@@ -1,0 +1,7 @@
+# ~/.config/wofi/config
+# ---------------------
+# Copyright (C) 2025 Qompass AI, All rights reserved
+
+key_up=Control_L-p
+key_down=Control_L-n
+term=ghostty
