@@ -1,0 +1,24 @@
+2025/05/08-13:18:54.838 ccccf Reusing MANIFEST /home/phaedrus/.config/vesktop/sessionData/Local Storage/leveldb/MANIFEST-000001
+2025/05/08-13:18:54.843 ccccf Recovering log #91
+2025/05/08-13:18:54.843 ccccf Reusing old log /home/phaedrus/.config/vesktop/sessionData/Local Storage/leveldb/000091.log 
+2025/05/08-13:20:55.479 cccd0 Level-0 table #96: started
+2025/05/08-13:20:55.481 cccd0 Level-0 table #96: 48174 bytes OK
+2025/05/08-13:20:55.483 cccd0 Delete type=0 #91
+2025/05/08-15:09:44.106 cccd0 Level-0 table #98: started
+2025/05/08-15:09:44.108 cccd0 Level-0 table #98: 43654 bytes OK
+2025/05/08-15:09:44.115 cccd0 Delete type=0 #95
+2025/05/08-16:15:22.367 cccd0 Level-0 table #100: started
+2025/05/08-16:15:22.372 cccd0 Level-0 table #100: 14968 bytes OK
+2025/05/08-16:15:22.379 cccd0 Delete type=0 #97
+2025/05/08-17:55:48.055 cccd0 Level-0 table #102: started
+2025/05/08-17:55:48.069 cccd0 Level-0 table #102: 44861 bytes OK
+2025/05/08-17:55:48.077 cccd0 Delete type=0 #99
+2025/05/08-17:55:48.078 cccd0 Compacting 4@0 + 1@1 files
+2025/05/08-17:55:48.088 cccd0 Generated table #103@0: 45 keys, 39729 bytes
+2025/05/08-17:55:48.088 cccd0 Compacted 4@0 + 1@1 files => 39729 bytes
+2025/05/08-17:55:48.096 cccd0 compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/05/08-17:55:48.097 cccd0 Delete type=2 #93
+2025/05/08-17:55:48.097 cccd0 Delete type=2 #96
+2025/05/08-17:55:48.097 cccd0 Delete type=2 #98
+2025/05/08-17:55:48.098 cccd0 Delete type=2 #100
+2025/05/08-17:55:48.098 cccd0 Delete type=2 #102
