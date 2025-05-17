@@ -1,6 +1,6 @@
-# {{REPO_NAME}}
+<h2> Qompass AI Dotfiles </h3>
 
-## {{DESCRIPTION}}
+<h3> Qompass AI dotfiles (ie xdg .config files) </h3>
 
 <p align="center">
   <a href="https://www.gnu.org/licenses/agpl-3.0">
@@ -9,15 +9,10 @@
   <a href="./LICENSE-QCDA">
     <img src="https://img.shields.io/badge/license-Q--CDA-lightgrey.svg" alt="License: Q-CDA">
   </a>
-  {{DOI_BADGE}}
   <p align="center">
-  {{REPO_VIEW_BADGE}}
 </p>
 </p>
 
-**Tags:** {{KEYWORDS_LIST}}
-
----
 
 <details id="Contact">
   <summary><strong>Contact Qompass AI</strong></summary>
@@ -46,9 +41,4 @@
   </div>
 </details>
 
-<details id="Zenodo DOI">
-  <summary><strong>Digital Object Identifier (DOI)</strong></summary>
-
-```markdown
-{{DOI_MARKDOWN}}
 
