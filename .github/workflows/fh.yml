@@ -6,10 +6,7 @@ on:
 
 jobs:
   flakehub-publish:
-    strategy:
-      matrix:
-        system: [x86_64-linux, aarch64-linux, aarch64-darwin]
-          runs-on: [self-hosted, linux, x64, ${{ matrix.system }}]
+    runs-on: [self-hosted, linux, x64]
     permissions:
       id-token: write
       contents: read
@@ -18,6 +15,6 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main
       - uses: DeterminateSystems/flakehub-push@main
         with:
-          name: qompassai/Dotfiles  # Auto-generate org/repo-name format
+          name: qompassai/dotfiles 
           rolling: true
           visibility: public

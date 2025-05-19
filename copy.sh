@@ -63,7 +63,6 @@ echo "${WARNING}A T T E N T I O N !${RESET}"
 echo "${SKY_BLUE}This version (v2.3.13) no extra packages!${RESET}"
 echo "${SKY_BLUE}If you ran through (Distro-Hyprland install scripts), no need to do anything${RESET}"
 echo "${YELLOW}previous version: nwg-displays & Some Keybinds changes${RESET}"
-echo "${MAGENTA}Kindly visit KooL Hyprland Own Wiki for changelogs${RESET}"
 printf "\n%.0s" {1..1}
 
 if [ ! -d Copy-Logs ]; then
@@ -571,7 +570,6 @@ if [ -d "$DIRPATHw" ]; then
                     fi
                 done || true
 
-                # Step 3: Copy unique files in waybar/style
                 for file in "$DIRPATHw-backup-$BACKUP_DIR/style"/*; do
                     [ -e "$file" ] || continue
 
@@ -594,7 +592,6 @@ if [ -d "$DIRPATHw" ]; then
                     fi
                 done || true
 
-                # Step 4: restore Modules_Extras
                 BACKUP_FILEw="$DIRPATHw-backup-$BACKUP_DIR/UserModules"
                 if [ -f "$BACKUP_FILEw" ]; then
                     cp -f "$BACKUP_FILEw" "$DIRPATHw/UserModules"
@@ -755,7 +752,6 @@ fi
 
 printf "\n%.0s" {1..1}
 
-# Restoring previous UserScripts
 DIRSH="hypr"
 SCRIPTS_TO_RESTORE=(
     "RofiBeats.sh"
@@ -928,7 +924,7 @@ while true; do
     case $WALL in
         [Yy])
             echo "${NOTE} Downloading additional wallpapers..."
-            if git clone "https://github.com/JaKooLit/Wallpaper-Bank.git"; then
+            if git clone "https://github.com/qompassai/wp-bank.git"; then
                 echo "${OK} Wallpapers downloaded successfully." 2>&1 | tee -a "$LOG"
 
                 if [ ! -d "$HOME/Pictures/wallpapers" ]; then
@@ -936,9 +932,9 @@ while true; do
                     echo "${OK} Created wallpapers directory." 2>&1 | tee -a "$LOG"
                 fi
 
-                if cp -R Wallpaper-Bank/wallpapers/* "$HOME/Pictures/wallpapers/" >> "$LOG" 2>&1; then
+                if cp -R wp-bank/wallpapers/* "$HOME/Pictures/wallpapers/" >> "$LOG" 2>&1; then
                     echo "${OK} Wallpapers copied successfully." 2>&1 | tee -a "$LOG"
-                    rm -rf Wallpaper-Bank 2>&1 # Remove cloned repository after copying wallpapers
+                    rm -rf wp-bank 2>&1 # Remove cloned repository after copying wallpapers
                     break
                 else
                     echo "${ERROR} Copying wallpapers failed" 2>&1 | tee -a "$LOG"
@@ -957,24 +953,20 @@ while true; do
     esac
 done
 
-# CLeaning up of ~/.config/ backups
 cleanup_backups() {
     CONFIG_DIR="$HOME/.config"
     BACKUP_PREFIX="-backup"
 
-    # Loop through directories in $HOME/.config
     for DIR in "$CONFIG_DIR"/*; do
         if [ -d "$DIR" ]; then
             BACKUP_DIRS=()
 
-            # Check for backup directories
             for BACKUP in "$DIR"$BACKUP_PREFIX*; do
                 if [ -d "$BACKUP" ]; then
                     BACKUP_DIRS+=("$BACKUP")
                 fi
             done
 
-            # If more than one backup found
             if [ ${#BACKUP_DIRS[@]} -gt 1 ]; then
                 printf "\n%.0s" {1..2}
                 echo -e "${INFO} Found ${MAGENTA}multiple backups${RESET} for: ${YELLOW}${DIR##*/}${RESET}"
@@ -989,7 +981,6 @@ cleanup_backups() {
                 read back_choice
 
                 if [[ "$back_choice" == [Yy]* ]]; then
-                    # Sort backups by modification time
                     latest_backup="${BACKUP_DIRS[0]}"
                     for BACKUP in "${BACKUP_DIRS[@]}"; do
                         if [ "$BACKUP" -nt "$latest_backup" ]; then
@@ -1019,13 +1010,12 @@ fi
 
 printf "\n%.0s" {1..1}
 
-# initialize wallust to avoid config error on hyprland
 wallust run -s $wallpaper 2>&1 | tee -a "$LOG"
 
 printf "\n%.0s" {1..2}
-printf "${OK} GREAT! KooL's Hyprland-Dots is now Loaded & Ready !!! "
+printf "${OK} GREAT! Qompass AI's Dotfiles are now Loaded & Ready !!! "
 printf "\n%.0s" {1..1}
 printf "${INFO} However, it is ${MAGENTA}HIGHLY SUGGESTED${RESET} to logout and re-login or better reboot to avoid any issues"
 printf "\n%.0s" {1..1}
-printf "${SKY_BLUE}Thank you${RESET} for using ${MAGENTA}KooL's Hyprland Configuration${RESET}... ${YELLOW}ENJOY!!!${RESET}"
+printf "${SKY_BLUE}Thank you${RESET} for using ${MAGENTA}Qompass AI's Hypr Configuration${RESET}... ${YELLOW}ENJOY!!!${RESET}"
 printf "\n%.0s" {1..3}
