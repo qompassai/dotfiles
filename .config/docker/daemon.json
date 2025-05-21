@@ -1,0 +1,13 @@
+
+{
+    "default-runtime": "nvidia",
+    "experimental": true,
+    "fixed-cidr-v6": "fd00::/64",
+    "ipv6": true,
+    "runtimes": {
+        "nvidia": {
+            "args": [],
+            "path": "nvidia-container-runtime"
+        }
+    }
+}
