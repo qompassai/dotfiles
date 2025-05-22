@@ -1,0 +1,61 @@
+# /qompassai/dotfiles/.config/discordo/config.toml
+# ---------------------------------------------------
+# Copyright (C) 2025 Qompass AI, All rights reserved
+
+[discord]
+token = "YOUR_DISCORD_TOKEN_GOES_HERE"
+
+mouse = true
+editor = "nvim"
+hide_blocked_users = true
+show_attachment_links = true
+messages_limit = 50
+compact_mode = false
+disable_rich_presence = true
+auto_reconnect = true
+auto_scroll = true
+
+[identify]
+status = "online"
+browser_version = "123.0.0"
+user_agent = "Discordo/1.0"
+
+[appearance]
+timestamps = true
+show_user_badges = true
+show_separators = true
+
+[notifications]
+enabled = true
+duration = 500
+
+[notifications.sound]
+enabled = true
+only_on_ping = true
+
+[advanced]
+debug_mode = false
+log_level = "info"  # Options: debug, info, warn, error
+cache_messages = true
+cache_dir = "~/.cache/discordo"
+
+[keys]
+up = "k"
+down = "j"
+send_message = "<Enter>"
+edit_message = "e"
+quit = "q"
+help = "?"
+focus_message_input = "i"
+next_channel = "<Tab>"
+previous_channel = "<S-Tab>"
+scroll_up = "<C-u>"
+scroll_down = "<C-d>"
+
+[theme]
+background = "#282828"
+foreground = "#ebdbb2"
+highlight = "#fabd2f"
+
+[display]
+image_viewer = "imv"

@@ -1,0 +1,131 @@
+<!-- /qompassai/dotfiles/.config/'Unreal Engine'/UnrealBuildTool/BuildConfiguration.xml -->
+<!-- # Copyright (C) 2025 Qompass AI, All rights reserved -->
+<!-- # Unreal Engine Linux Build -->
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration xmlns="https://www.unrealengine.com/BuildConfiguration">
+  <BuildConfiguration>
+    <bLegalToDistributeBinary>true</bLegalToDistributeBinary>
+    <bIgnoreOutdatedImportLibraries>true</bIgnoreOutdatedImportLibraries>
+    <bUseUnityBuild>true</bUseUnityBuild>
+    <bChainPCHs>true</bChainPCHs>
+    <bAllowLTCG>true</bAllowLTCG>
+    <bUseFastPDBLinking>false</bUseFastPDBLinking>
+    <bUseInlining>true</bUseInlining>
+    <bAllowUBAExecutor>true</bAllowUBAExecutor>
+    <MinCpuArchX64>AVX2</MinCpuArchX64>
+    <MinFilesUsingPrecompiledHeader>1</MinFilesUsingPrecompiledHeader>
+    <bPreferThinLTO>true</bPreferThinLTO>
+    <ThinLTOCacheDirectory>/home/phaedrus/.cache/ThinLTOCache</ThinLTOCacheDirectory>
+    <ThinLTOCachePruningArguments>--cache-size-bytes=20G --cache-size-files=200000</ThinLTOCachePruningArguments>
+    <bAllowXGE>true</bAllowXGE>
+    <CppStandardEngine>Cpp20</CppStandardEngine>
+    <CppStandard>Cpp20</CppStandard>    
+    <bAllowFASTBuild>true</bAllowFASTBuild>
+    <bAllowSNDBS>true</bAllowSNDBS>
+    <bArtifactRead>true</bArtifactRead>
+    <bArtifactWrites>true</bArtifactWrites>
+    <ArtifactDirectory>/home/phaedrus/.cache/UnrealEngine/Artifacts</ArtifactDirectory>
+    <bLogArtifactCacheMisses>true</bLogArtifactCacheMisses>
+    <bPGOProfile>true</bPGOProfile>
+    <bAdaptiveUnityEnablesEditAndContinue>true</bAdaptiveUnityEnablesEditAndContinue>
+    <bSupportEditAndContinue>true</bSupportEditAndContinue>
+    <bOmitFramePointers>false</bOmitFramePointers>
+    <bPGOOptimize>false</bPGOOptimize>
+    <bForceUnityBuild>false</bForceUnityBuild>
+    <bForcePrecompiledHeaderForGameModules>true</bForcePrecompiledHeaderForGameModules>
+    <bAllowRuntimeSymbolFiles>true</bAllowRuntimeSymbolFiles>
+    <bUseAdaptiveUnityBuild>true</bUseAdaptiveUnityBuild>
+    <bUseIncrementalLinking>true</bUseIncrementalLinking>
+    <bUseUBTMakefiles>true</bUseUBTMakefiles>
+    <bUseSharedPCHs>true</bUseSharedPCHs>
+    <bOmitPCDebugInfoInDevelopment>true</bOmitPCDebugInfoInDevelopment>
+    <bUseFastMonoCalls>true</bUseFastMonoCalls>
+    <bAdaptiveUnityDisablesPCH>false</bAdaptiveUnityDisablesPCH>
+    <bAdaptiveUnityCreatesDedicatedPCH>true</bAdaptiveUnityCreatesDedicatedPCH>
+    <MaxParallelActions>1</MaxParallelActions>
+    <bUseShippingPhysXLibraries>true</bUseShippingPhysXLibraries>
+    <bEnableAddressSanitizer>false</bEnableAddressSanitizer>
+    <bEnableThreadSanitizer>false</bEnableThreadSanitizer>
+    <bEnableUndefinedBehaviorSanitizer>false</bEnableUndefinedBehaviorSanitizer>
+    </BuildConfiguration>
+
+  <BuildMode>
+	  <bIgnoreJunk>true</bIgnoreJunk>
+  </BuildMode>
+
+  <FASTBuild>
+  <bEnableCaching>true</bEnableCaching>
+  <CacheMode>ReadWrite</CacheMode>
+  <FBuildCachePath>/home/phaedrus/.cache/UnrealEngine/FASTBuildCache</FBuildCachePath>
+   <bEnableDistribution>true</bEnableDistribution>
+  <bStopOnError>false</bStopOnError>
+</FASTBuild>
+
+<CMakefileGenerator>
+  <bIncludeDocumentation>true</bIncludeDocumentation>
+  <bUsePrecompiled>true</bUsePrecompiled>
+  <bIncludeEngineSource>true</bIncludeEngineSource>
+  <bIncludeShaderSource>true</bIncludeShaderSource>
+  <bIncludeConfigFiles>true</bIncludeConfigFiles>
+  <bIncludeTemplateFiles>true</bIncludeTemplateFiles>
+  <bIncludeEnginePrograms>true</bIncludeEnginePrograms>
+</CMakefileGenerator>
+
+<MakefileGenerator>
+  <bIncludeDocumentation>true</bIncludeDocumentation>
+  <bUsePrecompiled>true</bUsePrecompiled>
+  <bIncludeEngineSource>true</bIncludeEngineSource>
+  <bIncludeShaderSource>true</bIncludeShaderSource>
+  <bIncludeConfigFiles>true</bIncludeConfigFiles>
+  <bIncludeTemplateFiles>true</bIncludeTemplateFiles>
+  <bIncludeEnginePrograms>true</bIncludeEnginePrograms>
+</MakefileGenerator>
+
+<ProjectFileGenerator>
+  <Format>Make</Format>
+  <bGenerateIntelliSenseData>false</bGenerateIntelliSenseData>
+  <bIncludeDocumentation>true</bIncludeDocumentation>
+  <bAllDocumentationLanguages>true</bAllDocumentationLanguages>
+  <bUsePrecompiled>true</bUsePrecompiled>
+  <bIncludeEngineSource>true</bIncludeEngineSource>
+  <bIncludeShaderSource>true</bIncludeShaderSource>
+  <bIncludeBuildSystemFiles>true</bIncludeBuildSystemFiles>
+  <bIncludeConfigFiles>true</bIncludeConfigFiles>
+  <bIncludeLocalizationFiles>true</bIncludeLocalizationFiles>
+  <bIncludeTemplateFiles>true</bIncludeTemplateFiles>
+  <bIncludeEnginePrograms>true</bIncludeEnginePrograms>
+  <IncludeCppSource>true</IncludeCppSource>
+  <bIncludeDotNetPrograms>true</bIncludeDotNetPrograms>
+  <bIncludeTempTargets>true</bIncludeTempTargets>
+  <bKeepSourceSubDirectories>true</bKeepSourceSubDirectories>
+  <bGatherThirdPartySource>true</bGatherThirdPartySource>
+  <Platforms>
+  <Item>Linux</Item>
+  </Platforms>
+  <bIncludeDebugConfigs>true</bIncludeDebugConfigs>
+  <bIncludeTestAndShippingConfigs>true</bIncludeTestAndShippingConfigs>
+  <bIncludeDevelopmentConfigs>true</bIncludeDevelopmentConfigs>
+</ProjectFileGenerator>
+
+
+  <UEBuildConfiguration>
+    <bFailIfGeneratedCodeChanges>false</bFailIfGeneratedCodeChanges>
+    <bForceHeaderGeneration>true</bForceHeaderGeneration>
+    <bAllowHotReloadFromIDE>true</bAllowHotReloadFromIDE>
+  </UEBuildConfiguration>
+  <Horde>
+    <Server>http://192.168.1.69:13340</Server>
+    <LinuxPool>Linux-UE5</LinuxPool>
+  </Horde>
+  <ParallelExecutor>
+    <ProcessorCountMultiplier>1.0</ProcessorCountMultiplier>
+    <MemoryPerActionBytes>209715200</MemoryPerActionBytes>
+    <ProcessPriority>Normal</ProcessPriority>
+  </ParallelExecutor>
+  <UnrealBuildAccelerator>
+    <bDisableRemote>false</bDisableRemote>
+    <bForceBuildAllRemote>false</bForceBuildAllRemote>
+    <Host>192.168.1.69</Host>
+    <Port>13340</Port>
+  </UnrealBuildAccelerator>
+</Configuration>
