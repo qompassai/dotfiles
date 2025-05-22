@@ -26,8 +26,6 @@
   <a href="./LICENSE-QCDA"><img src="https://img.shields.io/badge/license-Q--CDA-lightgrey.svg" alt="License: Q-CDA"></a>
 </p>
 
-
-
 <details id="Contact">
   <summary><strong>Contact Qompass AI</strong></summary>
 
