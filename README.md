@@ -8,6 +8,7 @@
 
 ![Repository Views](https://komarev.com/ghpvc/?username=qompassai-dotfiles)
 ![GitHub all releases](https://img.shields.io/github/downloads/qompassai/dotfiles/total?style=flat-square)
+
  <a href="https://wiki.archlinux.org/title/XDG_Base_Directory">
   <img src="https://img.shields.io/badge/XDG/Dotfiles-1793D1?style=for-the-badge&logo=linux&logoColor=white" alt="XDG and Dotfiles">
 </a>
