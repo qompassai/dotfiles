@@ -1,0 +1,48 @@
+# Default packages for AI/ML environments
+create_default_packages:
+  - catboost
+  - conda-build
+  - cudatoolkit-dev
+  - dask
+  - datasets
+  - fastai
+  - git
+  - huggingface_hub
+  - ipython
+  - jax
+  - jaxlib
+  - jupyter
+  - lightgbm
+  - matplotlib
+  - mlflow
+  - nccl
+  - notebook
+  - numpy
+  - onnxruntime
+  - optuna
+  - pandas
+  - pip
+  - pytorch-lightning
+  - ray
+  - scikit-learn
+  - setuptools
+  - tensorboard
+  - tensorflow
+  - tensorrt
+  - torch
+  - torchaudio
+  - torchvision
+  - transformers
+  - wandb
+  - wheel
+  - xgboost
+
+# Package directories
+pkgs_dirs:
+  - ~/.conda/pkgs
+  - ~/.local/share/conda/pkgs
+  - ~/miniconda3/pkgs
+
+# Package settings
+use_pip: true
+pip_interop_enabled: true

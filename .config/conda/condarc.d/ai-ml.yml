@@ -1,0 +1,89 @@
+# AI/ML framework settings
+frameworks:
+  pytorch:
+    cuda_version: "12.8"
+    use_system_cuda: true
+    cudnn_version: "9"
+    cublas_version: "12"
+    cufft_version: "11"
+    curand_version: "10"
+    cusolver_version: "11"
+    cusparse_version: "12"
+  tensorflow:
+    version: ">=2.10"
+    tensorrt_support: true
+    cuda_system_lib: true
+  jax:
+    cuda_support: true
+    nccl_support: true
+
+# GPU and CUDA settings
+cuda:
+  system_installation: true
+  version: "12.8"
+  path: "/opt/cuda"
+  arch_list: "6.0;6.1;7.0;7.5;8.0;8.6;8.9;9.0"
+
+# NVIDIA libraries configuration
+nvidia_libraries:
+  cudnn:
+    version: "9.5.1"
+    path: "/opt/cuda/lib64"
+  cublas:
+    version: "12.8.1"
+    path: "/opt/cuda/lib64"
+  cufft:
+    version: "11.3.0"
+    path: "/opt/cuda/lib64"
+  curand:
+    version: "10.3.7"
+    path: "/opt/cuda/lib64"
+  cusolver:
+    version: "11.7.1"
+    path: "/opt/cuda/lib64"
+  cusparse:
+    version: "12.5.4"
+    path: "/opt/cuda/lib64"
+  npp:
+    version: "12.3.2"
+    path: "/opt/cuda/lib64"
+  nvtx:
+    version: "12.6"
+    path: "/opt/cuda/lib64"
+  tensorrt:
+    version: "10.5.0"
+    path: "/usr/lib/x86_64-linux-gnu"
+  nccl:
+    version: "2.23.4"
+    path: "/opt/cuda/lib64"
+
+# Environment variables for AI/ML
+default_env_vars:
+  CUDA_HOME: "/opt/cuda"
+  CUDA_ROOT: "/opt/cuda"
+  CUDA_PATH: "/opt/cuda"
+  CUDA_VISIBLE_DEVICES: "0"
+  CUDNN_PATH: "/opt/cuda"
+  CUBLAS_PATH: "/opt/cuda"
+  CUFFT_PATH: "/opt/cuda"
+  CURAND_PATH: "/opt/cuda"
+  CUSOLVER_PATH: "/opt/cuda"
+  CUSPARSE_PATH: "/opt/cuda"
+  NPP_PATH: "/opt/cuda"
+  TENSORRT_PATH: "/usr/lib/x86_64-linux-gnu"
+  NCCL_PATH: "/opt/cuda"
+  PATH: "/opt/cuda/bin:$PATH"
+  LD_LIBRARY_PATH: "/opt/cuda/lib64:/opt/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH"
+  OMP_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  NUMBA_CACHE_DIR: "~/.cache/numba"
+  TORCH_HOME: "~/.cache/torch"
+  HF_HOME: "~/.cache/huggingface"
+  TRANSFORMERS_CACHE: "~/.cache/huggingface/transformers"
+  TRT_LOGGER_VERBOSITY: "WARNING"
+  TENSORRT_ROOT: "/usr/lib/x86_64-linux-gnu"
+  # NCCL settings for multi-GPU
+  NCCL_DEBUG: "INFO"
+  NCCL_IB_DISABLE: "1"
+  NCCL_P2P_DISABLE: "1"
