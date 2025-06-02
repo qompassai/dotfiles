@@ -1,7 +1,8 @@
-# /qompassai/dotfiles/.config/fish/fish_variables
-# ------------------------------
-# Copyright (C) 2025 Qompass AI, All rights reserved
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+
 SETUVAR __fish_initialized:3800
+SETUVAR fifc_open_keybinding:ctrl\x2do
 SETUVAR fish_color_autosuggestion:brblack
 SETUVAR fish_color_cancel:\x2dr
 SETUVAR fish_color_command:normal
@@ -30,3 +31,4 @@ SETUVAR fish_pager_color_description:yellow\x1e\x2di
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
+SETUVAR fish_user_paths:/usr/bin/site_perl\x1e/usr/bin/vendor_perl\x1e/usr/bin/core_perl\x1e/home/phaedrus/\x2ecargo/bin\x1e/usr/lib/jvm/default/bin\x1e/opt/rocm/bin\x1e/opt/rocm/lib\x1e/opt/nvidia/hpc_sdk/Linux_x86_64/25\x2e3/comm_libs/mpi/bin\x1e/opt/nvidia/hpc_sdk/Linux_x86_64/25\x2e3/cuda/bin\x1e/opt/nvidia/hpc_sdk/Linux_x86_64/25\x2e3/compilers/bin

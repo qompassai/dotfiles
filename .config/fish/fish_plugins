@@ -1,0 +1,8 @@
+# ~/.config/fish/fish_plugins
+# ---------------------------
+# Copyright (C) 2025 Qompass AI, All rights reserved
+
+jorgebucaran/fisher
+ilancosman/tide@v5
+jorgebucaran/nvm.fish
+PatrickF1/fzf.fish
