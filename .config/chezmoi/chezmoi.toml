@@ -1,0 +1,10 @@
+# ~/.config/chezmoi/chezmoi.toml
+# ------------------------------
+# Copyright (C) 2025 Qompass AI, All rights reserved
+
+[data]
+nixosrepo = "/home/phaedrus/.GH/Qompass/NixOS"
+
+[git]
+autoCommit = true
+commitMessageTemplate = "update(dotfiles): {{ now | date \"2006-01-02\" }} changes"
