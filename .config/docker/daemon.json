@@ -1,13 +1,25 @@
-
 {
-    "default-runtime": "nvidia",
-    "experimental": true,
-    "fixed-cidr-v6": "fd00::/64",
-    "ipv6": true,
-    "runtimes": {
-        "nvidia": {
-            "args": [],
-            "path": "nvidia-container-runtime"
-        }
-    }
+	"default-runtime": "nvidia",
+	"experimental": true,
+	"fixed-cidr-v6": "fd00::/64",
+	"ipv6": true,
+	"runtimes": {
+		"nvidia": {
+			"args": [],
+			"path": "nvidia-container-runtime"
+		}
+	},
+	"sops": {
+		"lastmodified": "2025-06-24T01:38:07Z",
+		"mac": "ENC[AES256_GCM,data:di9Iw9Mg5EGYMIyEbkwjZfrVpHNipDKDdny1w2sTF+6J38Fu/SxW1YLYTA0IcVpWBe1efrD7olViWAxRB9TKt+Ex+kV7c4yIuxjQ0pSKaUUH1TooDN7nqs6x/6las2gp46zWnBW6ImymFOMnmi+4adHyW5TYtcTceE3RNDiCqIk=,iv:rtXJZ3ZJUxoC3TjBZDEVMlZZoSgSq2HXeTgJZRpEcM0=,tag:ZXg0+e/7njrozhCVc78WbQ==,type:str]",
+		"pgp": [
+			{
+				"created_at": "2025-06-24T01:38:07Z",
+				"enc": "-----BEGIN PGP MESSAGE-----\n\nhF4D247fH+6XZmwSAQdAIAYpqAhlwNYTAmD10VEjfV/K0P41Z/s3xLt8D8wKQDgw\n4xsm8PVN9Hq0IpED3YYcbqmVRGnPpo7J/CPYK6hu43UKgLTB+ZLwx1BfYyR01/7X\n0l4BK4Rb9RZlwbRO37006ML9+JlM1wtZLZJ6ZYfTMCnHF7eWcWnbA99JZa7flMdj\nTXoJq/3PKH14pULGcaIjoINCtf0YcuUU32FtaG5SyItFx/0ukjmtnQJyhMCm+H9o\n=UjrN\n-----END PGP MESSAGE-----",
+				"fp": "0x4F8B914D6026570F"
+			}
+		],
+		"encrypted_regex": "^(data|stringData|password|secret|key|token|.*pass.*|.*cred.*|.*auth.*|.*api.*)$",
+		"version": "3.10.2"
+	}
 }

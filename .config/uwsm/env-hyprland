@@ -1,0 +1,10 @@
+export AQ_DRM_DEVICES="/dev/dri/card0:/dev/dri/card1"
+export __GL_SHADER_DISK_CACHE_SIZE=10737418240
+export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
+export __GL_SHADER_DISK_CACHE=1
+export __GL_SHADER_DISK_CACHE_PATH=$XDG_CACHE_HOME/nvidia/GLCache
+export MESA_SHADER_CACHE_MAX_SIZE=10G
+export MESA_GLSL_CACHE_DIR=/home/phaedrus/.cache/mesa_shader_cache_db
+export MOZ_ENABLE_WAYLAND=1
+export MOZ_DBUS_REMOTE=1
+export XDG_CACHE_HOME="$HOME/.cache"
