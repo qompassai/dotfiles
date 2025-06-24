@@ -1,0 +1,25 @@
+
+[describe]
+args = [{ type = 'string' }, { type = 'function' }]
+
+[it.args]
+type = ['string', 'function']
+
+[before_each.args]
+type = 'function'
+
+[after_each.args]
+type = 'function'
+
+[vim.api]
+any = true
+
+[vim.fn]
+any = true
+
+[vim.keymap]
+any = true
+
+[vim.lsp]
+any = true
+

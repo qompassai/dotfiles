@@ -43,7 +43,6 @@
             fuzzel
             gh
             git
-            ipython
             jq
             khal
             libreoffice
