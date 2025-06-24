@@ -1,0 +1,978 @@
+{
+    "configuration": {
+        "default_layer_control": "off",
+        "layers": [
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/implicit_layer.d/vkdevicechooser.json",
+                "name": "VK_LAYER_AEJS_DeviceChooserLayer",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 0,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/implicit_layer.d/VkLayer_DXVK_NVAPI_reflex.json",
+                "name": "VK_LAYER_DXVK_NVAPI_reflex",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 1,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/implicit_layer.d/VkLayer_FROG_gamescope_wsi.x86_64.json",
+                "name": "VK_LAYER_FROG_gamescope_wsi_x86_64",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 2,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/implicit_layer.d/latencyflex.json",
+                "name": "VK_LAYER_LFX_LatencyFleX",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 3,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/implicit_layer.d/MangoHud.x86.json",
+                "name": "VK_LAYER_MANGOHUD_overlay_x86",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 4,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/implicit_layer.d/MangoHud.x86_64.json",
+                "name": "VK_LAYER_MANGOHUD_overlay_x86_64",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 5,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json",
+                "name": "VK_LAYER_MESA_device_select",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 6,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/implicit_layer.d/obs_vkcapture_32.json",
+                "name": "VK_LAYER_OBS_vkcapture_32",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 7,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/implicit_layer.d/obs_vkcapture_64.json",
+                "name": "VK_LAYER_OBS_vkcapture_64",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 8,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "/etc/vulkan/implicit_layer.d/renderdoc_capture.json",
+                "name": "VK_LAYER_RENDERDOC_Capture",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 9,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "/etc/vulkan/implicit_layer.d/renderdoc_capture.32.json",
+                "name": "VK_LAYER_RENDERDOC_Capture_32",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 10,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/implicit_layer.d/libstrangle_vk.json",
+                "name": "VK_LAYER_TORKEL104_libstrangle",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 11,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/implicit_layer.d/vkBasalt.x86.json",
+                "name": "VK_LAYER_VKBASALT_post_processing",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 12,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/implicit_layer.d/VkLayer_hdr_wsi.x86_64.json",
+                "name": "VK_LAYER_hdr_wsi",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 13,
+                "settings": [
+                ],
+                "type": "Implicit",
+                "version": "latest"
+            },
+            {
+                "builtin": "unordered_layer_location",
+                "control": "discard",
+                "name": "Vulkan Layers Located by the Vulkan Application",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 14,
+                "settings": [
+                ],
+                "type": "Explicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/explicit_layer.d/alvr_x86_64.json",
+                "name": "VK_LAYER_ALVR_capture",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 15,
+                "settings": [
+                ],
+                "type": "Explicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/explicit_layer.d/VkLayer_INTEL_nullhw.json",
+                "name": "VK_LAYER_INTEL_nullhw",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 16,
+                "settings": [
+                ],
+                "type": "Explicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/explicit_layer.d/VkLayer_api_dump.json",
+                "name": "VK_LAYER_LUNARG_api_dump",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 17,
+                "settings": [
+                    {
+                        "expanded": true,
+                        "key": "output_range",
+                        "type": "STRING",
+                        "value": "0-0"
+                    },
+                    {
+                        "expanded": true,
+                        "key": "output_format",
+                        "type": "ENUM",
+                        "value": "text"
+                    },
+                    {
+                        "expanded": true,
+                        "key": "file",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "log_filename",
+                        "type": "SAVE_FILE",
+                        "value": "stdout"
+                    },
+                    {
+                        "expanded": true,
+                        "key": "flush",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "name_size",
+                        "type": "INT",
+                        "value": 32
+                    },
+                    {
+                        "expanded": true,
+                        "key": "show_types",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "type_size",
+                        "type": "INT",
+                        "value": 0
+                    },
+                    {
+                        "expanded": true,
+                        "key": "timestamp",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "show_shader",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "detailed",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "no_addr",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "use_spaces",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "indent_size",
+                        "type": "INT",
+                        "value": 4
+                    },
+                    {
+                        "expanded": true,
+                        "key": "show_thread_and_frame",
+                        "type": "BOOL",
+                        "value": true
+                    }
+                ],
+                "type": "Explicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/explicit_layer.d/VkLayer_monitor.json",
+                "name": "VK_LAYER_LUNARG_monitor",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 18,
+                "settings": [
+                ],
+                "type": "Explicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/explicit_layer.d/VkLayer_screenshot.json",
+                "name": "VK_LAYER_LUNARG_screenshot",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 19,
+                "settings": [
+                    {
+                        "expanded": true,
+                        "key": "frames",
+                        "type": "STRING",
+                        "value": ""
+                    },
+                    {
+                        "expanded": true,
+                        "key": "dir",
+                        "type": "SAVE_FOLDER",
+                        "value": ""
+                    },
+                    {
+                        "expanded": true,
+                        "key": "format",
+                        "type": "ENUM",
+                        "value": "USE_SWAPCHAIN_COLORSPACE"
+                    }
+                ],
+                "type": "Explicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/explicit_layer.d/VkLayer_MESA_overlay.json",
+                "name": "VK_LAYER_MESA_overlay",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 20,
+                "settings": [
+                ],
+                "type": "Explicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/explicit_layer.d/VkLayer_MESA_screenshot.json",
+                "name": "VK_LAYER_MESA_screenshot",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 21,
+                "settings": [
+                ],
+                "type": "Explicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/explicit_layer.d/VkLayer_MESA_vram_report_limit.json",
+                "name": "VK_LAYER_MESA_vram_report_limit",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 22,
+                "settings": [
+                    {
+                        "expanded": true,
+                        "key": "VK_VRAM_REPORT_LIMIT_DEVICE_ID",
+                        "type": "STRING",
+                        "value": ""
+                    }
+                ],
+                "type": "Explicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/explicit_layer.d/VkLayer_khronos_validation.json",
+                "name": "VK_LAYER_KHRONOS_validation",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 23,
+                "settings": [
+                    {
+                        "expanded": true,
+                        "key": "fine_grained_locking",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "validate_core",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "check_image_layout",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "check_command_buffer",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "check_object_in_use",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "check_query",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "check_shaders",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "check_shaders_caching",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "debug_disable_spirv_val",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "unique_handles",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "object_lifetime",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "stateless_param",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "thread_safety",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "validate_sync",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "syncval_submit_time_validation",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "syncval_shader_accesses_heuristic",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "syncval_message_extra_properties",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "syncval_message_extra_properties_pretty_print",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "printf_enable",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "printf_to_stdout",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "printf_verbose",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "printf_buffer_size",
+                        "type": "INT",
+                        "value": 1024
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_enable",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_shader_instrumentation",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_descriptor_checks",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_warn_on_robust_oob",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_buffer_address_oob",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_max_buffer_device_addresses",
+                        "type": "INT",
+                        "value": 10000
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_validate_ray_query",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_post_process_descriptor_indexing",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_vertex_attribute_fetch_oob",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_select_instrumented_shaders",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_buffers_validation",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_indirect_draws_buffers",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_indirect_dispatches_buffers",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_indirect_trace_rays_buffers",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_buffer_copies",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_index_buffers",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_image_layout",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_reserve_binding_slot",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_vma_linear_output",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_debug_validate_instrumented_shaders",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_debug_dump_instrumented_shaders",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_debug_max_instrumentations_count",
+                        "type": "INT",
+                        "value": 0
+                    },
+                    {
+                        "expanded": true,
+                        "key": "gpuav_debug_print_instrumentation_info",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "validate_best_practices",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "validate_best_practices_arm",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "validate_best_practices_amd",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "validate_best_practices_img",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "validate_best_practices_nvidia",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "debug_action",
+                        "type": "FLAGS",
+                        "value": [
+                            "VK_DBG_LAYER_ACTION_LOG_MSG"
+                        ]
+                    },
+                    {
+                        "expanded": true,
+                        "key": "log_filename",
+                        "type": "SAVE_FILE",
+                        "value": "stdout"
+                    },
+                    {
+                        "expanded": true,
+                        "key": "report_flags",
+                        "type": "FLAGS",
+                        "value": [
+                            "error"
+                        ]
+                    },
+                    {
+                        "expanded": true,
+                        "key": "enable_message_limit",
+                        "type": "BOOL",
+                        "value": true
+                    },
+                    {
+                        "expanded": true,
+                        "key": "duplicate_message_limit",
+                        "type": "INT",
+                        "value": 10
+                    },
+                    {
+                        "expanded": true,
+                        "key": "message_id_filter",
+                        "type": "LIST",
+                        "value": [
+                        ]
+                    },
+                    {
+                        "expanded": true,
+                        "key": "message_format_json",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "message_format_display_application_name",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "debug_stable_messages",
+                        "type": "BOOL",
+                        "value": false
+                    }
+                ],
+                "type": "Explicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/explicit_layer.d/VkLayer_khronos_shader_object.json",
+                "name": "VK_LAYER_KHRONOS_shader_object",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 24,
+                "settings": [
+                    {
+                        "expanded": true,
+                        "key": "force_enable",
+                        "type": "BOOL",
+                        "value": false
+                    },
+                    {
+                        "expanded": true,
+                        "key": "disable_pipeline_pre_caching",
+                        "type": "BOOL",
+                        "value": false
+                    }
+                ],
+                "type": "Explicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/explicit_layer.d/VkLayer_khronos_synchronization2.json",
+                "name": "VK_LAYER_KHRONOS_synchronization2",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 25,
+                "settings": [
+                    {
+                        "expanded": true,
+                        "key": "force_enable",
+                        "type": "BOOL",
+                        "value": false
+                    }
+                ],
+                "type": "Explicit",
+                "version": "latest"
+            },
+            {
+                "control": "off",
+                "manifest": "${VULKAN_SDK}/share/vulkan/explicit_layer.d/VkLayer_khronos_timeline_semaphore.json",
+                "name": "VK_LAYER_KHRONOS_timeline_semaphore",
+                "override_settings": true,
+                "platforms": [
+                    "WINDOWS_X86",
+                    "WINDOWS_ARM",
+                    "LINUX",
+                    "MACOS"
+                ],
+                "rank": 26,
+                "settings": [
+                ],
+                "type": "Explicit",
+                "version": "latest"
+            }
+        ],
+        "loader_message_types": [
+            "error",
+            "warn",
+            "info",
+            "debug",
+            "perf",
+            "layer",
+            "driver"
+        ],
+        "name": "Disable All Vulkan Layers",
+        "override_layers": true,
+        "override_loader": true,
+        "platforms": [
+            "WINDOWS_X86",
+            "WINDOWS_ARM",
+            "LINUX",
+            "MACOS"
+        ],
+        "selected_layer_name": "",
+        "version": 1
+    },
+    "file_format_version": "3.1.0"
+}

@@ -1,0 +1,169 @@
+{
+    "file_format_version": "1.0.0",
+    "settings": {
+        "layers": [
+            {
+                "control": "auto",
+                "name": "VK_LAYER_AEJS_DeviceChooserLayer",
+                "path": "/usr/share/vulkan/implicit_layer.d/vkdevicechooser.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_DXVK_NVAPI_reflex",
+                "path": "/usr/share/vulkan/implicit_layer.d/VkLayer_DXVK_NVAPI_reflex.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_FROG_gamescope_wsi_x86_64",
+                "path": "/usr/share/vulkan/implicit_layer.d/VkLayer_FROG_gamescope_wsi.x86_64.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_LFX_LatencyFleX",
+                "path": "/usr/share/vulkan/implicit_layer.d/latencyflex.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_MANGOHUD_overlay_x86",
+                "path": "/usr/share/vulkan/implicit_layer.d/MangoHud.x86.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_MANGOHUD_overlay_x86_64",
+                "path": "/usr/share/vulkan/implicit_layer.d/MangoHud.x86_64.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_MESA_device_select",
+                "path": "/usr/share/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_OBS_vkcapture_32",
+                "path": "/usr/share/vulkan/implicit_layer.d/obs_vkcapture_32.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_OBS_vkcapture_64",
+                "path": "/usr/share/vulkan/implicit_layer.d/obs_vkcapture_64.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_RENDERDOC_Capture",
+                "path": "/etc/vulkan/implicit_layer.d/renderdoc_capture.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_RENDERDOC_Capture_32",
+                "path": "/etc/vulkan/implicit_layer.d/renderdoc_capture.32.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_TORKEL104_libstrangle",
+                "path": "/usr/share/vulkan/implicit_layer.d/libstrangle_vk.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_VKBASALT_post_processing",
+                "path": "/usr/share/vulkan/implicit_layer.d/vkBasalt.x86.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_hdr_wsi",
+                "path": "/usr/share/vulkan/implicit_layer.d/VkLayer_hdr_wsi.x86_64.json",
+                "treat_as_implicit_manifest": true
+            },
+            {
+                "control": "unordered_layer_location"
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_ALVR_capture",
+                "path": "/usr/share/vulkan/explicit_layer.d/alvr_x86_64.json",
+                "treat_as_implicit_manifest": false
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_INTEL_nullhw",
+                "path": "/usr/share/vulkan/explicit_layer.d/VkLayer_INTEL_nullhw.json",
+                "treat_as_implicit_manifest": false
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_LUNARG_api_dump",
+                "path": "/usr/share/vulkan/explicit_layer.d/VkLayer_api_dump.json",
+                "treat_as_implicit_manifest": false
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_LUNARG_monitor",
+                "path": "/usr/share/vulkan/explicit_layer.d/VkLayer_monitor.json",
+                "treat_as_implicit_manifest": false
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_LUNARG_screenshot",
+                "path": "/usr/share/vulkan/explicit_layer.d/VkLayer_screenshot.json",
+                "treat_as_implicit_manifest": false
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_MESA_overlay",
+                "path": "/usr/share/vulkan/explicit_layer.d/VkLayer_MESA_overlay.json",
+                "treat_as_implicit_manifest": false
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_MESA_screenshot",
+                "path": "/usr/share/vulkan/explicit_layer.d/VkLayer_MESA_screenshot.json",
+                "treat_as_implicit_manifest": false
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_MESA_vram_report_limit",
+                "path": "/usr/share/vulkan/explicit_layer.d/VkLayer_MESA_vram_report_limit.json",
+                "treat_as_implicit_manifest": false
+            },
+            {
+                "control": "on",
+                "name": "VK_LAYER_KHRONOS_validation",
+                "path": "/usr/share/vulkan/explicit_layer.d/VkLayer_khronos_validation.json",
+                "treat_as_implicit_manifest": false
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_KHRONOS_shader_object",
+                "path": "/usr/share/vulkan/explicit_layer.d/VkLayer_khronos_shader_object.json",
+                "treat_as_implicit_manifest": false
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_KHRONOS_synchronization2",
+                "path": "/usr/share/vulkan/explicit_layer.d/VkLayer_khronos_synchronization2.json",
+                "treat_as_implicit_manifest": false
+            },
+            {
+                "control": "auto",
+                "name": "VK_LAYER_KHRONOS_timeline_semaphore",
+                "path": "/usr/share/vulkan/explicit_layer.d/VkLayer_khronos_timeline_semaphore.json",
+                "treat_as_implicit_manifest": false
+            }
+        ],
+        "stderr_log": [
+            "error"
+        ]
+    }
+}

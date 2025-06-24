@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Mozilla Firefox
+Exec=env WINEPREFIX="/home/phaedrus/.wine" wine C:\\\\ProgramData\\\\Microsoft\\\\Windows\\\\Start\\ Menu\\\\Programs\\\\Mozilla\\ Firefox.lnk
+Type=Application
+StartupNotify=true
+Path=/home/phaedrus/.wine/dosdevices/c:/Program Files (x86)/Mozilla Firefox
+Icon=8D42_firefox.0
+StartupWMClass=firefox.exe

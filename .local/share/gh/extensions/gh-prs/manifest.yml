@@ -1,0 +1,6 @@
+owner: dlvhdr
+name: gh-prs
+host: github.com
+tag: v4.14.0
+ispinned: false
+path: /home/phaedrus/.local/share/gh/extensions/gh-prs/gh-prs

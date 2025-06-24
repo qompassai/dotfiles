@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Zen Server
+Exec=/opt/UnrealEngine/Engine/Binaries/Linux/ZenServer
+Icon=/opt/UnrealEngine/Engine/Content/Slate/Icons/DefaultAppIcon.png
+Type=Application
+Categories=Development;Build;
+Comment=Distributed Build Server for Unreal Engine Projects
+Terminal=true
+

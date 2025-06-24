@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Live Link Hub
+Exec=/opt/UnrealEngine/Engine/Binaries/Linux/LiveLinkHub
+Icon=/opt/UnrealEngine/Engine/Content/Slate/Icons/DefaultAppIcon.png
+Type=Application
+Categories=Development;Tools;
+Comment=Manage Live Link Connections for Unreal Engine
+Terminal=false
+

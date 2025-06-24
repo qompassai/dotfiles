@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Silenzio
+Comment=Stop voice dictation
+Exec=sh -c "nerd-dictation end"
+Type=Application
+Categories=Utility;Accessibility;
+Terminal=false
+Icon=/usr/share/icons/Papirus/24x24/panel/audio-input-microphone-muted.svg

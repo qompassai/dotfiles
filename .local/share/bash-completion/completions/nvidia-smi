@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#/qompassai/dotfiles/.local/share/bash-completions/completions/nvidia-smi
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###########################################################################
+_nvidia_smi_completion() {
+    local cur opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    opts="-q -i -l -f -x --query-gpu --format"
+    COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+}
+complete -F _nvidia_smi_completion nvidia-smi

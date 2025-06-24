@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=CMake (cmake-gui)
+Exec=env WINEPREFIX="/home/phaedrus/.wine" wine C:\\\\ProgramData\\\\Microsoft\\\\Windows\\\\Start\\ Menu\\\\Programs\\\\CMake\\ 2.8\\\\CMake\\ \\(cmake-gui\\).lnk
+Type=Application
+StartupNotify=true
+Path=/home/phaedrus/.wine/dosdevices/c:/Program Files (x86)/CMake 2.8
+Icon=8B76_cmake-gui.0
+StartupWMClass=cmake-gui.exe

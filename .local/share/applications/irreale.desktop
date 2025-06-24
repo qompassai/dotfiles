@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Irreale
+Exec=env SDL_VIDEODRIVER=x11 /opt/UnrealEngine/Engine/Binaries/Linux/UnrealEditor -vulkan -r.OneFrameThreadLag=0 -r.GTSyncType=2 -r.Vsync=1 -rhi.SyncSlackMS=0 -r.Shadow.Virtual.Enable=1 -r.TemporalAA.UpsampleQuality=3 -r.ScreenPercentage=100
+Icon=/opt/UnrealEngine/Engine/Content/Slate/Icons/DefaultAppIcon.png
+Type=Application
+Categories=Development;Game;
+MimeType=application/x-uproject;
+Comment=Unreal Engine 5.5.4 Editor
+Terminal=false
+Keywords=Unreal;Engine;UE5;Game;Development;

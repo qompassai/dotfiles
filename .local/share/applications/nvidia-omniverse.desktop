@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=omniverse-launcher
+Exec="undefined" --no-sandbox %u
+Type=Application
+Terminal=false
+MimeType=x-scheme-handler/omniverse
