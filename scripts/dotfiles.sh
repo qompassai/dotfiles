@@ -7,30 +7,29 @@ if ! command -v nix >/dev/null; then
         . '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
     fi
 fi
+
 REPO="https://github.com/qompassai/dotfiles"
 TARGET_DIR="$HOME/.dotfiles"
-
-if [ ! -d "$TARGET_DIR" ]; then
-    git clone "$REPO" "$TARGET_DIR"
-else
-    echo "Dotfiles already exist at $TARGET_DIR. Updating..."
-    git -C "$TARGET_DIR" pull
+if [ -d "$TARGET_DIR" ]; then
+    echo "Removing existing dotfiles directory..."
+    rm -rf "$TARGET_DIR"
 fi
-echo "Copying configuration files..."
-mkdir -p ~/.config
-rsync -av --no-perms --no-owner --no-group \
-    --include='home/' \
-    --exclude='*' \
-    "$TARGET_DIR/" "$HOME/.config/"
+echo "Cloning dotfiles repository..."
+git clone "$REPO" "$TARGET_DIR"
+echo "Creating symlinks..."
+mkdir -p "$HOME/.config"
+if [ -d "$TARGET_DIR/home" ]; then
+    ln -sfn "$TARGET_DIR/home" "$HOME/.config/home"
+fi
 if [ -d "$TARGET_DIR/.local" ]; then
-    echo "Copying .local directory..."
-    rsync -av --no-perms --no-owner --no-group \
-        "$TARGET_DIR/.local/" "$HOME/.local/"
+    ln -sfn "$TARGET_DIR/.local" "$HOME/.local"
+fi
+if [ -f "$TARGET_DIR/flake.nix" ]; then
+    ln -sf "$TARGET_DIR/flake.nix" "$HOME/.config/flake.nix"
 fi
 echo "Setting up Nix environment..."
 cd "$TARGET_DIR"
 nix flake update
-
 detect_shell() {
     if [ -n "$BASH_VERSION" ]; then
         echo "bash"
@@ -39,7 +38,6 @@ detect_shell() {
     elif [ -n "$FISH_VERSION" ]; then
         echo "fish"
     else
-        # Fallback to shell from $SHELL variable
         basename "${SHELL:-bash}"
     fi
 }
