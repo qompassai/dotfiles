@@ -38,7 +38,6 @@ bash <(curl -L https://raw.githubusercontent.com/qompassai/dotfiles/main/scripts
 ```
   </div>
   <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-    <strong>Want to review the script before running?</strong>
     <details>
       <summary style="font-size: 1em; font-weight: bold; padding: 10px; background: #e9ecef; color: #333; border-radius: 5px; cursor: pointer; margin: 10px 0;">
         <strong>📄 We advise you read the script BEFORE running it 😉</strong>
