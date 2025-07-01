@@ -29,7 +29,7 @@
 
 <details>
   <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0;">
-    <strong>▶️Qompass AI Quick Start</strong>
+    <strong>▶️ Qompass AI Quick Start</strong>
   </summary>
   <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
 
