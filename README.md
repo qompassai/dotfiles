@@ -1,5 +1,6 @@
 <!-- /qompassai/dotfiles/README.md -->
-<!-- ---------------------------- -->
+<!-- Qompass AI Dotfiles------------->
+<!----------------------------------->
 <!-- Copyright (C) 2025 Qompass AI, All rights reserved -->
 
 <h2> Qompass AI Dotfiles </h3>
