@@ -1,7 +1,15 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-
+SETUVAR ZO_CMD:zo
+SETUVAR Z_CMD:z
+SETUVAR Z_DATA:/home/phaedrus/\x2elocal/share/z/data
+SETUVAR Z_DATA_DIR:/home/phaedrus/\x2elocal/share/z
+SETUVAR Z_EXCLUDE:\x5e/home/phaedrus\x24
 SETUVAR __fish_initialized:3800
+SETUVAR _fisher_jethrokuan_2F_z_files:\x7e/\x2econfig/fish/functions/__z\x2efish\x1e\x7e/\x2econfig/fish/functions/__z_add\x2efish\x1e\x7e/\x2econfig/fish/functions/__z_clean\x2efish\x1e\x7e/\x2econfig/fish/functions/__z_complete\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/z\x2efish
+SETUVAR _fisher_jorgebucaran_2F_autopair_2E_fish_files:\x7e/\x2econfig/fish/functions/_autopair_backspace\x2efish\x1e\x7e/\x2econfig/fish/functions/_autopair_insert_left\x2efish\x1e\x7e/\x2econfig/fish/functions/_autopair_insert_right\x2efish\x1e\x7e/\x2econfig/fish/functions/_autopair_insert_same\x2efish\x1e\x7e/\x2econfig/fish/functions/_autopair_tab\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/autopair\x2efish
+SETUVAR _fisher_plugins:jorgebucaran/autopair\x2efish\x1ejethrokuan/z
+SETUVAR _fisher_upgraded_to_4_4:\x1d
 SETUVAR fifc_open_keybinding:ctrl\x2do
 SETUVAR fish_color_autosuggestion:brblack
 SETUVAR fish_color_cancel:\x2dr
@@ -31,4 +39,4 @@ SETUVAR fish_pager_color_description:yellow\x1e\x2di
 SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
-SETUVAR fish_user_paths:/usr/bin/site_perl\x1e/usr/bin/vendor_perl\x1e/usr/bin/core_perl\x1e/home/phaedrus/\x2ecargo/bin\x1e/usr/lib/jvm/default/bin\x1e/opt/rocm/bin\x1e/opt/rocm/lib\x1e/opt/nvidia/hpc_sdk/Linux_x86_64/25\x2e3/comm_libs/mpi/bin\x1e/opt/nvidia/hpc_sdk/Linux_x86_64/25\x2e3/cuda/bin\x1e/opt/nvidia/hpc_sdk/Linux_x86_64/25\x2e3/compilers/bin
+SETUVAR --export fish_user_paths:/home/phaedrus/\x2elocal/bin\x1e/usr/bin/site_perl\x1e/usr/bin/vendor_perl\x1e/usr/bin/core_perl\x1e/home/phaedrus/\x2ecargo/bin\x1e/usr/lib/jvm/default/bin\x1e/opt/rocm/bin\x1e/opt/rocm/lib\x1e/opt/nvidia/hpc_sdk/Linux_x86_64/25\x2e3/comm_libs/mpi/bin\x1e/opt/nvidia/hpc_sdk/Linux_x86_64/25\x2e3/cuda/bin\x1e/opt/nvidia/hpc_sdk/Linux_x86_64/25\x2e3/compilers/bin

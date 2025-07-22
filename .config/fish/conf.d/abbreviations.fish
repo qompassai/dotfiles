@@ -14,7 +14,6 @@ if status is-interactive
     abbr -a ll 'ls -alF'
     abbr -a la 'ls -A'
     abbr -a l 'ls -CF'
-    # Git
     abbr -a g git
     abbr -a ga 'git add'
     abbr -a gb 'git branch'
@@ -31,22 +30,16 @@ if status is-interactive
     abbr -a gpl 'git pull'
     abbr -a gs 'git status'
 
-    # Python
     abbr -a python3 '/usr/bin/python3.13'
     abbr -a pip3 '/usr/bin/python3.13 -m pip'
 
-    # Neovim
     abbr -a nv nvim
     abbr -a sn 'sudo -E nvim'
     abbr -a sv 'sudo -E vim'
-
-    # HuggingFace 
     abbr -a hfd 'HF_TOKEN=(pass show hf) hfdownloader'
     abbr -a hfdown 'HF_TOKEN=(pass show hf) hf download'
     abbr -a hfup 'HF_TOKEN=(pass show hf) hf upload'
     abbr -a hfwhoami 'HF_TOKEN=(pass show hf) hf whoami'
-
-    # Other useful ones
     abbr -a c clear
     abbr -a h history
     abbr -a top htop
