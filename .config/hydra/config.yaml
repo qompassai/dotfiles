@@ -1,0 +1,16 @@
+# ~/.config/hydra/config.yaml
+# ---------------------------
+# Copyright (C) 2025 Qompass AI, All rights reserved
+defaults:
+  - _self_
+hydra:
+  searchpath:
+    - file://~/.config/hydra/conf
+    - pkg://hydra.conf
+  run:
+    dir: ${oc.env:HOME}/.local/share/hydra/outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  sweep:
+    dir: ${oc.env:HOME}/.local/share/hydra/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  job:
+    chdir: false
+    name: ${hydra.job.override_dirname}

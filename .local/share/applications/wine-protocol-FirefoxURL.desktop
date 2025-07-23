@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Firefox
+MimeType=x-scheme-handler/FirefoxURL;
+Exec=env WINEPREFIX="/home/phaedrus/.wine" wine start %u
+NoDisplay=true
+StartupNotify=true
+Icon=8D42_firefox.0

@@ -1,0 +1,34 @@
+# ~/.config/nvfetcher/nvfetcher.toml
+
+[nvfetcher-git]
+src.git = "https://github.com/berberman/nvfetcher"
+fetch.github = "berberman/nvfetcher"
+
+[gcc-10]
+src.github_tag = "gcc-mirror/gcc"
+src.include_regex = "releases/gcc-10.*"
+fetch.github = "gcc-mirror/gcc"
+
+[fd]
+src.github = "sharkdp/fd"
+fetch.github = "sharkdp/fd"
+extract = ["Cargo.lock"]
+
+[alpine]
+src.container = "library/alpine"
+src.include_regex = "3\\..*"
+fetch.docker = "library/alpine"
+
+[version-check]
+src.cmd = "echo v2.5"
+fetch.github = "lilydjwg/nvchecker"
+
+["my-project.submodule"]
+src.git = "https://github.com/user/repo"
+fetch.git = "https://github.com/user/repo"
+git.fetchSubmodules = true
+
+[vscode-extension]
+src.openvsx = "ms-python.python"
+fetch.openvsx = "ms-python.python"
+passthru = { publisher = "ms-python", name = "python" }

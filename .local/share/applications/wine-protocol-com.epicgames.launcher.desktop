@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=EpicGamesLauncher
+MimeType=x-scheme-handler/com.epicgames.launcher;
+Exec=env WINEPREFIX="/home/phaedrus/.wine" wine start %u
+NoDisplay=true
+StartupNotify=true
+Icon=ED2E_EpicGamesLauncher.0

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+#/qompassai/dotfiles/.local/share/bash-completions/completions/cargo
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+if command -v cargo >/dev/null 2>&1; then
+    if cargo --list 2>/dev/null | grep -q "help"; then
+        eval "$(cargo --list 2>/dev/null | awk '/^    [a-z]/ {print $1}' |
+               xargs -I {} echo 'complete -W "{}" cargo')"
+    fi
+fi
+_cargo_completion() {
+    local cur prev opts subcommands
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    subcommands="build check test run install update search publish bench doc
+                 clean new init add remove fmt clippy tree audit fix metadata
+                 generate-lockfile locate-project pkgid verify-project version help"
+    case "${prev}" in
+        build|check|test|bench)
+            opts="--release --target --features --all-features --no-default-features
+                  --target-dir --manifest-path --workspace --package --bin --lib"
+            ;;
+        install)
+            opts="--bin --bins --example --examples --path --git --branch --tag --version"
+            ;;
+        run)
+            opts="--release --target --features --bin --example --package"
+            ;;
+        *)
+            opts="${subcommands}"
+            ;;
+    esac
+
+    if [[ ${cur} == -* ]]; then
+        local flags="--help --version --verbose --quiet --color --frozen --locked --offline"
+        COMPREPLY=( $(compgen -W "${flags} ${opts}" -- ${cur}) )
+    else
+        COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) )
+    fi
+}
+if ! complete -p cargo >/dev/null 2>&1; then
+    complete -F _cargo_completion cargo
+fi

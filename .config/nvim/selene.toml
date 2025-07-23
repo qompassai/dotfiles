@@ -1,0 +1,17 @@
+# .selene.toml
+
+std = "lua_51"
+
+[globals]
+"vim" = {}
+"require" = {}
+"pcall" = {}
+"ipairs" = {}
+"table" = {}
+"string" = {}
+"package" = {}
+"debug" = {}
+"io" = {}
+"os" = {}
+"jit" = {}
+"bit" = {}

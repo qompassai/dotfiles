@@ -1,0 +1,21 @@
+background = "#000000"
+background-opacity = "0.25"
+font-family = "DaddyTimeMono Nerd Font Mono"
+font-size = "13"
+font-style = "Regular"
+foreground = "#7DF9FF"
+gtk-adwaita = false
+keybind = ctrl+alt+n=new_window
+keybind = ctrl+shift+a=new_split:left
+keybind = ctrl+shift+d=new_split:right
+keybind = ctrl+shift+n=new_tab
+keybind = ctrl+shift+s=new_split:down
+keybind = ctrl+shift+w=new_split:up
+split-divider-color = "#7DF9FF"
+#theme = "Argonaut"
+unfocused-split-fill = "#7DF9FF"
+window-decoration = true
+window-padding-balance = true
+window-padding-x = 2
+window-padding-y = 2
+resize-overlay-duration = 4s 200ms

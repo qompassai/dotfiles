@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Discordo
+Comment=Discordo + pass + wofi
+Exec=/home/phaedrus/.local/bin/discordo-wofi-launch
+Icon=discord
+Terminal=true
+Type=Application
+Categories=Network;InstantMessaging;

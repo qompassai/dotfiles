@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Categories=Utilities;
+Name=Vortex (SteamTinkerLaunch - steamtinkerlaunch)
+Comment=Link Handler - For internal use only
+Icon=/dev/shm/steamtinkerlaunch/steamtinkerlaunch-steam-checked.png
+MimeType=x-scheme-handler/nxm;x-scheme-handler/nxm-protocol
+Terminal=false
+X-KeepTerminal=false
+Path=/home/phaedrus/.config/steamtinkerlaunch/vortex/compatdata/pfx/drive_c/Program Files/Black Tree Gaming Ltd/Vortex
+Exec=/usr/bin/steamtinkerlaunch vortex u %u
+NoDisplay=false
+Hidden=false

@@ -1,0 +1,8 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Name=IB Gateway 10.36
+Exec="/home/phaedrus/.cache/paru/clone/ibgateway/src/ibgateway/ibgateway" %U
+Icon=/home/phaedrus/.cache/paru/clone/ibgateway/src/ibgateway/.install4j/ibgateway.png
+Categories=Application;
+StartupWMClass=install4j-ibgateway-GWClient

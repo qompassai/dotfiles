@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=CMake Properties and Variables Help
+Exec=env WINEPREFIX="/home/phaedrus/.wine" wine C:\\\\ProgramData\\\\Microsoft\\\\Windows\\\\Start\\ Menu\\\\Programs\\\\CMake\\ 2.8\\\\CMake\\ Properties\\ and\\ Variables\\ Help.lnk
+Type=Application
+StartupNotify=true
+Path=/home/phaedrus/.wine/dosdevices/c:/Program Files (x86)/CMake 2.8
+StartupWMClass=cmake-properties.html

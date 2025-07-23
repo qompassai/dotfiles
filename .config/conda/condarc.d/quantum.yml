@@ -1,0 +1,24 @@
+# Quantum computing channels
+quantum_channels:
+  - qiskit
+  - rigetti
+  - xanadu
+  - microsoft-quantum
+
+# Quantum computing packages
+quantum_default_packages:
+  - qiskit
+  - qiskit-aer
+  - qiskit-nature
+  - cirq
+  - pennylane
+  - strawberry-fields
+  - pyquil
+  - qutip
+  - forest-benchmarking
+
+# Quantum simulation settings
+quantum_simulators:
+  - qasm_simulator
+  - statevector_simulator
+  - unitary_simulator

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Dreamland
+Comment=Play this game on Steam
+Exec=steam steam://rungameid/2176560
+Icon=steam_icon_2176560
+Terminal=false
+Type=Application
+Categories=Game;

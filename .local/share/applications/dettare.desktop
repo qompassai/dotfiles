@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Dettare
+Comment=Start voice dictation
+Exec=sh -c 'export YDOTOOL_SOCKET=/run/user/$(id -u)/.ydotool_socket && nerd-dictation begin --simulate-input-tool YDOTOOL --continuous --full-sentence --config ~/.config/nerd-dictation/nerd-dictation.py'
+Type=Application
+Categories=Utility;Accessibility;
+Terminal=false
+Icon=audio-input-microphone
+

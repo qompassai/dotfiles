@@ -1,0 +1,14 @@
+# Performance settings
+solver: libmamba
+auto_update_conda: false
+offline: false
+
+# Download settings
+concurrent_downloads: true
+download_threads: 8
+verify_threads: 2
+
+# Memory and speed optimizations
+aggressive_update_packages: []
+disallowed_packages: []
+pinned_packages: []

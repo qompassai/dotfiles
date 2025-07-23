@@ -1,0 +1,13 @@
+# converted by firecfg
+[Desktop Entry]
+Encoding=UTF-8
+Name=VMware Player
+Comment=Run a virtual machine
+Exec=vmplayer %u
+Terminal=false
+Type=Application
+Icon=vmware-player
+StartupNotify=true
+StartupWMClass=vmplayer
+Categories=System;
+MimeType=application/x-vmware-vm;application/x-vmware-enc-vm;x-scheme-handler/vmrc;

@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+#/qompassai/dotfiles/.local/share/bash-completions/completions/make
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###########################################################################
+_comp_cmd_make__extract_targets() {
+  local mode=$1
+  local -x prefix=$2
+
+  local -x prefix_replace=$prefix
+  [[ $mode == -d && $prefix == */* ]] &&
+    prefix_replace=${prefix##*/}
+
+  _comp_awk -f "${BASH_SOURCE[0]%/*}/../helpers/make-extract-targets.awk"
+}
+
+# @var[in] cur
+# @var[in] mode
+# @var[in,out] COMPREPLY
+_comp_cmd_make__truncate_non_unique_paths() {
+  local prefix=$cur
+  [[ $mode == -d ]] && prefix=
+  if ((${#COMPREPLY[@]} > 0)); then
+    local -A paths nchild
+    local target
+    for target in "${COMPREPLY[@]}"; do
+      local path=${target%/}
+      while [[ ! ${paths[$path]+set} ]] &&
+        paths[$path]=set &&
+        [[ $path == "$prefix"*/* ]]; do
+        path=${path%/*}
+        nchild[$path]=$((${nchild[$path]-0} + 1))
+      done
+    done
+
+    COMPREPLY=()
+    local nreply=0
+    for target in "${!paths[@]}"; do
+      ((${nchild[$target]-0} == 1)) && continue
+      local path=$target
+      while [[ $path == "$prefix"*/* ]]; do
+        path=${path%/*}
+        ((${nchild[$path]-0} == 1)) || continue 2
+      done
+
+      COMPREPLY[nreply++]=$target${nchild[$target]+/}
+    done
+  fi
+}
+
+_comp_cmd_make() {
+  local cur prev words cword was_split comp_args
+  _comp_initialize -s -- "$@" || return
+
+  local makef makef_dir=("-C" ".") i
+
+  local noargopts='!(-*|*[foWICmEDVxj]*)'
+  # shellcheck disable=SC2254
+  case $prev in
+    --file | --makefile | --old-file | --assume-old | --what-if | --new-file | \
+      --assume-new | -${noargopts}[foW])
+      _comp_compgen_filedir
+      return
+      ;;
+    --include-dir | --directory | -${noargopts}[ICm])
+      _comp_compgen_filedir -d
+      return
+      ;;
+    -${noargopts}E)
+      _comp_compgen -- -v
+      return
+      ;;
+    --eval | -${noargopts}[DVx])
+      return
+      ;;
+    --jobs | -${noargopts}j)
+      local REPLY
+      _comp_get_ncpus
+      _comp_compgen -- -W "{1..$((REPLY * 2))}"
+      return
+      ;;
+  esac
+
+  [[ $was_split ]] && return
+
+  if [[ $cur == -* ]]; then
+    _comp_compgen_help || _comp_compgen_usage
+    [[ ${COMPREPLY-} == *= ]] && compopt -o nospace
+  elif [[ $cur == *=* ]]; then
+    prev=${cur%%=*}
+    cur=${cur#*=}
+    local diropt
+    [[ ${prev,,} == *dir?(ectory) ]] && diropt=-d
+    _comp_compgen_filedir $diropt
+  else
+    for ((i = 1; i < ${#words[@]}; i++)); do
+      if [[ ${words[i]} == @(-${noargopts}C|--directory) ]]; then
+        # Expand tilde expansion
+        local REPLY
+        _comp_dequote "${words[i + 1]-}" &&
+          [[ -d ${REPLY-} ]] &&
+          makef_dir=(-C "$REPLY")
+        break
+      fi
+    done
+
+    for ((i = 1; i < ${#words[@]}; i++)); do
+      if [[ ${words[i]} == @(-${noargopts}f|--?(make)file) ]]; then
+        # Expand tilde expansion
+        local REPLY
+        _comp_dequote "${words[i + 1]-}" &&
+          [[ -f ${REPLY-} ]] &&
+          makef=(-f "$REPLY")
+        break
+      fi
+    done
+
+    local mode=--
+    # if ((COMP_TYPE != 9 && COMP_TYPE != 37 && COMP_TYPE != 42)); then
+    #     mode=-d # display-only mode
+    # fi
+
+    _comp_split COMPREPLY "$(LC_ALL=C \
+      $1 -npq __BASH_MAKE_COMPLETION__=1 \
+      ${makef+"${makef[@]}"} "${makef_dir[@]}" .DEFAULT 2>/dev/null |
+      _comp_cmd_make__extract_targets "$mode" "$cur")"
+
+    _comp_cmd_make__truncate_non_unique_paths
+
+    if [[ $mode != -d ]]; then
+      [[ ${COMPREPLY-} == */ ]] && compopt -o nospace
+    fi
+
+  fi
+} &&
+  complete -F _comp_cmd_make make gmake gnumake pmake colormake bmake
+
+# ex: filetype=sh

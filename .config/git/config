@@ -1,0 +1,30 @@
+# /qompassai/dotfiles/.config/git/config
+# -----------------------------------------
+# Copyright (C) 2025 Qompass AI, All rights reserved
+
+[feature]
+    manyFiles = true
+
+[core]
+    preloadindex = true
+    untrackedCache = true
+    fsmonitor = true
+    commitgraph = true
+    bigFileThreshold = 50m
+    packedGitLimit = 512m
+    packedGitWindowSize = 512m
+
+[pack]
+    threads = 0
+    windowMemory = 5g
+    packSizeLimit = 2g
+
+[index]
+    version = 4
+    skipHash = true
+
+[fetch]
+    writeCommitGraph = true
+
+[checkout]
+

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Irreale-V
+Exec=/opt/UnrealEngine/Engine/Binaries/Linux/UnrealVersionSelector-Linux-Shipping
+Icon=/opt/UnrealEngine/Engine/Content/Slate/Icons/DefaultAppIcon.png
+Type=Application
+Categories=Development;Game;
+Comment=Select and Open Unreal Engine Versions
+Terminal=false
+
