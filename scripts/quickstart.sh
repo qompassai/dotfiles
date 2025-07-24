@@ -45,10 +45,10 @@ cd "$TARGET_DIR"
 nix flake update
 detect_shell() {
     case "$(ps -p $$ -o comm=)" in
-        *bash*) echo "bash" ;;
-        *zsh*)  echo "zsh" ;;
-        *fish*) echo "fish" ;;
-        *)      echo "bash" ;;
+    *bash*) echo "bash" ;;
+    *zsh*) echo "zsh" ;;
+    *fish*) echo "fish" ;;
+    *) echo "bash" ;;
     esac
 }
 USER_SHELL=$(detect_shell)
