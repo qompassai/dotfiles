@@ -1,5 +1,5 @@
-# qompassai/qdot/install.conf.yaml
-# Qompass AI QDot Config w/YAML 
+# qompassai/qonfig/qonfig.yaml
+# Qompass AI Qonfig YAML 
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
 - defaults:
@@ -55,29 +55,6 @@
     ~/.cursor/mcp.json:
       path: mcpservers.json5
       force: true
-    ~/Library/Application Support/Claude/claude_desktop_config.json:
-      path: mcpservers.json
-      force: true
-    ~/Library/Application Support/Cursor/User/settings.json:
-      path: cursor_settings.jsonc
-      force: true
-      if: '[ "$(uname -s)" = "Darwin" ]'
-    ~/Library/KeyBindings/DefaultKeyBinding.dict:
-      # Remap US English layout's ['; keys to Swedish åäö keys
-      path: _macos/DefaultKeyBinding.dict
-      force: true
-      if: '[ "$(uname -s)" = "Darwin" ]'
-    # ~/.config/karabiner:
-    #   # Remap US English layout's ['; keys to Swedish åäö keys using Karabiner
-    #   # This is a heavy solution to fix this problem, so commented out for now
-    #   path: _macos/karabiner
-    #   create: true
-    #   if: '[ "$(uname -s)" = "Darwin" ]'
-    /mnt/c/Users/fredr/.wslconfig:
-      path: _windows/wslconfig
-      force: true
-      # if /mnt/c/Users/fredr exists
-      if: "[ -d /mnt/c/Users/fredr ]"
 - shell:
     - description: sync dotbot
       command: git submodule sync --recursive
