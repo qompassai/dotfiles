@@ -50,6 +50,7 @@
               <strong>📄 We advise you read the script BEFORE running it 😉</strong>
             </summary>
             <pre style="background: #fff; padding: 15px; border-radius: 5px; border: 1px solid #ddd; overflow-x: auto;">
+```bash
 #!/usr/bin/env bash
 # /qompassai/dotfiles/scripts/quickstart.sh
 # Qompass AI Quick Start Script
@@ -105,7 +106,9 @@ detect_shell() {
 }
 USER_SHELL=$(detect_shell)
 echo "Detected shell: $USER_SHELL"
-nix develop --command "$USER_SHELL" </pre>
+nix develop --command "$USER_SHELL"
+```
+</pre>
       </details>
       <p>Or, <a href="https://github.com/qompassai/dotfiles/blob/main/scripts/quickstart.sh" target="_blank">View
           the quickstart script</a>.</p>
