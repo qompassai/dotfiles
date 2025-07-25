@@ -40,7 +40,6 @@
       <strong>▶️ Qompass AI Quick Start</strong>
     </summary>
     <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
-
       ```bash
   bash <(curl -fsSL https://raw.githubusercontent.com/qompassai/dotfiles/main/scripts/quickstart.sh)
     ```
@@ -51,9 +50,8 @@
             <summary
               style="font-size: 1em; font-weight: bold; padding: 10px; background: #e9ecef; color: #333; border-radius: 5px; cursor: pointer; margin: 10px 0;">
               <strong>📄 We advise you read the script BEFORE running it 😉</strong>
-            </summary>
-            <pre style="background: #fff; padding: 15px; border-radius: 5px; border: 1px solid #ddd; overflow-x: auto;">
-```bash
+            </summary>            
+<pre style="background: #fff; padding: 15px; border-radius: 5px; border: 1px solid #ddd; overflow-x: auto;">
 #!/usr/bin/env bash
 # /qompassai/dotfiles/scripts/quickstart.sh
 # Qompass AI Quick Start Script
@@ -110,7 +108,6 @@ detect_shell() {
 USER_SHELL=$(detect_shell)
 echo "Detected shell: $USER_SHELL"
 nix develop --command "$USER_SHELL"
-```
 </pre>
       </details>
       <p>Or, <a href="https://github.com/qompassai/dotfiles/blob/main/scripts/quickstart.sh" target="_blank">View
