@@ -1,10 +1,7 @@
 <!-- /qompassai/dotfiles/README.md -->
-
 <!-- Qompass AI Dotfiles------------->
-
-<!----------------------------------->
-
 <!-- Copyright (C) 2025 Qompass AI, All rights reserved -->
+<!-------------------------------------------------------->
 
 <h2> Qompass AI Dotfiles </h3>
 
@@ -13,6 +10,7 @@
 ![Repository Views](https://komarev.com/ghpvc/?username=qompassai-dotfiles)
 ![GitHub all releases](https://img.shields.io/github/downloads/qompassai/dotfiles/total?style=flat-square)
 
+<p align="center">
   <a href="https://wiki.archlinux.org/title/XDG_Base_Directory">
     <img src="https://img.shields.io/badge/XDG/Dotfiles-1793D1?style=for-the-badge&logo=linux&logoColor=white"
       alt="XDG and Dotfiles">
@@ -32,7 +30,7 @@
       alt="License: AGPL v3"></a>
   <a href="./LICENSE-QCDA"><img src="https://img.shields.io/badge/license-Q--CDA-lightgrey.svg"
       alt="License: Q-CDA"></a>
-  </p>
+</p>
 
 <details>
   <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0;">
@@ -40,8 +38,8 @@
   </summary>
   <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
 
-```bash  
-bash <(curl -fsSL https://raw.githubusercontent.com/qompassai/dotfiles/main/scripts/quickstart.sh)
+```sh  
+curl -fsSL https://raw.githubusercontent.com/qompassai/dotfiles/main/scripts/quickstart.sh | sh
 ```
   </div>
   <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
@@ -55,7 +53,6 @@ bash <(curl -fsSL https://raw.githubusercontent.com/qompassai/dotfiles/main/scri
 # Qompass AI Quick Start Script
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
-
 REPO="https://github.com/qompassai/dotfiles"
 TARGET_DIR="$HOME/.dotfiles"
 if [ -d "$TARGET_DIR" ]; then
@@ -145,7 +142,6 @@ nix develop --command "$USER_SHELL"
 [![HackerOne](https://img.shields.io/badge/-HackerOne-%23494649?style=for-the-badge\&logo=hackerone\&logoColor=white)](https://hackerone.com/phaedrusflow)
 [![HuggingFace](https://img.shields.io/badge/HuggingFace-qompass-yellow?style=flat-square\&logo=huggingface)](https://huggingface.co/qompass)
 [![Epic Games Developer](https://img.shields.io/badge/Epic_Games-Developer_Program-313131?style=for-the-badge\&logo=epic-games\&logoColor=white)](https://dev.epicgames.com/)
-
 <h3>Professional Profiles</h3>
   <p>
     <a href="https://www.linkedin.com/in/matt-a-porter-103535224/">
@@ -212,7 +208,7 @@ nix develop --command "$USER_SHELL"
 **Monero (XMR):**
 
 <div align="center">
-  <img src="./assets/monero-qr.png" alt="Monero QR Code" width="180">
+  <img src="https://www.github.com/qompassai/svg/assets/monero-qr.svg" alt="Monero QR Code" width="180">
 </div>
 
 <div style="margin: 10px 0;">
@@ -259,17 +255,17 @@ Where:
 For neural networks, the bias term is incorporated before activation:
 
 $$
-z = \\sum\_{i=1}^{n} w_ix_i + b
+z = \sum_{i=1}^{n} w_ix_i + b
 $$
 $$
-a = \\sigma(z)
+a = \sigma(z)
 $$
 
 Where:
 
 - $z$ is the weighted sum plus bias
 - $a$ is the activation output
-- $\\sigma$ is the activation function
+- $\sigma$ is the activation function
 
 ### Attention Mechanism- aka what makes the Transformer (The "T" in ChatGPT) powerful
 
@@ -280,7 +276,7 @@ Where:
 The Attention mechanism equation is:
 
 $$
-\\text{Attention}(Q, K, V) = \\text{softmax}\\left( \\frac{QK^T}{\\sqrt{d_k}} \\right) V
+\text{Attention}(Q, K, V) = \text{softmax}\\left( \\frac{QK^T}{\\sqrt{d_k}} \\right) V
 $$
 
 Where:
@@ -289,7 +285,7 @@ Where:
 - $K$ represents the Key matrix
 - $V$ represents the Value matrix
 - $d_k$ is the dimension of the key vectors
-- $\\text{softmax}(\\cdot)$ normalizes scores to sum to 1
+- $\text{softmax}(\cdot)$ normalizes scores to sum to 1
 
 ### Q: Do I have to buy a Linux computer to use this? I don't have time for that!
 
