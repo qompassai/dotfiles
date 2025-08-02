@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # /qompassai/dotfiles/scripts/quickstart.sh
-# Qompass AI Quick Start Script
+# Qompass AI Quick Start
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
 REPO="https://github.com/qompassai/dotfiles"
