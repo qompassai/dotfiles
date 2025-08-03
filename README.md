@@ -26,6 +26,9 @@
     <img src="https://img.shields.io/badge/Dotfiles_Tutorials-green?style=flat-square" alt="Dotfiles Tutorials">
   </a>
   <br>
+  <a href="https://doi.org/10.5281/zenodo.16171391">
+  <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.16171391.svg" alt="DOI">
+</a>
   <a href="https://www.gnu.org/licenses/agpl-3.0"><img src="https://img.shields.io/badge/License-AGPL%20v3-blue.svg"
       alt="License: AGPL v3"></a>
   <a href="./LICENSE-QCDA"><img src="https://img.shields.io/badge/license-Q--CDA-lightgrey.svg"
