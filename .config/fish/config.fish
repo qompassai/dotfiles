@@ -1,7 +1,7 @@
 # /qompassai/dotfiles/.config/fish/config.fish
 # Qompass AI Fish Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
-#---------------------------------------------------
+####################################################
 
 if status is-interactive
     set fish_greeting ""
