@@ -1,4 +1,5 @@
-# /qompassai/dotfiles/gh/config.yml
+# /qompassai/dotfiles/.config/gh/config.yml
+# Qompass AI Github CLI Config
 version: 1
 git_protocol: ssh
 editor: nvim
@@ -9,8 +10,7 @@ defaults:
     git_protocol: ssh
     editor: nvim
     pager: nvimpager
-prefer_editor_prompt: enabled
-pager: nvimpager
+    prefer_editor_prompt: enabled
 aliases:
     co: pr checkout
 http_unix_socket:
