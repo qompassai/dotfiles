@@ -39,7 +39,6 @@ globalThis['handleStyles'] = (resetMusic) => {
 }
 `,
         `${GLib.get_user_state_dir()}/ags/scss/_lib_mixins_overrides.scss`)
-    // Compile and apply
     async function applyStyle() {
         Utils.exec(`mkdir -p ${COMPILED_STYLE_DIR}`);
         Utils.exec(`sass -I "${GLib.get_user_state_dir()}/ags/scss" -I "${App.configDir}/scss/fallback" "${App.configDir}/scss/main.scss" "${COMPILED_STYLE_DIR}/style.css"`);

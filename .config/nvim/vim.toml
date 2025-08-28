@@ -1,4 +1,7 @@
+# /qompassai/dotfiles/.config/vim/vim.toml
+# Qompass AI Vim Config
 
+#############################################
 [describe]
 args = [{ type = 'string' }, { type = 'function' }]
 

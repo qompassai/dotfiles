@@ -1,0 +1,13 @@
+# aria2.service
+# Qompass AI - [Add description here]
+# Copyright (C) 2025 Qompass AI, All rights reserved
+# ----------------------------------------
+[Unit]
+Description=Aria2 Daemon
+
+[Service]
+ExecStart=/usr/bin/aria2c --enable-rpc --rpc-listen-all --conf-path=%h/.config/aria2/aria2.conf
+
+[Install]
+WantedBy=default.target
+

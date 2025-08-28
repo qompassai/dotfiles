@@ -1,21 +1,30 @@
 background = "#000000"
 background-opacity = "0.25"
+clipboard-paste-bracketed-safe = true
+clipboard-paste-protection = true
+clipboard-trim-trailing-spaces = true
+copy-on-select = clipboard
+command = /usr/bin/fish --login --interactive
 font-family = "DaddyTimeMono Nerd Font Mono"
 font-size = "13"
 font-style = "Regular"
 foreground = "#7DF9FF"
 gtk-adwaita = false
+gtk-single-instance = true
+image-storage-limit = 4294967295
 keybind = ctrl+alt+n=new_window
 keybind = ctrl+shift+a=new_split:left
 keybind = ctrl+shift+d=new_split:right
 keybind = ctrl+shift+n=new_tab
 keybind = ctrl+shift+s=new_split:down
 keybind = ctrl+shift+w=new_split:up
+quit-after-last-window-closed = true
+resize-overlay-duration = 4s 200ms
 split-divider-color = "#7DF9FF"
+shell-integration = fish
 #theme = "Argonaut"
 unfocused-split-fill = "#7DF9FF"
 window-decoration = true
 window-padding-balance = true
 window-padding-x = 2
 window-padding-y = 2
-resize-overlay-duration = 4s 200ms

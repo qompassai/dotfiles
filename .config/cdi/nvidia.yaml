@@ -1,0 +1,480 @@
+---
+cdiVersion: 0.5.0
+containerEdits:
+  deviceNodes:
+  - path: /dev/nvidia-modeset
+  - path: /dev/nvidia-uvm
+  - path: /dev/nvidia-uvm-tools
+  - path: /dev/nvidiactl
+  env:
+  - NVIDIA_VISIBLE_DEVICES=void
+  hooks:
+  - args:
+    - nvidia-cdi-hook
+    - create-symlinks
+    - --link
+    - ../libnvidia-allocator.so.1::/usr/lib/gbm/nvidia-drm_gbm.so
+    - --link
+    - libglxserver_nvidia.so.580.76.05::/usr/lib/nvidia/xorg/libglxserver_nvidia.so
+    env:
+    - NVIDIA_CTK_DEBUG=false
+    hookName: createContainer
+    path: /usr/bin/nvidia-cdi-hook
+  - args:
+    - nvidia-cdi-hook
+    - create-symlinks
+    - --link
+    - libGLX_nvidia.so.580.76.05::/usr/lib/libGLX_indirect.so.0
+    - --link
+    - libcuda.so.1::/usr/lib/libcuda.so
+    - --link
+    - libnvidia-opticalflow.so.1::/usr/lib/libnvidia-opticalflow.so
+    env:
+    - NVIDIA_CTK_DEBUG=false
+    hookName: createContainer
+    path: /usr/bin/nvidia-cdi-hook
+  - args:
+    - nvidia-cdi-hook
+    - enable-cuda-compat
+    - --host-driver-version=580.76.05
+    env:
+    - NVIDIA_CTK_DEBUG=false
+    hookName: createContainer
+    path: /usr/bin/nvidia-cdi-hook
+  - args:
+    - nvidia-cdi-hook
+    - update-ldcache
+    - --folder
+    - /usr/lib
+    - --folder
+    - /usr/lib/vdpau
+    env:
+    - NVIDIA_CTK_DEBUG=false
+    hookName: createContainer
+    path: /usr/bin/nvidia-cdi-hook
+  mounts:
+  - containerPath: /usr/bin/nvidia-cuda-mps-control
+    hostPath: /usr/bin/nvidia-cuda-mps-control
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/bin/nvidia-cuda-mps-server
+    hostPath: /usr/bin/nvidia-cuda-mps-server
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/bin/nvidia-debugdump
+    hostPath: /usr/bin/nvidia-debugdump
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/bin/nvidia-persistenced
+    hostPath: /usr/bin/nvidia-persistenced
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/bin/nvidia-smi
+    hostPath: /usr/bin/nvidia-smi
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libEGL_nvidia.so.580.76.05
+    hostPath: /usr/lib/libEGL_nvidia.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libGLESv1_CM_nvidia.so.580.76.05
+    hostPath: /usr/lib/libGLESv1_CM_nvidia.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libGLESv2_nvidia.so.580.76.05
+    hostPath: /usr/lib/libGLESv2_nvidia.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libGLX_nvidia.so.580.76.05
+    hostPath: /usr/lib/libGLX_nvidia.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libcuda.so.580.76.05
+    hostPath: /usr/lib/libcuda.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libcudadebugger.so.580.76.05
+    hostPath: /usr/lib/libcudadebugger.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvcuvid.so.580.76.05
+    hostPath: /usr/lib/libnvcuvid.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-allocator.so.580.76.05
+    hostPath: /usr/lib/libnvidia-allocator.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-cfg.so.580.76.05
+    hostPath: /usr/lib/libnvidia-cfg.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-egl-gbm.so.1.1.2
+    hostPath: /usr/lib/libnvidia-egl-gbm.so.1.1.2
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-egl-wayland.so.1.1.20
+    hostPath: /usr/lib/libnvidia-egl-wayland.so.1.1.20
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-eglcore.so.580.76.05
+    hostPath: /usr/lib/libnvidia-eglcore.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-encode.so.580.76.05
+    hostPath: /usr/lib/libnvidia-encode.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-fbc.so.580.76.05
+    hostPath: /usr/lib/libnvidia-fbc.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-glcore.so.580.76.05
+    hostPath: /usr/lib/libnvidia-glcore.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-glsi.so.580.76.05
+    hostPath: /usr/lib/libnvidia-glsi.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-glvkspirv.so.580.76.05
+    hostPath: /usr/lib/libnvidia-glvkspirv.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-gpucomp.so.580.76.05
+    hostPath: /usr/lib/libnvidia-gpucomp.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-ml.so.580.76.05
+    hostPath: /usr/lib/libnvidia-ml.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-ngx.so.580.76.05
+    hostPath: /usr/lib/libnvidia-ngx.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-nvvm.so.580.76.05
+    hostPath: /usr/lib/libnvidia-nvvm.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-opencl.so.580.76.05
+    hostPath: /usr/lib/libnvidia-opencl.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-opticalflow.so.580.76.05
+    hostPath: /usr/lib/libnvidia-opticalflow.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-pkcs11-openssl3.so.580.76.05
+    hostPath: /usr/lib/libnvidia-pkcs11-openssl3.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-pkcs11.so.580.76.05
+    hostPath: /usr/lib/libnvidia-pkcs11.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-present.so.580.76.05
+    hostPath: /usr/lib/libnvidia-present.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-ptxjitcompiler.so.580.76.05
+    hostPath: /usr/lib/libnvidia-ptxjitcompiler.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-rtcore.so.580.76.05
+    hostPath: /usr/lib/libnvidia-rtcore.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-sandboxutils.so.580.76.05
+    hostPath: /usr/lib/libnvidia-sandboxutils.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-tls.so.580.76.05
+    hostPath: /usr/lib/libnvidia-tls.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvidia-vksc-core.so.580.76.05
+    hostPath: /usr/lib/libnvidia-vksc-core.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/libnvoptix.so.580.76.05
+    hostPath: /usr/lib/libnvoptix.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /etc/vulkan/icd.d/nvidia_icd.json
+    hostPath: /usr/share/vulkan/icd.d/nvidia_icd.json
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /etc/vulkan/implicit_layer.d/nvidia_layers.json
+    hostPath: /usr/share/vulkan/implicit_layer.d/nvidia_layers.json
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/vdpau/libvdpau_nvidia.so.580.76.05
+    hostPath: /usr/lib/vdpau/libvdpau_nvidia.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/share/nvidia/nvoptix.bin
+    hostPath: /usr/share/nvidia/nvoptix.bin
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /lib/firmware/nvidia/580.76.05/gsp_ga10x.bin
+    hostPath: /lib/firmware/nvidia/580.76.05/gsp_ga10x.bin
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /lib/firmware/nvidia/580.76.05/gsp_tu10x.bin
+    hostPath: /lib/firmware/nvidia/580.76.05/gsp_tu10x.bin
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/nvidia/xorg/libglxserver_nvidia.so.580.76.05
+    hostPath: /usr/lib/nvidia/xorg/libglxserver_nvidia.so.580.76.05
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/share/egl/egl_external_platform.d/10_nvidia_wayland.json
+    hostPath: /usr/share/egl/egl_external_platform.d/10_nvidia_wayland.json
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/share/egl/egl_external_platform.d/15_nvidia_gbm.json
+    hostPath: /usr/share/egl/egl_external_platform.d/15_nvidia_gbm.json
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/share/glvnd/egl_vendor.d/10_nvidia.json
+    hostPath: /usr/share/glvnd/egl_vendor.d/10_nvidia.json
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+  - containerPath: /usr/lib/xorg/modules/drivers/nvidia_drv.so
+    hostPath: /usr/lib/xorg/modules/drivers/nvidia_drv.so
+    options:
+    - ro
+    - nosuid
+    - nodev
+    - bind
+devices:
+- containerEdits:
+    deviceNodes:
+    - path: /dev/nvidia0
+    - path: /dev/dri/card1
+    - path: /dev/dri/renderD129
+    hooks:
+    - args:
+      - nvidia-cdi-hook
+      - create-symlinks
+      - --link
+      - ../card1::/dev/dri/by-path/pci-0000:01:00.0-card
+      - --link
+      - ../renderD129::/dev/dri/by-path/pci-0000:01:00.0-render
+      env:
+      - NVIDIA_CTK_DEBUG=false
+      hookName: createContainer
+      path: /usr/bin/nvidia-cdi-hook
+    - args:
+      - nvidia-cdi-hook
+      - chmod
+      - --mode
+      - "755"
+      - --path
+      - /dev/dri
+      env:
+      - NVIDIA_CTK_DEBUG=false
+      hookName: createContainer
+      path: /usr/bin/nvidia-cdi-hook
+  name: "0"
+- containerEdits:
+    deviceNodes:
+    - path: /dev/nvidia0
+    - path: /dev/dri/card1
+    - path: /dev/dri/renderD129
+    hooks:
+    - args:
+      - nvidia-cdi-hook
+      - create-symlinks
+      - --link
+      - ../card1::/dev/dri/by-path/pci-0000:01:00.0-card
+      - --link
+      - ../renderD129::/dev/dri/by-path/pci-0000:01:00.0-render
+      env:
+      - NVIDIA_CTK_DEBUG=false
+      hookName: createContainer
+      path: /usr/bin/nvidia-cdi-hook
+    - args:
+      - nvidia-cdi-hook
+      - chmod
+      - --mode
+      - "755"
+      - --path
+      - /dev/dri
+      env:
+      - NVIDIA_CTK_DEBUG=false
+      hookName: createContainer
+      path: /usr/bin/nvidia-cdi-hook
+  name: GPU-3281fc60-e4c2-da28-9d27-da51a585c7b9
+- containerEdits:
+    deviceNodes:
+    - path: /dev/nvidia0
+    - path: /dev/dri/card1
+    - path: /dev/dri/renderD129
+    hooks:
+    - args:
+      - nvidia-cdi-hook
+      - create-symlinks
+      - --link
+      - ../card1::/dev/dri/by-path/pci-0000:01:00.0-card
+      - --link
+      - ../renderD129::/dev/dri/by-path/pci-0000:01:00.0-render
+      env:
+      - NVIDIA_CTK_DEBUG=false
+      hookName: createContainer
+      path: /usr/bin/nvidia-cdi-hook
+    - args:
+      - nvidia-cdi-hook
+      - chmod
+      - --mode
+      - "755"
+      - --path
+      - /dev/dri
+      env:
+      - NVIDIA_CTK_DEBUG=false
+      hookName: createContainer
+      path: /usr/bin/nvidia-cdi-hook
+  name: all
+kind: nvidia.com/gpu

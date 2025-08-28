@@ -1,9 +1,8 @@
-# /qompassai/dotfiles/.config/discordo/config.toml
-# ---------------------------------------------------
+# ~/.config/discordo/config.toml
+# ------------------------------
 # Copyright (C) 2025 Qompass AI, All rights reserved
 
 [discord]
-token = "YOUR_DISCORD_TOKEN_GOES_HERE"
 
 mouse = true
 editor = "nvim"
@@ -34,8 +33,8 @@ enabled = true
 only_on_ping = true
 
 [advanced]
-debug_mode = false
-log_level = "info"  # Options: debug, info, warn, error
+debug_mode = true
+log_level = "info"
 cache_messages = true
 cache_dir = "~/.cache/discordo"
 

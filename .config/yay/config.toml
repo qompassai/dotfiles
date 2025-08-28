@@ -1,0 +1,12 @@
+# /qompassai/dotfiles/.config/yay/config.toml
+# Qompass AI Yay Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+aururl = "https://aur.archlinux.org"
+buildDir = "/tmp/yaybuild"
+editor = "nvim"
+devel = true
+cleanAfter = true
+gitBin = "git"
+sortBy = "votes,stars"
+searchSort = "desc"

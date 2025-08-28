@@ -1,7 +1,3 @@
-# /qompassai/dotfiles/.config/git/config
-# Qompass AI Git Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
 [feature]
     manyFiles = true
 
@@ -27,4 +23,8 @@
     writeCommitGraph = true
 
 [checkout]
+    workers = -1
+    thresholdForParallelism = 1000
 
+[gc]
+    auto = 8000

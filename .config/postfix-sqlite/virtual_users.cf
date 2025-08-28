@@ -1,0 +1,6 @@
+# /qompassai/dotfiles/.config/postfix-sqlite/virtual_users.cf
+# Qompass AI Postfix SQLite Virtual Users config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##############################################################
+dbpath = /home/phaedrus/.local/share/mail/sqlite
+query = SELECT 1 FROM virtual_users WHERE email='%s'

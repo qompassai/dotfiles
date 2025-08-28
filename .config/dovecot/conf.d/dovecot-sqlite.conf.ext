@@ -1,0 +1,6 @@
+# /qompassai/dotfiles/.config/dovecot/dovecot-sqlite.conf.ext
+# Qompass AI Dovecot SQlite Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+# ----------------------------------------
+driver = sqlite
+connect =/home/phaedrus/.local/share/mail/sqlite/mail.db

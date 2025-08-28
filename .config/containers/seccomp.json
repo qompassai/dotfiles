@@ -1,6 +1,12 @@
+// /qompassai/dotfiles/.config/containers/seccomp.json
+// Qompass AI Seccomp Config
 {
     "defaultAction": "SCMP_ACT_ERRNO",
-    "architectures": ["SCMP_ARCH_X86_64", "SCMP_ARCH_X86", "SCMP_ARCH_AARCH64"],
+    "architectures": [
+        "SCMP_ARCH_X86_64",
+        "SCMP_ARCH_X86",
+        "SCMP_ARCH_AARCH64"
+    ],
     "syscalls": [
         {
             "names": [
@@ -135,7 +141,6 @@
             ],
             "action": "SCMP_ACT_ALLOW"
         },
-        // IPv4/IPv6 specific syscalls
         {
             "names": [
                 "bind",
@@ -154,13 +159,13 @@
             "args": [
                 {
                     "index": 0,
-                    "value": 1,  // AF_UNIX
+                    "value": 1, // AF_UNIX
                     "valueTwo": 0,
                     "op": "SCMP_CMP_NE"
                 },
                 {
                     "index": 0,
-                    "value": 2,  // AF_INET (IPv4)
+                    "value": 2, // AF_INET (IPv4)
                     "valueTwo": 0,
                     "op": "SCMP_CMP_NE"
                 },
@@ -172,18 +177,18 @@
                 }
             ]
         },
-        // Raw socket support (required for ping)
         {
-            "names": ["socket"],
+            "names": [
+                "socket"
+            ],
             "action": "SCMP_ACT_ALLOW",
             "args": [
                 {
                     "index": 0,
-                    "value": 17, // AF_PACKET
+                    "value": 17,
                     "op": "SCMP_CMP_EQ"
                 }
             ]
         }
     ]
 }
-

@@ -5,7 +5,6 @@
 
 function convert_alias_to_fish
     set alias_line $argv[1]
-
     set alias_name (echo $alias_line | sed "s/alias \([^=]*\)=.*/\1/")
     set alias_cmd (echo $alias_line | sed "s/alias [^=]*='\(.*\)'/\1/" | sed 's/\\$//')
 
@@ -14,7 +13,6 @@ function convert_alias_to_fish
     echo end
     echo ""
 end
-
 grep "^alias " /qompassai/Shell/.profile.d/12-aliases.sh | while read line
     convert_alias_to_fish "$line"
 end

@@ -1,19 +1,20 @@
+-- /qompassai/Diver/lua/plugins/cloud/remote.lua
+-- Qompass AI Diver Fire Plugin Spec
+-- Copyright (C) 2025 Qompass AI, All rights reserved
+------------------------------------------------------
 return {
-  "amitds1997/remote-nvim.nvim",
-  lazy = true, -- Enable lazy loading
-  version = "*", -- Pin to GitHub releases
+  'amitds1997/remote-nvim.nvim',
+  version = '*',
   dependencies = {
-    "nvim-lua/plenary.nvim", -- For standard functions
-    "MunifTanjim/nui.nvim", -- To build the plugin UI
-    "nvim-telescope/telescope.nvim", -- For picking between different remote methods
+    'nvim-lua/plenary.nvim', 'MunifTanjim/nui.nvim',
+    'ibhagwan/fzf-lua'
   },
   config = function()
-    require("remote-nvim").setup({
-      method = "ssh", -- Set default remote method to SSH
-      default_user = os.getenv("USER"), -- Use the current system user as default
-      picker = "telescope", -- Use Telescope to pick the remote
-      ssh_config = vim.fn.expand("~/.ssh/config"), -- Use custom SSH config for remote servers
+    require('remote-nvim').setup({
+      method = 'ssh',
+      default_user = os.getenv('USER'),
+      picker = 'telescope',
+      ssh_config = vim.fn.expand('~/.ssh/config')
     })
   end,
-  event = "VeryLazy", -- Load the plugin lazily based on an event (change as required)
 }

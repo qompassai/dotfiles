@@ -1,8 +1,8 @@
-// /qompassai/dotfiles/.config/tailwind/postcss.config.mjs
+// /qompassai/dotfiles/.config/tailwind/postcss.config.ts
 // Qompass AI Postcss Typescript Config Dotfile
 // Copyright (C) 2025 Qompass AI, All rights reserved
 ////////////////////////////////////////////////////
-
+// eslint-disable
 import tailwindcss from "tailwindcss"
 import autoprefixer from "autoprefixer"
 import type { ProcessOptions } from "postcss"

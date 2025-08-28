@@ -1,12 +1,13 @@
+-- /qompassai/Diver/lua/plugins/core/whichkey.lua
+-- Qompass AI Diver Whichkey Plugin Spec
+-- Copyright (C) 2025 Qompass AI, All rights reserved
+------------------------------------------------------
+
 return {
- {
   "folke/which-key.nvim",
-  config = function()
-    require("which-key").setup({
-    })
-    if require("which-key").health and require("which-key").health.check then
-      require("which-key").health.check = function() return {} end
-    end
-  end
-}
+  event = "VeryLazy",
+  opts = function()
+    local WK = require("config.core.whichkey")
+    WK.setup()
+  end,
 }

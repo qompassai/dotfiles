@@ -2,17 +2,26 @@
 # ------------------------
 # Copyright (C) 2025 Qompass AI, All rights reserved
 
+[commit]
+message-line-length = 72
+
 [user]
 name = "Matt A. Porter"
 email = "map@qompass.ai"
 
 [ui]
-color = "always"          # or "auto" or "never"
-paginate = "auto"         # or "never"
+color = "always"
+paginate = "auto"
 
 [pager]
 diff = "delta"
+[signing]
+behavior = "own"
+backend = "gpg"
 
 [template-aliases]
 "format_short_id(id)" = "id.shortest(12)"
 
+[alias]
+ls = "log -r 'all()' -T 'commit_id.shortest(7) \" \" description'"
+st = "status"

@@ -2,6 +2,12 @@
     "discordBranch": "canary",
     "minimizeToTray": true,
     "arRPC": true,
-    "splashColor": "rgb(239, 239, 240)",
-    "splashBackground": "rgb(32, 32, 36)"
+    "splashColor": "rgb(237, 238, 240)",
+    "splashBackground": "rgb(31, 32, 35)",
+    "customTitleBar": false,
+    "enableMenu": true,
+    "spellCheckLanguages": [
+        "en-US",
+        "en"
+    ]
 }

@@ -1,14 +1,14 @@
--- ~/.config/nvim/init.lua
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-local utils = require("utils.safe_require")
-_G.safe_require = utils.safe_require
-require("config.lazy")
-require("config.autocmds")
-require("config.options")
-require("config.keymaps").setup()
-require("config.types")
-local wk_ok, wk = pcall(require, "which-key")
-if wk_ok and wk.health and wk.health.check then
-    wk.health.check = function() return {} end
-end
+-- /qompassai/Diver/init.lua
+-- Qompass AI Diver Init
+-- Copyright (C) 2025 Qompass AI, All rights reserved
+-- --------------------------------------------------
+vim.loader.enable()
+require('config.init').config({
+  core = true,
+  cicd = true,
+  cloud = true,
+  debug = false,
+  edu = true,
+  nav = true,
+  ui = true
+})

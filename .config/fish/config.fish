@@ -1,7 +1,7 @@
 # /qompassai/dotfiles/.config/fish/config.fish
 # Qompass AI Fish Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
+#---------------------------------------------------
 
 if status is-interactive
     set fish_greeting ""
@@ -21,3 +21,5 @@ abbr -a cp 'cp -iv'
 abbr -a mv 'mv -iv'
 abbr -a gpu 'watch -n 1 nvidia-smi'
 
+set -x PATH $HOME/.dotnet $PATH
+set -x DOTNET_ROOT $HOME/.dotnet

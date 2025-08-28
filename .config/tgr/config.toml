@@ -1,10 +1,8 @@
-# /qompassai/dotfiles/.config/tgr/config.toml
-# --------------------------
-# Copyright (C) 2025 Qompass AI, All rights reserved
-cache_dir = "/home/youruser/.cache/tgr"
+# ~/.config/tgr/config.toml
+cache_dir = "/home/phaedrus/.cache/tgr"
 default_keyserver = "hkp://keys.openpgp.org"
 keyservers = ["hkp://keys.openpgp.org", "hkp://pgp.mit.edu"]
-log_file = "/home/youruser/.config/tgr/tgr.log"
+log_file = "/home/phaedrus/.config/tgr/tgr.log"
 max_retries = 5
 nullglob = false
 proxy = ""

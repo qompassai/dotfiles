@@ -1,14 +1,18 @@
+//qompassai/dotfiles/.config/waybar/config//
+////////////////////////////////////////////
+// Copyright (C) 2025 Qompass AI, All rights reserved
 {
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
     "height": 34, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 4, // Gaps between modules (4px)
-    // Choose the order of the modules
+     "reload_style_on_change": false,
+    "gtk-layer-shell": true,
+    "start_hidden": false,
     "modules-left": ["hyprland/workspaces", "idle_inhibitor", "pulseaudio", "backlight", "network", "custom/updates"],
     "modules-center": ["hyprland/window"],
     "modules-right": ["hyprland/submap", "hyprland/language", "cpu", "memory", "temperature", "battery", "tray", "clock"],
-    // Modules configuration
      "hyprland/workspaces": {
          "disable-scroll": true,
          "on-click": "activate",
@@ -17,7 +21,10 @@
          "format": "{name}",
          "on-scroll-up": "hyprctl dispatch workspace m-1 > /dev/null",
          "on-scroll-down": "hyprctl dispatch workspace m+1 > /dev/null",
-         "format-icons": {
+          "persistent_workspaces": {
+          "*": 5
+          },
+          "format-icons": {
              "1": "",
              "2": "",
              "3": "",
@@ -93,20 +100,23 @@
         "spacing": 0
     },
     "clock": {
+        "interval": 1,
         // "timezone": "America/New_York",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
-    },
-    "cpu": {
+     },
+     "cpu": {
         "format": "{usage}% ",
-        "tooltip": false
+        "tooltip": false,
+        "interval": 2
     },
     "memory": {
-        "format": "{}% "
+        "format": "{}% ",
+        "interval": 2
     },
     "custom/temperature": {
     "exec": "~/.config/waybar/scripts/temp_f.sh",
-    "interval": 10,
+    "interval": 30,
     "format": "{}",
     "tooltip": false
     },
@@ -116,6 +126,7 @@
         "format-icons": ["", "", "", "", "", "", "", "", ""]
     },
     "battery": {
+    "interval": 5,
         "states": {
             // "good": 95,
             "warning": 30,
@@ -133,6 +144,7 @@
         "bat": "BAT2"
     },
     "network": {
+        "interval": 5,
         "format-wifi": "{essid} ",
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "{ifname} via {gwaddr} ",
@@ -141,7 +153,8 @@
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "pulseaudio": {
-        // "scroll-step": 10, // %, can be a float
+        "interval": 2,
+        "scroll-step": 5,
         "format": "{volume}%{icon} {format_source}",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
@@ -157,8 +170,13 @@
             "car": "",
             "default": ["", "", ""]
         },
-        "on-click": "pavucontrol"
-    },
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "pwvucontrol",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
+        "smooth-scrolling-threshold": 1
+        // "on-click": "pavucontrol"
+        },
     "custom/notification": {
         "tooltip": false,
         "format": "{} {icon}",

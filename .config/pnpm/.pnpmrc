@@ -1,0 +1,12 @@
+# ~/.config/pnpm/.pnpmrc
+# ----------------------
+# Copyright (C) 2025 Qompass AI, All rights reserved
+
+store-dir=~/.local/share/pnpm/store
+cache-dir=~/.cache/pnpm
+state-dir=~/.local/share/pnpm/state
+
+# dangerously-allow-all-builds=true
+auto-install-peers=true
+shamefully-hoist=false
+strict-peer-dependencies=false

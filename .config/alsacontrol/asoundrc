@@ -1,5 +1,4 @@
 
-
 pcm.alsacontrol-dmix {
     type dmix
     ipc_key 92882631
@@ -8,15 +7,13 @@ pcm.alsacontrol-dmix {
         channels 2
     }
 }
-
 pcm.alsacontrol-plug {
     type plug
     slave.pcm "null"
 }
-
 pcm.alsacontrol-dsnoop {
     type dsnoop
-    ipc_key 34376432 
+    ipc_key 34376432
     slave {
         pcm "null"
     }
@@ -63,7 +60,6 @@ pcm.alsacontrol-jack-input {
     type plug
     slave.pcm jack
 }
-
 pcm.!default {
     type asym
     playback.pcm {

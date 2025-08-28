@@ -1,0 +1,15 @@
+# /qompassai/dotfiles/.config/neomutt/account.qompassai
+# Qompass AI Neomutt Self-hosted Account Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################### 
+set realname = "Matt A. Porter | Founder & CEO Qompass AI"
+set imap_user = "map@qompass.ai"
+set imap_pass = "YOUR_PASSWORD"
+set folder = "imaps://imap.qompass.ai:993"
+set spoolfile = "+INBOX"
+set smtp_url = "smtp://map@qompass.ai@smtp.qompass.ai:587/"
+set smtp_pass = "pass show qmail/pass"
+set from = "map@qompass.ai"
+set postponed = "+Drafts"
+set record = "+Sent"
+set trash = "+Trash"

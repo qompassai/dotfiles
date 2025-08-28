@@ -1,0 +1,59 @@
+# /qompassai/dotfiles/.config/stack/config.yaml
+# Qompass AI Haskell Stack Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+allow-different-user: true
+allow-newer: true
+build:
+  copy-bins: true
+  executable-profiling: false
+  haddock: false
+  library-profiling: false
+  split-objs: false
+compiler-check: newer-minor
+concurrent-tests: true
+docker:
+  enable: false
+  repo: "fpco/stack-build"
+ghc-options:
+  "$locals": -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+
+install-ghc: true
+jobs: 4
+local-bin-path: $HOME/.local/bin
+modify-code-page: true
+
+nix:
+  add-gc-roots: false
+  enable: true
+  packages: [git, openssl, pkgconfig, postgresql, zlib]
+  path:
+    - nixpkgs=$HOME/.nix-defexpr/channels/nixpkgs 
+  pure: true
+
+notify-if-nix-on-path: false
+require-stack-version: ">=2.7"
+skip-ghc-check: true
+snapshot-location-base: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/
+system-ghc: false
+
+templates:
+  params:
+    author-email: "map@qompassai.com"
+    author-name: "Matthew A. Porter"
+    category: "Development"
+    copyright: "2025 Qompass AI"
+    github-username: "qompassai"
+
+extra-include-dirs:
+  - $HOME/.nix-profile/include
+  - $HOME/.local/include
+
+extra-lib-dirs:
+  - $HOME/.nix-profile/lib
+  - $HOME/.local/lib
+
+notify-if-ghc-untested: true
+rebuild-ghc-options: true
+save-hackage-creds: true
+work-dir: .stack-work

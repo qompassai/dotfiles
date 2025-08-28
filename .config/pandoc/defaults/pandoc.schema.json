@@ -1,0 +1,23 @@
+// pandoc.schema.json
+// Qompass AI - [Add description here]
+// Copyright (C) 2025 Qompass AI, All rights reserved
+// ----------------------------------------
+{
+    "type": "object",
+    "properties": {
+        "from": {
+            "type": "string"
+        },
+        "to": {
+            "type": "string"
+        },
+        "pdf-engine": {
+            "type": "string"
+        },
+        "template": {
+            "type": "string"
+        }
+        // Add more supported properties as needed
+    },
+    "additionalProperties": true
+}

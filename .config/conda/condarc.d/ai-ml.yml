@@ -1,4 +1,4 @@
-# AI/ML framework settings
+# /qompassai/dotfiles/.config/conda/condarc.d/ai-ml.yml
 frameworks:
   pytorch:
     cuda_version: "12.8"
@@ -17,14 +17,12 @@ frameworks:
     cuda_support: true
     nccl_support: true
 
-# GPU and CUDA settings
 cuda:
   system_installation: true
   version: "12.8"
   path: "/opt/cuda"
   arch_list: "6.0;6.1;7.0;7.5;8.0;8.6;8.9;9.0"
 
-# NVIDIA libraries configuration
 nvidia_libraries:
   cudnn:
     version: "9.5.1"
@@ -57,7 +55,6 @@ nvidia_libraries:
     version: "2.23.4"
     path: "/opt/cuda/lib64"
 
-# Environment variables for AI/ML
 default_env_vars:
   CUDA_HOME: "/opt/cuda"
   CUDA_ROOT: "/opt/cuda"
@@ -83,7 +80,6 @@ default_env_vars:
   TRANSFORMERS_CACHE: "~/.cache/huggingface/transformers"
   TRT_LOGGER_VERBOSITY: "WARNING"
   TENSORRT_ROOT: "/usr/lib/x86_64-linux-gnu"
-  # NCCL settings for multi-GPU
   NCCL_DEBUG: "INFO"
   NCCL_IB_DISABLE: "1"
   NCCL_P2P_DISABLE: "1"

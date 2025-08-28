@@ -1,5 +1,7 @@
 # /qompassai/dotfiles/.config/gh/config.yml
 # Qompass AI Github CLI Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 version: 1
 git_protocol: ssh
 editor: nvim
@@ -10,7 +12,6 @@ defaults:
     git_protocol: ssh
     editor: nvim
     pager: nvimpager
-    prefer_editor_prompt: enabled
 aliases:
     co: pr checkout
 http_unix_socket:
@@ -22,4 +23,4 @@ security:
 ui:
     relative_dates: true
     unicode: true
-    color_scheme: dark 
+    color_scheme: dark

@@ -1,6 +1,8 @@
-# /qompassai/Diver/vim.toml
-# ---------------------------------
+# /qompassai/Diver/vim.yml
+# Qompass AI Vim YML
 # Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+
 globals:
   vim:
     any: true

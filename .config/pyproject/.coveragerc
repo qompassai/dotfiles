@@ -1,0 +1,14 @@
+; ~/.config/pyproject/.coveragerc
+; -------------------------------
+; Copyright (C) 2025 Qompass AI, All rights reserved
+
+[run]
+omit =
+    */site-packages/*
+    */cache/*
+    */signature_bootstrap.py
+    */shibokensupport/*
+    .tox/*
+[report]
+skip_covered = False
+skip_empty = True

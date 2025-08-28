@@ -1,0 +1,164 @@
+(10:57:39) INFO:    [Legendary]:        Legendary location: /usr/lib/heroic/app.asar.unpacked/build/bin/x64/linux/legendary
+(10:57:39) INFO:    [Gog]:              GOGDL location: /usr/lib/heroic/app.asar.unpacked/build/bin/x64/linux/gogdl
+(10:57:39) INFO:    [Connection]:       Connectivity: check-online
+(10:57:39) INFO:    [Connection]:       Pinging external endpoints
+(10:57:39) INFO:    [Gog]:              Checking for existing gog manifests
+(10:57:40) WARNING: [Backend]:          Failed to register protocol with OS.
+(10:57:40) INFO:    [Connection]:       Connectivity: online
+(10:57:40) INFO:    [Backend]:          User Not Found, removing it from Store
+(10:57:40) ERROR:   [Gog]:              Unable to syncQueued playtime, userData not present
+(10:57:40) INFO:    [Gog]:              Running command: GOGDL_CONFIG_PATH=/home/phaedrus/.config/heroic/gogdlConfig /usr/lib/heroic/app.asar.unpacked/build/bin/x64/linux/gogdl --auth-config-path /home/phaedrus/.config/heroic/gog_store/auth.json auth
+(10:57:40) INFO:    [Backend]:          AreWeAntiCheatYet data downloaded
+(10:57:41) INFO:    [Backend]:          Frontend Ready
+(10:57:41) INFO:    [Backend]:          Checking for new Heroic Updates
+(10:57:41) INFO:    [Backend]:          Checking for current version changelog
+(10:57:41) INFO:    [Frontend]:         Updated to a new version, cleaaning up the cache.
+(10:57:41) INFO:    [Legendary]:        Running command: LEGENDARY_CONFIG_PATH=/home/phaedrus/.config/heroic/legendaryConfig/legendary /usr/lib/heroic/app.asar.unpacked/build/bin/x64/linux/legendary cleanup
+(10:57:41) INFO:    [Frontend]:         Refreshing undefined Library
+(10:57:41) WARNING: [Backend]:          refresh not implemented on Sideload Library Manager
+(10:57:41) INFO:    [Legendary]:        Refreshing library...
+(10:57:42) INFO:    [Legendary]:        Running command: LEGENDARY_CONFIG_PATH=/home/phaedrus/.config/heroic/legendaryConfig/legendary /usr/lib/heroic/app.asar.unpacked/build/bin/x64/linux/legendary --version
+(10:57:42) INFO:    [Gog]:              Running command: GOGDL_CONFIG_PATH=/home/phaedrus/.config/heroic/gogdlConfig /usr/lib/heroic/app.asar.unpacked/build/bin/x64/linux/gogdl --auth-config-path /home/phaedrus/.config/heroic/gog_store/auth.json --version
+(10:57:42) INFO:    [Nile]:             Running command: NILE_CONFIG_PATH=/home/phaedrus/.config/heroic/nile_config /usr/lib/heroic/app.asar.unpacked/build/bin/x64/linux/nile --version
+(10:57:42) INFO:    [Winetricks]:       Downloading Winetricks
+(10:57:43) INFO:    [Backend]:          
+System Information:
+CPU: 16x 13th Gen Intel(R) Core(TM) i7-13620H
+Memory: 67.1 GB (used: 20.02 GB)
+GPUs:
+  GPU 0:
+    Name: NVIDIA Corporation AD106M [GeForce RTX 4070 Max-Q / Mobile]
+    IDs: D=2820 V=10de SD=13cb SV=1462
+    Driver: nvidia
+  GPU 1:
+    Name: Intel Corporation Raptor Lake-P [UHD Graphics]
+    IDs: D=a7a8 V=8086 SD=13cb SV=1462
+    Driver: i915
+OS: Arch Linux 6.13.8-arch1-1 (linux)
+
+The current system is not a Steam Deck
+We are not running inside a Flatpak container
+
+Software Versions:
+  Heroic: 2.16.1 Scopper Gaban
+  Legendary: 0.20.36 Urban Flight (Heroic)
+  gogdl: 1.1.2
+  comet: comet 0.2.0
+  Nile: 1.1.2 Will A. Zeppeli
+
+(10:57:45) INFO:    [WineDownloader]:   Updating wine versions info
+(10:57:45) INFO:    [WineDownloader]:   Fetching upstream information...
+(10:57:45) INFO:    [WineDownloader]:   wine versions updated
+(10:57:46) INFO:    [Backend]:          Starting the Download Queue
+(10:58:05) INFO:    [Backend]:          Heroic: Setting autoUpdateGames to true (previous value: false)
+(10:58:09) INFO:    [Backend]:          Heroic: Setting addDesktopShortcuts to true (previous value: false)
+(10:58:11) INFO:    [Backend]:          Heroic: Setting addSteamShortcuts to true (previous value: false)
+(10:58:12) INFO:    [Backend]:          Heroic: Setting addStartMenuShortcuts to true (previous value: false)
+(10:58:15) INFO:    [Legendary]:        Running command: LEGENDARY_CONFIG_PATH=/home/phaedrus/.config/heroic/legendaryConfig/legendary /usr/lib/heroic/app.asar.unpacked/build/bin/x64/linux/legendary --version
+(10:58:15) INFO:    [Gog]:              Running command: GOGDL_CONFIG_PATH=/home/phaedrus/.config/heroic/gogdlConfig /usr/lib/heroic/app.asar.unpacked/build/bin/x64/linux/gogdl --auth-config-path /home/phaedrus/.config/heroic/gog_store/auth.json --version
+(10:58:15) INFO:    [Nile]:             Running command: NILE_CONFIG_PATH=/home/phaedrus/.config/heroic/nile_config /usr/lib/heroic/app.asar.unpacked/build/bin/x64/linux/nile --version
+(10:58:19) INFO:    [Backend]:          Heroic: Setting experimentalFeatures to {"enableNewDesign":true,"enableHelp":false,"cometSupport":true} (previous value: undefined)
+(10:58:25) INFO:    [Legendary]:        Running command: LEGENDARY_CONFIG_PATH=/home/phaedrus/.config/heroic/legendaryConfig/legendary /usr/lib/heroic/app.asar.unpacked/build/bin/x64/linux/legendary --version
+(10:58:25) INFO:    [Gog]:              Running command: GOGDL_CONFIG_PATH=/home/phaedrus/.config/heroic/gogdlConfig /usr/lib/heroic/app.asar.unpacked/build/bin/x64/linux/gogdl --auth-config-path /home/phaedrus/.config/heroic/gog_store/auth.json --version
+(10:58:25) INFO:    [Nile]:             Running command: NILE_CONFIG_PATH=/home/phaedrus/.config/heroic/nile_config /usr/lib/heroic/app.asar.unpacked/build/bin/x64/linux/nile --version
+(10:58:34) INFO:    [WineDownloader]:   Start installation of wine version GE-Proton-latest
+(10:58:38) INFO:    [WineDownloader]:   Start installation of wine version Wine-GE-latest
+(10:58:38) INFO:    [Backend]:          Downloaded: 592.48 KB / 465.99 MB  @233.54 KB/s (0.12%)
+(10:58:41) INFO:    [Backend]:          Downloaded: 6.64 MB / 465.99 MB  @2.42 MB/s (1.43%)
+(10:58:43) INFO:    [Backend]:          Downloaded: 2.25 MB / 222.76 MB  @922.06 KB/s (1.01%)
+(10:58:43) INFO:    [Backend]:          Downloaded: 12.73 MB / 465.99 MB  @2.44 MB/s (2.73%)
+(10:58:45) INFO:    [Backend]:          Downloaded: 11.7 MB / 222.76 MB  @3.76 MB/s (5.25%)
+(10:58:46) INFO:    [Backend]:          Downloaded: 19.9 MB / 465.99 MB  @2.86 MB/s (4.27%)
+(10:58:48) INFO:    [Backend]:          Downloaded: 20.35 MB / 222.76 MB  @3.46 MB/s (9.14%)
+(10:58:48) INFO:    [Backend]:          Downloaded: 27.1 MB / 465.99 MB  @2.89 MB/s (5.82%)
+(10:58:51) INFO:    [Backend]:          Downloaded: 33.39 MB / 465.99 MB  @2.51 MB/s (7.16%)
+(10:58:51) INFO:    [Backend]:          Downloaded: 28.21 MB / 222.76 MB  @2.58 MB/s (12.66%)
+(10:58:53) INFO:    [Backend]:          Downloaded: 40.58 MB / 465.99 MB  @2.87 MB/s (8.71%)
+(10:58:53) INFO:    [Backend]:          Downloaded: 35.65 MB / 222.76 MB  @2.97 MB/s (16.00%)
+(10:58:55) INFO:    [Backend]:          Downloaded: 40.7 MB / 222.76 MB  @2.38 MB/s (18.27%)
+(10:58:56) INFO:    [Backend]:          Downloaded: 45.88 MB / 465.99 MB  @2.11 MB/s (9.85%)
+(10:58:57) INFO:    [Backend]:          Downloaded: 48.32 MB / 465.99 MB  @1.88 MB/s (10.37%)
+(10:58:58) INFO:    [Backend]:          Downloaded: 45.33 MB / 222.76 MB  @1.85 MB/s (20.35%)
+(10:58:58) INFO:    [Backend]:          Downloaded: 50.61 MB / 465.99 MB  @2.18 MB/s (10.86%)
+(10:58:59) INFO:    [Backend]:          Downloaded: 49.36 MB / 222.76 MB  @2.79 MB/s (22.16%)
+(10:59:01) INFO:    [Backend]:          Downloaded: 60.73 MB / 465.99 MB  @3.58 MB/s (13.03%)
+(10:59:02) INFO:    [Backend]:          Downloaded: 59.98 MB / 222.76 MB  @3.48 MB/s (26.93%)
+(10:59:03) INFO:    [Backend]:          Downloaded: 68.36 MB / 465.99 MB  @3.04 MB/s (14.67%)
+(10:59:05) INFO:    [Backend]:          Downloaded: 68.47 MB / 222.76 MB  @3.38 MB/s (30.74%)
+(10:59:05) INFO:    [Backend]:          Downloaded: 74.09 MB / 465.99 MB  @3.78 MB/s (15.90%)
+(10:59:08) INFO:    [Backend]:          Downloaded: 82.6 MB / 465.99 MB  @3.39 MB/s (17.73%)
+(10:59:08) INFO:    [Backend]:          Downloaded: 84.53 MB / 222.76 MB  @4.73 MB/s (37.95%)
+(10:59:10) INFO:    [Backend]:          Downloaded: 92.85 MB / 465.99 MB  @4.08 MB/s (19.92%)
+(10:59:11) INFO:    [Backend]:          Downloaded: 94.51 MB / 222.76 MB  @4.17 MB/s (42.43%)
+(10:59:13) INFO:    [Backend]:          Downloaded: 99.51 MB / 465.99 MB  @2.48 MB/s (21.35%)
+(10:59:13) INFO:    [Backend]:          Downloaded: 100.24 MB / 222.76 MB  @2.29 MB/s (45.00%)
+(10:59:15) INFO:    [Backend]:          Downloaded: 104.94 MB / 465.99 MB  @2.1 MB/s (22.52%)
+(10:59:16) INFO:    [Backend]:          Downloaded: 106.79 MB / 222.76 MB  @1.92 MB/s (47.94%)
+(10:59:17) INFO:    [Backend]:          Downloaded: 109.68 MB / 222.76 MB  @2.66 MB/s (49.24%)
+(10:59:19) INFO:    [Backend]:          Downloaded: 113.66 MB / 465.99 MB  @2.74 MB/s (24.39%)
+(10:59:20) INFO:    [Backend]:          Downloaded: 117.52 MB / 222.76 MB  @3.13 MB/s (52.76%)
+(10:59:21) INFO:    [Backend]:          Downloaded: 121.3 MB / 465.99 MB  @3.05 MB/s (26.03%)
+(10:59:23) INFO:    [Backend]:          Downloaded: 125.48 MB / 222.76 MB  @2.08 MB/s (56.33%)
+(10:59:24) INFO:    [Backend]:          Downloaded: 126.18 MB / 465.99 MB  @1.38 MB/s (27.08%)
+(10:59:26) INFO:    [Backend]:          Downloaded: 129.32 MB / 222.76 MB  @1.53 MB/s (58.06%)
+(10:59:27) INFO:    [Backend]:          Downloaded: 130.26 MB / 465.99 MB  @1.63 MB/s (27.95%)
+(10:59:28) INFO:    [Backend]:          Downloaded: 131.73 MB / 222.76 MB  @955.41 KB/s (59.14%)
+(10:59:29) INFO:    [Backend]:          Downloaded: 131.26 MB / 465.99 MB  @404.9 KB/s (28.17%)
+(10:59:31) INFO:    [Backend]:          Downloaded: 132.82 MB / 222.76 MB  @434.78 KB/s (59.63%)
+(10:59:32) INFO:    [Backend]:          Downloaded: 133.4 MB / 465.99 MB  @844.64 KB/s (28.63%)
+(10:59:33) INFO:    [Backend]:          Downloaded: 134.93 MB / 222.76 MB  @1.05 MB/s (60.57%)
+(10:59:35) INFO:    [Backend]:          Downloaded: 136.16 MB / 465.99 MB  @1.07 MB/s (29.22%)
+(10:59:35) INFO:    [Backend]:          Downloaded: 137.25 MB / 222.76 MB  @934.58 KB/s (61.61%)
+(10:59:37) INFO:    [Backend]:          Downloaded: 137.79 MB / 465.99 MB  @657.77 KB/s (29.57%)
+(10:59:38) INFO:    [Backend]:          Downloaded: 139.06 MB / 222.76 MB  @732.44 KB/s (62.43%)
+(10:59:40) INFO:    [Backend]:          Downloaded: 139.81 MB / 465.99 MB  @828.74 KB/s (30.00%)
+(10:59:40) INFO:    [Backend]:          Downloaded: 141.36 MB / 222.76 MB  @925.14 KB/s (63.46%)
+(10:59:42) INFO:    [Backend]:          Downloaded: 142.77 MB / 465.99 MB  @1.18 MB/s (30.64%)
+(10:59:42) INFO:    [Backend]:          Downloaded: 144.06 MB / 222.76 MB  @1.29 MB/s (64.67%)
+(10:59:45) INFO:    [Backend]:          Downloaded: 148 MB / 222.76 MB  @1.58 MB/s (66.44%)
+(10:59:45) INFO:    [Backend]:          Downloaded: 147.54 MB / 465.99 MB  @1.59 MB/s (31.66%)
+(10:59:47) INFO:    [Backend]:          Downloaded: 152.06 MB / 222.76 MB  @1.85 MB/s (68.27%)
+(10:59:48) INFO:    [Backend]:          Downloaded: 152.09 MB / 465.99 MB  @1.05 MB/s (32.64%)
+(10:59:49) INFO:    [Backend]:          Downloaded: 155.7 MB / 465.99 MB  @2.83 MB/s (33.41%)
+(10:59:50) INFO:    [Backend]:          Downloaded: 157.76 MB / 222.76 MB  @2.28 MB/s (70.82%)
+(10:59:53) INFO:    [Backend]:          Downloaded: 162.68 MB / 465.99 MB  @2.2 MB/s (34.91%)
+(10:59:53) INFO:    [Backend]:          Downloaded: 166.07 MB / 222.76 MB  @2.1 MB/s (74.55%)
+(10:59:55) INFO:    [Backend]:          Downloaded: 170.01 MB / 222.76 MB  @2.68 MB/s (76.32%)
+(10:59:55) INFO:    [Backend]:          Downloaded: 169.34 MB / 465.99 MB  @2.66 MB/s (36.34%)
+(10:59:57) INFO:    [Backend]:          Downloaded: 176.85 MB / 222.76 MB  @2.69 MB/s (79.39%)
+(10:59:58) INFO:    [Backend]:          Downloaded: 176.93 MB / 465.99 MB  @1.93 MB/s (37.97%)
+(11:00:00) INFO:    [Backend]:          Downloaded: 180.35 MB / 222.76 MB  @1.39 MB/s (80.96%)
+(11:00:01) INFO:    [Backend]:          Downloaded: 179.43 MB / 465.99 MB  @1015.8 KB/s (38.51%)
+(11:00:02) INFO:    [Backend]:          Downloaded: 183.76 MB / 222.76 MB  @1.36 MB/s (82.49%)
+(11:00:03) INFO:    [Backend]:          Downloaded: 183.22 MB / 465.99 MB  @1.49 MB/s (39.32%)
+(11:00:06) INFO:    [Backend]:          Downloaded: 188.34 MB / 222.76 MB  @1.38 MB/s (84.55%)
+(11:00:06) INFO:    [Backend]:          Downloaded: 186.69 MB / 465.99 MB  @1.38 MB/s (40.06%)
+(11:00:08) INFO:    [Backend]:          Downloaded: 191.96 MB / 222.76 MB  @1.44 MB/s (86.18%)
+(11:00:08) INFO:    [Backend]:          Downloaded: 190.53 MB / 465.99 MB  @1.53 MB/s (40.89%)
+(11:00:11) INFO:    [Backend]:          Downloaded: 192.8 MB / 465.99 MB  @914.83 KB/s (41.37%)
+(11:00:11) INFO:    [Backend]:          Downloaded: 195.17 MB / 222.76 MB  @635.47 KB/s (87.62%)
+(11:00:13) INFO:    [Backend]:          Downloaded: 199.33 MB / 465.99 MB  @2.61 MB/s (42.77%)
+(11:00:14) INFO:    [Backend]:          Downloaded: 202.15 MB / 222.76 MB  @3.19 MB/s (90.75%)
+(11:00:14) INFO:    [Backend]:          Downloaded: 203.86 MB / 465.99 MB  @4.44 MB/s (43.75%)
+(11:00:15) INFO:    [Backend]:          Downloaded: 209.18 MB / 222.76 MB  @4.66 MB/s (93.90%)
+(11:00:17) INFO:    [Backend]:          Downloaded: 214.81 MB / 222.76 MB  @3.89 MB/s (96.43%)
+(11:00:17) INFO:    [Backend]:          Downloaded: 223.18 MB / 465.99 MB  @7.2 MB/s (47.89%)
+(11:00:19) INFO:    [Backend]:          Downloaded: 222.24 MB / 222.76 MB  @3.3 MB/s (99.77%)
+(11:00:19) INFO:    [Backend]:          Downloaded: 243.31 MB / 465.99 MB  @9.15 MB/s (52.21%)
+(11:00:20) INFO:    [DownloadManager]:  Downloader: Finished downloading https://github.com/GloriousEggroll/wine-ge-custom/releases/download/GE-Proton8-26/wine-lutris-GE-Proton8-26-x86_64.tar.xz
+(11:00:25) INFO:    [Backend]:          Downloaded: 245.88 MB / 465.99 MB  @500.1 KB/s (52.76%)
+(11:00:27) INFO:    [Backend]:          Downloaded: 273.62 MB / 465.99 MB  @9.52 MB/s (58.72%)
+(11:00:30) INFO:    [Backend]:          Downloaded: 300.4 MB / 465.99 MB  @10.92 MB/s (64.46%)
+(11:00:32) INFO:    [Backend]:          Downloaded: 317.9 MB / 465.99 MB  @10.75 MB/s (68.22%)
+(11:00:34) INFO:    [Backend]:          Downloaded: 347.43 MB / 465.99 MB  @11.84 MB/s (74.56%)
+(11:00:36) INFO:    [Backend]:          Downloaded: 370.56 MB / 465.99 MB  @11.35 MB/s (79.52%)
+(11:00:38) INFO:    [Backend]:          Downloaded: 388.44 MB / 465.99 MB  @11.76 MB/s (83.36%)
+(11:00:40) INFO:    [Backend]:          Downloaded: 408.82 MB / 465.99 MB  @10.66 MB/s (87.73%)
+(11:00:41) INFO:    [WineDownloader]:   Finished installation of wine version Wine-GE-latest
+(11:00:42) INFO:    [Backend]:          Downloaded: 427.7 MB / 465.99 MB  @8.15 MB/s (91.78%)
+(11:00:44) INFO:    [Backend]:          Downloaded: 440.69 MB / 465.99 MB  @5.17 MB/s (94.57%)
+(11:00:47) INFO:    [Backend]:          Downloaded: 451.99 MB / 465.99 MB  @4.51 MB/s (97.00%)
+(11:00:48) INFO:    [Backend]:          Downloaded: 459.25 MB / 465.99 MB  @4.83 MB/s (98.55%)
+(11:00:51) INFO:    [Backend]:          Downloaded: 465.52 MB / 465.99 MB  @2.63 MB/s (99.90%)
+(11:00:53) INFO:    [DownloadManager]:  Downloader: Finished downloading https://github.com/GloriousEggroll/proton-ge-custom/releases/download/GE-Proton9-26/GE-Proton9-26.tar.gz
+(11:01:11) INFO:    [WineDownloader]:   Finished installation of wine version GE-Proton-latest
