@@ -1,4 +1,7 @@
-
+// /qompassai/dotfiles/.config/ags/user_options.js
+// Qompass AI User Options Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
 const userConfigOptions = {
     // For every option, see ~/.config/ags/modules/.configuration/user_options.js
     // (vscode users ctrl+click this: file://./modules/.configuration/user_options.js)

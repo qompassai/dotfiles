@@ -1,3 +1,4 @@
+
 const Gio = imports.gi.Gio;
 const GLib = imports.gi.GLib;
 import configOptions from "../modules/.configuration/user_options.js";

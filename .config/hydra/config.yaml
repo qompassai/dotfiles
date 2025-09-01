@@ -1,6 +1,8 @@
-# ~/.config/hydra/config.yaml
-# ---------------------------
+# /qompassai/dotfiles/.config/hydra/config.yaml
+# Qompass AI Hydra Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+
 defaults:
   - _self_
 hydra:

@@ -1,0 +1,19 @@
+# /qompassai/dotfiles/.config/alsacontrol/config
+pcm.loopback_playback {
+  type hw
+  card 0
+  device 0
+}
+
+pcm.usb_mic {
+  type hw
+  card 2
+  device 0
+}
+
+pcm.hdmi {
+  type hw
+  card 1
+  device 3
+}
+

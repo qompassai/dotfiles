@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-
 enable_battery=false
 battery_charging=false
-
 for battery in /sys/class/power_supply/*BAT*; do
     if [[ -f "$battery/uevent" ]]; then
         enable_battery=true
@@ -12,7 +10,6 @@ for battery in /sys/class/power_supply/*BAT*; do
         break
     fi
 done
-
 if [[ $enable_battery == true ]]; then
     if [[ $battery_charging == true ]]; then
         echo -n "(+) "
@@ -22,5 +19,4 @@ if [[ $enable_battery == true ]]; then
         echo -n " remaining"
     fi
 fi
-
 echo ''

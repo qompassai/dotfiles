@@ -1,3 +1,7 @@
+// /qompassai/dotfiles/.config/ags/init.js
+// Qompass AI AGS Init
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
 const { Gio, GLib } = imports.gi;
 import GtkSource from "gi://GtkSource?version=3.0";
 import App from 'resource:///com/github/Aylur/ags/app.js'

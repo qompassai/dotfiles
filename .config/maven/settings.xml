@@ -1,15 +1,13 @@
-# ~/.config/maven/settings.xml
-# ----------------------------
-# Copyright (C) 2025 Qompass AI, All rights reserved
+<!-- /qompassai/dotfiles/.config/maven/settings.xml -->
+<!-- Qompass AI - [Add description here] -->
+<!-- Copyright (C) 2025 Qompass AI, All rights reserved -->
 
 <settings xmlns="http://maven.apache.org/SETTINGS/2.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/2.0.0 https://maven.apache.org/xsd/settings-2.0.0.xsd">
-
   <localRepository>/path/to/your/local/repo</localRepository>
   <interactiveMode>true</interactiveMode>
   <offline>false</offline>
-
   <profiles>
     <profile>
       <id>custom-profile</id>
@@ -31,7 +29,6 @@
       </properties>
     </profile>
   </profiles>
-
   <activeProfiles>
     <activeProfile>custom-profile</activeProfile>
     <activeProfile>zig-default</activeProfile>

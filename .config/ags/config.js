@@ -1,3 +1,8 @@
+// /qompassai/dotfiles/.config/ags/config.js
+// Qompass AI AGS Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+
 "use strict";
 import GLib from 'gi://GLib';
 import App from 'resource:///com/github/Aylur/ags/app.js'

@@ -150,7 +150,7 @@ vim.lsp.enable({
   'neocmake',
   'nextflow_ls',
   'nextls',
-  'nginx_language_server',
+  --'nginx_language_server',
   'nickel_ls',
   'nil_ls',
   'nixd',

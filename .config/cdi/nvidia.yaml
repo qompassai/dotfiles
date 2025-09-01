@@ -1,3 +1,7 @@
+# /qompassai/dotfiles/.config/cdi/nvidia.yaml
+# Qompass AI Container Device Interface (CDI) Nvidia Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
 ---
 cdiVersion: 0.5.0
 containerEdits:
