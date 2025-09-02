@@ -1,0 +1,31 @@
+#%Module
+
+module-help {    use.own - adds $HOME/privatemodules to the list of directories}
+module-help {    that the module command will search for modules. Place your}
+module-help {    own module files here. This module, when loaded, will create}
+module-help {    this directory if necessary.}
+module-help {}
+
+module-whatis {adds your own modulefiles directory to MODULEPATH}
+
+eval set [array get env HOME]
+set ownmoddir $HOME/privatemodules
+
+# create directory if necessary
+if {[module-info mode load]} {
+    if {![file exists $ownmoddir]} {
+        puts stderr "Creating directory '$ownmoddir'"
+        file mkdir $ownmoddir
+        set null [open $ownmoddir/null w]
+        puts $null {#%Module}
+        puts $null {}
+        puts $null {module-help {    null - does absolutely nothing. It is simply meant as a place}}
+        puts $null {module-help {    holder in your dot file initialization.}}
+        puts $null {module-help {}}
+        puts $null {}
+        puts $null {module-whatis {does absolutely nothing}}
+        close $null
+    }
+}
+
+module use --append $ownmoddir

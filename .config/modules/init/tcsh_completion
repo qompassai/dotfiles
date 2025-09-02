@@ -1,0 +1,123 @@
+#
+# Tcsh commandline completion
+#
+
+alias _module_avail '\\
+    /usr/bin/tclsh "/usr/lib/env-modules/modulecmd.tcl" tcsh avail --color=never -s -t -S -o "alias:indesym" |& cat'
+
+alias _module_spider '\\
+    /usr/bin/tclsh "/usr/lib/env-modules/modulecmd.tcl" tcsh spider --color=never -s -t -S -o "alias:indesym" |& cat'
+
+alias _module_loaded '\\
+    /usr/bin/tclsh "/usr/lib/env-modules/modulecmd.tcl" tcsh list --color=never -s -t -o "" |& cat'
+
+alias _module_savelist '\\
+    /usr/bin/tclsh "/usr/lib/env-modules/modulecmd.tcl" tcsh savelist --color=never -s -t |& sed '"'"'\\
+        /No named collection\.$/d; \\
+        /Named collection list$/d; \\
+        /:$/d; '"'"
+
+alias _module_stashlist '\\
+    /usr/bin/tclsh "/usr/lib/env-modules/modulecmd.tcl" tcsh stashlist --color=never -s -t |& sed '"'"'\\
+        /No stash collection\.$/d; \\
+        /Stash collection list$/d; \\
+        /:$/d; '"'"
+
+alias _module_not_yet_loaded '\\
+        mkfifo /tmp/modules_tcsh_completion.$$.p1 /tmp/modules_tcsh_completion.$$.p2 && \\
+        ( _module_avail | sort >! /tmp/modules_tcsh_completion.$$.p1 & ); \\
+        ( _module_loaded | sort >! /tmp/modules_tcsh_completion.$$.p2 & ); \\
+        comm -23 /tmp/modules_tcsh_completion.$$.p1 /tmp/modules_tcsh_completion.$$.p2; \\
+        \rm /tmp/modules_tcsh_completion.$$.p1 /tmp/modules_tcsh_completion.$$.p2'
+
+alias _module_modulepath 'echo ${MODULEPATH} | sed '"'"'s/:/\n/g;'"'"' '
+
+complete module 'C,/*,f,' 'C,.*,f,' 'C,~/*,f,' \
+        'n/help/`_module_avail`/' \
+        'n/add/`_module_not_yet_loaded; echo "--auto --no-auto --force -f --icase -i --tag --tag="`/' \
+        'n/load/`_module_not_yet_loaded; echo "--auto --no-auto --force -f --icase -i --tag --tag="`/' \
+        'n/add-any/`_module_not_yet_loaded; echo "--auto --no-auto --force -f --icase -i --tag --tag="`/' \
+        'n/load-any/`_module_not_yet_loaded; echo "--auto --no-auto --force -f --icase -i --tag --tag="`/' \
+        'n/try-add/`_module_not_yet_loaded; echo "--auto --no-auto --force -f --icase -i --tag --tag="`/' \
+        'n/try-load/`_module_not_yet_loaded; echo "--auto --no-auto --force -f --icase -i --tag --tag="`/' \
+        'n/rm/`_module_loaded; echo "--auto --no-auto --force -f --icase -i"`/' \
+        'n/del/`_module_loaded; echo "--auto --no-auto --force -f --icase -i"`/' \
+        'n/remove/`_module_loaded; echo "--auto --no-auto --force -f --icase -i"`/' \
+        'n/unload/`_module_loaded; echo "--auto --no-auto --force -f --icase -i"`/' \
+        'n/swap/`_module_loaded; echo "--auto --no-auto --force -f --icase -i --tag --tag="`/' \
+        'N/swap/`_module_not_yet_loaded; echo "--auto --no-auto --force -f --icase -i --tag --tag="`/' \
+        'n/switch/`_module_loaded; echo "--auto --no-auto --force -f --icase -i --tag --tag="`/' \
+        'N/switch/`_module_not_yet_loaded; echo "--auto --no-auto --force -f --icase -i --tag --tag="`/' \
+        'n/show/`_module_avail; echo "-i --icase"`/' \
+        'n/display/`_module_avail; echo "-i --icase"`/' \
+        'n/test/`_module_avail; echo "-i --icase"`/' \
+        "n/list/(-a -j -l -o -t --all --json --long --output --output= --terse)/" \
+        'n/avail/`_module_avail; echo "-a -C -d -i -j -L -l -o -S -t --all --contains --default --icase --json --latest --long --output --output= --starts-with --terse --indepth --no-indepth"`/' \
+        'n/spider/`_module_spider; echo "-a -C -d -i -j -L -l -o -S -t --all --contains --default --icase --json --latest --long --output --output= --starts-with --terse --indepth --no-indepth"`/' \
+        'n/is-avail/`_module_avail; echo "-a -i --all --icase"`/' \
+        'n/is-loaded/`_module_avail; echo "-i --icase"`/' \
+        'n/info-loaded/`_module_avail; echo "-i --icase"`/' \
+        'n/restore/`_module_savelist`/' \
+        "n/savelist/(-a -j -l -o -t --all --json --long --output --output= --terse)/" \
+        'n/saveshow/`_module_savelist`/' \
+        'n/describe/`_module_savelist`/' \
+        'n/saverm/`_module_savelist`/' \
+        'n/disable/`_module_savelist`/' \
+        'n/save/`_module_savelist`/' \
+        'n/is-saved/`_module_savelist`/' \
+        "n/aliases/(-a --all)/" \
+        'n/use/d/' \
+        'N/use/d/' \
+        'n/unuse/`_module_modulepath`/' \
+        'n/is-used/`_module_modulepath`/' \
+        'n/purge/n/' \
+        'n/refresh/n/' \
+        'n/reload/n/' \
+        'n/update/n/' \
+        'n/whatis/`_module_avail; echo "-a -i -j --all --icase --json"`/' \
+        "n/apropos/(-a -j --all --json)/" \
+        "n/search/(-a -j --all --json)/" \
+        "n/keyword/(-a -j --all --json)/" \
+        'n/paths/`_module_avail; echo "-i --icase"`/' \
+        'n/path/`_module_avail; echo "-i --icase"`/' \
+        'n/edit/`_module_avail`/' \
+        'n/sh-to-mod/n/' \
+        'n/source/n/' \
+        'n/initadd/n/' \
+        'n/initprepend/n/' \
+        'n/initrm/n/' \
+        'n/initlist/n/' \
+        'n/initclear/n/' \
+        "n/append-path/(-d --delim --duplicates)/" \
+        "n/prepend-path/(-d --delim --duplicates)/" \
+        "n/remove-path/(-d --delim --index)/" \
+        "n/clear/(--force -f)/" \
+        "n/config/(--dump-state --reset abort_on_error advanced_version_spec auto_handling avail_indepth avail_output avail_terse_output cache_buffer_bytes cache_expiry_secs collection_pin_version collection_pin_tag collection_target color colors conflict_unload contact editor extended_default extra_siteconfig hide_auto_loaded home icase ignore_cache ignore_user_rc implicit_default implicit_requirement list_output list_terse_output locked_configs logged_events logger mcookie_check mcookie_version_check ml nearly_forbidden_days pager protected_envvars quarantine_support rcfile redirect_output require_via reset_target_state run_quarantine search_match set_shell_startup shells_with_ksh_fpath silent_shell_debug source_cache spider_indepth spider_output spider_terse_output sticky_purge tag_abbrev tag_color_name tcl_linter term_background term_width unique_name_loaded unload_match_order variant_shortcut verbosity wa_277)/" \
+        "n/state/n/" \
+        'n/lint/`_module_avail; echo "-a -i --all --icase"`/' \
+        'n/mod-to-sh/`_module_not_yet_loaded; echo "--auto --no-auto --force -f --icase -i"`/' \
+        "n/reset/n/" \
+        "n/stash/n/" \
+        "n/stashclear/n/" \
+        "n/stashlist/(-j -l -t --json --long --terse)/" \
+        'n/stashpop/`_module_stashlist`/' \
+        'n/stashrm/`_module_stashlist`/' \
+        'n/stashshow/`_module_stashlist`/' \
+        'n/cachebuild/d/' \
+        'N/cachebuild/d/' \
+        "n/cacheclear/n/" \
+        "n/--reset/(--dump-state --reset abort_on_error advanced_version_spec auto_handling avail_indepth avail_output avail_terse_output cache_buffer_bytes cache_expiry_secs collection_pin_version collection_pin_tag collection_target color colors conflict_unload contact editor extended_default extra_siteconfig hide_auto_loaded home icase ignore_cache ignore_user_rc implicit_default implicit_requirement list_output list_terse_output locked_configs logged_events logger mcookie_check mcookie_version_check ml nearly_forbidden_days pager protected_envvars quarantine_support rcfile redirect_output require_via reset_target_state run_quarantine search_match set_shell_startup shells_with_ksh_fpath silent_shell_debug source_cache spider_indepth spider_output spider_terse_output sticky_purge tag_abbrev tag_color_name tcl_linter term_background term_width unique_name_loaded unload_match_order variant_shortcut verbosity wa_277)/" \
+        'n/-h/n/' \
+        'n/--help/n/' \
+        'n/-V/n/' \
+        'n/--version/n/' \
+        'n/--dumpname/n/' \
+        'C/sw*/(switch)/' \
+        "p/1/(add add-any apropos aliases avail append-path cachebuild cacheclear clear config del describe disable display edit help initadd initclear initlist initprepend initrm is-loaded is-saved is-used is-avail info-loaded keyword lint list load load-any mod-to-sh path paths purge prepend-path refresh reload reset restore rm remove remove-path save savelist saveshow saverm search show sh-to-mod source spider stash stashclear stashlist stashpop stashrm stashshow state swap switch test try-add try-load unload unuse update use whatis -D -h -s -T -v -V -w --debug --dumpname --help --silent --trace --verbose --version --paginate --no-pager --color --color= --width --width= --ignore-cache --ignore-user-rc)/" \
+        "n/-*/(add add-any apropos aliases avail append-path cachebuild cacheclear clear config del describe disable display edit help initadd initclear initlist initprepend initrm is-loaded is-saved is-used is-avail info-loaded keyword lint list load load-any mod-to-sh path paths purge prepend-path refresh reload reset restore rm remove remove-path save savelist saveshow saverm search show sh-to-mod source spider stash stashclear stashlist stashpop stashrm stashshow state swap switch test try-add try-load unload unuse update use whatis)/"
+
+complete ml \
+        "C/--*/(--debug --dumpname --help --silent --trace --verbose --version --paginate --no-pager --color --color= --width --width= --ignore-cache --ignore-user-rc)/" \
+        'c/-/`_module_loaded`/' \
+        'p/1-/`_module_not_yet_loaded`//'
+

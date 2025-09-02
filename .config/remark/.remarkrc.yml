@@ -1,0 +1,9 @@
+# /qompassai/dotfiles/.config/remark/.remarkrc.yml
+# Qompass AI Remark Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################### 
+plugins:
+  - preset-remark-markdown
+  - remark-lint
+  - remark-preset-lint-recommended
+

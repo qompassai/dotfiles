@@ -1,4 +1,7 @@
-# AI/ML optimized channels
+# /qompassai/dotfiles/.config/conda/condarc.d/channels.yml
+# Qompass AI Conda Channels Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 channels:
   - anaconda
   - bioconda
@@ -16,13 +19,9 @@ channels:
   - pyviz
   - rapidsai
   - rapidsai/label/cuda12
-
-# Channel settings
 channel_priority: strict
 show_channel_urls: true
 use_only_tar_bz2: false
-
-# Platform support
 subdirs:
   - linux-64
   - noarch

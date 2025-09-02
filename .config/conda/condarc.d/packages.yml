@@ -1,4 +1,8 @@
-# Default packages for AI/ML environments
+# /qompassai/dotfiles/.config/conda/condarc.d/packages.yml
+# Qompass AI Conda Packages Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+
 create_default_packages:
   - catboost
   - conda-build
@@ -36,13 +40,9 @@ create_default_packages:
   - wandb
   - wheel
   - xgboost
-
-# Package directories
 pkgs_dirs:
   - ~/.conda/pkgs
   - ~/.local/share/conda/pkgs
   - ~/miniconda3/pkgs
-
-# Package settings
 use_pip: true
 pip_interop_enabled: true

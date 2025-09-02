@@ -1,4 +1,7 @@
 # /qompassai/dotfiles/.config/conda/condarc.d/ai-ml.yml
+# Qompass AI Conda AI-ML Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 frameworks:
   pytorch:
     cuda_version: "12.8"

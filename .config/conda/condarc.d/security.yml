@@ -1,14 +1,10 @@
-# Security settings
+# /qompassai/dotfiles/.config/conda/condarc.d/security.yml
+# Qompass AI Conda Security Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 ssl_verify: true
-report_errors: false
+report_errors: true
 safety_checks: warn
-
-# Network settings
 remote_connect_timeout_secs: 15.0
 remote_read_timeout_secs: 120.0
 remote_max_retries: 5
-
-# Proxy settings (uncomment and modify if needed)
-# proxy_servers:
-#   http: http://user:pass@corp.com:8080
-#   https: https://user:pass@corp.com:8080

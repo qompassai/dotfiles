@@ -1,11 +1,13 @@
-# Quantum computing channels
+# /qompassai/dotfiles/.config/conda/condarc.d/quantum.yml
+# Qompass AI Conda Quantum Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 quantum_channels:
   - qiskit
   - rigetti
   - xanadu
   - microsoft-quantum
 
-# Quantum computing packages
 quantum_default_packages:
   - qiskit
   - qiskit-aer
@@ -17,7 +19,6 @@ quantum_default_packages:
   - qutip
   - forest-benchmarking
 
-# Quantum simulation settings
 quantum_simulators:
   - qasm_simulator
   - statevector_simulator

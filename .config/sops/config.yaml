@@ -1,7 +1,7 @@
 # /qompassai/dotfiles/.config/sops/config.yaml
-# --------------------------
+# Qompass AI SOPS Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
-
+####################################################
 creation_rules:
   - path_regex: '.*\.enc\.(yaml|yml|json|env|toml|nix|ini)$'
     encrypted_regex: '^(data|stringData|secrets|values|env)$'

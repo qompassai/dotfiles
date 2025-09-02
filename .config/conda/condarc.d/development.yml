@@ -1,12 +1,11 @@
-# Development settings
+# /qompassai/dotfiles/.config/conda/condarc.d/development.yml
+# Qompass AI Conda Development Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 rollback_enabled: true
 track_features: []
-
-# Jupyter and notebook settings
 notebook_dir: "~/notebooks"
 jupyter_config_dir: "~/.config/jupyter"
 ipython_dir: "~/.config/ipython"
-
-# Version control integration
 git_executable: git
 restore_free_channel: true

@@ -1,3 +1,8 @@
+# /qompassai/dotfiles/.config/uwsm/env-hyprland
+# Qompass AI UWSM Env-Hyprland Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+
 export AQ_DRM_DEVICES="/dev/dri/card0:/dev/dri/card1"
 export __GL_SHADER_DISK_CACHE_SIZE=10737418240
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
@@ -5,6 +10,8 @@ export __GL_SHADER_DISK_CACHE=1
 export __GL_SHADER_DISK_CACHE_PATH=$XDG_CACHE_HOME/nvidia/GLCache
 export MESA_SHADER_CACHE_MAX_SIZE=10G
 export MESA_GLSL_CACHE_DIR=/home/phaedrus/.cache/mesa_shader_cache_db
+env = MESA_GLSL_CACHE_ENABLE,true
 export MOZ_ENABLE_WAYLAND=1
 export MOZ_DBUS_REMOTE=1
 export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_SESSION_TYPE="wayland"
