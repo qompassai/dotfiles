@@ -1,0 +1,3 @@
+[submodule ".config/hypr"]
+	path = .config/hypr
+	url = git@github.com:qompassai/hyprland.git
