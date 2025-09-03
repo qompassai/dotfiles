@@ -1,5 +1,7 @@
-# ~/.config/vdirsyncer/config
-# --------------------------
+# /qompassai/dotfiles/.config/vdirsyncer/config
+# Qompass AI VdirSyncr Config
+# # Copyright (C) 2025 Qompass AI, All rights reserved
+######################################################
 
 [general]
 status_path = "~/.vdirsyncer/status/"

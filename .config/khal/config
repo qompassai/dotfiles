@@ -1,10 +1,9 @@
-# ~/.config/khal/config
-# ---------------------
+# /qompassai/dotfiles/.config/khal/config
+# Qompass AI Khal Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
-
+####################################################
 [calendars]
 
-# Self-hosted CalDAV (e.g., Radicale/Baikal)
 [[qompass]]
 path = ~/.calendars/qompass/
 type = caldav
@@ -14,17 +13,14 @@ password = hunter2  # Use passwordcmd for secure storage
 auth = basic
 readonly = false
 
-# Google Foamedmap Calendar (via CalDAV)
 [[foamedmapgm]]
 path = ~/.calendars/gmail/
 type = caldav
 url = https://apidata.googleusercontent.com/caldav/v2/your@gmail.com/events/
 username = foamedmap@gmail.com
-password = app-specific-password  # Use OAuth2 via vdirsyncer instead
+password = app-specific-password
 auth = basic
 readonly = false
-
-# Google map26 Calendar (via CalDAV)
 [[map26gm]]
 path = ~/.calendars/gmail/
 type = caldav
@@ -33,8 +29,6 @@ username = matt.a.porter26@gmail.com
 password = app-specific-password  # Use OAuth2 via vdirsyncer instead
 auth = basic
 readonly = false
-
-# Outlook Calendar (Office365)
 [[client]]
 path = ~/.calendars/client/
 type = caldav
@@ -61,8 +55,6 @@ frame = color
 theme = dark
 agenda_event_format = {calendar-color}{start-end-time-style} {title} ({location})
 agenda_event_separator = " | "
-
-# For OAuth2 authentication (requires vdirsyncer)
 [hooks]
 pre_import = vdirsyncer sync
 post_import = khal calendar

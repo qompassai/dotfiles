@@ -1,0 +1,86 @@
+2025-04-05 18:15:28 INFO  (LoggingInitialization) Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml  
+2025-04-05 18:15:28 INFO  (LoggingInitialization) Using log file: /home/phaedrus/.ghidra/.ghidra_11.0.3_DEV/application.log  
+2025-04-05 18:15:28 INFO  (Preferences) Loading user preferences: /home/phaedrus/.ghidra/.ghidra_11.0.3_DEV/preferences  
+2025-04-05 18:15:30 INFO  (ClassSearcher) Searching for classes...  
+2025-04-05 18:15:31 INFO  (ClassSearcher) Class search complete (898 ms)  
+2025-04-05 18:15:31 INFO  (SSLContextInitializer) Initializing SSL Context  
+2025-04-05 18:15:31 INFO  (SecureRandomFactory) Initializing Random Number Generator...  
+2025-04-05 18:15:31 INFO  (SecureRandomFactory) Random Number Generator initialization complete: NativePRNGNonBlocking  
+2025-04-05 18:15:31 INFO  (ApplicationTrustManagerFactory) Trust manager disabled, cacerts have not been set  
+2025-04-05 18:15:31 INFO  (GhidraRun) User phaedrus started Ghidra.  
+2025-04-05 18:15:31 DEBUG (DefaultProjectManager) No tools found; Installing default tools  
+2025-04-05 18:15:31 DEBUG (DefaultProjectManager) 	no recent project directories found  
+2025-04-05 18:15:32 INFO  (LoggingInitialization) Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml  
+2025-04-05 18:15:32 INFO  (LoggingInitialization) Using log file: /home/phaedrus/.ghidra/.ghidra_11.0.3_DEV/application.log  
+2025-04-05 18:15:32 DEBUG (RecoverySnapshotMgrPlugin) Recovery snapshot timer set to 5 minute(s)  
+2025-04-05 18:15:32 WARN  (SleighCompile) 3 NOP constructors found  
+2025-04-05 18:15:32 WARN  (SleighCompile) Use -n switch to list each individually  
+2025-04-05 18:15:32 WARN  (SleighCompile) 3 operations wrote to temporaries that were not read  
+2025-04-05 18:15:32 WARN  (SleighCompile) Use -t switch to list each individually  
+2025-09-02 17:08:58 INFO  (LoggingInitialization) Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml  
+2025-09-02 17:08:58 INFO  (LoggingInitialization) Using log file: /home/phaedrus/.ghidra/.ghidra_11.0.3_DEV/application.log  
+2025-09-02 17:08:59 INFO  (Preferences) Loading user preferences: /home/phaedrus/.ghidra/.ghidra_11.0.3_DEV/preferences  
+2025-09-02 17:09:00 INFO  (ClassSearcher) Searching for classes...  
+2025-09-02 17:09:01 INFO  (ClassSearcher) Class search complete (1670 ms)  
+2025-09-02 17:09:01 INFO  (SSLContextInitializer) Initializing SSL Context  
+2025-09-02 17:09:01 INFO  (SecureRandomFactory) Initializing Random Number Generator...  
+2025-09-02 17:09:01 INFO  (SecureRandomFactory) Random Number Generator initialization complete: NativePRNGNonBlocking  
+2025-09-02 17:09:01 INFO  (ApplicationTrustManagerFactory) Trust manager disabled, cacerts have not been set  
+2025-09-02 17:09:01 INFO  (GhidraRun) User phaedrus started Ghidra.  
+2025-09-02 17:09:02 DEBUG (RecoverySnapshotMgrPlugin) Recovery snapshot timer set to 5 minute(s)  
+2025-09-02 17:09:02 INFO  (GhidraRun) Invalid Project: The specified file is not a project file: --help  
+2025-09-02 17:10:09 INFO  (LoggingInitialization) Using log config file: jar:file:/opt/ghidra/Ghidra/Framework/Generic/lib/Generic.jar!/generic.log4j.xml  
+2025-09-02 17:10:09 INFO  (LoggingInitialization) Using log file: /home/phaedrus/.ghidra/.ghidra_11.0.3_DEV/application.log  
+2025-09-02 17:10:09 INFO  (Preferences) Loading user preferences: /home/phaedrus/.ghidra/.ghidra_11.0.3_DEV/preferences  
+2025-09-02 17:10:10 INFO  (ClassSearcher) Searching for classes...  
+2025-09-02 17:10:12 INFO  (ClassSearcher) Class search complete (1674 ms)  
+2025-09-02 17:10:12 INFO  (SSLContextInitializer) Initializing SSL Context  
+2025-09-02 17:10:12 INFO  (SecureRandomFactory) Initializing Random Number Generator...  
+2025-09-02 17:10:12 INFO  (SecureRandomFactory) Random Number Generator initialization complete: NativePRNGNonBlocking  
+2025-09-02 17:10:12 INFO  (ApplicationTrustManagerFactory) Trust manager disabled, cacerts have not been set  
+2025-09-02 17:10:12 INFO  (GhidraRun) User phaedrus started Ghidra.  
+2025-09-02 17:10:13 DEBUG (RecoverySnapshotMgrPlugin) Recovery snapshot timer set to 5 minute(s)  
+2025-09-02 17:10:13 INFO  (GhidraRun) Invalid Project: The specified file is not a project file: -h  
+2025-09-02 17:12:34 INFO  (ExtensionTableProvider) Extensions Changed!: Please restart Ghidra for extension changes to take effect.  
+2025-09-02 17:12:43 ERROR (SwingExceptionHandler) Error: Uncaught Exception! 
+RuntimeException - java.lang.NullPointerException: Cannot invoke 
+"ghidra.framework.main.FrontEndService.addProjectListener(ghidra.framework.model.ProjectListener)" because "frontEnd" is
+ null java.lang.RuntimeException: java.lang.NullPointerException: Cannot invoke "ghidra.framework.main.FrontEndService.addProjectListener(ghidra.framework.model.ProjectListener)" because "frontEnd" is null
+	at ghidra.framework.plugintool.Plugin.cleanup(Plugin.java:276)
+	at ghidra.framework.plugintool.PluginManager.dispose(PluginManager.java:104)
+	at ghidra.framework.plugintool.PluginTool.dispose(PluginTool.java:514)
+	at ghidra.framework.main.FrontEndTool.dispose(FrontEndTool.java:168)
+	at ghidra.framework.plugintool.PluginTool.close(PluginTool.java:1158)
+	at docking.DockingWindowManager.close(DockingWindowManager.java:1170)
+	at docking.RootNode$JFrameWindowWrapper$1.windowClosing(RootNode.java:814)
+	at java.desktop/java.awt.AWTEventMulticaster.windowClosing(AWTEventMulticaster.java:357)
+	at java.desktop/java.awt.AWTEventMulticaster.windowClosing(AWTEventMulticaster.java:357)
+	at java.desktop/java.awt.Window.processWindowEvent(Window.java:2085)
+	at java.desktop/javax.swing.JFrame.processWindowEvent(JFrame.java:298)
+	at java.desktop/java.awt.Window.processEvent(Window.java:2044)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:5001)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
+	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2780)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4833)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:775)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:720)
+	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:714)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:747)
+	at java.desktop/java.awt.EventQueue$5.run(EventQueue.java:745)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
+	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:744)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+Caused by: java.lang.NullPointerException: Cannot invoke "ghidra.framework.main.FrontEndService.addProjectListener(ghidra.framework.model.ProjectListener)" because "frontEnd" is null
+	at ghidra.app.plugin.debug.DomainFolderChangesDisplayPlugin.dispose(DomainFolderChangesDisplayPlugin.java:63)
+	at ghidra.framework.plugintool.Plugin.cleanup(Plugin.java:265)
+	... 32 more
+ 
