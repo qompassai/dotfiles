@@ -1,8 +1,5 @@
-# /qompassai/dotfiles/flake.nix
-# Qompass AI Dotfiles Flake
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
 {
+  description = "Qompass AI Dotfiles Flake";
   inputs = {
     devshell.url = "github:numtide/devshell";
     devshell.inputs.nixpkgs.follows = "nixpkgs";
@@ -17,17 +14,70 @@
     nvfetcher.inputs.nixpkgs.follows = "nixpkgs";
     nvfetcher.inputs.flake-utils.follows = "flake-utils";
     nvfetcher.inputs.flake-compat.follows = "flake-compat";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-stable.url = "github:nixos/nixpkgs/nixos-25.05";
   };
-  outputs = inputs@{ flake-parts, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" "aarch64-linux" ];
+  outputs = inputs @ {
+    self,
+    flake-utils,
+    nixpkgs,
+    flake-parts,
+    ...
+  }:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = ["x86_64-linux" "aarch64-linux"];
+
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
         inputs.devshell.flakeModule
         inputs.treefmt-nix.flakeModule
         ./flake
       ];
+
+      packages = {
+        x86_64-linux = let
+          pkgs = import nixpkgs {system = "x86_64-linux";};
+        in {
+          userEnvironment = pkgs.buildEnv {
+            name = "qompass-user-environment";
+            paths = with pkgs; [
+              ant
+              burp
+              caja
+              carbonyl
+              cava
+              clamav
+              composer
+              connman
+              discordo
+              distcc
+              docker
+              fuzzel
+              git
+              neovim
+              nyx
+              python3
+              rage
+              rkhunter
+              xdg-desktop-portal
+              xdg-desktop-portal-hyprland
+              wine
+              wireguard
+            ];
+          };
+        };
+        aarch64-linux = let
+          pkgs = import nixpkgs {system = "aarch64-linux";};
+        in {
+          userEnvironment = pkgs.buildEnv {
+            name = "qompass-user-environment";
+            paths = with pkgs; [
+              git
+              neovim
+              python311
+            ];
+          };
+        };
+      };
     };
 }
