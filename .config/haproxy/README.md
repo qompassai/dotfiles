@@ -1,0 +1,5 @@
+<!-- README.md -->
+<!-- Qompass AI HAProxy Docs -->
+<!-- Copyright (C) 2025 Qompass AI, All rights reserved -->
+<!-- ---------------------------------------- -->
+

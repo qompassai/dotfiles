@@ -1,0 +1,32 @@
+# /qompassai/dotfiles/.config/guvcview2/video0
+# Qompass AI Guvcview2 Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+width=640
+height=480
+v4l2_format=1196444237
+capture=mmap
+audio=port
+gui=gtk3
+render=sdl
+render_width=800
+render_height=600
+video_codec=dx50
+audio_codec=mp2
+profile_name=default.gpfl
+profile_path=/home/phaedrus
+video_name=my_video.mkv
+video_path=/home/phaedrus/.Videos
+video_sufix=1
+photo_name=my_photo.jpg
+photo_path=/home/phaedrus/.Pictures
+photo_sufix=1
+fps_num=1
+fps_denom=25
+audio_device=21
+video_fx=0x0
+fx_bin_treshold=0x7f
+audio_fx=0x0
+osd_mask=0x0
+crosshair_color=0xff00
+crosshair_size=24
