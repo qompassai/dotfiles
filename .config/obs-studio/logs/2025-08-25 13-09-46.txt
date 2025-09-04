@@ -1,0 +1,55 @@
+13:09:46.850: [Safe Mode] Unclean shutdown detected!
+13:09:49.198: [Safe Mode] User elected to launch normally.
+13:09:49.199: Platform: Wayland
+13:09:49.199: CPU Name: 13th Gen Intel(R) Core(TM) i7-13620H
+13:09:49.199: CPU Speed: 3300.000MHz
+13:09:49.199: Physical Cores: 10, Logical Cores: 16
+13:09:49.199: Physical Memory: 63995MB Total, 1233MB Free
+13:09:49.199: Kernel Version: Linux 6.16.3-arch1-1
+13:09:49.199: Distribution: "Arch Linux" Unknown
+13:09:49.199: Desktop Environment: Hyprland (Hyprland)
+13:09:49.199: Session Type: wayland
+13:09:49.200: Current Date/Time: 2025-08-25, 01:09:49 PM
+13:09:49.200: Browser Hardware Acceleration: true
+13:09:49.200: Qt Version: 6.9.1 (runtime), 6.9.1 (compiled)
+13:09:49.200: Portable mode: false
+13:09:49.250: OBS 31.1.2 (linux)
+13:09:49.250: ---------------------------------
+13:09:49.259: ---------------------------------
+13:09:49.259: audio settings reset:
+13:09:49.259: 	samples per sec: 48000
+13:09:49.259: 	speakers:        2
+13:09:49.259: 	max buffering:   960 milliseconds
+13:09:49.259: 	buffering type:  dynamically increasing
+13:09:49.261: ---------------------------------
+13:09:49.262: Initializing OpenGL...
+13:09:49.262: Using EGL/Wayland
+13:09:49.378: Initialized EGL 1.5
+13:09:49.399: Loading up OpenGL on adapter Intel Mesa Intel(R) Graphics (RPL-P)
+13:09:49.399: OpenGL loaded successfully, version 4.6 (Core Profile) Mesa 25.3.0-devel (git-c1b9396403), shading language 4.60
+13:09:49.591: ---------------------------------
+13:09:49.591: video settings reset:
+13:09:49.591: 	base resolution:   1920x1080
+13:09:49.591: 	output resolution: 1280x720
+13:09:49.591: 	downscale filter:  Bicubic
+13:09:49.591: 	fps:               30/1
+13:09:49.591: 	format:            NV12
+13:09:49.591: 	YUV mode:          Rec. 709/Partial
+13:09:49.591: NV12 texture support enabled
+13:09:49.591: P010 texture support not available
+13:09:49.601: Audio monitoring device:
+13:09:49.601: 	name: Default
+13:09:49.601: 	id: default
+13:09:49.612: ---------------------------------
+13:09:49.625: Failed to load 'en-US' text for module: 'decklink-captions.so'
+13:09:49.639: Failed to load 'en-US' text for module: 'decklink-output-ui.so'
+13:09:49.653: A DeckLink iterator could not be created.  The DeckLink drivers may not be installed
+13:09:49.653: Failed to initialize module 'decklink.so'
+13:09:49.667: [droidcam-obs] module loaded release 240 (arch)
+13:09:49.885: google_s2t_caption_plugin 0.30 obs_module_load 1293543299
+13:09:49.974: [pipewire] No capture sources available
+13:09:50.054: v4l2loopback not installed, virtual camera not registered
+13:09:50.065: [linux-vkcapture] plugin loaded successfully (version 1.5.2)
+13:09:50.123: [Move Transition] loaded version 3.1.0
+13:09:50.263: VAAPI: API version 1.22
+13:09:50.264: FFmpeg VAAPI H264 encoding supported

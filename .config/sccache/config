@@ -1,0 +1,5 @@
+#
+[cache.disk]
+dir = "/home/phaedrus/.cache/sccache"
+size = 53687091200
+
