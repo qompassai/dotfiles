@@ -29,7 +29,7 @@
   "firenvim": { "branch": "master", "commit": "0c3b81444944ed51e9eb50b158b71ee26b611575" },
   "flash.nvim": { "branch": "main", "commit": "3c942666f115e2811e959eabbdd361a025db8b63" },
   "friendly-snippets": { "branch": "main", "commit": "572f5660cf05f8cd8834e096d7b4c921ba18e175" },
-  "fzf-lua": { "branch": "main", "commit": "79dba2990e766a135e92b2851f564f7fccb41b7f" },
+  "fzf-lua": { "branch": "main", "commit": "f6a570cc42596efb73359fc453061e24abb71d9f" },
   "github-nvim-theme": { "branch": "main", "commit": "c106c9472154d6b2c74b74565616b877ae8ed31d" },
   "go.nvim": { "branch": "master", "commit": "2f7cd3a20a2940320d5cad338722601ffa3ce31b" },
   "gruvbox-material": { "branch": "master", "commit": "6a100833060d26cd3ab85c34c5f7154a1000c12f" },

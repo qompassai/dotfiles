@@ -7,19 +7,16 @@
     flake-compat.flake = false;
     flake-parts.url = "github:hercules-ci/flake-parts";
     flake-parts.inputs.nixpkgs-lib.follows = "nixpkgs";
-    flake-utils.url = "github:numtide/flake-utils";
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
     nvfetcher.url = "github:berberman/nvfetcher";
     nvfetcher.inputs.nixpkgs.follows = "nixpkgs";
-    nvfetcher.inputs.flake-utils.follows = "flake-utils";
     nvfetcher.inputs.flake-compat.follows = "flake-compat";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-stable.url = "github:nixos/nixpkgs/nixos-25.05";
   };
   outputs = inputs @ {
     self,
-    flake-utils,
     nixpkgs,
     flake-parts,
     ...
@@ -54,6 +51,7 @@
               docker
               fuzzel
               git
+              limine
               neovim
               nyx
               python3
