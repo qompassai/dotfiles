@@ -1,0 +1,6 @@
+#%PAM-1.0
+auth     sufficient pam_fprintd.so
+auth     sufficient pam_oauth2.so https://example.com/oauth2/tokeninfo?access_token= uid grp=tester,qaiadmin,qaidev
+auth     include    system-auth
+account  sufficient pam_oauth2.so https://example.com/oauth2/tokeninfo?access_token= uid grp=tester,qaiadmin,qaidev
+account  include    system-auth

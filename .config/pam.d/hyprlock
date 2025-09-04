@@ -1,0 +1,4 @@
+# #%PAM-1.0 | /etc/pam.d/hyprlock 
+auth        sufficient  pam_fprintd.so
+auth        include     login
+
