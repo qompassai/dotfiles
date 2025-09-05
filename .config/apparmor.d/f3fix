@@ -1,0 +1,44 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/f3fix
+profile f3fix /{,usr/}bin/f3fix flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/disks-write>
+
+  capability sys_admin,
+  capability sys_rawio,
+
+  ptrace read,
+
+  @{exec_path} mr,
+
+  @{sh_path}  rix,
+
+  @{sbin}/dmidecode rpx,
+  @{bin}/udevadm    rcx -> udevadm,
+
+        @{PROC}/swaps r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  profile udevadm flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/udevadm>
+    include <abstractions/disks-write>
+
+    ptrace read,
+
+    include if exists <local/f3fix_udevadm>
+  }
+
+  include if exists <local/f3fix>
+}
+
+
+# vim:syntax=apparmor

@@ -1,0 +1,64 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/gnome-calculator-search-provider
+profile gnome-calculator-search-provider /{,usr/}lib{,exec,32,64}/gnome-calculator-search-provider flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/dconf-write>
+  include <abstractions/gnome-strict>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+
+  signal (send) set=kill peer=unconfined,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.Calculator.SearchProvider{,.*},
+  dbus receive bus=session path=/org/gnome/Calculator/SearchProvider{,/**}
+       interface=org.gnome.Calculator.SearchProvider{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/Calculator/SearchProvider{,/**}
+       interface=org.gnome.Calculator.SearchProvider{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/Calculator/SearchProvider{,/**}
+       interface=org.gnome.Shell.SearchProvider2
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/Calculator/SearchProvider{,/**}
+       interface=org.gnome.Shell.SearchProvider2
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/Calculator/SearchProvider{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/Calculator/SearchProvider{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/Calculator/SearchProvider{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.Calculator.SearchProvider{,.*}}"),
+  dbus send bus=session path=/org/gnome/Calculator/SearchProvider{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mrix,
+
+  @{bin}/* rpux,
+
+  owner @{user_cache_dirs}/gnome-calculator/* r,
+
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/cmdline r,
+
+  include if exists <local/gnome-calculator-search-provider>
+}
+
+# vim:syntax=apparmor

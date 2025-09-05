@@ -1,0 +1,54 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = /etc/lightdm/Xsession
+profile lightdm-xsession /etc/lightdm/Xsession flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+  include <abstractions/shells>
+
+  @{exec_path} mr,
+
+  @{sh_path}         rix,
+  @{bin}/cat         rix,
+  @{bin}/tr          rix,
+  @{bin}/tty         rix,
+
+  @{bin}/dbus-update-activation-environment  rcx -> dbus,
+  @{bin}/startxfce4                          rpx,
+  @{bin}/systemctl                           rcx -> systemctl,
+
+  /etc/X11/xinit/xinitrc.d/{,**} r,
+  /etc/debuginfod/{,**} r,
+
+  owner @{HOME}/.xsession-errors w,
+
+  profile systemctl flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    owner @{HOME}/.xsession-errors w,
+
+    include if exists <local/lightdm-xsession_systemctl>
+  }
+
+  profile dbus flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/dbus-update-activation-environment mr,
+
+    owner @{HOME}/.xsession-errors w,
+
+    include if exists <local/lightdm-xsession_dbus>
+  }
+
+  include if exists <local/lightdm-xsession>
+}
+
+# vim:syntax=apparmor

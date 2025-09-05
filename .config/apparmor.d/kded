@@ -1,0 +1,231 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/kded5 @{bin}/kded6
+profile kded /{{,usr/}bin/kded5,{,usr/}bin/kded6} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.bluez>
+  include <abstractions/bus/org.freedesktop.PolicyKit1>
+  include <abstractions/consoles>
+  include <abstractions/dconf-write>
+  include <abstractions/devices-usb>
+  include <abstractions/graphics>
+  include <abstractions/gtk>
+  include <abstractions/kde-globals-write>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+  include <abstractions/wutmp>
+
+  capability sys_ptrace,
+
+  network inet dgram,
+  network inet6 dgram,
+  network netlink raw,
+  network netlink dgram,
+
+  ptrace (read),
+
+  signal send set=hup peer=xsettingsd,
+  signal send set=term peer=kioworker,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=com.redhat.NewPrinterNotification{,.*},
+  dbus receive bus=system path=/com/redhat/NewPrinterNotification{,/**}
+       interface=com.redhat.NewPrinterNotification{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/com/redhat/NewPrinterNotification{,/**}
+       interface=com.redhat.NewPrinterNotification{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/com/redhat/NewPrinterNotification{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/com/redhat/NewPrinterNotification{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/com/redhat/NewPrinterNotification{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},com.redhat.NewPrinterNotification{,.*}}"),
+  dbus send bus=system path=/com/redhat/NewPrinterNotification{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.NetworkManager{,.*}
+       peer=(name="{@{busname},org.freedesktop.NetworkManager{,.*}}", label=NetworkManager),
+  dbus (send receive) bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.NetworkManager{,.*}}", label=NetworkManager),
+  dbus send bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.NetworkManager{,.*}}", label=NetworkManager),
+  dbus send bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.NetworkManager{,.*}}", label=NetworkManager),
+  dbus receive bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.NetworkManager{,.*}}", label=NetworkManager),
+  dbus (send receive) bus=system path=/org/freedesktop/bolt{,/**}
+       interface=org.freedesktop.bolt{,.*}
+       peer=(name="{@{busname},org.freedesktop.bolt{,.*}}", label=boltd),
+  dbus (send receive) bus=system path=/org/freedesktop/bolt{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.bolt{,.*}}", label=boltd),
+  dbus send bus=system path=/org/freedesktop/bolt{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.bolt{,.*}}", label=boltd),
+  dbus send bus=system path=/org/freedesktop/bolt{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.bolt{,.*}}", label=boltd),
+  dbus receive bus=system path=/org/freedesktop/bolt{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.bolt{,.*}}", label=boltd),
+
+  dbus receive bus=system path=/
+       interface=org.kde.kf5auth
+       member=remoteSignal
+       peer=(name=:*, label=kauth-kded-smart-helper),
+
+  dbus send bus=system path=/
+       interface=org.kde.kf5auth
+       member=performAction
+       peer=(name="{:*,org.kde.kded.smart}", label=kauth-kded-smart-helper),
+
+  @{exec_path} mrix,
+
+  @{bin}/kcminit            rpx,
+  @{bin}/pgrep              rcx -> pgrep,
+  @{bin}/plasma-welcome    rpux,
+  @{python_path}            rix,
+  @{bin}/flatpak            rpx,
+  @{bin}/setxkbmap          rix,
+  @{bin}/xmodmap           rpux,
+  @{bin}/xrdb               rpx,
+  @{bin}/xsetroot           rpx,
+  @{bin}/xsettingsd         rpx,
+  @{lib}/drkonqi            rpx,
+
+  @{lib}/{,@{multiarch}/}utempter/utempter rpx,
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf{5,6}/kconf_update Px,
+  /{,usr/}lib{,exec,32,64}/kf{5,6}/kconf_update Px,
+
+  /usr/share/color-schemes/{,**} r,
+  /usr/share/kconf_update/ r,
+  /usr/share/kded{5,6}/{,**} r,
+  /usr/share/kf{5,6}/kcookiejar/* r,
+  /usr/share/khotkeys/{,**} r,
+  /usr/share/kservices{5,6}/{,**} r,
+  /usr/share/kservicetypes5/{,**} r,
+
+  /etc/fstab r,
+  /etc/xdg/accept-languages.codes r,
+  /etc/xdg/kde* r,
+  /etc/xdg/kioslaverc r,
+  /etc/xdg/menus/{,**} r,
+
+  /etc/machine-id r,
+  /var/lib/dbus/machine-id r,
+
+  / r,
+
+  owner @{HOME}/ r,
+  owner @{HOME}/.gtkrc-2.0 rw,
+
+  owner @{HOME}/.var/ w,
+  owner @{HOME}/.var/app/ w,
+  owner @{HOME}/.var/app/org.mozilla.firefox/**/ w,
+  owner @{HOME}/.var/app/org.mozilla.firefox/.mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json w,
+  owner @{HOME}/.var/app/org.mozilla.firefox/plasma-browser-integration-host w,
+
+        @{user_cache_dirs}/ksycoca{5,6}_* rwlk -> @{user_cache_dirs}/#@{int},
+  owner @{user_cache_dirs}/plasmashell/ rw,
+  owner @{user_cache_dirs}/plasmashell/** rwlk ->  @{user_cache_dirs}/plasmashell/**,
+
+        @{user_config_dirs}/kcookiejarrc.lock rwk,
+        @{user_config_dirs}/kcookiejarrc{,.@{rand6}} rwl -> @{user_config_dirs}/#@{int},
+  owner @{user_config_dirs}/*rc rwl -> @{user_config_dirs}/#@{int},
+  owner @{user_config_dirs}/*rc.@{rand6} rwl -> @{user_config_dirs}/#@{int},
+  owner @{user_config_dirs}/*rc.lock rwk,
+  owner @{user_config_dirs}/gtk-{3,4}.0/{,**} rwl,
+  owner @{user_config_dirs}/gtk-{3,4}.0/settings.ini.lock rk,
+  owner @{user_config_dirs}/kdedefaults/{,**} r,
+  owner @{user_config_dirs}/libaccounts-glib/ rw,
+  owner @{user_config_dirs}/libaccounts-glib/accounts.db{,-shm,-wal,-journal} rwk,
+  owner @{user_config_dirs}/menus/{,**} r,
+  owner @{user_config_dirs}/plasma* r,
+  owner @{user_config_dirs}/Trolltech.conf.lock rwk,
+  owner @{user_config_dirs}/Trolltech.conf{,.@{rand6}} rwl,
+  owner @{user_config_dirs}/xsettingsd/{,**} rw,
+
+  owner @{user_share_dirs}/icc/{,edid-*} r,
+  owner @{user_share_dirs}/kcookiejar/#@{int} rw,
+  owner @{user_share_dirs}/kcookiejar/cookies.lock rwk,
+  owner @{user_share_dirs}/kcookiejar/cookies{,.@{rand6}} rwkl -> @{user_share_dirs}/kcookiejar/#@{int},
+  owner @{user_share_dirs}/kded{5,6}/{,**} rw,
+  owner @{user_share_dirs}/kscreen/{,**} rwl,
+  owner @{user_share_dirs}/kservices{5,6}/{,**} r,
+  owner @{user_share_dirs}/ktp/cache.db rwk,
+  owner @{user_share_dirs}/remoteview/ r,
+  owner @{user_share_dirs}/services5/{,**} r,
+  owner @{user_share_dirs}/user-places.xbel r,
+
+  owner @{user_state_dirs}/#@{int} rw,
+  owner @{user_state_dirs}/plasmashellstaterc{,*} rwlk -> @{user_state_dirs}/#@{int},
+
+        @{run}/mount/utab r,
+        @{run}/udev/data/c189:@{int} r,                # for /dev/bus/usb/**
+        @{run}/user/@{uid}/gvfs/ r,
+  owner @{run}/user/@{uid}/#@{int} rw,
+  owner @{run}/user/@{uid}/kded{5,6}*kioworker.socket rwl,
+
+  owner @{tmp}/#@{int} rw,
+  owner @{tmp}/kded6.@{rand6} rwl -> /tmp/#@{int},
+  owner @{tmp}/plasma-csd-generator.@{rand6}/{,**} rw,
+
+  @{sys}/class/leds/ r,
+
+        @{PROC}/ r,
+        @{PROC}/@{pids}/cmdline/ r,
+        @{PROC}/@{pids}/fd/ r,
+        @{PROC}/@{pids}/fdinfo/@{int} r,
+        @{PROC}/@{pids}/fd/info/@{int} r,
+        @{PROC}/sys/fs/inotify/max_user_{instances,watches} r,
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  /dev/disk/by-label/ r,
+  /dev/ptmx rw,
+  /dev/rfkill rw,
+
+  profile pgrep flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/pgrep>
+
+    @{PROC}/tty/drivers r,
+
+    include if exists <local/kded_pgrep>
+  }
+
+  include if exists <local/kded>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,42 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/kalendarac
+profile kalendarac /{,usr/}bin/kalendarac flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-server>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{bin}/akonadi_control rpx,
+
+  /usr/share/akonadi/firstrun/{,*} r,
+  /usr/share/akonadi/plugins/serializer/{,*.desktop} r,
+
+  /etc/machine-id r,
+
+  owner @{user_config_dirs}/#@{int} rw,
+  owner @{user_config_dirs}/akonadi-firstrunrc r,
+  owner @{user_config_dirs}/akonadi/ rw,
+  owner @{user_config_dirs}/akonadi/akonadiconnectionrc r,
+  owner @{user_config_dirs}/emaildefaults r,
+  owner @{user_config_dirs}/emailidentities r,
+  owner @{user_config_dirs}/kalendaracrc rw,
+  owner @{user_config_dirs}/kalendaracrc.@{rand6} rwl,
+  owner @{user_config_dirs}/kalendaracrc.lock rwk,
+  owner @{user_config_dirs}/kmail2rc r,
+
+  /dev/tty r,
+
+  include if exists <local/kalendarac>
+}
+
+# vim:syntax=apparmor

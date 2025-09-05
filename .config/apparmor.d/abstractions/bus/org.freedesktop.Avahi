@@ -1,0 +1,52 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+  abi <abi/4.0>,
+
+  # DBus.Properties: read all properties from the interface
+  dbus send bus=system path=/org/freedesktop/Avahi{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll}
+       peer=(name="{@{busname},org.freedesktop.Avahi{,.*}}", label="@{p_avahi_daemon}"),
+
+  # DBus.Properties: receive property changed events
+  dbus receive bus=system path=/org/freedesktop/Avahi{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member=PropertiesChanged
+       peer=(name="{@{busname},org.freedesktop.Avahi{,.*}}", label="@{p_avahi_daemon}"),
+
+  # DBus.Introspectable: allow clients to introspect the service
+  dbus send bus=system path=/org/freedesktop/Avahi{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.Avahi{,.*}}", label="@{p_avahi_daemon}"),
+
+  dbus send bus=system path=/
+       interface=org.freedesktop.DBus.Peer
+       member=Ping
+       peer=(name=org.freedesktop.Avahi),
+
+  dbus send bus=system path=/
+       interface=org.freedesktop.Avahi.Server
+       member={GetAPIVersion,GetState,Service*New}
+       peer=(name=org.freedesktop.Avahi, label="@{p_avahi_daemon}"),
+
+  dbus send bus=system path=/Client@{int}/ServiceBrowser@{int}
+       interface=org.freedesktop.Avahi.ServiceBrowser
+       member=Free
+       peer=(name=org.freedesktop.Avahi, label="@{p_avahi_daemon}"),
+
+  dbus receive bus=system path=/Client@{int}/ServiceBrowser@{int}
+       interface=org.freedesktop.Avahi.ServiceBrowser
+       member={ItemNew,AllForNow,CacheExhausted}
+       peer=(name="@{busname}", label="@{p_avahi_daemon}"),
+
+  dbus receive bus=system path=/
+       interface=org.freedesktop.Avahi.Server
+       member=StateChanged
+       peer=(name=@{busname},  label="@{p_avahi_daemon}"),
+
+  include if exists <abstractions/bus/org.freedesktop.Avahi.d>
+
+# vim:syntax=apparmor

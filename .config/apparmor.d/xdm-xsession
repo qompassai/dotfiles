@@ -1,0 +1,116 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{etc_ro}/X11/xdm/Xsession
+profile xdm-xsession /{,usr/}etc/X11/xdm/Xsession flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/dconf-write>
+  include <abstractions/nameservice-strict>
+  include <abstractions/shells>
+  include <abstractions/X-strict>
+
+  @{exec_path} mr,
+
+  @{shells_path}            rix,
+
+  @{bin}/basename           rix,
+  @{bin}/cat                rix,
+  @{sbin}/checkproc         rix,
+  @{bin}/dirname            rix,
+  @{bin}/fortune           rpux,
+  @{bin}/gpg-agent          rpx,
+  @{bin}/gpg-connect-agent  rpx,
+  @{bin}/{,e}grep           rix,
+  @{bin}/locale             rix,
+  @{bin}/manpath            rix,
+  @{bin}/readlink           rix,
+  @{bin}/realpath           rix,
+  @{bin}/sed                rix,
+  @{bin}/ssh-agent          rix,
+  @{bin}/tput               rix,
+  @{bin}/tr                 rix,
+  @{bin}/tty                rix,
+  @{bin}/uname              rix,
+  @{bin}/whoami             rix,
+  @{bin}/xmodmap           rpux,
+
+  @{bin}/dbus-update-activation-environment rcx -> dbus,
+  @{bin}/flatpak                            rpx,
+  @{bin}/pidof                              rpx,
+  @{bin}/startplasma-x11                    rpx,
+  @{bin}/systemctl                          rcx -> systemctl,
+  @{bin}/xdg-user-dirs-update               rpx,
+  @{bin}/xrdb                               rpx,
+
+  @{lib}/gnome-session-binary               rpx,
+  @{bin}/gnome                              rix,
+  @{bin}/gnome-session                      rix,
+  @{bin}/gsettings                          rpx,
+
+  @{etc_ro}/X11/xdm/sys.xsession                    rix,
+  @{etc_ro}/X11/xinit/xinitrc.d/50-systemd-user.sh  rix,
+  @{etc_ro}/X11/xinit/xinitrc.d/xdg-user-dirs.sh    rix,
+  @{HOME}/.xinitrc                                 rPix, # TODO: rcx
+  @{lib}/xinit/xinitrc                          rix,
+
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+  /usr/share/mc/mc.sh r,
+  /usr/share/terminfo/{,**} r,
+
+  @{etc_ro}/X11/xdm/scripts/{,*} r,
+  @{etc_ro}/X11/xim r,
+  @{etc_ro}/X11/xim.d/none r,
+  @{etc_ro}/X11/xinit/xinitrc.common r,
+  @{etc_ro}/X11/xinit/xinitrc.d/{,*} r,
+  /etc/debuginfod/{,*} r,
+  /etc/gcrypt/hwf.deny r,
+  /etc/locale.conf r,
+  /etc/manpath.config r,
+  /etc/shells r,
+  /etc/sysconfig/* r,
+
+  owner @{HOME}/ r,
+  owner @{HOME}/@{XDG_GPG_DIR}/gpg-agent.conf r,
+
+  owner @{user_share_dirs}/sddm/xorg-session.log rw,
+
+  @{run}/user/@{uid}/xauth_@{rand6} rl,
+
+  owner @{tmp}/ssh-*/ rw,
+  owner @{tmp}/ssh-*/agent.* rw,
+
+        @{PROC}/@{pids}/stat r,
+        @{PROC}/@{pids}/statm r,
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/fd/ r,
+
+        /dev/tty rw,
+  owner /dev/tty@{int} rw,
+
+  profile dbus flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/bus-session>
+
+    @{bin}/dbus-update-activation-environment mr,
+
+    owner @{user_share_dirs}/sddm/xorg-session.log rw,
+
+    include if exists <local/xdm-xsession_dbus>
+  }
+
+  profile systemctl flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    include if exists <local/xdm-xsession_systemctl>
+  }
+
+  include if exists <local/xdm-xsession>
+}
+
+# vim:syntax=apparmor

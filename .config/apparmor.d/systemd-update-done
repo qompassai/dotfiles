@@ -1,0 +1,34 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/systemd/systemd-update-done
+profile systemd-update-done /{,usr/}lib{,exec,32,64}/systemd/systemd-update-done  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+
+  capability net_admin,
+
+  ptrace (read) peer=@{p_systemd},
+
+  @{exec_path} mr,
+
+  /etc/.#.updated@{hex} rw,
+  /etc/.updated w,
+  /var/.#.updated@{hex} rw,
+  /var/.updated w,
+
+  @{run}/host/container-manager r,
+
+  @{PROC}/1/cmdline r,
+  @{PROC}/1/environ r,
+  @{PROC}/cmdline r,
+  @{PROC}/sys/kernel/osrelease r,
+
+  include if exists <local/systemd-update-done>
+}
+
+# vim:syntax=apparmor

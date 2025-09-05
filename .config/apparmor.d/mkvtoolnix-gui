@@ -1,0 +1,66 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/mkvtoolnix-gui
+profile mkvtoolnix-gui /{,usr/}bin/mkvtoolnix-gui flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/desktop>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/qt5-compose-cache-write>
+  include <abstractions/qt5-settings-write>
+  include <abstractions/qt5>
+  include <abstractions/ssl_certs>
+  include <abstractions/user-download-strict>
+
+  signal (send) set=(term, kill) peer=mkvmerge,
+
+  @{exec_path} mr,
+
+  @{bin}/mkvmerge      rpx,
+  @{bin}/mediainfo-gui rpx,
+
+  /usr/share/hwdata/pnp.ids r,
+
+  /etc/fstab r,
+  /etc/machine-id r,
+  /var/lib/dbus/machine-id r,
+
+  owner @{user_music_dirs}/** rw,
+  owner @{user_videos_dirs}/** rw,
+
+  owner @{user_config_dirs}/bunkus.org/ rw,
+  owner @{user_config_dirs}/bunkus.org/mkvtoolnix-gui/ rw,
+  owner @{user_config_dirs}/bunkus.org/mkvtoolnix-gui/** rwkl -> @{user_config_dirs}/bunkus.org/mkvtoolnix-gui/#@{int},
+
+  owner @{user_cache_dirs}/ rw,
+  owner @{user_cache_dirs}/bunkus.org/ rw,
+  owner @{user_cache_dirs}/bunkus.org/mkvtoolnix-gui/ rw,
+  owner @{user_cache_dirs}/bunkus.org/mkvtoolnix-gui/**/ rw,
+  owner @{user_cache_dirs}/bunkus.org/mkvtoolnix-gui/**/@{hex} rw,
+
+  owner @{tmp}/#@{int} rw,
+  owner @{tmp}/MKVToolNix-GUI-MuxConfig-* rwl -> /tmp/#@{int},
+  owner @{tmp}/MKVToolNix-process-*.json rwl -> /tmp/#@{int},
+  owner @{tmp}/MKVToolNix-GUI-MuxJob-*.json rwl -> /tmp/#@{int},
+  owner @{tmp}/MKVToolNix-GUI-Instance-Communicator-* rw,
+  owner /dev/shm/#@{int} rw,
+
+  deny owner @{PROC}/@{pid}/cmdline r,
+  deny       @{PROC}/sys/kernel/random/boot_id r,
+             @{PROC}/@{pid}/mountinfo r,
+             @{PROC}/@{pid}/mounts r,
+
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/mkvtoolnix-gui>
+}
+
+# vim:syntax=apparmor

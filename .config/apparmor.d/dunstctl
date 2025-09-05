@@ -1,0 +1,28 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/dunstctl
+profile dunstctl /{,usr/}bin/dunstctl flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} mr,
+
+  @{bin}/dbus-send          cx -> bus,
+
+  profile bus flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/bus>
+
+    include if exists <local/dunstctl_bus>
+  }
+
+  include if exists <local/dunstctl>
+}
+
+# vim:syntax=apparmor

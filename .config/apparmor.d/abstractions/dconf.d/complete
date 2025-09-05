@@ -1,0 +1,11 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+  /usr/share/dconf/profile/gdm r,
+
+  owner @{user_config_dirs}/glib-2.0/settings/keyfile r,  # When GSETTINGS_BACKEND=keyfile
+
+  owner @{run}/user/@{uid}/dconf/ r,
+
+# vim:syntax=apparmor

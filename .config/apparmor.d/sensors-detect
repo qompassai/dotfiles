@@ -1,0 +1,66 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2022 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/sensors-detect
+profile sensors-detect /{,usr/}{,s}bin/sensors-detect flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/perl>
+
+  capability syslog,
+
+  @{exec_path} rm,
+
+  @{bin}/kmod       rcx -> kmod,
+  @{bin}/perl         r,
+  @{bin}/systemctl  rcx -> systemctl,
+  @{bin}/udevadm    rcx -> udevadm,
+  @{bin}/uname      rix,
+
+  /etc/udev/udev.conf r,
+
+  @{sys}/bus/pci/devices/ r,
+  @{sys}/class/i2c-adapter/ r,
+  @{sys}/devices/@{pci}/{class,vendor,device} r,
+  @{sys}/devices/@{pci}/i2c-*/{,**/}name r,
+  @{sys}/devices/@{pci}/modalias r,
+  @{sys}/devices/virtual/dmi/id/board_{version,vendor,name} r,
+  @{sys}/devices/virtual/dmi/id/chassis_type r,
+  @{sys}/devices/virtual/dmi/id/product_{version,name} r,
+  @{sys}/devices/virtual/dmi/id/sys_vendor r,
+
+        @{PROC}/modules r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  /dev/i2c-@{int} r,
+
+  profile udevadm flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/udevadm>
+
+    include if exists <local/sensors-detect_udevadm>
+  }
+
+  profile kmod flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/kmod>
+
+    include if exists <local/sensors-detect_kmod>
+  }
+
+  profile systemctl flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    include if exists <local/sensors-detect_systemctl>
+  }
+
+  include if exists <local/sensors-detect>
+}
+
+# vim:syntax=apparmor

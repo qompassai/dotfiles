@@ -1,0 +1,112 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/adequate
+profile adequate /{,usr/}bin/adequate flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/perl>
+  include <abstractions/nameservice-strict>
+
+  #capability sys_tty_config,
+
+  @{exec_path} r,
+
+  @{sbin}/ldconfig       rix,
+
+  # It wants to ldd all binaries/libs in packages.
+  @{bin}/ldd                 rcx -> ldd,
+
+  # Think what to do about this (#FIXME#)
+  /usr/share/debconf/frontend     rpx,
+  #/usr/share/debconf/frontend    rcx -> frontend,
+
+  @{bin}/pkg-config          rcx -> pkg-config,
+  @{bin}/dpkg                rpx -> child-dpkg,
+  # Do not strip env to avoid errors like the following:
+  #  ERROR: ld.so: object 'libfakeroot-sysv.so' from LD_PRELOAD cannot be preloaded (cannot open
+  #  shared object file): ignored.
+  @{bin}/dpkg-query          rpx,
+  #
+  @{bin}/update-alternatives rpx,
+
+  /var/lib/adequate/pending rwk,
+
+  /etc/shadow r,
+
+  /usr/share/python{,3}/debian_defaults r,
+  /usr/share/doc/*/copyright r,
+  /usr/share/**/__pycache__/ r,
+  /usr/**/*.py r,
+
+
+  profile ldd flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+
+    @{bin}/ldd mr,
+
+    @{bin}/*               mr,
+    /usr/games/*           mr,
+    @{lib}/@{multiarch}/** mr,
+    /usr/share/**                r,
+
+    /opt/google/chrome{,-beta,-unstable}/google-chrome{,-beta,-unstable} mr,
+
+    @{lib}/@{multiarch}/ld-*.so rix,
+
+    include if exists <local/adequate_ldd>
+  }
+
+  profile frontend flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+    include <abstractions/perl>
+    include <abstractions/nameservice-strict>
+
+    /usr/share/debconf/frontend r,
+
+    @{bin}/adequate   rpx,
+
+    @{sh_path}        rix,
+    @{bin}/stty       rix,
+    @{bin}/locale     rix,
+
+    /etc/debconf.conf r,
+    owner /var/cache/debconf/{config,passwords,templates}.dat{,-new,-old} rwk,
+    /usr/share/debconf/templates/adequate.templates r,
+
+    # The following is needed when debconf uses GUI frontends.
+    include <abstractions/gtk>
+    include <abstractions/fonts>
+    include <abstractions/fontconfig-cache-read>
+    include <abstractions/freedesktop.org>
+    capability dac_read_search,
+    @{bin}/lsb_release rpx,
+    @{bin}/hostname    rix,
+    owner @{PROC}/@{pid}/mounts r,
+    @{HOME}/.Xauthority r,
+
+    /etc/shadow r,
+
+    include if exists <local/adequate_frontend>
+  }
+
+  profile pkg-config flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/pkg-config mr,
+
+    include if exists <local/adequate_pkg-config>
+  }
+
+  include if exists <local/adequate>
+}
+
+# vim:syntax=apparmor

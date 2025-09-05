@@ -1,0 +1,133 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/anyremote
+profile anyremote /{,usr/}bin/anyremote flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+
+  signal (receive) set=(int, term, kill),
+  signal (send) set=(term, kill),
+
+  network inet stream,
+  network inet6 stream,
+
+  @{exec_path} mr,
+
+  @{sh_path}        rix,
+  @{bin}/{,e}grep   rix,
+  @{bin}/{m,g,}awk  rix,
+  @{bin}/basename   rix,
+  @{bin}/cat        rix,
+  @{bin}/curl       rix,
+  @{bin}/cut        rix,
+  @{bin}/expr       rix,
+  @{bin}/find       rix,
+  @{bin}/head       rix,
+  @{bin}/id         rix,
+  @{bin}/md5sum     rix,
+  @{bin}/mkdir      rix,
+  @{bin}/mv         rix,
+  @{bin}/rm         rix,
+  @{bin}/sed        rix,
+  @{bin}/sleep      rix,
+  @{bin}/tail       rix,
+  @{bin}/tr         rix,
+  @{bin}/wc         rix,
+  @{bin}/which{,.debianutils}  rix,
+
+  @{bin}/convert-im6.q16 rcx -> imagemagic,
+  @{bin}/killall         rcx -> killall,
+  @{bin}/pgrep           rcx -> pgrep,
+
+  @{bin}/pacmd           rpx,
+  @{bin}/pactl           rpx,
+  @{bin}/ps              rpx,
+  @{bin}/qtchooser       rpx,
+  @{bin}/wmctrl          rpx,
+  @{lib}/qt{5,6}/bin/qdbus rpx,
+
+  # Players
+  @{bin}/smplayer        rpx,
+  @{bin}/amarok          rpx,
+  @{bin}/vlc             rpx,
+  @{bin}/mpv             rpx,
+  @{bin}/strawberry      rpx,
+
+  /usr/share/anyremote/{,**} r,
+  /usr/share/anyremote/cfg-data/Utils/*.sh rix,
+
+  owner @{HOME}/ r,
+  owner @{HOME}/.Xauthority r,
+  owner @{HOME}/.anyRemote/{,**} rw,
+  owner @{HOME}/.anyRemote/imdb-mf.sh rix,
+
+  owner @{tmp}/amarok_covers/ rw,
+  owner @{tmp}/*.png rw,
+
+  deny @{PROC}/sys/kernel/osrelease r,
+
+  profile imagemagic flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/convert-im6.q16 mr,
+
+    /usr/share/anyremote/cfg-data/Icons/common/*.png r,
+
+    /usr/share/ImageMagick-@{int}/*.xml rw,
+    /etc/ImageMagick-@{int}/*.xml r,
+
+    owner @{HOME}/.anyRemote/*.png rw,
+    owner @{HOME}/.kde/share/apps/amarok/albumcovers/cache/* r,
+
+          /tmp/ r,
+    owner @{tmp}/*.png rw,
+    owner @{tmp}/amarok_covers/* rw,
+    owner @{tmp}/magick-* rw,
+
+    include if exists <local/anyremote_imagemagic>
+  }
+
+  profile killall flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+
+    capability sys_ptrace,
+
+    signal (send) set=(term, kill),
+
+    ptrace (read),
+
+    @{bin}/killall mr,
+
+    # The /proc/ dir is needed to avoid the following error:
+    #  /proc: Permission denied
+         @{PROC}/ r,
+         @{PROC}/@{pids}/stat r,
+
+    # file_inherit
+    owner @{HOME}/.anyRemote/anyremote.stdout w,
+
+    include if exists <local/anyremote_killall>
+  }
+
+  profile pgrep flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/pgrep>
+
+    owner @{HOME}/.anyRemote/anyremote.stdout w,
+
+    include if exists <local/anyremote_pgrep>
+  }
+
+  include if exists <local/anyremote>
+}
+
+# vim:syntax=apparmor

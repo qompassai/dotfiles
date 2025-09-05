@@ -1,0 +1,221 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/hw-probe
+profile hw-probe /{,usr/}bin/hw-probe  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/perl>
+
+  capability sys_admin,
+
+  network inet dgram,
+  network inet6 dgram,
+
+  @{exec_path} rm,
+
+  @{sh_path}             rix,
+  @{bin}/{,e}grep        rix,
+  @{bin}/{m,g,}awk       rix,
+  @{bin}/dd              rix,
+  @{sbin}/efibootmgr     rix,
+  @{bin}/efivar          rix,
+  @{bin}/find            rix,
+  @{bin}/md5sum          rix,
+  @{bin}/pwd             rix,
+  @{bin}/sleep           rix,
+  @{bin}/sort            rix,
+  @{bin}/tar             rix,
+  @{bin}/uname           rix,
+
+  @{bin}/vulkaninfo     rpux,
+  @{bin}/acpi            rpx,
+  @{bin}/amixer          rpx,
+  @{bin}/aplay           rpx,
+  @{bin}/cpuid           rpx,
+  @{bin}/cpupower        rpx,
+  @{bin}/curl            rcx -> curl,
+  @{bin}/df              rpx,
+  @{bin}/dmesg           rpx,
+  @{bin}/dpkg            rpx -> child-dpkg,
+  @{bin}/edid-decode     rpx,
+  @{bin}/glxgears        rpx,
+  @{bin}/glxinfo         rpx,
+  @{bin}/hciconfig       rpx,
+  @{bin}/i2cdetect       rpx,
+  @{bin}/inxi            rpx,
+  @{bin}/journalctl      rcx -> journalctl,
+  @{bin}/killall         rcx -> killall,
+  @{bin}/kmod            rcx -> kmod,
+  @{bin}/lsb_release     rpx,
+  @{bin}/lsblk           rpx,
+  @{bin}/lscpu           rpx,
+  @{bin}/lspci           rpx,
+  @{bin}/lsusb           rpx,
+  @{bin}/memtester       rpx,
+  @{bin}/nmcli           rpx,
+  @{bin}/pacman          rcx -> pacman,
+  @{bin}/rpm             rcx -> rpm,
+  @{bin}/sensors         rpx,
+  @{bin}/systemctl       rcx -> systemctl,
+  @{bin}/systemd-analyze rpx,
+  @{bin}/udevadm         rcx -> udevadm,
+  @{bin}/upower          rpx,
+  @{bin}/uptime          rpx,
+  @{bin}/usb-devices     rpx,
+  @{bin}/xdpyinfo        rpx,
+  @{bin}/xinput          rpx,
+  @{bin}/xrandr          rpx,
+  @{sbin}/biosdecode     rpx,
+  @{sbin}/dkms           rpx,
+  @{sbin}/dmidecode      rpx,
+  @{sbin}/fdisk          rpx,
+  @{sbin}/hdparm         rpx,
+  @{bin}/boltctl        rpux,
+  @{sbin}/hwinfo         rpx,
+  @{sbin}/rfkill         rpx,
+  @{sbin}/smartctl       rpx,
+
+  /etc/modprobe.d/{,*.conf} r,
+
+  @{efi}/EFI/{,**} r,
+
+  owner @{HOME}/HW_PROBE/{,**} rw,
+
+  owner @{tmp}/@{rand10}/  rw,
+  owner @{tmp}/*/cpu_perf rw,
+
+  @{sys}/class/drm/ r,
+  @{sys}/class/power_supply/ r,
+  @{sys}/devices/@{pci}/drm/card@{int}/*/edid r,
+  @{sys}/devices/**/power_supply/*/uevent r,
+  @{sys}/devices/virtual/dmi/id/* r,
+  @{sys}/firmware/efi/efivars/ r,
+  @{sys}/firmware/efi/efivars/* r,
+
+  @{PROC}/bus/input/devices r,
+  @{PROC}/cmdline r,
+  @{PROC}/interrupts r,
+  @{PROC}/ioports r,
+  @{PROC}/scsi/scsi r,
+
+  /dev/{,**} r,
+
+  profile kmod flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/kmod>
+
+    capability syslog,
+
+    @{sys}/module/{,**} r,
+
+    include if exists <local/hw-probe_kmod>
+  }
+
+  profile curl  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+
+    @{bin}/curl mr,
+
+    include if exists <local/hw-probe_curl>
+  }
+
+  profile pacman  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+
+    @{bin}/pacman mr,
+
+    @{bin}/gpg      rpx -> pacman//gpg,
+    @{bin}/gpgconf  rpx -> pacman//gpg,
+    @{bin}/gpgsm    rpx -> pacman//gpg,
+
+    /etc/pacman.conf r,
+    /etc/pacman.d/{,**} r,
+
+    /var/lib/pacman/{,**} r,
+
+    include if exists <local/hw-probe_pacman>
+  }
+
+  profile rpm  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+
+    capability dac_read_search,
+
+    @{bin}/rpm mr,
+
+    /var/ r,
+    /var/lib/ r,
+    /var/lib/rpm/ r,
+    /var/lib/rpm/rpmdb.sqlite rk,
+    /var/lib/rpm/rpmdb.sqlite-shm rwk,
+    /var/lib/rpm/rpmdb.sqlite-wal rw,
+
+    include if exists <local/hw-probe_rpm>
+  }
+
+  profile journalctl  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+
+    @{bin}/journalctl mr,
+
+    /var/lib/dbus/machine-id r,
+    /etc/machine-id r,
+
+    @{run}/log/ rw,
+    /{run,var}/log/journal/ r,
+    /{run,var}/log/journal/@{hex32}/ r,
+    /{run,var}/log/journal/@{hex32}/system.journal* r,
+    /{run,var}/log/journal/@{hex32}/system@@{hex}-@{hex}.journal* r,
+    /{run,var}/log/journal/@{hex32}/system@@{hex32}-@{hex16}-@{hex16}.journal* r,
+    /{run,var}/log/journal/@{hex32}/user-@{hex}.journal* r,
+    /{run,var}/log/journal/@{hex32}/user-@{uid}@@{hex}-@{hex}.journal* r,
+    /{run,var}/log/journal/@{hex32}/user-@{uid}@@{hex32}-@{hex16}-@{hex16}.journal* r,
+
+    owner @{PROC}/@{pid}/stat r,
+
+    include if exists <local/hw-probe_journalctl>
+  }
+
+  profile killall  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+
+    capability sys_ptrace,
+
+    ptrace (read),
+
+    signal (send) set=(int, term, kill),
+
+    @{bin}/killall mr,
+
+    @{PROC}/ r,
+    @{PROC}/@{pids}/stat r,
+
+    include if exists <local/hw-probe_killall>
+  }
+
+  profile udevadm  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/udevadm>
+
+    include if exists <local/hw-probe_udevadm>
+  }
+
+  profile systemctl  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    include if exists <local/hw-probe_systemctl>
+  }
+
+  include if exists <local/hw-probe>
+}
+
+# vim:syntax=apparmor

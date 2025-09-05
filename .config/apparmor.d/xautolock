@@ -1,0 +1,34 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xautolock
+profile xautolock /{,usr/}bin/xautolock flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} mr,
+
+  @{sh_path}        rix,
+  @{bin}/env        rix,
+
+  # Locker apps to launch.
+  @{bin}/i3lock-fancy         rpx,
+  @{bin}/light-locker         rpx,
+  @{bin}/light-locker-command rpx,
+
+  @{bin}/xset                 rpx,
+
+  owner @{HOME}/.Xauthority r,
+
+  # file_inherit
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/xautolock>
+}
+
+# vim:syntax=apparmor

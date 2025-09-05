@@ -1,0 +1,68 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+# Most programs do not need access to audio devices, audio-client only includes
+# configuration files to be used by client applications.
+
+  abi <abi/4.0>,
+
+  /usr/share/alsa/{,**} r,
+  /usr/share/openal/hrtf/{,**} r,
+  /usr/share/pipewire/client-rt.conf r,
+  /usr/share/pipewire/client.conf r,
+  /usr/share/pipewire/jack.conf r,
+  /usr/share/sounds/{,**} r,
+
+  /etc/alsa/conf.d/{,**} r,
+  /etc/asound.conf r,
+  /etc/esound/esd.conf r,
+  /etc/libao.conf r,
+  /etc/openal/alsoft.conf r,
+  /etc/pipewire/client{,-rt}.conf r,
+  /etc/pipewire/client{,-rt}.conf.d/{,**} r,
+  /etc/pulse/client.conf r,
+  /etc/pulse/client.conf.d/{,**} r,
+  /etc/wildmidi/wildmidi.cfg r,
+
+  owner @{desktop_cache_dirs}/event-sound-cache.tdb.@{hex32}.@{multiarch} rwk,  # libcanberra
+  owner @{desktop_config_dirs}/pulse/ rw,
+  owner @{desktop_config_dirs}/pulse/client.conf r,
+  owner @{desktop_config_dirs}/pulse/client.conf.d/{,*.conf} r,
+  owner @{desktop_config_dirs}/pulse/cookie rwk,
+
+  owner @{HOME}/.alsoftrc r,
+  owner @{HOME}/.asoundrc r,
+  owner @{HOME}/.esd_auth r,
+  owner @{HOME}/.libao r,
+  owner @{HOME}/.pulse-cookie rwk,
+
+  owner @{user_cache_dirs}/event-sound-cache.tdb.@{hex32}.@{multiarch} rwk,  # libcanberra
+
+  owner @{user_config_dirs}/pulse/ rw,
+  owner @{user_config_dirs}/pulse/client.conf r,
+  owner @{user_config_dirs}/pulse/client.conf.d/{,*.conf} r,
+  owner @{user_config_dirs}/pulse/cookie rwk,
+
+  owner @{user_config_dirs}/pipewire/ rw,
+  owner @{user_config_dirs}/pipewire/client.conf r,
+
+  owner @{user_share_dirs}/openal/hrtf/{,**} r,
+  owner @{user_share_dirs}/sounds/ r,
+  owner @{user_share_dirs}/sounds/__custom/index.theme r,
+
+  owner @{run}/user/@{uid}/pipewire-@{int} rw,
+
+  owner @{run}/user/@{uid}/pulse/ rw,
+  owner @{run}/user/@{uid}/pulse/native rw,
+
+  @{sys}/class/sound/ r,
+
+        /dev/shm/ r,
+  owner /dev/shm/pulse-shm-@{int} rw,
+
+  /dev/snd/controlC@{int} r,
+
+  include if exists <abstractions/audio-client.d>
+
+# vim:syntax=apparmor

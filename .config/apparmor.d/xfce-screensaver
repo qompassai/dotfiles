@@ -1,0 +1,61 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xfce4-screensaver
+profile xfce-screensaver /{,usr/}bin/xfce4-screensaver  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/authentication>
+  include <abstractions/graphics>
+  include <abstractions/xfce>
+  include <abstractions/nameservice-strict>
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.xfce.ScreenSaver{,.*},
+  dbus receive bus=session path=/org/xfce/ScreenSaver{,/**}
+       interface=org.xfce.ScreenSaver{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/xfce/ScreenSaver{,/**}
+       interface=org.xfce.ScreenSaver{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/xfce/ScreenSaver{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/xfce/ScreenSaver{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/xfce/ScreenSaver{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.xfce.ScreenSaver{,.*}}"),
+  dbus send bus=session path=/org/xfce/ScreenSaver{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{sh_path}    rix,
+  @{bin}/pidof  rix,
+  @{bin}/wc     rix,
+
+  @{lib}/xfce4-screensaver-dialog rix,
+  @{lib}/xfce4-screensaver-gl-helper rix,
+
+  /etc/xdg/menus/xfce4-screensavers.menu r,
+
+  @{att}/@{run}/systemd/inhibit/@{int}.ref rw,
+
+  include if exists <local/xfce-screensaver>
+}
+
+# vim:syntax=apparmor

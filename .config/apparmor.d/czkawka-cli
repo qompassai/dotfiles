@@ -1,0 +1,36 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/czkawka_cli
+profile czkawka-cli /{,usr/}bin/czkawka_cli flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} mr,
+
+  # Dirs to scan for duplicates
+  #owner @{HOME}/** rw,
+  owner @{MOUNTS}/** rw,
+
+  owner @{user_config_dirs}/czkawka/ rw,
+  owner @{user_config_dirs}/czkawka/** rw,
+
+  owner @{user_cache_dirs}/ rw,
+  owner @{user_cache_dirs}/czkawka/ rw,
+  owner @{user_cache_dirs}/czkawka/** rw,
+
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  @{sys}/fs/cgroup/{,**} r,
+
+  include if exists <local/czkawka-cli>
+}
+
+# vim:syntax=apparmor

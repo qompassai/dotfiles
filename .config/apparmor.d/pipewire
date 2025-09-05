@@ -1,0 +1,96 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2015-2022 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/pipewire
+profile pipewire /{,usr/}bin/pipewire  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/audio-server>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.RealtimeKit1>
+  include <abstractions/nameservice-strict>
+  include <abstractions/video>
+
+  capability sys_ptrace,
+
+  network netlink raw,
+
+  ptrace (read),
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.pulseaudio.Server{,.*},
+  dbus receive bus=session path=/org/pulseaudio/Server{,/**}
+       interface=org.pulseaudio.Server{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/pulseaudio/Server{,/**}
+       interface=org.pulseaudio.Server{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/pulseaudio/Server{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/pulseaudio/Server{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/pulseaudio/Server{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.pulseaudio.Server{,.*}}"),
+  dbus send bus=session path=/org/pulseaudio/Server{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mrix,
+
+  @{bin}/pactl                   rix,
+  @{bin}/pipewire-media-session  rpx,
+
+  /usr/share/pipewire/{,**} r,
+
+  /etc/pipewire/{,**} r,
+
+              / r,
+        @{att}/ r,
+  owner @{att}/.flatpak-info r,
+
+  owner @{user_config_dirs}/pipewire/{,**} r,
+
+  owner @{tmp}/librnnoise-@{int}.so rm,
+
+  owner @{run}/user/@{uid}/pipewire-@{int} rw,
+  owner @{run}/user/@{uid}/pipewire-@{int}-manager.lock rwk,
+  owner @{run}/user/@{uid}/pipewire-@{int}.lock rwk,
+  owner @{run}/user/@{uid}/pulse/pid rw,
+
+  @{run}/udev/data/c@{dynamic}:@{int} r,  # For dynamic assignment range 234 to 254, 384 to 511
+
+  @{sys}/bus/ r,
+  @{sys}/bus/media/devices/ r,
+  @{sys}/class/ r,
+  @{sys}/devices/@{pci}/usb@{int}/**/{idVendor,idProduct,removable,uevent} r,
+  @{sys}/devices/**/device:*/**/path r,
+  @{sys}/devices/virtual/dmi/id/{sys_vendor,product_version,product_name,bios_vendor,board_vendor} r,
+  @{sys}/module/apparmor/parameters/enabled r,
+
+  owner @{PROC}/@{pid}/task/@{tid}/comm rw,
+
+  /dev/media@{int} rw,
+
+  include if exists <local/pipewire>
+}
+
+# vim:syntax=apparmor

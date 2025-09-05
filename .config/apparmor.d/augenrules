@@ -1,0 +1,38 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/augenrules
+profile augenrules /{,usr/}{,s}bin/augenrules  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{sh_path}         rix,
+  @{bin}/{,e,f}grep  rix,
+  @{bin}/{,g,m}awk   rix,
+  @{sbin}/auditctl   rpx,
+  @{bin}/cat         rix,
+  @{bin}/chmod       rix,
+  @{bin}/cmp         rix,
+  @{bin}/cp          rix,
+  @{bin}/ls          rix,
+  @{bin}/mktemp      rix,
+  @{bin}/rm          rix,
+
+  /etc/audit/audit.rules rw,
+  /etc/audit/rules.d/{,*} r,
+
+  owner @{tmp}/aurules.@{rand8} rw,
+
+  /dev/tty rw,
+
+  include if exists <local/augenrules>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,30 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/dleyna-server-service
+profile dleyna-server-service /{,usr/}lib{,exec,32,64}/dleyna-server-service flags=(complain) {
+  include <abstractions/base>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink dgram,
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  /etc/dleyna-server-service.conf r,
+
+        @{user_config_dirs}/dleyna-server-service.conf r,
+  owner @{user_config_dirs}/dleyna-server-service.conf w,
+
+  include if exists <local/dleyna-server-service>
+}
+
+# vim:syntax=apparmor

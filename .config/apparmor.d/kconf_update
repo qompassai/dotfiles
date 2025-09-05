@@ -1,0 +1,81 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{lib}/kf{5,6}/kconf_update
+@{exec_path} += @{lib}/@{multiarch}/{,libexec/}kf{5,6}/kconf_update
+profile kconf_update /{{,usr/}lib{,exec,32,64}/kf{5,6}/kconf_update,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf{5,6}/kconf_update,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf{5,6}/kconf_update} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/dconf-write>
+  include <abstractions/graphics>
+  include <abstractions/gtk>
+  include <abstractions/kde-globals-write>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+  include <abstractions/perl>
+  include <abstractions/python>
+
+  ptrace (read),
+
+  @{exec_path} mr,
+
+  @{sh_path}                             rix,
+  @{bin}/{,p}grep                        rix,
+  @{python_path}                         rix,
+  @{bin}/qtpaths                         rix,
+  @{bin}/sed                             rix,
+
+  @{bin}/qtchooser                       rpx,
+  @{lib}/kconf_update_bin/*              rix,
+  @{lib}/@{multiarch}/kconf_update_bin/* rix,
+  @{lib}/qt6/bin/qtpaths                 rix,
+  /usr/share/kconf_update/*.py           rix,
+  /usr/share/kconf_update/*.sh           rix,
+
+  /usr/share/kconf_update/{,**} r,
+  /usr/share/kglobalaccel/org.kde.krunner.desktop r,
+
+  /etc/xdg/*rc r,
+  /etc/xdg/ui/*rc r,
+
+  /etc/machine-id r,
+  /var/lib/dbus/machine-id r,
+
+  owner @{HOME}/.gtkrc-@{version} w,
+
+  owner @{user_config_dirs}/*rc rwl -> @{user_config_dirs}/#@{int},
+  owner @{user_config_dirs}/*rc.@{rand6} rwl -> @{user_config_dirs}/#@{int},
+  owner @{user_config_dirs}/*rc.lock rwk,
+  owner @{user_config_dirs}/gtk-{3,4}.0/* rwlk -> @{user_config_dirs}/gtk-{3,4}.0/**,
+  owner @{user_config_dirs}/sed@{rand6} rw,
+  owner @{user_config_dirs}/xsettingsd/xsettingsd.conf rw,
+  owner @{user_config_dirs}/kcmfonts.lock rwk,
+
+  owner @{user_share_dirs}/#@{int} rw,
+  owner @{user_share_dirs}/krunnerstaterc.lock rwk,
+  owner @{user_share_dirs}/krunnerstaterc{,.@{rand6}} rwl -> @{user_config_dirs}/#@{int},
+
+  owner @{tmp}/#@{int} rw,
+  owner @{tmp}/kconf_update.@{rand6}.lock rwk,
+  owner @{tmp}/kconf_update.@{rand6}{,.@{rand6}} rwl -> /tmp/#@{int},
+
+  @{sys}/devices/system/node/ r,
+  @{sys}/devices/system/node/node@{int}/meminfo r,
+
+        @{PROC}/ r,
+        @{PROC}/tty/drivers r,
+        @{PROC}/uptime r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/stat r,
+
+  /dev/tty rw,
+
+  include if exists <local/kconf_update>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,57 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/resolvconf
+profile resolvconf /{,usr/}{,s}bin/resolvconf flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{sh_path}         rix,
+  @{bin}/cat         rix,
+  @{bin}/cp          rix,
+  @{bin}/flock       rix,
+  @{bin}/mkdir       rix,
+  @{bin}/mv          rix,
+  @{bin}/readlink    rix,
+  @{bin}/rm          rix,
+  @{bin}/run-parts   rix,
+  @{bin}/sed         rix,
+  @{bin}/systemctl   rcx -> systemctl,
+  @{lib}/resolvconf/list-records rix,
+
+  @{lib}/resolvconf/{,**} r,
+
+  @{etc_rw}/resolv.conf.bak rw,
+  @{etc_rw}/resolv.conf rw,
+  /etc/resolvconf.conf r,
+  /etc/resolvconf/{,**} r,
+  /etc/resolvconf/update.d/libc rix,
+
+  / r,
+
+  owner @{run}/resolvconf/{,**} rw,
+  owner @{run}/resolvconf/run-lock wk,
+
+  /dev/tty rw,
+
+  profile systemctl flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    capability net_admin,
+    capability sys_ptrace,
+
+    include if exists <local/resolvconf_systemctl>
+  }
+
+  include if exists <local/resolvconf>
+}
+
+# vim:syntax=apparmor

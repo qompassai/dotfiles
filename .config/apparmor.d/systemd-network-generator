@@ -1,0 +1,25 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/systemd/systemd-network-generator
+profile systemd-network-generator /{,usr/}lib{,exec,32,64}/systemd/systemd-network-generator  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/common/systemd>
+
+  capability net_admin,
+
+  @{exec_path} mr,
+
+  owner @{run}/systemd/network/{,**} rw,
+
+  @{run}/credentials/systemd-network-generator.service/ r,
+
+  include if exists <local/systemd-network-generator>
+}
+
+# vim:syntax=apparmor

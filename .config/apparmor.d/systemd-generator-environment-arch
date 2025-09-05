@@ -1,0 +1,22 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/systemd/system-environment-generators/10-arch
+profile systemd-generator-environment-arch /{,usr/}lib{,exec,32,64}/systemd/system-environment-generators/10-arch flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{sh_path}        r,
+
+  include if exists <local/systemd-generator-environment-arch>
+}
+
+# vim:syntax=apparmor

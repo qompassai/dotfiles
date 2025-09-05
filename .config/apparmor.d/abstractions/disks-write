@@ -1,0 +1,49 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+  abi <abi/4.0>,
+
+  include <abstractions/disks-read>
+
+  # Regular disk/partition devices
+  /dev/{s,v}d[a-z]* w,
+  /dev/{s,v}d[a-z]*@{int} w,
+
+  # SSD Nvme devices
+  /dev/nvme[0-9]* w,
+
+  # SD card devices
+  /dev/mmcblk[0-9]* w,
+  /dev/mmcblk[0-9]*p@{int} w,
+
+  # Loop devices
+  /dev/loop[0-9]* w,
+  /dev/loop[0-9]*p@{int} w,
+
+  # LUKS/LVM (device-mapper) devices
+  /dev/dm-@{int} w,
+  /dev/mapper/{,*} w,
+
+  # ZFS devices
+  /dev/zd@{int} w,
+
+  # ZRAM devices
+  /dev/zram@{int} w,
+
+  # NBD devices
+  /dev/nbd* w,
+
+  # Floppy disks
+  /dev/fd@{int} w,
+
+  # CD-ROM
+  /dev/sr@{int} w,
+
+  # MD RAID devices
+  /dev/md@{int} w,
+
+  include if exists <abstractions/disks-write.d>
+
+# vim:syntax=apparmor

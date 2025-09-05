@@ -1,0 +1,147 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/systemd/systemd-homed
+profile systemd-homed /{,usr/}lib{,exec,32,64}/systemd/systemd-homed  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/disks-write>
+  include <abstractions/nameservice-strict>
+  include <abstractions/common/systemd>
+
+  userns,
+
+  capability chown,
+  capability dac_override,
+  capability dac_read_search,
+  capability fowner,
+  capability fsetid,
+  capability setfcap,
+  capability setgid,
+  capability setpcap,
+  capability setuid,
+  capability sys_admin,
+  capability sys_ptrace,
+  capability sys_resource,
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet raw,
+  network inet6 raw,
+  network netlink raw,
+
+  mount                      -> @{run}/systemd/user-home-mount/,
+  mount options=(rw private) -> @{run}/systemd/user-home-mount/,
+  mount options=(rw rslave)  -> @{run}/,
+
+  umount @{run}/systemd/user-home-mount/,
+
+  signal (send receive) set=kill peer=systemd-homed//&systemd-homework,
+
+  ptrace read peer=systemd-homed//&systemd-homework,
+
+  unix bind type=stream addr=@@{udbus}/bus/systemd-homed/system,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.freedesktop.home1{,.*},
+  dbus receive bus=system path=/org/freedesktop/home1{,/**}
+       interface=org.freedesktop.home1{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/freedesktop/home1{,/**}
+       interface=org.freedesktop.home1{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/freedesktop/home1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/freedesktop/home1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/freedesktop/home1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.home1{,.*}}"),
+  dbus send bus=system path=/org/freedesktop/home1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/freedesktop/PolicyKit1{,/**}
+       interface=org.freedesktop.PolicyKit1{,.*}
+       peer=(name="{@{busname},org.freedesktop.PolicyKit1{,.*}}", label=polkitd),
+  dbus (send receive) bus=system path=/org/freedesktop/PolicyKit1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.PolicyKit1{,.*}}", label=polkitd),
+  dbus send bus=system path=/org/freedesktop/PolicyKit1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.PolicyKit1{,.*}}", label=polkitd),
+  dbus send bus=system path=/org/freedesktop/PolicyKit1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.PolicyKit1{,.*}}", label=polkitd),
+  dbus receive bus=system path=/org/freedesktop/PolicyKit1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.PolicyKit1{,.*}}", label=polkitd),
+
+  @{exec_path} mr,
+
+  @{lib}/systemd/systemd-homework rpx -> &systemd-homework,
+  @{sbin}/mkfs.btrfs rpx,
+  @{sbin}/mkfs.fat   rpx,
+  @{sbin}/mke2fs     rpx,
+
+  /etc/machine-id r,
+  /etc/systemd/homed.conf r,
+  /etc/skel/{,**} r,
+
+  /var/cache/systemd/home/{,**} rw,
+  /var/lib/systemd/home/{,**} rw,
+
+  / r,
+  @{HOMEDIRS}/ r,
+  @{HOMEDIRS}/* rw,
+  @{HOMEDIRS}/*.homedir/ rw,
+
+  @{run}/ r,
+  @{run}/cryptsetup/{,*} rwk,
+  @{run}/systemd/home/{,**} rw,
+  @{run}/systemd/userdb/io.systemd.home r,
+  @{run}/systemd/user-home-mount/{,**} rw,
+  @{run}/systemd/notify w,
+
+  @{sys}/bus/ r,
+  @{sys}/fs/ r,
+  @{sys}/class/ r,
+  @{sys}/kernel/uevent_seqnum r,
+  @{sys}/devices/**/read_ahead_kb r,
+
+        @{PROC}/@{pid}/cgroup r,
+        @{PROC}/devices r,
+        @{PROC}/pressure/* r,
+        @{PROC}/swaps r,
+        @{PROC}/sys/fs/nr_open r,
+        @{PROC}/sysvipc/{shm,sem,msg} r,
+  owner @{PROC}/@{pid}/gid_map w,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/uid_map w,
+
+  /dev/loop-control rwk,
+  /dev/loop@{int} rw,
+  /dev/mapper/control rw,
+  /dev/mqueue/ r,
+  /dev/shm/ r,
+
+  include if exists <local/systemd-homed>
+}
+
+# vim:syntax=apparmor

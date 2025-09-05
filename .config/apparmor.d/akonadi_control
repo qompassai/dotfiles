@@ -1,0 +1,38 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/akonadi_control
+profile akonadi_control /{,usr/}bin/akonadi_control flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{bin}/akonadi_*      rpux,
+  @{bin}/akonadiserver  rpx,
+
+  /usr/share/akonadi/{,**} r,
+
+  /etc/machine-id r,
+
+  owner @{user_cache_dirs}/akonadi/{,**} rwl,
+
+  owner @{user_config_dirs}/akonadi/ rw,
+  owner @{user_config_dirs}/akonadi/** rwlk -> @{user_config_dirs}/akonadi/**,
+  owner @{user_config_dirs}/libaccounts-glib/accounts.db{,-shm,-wal} rwk,
+
+  owner @{user_share_dirs}/akonadi/{,**} rwl,
+
+  /dev/tty r,
+
+  include if exists <local/akonadi_control>
+}
+
+# vim:syntax=apparmor

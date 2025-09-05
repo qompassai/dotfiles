@@ -1,0 +1,98 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/ganyremote
+profile ganyremote /{,usr/}bin/ganyremote flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/desktop>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/nameservice-strict>
+  include <abstractions/python>
+  include <abstractions/thumbnails-cache-read>
+  include <abstractions/user-download-strict>
+
+  network inet stream,
+  network inet6 stream,
+
+  @{exec_path} r,
+  @{python_path} r,
+
+  @{bin}/            r,
+  @{sh_path}         rix,
+  @{bin}/rm          rix,
+  @{bin}/{,e}grep    rix,
+  @{bin}/cut         rix,
+  @{bin}/id          rix,
+  @{bin}/which{,.debianutils}  rix,
+  @{bin}/tr          rix,
+  @{bin}/{m,g,}awk   rix,
+
+  @{bin}/anyremote   rpx,
+  @{bin}/ps          rpx,
+
+  @{bin}/killall     rcx -> killall,
+  @{bin}/pgrep       rcx -> pgrep,
+
+  @{bin}/pacmd      rpux,
+  @{bin}/pactl      rpux,
+
+  # Players
+  @{bin}/smplayer   rpux,
+  @{bin}/amarok     rpux,
+  @{bin}/vlc        rpux,
+  @{bin}/mpv        rpux,
+  @{bin}/strawberry rpux,
+
+  /usr/share/anyremote/{,**} r,
+  /usr/share/doc/anyremote{,-data}/{,**} r,
+
+  /etc/fstab r,
+
+  owner @{HOME}/ r,
+  owner @{HOME}/.anyRemote/{,*} rw,
+
+  owner @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/mountinfo r,
+
+  deny @{PROC}/sys/kernel/osrelease r,
+
+  profile killall flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+
+    capability sys_ptrace,
+
+    signal (send) set=(int, term, kill),
+
+    ptrace (read),
+
+    @{bin}/killall mr,
+
+    # The /proc/ dir is needed to avoid the following error:
+    #  /proc: Permission denied
+         @{PROC}/ r,
+         @{PROC}/@{pids}/stat r,
+
+    include if exists <local/ganyremote_killall>
+  }
+
+  profile pgrep flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/pgrep>
+
+    /usr/share/anyremote/{,**} r,
+
+    include if exists <local/ganyremote_pgrep>
+  }
+
+  include if exists <local/ganyremote>
+}
+
+# vim:syntax=apparmor

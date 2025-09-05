@@ -1,0 +1,25 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/kreadconfig{,5}
+profile kreadconfig /{,usr/}bin/kreadconfig{,5} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/kde-strict>
+
+  capability dac_read_search,
+
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  /etc/xdg/kioslaverc r,
+
+  include if exists <local/kreadconfig>
+}
+
+# vim:syntax=apparmor

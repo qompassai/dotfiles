@@ -1,0 +1,34 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/update-secureboot-policy
+profile update-secureboot-policy /{,usr/}{,s}bin/update-secureboot-policy flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/common/debconf>
+
+  @{exec_path} rm,
+
+  @{bin}/{,m,g}awk       ix,
+  @{bin}/dpkg-trigger    px,
+  @{bin}/find            ix,
+  @{bin}/id              ix,
+  @{bin}/od              ix,
+  @{bin}/sort            ix,
+  @{bin}/touch           ix,
+  @{bin}/wc              ix,
+
+  / r,
+
+  /var/lib/dkms/ r,
+  /var/lib/shim-signed/dkms-list rw,
+
+  include if exists <local/update-secureboot-policy>
+}
+
+# vim:syntax=apparmor

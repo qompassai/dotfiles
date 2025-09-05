@@ -1,0 +1,81 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/ModemManager
+profile ModemManager /{,usr/}{,s}bin/ModemManager  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.login1>
+  include <abstractions/bus/org.freedesktop.PolicyKit1>
+  include <abstractions/consoles>
+  include <abstractions/devices-usb>
+  include <abstractions/dri>
+
+  capability net_admin,
+
+  network qipcrtr dgram,
+  network netlink raw,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.freedesktop.ModemManager1{,.*},
+  dbus receive bus=system path=/org/freedesktop/ModemManager1{,/**}
+       interface=org.freedesktop.ModemManager1{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/freedesktop/ModemManager1{,/**}
+       interface=org.freedesktop.ModemManager1{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/freedesktop/ModemManager1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/freedesktop/ModemManager1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/freedesktop/ModemManager1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.ModemManager1{,.*}}"),
+  dbus send bus=system path=/org/freedesktop/ModemManager1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{run}/udev/data/+acpi:* r,             # for acpi
+  @{run}/udev/data/+pci:* r,              # Identifies all PCI devices (CPU, GPU, Network, Disks, USB, etc.)
+  @{run}/udev/data/+platform:* r,
+  @{run}/udev/data/+pnp:* r,
+  @{run}/udev/data/+serial*:* r,
+  @{run}/udev/data/+usb:* r,
+  @{run}/udev/data/+vmbus:* r,
+  @{run}/udev/data/c16[6,7]:@{int} r,     # USB modems
+  @{run}/udev/data/c18[0,8,9]:@{int} r,   # USB devices & USB serial converters
+  @{run}/udev/data/c4:@{int} r,           # for /dev/tty[0-9]*
+  @{run}/udev/data/c5:@{int} r,           # for /dev/tty, /dev/console, /dev/ptmx
+  @{run}/udev/data/n@{int} r,
+
+  @{att}/@{run}/systemd/inhibit/@{int}.ref rw,
+
+  @{sys}/bus/ r,
+  @{sys}/bus/usb/devices/ r,
+  @{sys}/class/ r,
+  @{sys}/class/net/ r,
+  @{sys}/class/tty/ r,
+  @{sys}/class/wwan/ r,
+
+  @{sys}/devices/**/net/*/ r,
+  @{sys}/devices/**/uevent r,
+  @{sys}/devices/virtual/tty/*/ r,
+
+  include if exists <local/ModemManager>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,56 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gnome-disks
+profile gnome-disks /{,usr/}bin/gnome-disks flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/dconf-write>
+  include <abstractions/disks-write>
+  include <abstractions/gnome-strict>
+  include <abstractions/user-download-strict>
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.DiskUtility{,.*},
+  dbus receive bus=session path=/org/gnome/DiskUtility{,/**}
+       interface=org.gnome.DiskUtility{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/DiskUtility{,/**}
+       interface=org.gnome.DiskUtility{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/DiskUtility{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/DiskUtility{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/DiskUtility{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.DiskUtility{,.*}}"),
+  dbus send bus=session path=/org/gnome/DiskUtility{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{open_path}  rpx -> child-open-help,
+
+  owner @{user_cache_dirs}/gnome-disks/{,**} rw,
+
+        @{PROC}/1/cgroup r,
+  owner @{PROC}/@{pid}/cgroup r,
+
+  include if exists <local/gnome-disks>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,19 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2017-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/light-locker-command
+profile light-locker-command /{,usr/}bin/light-locker-command flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} mr,
+
+  include if exists <local/light-locker-command>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,65 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/usbguard
+profile usbguard /{,usr/}bin/usbguard flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/devices-usb>
+
+  capability chown,
+  capability fowner,
+  capability dac_override,
+
+  # Needed to create policy (usbguard generate-policy)
+  network netlink dgram,
+
+  unix (send, receive, connect) type=stream peer=(label="usbguard-daemon",addr=@@{int}),
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.usbguard1{,.*},
+  dbus receive bus=system path=/org/usbguard1{,/**}
+       interface=org.usbguard1{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/usbguard1{,/**}
+       interface=org.usbguard1{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/usbguard1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/usbguard1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/usbguard1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.usbguard1{,.*}}"),
+  dbus send bus=system path=/org/usbguard1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  /etc/usbguard/*.conf rw,
+  /etc/usbguard/IPCAccessControl.d/{,*} rw,
+
+  /dev/shm/qb-usbguard-{request,response,event}-@{int}-@{int}-@{int}-{header,data} rw,
+  /dev/shm/qb-@{int}-@{int}-@{int}-*/qb-{request,response,event}-usbguard-{header,data} rw,
+
+  # For "usbguard generate-policy"
+  @{sys}/devices/@{pci}/uevent r,
+
+  include if exists <local/usbguard>
+}
+
+# vim:syntax=apparmor

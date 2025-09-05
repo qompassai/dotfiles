@@ -1,0 +1,92 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2017-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/psi-plus
+profile psi-plus /{,usr/}bin/psi-plus flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/desktop>
+  include <abstractions/enchant>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/qt5-compose-cache-write>
+  include <abstractions/qt5-settings-write>
+  include <abstractions/ssl_certs>
+  include <abstractions/thumbnails-cache-read>
+  include <abstractions/user-download-strict>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink dgram,
+
+  signal (send) set=(term, kill) peer=lsb_release,
+
+  @{exec_path} mr,
+
+  @{bin}/aplay       rcx -> aplay,
+  @{bin}/gpg{,2}     rpx,
+  @{bin}/lsb_release rpx,
+  @{open_path}       rpx -> child-open,
+  @{lib}/firefox/firefox rpux,
+
+  /usr/share/psi-plus/{,**} r,
+
+  /etc/debian_version r,
+  /etc/fstab r,
+  /etc/machine-id r,
+  /var/lib/dbus/machine-id r,
+
+  owner @{HOME}/ r,
+  owner @{user_cache_dirs}/psi+/{,**} rw,
+  owner @{user_config_dirs}/autostart/psi-plus.desktop rw,
+  owner @{user_config_dirs}/psi+/ rw,
+  owner @{user_config_dirs}/psi+/** rwkl -> @{user_config_dirs}/psi+/#@{int},
+  owner @{user_share_dirs}/psi+/ rw,
+  owner @{user_share_dirs}/psi+/** rwk,
+
+  owner @{tmp}/#@{int} rw,
+  owner @{tmp}/etilqs_@{sqlhex} rw,
+  owner @{tmp}/Psi+.* rwl -> /tmp/#@{int},
+
+  @{att}/@{run}/systemd/inhibit/@{int}.ref rw,
+
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+
+        /dev/shm/#@{int} rw,
+  owner /dev/tty@{int} rw,
+
+  profile aplay flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/audio-client>
+
+    @{bin}/aplay mr,
+    #@{bin}/pulseaudio rpux,
+
+    /var/lib/dbus/machine-id r,
+    /etc/machine-id r,
+
+    /usr/share/psi-plus/sound/** r,
+
+    owner @{HOME}/.Xauthority r,
+
+    # file_inherit
+    /dev/dri/card@{int} rw,
+
+    include if exists <local/psi-plus_aplay>
+  }
+
+  include if exists <local/psi-plus>
+}
+
+# vim:syntax=apparmor

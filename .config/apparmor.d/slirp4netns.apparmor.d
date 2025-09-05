@@ -1,0 +1,46 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/slirp4netns
+profile slirp4netns /{,usr/}bin/slirp4netns  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+
+  userns,
+
+  capability net_admin,
+  capability setpcap,
+  capability sys_admin,
+
+  network inet stream,
+  network inet6 stream,
+  network inet dgram,
+  network inet6 dgram,
+
+  # TODO: Restrict this a bit
+  mount,
+  umount,
+
+  pivot_root /tmp/**,
+  pivot_root /tmp/old/,
+  pivot_root oldroot=/tmp/old/ /tmp/,
+
+  @{exec_path} mr,
+
+  /tmp/{,**} rw,
+  /old/ rw,
+
+        @{run}/user/@{uid}/netns-@{uid} r,
+        @{run}/user/@{uid}/netns/cni-* r,
+  owner @{run}/user/@{uid}/libpod/tmp/slirp4netns-*.log r,
+
+  /dev/net/tun rw,
+
+  include if exists <local/slirp4netns>
+}
+
+# vim:syntax=apparmor

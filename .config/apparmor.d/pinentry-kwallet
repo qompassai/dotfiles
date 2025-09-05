@@ -1,0 +1,44 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/pinentry-kwallet
+profile pinentry-kwallet /{,usr/}bin/pinentry-kwallet flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/kde-strict>
+
+  signal (send) set=(term, kill) peer=gpg-agent,
+
+  @{exec_path} mr,
+
+  @{bin}/date              rix,
+  @{bin}/env               rix,
+  @{bin}/kwalletcli        rcx -> kwalletcli,
+  @{bin}/kwalletcli_getpin rix,
+  @{bin}/mksh              rix,
+  @{bin}/pinentry-*        rpx,
+
+  profile kwalletcli flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/kde-strict>
+
+    @{bin}/kwalletcli mr,
+
+    @{lib}/@{multiarch}/qt5/plugins/kf5/org.kde.kwindowsystem.platforms/KF5WindowSystemKWaylandPlugin.so mr,
+    @{lib}/@{multiarch}/qt5/plugins/kf5/org.kde.kwindowsystem.platforms/KF5WindowSystemX11Plugin.so mr,
+
+    owner @{user_config_dirs}/kwalletrc r,
+
+    include if exists <local/pinentry-kwallet_kwalletcli>
+  }
+
+  include if exists <local/pinentry-kwallet>
+}
+
+# vim:syntax=apparmor

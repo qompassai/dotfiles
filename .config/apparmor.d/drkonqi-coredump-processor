@@ -1,0 +1,36 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{lib}/drkonqi-coredump-processor
+@{exec_path} += @{lib}/@{multiarch}/{,libexec/}drkonqi-coredump-processor
+profile drkonqi-coredump-processor /{{,usr/}lib{,exec,32,64}/drkonqi-coredump-processor,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}drkonqi-coredump-processor,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}drkonqi-coredump-processor} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/qt5>
+
+  capability dac_override,
+  capability dac_read_search,
+
+  @{exec_path} mr,
+
+  /etc/machine-id r,
+
+  /usr/share/icu/@{int}.@{int}/*.dat r,
+
+  /{run,var}/log/journal/ r,
+  /{run,var}/log/journal/@{hex32}/ r,
+  /{run,var}/log/journal/@{hex32}/system.journal r,
+  /{run,var}/log/journal/@{hex32}/system@*.journal* r,
+  /{run,var}/log/journal/@{hex32}/user-@{uid}.journal r,
+  /{run,var}/log/journal/@{hex32}/user-@{uid}@*.journal* r,
+  /{run,var}/log/journal/remote/ r,
+
+  include if exists <local/drkonqi-coredump-processor>
+}
+
+# vim:syntax=apparmor

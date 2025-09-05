@@ -1,0 +1,80 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/gsd-datetime
+profile gsd-datetime /{,usr/}lib{,exec,32,64}/gsd-datetime  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.gnome.SessionManager>
+  include <abstractions/dconf-write>
+  include <abstractions/nameservice-strict>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  signal receive set=(term, hup) peer=gdm*,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.SettingsDaemon.Datetime{,.*},
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Datetime{,/**}
+       interface=org.gnome.SettingsDaemon.Datetime{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Datetime{,/**}
+       interface=org.gnome.SettingsDaemon.Datetime{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Datetime{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Datetime{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Datetime{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Datetime{,.*}}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Datetime{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mr,
+
+  /usr/share/dconf/profile/gdm r,
+  /usr/share/gdm/greeter-dconf-defaults r,
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+  /usr/share/gnome-settings-daemon/datetime/backward r,
+
+  owner @{GDM_HOME}/greeter-dconf-defaults r,
+  owner @{gdm_config_dirs}/dconf/user r,
+
+  owner @{user_cache_dirs}/geocode-glib/* r,
+
+  @{run}/systemd/sessions/@{int} r,
+  @{run}/systemd/users/@{uid} r,
+
+        @{PROC}/1/cgroup r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/fdinfo/@{int} r,
+  owner @{PROC}/@{pid}/stat r,
+
+  include if exists <local/gsd-datetime>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,73 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2017-2022 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gpg{,2}
+profile gpg /{,usr/}bin/gpg{,2} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+  include <abstractions/user-download-strict>
+  include <abstractions/user-read-strict>
+
+  capability dac_read_search,
+
+  network netlink raw,
+
+  @{exec_path} mrix,
+
+  @{bin}/dirmngr           rpx,
+  @{bin}/gpg-agent         rpx,
+  @{bin}/gpg-connect-agent rpx,
+  @{bin}/gpgconf           rpx,
+  @{bin}/gpgsm             rpx,
+  @{lib}/{,gnupg/}scdaemon rpx,
+
+  /usr/share/terminfo/** r,
+  /usr/share/pacman/keyrings/** r,
+
+  /etc/inputrc r,
+
+
+  /etc/pacman.d/gnupg/ rw,
+  /etc/pacman.d/gnupg/** rwkl -> /etc/pacman.d/gnupg/**,
+
+  owner /var/lib/*/{,.}gnupg/ rw,
+  owner /var/lib/*/{,.}gnupg/** rwkl -> /var/lib/*/{,.}gnupg/**,
+
+  # TODO: Remove after zypper profile is created
+  owner @{HOME}/@{XDG_GPG_DIR}/ rw,
+  owner @{HOME}/@{XDG_GPG_DIR}/** rwkl -> @{HOME}/@{XDG_GPG_DIR}/**,
+
+  owner @{HOME}/.var/app/**/gnupg*/** rw,
+  owner @{HOME}/.var/app/**/gnupg*/** rwkl -> @{HOME}/.var/app/**/gnupg*/**,
+
+  owner @{user_projects_dirs}/**/gnupg/ rw,
+  owner @{user_projects_dirs}/**/gnupg/** rwkl -> @{user_projects_dirs}/**/gnupg/**,
+
+  # TODO: For compatibility with torbrowser profile from upstream.
+  owner @{user_share_dirs}/torbrowser/gnupg_homedir/ rw,
+  owner @{user_share_dirs}/torbrowser/gnupg_homedir/** rwkl -> @{user_share_dirs}/torbrowser/gnupg_homedir/**,
+
+
+  owner @{tmp}/ostree-gpg-@{rand6}/ r,
+  owner @{tmp}/ostree-gpg-@{rand6}/** rwkl -> /tmp/ostree-gpg-@{rand6}/**,
+
+  owner /tmp/@{int}@{int} rw,
+
+  owner @{run}/user/@{uid}/gnupg/d.*/ rw,
+  owner @{run}/user/@{uid}/gnupg/S.gpg-agent rw,
+
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/task/@{tid}/comm rw,
+  owner @{PROC}/@{pid}/task/@{tid}/stat rw,
+
+  include if exists <local/gpg>
+}
+
+# vim:syntax=apparmor

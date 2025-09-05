@@ -1,0 +1,103 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/yelp @{bin}/gnome-help
+profile yelp /{{,usr/}bin/yelp,{,usr/}bin/gnome-help} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/bus-system>
+  include <abstractions/common/gnome>
+
+  network netlink raw,
+
+  include <abstractions/bus/own-accessibility>
+
+  dbus bind bus=accessibility name=org.gnome.Yelp{,.*},
+  dbus receive bus=accessibility path=/org/gnome/Yelp{,/**}
+       interface=org.gnome.Yelp{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=accessibility path=/org/gnome/Yelp{,/**}
+       interface=org.gnome.Yelp{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=accessibility path=/org/gnome/Yelp{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=accessibility path=/org/gnome/Yelp{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=accessibility path=/org/gnome/Yelp{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.Yelp{,.*}}"),
+  dbus send bus=accessibility path=/org/gnome/Yelp{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.Yelp{,.*},
+  dbus receive bus=session path=/org/gnome/Yelp{,/**}
+       interface=org.gnome.Yelp{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/Yelp{,/**}
+       interface=org.gnome.Yelp{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/Yelp{,/**}
+       interface=org.gtk.Actions
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/Yelp{,/**}
+       interface=org.gtk.Actions
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/Yelp{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/Yelp{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/Yelp{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.Yelp{,.*}}"),
+  dbus send bus=session path=/org/gnome/Yelp{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+  @{open_path}  rpx -> child-open-help,
+
+  @{lib}/{,@{multiarch}/}webkit{2,}gtk-*/WebKitNetworkProcess rix,
+  @{lib}/{,@{multiarch}/}webkit{2,}gtk-*/WebKitWebProcess rix,
+
+  /usr/share/help/{,**} r,
+  /usr/share/yelp-xsl/{,**} r,
+  /usr/share/xml/{,**} r,
+
+  /etc/xml/{,**} r,
+
+        @{sys}/devices/virtual/dmi/id/chassis_type r,
+        @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/app.slice/app-gnome-yelp-*.scope/memory.* r,
+  owner @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/app.slice/*.slice/*/memory.* r,
+  owner @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/session.slice/xdg-desktop-portal.service/memory.current r,
+  owner @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/session.slice/xdg-desktop-portal.service/memory.high r,
+  owner @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/session.slice/xdg-desktop-portal.service/memory.max r,
+
+        @{PROC}/zoneinfo r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/smaps r,
+  owner @{PROC}/@{pid}/statm r,
+
+  include if exists <local/yelp>
+}
+
+# vim:syntax=apparmor

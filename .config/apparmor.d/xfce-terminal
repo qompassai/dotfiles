@@ -1,0 +1,86 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xfce4-terminal
+profile xfce-terminal /{,usr/}bin/xfce4-terminal flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/audio-client>
+  include <abstractions/consoles>
+  include <abstractions/dconf-write>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/xfce>
+
+  signal send,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.xfce.Terminal5{,.*},
+  dbus receive bus=session path=/org/xfce/Terminal5{,/**}
+       interface=org.xfce.Terminal5{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/xfce/Terminal5{,/**}
+       interface=org.xfce.Terminal5{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/xfce/Terminal5{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/xfce/Terminal5{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/xfce/Terminal5{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.xfce.Terminal5{,.*}}"),
+  dbus send bus=session path=/org/xfce/Terminal5{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{open_path} rpx -> child-open-help,
+
+  # The shell is not confined on purpose.
+  @{bin}/@{shells}            rux,
+
+  # Some CLI program can be launched directly from Gnome Shell
+  @{bin}/htop                 rpx,
+  @{bin}/micro               rpux,
+  @{bin}/nvtop                rpx,
+
+  @{editor_path} rpux,
+
+  /usr/share/ r,
+  /usr/share/desktop-base/profiles/xdg-config/ r,
+  /usr/share/xfce4/ r,
+  /usr/share/xfce4/terminal/{,**} r,
+
+  /etc/fstab r,
+  /etc/xdg/ r,
+  /etc/xdg/xfce4/ r,
+
+  owner @{user_config_dirs}/xfce4/ r,
+  owner @{user_config_dirs}/xfce4/terminal/{,**} r,
+
+  owner @{tmp}/#@{int} rw,
+
+        @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/mountinfo r,
+
+  /dev/ptmx rw,
+
+  include if exists <local/xfce-terminal>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,127 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/{ifup,ifdown,ifquery}
+profile ifup /{,usr/}bin/{ifup,ifdown,ifquery} flags=(complain) {
+  include <abstractions/base>
+
+  capability net_admin,
+  audit capability sys_module,
+
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{sh_path}        rix,
+  @{bin}/ip         rix,
+  @{sbin}/route     rix,
+  @{bin}/seq        rix,
+  @{bin}/sleep      rix,
+  @{bin}/wc         rix,
+
+  @{bin}/dhclient      rpx,
+  @{bin}/macchanger    rpx,
+
+  @{lib}/ifupdown/*.sh rix,
+
+  @{bin}/run-parts  rcx -> run-parts,
+  @{bin}/kmod       rcx -> kmod,
+  @{sbin}/sysctl    rcx -> sysctl,
+
+  /etc/network/interfaces r,
+  /etc/network/interfaces.d/{,*} r,
+  /etc/iproute2/rt_scopes r,
+
+  @{run}/network/ rw,
+  @{run}/network/{.,}ifstate* rwk,
+  @{run}/network/{ifup,ifdown}-*.pid rw,
+  @{run}/network/interfaces.d/{,*} r,
+
+  # For setting a USB modem
+  owner /dev/ttyUSB[0-9]* rw,
+
+
+  profile run-parts flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/run-parts mr,
+
+    @{lib}/bridge-utils/ifupdown.sh       rpux,
+
+    /etc/network/if-down.d/ r,
+    /etc/network/if-down.d/resolvconf          rpux,
+    /etc/network/if-down.d/resolved            rpux,
+    /etc/network/if-down.d/openvpn             rpux,
+    /etc/network/if-down.d/wpasupplicant       rpux,
+    /etc/wpa_supplicant/ifupdown.sh            rpux,
+
+    /etc/network/if-post-down.d/ r,
+    /etc/network/if-post-down.d/bridge         rpux,
+    /etc/network/if-post-down.d/hostapd        rpux,
+    /etc/network/if-post-down.d/chrony         rpux,
+    /etc/hostapd/ifupdown.sh                   rpux,
+    /etc/network/if-post-down.d/ifenslave      rpux,
+    /etc/network/if-post-down.d/macchanger     rpux,
+    /etc/macchanger/ifupdown.sh                rpux,
+    /etc/network/if-post-down.d/wireless-tools rpux,
+    /etc/network/if-post-down.d/wpasupplicant  rpux,
+
+    /etc/network/if-pre-up.d/ r,
+    /etc/network/if-pre-up.d/bridge            rpux,
+    /etc/network/if-pre-up.d/ethtool           rpux,
+    /etc/network/if-pre-up.d/hostapd           rpux,
+    /etc/network/if-pre-up.d/ifenslave         rpux,
+    /etc/network/if-pre-up.d/macchanger        rpux,
+    /etc/network/if-pre-up.d/wireless-tools    rpux,
+    /etc/network/if-pre-up.d/wpasupplicant     rpux,
+    # For stable-privacy IPv6 addresses
+    /etc/network/if-pre-up.d/random-secret     rpux,
+
+    /etc/network/if-up.d/ r,
+    /etc/network/if-up.d/*resolvconf           rpux,
+    /etc/network/if-up.d/resolved              rpux,
+    /etc/network/if-up.d/chrony                rpux,
+    /etc/network/if-up.d/ethtool               rpux,
+    /etc/network/if-up.d/ifenslave             rpux,
+    /etc/network/if-up.d/openvpn               rpux,
+    /etc/network/if-up.d/wpasupplicant         rpux,
+
+    include if exists <local/ifup_run-parts>
+  }
+
+  profile kmod flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/kmod>
+
+    @{sys}/module/** r,
+
+    include if exists <local/ifup_kmod>
+  }
+
+  profile sysctl flags=(complain) {
+    include <abstractions/base>
+
+    capability net_admin,
+    capability sys_admin,
+
+    @{sbin}/sysctl mr,
+
+    @{PROC}/sys/ r,
+    @{PROC}/sys/** r,
+
+    @{PROC}/sys/net/ipv6/conf/*/accept_ra rw,
+    @{PROC}/sys/net/ipv6/conf/*/autoconf rw,
+
+    include if exists <local/ifup_sysctl>
+  }
+
+  include if exists <local/ifup>
+}
+
+# vim:syntax=apparmor

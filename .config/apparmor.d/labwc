@@ -1,0 +1,60 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/labwc
+profile labwc /{,usr/}bin/labwc  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/desktop>
+  include <abstractions/devices-usb>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  # Apps allowed to run
+  @{bin}/* rpux,
+  @{lib}/* rpux,
+
+  /usr/share/libinput/ r,
+  /usr/share/libinput/*.quirks r,
+
+  owner @{user_config_dirs}/labwc/ r,
+  owner @{user_config_dirs}/labwc/* r,
+
+  owner /dev/shm/wayland.mozilla.ipc.@{int} rw,
+
+  @{sys}/class/drm/ r,
+  @{sys}/class/input/ r,
+  @{sys}/devices/@{pci}/boot_vga r,
+  @{sys}/devices/**/uevent r,
+
+  @{run}/udev/data/+acpi:* r,             # for ?
+  @{run}/udev/data/+drm:card@{int}-* r,   # for screen outputs
+  @{run}/udev/data/+hid:* r,              # for HID-Compliant Keyboard
+  @{run}/udev/data/+hid:* r,              # for HID-Compliant Keyboard
+  @{run}/udev/data/+pci:* r,              # Identifies all PCI devices (CPU, GPU, Network, Disks, USB, etc.)
+  @{run}/udev/data/+platform:* r,         # for ?
+  @{run}/udev/data/+serio:* r,            # for touchpad?
+  @{run}/udev/data/+sound:card@{int} r,   # for sound card
+  @{run}/udev/data/c13:@{int}  r,         # for /dev/input/*
+  @{run}/udev/data/c226:@{int} r,         # for /dev/dri/card*
+
+  @{run}/systemd/sessions/* r,
+  @{run}/systemd/seats/seat@{int} r,
+
+  owner @{PROC}/@{pid}/fd/ r,
+
+  include if exists <local/labwc>
+}
+
+# vim:syntax=apparmor

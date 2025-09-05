@@ -1,0 +1,29 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gdk-pixbuf-query-loaders
+profile gdk-pixbuf-query-loaders /{,usr/}bin/gdk-pixbuf-query-loaders flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  capability dac_read_search,
+
+  network inet stream,
+  network inet6 stream,
+
+  @{exec_path} mr,
+
+  @{lib}/gdk-pixbuf-[0-9].@{int}/{,*}/loaders.cache.* rw,
+  @{lib}/gdk-pixbuf-[0-9].@{int}/*/loaders.cache rw,
+
+  /usr/share/gvfs/remote-volume-monitors/{,**} r,
+
+  include if exists <local/gdk-pixbuf-query-loaders>
+}
+
+# vim:syntax=apparmor

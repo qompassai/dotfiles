@@ -1,0 +1,57 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2017-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/fuseiso
+profile fuseiso /{,usr/}bin/fuseiso flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+
+  # Be able to mount ISO images
+  mount fstype=fuse.fuseiso -> @{HOME}/*/,
+  mount fstype=fuse.fuseiso -> @{HOME}/*/*/,
+  mount fstype=fuse.fuseiso -> @{user_cache_dirs}/**/,
+
+  @{exec_path} mr,
+
+  @{bin}/fusermount{,3} rcx -> fusermount,
+
+  # Where to mount ISO files
+  owner @{HOME}/*/ rw,
+  owner @{HOME}/*/*/ rw,
+  owner @{user_cache_dirs}/**/ r,
+
+  owner @{HOME}/.mtab.fuseiso rwk,
+  owner @{HOME}/.mtab.fuseiso.new rw,
+
+  # Image files to be mounted
+  owner @{user_img_dirs}/{,**} rwk,
+
+  /dev/fuse rw,
+
+  profile fusermount flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/fusermount>
+
+    mount fstype={fuse,fuse.fuseiso} -> @{HOME}/*/,
+    mount fstype={fuse,fuse.fuseiso} -> @{HOME}/*/*/,
+    mount fstype={fuse,fuse.fuseiso} -> @{user_cache_dirs}/**/,
+
+    umount @{HOME}/*/,
+    umount @{HOME}/*/*/,
+    umount @{user_cache_dirs}/**/,
+
+    owner @{user_img_dirs}/{,**} r, # Image files to be mounted
+
+    include if exists <local/fuseiso_fusermount>
+  }
+
+  include if exists <local/fuseiso>
+}
+
+# vim:syntax=apparmor

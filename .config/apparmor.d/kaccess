@@ -1,0 +1,35 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/kaccess
+profile kaccess /{,usr/}bin/kaccess flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{bin}/gsettings rpx,
+
+  /usr/share/icons/{,**} r,
+
+  /etc/machine-id r,
+
+  owner @{user_config_dirs}/breezerc r,
+  owner @{user_config_dirs}/kaccessrc r,
+
+  owner @{user_share_dirs}/mime/generic-icons r,
+
+  /dev/tty r,
+
+  include if exists <local/kaccess>
+}
+
+# vim:syntax=apparmor

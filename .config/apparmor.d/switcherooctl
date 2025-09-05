@@ -1,0 +1,40 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/switcherooctl
+profile switcherooctl /{,usr/}bin/switcherooctl flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/python>
+
+  dbus (send receive) bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=net.hadess.SwitcherooControl{,.*}
+       peer=(name="{@{busname},net.hadess.SwitcherooControl{,.*}}", label=switcheroo-control),
+  dbus (send receive) bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},net.hadess.SwitcherooControl{,.*}}", label=switcheroo-control),
+  dbus send bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},net.hadess.SwitcherooControl{,.*}}", label=switcheroo-control),
+  dbus send bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},net.hadess.SwitcherooControl{,.*}}", label=switcheroo-control),
+  dbus receive bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},net.hadess.SwitcherooControl{,.*}}", label=switcheroo-control),
+
+  @{exec_path} mr,
+
+  include if exists <local/switcherooctl>
+}
+
+# vim:syntax=apparmor

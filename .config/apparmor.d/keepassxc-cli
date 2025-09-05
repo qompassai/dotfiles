@@ -1,0 +1,19 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/keepassxc-cli
+profile keepassxc-cli /{,usr/}bin/keepassxc-cli flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} mr,
+
+  include if exists <local/keepassxc-cli>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,50 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/dkms/dkms_autoinstaller
+profile dkms-autoinstaller /{,usr/}lib{,exec,32,64}/dkms/dkms_autoinstaller flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  @{exec_path} rm,
+
+  @{sh_path}        rix,
+  @{sbin}/dkms      rpx,
+  @{bin}/echo       rix,
+  @{bin}/plymouth   rix,
+  @{bin}/readlink   rix,
+  @{bin}/run-parts  rcx -> run-parts,
+  @{bin}/systemctl  rcx -> systemctl,
+  @{bin}/tput       rix,
+
+  # For shell pwd
+  / r,
+
+  owner @{PROC}/cmdline r,
+
+  profile run-parts flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+
+    @{bin}/run-parts mr,
+
+    include if exists <local/dkms-autoinstaller_run-parts>
+  }
+
+  profile systemctl flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    include if exists <local/dkms-autoinstaller_systemctl>
+  }
+
+  include if exists <local/dkms-autoinstaller>
+}
+
+# vim:syntax=apparmor

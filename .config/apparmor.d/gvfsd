@@ -1,0 +1,99 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2022 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,gvfs/}gvfsd
+profile gvfsd /{,usr/}lib{,exec,32,64}/{,gvfs/}gvfsd flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/nameservice-strict>
+
+  signal receive set=usr1 peer=pacman,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gtk.vfs.Daemon{,.*},
+  dbus receive bus=session path=/org/gtk/vfs/Daemon{,/**}
+       interface=org.gtk.vfs.Daemon{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gtk/vfs/Daemon{,/**}
+       interface=org.gtk.vfs.Daemon{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gtk/vfs/Daemon{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gtk/vfs/Daemon{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gtk/vfs/Daemon{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gtk.vfs.Daemon{,.*}}"),
+  dbus send bus=session path=/org/gtk/vfs/Daemon{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gtk.vfs.MountTracker{,.*},
+  dbus receive bus=session path=/org/gtk/vfs/mounttracker
+       interface=org.gtk.vfs.MountTracker{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gtk/vfs/mounttracker
+       interface=org.gtk.vfs.MountTracker{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gtk/vfs/mounttracker
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gtk/vfs/mounttracker
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gtk/vfs/mounttracker
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gtk.vfs.MountTracker{,.*}}"),
+  dbus send bus=session path=/org/gtk/vfs/mounttracker
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus send bus=session path=/org/gtk/vfs/mountable
+       interface=org.gtk.vfs.Mountable
+       member=Mount
+       peer=(name=:*, label=gvfsd-*),
+
+  dbus receive bus=session path=/org/gtk/gvfs/exec_spaw/@{int}
+       interface=org.gtk.vfs.Spawner
+       member=Spawned
+       peer=(name=:*, label=gvfsd-*),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mr,
+
+  @{sh_path}              rix,
+  @{lib}/{,gvfs/}gvfsd-*  rpx,
+
+  /usr/share/gvfs/{,**} r,
+
+  owner @{run}/user/@{uid}/gvfs/ rw,
+  owner @{run}/user/@{uid}/gvfsd/ rw,
+
+  owner @{PROC}/@{pid}/fd/ r,
+
+  include if exists <local/gvfsd>
+}
+
+# vim:syntax=apparmor

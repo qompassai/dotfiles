@@ -1,0 +1,88 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Jeroen Rijken
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/konsole
+profile konsole /{,usr/}bin/konsole  flags=(attach_disconnected,mediate_deleted,complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/consoles>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+
+  ptrace (read),
+
+  signal (send) set=(hup),
+
+  @{exec_path}                          mr,
+  @{bin}/@{shells}                      rux,
+  @{browsers_path}                      rpx,
+
+  @{lib}/libheif/                            r,
+  @{lib}/libheif/**                         mr,
+  @{lib}/{,@{multiarch}/}utempter/utempter rpx,
+
+  # Some CLI program can be launched directly from KDE
+  @{bin}/btop                rpux,
+  @{bin}/htop                 rpx,
+  @{bin}/micro               rpux,
+  @{bin}/nvtop                rpx,
+  @{bin}/vim                  rux,
+
+  /usr/share/color-schemes/{,**} r,
+  /usr/share/kf6/{,**} r,
+  /usr/share/konsole/{,**} r,
+  /usr/share/sounds/** r,
+
+  /etc/xdg/konsolerc r,
+  /etc/xdg/kshorturifilterrc r,
+  /etc/xdg/menus/{,**} r,
+  /etc/xdg/ui/ui_standards.rc r,
+
+  owner @{HOME}/@{XDG_SSH_DIR}/config r,
+
+  owner @{user_config_dirs}/#@{int} rwl,
+  owner @{user_config_dirs}/breezerc r,
+  owner @{user_config_dirs}/kbookmarkrc r,
+  owner @{user_config_dirs}/konsole.notifyrc r,
+  owner @{user_config_dirs}/konsolerc{,*} rwlk,
+  owner @{user_config_dirs}/konsolesshconfig rwl -> @{user_config_dirs}/#@{int},
+  owner @{user_config_dirs}/konsolesshconfig.@{rand6} rwl -> @{user_config_dirs}/#@{int},
+  owner @{user_config_dirs}/konsolesshconfig.lock rwk,
+  owner @{user_config_dirs}/kservicemenurc r,
+  owner @{user_config_dirs}/menus/{,**} r,
+  owner @{user_config_dirs}/session/** rwlk,
+
+  owner @{user_share_dirs}/color-schemes/{,**} r,
+  owner @{user_share_dirs}/konsole/ rw,
+  owner @{user_share_dirs}/konsole/** rwlk,
+  owner @{user_share_dirs}/kxmlgui5/konsole/{,**} r,
+
+  owner @{user_state_dirs}/#@{int} rw,
+  owner @{user_state_dirs}/konsolestaterc rw,
+  owner @{user_state_dirs}/konsolestaterc.@{rand6} rwl -> @{user_state_dirs}/#@{int},
+  owner @{user_state_dirs}/konsolestaterc.lock rwk,
+
+  owner @{tmp}/#@{int} rw,
+  owner @{tmp}/konsole.@{rand6} rw,
+
+  owner @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/app.slice/app-org.kde.konsole-@{int}.scope/** rw,
+
+        @{PROC}/@{pid}/cmdline r,
+        @{PROC}/@{pid}/stat r,
+  owner @{PROC}/@{pid}/cgroup r,
+
+  /dev/ptmx rw,
+
+  include if exists <local/konsole>
+}
+
+# vim:syntax=apparmor

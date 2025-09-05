@@ -1,0 +1,58 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 valoq <valoq@mailbox.org>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/atool
+profile atool /{,usr/}bin/atool flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+  include <abstractions/perl>
+  include <abstractions/user-read-strict>
+  include <abstractions/user-write-strict>
+
+  @{exec_path} mr,
+
+  @{bin}/7z rix,
+  @{bin}/arc rix,
+  @{bin}/arj rix,
+  @{bin}/bzip rix,
+  @{bin}/bzip2 rix,
+  @{bin}/bzip2 rix,
+  @{bin}/compress rix,
+  @{bin}/cpio rix,
+  @{bin}/gunzip rix,
+  @{bin}/gzip rix,
+  @{bin}/gzip rix,
+  @{bin}/jar rix,
+  @{bin}/lha rix,
+  @{bin}/lrunzip rix,
+  @{bin}/lrz rix,
+  @{bin}/lrzcat rix,
+  @{bin}/lrzip rix,
+  @{bin}/lrztar rix,
+  @{bin}/lrzuntar rix,
+  @{bin}/lzip rix,
+  @{bin}/lzma rix,
+  @{bin}/lzop rix,
+  @{bin}/lzop rix,
+  @{bin}/rar rix,
+  @{bin}/tar rix,
+  @{bin}/unace rix,
+  @{bin}/unrar rix,
+  @{bin}/unxz rix,
+  @{bin}/unzip rix,
+  @{bin}/xz rix,
+  @{bin}/zip rix,
+  @{lib}/p7zip/7z rix,
+
+  /etc/atool.conf r,
+  owner @{HOME}/.atoolrc r,
+
+  include if exists <local/atool>
+}
+
+# vim:syntax=apparmor

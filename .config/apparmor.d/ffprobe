@@ -1,0 +1,28 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2017-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/ffprobe
+profile ffprobe /{,usr/}bin/ffprobe flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/dri-common>
+  include <abstractions/user-download-strict>
+
+  @{exec_path} mr,
+
+  owner @{user_music_dirs}/** rw,
+  owner @{user_videos_dirs}/** rw,
+
+  @{sys}/devices/system/node/ r,
+  @{sys}/devices/system/node/node@{int}/meminfo r,
+
+  include if exists <local/ffprobe>
+}
+
+# vim:syntax=apparmor

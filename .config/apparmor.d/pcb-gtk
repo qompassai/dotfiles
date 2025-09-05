@@ -1,0 +1,43 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/pcb-gtk
+profile pcb-gtk /{,usr/}bin/pcb-gtk flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/desktop>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/user-download-strict>
+
+  @{exec_path} mr,
+
+  /usr/share/pcb/ListLibraryContents.sh rix,
+
+  @{sh_path}  rix,
+  @{bin}/cat  rix,
+  @{bin}/tr   rix,
+
+  /usr/share/pcb/ r,
+  /usr/share/pcb/** r,
+
+  owner @{HOME}/.pcb/ rw,
+  owner @{HOME}/.pcb/preferences rw,
+
+  owner @{HOME}/PCB.[0-9]*.backup rw,
+
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  /etc/fstab r,
+
+  include if exists <local/pcb-gtk>
+}
+
+# vim:syntax=apparmor

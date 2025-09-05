@@ -1,0 +1,27 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/grub-mkdevicemap
+profile grub-mkdevicemap /{,usr/}{,s}bin/grub-mkdevicemap flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/disks-read>
+
+  capability sys_admin,
+
+  @{exec_path} mr,
+
+  @{PROC}/devices r,
+
+  /dev/mapper/control rw,
+
+  include if exists <local/grub-mkdevicemap>
+}
+
+
+# vim:syntax=apparmor

@@ -1,0 +1,20 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+# Permissions for querying dconf settings with write access; use the dconf
+# abstraction first, and dconf-write only for specific application's profile.
+
+  abi <abi/4.0>,
+
+  include <abstractions/dconf>
+  include <abstractions/bus/ca.desrt.dconf.Writer>
+
+  owner @{user_config_dirs}/glib-2.0/settings/keyfile w,  # When GSETTINGS_BACKEND=keyfile
+
+  owner @{run}/user/@{uid}/dconf/ w,
+  owner @{run}/user/@{uid}/dconf/user w,
+
+  include if exists <abstractions/dconf-write.d>
+
+# vim:syntax=apparmor

@@ -1,0 +1,43 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/ssh-agent
+profile ssh-agent /{,usr/}bin/ssh-agent flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+
+  signal receive set=term peer=cockpit-bridge,
+  signal receive set=term peer=gnome-keyring-daemon,
+
+  @{exec_path} mr,
+
+  @{sh_path}                   rix,
+  @{bin}/gpg-agent             rpx,
+  @{bin}/im-launch             rpx,
+
+  owner @{HOME}/@{XDG_SSH_DIR}/ rw,
+  owner @{HOME}/@{XDG_SSH_DIR}/* r,
+  owner @{HOME}/.xsession-errors w,
+  owner @{user_projects_dirs}/**/ssh/{,*} r,
+
+  owner @{tmp}/ssh-@{rand12}/ rw,
+  owner @{tmp}/ssh-@{rand12}/agent.@{int} rw,
+
+  owner @{run}/user/@{uid}/keyring/.ssh rw,
+  owner @{run}/user/@{uid}/openssh_agent rw,
+  owner @{run}/user/@{uid}/ssh-agent.@{rand6} w,
+  owner @{run}/user/@{uid}/gcr/.ssh w,
+
+  /dev/tty@{int} rw,
+  /dev/tty rw,
+
+  include if exists <local/ssh-agent>
+}
+
+# vim:syntax=apparmor

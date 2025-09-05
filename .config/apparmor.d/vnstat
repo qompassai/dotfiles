@@ -1,0 +1,54 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2015-2020 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/vnstat
+profile vnstat /{,usr/}bin/vnstat flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  capability chown,
+  capability dac_override,
+
+  @{exec_path} mr,
+
+  /etc/vnstat.conf r,
+
+  /var/lib/vnstat/ r,
+  /var/lib/vnstat/vnstat.db rwk,
+  /var/lib/vnstat/vnstat.db-journal rw,
+
+  @{sys}/class/net/ r,
+
+  @{sys}/devices/@{pci}/net/*/statistics/{tx,rx}_{bytes,packets} r,
+  @{sys}/devices/virtual/net/*/statistics/{tx,rx}_{bytes,packets} r,
+
+  @{sys}/devices/@{pci}/net/*/speed r,
+  @{sys}/devices/virtual/net/*/speed r,
+
+  @{PROC}/@{pid}/net/dev r,
+
+  # file_inherit
+  deny @{PROC}/@{pid}/stat r,
+  deny @{PROC}/@{pid}/net/tcp{,6} r,
+  deny @{PROC}/@{pid}/net/if_inet6 r,
+  deny @{PROC}/@{pid}/cmdline r,
+  deny @{PROC}/@{pid}/io r,
+  deny @{PROC}/@{pid}/net/route r,
+  deny @{PROC}/uptime r,
+  deny @{PROC}/diskstats r,
+  deny @{PROC}/loadavg r,
+  deny @{sys}/devices/**/hwmon/**/temp*_input r,
+  owner /dev/tty@{int} rw,
+  deny network inet dgram,
+  deny network inet6 dgram,
+
+  include if exists <local/vnstat>
+}
+
+# vim:syntax=apparmor

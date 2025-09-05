@@ -1,0 +1,43 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/tasksel
+profile tasksel /{,usr/}bin/tasksel flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/common/debconf>
+
+  @{exec_path} r,
+
+  @{bin}/tempfile                 ix,
+  @{lib}/tasksel/tasksel-debconf  ix,
+  @{lib}/tasksel/tests/*          cx -> tasksel-tests,
+
+  # Do not strip env to avoid errors like the following:
+  #  ERROR: ld.so: object 'libfakeroot-sysv.so' from LD_PRELOAD cannot be preloaded (cannot open
+  #  shared object file): ignored.
+  @{bin}/dpkg-query               px,
+  #
+  @{bin}/apt-cache                px,
+  @{bin}/debconf-apt-progress     px,
+
+  /usr/share/tasksel/{,**} r,
+
+  profile tasksel-tests flags=(complain) {
+    include <abstractions/base>
+
+    @{sh_path}        rix,
+    @{lib}/tasksel/tests/* r,
+
+    include if exists <local/tasksel_tasksel-tests>
+  }
+
+  include if exists <local/tasksel>
+}
+
+# vim:syntax=apparmor

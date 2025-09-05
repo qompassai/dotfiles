@@ -1,0 +1,24 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/pinentry-gnome3
+profile pinentry-gnome3 /{,usr/}bin/pinentry-gnome3 flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/consoles>
+
+  signal (receive) set=(int) peer=gpg-agent,
+
+  @{exec_path} mr,
+
+  owner @{PROC}/@{pid}/cmdline r,
+
+  include if exists <local/pinentry-gnome3>
+}
+
+# vim:syntax=apparmor

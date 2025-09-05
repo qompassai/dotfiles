@@ -1,0 +1,122 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2017-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/lightdm
+profile lightdm /{,usr/}bin/lightdm  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/authentication>
+  include <abstractions/desktop>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/nameservice-strict>
+  include <abstractions/wutmp>
+
+  capability audit_write,
+  capability chown,
+  capability dac_override,
+  capability dac_read_search,
+  capability fowner,
+  capability fsetid,
+  capability kill,
+  capability net_admin,
+  capability setgid,
+  capability setuid,
+  capability sys_resource,
+  capability sys_tty_config,
+
+  network netlink raw,
+
+  signal (receive) set=(usr1) peer=xorg,
+  signal (send) set=(term) peer=lightdm-*-greeter,
+  signal (send) set=(term) peer=xfce-session,
+  signal (send) set=(term) peer=xorg,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.freedesktop.DisplayManager{,.*},
+  dbus receive bus=system path=/org/freedesktop/DisplayManager{,/**}
+       interface=org.freedesktop.DisplayManager{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/freedesktop/DisplayManager{,/**}
+       interface=org.freedesktop.DisplayManager{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/freedesktop/DisplayManager{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/freedesktop/DisplayManager{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/freedesktop/DisplayManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.DisplayManager{,.*}}"),
+  dbus send bus=system path=/org/freedesktop/DisplayManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mrix,
+
+  @{sh_path}        rix,
+  @{bin}/{,e,f}grep rix,
+  @{bin}/df         rix,
+  @{bin}/rm         rix,
+
+  @{bin}/lightdm-*-greeter    rpux,
+  @{bin}/startx                rpx,
+  @{bin}/Xorg                  rpx,
+  @{bin}/plymouth              rpx,
+  @{bin}/gnome-keyring-daemon  rpx,
+  @{bin}/lightdm-session       rpx,
+
+
+  @{lib}/{,at-spi2{,-core}/}at-spi-bus-launcher rpx,
+
+  /etc/lightdm/Xsession        rpx,
+  /etc/X11/Xsession            rpx,
+
+  /usr/share/lightdm/{,**} r,
+  /usr/share/wayland-sessions/{,*.desktop} r,
+  /usr/share/xgreeters/{,**} r,
+
+  @{etc_ro}/environment r,
+  @{etc_ro}/security/limits.d/{,*} r,
+  /etc/default/locale r,
+  /etc/lightdm/{,**} r,
+  /etc/machine-id r,
+  /etc/shells r,
+
+  /var/cache/lightdm/dmrc/*.dmrc* rw,
+  /var/lib/lightdm/{,**} rw,
+  /var/lib/lightdm-data/{,**} rw,
+  /var/log/lightdm/{,**} rw,
+
+  owner @{HOME}/.dmrc r,
+
+        @{run}/faillock/ rw,
+        @{run}/faillock/@{user} rwk,
+        @{run}/lightdm.pid rw,
+        @{run}/lightdm/{,**} rw,
+  owner @{run}/systemd/sessions/*.ref rw,
+
+        @{PROC}/1/limits r,
+        @{PROC}/cmdline r,
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/loginuid rw,
+  owner @{PROC}/@{pid}/uid_map r,
+  owner @{PROC}/@{pid}/mountinfo r,
+
+  /dev/tty@{int} r,
+
+  include if exists <local/lightdm>
+}
+
+# vim:syntax=apparmor

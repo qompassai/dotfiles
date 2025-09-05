@@ -1,0 +1,28 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/cni/loopback /opt/cni/bin/loopback
+profile cni-loopback /{{,usr/}lib{,exec,32,64}/cni/loopback,opt/cni/bin/loopback}  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+
+  capability sys_admin,
+  capability net_admin,
+
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  / r,
+
+  @{run}/netns/ r,
+  @{run}/netns/cni-@{uuid} rw,
+
+  include if exists <local/cni-loopback>
+}
+
+# vim:syntax=apparmor

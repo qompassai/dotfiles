@@ -1,0 +1,24 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/evince-thumbnailer
+profile evince-thumbnailer /{,usr/}bin/evince-thumbnailer  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+
+  @{exec_path} mr,
+
+  /usr/share/mime/mime.cache r,
+  /usr/share/poppler/{,**} r,
+
+  owner @{tmp}/gnome-desktop-file-to-thumbnail.pdf r,
+  owner @{tmp}/gnome-desktop-thumbnailer.png w,
+
+  include if exists <local/evince-thumbnailer>
+}
+
+# vim:syntax=apparmor

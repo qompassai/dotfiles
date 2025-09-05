@@ -1,0 +1,31 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+  abi <abi/4.0>,
+
+  # DBus.Properties: read all properties from the interface
+  dbus send bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll}
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}", label="@{p_systemd_hostnamed}"),
+
+  # DBus.Properties: receive property changed events
+  dbus receive bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member=PropertiesChanged
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}", label="@{p_systemd_hostnamed}"),
+
+  # DBus.Introspectable: allow clients to introspect the service
+  dbus send bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}", label="@{p_systemd_hostnamed}"),
+  dbus send bus=system path=/org/freedesktop/hostname1
+       interface=org.freedesktop.DBus.Properties
+       member=Get
+       peer=(name=org.freedesktop.hostname1),
+
+  include if exists <abstractions/bus/org.freedesktop.hostname1.d>
+
+# vim:syntax=apparmor

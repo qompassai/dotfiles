@@ -1,0 +1,115 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{lib}/kscreenlocker_greet
+@{exec_path} += @{lib}/@{multiarch}/{,libexec/}kscreenlocker_greet
+profile kscreenlocker_greet /{{,usr/}lib{,exec,32,64}/kscreenlocker_greet,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kscreenlocker_greet,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kscreenlocker_greet} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.login1>
+  include <abstractions/bus/org.freedesktop.login1.Session>
+  include <abstractions/bus/org.freedesktop.UPower>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+  include <abstractions/qt5-compose-cache-write>
+  include <abstractions/qt5-shader-cache>
+
+  network netlink raw,
+
+  signal (receive) set=(term) peer=kwin_wayland,
+  signal (receive) set=(usr1, term) peer=ksmserver,
+  signal (send) peer=kcheckpass,
+
+  dbus send bus=system path=/org/freedesktop/DisplayManager/Seat@{int}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=sddm),
+
+  @{exec_path} mr,
+
+  @{lib}/libheif/ r,
+  @{lib}/libheif/*.so* rm,
+
+  @{sbin}/unix_chkpwd rpx,
+  @{lib}/@{multiarch}/libexec/kcheckpass rpx,
+
+  /usr/share/plasma/** r,
+  /usr/share/wallpapers/{,**} r,
+  /usr/share/wallpapers/Path/contents/images/*.{jpg,png} r,
+  /usr/share/wayland-sessions/{,*.desktop} r,
+  /usr/share/xsessions/{,*.desktop} r,
+  /usr/share/hunspell/* r,
+
+  @{etc_ro}/environment r,
+  @{etc_ro}/login.defs r,
+  @{etc_ro}/login.defs.d/{,*} r,
+  @{etc_ro}/security/*.conf r,
+  /etc/fstab r,
+  /etc/machine-id r,
+  /etc/os-release r,
+  /etc/pam.d/* r,
+  /etc/shells r,
+  /etc/xdg/kscreenlockerrc r,
+  /etc/xdg/plasmarc r,
+
+  /var/lib/AccountsService/icons/* r,
+
+  /var/lib/dbus/machine-id r,
+
+  owner @{HOME}/.face.icon r,
+  owner @{user_pictures_dirs}/{,**} r,
+
+  owner @{user_cache_dirs}/ rw,
+  owner @{user_cache_dirs}/kscreenlocker_greet/ w,
+  owner @{user_cache_dirs}/kscreenlocker_greet/** rwlk,
+  owner @{user_cache_dirs}/ksvg-elements rw,
+  owner @{user_cache_dirs}/ksvg-elements.@{rand6} rwlk -> @{user_cache_dirs}/#@{int},
+  owner @{user_cache_dirs}/ksvg-elements.lock rwlk,
+  owner @{user_cache_dirs}/plasma_theme_*.kcache rw,
+  owner @{user_cache_dirs}/plasma-svgelements rw,
+  owner @{user_cache_dirs}/plasma-svgelements-default_v* r,
+  owner @{user_cache_dirs}/plasma-svgelements.@{rand6} rwl -> @{user_cache_dirs}/#@{int},
+  owner @{user_cache_dirs}/plasma-svgelements.lock rwk,
+
+  owner @{user_config_dirs}/kdedefaults/kscreenlockerrc r,
+  owner @{user_config_dirs}/kdedefaults/plasmarc r,
+  owner @{user_config_dirs}/kscreenlockerrc r,
+  owner @{user_config_dirs}/kscreenlockerrc.lock rwk,
+  owner @{user_config_dirs}/ksmserverrc r,
+  owner @{user_config_dirs}/plasmarc r,
+  owner @{user_config_dirs}/plasmashellrc r,
+
+  # If one is blocked, the others are probed.
+  deny owner @{HOME}/#@{int} mrw,
+       owner @{HOME}/.glvnd* mrw,
+
+  owner @{tmp}/*-cover-*.{jpg,png} r,
+
+  @{run}/faillock/@{user} rwk,
+
+  @{sys}/devices/system/node/ r,
+  @{sys}/devices/system/node/node@{int}/meminfo r,
+
+        @{PROC}/@{pid}/cgroup r,
+        @{PROC}/@{pid}/cmdline r,
+        @{PROC}/@{pid}/fd/ r,
+        @{PROC}/@{pid}/loginuid r,
+        @{PROC}/@{pid}/mountinfo r,
+        @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/loginuid r,
+
+  /dev/tty r,
+
+  include if exists <local/kscreenlocker_greet>
+}
+
+# vim:syntax=apparmor

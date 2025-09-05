@@ -1,0 +1,94 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/needrestart
+profile needrestart /{,usr/}{,s}bin/needrestart  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/common/debconf>
+  include <abstractions/python>
+
+  capability checkpoint_restore,
+  capability dac_read_search,
+  capability sys_ptrace,
+
+  ptrace read,
+
+  @{exec_path} mrix,
+
+  @{sh_path}                               rix,
+  @{bin}/dpkg-query                        rpx,
+  @{bin}/fail2ban-server                   rpx,
+  @{bin}/stty                              rix,
+  @{bin}/systemctl                         rcx -> systemctl,
+  @{bin}/systemd-detect-virt               rpx,
+  @{bin}/udevadm                           rcx -> udevadm,
+  @{bin}/who                               rpx,
+  @{lib}/needrestart/*                     rpx,
+  @{python_path}                           rix,
+  @{sbin}/unix_chkpwd                      rpx,
+
+  @{etc_ro}/needrestart/hook.d/*           rpx,
+  @{etc_ro}/needrestart/notify.d/*         rpx,
+  @{etc_ro}/needrestart/restart.d/*        rpx,
+
+  /etc/init.d/* r,
+  /etc/needrestart/{,**} r,
+  /etc/shadow r,
+
+  / r,
+  @{efi}/ r,
+  @{efi}/* r,
+  /opt/*/** r,
+  @{bin}/* r,
+  @{lib}/** r,
+  @{sbin}/** r,
+  @{att}/@{lib}/** r,
+  /usr/share/** r,
+  /var/lib/*/** r,
+
+  @{run}/systemd/sessions/* r,
+
+  /tmp/@{word10}/ rw,
+
+        @{PROC}/ r,
+        @{PROC}/@{pid}/cgroup r,
+        @{PROC}/@{pid}/cmdline r,
+        @{PROC}/@{pid}/environ r,
+        @{PROC}/@{pid}/stat r,
+  owner @{PROC}/@{pid}/fd/ r,
+
+  /dev/ r,
+  /dev/**/ r,
+
+  deny mqueue type=posix /,
+
+  profile systemctl flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    capability sys_resource,
+    capability net_admin,
+
+    signal send set=(cont term) peer=systemd-tty-ask-password-agent,
+
+    @{bin}/systemd-tty-ask-password-agent px,
+
+    include if exists <local/needrestart_systemctl>
+  }
+
+  profile udevadm flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/udevadm>
+
+    include if exists <local/needrestart_udevadm>
+  }
+
+  include if exists <local/needrestart>
+}
+
+# vim:syntax=apparmor

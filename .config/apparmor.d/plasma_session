@@ -1,0 +1,53 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/plasma_session
+profile plasma_session /{,usr/}bin/plasma_session flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/kde-strict>
+
+  @{exec_path} mr,
+
+  @{bin}/firewall-applet                                 rpx,
+  @{bin}/gmenudbusmenuproxy                              rpx,
+  @{bin}/kaccess                                         rpx,
+  @{bin}/kcminit                                         rpx,
+  @{bin}/kded{5,6}                                       rpx,
+  @{bin}/ksmserver                                       rpx,
+  @{bin}/ksplashqml                                      rpx,
+  @{bin}/kwin_wayland_wrapper                            rpx,
+  @{bin}/plasmashell                                     rpx,
+  @{bin}/spice-vdagent                                   rpx,
+  @{bin}/xembedsniproxy                                  rpx,
+  @{lib}/pam_kwallet_init                                rpx,
+
+  /{,usr/}bin/baloo_file Px,
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}baloo_file Px,
+  /{,usr/}lib{,exec,32,64}/{,kf6/}baloo_file Px,
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}DiscoverNotifier Px,
+  /{,usr/}lib{,exec,32,64}/DiscoverNotifier Px,
+  /{,usr/}lib{,exec,32,64}/geoclue Px,
+  /{,usr/}lib{,exec,32,64}/geoclue-2.0/demos/agent Px,
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}org_kde_powerdevil Px,
+  /{,usr/}lib{,exec,32,64}/org_kde_powerdevil Px,
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}polkit-kde-authentication-agent-[0-9] Px,
+  /{,usr/}lib{,exec,32,64}/polkit-kde-authentication-agent-[0-9] Px,
+
+  /usr/share/kservices{5,6}/{,**} r,
+
+  /etc/xdg/autostart/ r,
+  /etc/xdg/autostart/*.desktop r,
+  /etc/xdg/menus/ r,
+
+  owner @{user_config_dirs}/kdedefaults/ksplashrc r,
+  owner @{user_config_dirs}/plasma-welcomerc r,
+
+  include if exists <local/plasma_session>
+}
+
+# vim:syntax=apparmor

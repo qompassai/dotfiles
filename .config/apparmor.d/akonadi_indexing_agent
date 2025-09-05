@@ -1,0 +1,40 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/akonadi_indexing_agent
+profile akonadi_indexing_agent /{,usr/}bin/akonadi_indexing_agent flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{bin}/akonadi_html_to_text rix,
+
+  /usr/share/akonadi/plugins/serializer/ r,
+  /usr/share/akonadi/plugins/serializer/*.desktop r,
+
+  /etc/machine-id r,
+
+  owner @{user_config_dirs}/#@{int} rw,
+  owner @{user_config_dirs}/akonadi_indexing_agentrc rw,
+  owner @{user_config_dirs}/akonadi_indexing_agentrc.@{rand6} rwl -> @{user_config_dirs}/#@{int},
+  owner @{user_config_dirs}/akonadi_indexing_agentrc.lock rwk,
+  owner @{user_config_dirs}/akonadi/ rw,
+  owner @{user_config_dirs}/akonadi/** rwlk -> @{user_config_dirs}/akonadi/**,
+
+  owner @{user_share_dirs}/akonadi/ rw,
+  owner @{user_share_dirs}/akonadi/** rwlk -> @{user_share_dirs}/akonadi/**,
+
+  /dev/tty r,
+
+  include if exists <local/akonadi_indexing_agent>
+}
+
+# vim:syntax=apparmor

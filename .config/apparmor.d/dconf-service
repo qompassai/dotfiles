@@ -1,0 +1,69 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,dconf/}dconf-service
+profile dconf-service /{,usr/}lib{,exec,32,64}/{,dconf/}dconf-service  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/bus-session>
+  include <abstractions/dconf-write>
+
+  signal (receive) set=(term kill hup) peer=dbus-session,
+  signal (receive) set=(term hup) peer=gdm{,-session-worker},
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=ca.desrt.dconf{,.*},
+  dbus receive bus=session path=/ca/desrt/dconf{,/**}
+       interface=ca.desrt.dconf{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/ca/desrt/dconf{,/**}
+       interface=ca.desrt.dconf{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/ca/desrt/dconf{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/ca/desrt/dconf{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/ca/desrt/dconf{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},ca.desrt.dconf{,.*}}"),
+  dbus send bus=session path=/ca/desrt/dconf{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mr,
+
+  owner @{desktop_config_dirs}/dconf/ rw,
+  owner @{desktop_config_dirs}/dconf/user rw,
+  owner @{desktop_config_dirs}/dconf/user.* rw,
+
+  owner @{user_config_dirs}/dconf/ rw,
+  owner @{user_config_dirs}/dconf/user{,.*} rw,
+
+  owner @{user_cache_dirs}/ rw,
+  owner @{user_cache_dirs}/dconf/ rw,
+  owner @{user_cache_dirs}/dconf/user rw,
+
+  @{PROC}/cmdline r,
+
+  include if exists <local/dconf-service>
+}
+
+# vim:syntax=apparmor

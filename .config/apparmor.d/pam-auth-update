@@ -1,0 +1,32 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/pam-auth-update
+profile pam-auth-update /{,usr/}{,s}bin/pam-auth-update flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/common/debconf>
+
+  @{exec_path} mrix,
+
+  @{bin}/cp      ix,
+  @{bin}/md5sum  ix,
+  @{bin}/stty    ix,
+
+  /usr/share/pam{,-configs}/{,*} r,
+
+  /etc/pam.d/* rw,
+  /etc/shadow r,
+
+  /var/lib/dpkg/info/libpam-runtime.templates r,
+  /var/lib/pam/* rw,
+
+  include if exists <local/pam-auth-update>
+}
+
+# vim:syntax=apparmor

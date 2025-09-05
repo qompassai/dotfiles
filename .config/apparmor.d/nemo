@@ -1,0 +1,52 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/nemo
+profile nemo /{,usr/}bin/nemo flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/dconf-write>
+  include <abstractions/deny-sensitive-home>
+  include <abstractions/desktop>
+  include <abstractions/nameservice-strict>
+  include <abstractions/trash-strict>
+
+  network inet stream,
+  network inet6 stream,
+
+  @{exec_path} mr,
+
+  @{open_path} rpx -> child-open,
+
+  @{bin}/gdk-pixbuf-thumbnailer rpx,
+
+  /usr/share/nemo/** r,
+  /usr/share/thumbnailers/{,*.thumbnailer} r,
+
+  # Full access to user's data
+  / r,
+  /*/ r,
+  @{bin}/ r,
+  @{lib}/ r,
+  @{MOUNTDIRS}/ r,
+  @{MOUNTS}/ r,
+  @{MOUNTS}/** rw,
+  owner @{HOME}/{,**} rw,
+  owner @{run}/user/@{uid}/{,**} rw,
+  owner @{tmp}/{,**} rw,
+
+  @{run}/mount/utab r,
+
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/fd/ r,
+
+  include if exists <local/nemo>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,65 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{lib}/systemd/systemd-coredump
+profile systemd-coredump /{,usr/}lib{,exec,32,64}/systemd/systemd-coredump  flags=(attach_disconnected,mediate_deleted,complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+  include <abstractions/common/systemd>
+
+  userns,
+
+  capability dac_override,
+  capability dac_read_search,
+  capability net_admin,
+  capability setgid,
+  capability setpcap,
+  capability setuid,
+  capability sys_admin,
+  capability sys_ptrace,
+
+  mount -> /,
+
+  ptrace (read),
+
+  @{exec_path} mr,
+
+  @{lib}/** r,
+  / r,
+  @{bin}/* r,
+  @{sbin}/* r,
+  /opt/** r,
+  @{user_lib_dirs}/** r,
+
+  /etc/systemd/coredump.conf r,
+  /etc/systemd/coredump.conf.d/{,**} r,
+
+  owner @{HOME}/**.so* r,
+
+  /var/lib/systemd/coredump/{,**} rwl,
+
+  @{att}/@{run}/systemd/coredump rw,
+  @{run}/systemd/coredump rw,
+
+        @{PROC}/@{pids}/cgroup r,
+        @{PROC}/@{pids}/cmdline r,
+        @{PROC}/@{pids}/comm r,
+        @{PROC}/@{pids}/environ r,
+        @{PROC}/@{pids}/fd/ r,
+        @{PROC}/@{pids}/fdinfo/@{int} r,
+        @{PROC}/@{pids}/limits r,
+        @{PROC}/@{pids}/mountinfo r,
+        @{PROC}/@{pids}/ns/ r,
+        @{PROC}/@{pids}/stat r,
+  owner @{PROC}/@{pid}/setgroups r,
+
+  include if exists <local/systemd-coredump>
+}
+
+# vim:syntax=apparmor

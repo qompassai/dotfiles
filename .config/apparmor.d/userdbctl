@@ -1,0 +1,38 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/userdbctl
+profile userdbctl /{,usr/}bin/userdbctl  flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+
+  capability dac_read_search,
+  capability sys_resource,
+
+  signal send set=cont peer=child-pager,
+
+  @{exec_path} mr,
+
+  @{pager_path} rpx -> child-pager,
+
+  /etc/gshadow r,
+  /etc/shadow r,
+
+  /etc/machine-id r,
+
+        @{PROC}/1/cgroup r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/gid_map r,
+  owner @{PROC}/@{pid}/setgroups r,
+  owner @{PROC}/@{pid}/uid_map r,
+
+  include if exists <local/userdbctl>
+}
+
+# vim:syntax=apparmor

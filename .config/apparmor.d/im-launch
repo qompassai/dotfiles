@@ -1,0 +1,45 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/im-launch
+profile im-launch /{,usr/}bin/im-launch flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} mr,
+
+  @{sh_path}                   rix,
+  @{bin}/dpkg-query            rpx,
+  @{bin}/env                   rix,
+  @{bin}/gettext{,.sh}         rix,
+  @{bin}/gnome-session         rix,
+  @{bin}/gsettings             rpx,
+  @{bin}/locale                rix,
+  @{bin}/sed                   rix,
+  @{bin}/sleep                 rix,
+  @{bin}/startplasma-x11       rpx,
+  @{bin}/startxfce4            rpx,
+  @{bin}/true                  rix,
+  @{bin}/uim-toolbar-gtk3     rpux,
+  @{bin}/uim-xim              rpux,
+  @{lib}/gnome-session-binary  rpx,
+
+  @{HOME}/.xsession-errors rw,
+  /usr/share/im-config/{,**} r,
+
+  /etc/default/im-config r,
+  /etc/X11/xinit/xinputrc r,
+  /etc/X11/Xsession.d/70im-config_launch r,
+
+  owner @{HOME}/.xinputrc r,
+
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/im-launch>
+}
+
+# vim:syntax=apparmor

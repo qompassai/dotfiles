@@ -1,0 +1,21 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,kf6/}kauth/{,libexec/}kinfocenter-dmidecode-helper
+profile kauth-kinfocenter-dmidecode-helper /{,usr/}lib{,exec,32,64}/{,kf6/}kauth/{,libexec/}kinfocenter-dmidecode-helper flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{sbin}/dmidecode  rpx,
+
+  include if exists <local/kauth-kinfocenter-dmidecode-helper>
+}
+
+# vim:syntax=apparmor

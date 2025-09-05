@@ -1,0 +1,63 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/crontab
+profile crontab /{,usr/}bin/crontab flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/authentication>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+
+  capability audit_write,
+  capability chown,
+  capability dac_read_search,
+  capability net_admin,
+  capability setgid,
+  capability setuid,
+
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{sh_path}             rix,
+  @{editor_path}         rcx -> editor,
+
+  @{etc_ro}/environment r,
+  @{etc_ro}/security/*.conf r,
+  /etc/cron.{allow,deny} r,
+  /etc/pam.d/* r,
+
+  /var/spool/cron/ r,
+  /var/spool/cron/** rw,
+
+  owner @{user_cache_dirs}/crontab/crontab.bak rw,
+
+  @{tmp}/crontab.@{rand6} rw,
+  @{tmp}/crontab.@{rand6}/ rw,
+  @{tmp}/crontab.@{rand6}/crontab rwl,
+
+  profile editor flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/editor>
+
+    capability fsetid,
+
+    /etc/cron.{allow,deny} r,
+
+          /tmp/ r,
+    owner @{tmp}/crontab.@{rand6}/crontab rw,
+    owner @{tmp}/crontab.@{rand6} rw,
+
+    include if exists <local/crontab_editor>
+  }
+
+  include if exists <local/crontab>
+}
+
+# vim:syntax=apparmor

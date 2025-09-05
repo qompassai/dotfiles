@@ -1,0 +1,51 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/paccache
+profile paccache /{,usr/}bin/paccache  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+
+  capability dac_read_search,
+  capability mknod,
+
+  @{exec_path} mr,
+
+  @{sh_path}          rix,
+  @{bin}/{m,g,}awk    rix,
+  @{bin}/cat          rix,
+  @{bin}/gettext      rix,
+  @{bin}/gpg{,2}      rix,
+  @{bin}/gpgconf      rix,
+  @{bin}/gpgsm        rix,
+  @{bin}/pacman       rix,
+  @{bin}/pacman-conf  rix,
+  @{bin}/pacsort      rix,
+  @{bin}/rm           rix,
+  @{bin}/stat         rix,
+  @{bin}/tput         rix,
+  @{bin}/xargs        rix,
+
+  /usr/share/makepkg/util/*.sh r,
+  /usr/share/terminfo/** r,
+
+  /etc/pacman.conf r,
+  /etc/pacman.d/{,**} r,
+  /etc/pacman.d/gnupg/** rwlk -> /etc/pacman.d/gnupg/**,
+
+  /var/cache/pacman/pkg/{,*} rw,
+  /var/lib/pacman/{,**} r,
+
+  owner @{PROC}/@{pid}/fd/ r,
+
+  /dev/tty rw,
+
+  include if exists <local/paccache>
+}
+
+# vim:syntax=apparmor

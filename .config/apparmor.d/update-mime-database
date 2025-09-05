@@ -1,0 +1,36 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/update-mime-database
+profile update-mime-database /{,usr/}bin/update-mime-database  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+
+  capability dac_override,
+  capability dac_read_search,
+
+  @{exec_path} mr,
+
+  @{system_share_dirs}/mime/{,**} rw,
+
+  /var/lib/flatpak/app/**.xml r,
+
+  owner @{user_share_dirs}/mime/{,**} rw,
+
+        /dev/tty@{int} rw,
+  owner /dev/pts/@{int} rw,
+
+  # Inherit silencer
+  deny network inet6 stream,
+  deny network inet stream,
+
+  include if exists <local/update-mime-database>
+}
+
+# vim:syntax=apparmor

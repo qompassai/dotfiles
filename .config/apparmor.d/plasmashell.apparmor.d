@@ -1,0 +1,233 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/plasmashell
+profile plasmashell /{,usr/}bin/plasmashell  flags=(attach_disconnected,mediate_deleted,complain) {
+  include <abstractions/base>
+  include <abstractions/app-launcher-user>
+  include <abstractions/audio-client>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.NetworkManager>
+  include <abstractions/bus/org.freedesktop.UPower>
+  include <abstractions/consoles>
+  include <abstractions/cups-client>
+  include <abstractions/devices-usb>
+  include <abstractions/disks-read>
+  include <abstractions/enchant>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+  include <abstractions/qt5-shader-cache>
+  include <abstractions/recent-documents-write>
+  include <abstractions/ssl_certs>
+  include <abstractions/thumbnails-cache-read>
+
+  userns,
+
+  capability sys_ptrace,
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink dgram,
+  network netlink raw,
+
+  ptrace read,
+
+  signal send,
+
+  @{exec_path} mr,
+
+  @{lib}/libheif/            r,
+  @{lib}/libheif/{,**}      mr,
+
+  @{bin}/dolphin           rpx,
+  @{bin}/ksysguardd        rix,
+  @{bin}/plasma-discover  rpux,
+  @{bin}/xrdb              rpx,
+  @{lib}/kf{5,6}/kdesu{,d} rix,
+
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf5/kioslave5 Px,
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf6/kioworker Px,
+  /{,usr/}lib{,exec,32,64}/kf5/kioslave5 Px,
+  /{,usr/}lib{,exec,32,64}/kf6/kioworker Px,
+
+  /opt/**/share/icons/{,**} r,
+  /opt/*/**/*.desktop r,
+  /opt/*/**/*.png r,
+  /usr/share/*/icons/{,**} r,
+  /usr/share/akonadi/{,**} r,
+  /usr/share/desktop-directories/kf5-*.directory r,
+  /usr/share/kf{5,6}/{,**} r,
+  /usr/share/kio/servicemenus/{,*.desktop} r,
+  /usr/share/konsole/ r,
+  /usr/share/krunner/{,**} r,
+  /usr/share/kservices{5,6}/{,**} r,
+  /usr/share/kservicetypes{5,6}/{,**} r,
+  /usr/share/lshw/artwork/logo.svg r,
+  /usr/share/metainfo/{,**} r,
+  /usr/share/plasma/{,**} r,
+  /usr/share/plasma5support/** r,
+  /usr/share/qalculate/{,**} r,
+  /usr/share/rider/{,**} r,
+  /usr/share/solid/actions/{,**} r,
+  /usr/share/swcatalog/{,**} r,
+  /usr/share/templates/{,*.desktop} r,
+  /usr/share/thumbnailers/{,*} r,
+  /usr/share/wallpapers/{,**} r,
+
+  /etc/appstream.conf r,
+  /etc/fstab r,
+  /etc/ksysguarddrc r,
+  /etc/machine-id r,
+  /etc/os-release r,
+  /etc/sensors.d/ r,
+  /etc/sensors3.conf r,
+  /etc/xdg/** r,
+
+  /var/lib/AccountsService/icons/* r,
+
+  @{MOUNTS}/ r,
+
+        @{HOME}/ r,
+  owner @{HOME}/.mozilla/firefox/firefox-mpris/{,*} r,
+  owner @{HOME}/.var/app/**.{png,jpg,svg} r,
+  owner @{HOME}/@{XDG_DESKTOP_DIR}/*.desktop r,
+  owner @{HOME}/@{XDG_WALLPAPERS_DIR}/{,**} r,
+  owner @{user_games_dirs}/**.{png,jpg,svg} r,
+  owner @{user_music_dirs}/**.{png,jpg,svg} r,
+  owner @{user_pictures_dirs}/{,**} r,
+
+  owner @{user_templates_dirs}/ r,
+
+  owner @{user_cache_dirs}/ r,
+  owner @{user_cache_dirs}/#@{int} rwk,
+  owner @{user_cache_dirs}/appstream/ rw,
+  owner @{user_cache_dirs}/appstream/*.xb rw,
+  owner @{user_cache_dirs}/bookmarksrunner/ rw,
+  owner @{user_cache_dirs}/bookmarksrunner/** rwkl -> @{user_cache_dirs}/bookmarksrunner/#@{int},
+  owner @{user_cache_dirs}/kcrash-metadata/plasmashell.*.ini w,
+  owner @{user_cache_dirs}/ksvg-elements rw,
+  owner @{user_cache_dirs}/ksvg-elements.@{rand6} rwlk -> @{user_cache_dirs}/#@{int},
+  owner @{user_cache_dirs}/ksvg-elements.lock rwlk,
+  owner @{user_cache_dirs}/org.kde.dirmodel-qml.kcache rw,
+  owner @{user_cache_dirs}/plasma_engine_potd/{,**} rw,
+  owner @{user_cache_dirs}/plasma_theme_*.kcache rw,
+  owner @{user_cache_dirs}/plasma-svgelements rw,
+  owner @{user_cache_dirs}/plasma-svgelements.@{rand6} rwl -> @{user_cache_dirs}/#@{int},
+  owner @{user_cache_dirs}/plasma-svgelements.lock rwk,
+  owner @{user_cache_dirs}/plasmashell/ rw,
+  owner @{user_cache_dirs}/plasmashell/** rwkl -> @{user_cache_dirs}/plasmashell/**,
+  owner @{user_cache_dirs}/org.kde.*/ rw,
+  owner @{user_cache_dirs}/org.kde.*/** rwlk,
+
+  owner @{user_config_dirs}/{KDE,kde.org}/ rw,
+  owner @{user_config_dirs}/{KDE,kde.org}/** rwkl -> @{user_config_dirs}/{KDE,kde.org}/#@{int},
+  owner @{user_config_dirs}/*kde*.desktop* r,
+  owner @{user_config_dirs}/#@{int} rwk,
+  owner @{user_config_dirs}/akonadi* r,
+  owner @{user_config_dirs}/akonadi/akonadi*rc r,
+  owner @{user_config_dirs}/arkrc r,
+  owner @{user_config_dirs}/baloofileinformationrc r,
+  owner @{user_config_dirs}/breezerc r,
+  owner @{user_config_dirs}/eventviewsrc r,
+  owner @{user_config_dirs}/kactivitymanagerd* rwkl -> @{user_config_dirs}/#@{int},
+  owner @{user_config_dirs}/kcookiejarrc r,
+  owner @{user_config_dirs}/kdedefaults/plasmarc r,
+  owner @{user_config_dirs}/kdiff3fileitemactionrc r,
+  owner @{user_config_dirs}/kiorc r,
+  owner @{user_config_dirs}/kioslaverc r,
+  owner @{user_config_dirs}/klaunchrc r,
+  owner @{user_config_dirs}/klipperrc r,
+  owner @{user_config_dirs}/kmail2.notifyrc r,
+  owner @{user_config_dirs}/korganizerrc r,
+  owner @{user_config_dirs}/krunnerrc r,
+  owner @{user_config_dirs}/ksmserverrc r,
+  owner @{user_config_dirs}/kwalletrc r,
+  owner @{user_config_dirs}/menus/{,**} r,
+  owner @{user_config_dirs}/networkmanagement.notifyrc r,
+  owner @{user_config_dirs}/plasma* rwlk,
+
+  owner @{user_share_dirs}/*/sessions/ r,
+  owner @{user_share_dirs}/#@{int} rw,
+  owner @{user_share_dirs}/akonadi/search_db/{,**} r,
+  owner @{user_share_dirs}/kactivitymanagerd/resources/database rwk,
+  owner @{user_share_dirs}/kactivitymanagerd/resources/database-shm rwk,
+  owner @{user_share_dirs}/kactivitymanagerd/resources/database-wal rw,
+  owner @{user_share_dirs}/kio/servicemenus/{,**} r,
+  owner @{user_share_dirs}/klipper/{,**} rwlk,
+  owner @{user_share_dirs}/konsole/ r,
+  owner @{user_share_dirs}/kpeople/persondb rwk,
+  owner @{user_share_dirs}/kpeoplevcard/ r,
+  owner @{user_share_dirs}/krunnerstaterc rwl,
+  owner @{user_share_dirs}/krunnerstaterc.@{rand6} rwl,
+  owner @{user_share_dirs}/krunnerstaterc.lock rwk,
+  owner @{user_share_dirs}/kservices{5,6}/{,**} r,
+  owner @{user_share_dirs}/ktp/cache.db rwk,
+  owner @{user_share_dirs}/libkunitconversion/ rw,
+  owner @{user_share_dirs}/libkunitconversion/** rwlk,
+  owner @{user_share_dirs}/plasma_icons/*.desktop r,
+  owner @{user_share_dirs}/plasma/{,**} r,
+  owner @{user_share_dirs}/plasmashell/** rwkl -> @{user_share_dirs}/plasmashell/**,
+  owner @{user_share_dirs}/qalculate/{,**} r,
+  owner @{user_share_dirs}/user-places.xbel{,*} rwl,
+  owner @{user_share_dirs}/wallpapers/{,**} rw,
+
+  owner @{user_state_dirs}/#@{int} rw,
+  owner @{user_state_dirs}/plasmashellstaterc rw,
+  owner @{user_state_dirs}/plasmashellstaterc.lock rwk,
+  owner @{user_state_dirs}/plasmashellstaterc.@{rand6} rwl,
+
+        /tmp/.mount_nextcl@{rand6}/{,*} r,
+  owner @{tmp}/#@{int} rw,
+
+        @{run}/mount/utab r,
+        @{run}/user/@{uid}/gvfs/ r,
+  owner @{run}/user/@{uid}/#@{int} rw,
+  owner @{run}/user/@{uid}/app/*/*.@{rand6} r,
+  owner @{run}/user/@{uid}/kdesud_:@{int} w,
+  owner @{run}/user/@{uid}/plasmashell@{rand6}.@{int}.kioworker.socket rwl -> @{run}/user/@{uid}/#@{int},
+
+  @{sys}/bus/ r,
+  @{sys}/bus/usb/devices/ r,
+  @{sys}/class/{,**} r,
+  @{sys}/devices/platform/** r,
+
+  @{sys}/devices/@{pci}/name r,
+  @{sys}/devices/system/cpu/cpufreq/policy@{int}/scaling_cur_freq r,
+  @{sys}/devices/virtual/dmi/id/bios_vendor r,
+  @{sys}/devices/virtual/dmi/id/board_vendor r,
+  @{sys}/devices/virtual/dmi/id/product_name r,
+  @{sys}/devices/virtual/dmi/id/sys_vendor r,
+  @{sys}/devices/virtual/thermal/**/{name,type} r,
+  @{sys}/devices/virtual/thermal/thermal_zone@{int}/hwmon@{int}/ r,
+
+        @{PROC}/ r,
+        @{PROC}/@{pid}/cmdline r,
+        @{PROC}/@{pid}/stat r,
+        @{PROC}/cmdline r,
+        @{PROC}/diskstats r,
+        @{PROC}/loadavg r,
+        @{PROC}/uptime r,
+        @{PROC}/vmstat r,
+  owner @{PROC}/@{pid}/{cgroup,cmdline,stat,statm} r,
+  owner @{PROC}/@{pid}/attr/current r,
+  owner @{PROC}/@{pid}/environ r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/task/@{tid}/comm rw,
+
+  /dev/ptmx rw,
+  /dev/rfkill r,
+
+  include if exists <local/plasmashell>
+}
+
+# vim:syntax=apparmor

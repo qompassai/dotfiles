@@ -1,0 +1,139 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{bin}/virt-manager
+@{exec_path} += /usr/share/virt-manager/virt-manager
+profile virt-manager /{{,usr/}bin/virt-manager,usr/share/virt-manager/virt-manager,usr/share/virt-manager/virt-manager}  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.a11y>
+  include <abstractions/dconf-write>
+  include <abstractions/desktop>
+  include <abstractions/devices-usb>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/gstreamer>
+  include <abstractions/nameservice-strict>
+  include <abstractions/python>
+  include <abstractions/ssl_certs>
+  include <abstractions/thumbnails-cache-read>
+  include <abstractions/user-download-strict>
+
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.virt-manager.virt-manager{,.*},
+  dbus receive bus=session path=/org/virt-manager/virt-manager{,/**}
+       interface=org.virt-manager.virt-manager{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/virt-manager/virt-manager{,/**}
+       interface=org.virt-manager.virt-manager{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/virt-manager/virt-manager{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/virt-manager/virt-manager{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/virt-manager/virt-manager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.virt-manager.virt-manager{,.*}}"),
+  dbus send bus=session path=/org/virt-manager/virt-manager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} rix,
+
+  @{sh_path}        rix,
+  @{python_path}    rix,
+  @{lib}/@{python_name}/site-packages/__pycache__/guestfs.cpython-@{int}.pyc.@{int} w,
+
+  @{bin}/ r,
+  @{bin}/env       rix,
+  @{bin}/getfacl   rix,
+  @{bin}/setfacl   rix,
+
+  @{sbin}/libvirtd                         rpx,
+  @{bin}/ssh                               rpx,
+  @{lib}/spice-client-glib-usb-acl-helper  rpx,
+
+  @{open_path}     rpx -> child-open,
+
+  /usr/share/gtksourceview-4/{,**} r,
+  /usr/share/ladspa/rdf/{,ladspa.rdfs} r,
+  /usr/share/misc/*.ids r,
+  /usr/share/osinfo/{,**} r,
+  /usr/share/pci.ids r,
+  /usr/share/virt-manager/{,**} r,
+  /usr/share/virtio/{,*} r,
+  /var/lib/usbutils/*.ids r,
+
+  /var/lib/dbus/machine-id r,
+  /etc/machine-id r,
+
+  /etc/fstab r,
+  /etc/libnl/classid r,
+
+  # System VM images
+  /var/lib/libvirt/images/{,**} rw,
+
+  # For disk images
+  @{MOUNTS}/ r,
+  @{user_img_dirs}/{,**} r,
+
+  owner @{HOME}/ r,
+  owner @{user_cache_dirs}/virt-manager/{,**} rw,
+
+  # User VM images
+  owner @{user_share_dirs}/ r,
+  owner @{user_share_dirs}/libvirt/{,**} rw,
+  owner @{user_vm_dirs}/{,**} rw,
+
+  owner @{run}/user/@{uid}/libvirt/libvirtd.lock rwk,
+  owner @{run}/user/@{uid}/libvirt/virtqemud.lock rwk,
+
+  @{run}/libvirt/libvirt-sock rw,
+  @{run}/mount/utab r,
+  @{run}/udev/data/c@{dynamic}:@{int} r,  # For dynamic assignment range 234 to 254, 384 to 511
+
+  @{sys}/devices/**/hwmon/**/{,name,temp*,fan*} r,
+  @{sys}/devices/virtual/drm/ttm/uevent r,
+  @{sys}/fs/cgroup/user.slice/cpu.max r,
+  @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/cpu.max r,
+  @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/session-@{word}.scope/cpu.max r,
+
+        @{PROC}/@{pids}/net/route r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/stat r,
+
+  /dev/media@{int} r,
+  /dev/video@{int} rw,
+
+  # Silence the noise
+  deny /usr/share/virt-manager/{,**} w,
+  deny owner @{user_share_dirs}/gvfs-metadata/{,*} r,
+
+  include if exists <local/virt-manager>
+}
+
+# vim:syntax=apparmor

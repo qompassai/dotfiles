@@ -1,0 +1,131 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/dkms
+profile dkms /{,usr/}{,s}bin/dkms  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+
+  capability dac_override,
+  capability dac_read_search,
+  capability mknod,
+  capability setgid,
+  capability setuid,
+
+  deny unix (receive) type=stream,
+
+  @{exec_path} rm,
+
+  @{sh_path}        rix,
+  @{coreutils_path} rix,
+  @{bin}/as         rix,
+  @{bin}/bc         rix,
+  @{bin}/clang-@{version} rix,
+  @{bin}/g++        rix,
+  @{bin}/gcc        rix,
+  @{bin}/getconf    rix,
+  @{bin}/hostname   rix,
+  @{bin}/kill       rix,
+  @{bin}/kmod       rcx -> kmod,
+  @{bin}/ld         rix,
+  @{bin}/ld.lld     rix,
+  @{bin}/llvm-objcopy rix,
+  @{bin}/lsb_release rpx,
+  @{bin}/make       rix,
+  @{bin}/objcopy    rix,
+  @{bin}/pahole     rix,
+  @{bin}/readelf    rix,
+  @{bin}/rpm       rpux,
+  @{bin}/strip      rix,
+  @{bin}/xz         rix,
+  @{bin}/zstd       rix,
+  @{sbin}/update-secureboot-policy rpux,
+
+  @{lib}/gcc/@{multiarch}/@{version}/*         rix,
+  @{lib}/linux-kbuild-*/scripts/**             rix,
+  @{lib}/linux-kbuild-*/tools/objtool/objtool  rix,
+  @{lib}/llvm-[0-9]*/bin/clang                 rix,
+  @{lib}/modules/*/build/arch/x86/**           rix,
+  @{lib}/modules/*/build/include/**            rix,
+  @{lib}/modules/*/build/scripts/**            rix,
+  @{lib}/modules/*/build/tools/**              rix,
+  @{lib}/os-release rix,
+
+  /var/lib/dkms/**/build/* rix,
+  /var/lib/dkms/vboxhost/*/build/** rw,
+  /var/lib/dkms/**/configure rix,
+  /var/lib/dkms/**/dkms.postbuild rix,
+
+  /var/lib/shim-signed/mok/** r,
+
+  / r,
+  @{lib}/modules/*/updates/ rw,
+  @{lib}/modules/*/updates/dkms/{,*,*/,**.ko.xz,**.ko.zst} rw,
+  @{lib}/modules/*/kernel/drivers/{,*,*/,**.ko.xz,**.ko.zst} rw,
+
+  /etc/lsb-release r,
+  /etc/dkms/{,**} r,
+
+  /var/ r,
+  /var/lib/ r,
+
+  /var/lib/dkms/ r,
+  /var/lib/dkms/** rw,
+
+  /var/lib/rpm/ r,
+  /var/lib/rpm/** rw,
+
+  # For building module in /usr/src/ subdirs
+  /usr/include/**.h r,
+  /usr/src/ r,
+  /usr/src/** rw,
+  /usr/src/linux-headers-*/scripts/**              rix,
+  /usr/src/linux-headers-*/scripts/gcc-plugins/*.so mr,
+  /usr/src/linux-headers-*/tools/**                rix,
+
+  # For autosign modules
+  owner /etc/kernel_key/*.crt r,
+  owner /etc/kernel_key/*.key r,
+  owner /etc/kernel_key/sign-kernel.sh rix,
+
+  owner @{HOME}/ r,
+
+  owner @{tmp}/* rw,
+  owner @{tmp}/cc* rw,
+  owner @{tmp}/dkms.*/ rw,
+  owner @{tmp}/sh-thd.* rw,
+  owner @{tmp}/tmp.* rw,
+
+        @{PROC}/sys/kernel/osrelease r,
+  owner @{PROC}/@{pid}/fd/ r,
+
+  /dev/pts/@{int} rw,
+
+  profile kmod flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/kmod>
+
+    @{lib}/modules/*/modules.* rw,
+    /var/lib/dkms/**/module/*.ko* r,
+
+    owner @{efi}/System.map-* r,
+
+    owner @{tmp}/tmp.@{rand10} r,
+
+    @{sys}/module/compression r,
+
+    include if exists <local/dkms_kmod>
+  }
+
+  include if exists <local/dkms>
+}
+
+# vim:syntax=apparmor

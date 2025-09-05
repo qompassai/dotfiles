@@ -1,0 +1,61 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xarchiver
+profile xarchiver /{,usr/}bin/xarchiver flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/dconf-write>
+  include <abstractions/gtk>
+  include <abstractions/fonts>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/freedesktop.org>
+  include <abstractions/nameservice-strict>
+  include <abstractions/user-download-strict>
+  include <abstractions/thumbnails-cache-read>
+
+  @{exec_path} mrix,
+
+  @{sh_path}           rix,
+  @{bin}/ls            rix,
+  @{bin}/rm            rix,
+  @{bin}/mv            rix,
+  @{bin}/cp            rix,
+
+  # Archivers
+  @{archive_path}      rix,
+  @{bin}/{,@{multiarch}-}ar rix,
+
+  @{open_path}         rpx -> child-open,
+
+  /etc/fstab r,
+
+  owner @{user_config_dirs}/xarchiver/ rw,
+  owner @{user_config_dirs}/xarchiver/xarchiverrc{,.*} rw,
+
+  owner @{HOME}/.bz2 rw,
+
+        / r,
+        /home/ r,
+  #owner @{HOME}/ r,
+  #owner @{HOME}/** rw,
+        @{MOUNTS}/ r,
+        @{MOUNTS}/** rw,
+        /tmp/ r,
+  owner @{tmp}/** rw,
+
+        @{PROC}/@{pid}/mountinfo r,
+        @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/fd/ r,
+
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/xarchiver>
+}
+
+# vim:syntax=apparmor

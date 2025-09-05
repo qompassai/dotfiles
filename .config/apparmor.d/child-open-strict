@@ -1,0 +1,25 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+# This profile is designed to be used in a child profile to limit what
+# confined application can invoke via open helper.
+
+# This version of child-open only allow to open browsers & folders.
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+profile child-open-strict  flags=(attach_disconnected,mediate_deleted,complain) {
+  include <abstractions/base>
+  include <abstractions/app/open>
+
+  @{browsers_path}               px,
+  @{file_explorers_path}         px,
+
+  include if exists <usr/child-open-strict.d>
+  include if exists <local/child-open-strict>
+}
+
+# vim:syntax=apparmor

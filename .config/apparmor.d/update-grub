@@ -1,0 +1,26 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/update-grub
+profile update-grub /{,usr/}{,s}bin/update-grub flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  capability dac_read_search,
+
+  @{exec_path} mr,
+
+  @{sh_path}             rix,
+  @{sbin}/grub-mkconfig  rpx,
+
+  /dev/tty@{int} rw,
+
+  include if exists <local/update-grub>
+}
+
+# vim:syntax=apparmor

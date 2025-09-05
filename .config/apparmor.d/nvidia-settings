@@ -1,0 +1,42 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/nvidia-settings
+profile nvidia-settings /{,usr/}bin/nvidia-settings  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/dconf-write>
+  include <abstractions/desktop>
+  include <abstractions/nvidia-strict>
+
+  @{exec_path} mr,
+
+  /usr/share/pixmaps/{,**} r,
+
+  owner @{HOME}/.nvidia-settings-rc rw,
+
+  @{sys}/bus/pci/devices/ r,
+  @{sys}/devices/@{pci}/config r,
+  @{sys}/devices/system/node/ r,
+  @{sys}/devices/system/node/node@{int}/cpumap r,
+
+        @{PROC}/devices r,
+        @{PROC}/driver/nvidia/capabilities/mig/config r,
+        @{PROC}/driver/nvidia/capabilities/mig/monitor r,
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/task/@{tid}/comm rw,
+
+  /dev/char/@{dynamic}:@{int} w,          # For dynamic assignment range 234 to 254, 384 to 511
+  /dev/nvidia-caps/ rw,
+  /dev/nvidia-caps/nvidia-cap@{int} r,
+  /dev/nvidia-uvm rw,
+  /dev/nvidia-uvm-tools r,
+
+  include if exists <local/nvidia-settings>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,131 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+#
+# The following profile assumes that:
+#   openvpn is started as root with dropping privileges
+#   iptables is used
+#   config files can be stored in:
+#     - /etc/openvpn/*.{conf,ovpn}
+#     - /etc/openvpn/{client,server}/*.{conf,ovpn}
+#   certs/keys can be are stored in:
+#     - /etc/openvpn/certs/*.{key,crt}
+#     - $HOME/.cert/**/*.pem
+#   auth credentials are stored in:   /etc/openvpn/auth/*.auth
+#   logs are redirected to:           /var/log/openvpn/*.log
+#   DNS/resolver script is stored in: /etc/openvpn/update-resolv-conf{,.sh}
+# If a user wants to type user/pass interactively, systemd-ask-password is
+# invoked for that.
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/openvpn
+profile openvpn /{,usr/}{,s}bin/openvpn  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+
+  # Needed to remove the following errors:
+  #  ERROR: Cannot ioctl TUNSETIFF tun: Operation not permitted (errno=1)
+  #  Exiting due to fatal error
+  capability net_admin,
+
+  # These are needed when user/group are set in a OpenVPN config file
+  capability setuid,
+  capability setgid,
+
+  capability dac_read_search,
+  capability dac_override,
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  signal (receive) set=(term) peer=nm-openvpn-service,
+
+  @{exec_path} mr,
+
+  @{lib}/{,NetworkManager/}nm-openvpn-service-openvpn-helper rpx,
+
+  /etc/openvpn/{,**} r,
+
+  @{HOME}/.cert/{,**} r,
+
+  /var/log/openvpn/*.log w,
+
+  @{run}/NetworkManager/nm-openvpn-@{uuid} rw,
+  @{run}/openvpn/*.{pid,status} rw,
+  @{run}/systemd/journal/dev-log r,
+
+  @{bin}/ip                                rix,
+  @{bin}/systemd-ask-password              rpx,
+  @{lib}/nm-openvpn-service-openvpn-helper rpx,
+  /etc/openvpn/force-user-traffic-via-vpn.sh    rcx -> force-user-traffic-via-vpn,
+  /etc/openvpn/update-resolv-conf{,.sh}         rcx -> update-resolv,
+
+  /dev/net/tun rw,
+
+  owner @{PROC}/@{pid}/net/route r,
+
+  profile update-resolv flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+    include <abstractions/nameservice-strict>
+
+    # To be able to manage firewall rules.
+    capability net_admin,
+
+    /etc/openvpn/update-resolv-conf.sh r,
+
+    @{sh_path}                rix,
+    @{bin}/cut                rix,
+    @{bin}/ip                 rix,
+    @{bin}/which{,.debianutils}  rix,
+    @{sbin}/xtables-nft-multi rix,
+
+    /etc/iproute2/rt_tables r,
+    /etc/iproute2/rt_tables.d/{,*} r,
+
+    include if exists <local/openvpn_update-resolv>
+  }
+
+  profile force-user-traffic-via-vpn flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+    include <abstractions/nameservice-strict>
+
+    # To be able to manage firewall rules.
+    capability net_admin,
+
+    network netlink raw,
+
+    /etc/openvpn/ r,
+    /etc/openvpn/force-user-traffic-via-vpn.sh r,
+
+    @{sh_path}        rix,
+    @{bin}/{,e}grep   rix,
+    @{bin}/cut        rix,
+    @{bin}/env        rix,
+    @{bin}/ip         rix,
+    @{sbin}/nft       rix,
+    @{bin}/sed        rix,
+
+    /etc/iproute2/rt_realms r,
+    /etc/iproute2/group r,
+    /etc/iproute2/rt_tables.d/ r,
+    /etc/iproute2/rt_tables rw,
+    /etc/iproute2/sed@{rand6} rw,
+
+    owner @{PROC}/sys/net/ipv{4,}/route/flush w,
+
+    include if exists <local/openvpn_force-user-traffic-via-vpn>
+  }
+
+  include if exists <local/openvpn>
+}
+
+# vim:syntax=apparmor

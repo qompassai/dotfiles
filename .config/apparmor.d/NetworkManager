@@ -1,0 +1,254 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/NetworkManager
+profile NetworkManager /{,usr/}{,s}bin/NetworkManager  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/bus/fi.w1.wpa_supplicant1>
+  include <abstractions/bus/org.bluez>
+  include <abstractions/bus/org.freedesktop.hostname1>
+  include <abstractions/bus/org.freedesktop.login1>
+  include <abstractions/bus/org.freedesktop.ModemManager1>
+  include <abstractions/bus/org.freedesktop.PolicyKit1>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+
+  capability audit_write,
+  capability dac_override,
+  capability kill,
+  capability net_admin,
+  capability net_bind_service,
+  capability net_raw,
+  capability setgid,
+  capability setuid,
+  capability sys_chroot,
+  capability sys_module,
+
+  network inet stream,
+  network inet6 stream,
+  network inet dgram,
+  network inet6 dgram,
+  network inet raw,
+  network inet6 raw,
+  network netlink raw,
+  network packet dgram,
+
+  signal (send) set=(term) peer=dnsmasq,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.freedesktop.NetworkManager{,.*},
+  dbus receive bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.NetworkManager{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.NetworkManager{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.NetworkManager{,.*}}"),
+  dbus send bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus (send receive) bus=system path=/fi/w1/wpa_supplicant1{,/**}
+       interface=fi.w1.wpa_supplicant1{,.*}
+       peer=(name="{@{busname},fi.w1.wpa_supplicant1{,.*}}", label=wpa-supplicant),
+  dbus (send receive) bus=system path=/fi/w1/wpa_supplicant1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},fi.w1.wpa_supplicant1{,.*}}", label=wpa-supplicant),
+  dbus send bus=system path=/fi/w1/wpa_supplicant1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},fi.w1.wpa_supplicant1{,.*}}", label=wpa-supplicant),
+  dbus send bus=system path=/fi/w1/wpa_supplicant1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},fi.w1.wpa_supplicant1{,.*}}", label=wpa-supplicant),
+  dbus receive bus=system path=/fi/w1/wpa_supplicant1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},fi.w1.wpa_supplicant1{,.*}}", label=wpa-supplicant),
+  dbus (send receive) bus=system path=/org/fedoraproject/FirewallD1{,/**}
+       interface=org.fedoraproject.FirewallD1{,.*}
+       peer=(name="{@{busname},org.fedoraproject.FirewallD1{,.*}}", label=firewalld),
+  dbus (send receive) bus=system path=/org/fedoraproject/FirewallD1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.fedoraproject.FirewallD1{,.*}}", label=firewalld),
+  dbus send bus=system path=/org/fedoraproject/FirewallD1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.fedoraproject.FirewallD1{,.*}}", label=firewalld),
+  dbus send bus=system path=/org/fedoraproject/FirewallD1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.fedoraproject.FirewallD1{,.*}}", label=firewalld),
+  dbus receive bus=system path=/org/fedoraproject/FirewallD1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.fedoraproject.FirewallD1{,.*}}", label=firewalld),
+  dbus (send receive) bus=system path=/org/freedesktop/nm_dispatcher{,/**}
+       interface=org.freedesktop.nm_dispatcher{,.*}
+       peer=(name="{@{busname},org.freedesktop.nm_dispatcher{,.*}}", label=nm-dispatcher),
+  dbus (send receive) bus=system path=/org/freedesktop/nm_dispatcher{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.nm_dispatcher{,.*}}", label=nm-dispatcher),
+  dbus send bus=system path=/org/freedesktop/nm_dispatcher{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.nm_dispatcher{,.*}}", label=nm-dispatcher),
+  dbus send bus=system path=/org/freedesktop/nm_dispatcher{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.nm_dispatcher{,.*}}", label=nm-dispatcher),
+  dbus receive bus=system path=/org/freedesktop/nm_dispatcher{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.nm_dispatcher{,.*}}", label=nm-dispatcher),
+  dbus (send receive) bus=system path=/org/freedesktop/resolve1{,/**}
+       interface=org.freedesktop.resolve1{,.*}
+       peer=(name="{@{busname},org.freedesktop.resolve1{,.*}}", label="@{p_systemd_resolved}"),
+  dbus (send receive) bus=system path=/org/freedesktop/resolve1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.resolve1{,.*}}", label="@{p_systemd_resolved}"),
+  dbus send bus=system path=/org/freedesktop/resolve1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.resolve1{,.*}}", label="@{p_systemd_resolved}"),
+  dbus send bus=system path=/org/freedesktop/resolve1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.resolve1{,.*}}", label="@{p_systemd_resolved}"),
+  dbus receive bus=system path=/org/freedesktop/resolve1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.resolve1{,.*}}", label="@{p_systemd_resolved}"),
+
+  dbus send bus=system path=/org/freedesktop/nm_dispatcher
+       interface=org.freedesktop.nm_dispatcher
+       peer=(name=org.freedesktop.nm_dispatcher),
+
+  dbus receive bus=system path=/org/freedesktop
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name=:*),
+
+  dbus receive bus=system path=/
+       interface=org.freedesktop.DBus.ObjectManager
+       member=InterfacesRemoved
+       peer=(name=:*, label="@{p_bluetoothd}"),
+
+  dbus send bus=system path=/
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name=:*, label="@{p_bluetoothd}"),
+
+  dbus send bus=system path=/org/freedesktop
+       interface=org.freedesktop.DBus.ObjectManager
+       member=InterfacesAdded
+       peer=(name=org.freedesktop.DBus, label=nm-online),
+
+  @{exec_path} mr,
+
+  @{sh_path}        rix,
+  @{sbin}/nft       rix,
+
+  @{sbin}/dnsmasq                                            rpx,
+  @{bin}/kmod                                                rpx,
+  @{bin}/netconfig                                          rpux,
+  @{sbin}/resolvconf                                         rpx,
+  @{bin}/systemctl                                           rcx -> systemctl,
+  @{lib}/{,NetworkManager/}nm-daemon-helper                  rpx,
+  @{lib}/{,NetworkManager/}nm-dhcp-helper                    rpx,
+  @{lib}/{,NetworkManager/}nm-dispatcher                     rpx,
+  @{lib}/{,NetworkManager/}nm-iface-helper                   rpx,
+  @{lib}/{,NetworkManager/}nm-initrd-generator               rpx,
+  @{lib}/{,NetworkManager/}nm-openvpn-auth-dialog            rpx,
+  @{lib}/{,NetworkManager/}nm-openvpn-service                rpx,
+  @{lib}/{,NetworkManager/}nm-openvpn-service-openvpn-helper rpx,
+  /usr/share/netplan/netplan.script                          rpx,
+
+  /usr/share/gvfs/remote-volume-monitors/{,*.monitor} r,
+  /usr/share/iproute2/{,**} r,
+
+  @{att}/ r,
+
+  /etc/ r,
+  /etc/iproute2/* r,
+  /etc/machine-id r,
+  /etc/network/interfaces r,
+  /etc/network/interfaces.d/{,*} r,
+  /etc/NetworkManager/{,**} r,
+  /etc/NetworkManager/system-connections/{,**} w,
+  @{etc_rw}/netplan/90-NM-@{uuid}.yaml w,
+  @{etc_rw}/resolv.conf rw,
+  @{etc_rw}/resolv.conf.[0-9A-Z]* rw,
+
+  /var/lib/iwd/*open* rw,
+  /var/lib/NetworkManager/{,**} rw,
+
+  @{sys}/bus/ r,
+  @{sys}/class/ r,
+  @{sys}/class/net/ r,
+  @{sys}/class/net/rfkill/ r,
+  @{sys}/class/rfkill/ r,
+
+  @{att}/@{run}/systemd/inhibit/@{int}.ref rw,
+
+  @{run}/network/ifstate r,
+  @{run}/NetworkManager/{,**} rw,
+  @{run}/nm-*.pid rw,
+  @{run}/nscd/db* rwl,
+  @{run}/systemd/users/@{uid} r,
+  @{run}/udev/data/+pci:* r,              # Identifies all PCI devices (CPU, GPU, Network, Disks, USB, etc.)
+  @{run}/udev/data/+platform:* r,
+  @{run}/udev/data/+rfkill:* r,
+  @{run}/udev/data/n@{int} r,
+
+  @{sys}/devices/@{pci}/net/*/{,**} r,
+  @{sys}/devices/@{pci}/usb@{int}/**/net/{,**} r,
+  @{sys}/devices/**/@{uuid}/net/*/{,**} r,
+  @{sys}/devices/**/uevent r,
+  @{sys}/devices/virtual/net/{,**} r,
+
+        @{PROC}/@{pids}/stat r,
+        @{PROC}/1/environ r,
+        @{PROC}/cmdline r,
+        @{PROC}/sys/kernel/osrelease r,
+        @{PROC}/sys/net/** rw,
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/fd/ r,
+
+  /dev/rfkill rw,
+
+  profile systemctl flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    include if exists <local/NetworkManager_systemctl>
+  }
+
+  include if exists <local/NetworkManager>
+}
+
+# vim:syntax=apparmor

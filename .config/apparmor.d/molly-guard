@@ -1,0 +1,46 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/molly-guard/molly-guard
+profile molly-guard /{,usr/}lib{,exec,32,64}/molly-guard/molly-guard flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  capability sys_ptrace,
+
+  ptrace (read),
+
+  @{exec_path} mr,
+
+  @{sh_path}         rix,
+  @{bin}/{,e,p}grep  rix,
+  @{bin}/hostname    rix,
+  @{bin}/run-parts   rix,
+  @{bin}/systemctl   rcx -> systemctl,
+  @{bin}/tr          rix,
+  @{bin}/tty         rix,
+
+  /etc/molly-guard/{,**} r,
+  /etc/molly-guard/run.d/* rix,
+
+  @{PROC}/ r,
+  @{PROC}/@{pids}/cmdline r,
+  @{PROC}/sys/kernel/osrelease r,
+  @{PROC}/uptime r,
+
+  profile systemctl flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    include if exists <local/molly-guard_systemctl>
+  }
+
+  include if exists <local/molly-guard>
+}
+
+# vim:syntax=apparmor

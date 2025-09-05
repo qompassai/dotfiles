@@ -1,0 +1,26 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/systemd/systemd-networkd-wait-online
+profile systemd-networkd-wait-online /{,usr/}lib{,exec,32,64}/systemd/systemd-networkd-wait-online  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/common/systemd>
+
+  capability net_admin,
+
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{run}/systemd/netif/links/@{int} r,
+
+  include if exists <local/systemd-networkd-wait-online>
+}
+
+# vim:syntax=apparmor

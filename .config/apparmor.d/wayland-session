@@ -1,0 +1,32 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{etc_ro}/sddm/wayland-session
+profile wayland-session /{,usr/}etc/sddm/wayland-session flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/shells>
+
+  @{exec_path} mr,
+
+  @{shells_path}  rix,
+  @{bin}/id       rix,
+
+  @{lib}/plasma-dbus-run-session-if-needed  rix,
+  @{lib}/@{multiarch}/libexec/plasma-dbus-run-session-if-needed  rix,
+  @{bin}/startplasma-wayland rpx,
+
+  /etc/machine-id r,
+
+  owner @{user_share_dirs}/sddm/wayland-session.log rw,
+
+  /dev/tty rw,
+
+  include if exists <local/wayland-session>
+}
+
+# vim:syntax=apparmor

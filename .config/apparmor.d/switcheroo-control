@@ -1,0 +1,62 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/switcheroo-control
+profile switcheroo-control /{,usr/}lib{,exec,32,64}/switcheroo-control  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+
+  capability net_admin,
+  capability sys_nice,
+
+  network netlink raw,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=net.hadess.SwitcherooControl{,.*},
+  dbus receive bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=net.hadess.SwitcherooControl{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=net.hadess.SwitcherooControl{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},net.hadess.SwitcherooControl{,.*}}"),
+  dbus send bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{run}/udev/data/+drm:card@{int}-* r,   # for screen outputs
+  @{run}/udev/data/+pci:* r,              # Identifies all PCI devices (CPU, GPU, Network, Disks, USB, etc.)
+
+  @{run}/udev/data/c226:@{int} r,         # for /dev/dri/card*
+
+  @{sys}/bus/ r,
+  @{sys}/class/ r,
+  @{sys}/class/drm/ r,
+  @{sys}/devices/@{pci}/boot_vga r,
+  @{sys}/devices/@{pci}/uevent r,
+  @{sys}/devices/virtual/**/uevent r,
+
+  include if exists <local/switcheroo-control>
+}
+
+# vim:syntax=apparmor

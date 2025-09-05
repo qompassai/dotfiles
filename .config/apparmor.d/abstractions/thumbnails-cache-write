@@ -1,0 +1,20 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+  abi <abi/4.0>,
+
+  include <abstractions/thumbnails-cache-read>
+
+  owner @{user_cache_dirs}/thumbnails/ w,
+  owner @{user_cache_dirs}/thumbnails/{fail,*large,normal}/ w,
+  owner @{user_cache_dirs}/thumbnails/{fail,*large,normal}/*.png wl,
+  owner @{user_cache_dirs}/thumbnails/{fail,*large,normal}/*.png.@{rand6} wl,
+  owner @{user_cache_dirs}/thumbnails/{fail,*large,normal}/#@{int} w,
+  owner @{user_cache_dirs}/thumbnails/{fail,*large,normal}/gnome-thumbnail-factory/ w,
+  owner @{user_cache_dirs}/thumbnails/{fail,*large,normal}/gnome-thumbnail-factory/*.png w,
+
+  include if exists <abstractions/thumbnails-cache-write.d>
+
+# vim:syntax=apparmor

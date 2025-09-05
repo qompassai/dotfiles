@@ -1,0 +1,137 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = /etc/sddm/Xsession
+profile sddm-xsession /etc/sddm/Xsession flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+  include <abstractions/shells>
+
+  @{exec_path} r,
+
+  /{usr/,}{local,}bin/ r,
+  @{shells_path}    rix,
+  @{bin}/{,e}grep   rix,
+  @{bin}/{m,g,}awk  rix,
+  @{bin}/cat        rix,
+  @{bin}/chmod      rix,
+  @{bin}/csh        rix,
+  @{bin}/date       rix,
+  @{bin}/fish       rix,
+  @{bin}/gettext.sh r,
+  @{bin}/gpgconf   rcx -> gpg,
+  @{bin}/id         rix,
+  @{bin}/locale     rix,
+  @{bin}/locale-check rix,
+  @{bin}/mktemp     rix,
+  @{bin}/mv         rix,
+  @{bin}/rm         rix,
+  @{bin}/sed        rix,
+  @{bin}/stat       rix,
+  @{bin}/tail       rix,
+  @{bin}/tcsh       rix,
+  @{bin}/tempfile   rix,
+  @{bin}/touch      rix,
+  @{bin}/which{,.debianutils} rix,
+  @{bin}/zsh        rix,
+
+  @{bin}/dbus-update-activation-environment  rcx -> dbus,
+  @{bin}/flatpak                             rpx,
+  @{bin}/numlockx                            rpx,
+  @{bin}/xhost                               rpx,
+  @{bin}/xrdb                                rpx,
+  /etc/X11/Xsession                          rpx,
+  @{bin}/ssh-agent                           rpx,
+  @{bin}/udevadm                             rpx,
+
+  @{bin}/run-parts         rcx -> run-parts,
+
+  # Allowed GUI sessions to start
+  #@{bin}/openbox-session  rpx,
+  #@{bin}/openbox          rpx,
+
+  @{system_share_dirs}/im-config/data/{,*} r,
+  @{system_share_dirs}/im-config/xinputrc.common r,
+
+  /etc/default/{,*} r,
+  /etc/X11/{,**} r,
+
+  owner @{HOME}/.xinputrc r,
+  owner @{HOME}/.xsession-errors rw,
+
+  owner @{user_share_dirs}/sddm/xorg-session.log w,
+
+  owner @{tmp}/xsess-env-* rw,
+  owner @{tmp}/file* rw,
+  audit owner @{tmp}/tmp.* rw,
+
+  owner @{PROC}/@{pid}/loginuid r,
+
+  profile run-parts flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/run-parts mr,
+
+    /etc/X11/Xsession.d/ r,
+    /etc/X11/Xresources/ r,
+
+    owner @{HOME}/.xsession-errors w,
+
+    include if exists <local/sddm-xsession_run-parts>
+  }
+
+  profile dbus flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/dbus-update-activation-environment mr,
+
+    owner @{HOME}/.xsession-errors w,
+
+    include if exists <local/sddm-xsession_dbus>
+  }
+
+  profile gpg flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/nameservice-strict>
+    include <abstractions/ssl_certs>
+
+    capability dac_read_search,
+
+    network inet stream,
+    network inet6 stream,
+    network inet dgram,
+    network inet6 dgram,
+
+    @{bin}/gpg{,2} mr,
+    @{bin}/gpgconf mr,
+    @{bin}/gpgsm   mr,
+
+    @{bin}/dirmngr           rix,
+    @{bin}/gpg-agent         rpx,
+    @{bin}/gpg-connect-agent rix,
+
+    @{HOME}/@{XDG_GPG_DIR}/*.conf r,
+
+    @{PROC}/@{pid}/fd/ r,
+    @{PROC}/@{pid}/task/@{tid}/comm rw,
+
+          /dev/tty@{int} rw,
+    owner /dev/pts/@{int} rw,
+
+    deny @{user_share_dirs}/sddm/* rw,
+
+    include if exists <local/sddm-xsession_gpg>
+  }
+
+  include if exists <local/sddm-xsession>
+}
+
+# vim:syntax=apparmor

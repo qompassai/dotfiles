@@ -1,0 +1,70 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,gnome-shell/}gnome-shell-calendar-server
+profile gnome-shell-calendar-server /{,usr/}lib{,exec,32,64}/{,gnome-shell/}gnome-shell-calendar-server flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/dconf-write>
+  include <abstractions/nameservice-strict>
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.Shell.CalendarServer{,.*},
+  dbus receive bus=session path=/org/gnome/Shell/CalendarServer{,/**}
+       interface=org.gnome.Shell.CalendarServer{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/Shell/CalendarServer{,/**}
+       interface=org.gnome.Shell.CalendarServer{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/Shell/CalendarServer{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/Shell/CalendarServer{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/Shell/CalendarServer{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.Shell.CalendarServer{,.*}}"),
+  dbus send bus=session path=/org/gnome/Shell/CalendarServer{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/{,**}
+       interface=org.freedesktop.DBus.Properties
+       peer=(name=:*, label=evolution-*),
+
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/{,**}
+       interface=org.gnome.evolution.dataserver.Calendar*
+       peer=(name=:*, label=evolution-*),
+
+  dbus send bus=session path=/org/gnome/evolution/dataserver/SourceManager
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name=:*, label=evolution-source-registry),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mr,
+
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+
+  /etc/sysconfig/clock r,
+  /etc/timezone r,
+
+  include if exists <local/gnome-shell-calendar-server>
+}
+
+# vim:syntax=apparmor

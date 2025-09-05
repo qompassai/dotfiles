@@ -1,0 +1,32 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/zsys-system-autosnapshot
+profile zsys-system-autosnapshot /{,usr/}lib{,exec,32,64}/zsys-system-autosnapshot flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  @{exec_path}            mr,
+
+  @{sh_path}         rix,
+  @{bin}/cat         rix,
+  @{bin}/cp          rix,
+  @{bin}/rm          rix,
+  @{bin}/zsysctl     rpx,
+  @{bin}/zsysd       rpx,
+
+  /var/log/unattended-upgrades/unattended-upgrades-dpkg.log rw,
+
+  @{run}/zsys-bootmenu.unattended-upgrades rw,
+  @{run}/zsys-snapshot.unattended-upgrades rw,
+  @{run}/unattended-upgrades.pid r,
+
+  include if exists <local/zsys-system-autosnapshot>
+}
+
+# vim:syntax=apparmor

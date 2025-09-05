@@ -1,0 +1,23 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020 krathalan https://git.sr.ht/~krathalan/apparmor-profiles/
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xclip
+profile xclip /{,usr/}bin/xclip flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/X-strict>
+
+  network unix stream,
+
+  @{exec_path} mr,
+
+  include if exists <local/xclip>
+}
+
+# vim:syntax=apparmor

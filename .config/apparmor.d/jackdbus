@@ -1,0 +1,55 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/jackdbus
+profile jackdbus /{,usr/}bin/jackdbus  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+
+  signal (receive) set=(term) peer=gdm,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.jackaudio.service{,.*},
+  dbus receive bus=session path=/org/jackaudio/service{,/**}
+       interface=org.jackaudio.service{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/jackaudio/service{,/**}
+       interface=org.jackaudio.service{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/jackaudio/service{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/jackaudio/service{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/jackaudio/service{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.jackaudio.service{,.*}}"),
+  dbus send bus=session path=/org/jackaudio/service{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  owner @{DESKTOP_HOME}/.log/ w,
+  owner @{DESKTOP_HOME}/.log/jack/{,**} rw,
+
+  owner @{HOME}/.log/ w,
+  owner @{HOME}/.log/jack/{,**} rw,
+
+  owner @{user_config_dirs}/jack/{,**} rw,
+
+  include if exists <local/jackdbus>
+}
+
+# vim:syntax=apparmor

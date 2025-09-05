@@ -1,0 +1,132 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/tomb
+profile tomb /{,usr/}bin/tomb flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/app/sudo>
+  include <abstractions/consoles>
+  include <abstractions/disks-read>
+  include <abstractions/nameservice-strict>
+  include <abstractions/zsh>
+
+  capability chown,
+  capability fowner,
+  capability sys_ptrace,
+  capability sys_rawio,
+
+  signal send set=cont peer=gpg,
+
+  ptrace read peer=@{p_systemd_user},
+
+  @{exec_path} mr,
+
+  @{bin}/{,e,f}grep  rix,
+  @{bin}/{m,g,}awk   rix,
+  @{bin}/basename    rix,
+  @{bin}/cat         rix,
+  @{bin}/chmod       rix,
+  @{bin}/chown       rix,
+  @{bin}/cp          rix,
+  @{bin}/date        rix,
+  @{bin}/dcfldd      rix,
+  @{bin}/dd          rix,
+  @{bin}/df          rix,
+  @{bin}/dirname     rix,
+  @{bin}/env         rix,
+  @{bin}/file        rix,
+  @{bin}/findmnt     rix,
+  @{bin}/getent      rix,
+  @{bin}/gettext     rix,
+  @{bin}/hostname    rix,
+  @{bin}/id          rix,
+  @{bin}/kill        rix,
+  @{bin}/locate      rix,
+  @{sbin}/losetup    rix,
+  @{bin}/ls          rix,
+  @{bin}/lsof        rix,
+  @{bin}/mkdir       rix,
+  @{bin}/mktemp      rix,
+  @{bin}/realpath    rix,
+  @{bin}/recoll      rix,
+  @{bin}/rm          rix,
+  @{bin}/rmdir       rix,
+  @{bin}/sha*sum     rix,
+  @{bin}/shred       rix,
+  @{bin}/sleep       rix,
+  @{bin}/stat        rix,
+  @{bin}/sudo        rix,
+  @{bin}/touch       rix,
+  @{bin}/tr          rix,
+  @{bin}/zsh         rix,
+
+  @{sbin}/btrfs            rpx,
+  @{sbin}/cryptsetup       rpux,
+  @{bin}/e2fsc             rpux,
+  @{sbin}/fsck             rpx,
+  @{bin}/gpg{,2}           rpx,
+  @{bin}/lsblk             rpx,
+  @{sbin}/mkfs.*           rpux,
+  @{bin}/mount             rpx,
+  @{bin}/pinentry          rpx,
+  @{bin}/pinentry-*        rpx,
+  @{bin}/qrencode          rpx,
+  @{sbin}/resize2fs        rpx,
+  @{bin}/tomb-kdb-pbkdf2   rpux,
+  @{sbin}/tune2fs          rpx,
+  @{bin}/umount            rcx -> umount,
+  @{bin}/updatedb.mlocate  rpx,
+  @{sbin}/zramctl          rpx,
+
+  /usr/share/file/** r,
+  /usr/share/terminfo/** r,
+
+        @{MOUNTDIRS}/ rw,
+        @{MOUNTS}/ rw,
+        @{MOUNTS}/** w,
+        @{MOUNTS}/**/ rw,
+  owner @{MOUNTS}/.{host,last,tty,uid,cleanexit} rw,
+
+  # TODO: access to tomb files and key.
+  @{user_private_dirs}/**/*tomb* rw,
+
+        /tmp/ r,
+  owner @{tmp}/@{int} rw,
+  owner @{tmp}/@{int}@{int} rw,
+  owner @{tmp}/zsh@{rand6} rw,
+  owner @{tmp}/zshm@{rand6} rw,
+
+  @{sys}/devices/virtual/block/zram@{int}/backing_dev r,
+
+        @{PROC}/swaps r,
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/mountinfo r,
+
+  /dev/loop-control rw,
+  /dev/loop@{int} rw,
+
+  profile umount flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+
+    capability dac_read_search,
+    capability sys_admin,
+
+    umount @{MOUNTS}/{,**/},
+
+    @{bin}/umount mr,
+
+    owner @{run}/mount/utab r,
+
+    include if exists <local/tomb_umount>
+  }
+
+  include if exists <local/tomb>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,37 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/akonadi_newmailnotifier_agent
+profile akonadi_newmailnotifier_agent /{,usr/}bin/akonadi_newmailnotifier_agent flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  /usr/share/akonadi/plugins/serializer/{,*.desktop} r,
+
+  /etc/machine-id r,
+
+  owner @{user_config_dirs}/#@{int} rw,
+  owner @{user_config_dirs}/akonadi_newmailnotifier_agentrc r,
+  owner @{user_config_dirs}/akonadi/ rw,
+  owner @{user_config_dirs}/akonadi/** rwlk -> @{user_config_dirs}/akonadi/**,
+  owner @{user_config_dirs}/emaildefaults r,
+  owner @{user_config_dirs}/emailidentities.lock rwk,
+  owner @{user_config_dirs}/emailidentities* rwl,
+  owner @{user_config_dirs}/kmail2rc r,
+  owner @{user_config_dirs}/specialmailcollectionsrc r,
+
+  /dev/tty r,
+
+  include if exists <local/akonadi_newmailnotifier_agent>
+}
+
+# vim:syntax=apparmor

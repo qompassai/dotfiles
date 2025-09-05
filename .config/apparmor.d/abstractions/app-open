@@ -1,0 +1,61 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+# Instead of allowing the run of all software in @{bin}/, @{lib} the purpose of
+# this abstraction is to list all GUI program that can open resources.
+
+# Ultimately, only sandbox manager such as like bwrap, snap, flatpak, firejail
+# should be present here. Until this day, this profile will be a controlled mess.
+
+  abi <abi/4.0>,
+
+  # Sandbox managers
+  @{bin}/bwrap                  pux,
+  @{bin}/firejail               pux,
+  @{bin}/flatpak                px,
+  @{bin}/snap                   px,
+
+  # Labeled programs
+  @{archive_viewers_path}       pux,
+  @{backup_path}                pux,
+  @{browsers_path}              px,
+  @{document_viewers_path}      pux,
+  @{emails_path}                pux,
+  @{file_explorers_path}        px,
+  @{help_path}                  px,
+  @{image_viewers_path}         pux,
+  @{offices_path}               pux,
+  @{terminal_path}              px,
+  @{text_editors_path}          pux,
+
+  # Others
+  @{bin}/amule                  px,
+  @{bin}/blueman-tray           px,
+  @{bin}/discord{,-ptb}         px,
+  @{bin}/draw.io                pux,
+  @{bin}/dropbox                px,
+  @{bin}/element-desktop        px,
+  @{bin}/extension-manager      px,
+  @{bin}/filezilla              px,
+  @{bin}/flameshot              px,
+  @{bin}/gimp{,-3.0}            px,
+  @{bin}/gnome-calculator       px,
+  @{bin}/gnome-disk-image-mounter px,
+  @{bin}/gnome-disks            px,
+  @{bin}/gnome-session-quit     px,
+  @{bin}/gnome-software         px,
+  @{bin}/gwenview               pux,
+  @{bin}/qbittorrent            px,
+  @{bin}/qpdfview               px,
+  @{bin}/smplayer               px,
+  @{bin}/steam-runtime          pux,
+  @{bin}/telegram-desktop       px,
+  @{bin}/transmission-gtk       px,
+  @{bin}/viewnior               pux,
+  @{bin}/vlc                    px,
+  @{bin}/xbrlapi                px,
+
+  include if exists <abstractions/app-open.d>
+
+# vim:syntax=apparmor

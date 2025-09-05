@@ -1,0 +1,28 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/cockpit/cockpit-tls
+profile cockpit-tls /{,usr/}lib{,exec,32,64}/cockpit/cockpit-tls  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+
+  network inet stream,
+  network inet6 stream,
+
+  @{exec_path} mr,
+
+  /etc/cockpit/ws-certs.d/{,**} r,
+
+  @{att}/@{run}/cockpit/wsinstance/https@@{hex64}.sock r,
+  @{att}/@{run}/cockpit/wsinstance/https-factory.sock rw,
+
+  owner @{run}/cockpit/tls/{,**} rw,
+
+  include if exists <local/cockpit-tls>
+}
+
+# vim:syntax=apparmor

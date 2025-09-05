@@ -1,0 +1,26 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/systemd-cgtop
+profile systemd-cgtop /{,usr/}bin/systemd-cgtop flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/common/systemd>
+
+  @{exec_path} mr,
+
+  @{pager_path} rpx -> child-pager,
+
+  @{sys}/fs/cgroup/{,**} r,
+
+  @{PROC}/loadavg r,
+
+  include if exists <local/systemd-cgtop>
+}
+
+# vim:syntax=apparmor

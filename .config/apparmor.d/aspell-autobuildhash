@@ -1,0 +1,76 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/aspell-autobuildhash
+profile aspell-autobuildhash /{,usr/}{,s}bin/aspell-autobuildhash flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/perl>
+
+  @{exec_path} r,
+
+  @{sh_path}                  rix,
+  @{bin}/basename             rix,
+  @{bin}/gzip                 rix,
+  @{bin}/precat               rix,
+  @{bin}/prezip-bin           rix,
+  @{bin}/which{,.debianutils} rix,
+  @{bin}/zcat                 rix,
+
+  @{bin}/dpkg-trigger         rpx,
+  @{bin}/aspell               rpx,
+
+  # Think what to do about this (#FIXME#)
+  /usr/share/debconf/frontend      rpx,
+  #/usr/share/debconf/frontend     rcx -> frontend,
+
+  /usr/share/aspell/{,*} r,
+
+  @{lib}/aspell/{,*} r,
+  @{lib}/aspell/*.rws rw,
+
+  /var/lib/aspell/ r,
+  /var/lib/aspell/* rw,
+
+
+  profile frontend {
+    include <abstractions/base>
+    include <abstractions/consoles>
+    include <abstractions/perl>
+    include <abstractions/nameservice-strict>
+
+    /usr/share/debconf/frontend r,
+
+    @{sbin}/aspell-autobuildhash rpx,
+
+    @{sh_path}        rix,
+    @{bin}/stty       rix,
+    @{bin}/locale     rix,
+
+    /etc/debconf.conf r,
+    owner /var/cache/debconf/{config,passwords,templates}.dat{,-new,-old} rwk,
+
+    # The following is needed when debconf uses GUI frontends.
+    include <abstractions/gtk>
+    include <abstractions/fonts>
+    include <abstractions/fontconfig-cache-read>
+    include <abstractions/freedesktop.org>
+    capability dac_read_search,
+    @{bin}/lsb_release rpx,
+    @{bin}/hostname    rix,
+    owner @{PROC}/@{pid}/mounts r,
+    @{HOME}/.Xauthority r,
+
+    include if exists <local/aspell-autobuildhash_frontend>
+  }
+
+  include if exists <local/aspell-autobuildhash>
+}
+
+# vim:syntax=apparmor

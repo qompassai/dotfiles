@@ -1,0 +1,69 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/youtube-viewer
+profile youtube-viewer /{,usr/}bin/youtube-viewer flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+  include <abstractions/perl>
+  include <abstractions/ssl_certs>
+
+  signal (receive) set=(hup, winch) peer=gtk-youtube-viewer//xterm,
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  @{exec_path} r,
+
+  @{sh_path}        rix,
+  @{bin}/infocmp    rix,
+  @{bin}/stty       rix,
+
+  @{bin}/wget       rcx -> wget,
+
+  # Players
+  @{bin}/mpv      rpux,
+  @{bin}/vlc      rpux,
+  @{bin}/smplayer rpux,
+
+  @{bin}/ffmpeg   rpux,
+
+  /etc/inputrc r,
+
+  owner @{user_config_dirs}/youtube-viewer/{,*} rw,
+  owner @{user_cache_dirs}/youtube-viewer/{,*} rw,
+  owner @{HOME}/Downloads/youtube-viewer/{,*} rw,
+
+  profile wget flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+    include <abstractions/nameservice-strict>
+    include <abstractions/user-download-strict>
+    include <abstractions/ssl_certs>
+
+    signal (receive) set=(hup, winch) peer=gtk-youtube-viewer//xterm,
+
+    @{bin}/wget mr,
+
+    /etc/wgetrc r,
+
+    owner @{HOME}/.wget-hsts r,
+    owner @{HOME}/wget-log{,.@{int}} rw,
+
+    include if exists <local/youtube-viewer_wget>
+  }
+
+  include if exists <local/youtube-viewer>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,68 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/fractal
+profile fractal /{,usr/}bin/fractal  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/common/gnome>
+  include <abstractions/gstreamer>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
+  network netlink raw,
+
+  signal send set=kill peer=fractal//bwrap,
+
+  @{exec_path} mr,
+
+  @{open_path}  rpx -> child-open-help,
+  @{bin}/bwrap  rcx -> bwrap,
+
+  /usr/share/glycin-loaders/{,**} r,
+  /usr/share/xml/iso-codes/{,**} r,
+
+  owner @{tmp}/.@{rand6} rw,
+  owner @{tmp}/.goutputstream-@{rand6} rw,
+  owner @{tmp}/@{rand6} rw,
+  owner @{tmp}/etilqs_@{sqlhex} rw,
+
+  owner @{run}/user/@{uid}/fractal/{,**} rw,
+
+        @{PROC}/sys/net/ipv6/conf/all/disable_ipv6 r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/mountinfo r,
+
+  /dev/ r,
+
+  profile bwrap  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/common/bwrap>
+
+    signal receive set=kill peer=fractal,
+
+    @{bin}/bwrap mr,
+    @{lib}/glycin-loaders/*/glycin-* rix,
+
+    owner @{run}/user/@{uid}/fractal/.tmp@{rand6} r,
+
+    owner @{PROC}/@{pid}/fd/ r,
+
+    deny @{user_share_dirs}/gvfs-metadata/* r,
+
+    include if exists <local/fractal_bwrap>
+  }
+
+  include if exists <local/fractal>
+}
+
+# vim:syntax=apparmor

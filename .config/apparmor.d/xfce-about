@@ -1,0 +1,23 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xfce4-about
+profile xfce-about /{,usr/}bin/xfce4-about flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/xfce>
+
+  @{exec_path} mr,
+
+  @{open_path} rpx -> child-open-help,
+
+  include if exists <local/xfce-about>
+}
+
+# vim:syntax=apparmor

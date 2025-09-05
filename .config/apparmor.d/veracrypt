@@ -1,0 +1,96 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/veracrypt
+profile veracrypt /{,usr/}bin/veracrypt flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/app/kmod>
+  include <abstractions/app/sudo>
+  include <abstractions/consoles>
+  include <abstractions/dconf-write>
+  include <abstractions/desktop>
+  include <abstractions/disks-write>
+  include <abstractions/nameservice-strict>
+
+  capability chown,
+  capability dac_read_search,
+  capability fsetid,
+  capability sys_admin,
+  capability sys_ptrace,
+
+  mount fstype=fuse.veracrypt options=(rw nodev nosuid) veracrypt -> /tmp/.veracrypt_*/,
+
+  @{exec_path} mrix,
+
+  @{sh_path}       rix,
+  @{open_path}     rpx -> child-open-help,
+  @{sbin}/dmsetup   rpx,
+  @{bin}/{,e}grep  rix,
+  @{bin}/kmod      rix,
+  @{sbin}/ldconfig  rix,
+  @{sbin}/losetup   rcx -> losetup,
+  @{bin}/mount     rpx,
+  @{bin}/sudo      rix,
+  @{bin}/umount    rcx -> umount,
+  @{bin}/wc        rix,
+  @{file_explorers_path} rpx,
+
+  /home/ r,
+
+  # Mount points
+  @{MOUNTS}/ rw,
+  @{MOUNTS}/*/ rw,
+
+  owner @{HOME}/ r,
+  owner @{HOME}/.VeraCrypt-lock-@{user} rwk,
+
+  owner @{user_config_dirs}/VeraCrypt/ rw,
+  owner @{user_config_dirs}/VeraCrypt/** rwk,
+
+  /tmp/.veracrypt_*/ rw,
+  /tmp/.veracrypt_*/** rwk,
+
+  @{sys}/module/compression r,
+  @{sys}/module/dm_mod/initstate r,
+
+        @{PROC}/partitions r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  /dev/fuse rw,
+  /dev/tty rw,
+
+  profile umount flags=(complain) {
+    include <abstractions/base>
+
+    capability sys_admin,
+
+    umount /tmp/.veracrypt_*/,
+    umount @{MOUNTS}/{,*/},
+
+    @{bin}/umount mr,
+
+    owner @{run}/mount/utab r,
+
+    include if exists <local/veracrypt_umount>
+  }
+
+  profile losetup flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/disks-write>
+
+    capability sys_rawio,
+
+    @{sbin}/losetup mr,
+
+    include if exists <local/veracrypt_losetup>
+  }
+
+  include if exists <local/veracrypt>
+}
+
+# vim:syntax=apparmor

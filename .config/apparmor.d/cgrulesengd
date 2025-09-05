@@ -1,0 +1,45 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/cgrulesengd
+profile cgrulesengd /{,usr/}bin/cgrulesengd flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+
+  capability dac_read_search,
+  capability net_admin,
+  capability sys_ptrace,
+
+  network netlink dgram,
+
+  ptrace (read),
+
+  @{exec_path} mr,
+
+
+  /etc/cgconfig.conf r,
+  /etc/cgconfig.d/{,*} r,
+
+  /etc/cgrules.conf r,
+  /etc/cgrules.d/{,*} r,
+
+  owner @{run}/cgred.socket w,
+
+  @{sys}/fs/cgroup/** rw,
+
+        @{PROC}/ r,
+        @{PROC}/@{pids}/cmdline r,
+        @{PROC}/@{pids}/task/ r,
+        @{PROC}/cgroups r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  include if exists <local/cgrulesengd>
+}
+
+# vim:syntax=apparmor

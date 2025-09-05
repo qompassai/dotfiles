@@ -1,0 +1,60 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,ibus/}ibus-portal
+profile ibus-portal /{,usr/}lib{,exec,32,64}/{,ibus/}ibus-portal  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/ibus>
+
+  signal (receive) set=(term, hup) peer=gdm*,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.freedesktop.portal.IBus{,.*},
+  dbus receive bus=session path=/org/freedesktop/portal/IBus{,/**}
+       interface=org.freedesktop.portal.IBus{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/freedesktop/portal/IBus{,/**}
+       interface=org.freedesktop.portal.IBus{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/freedesktop/portal/IBus{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/freedesktop/portal/IBus{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/freedesktop/portal/IBus{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.portal.IBus{,.*}}"),
+  dbus send bus=session path=/org/freedesktop/portal/IBus{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mr,
+
+  owner @{desktop_cache_dirs}/ibus/dbus-@{rand8} rw,
+  owner @{desktop_config_dirs}/ibus/bus/ r,
+  owner @{desktop_config_dirs}/ibus/bus/@{hex32}-unix-{,wayland-}@{int} r,
+
+  owner @{att}/dev/tty@{int} rw,
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/ibus-portal>
+}
+
+# vim:syntax=apparmor

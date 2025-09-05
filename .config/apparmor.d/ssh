@@ -1,0 +1,67 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/ssh
+profile ssh /{,usr/}bin/ssh flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/devices-usb>
+  include <abstractions/nameservice-strict>
+
+  network inet stream,
+  network inet6 stream,
+  network inet dgram,
+  network inet6 dgram,
+  network netlink raw,
+
+  signal receive set=term peer=gnome-keyring-daemon,
+  signal send set=hup peer=unconfined,
+
+  @{exec_path} mrix,
+
+  @{bin}/@{shells}     rux,
+
+  @{lib}/{,ssh/}ssh-sk-helper rix,
+
+  @{etc_ro}/ssh/ssh_config r,
+  @{etc_ro}/ssh/ssh_config.d/{,*} r,
+  @{etc_ro}/ssh/sshd_config r,
+  @{etc_ro}/ssh/sshd_config.d/{,*} r,
+  /etc/machine-id r,
+
+  owner @{HOME}/@{XDG_SSH_DIR}/ r,
+  owner @{HOME}/@{XDG_SSH_DIR}/*_*{,.pub} r,
+  owner @{HOME}/@{XDG_SSH_DIR}/config r,
+  owner @{HOME}/@{XDG_SSH_DIR}/known_hosts{,.*} rwl,
+  owner @{HOME}/@{XDG_SSH_DIR}/ssh_control_*_*_* wl,
+
+  owner @{user_projects_dirs}/**/ssh/{,*} r,
+  owner @{user_projects_dirs}/**/config r,
+
+  audit owner @{tmp}/ssh-*/{,agent.@{int}} rwkl,
+
+  owner @{run}/user/@{uid}/gvfsd-sftp/@{hex} wl -> @{run}/user/@{uid}/gvfsd-sftp/@{hex}.@{rand},
+  owner @{run}/user/@{uid}/gvfsd-sftp/@{hex}.@{rand} wl -> @{run}/user/@{uid}/gvfsd-sftp/@{hex}.@{rand},
+  owner @{run}/user/@{uid}/keyring/ssh rw,
+
+  @{sys}/ r,
+  @{sys}/bus/ r,
+  @{sys}/class/ r,
+  @{sys}/class/hidraw/ r,
+  @{sys}/class/hidraw/hidraw@{int} r,
+
+  owner @{PROC}/@{pid}/loginuid r,
+  owner @{PROC}/@{pid}/fd/ r,
+
+  /dev/hidraw@{int} rwk,
+
+  include if exists <local/ssh>
+}
+
+# vim:syntax=apparmor

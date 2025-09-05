@@ -1,0 +1,95 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2022 Mikhail Morfikov
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/networkctl
+profile networkctl /{,usr/}bin/networkctl  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/nameservice-strict>
+
+  capability net_admin,
+  capability sys_module,
+  audit capability sys_resource,
+
+  network inet dgram,
+  network inet6 dgram,
+  network netlink raw,
+
+  signal send peer=child-pager,
+
+  ptrace (read) peer=@{p_systemd},
+
+  unix (bind) type=stream addr=@@{udbus}/bus/networkctl/system,
+
+  dbus (send receive) bus=system path=/org/freedesktop/network1{,/**}
+       interface=org.freedesktop.network1{,.*}
+       peer=(name="{@{busname},org.freedesktop.network1{,.*}}", label="@{p_systemd_networkd}"),
+  dbus (send receive) bus=system path=/org/freedesktop/network1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.network1{,.*}}", label="@{p_systemd_networkd}"),
+  dbus send bus=system path=/org/freedesktop/network1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.network1{,.*}}", label="@{p_systemd_networkd}"),
+  dbus send bus=system path=/org/freedesktop/network1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.network1{,.*}}", label="@{p_systemd_networkd}"),
+  dbus receive bus=system path=/org/freedesktop/network1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.network1{,.*}}", label="@{p_systemd_networkd}"),
+  dbus send bus=system path=/org/freedesktop/network1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member=Get
+       peer=(name=org.freedesktop.network1),
+
+  @{exec_path} mr,
+
+  @{pager_path} rpx -> child-pager,
+
+  /etc/udev/hwdb.bin r,
+  /var/lib/dbus/machine-id r,
+  /etc/machine-id r,
+
+  owner /var/lib/systemd/network/ r,
+
+  # To be able to read logs
+  @{run}/log/ r,
+  /{run,var}/log/journal/ r,
+  /{run,var}/log/journal/@{hex32}/ r,
+  /{run,var}/log/journal/@{hex32}/user-@{hex}.journal* r,
+  /{run,var}/log/journal/@{hex32}/system.journal* r,
+  /{run,var}/log/journal/@{hex32}/system@@{hex}.journal* r,
+
+  @{att}/@{run}/systemd/netif/io.systemd.Network rw,
+
+  @{run}/systemd/netif/links/ r,
+  @{run}/systemd/netif/leases/@{int} r,
+  @{run}/systemd/netif/links/@{int} r,
+  @{run}/systemd/netif/state r,
+  @{run}/systemd/notify w,
+
+  @{run}/udev/data/n@{int} r,
+
+  @{sys}/devices/**/net/**/uevent r,
+
+        @{PROC}/1/cgroup r,
+        @{PROC}/cmdline r,
+        @{PROC}/sys/fs/nr_open r,
+        @{PROC}/sys/kernel/osrelease r,
+        @{PROC}/sys/kernel/random/boot_id r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/stat r,
+
+  include if exists <local/networkctl>
+}
+
+# vim:syntax=apparmor

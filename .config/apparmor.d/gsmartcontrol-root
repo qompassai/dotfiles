@@ -1,0 +1,32 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gsmartcontrol-root
+profile gsmartcontrol-root /{,usr/}bin/gsmartcontrol-root flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  @{exec_path} r,
+  @{sh_path}        rix,
+
+  @{bin}/which{,.debianutils}  rix,
+
+  @{bin}/pkexec     rcx -> pkexec,
+
+  profile pkexec flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/pkexec>
+
+    include if exists <local/gsmartcontrol-root_pkexec>
+  }
+
+  include if exists <local/gsmartcontrol-root>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,38 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{bin_dirs} = @{bin}/ /snap/{snapd,core}/@{int}@{bin}
+
+@{exec_path} = @{bin_dirs}/fc-cache{,-32,-v*}
+profile fc-cache /{{,usr/}bin/fc-cache{,-32,-v*},snap/{snapd,core}/[0-9]{[0-9],}{[0-9],}{[0-9],}{[0-9],}{[0-9],}{[0-9],}{[0-9],}{[0-9],}{[0-9],}/{,usr/}bin/fc-cache{,-32,-v*}} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/fonts>
+
+  capability dac_read_search,
+
+  @{exec_path} mr,
+
+  /var/cache/fontconfig/{,**} rw,
+  /var/cache/fontconfig/*.cache-@{int} rwk,
+  /var/cache/fontconfig/*.cache-@{int}.LCK rwl,
+  /var/cache/fontconfig/CACHEDIR.TAG.LCK rwl,
+
+  /var/tmp/mkinitramfs_*/{**,} rwl,
+
+  owner @{user_cache_dirs}/ w,
+
+  # Silencer
+  deny network inet6 stream,
+  deny network inet stream,
+
+  include if exists <local/fc-cache>
+}
+
+# vim:syntax=apparmor

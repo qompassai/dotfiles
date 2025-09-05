@@ -1,0 +1,31 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xdg-user-dirs-gtk-update
+profile xdg-user-dirs-gtk-update /{,usr/}bin/xdg-user-dirs-gtk-update flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/dconf-write>
+  include <abstractions/desktop>
+
+  @{exec_path} mr,
+
+  @{bin}/xdg-user-dirs-update px,
+
+  owner @{user_config_dirs}/gtk-3.0/bookmarks* rw,
+  owner @{user_config_dirs}/user-dirs.dirs r,
+  owner @{user_config_dirs}/user-dirs.locale r,
+
+  owner @{tmp}/dirs-@{rand6} rw,
+
+  include if exists <local/xdg-user-dirs-gtk-update>
+}
+
+# vim:syntax=apparmor

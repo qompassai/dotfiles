@@ -1,0 +1,60 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,gvfs/}gvfs-mtp-volume-monitor
+profile gvfs-mtp-volume-monitor /{,usr/}lib{,exec,32,64}/{,gvfs/}gvfs-mtp-volume-monitor flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/devices-usb>
+
+  network netlink raw,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gtk.vfs.MTPVolumeMonitor{,.*},
+  dbus receive bus=session path=/org/gtk/Private/RemoteVolumeMonitor
+       interface=org.gtk.vfs.MTPVolumeMonitor{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gtk/Private/RemoteVolumeMonitor
+       interface=org.gtk.vfs.MTPVolumeMonitor{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gtk/Private/RemoteVolumeMonitor
+       interface=org.gtk.Private.RemoteVolumeMonitor
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gtk/Private/RemoteVolumeMonitor
+       interface=org.gtk.Private.RemoteVolumeMonitor
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gtk/Private/RemoteVolumeMonitor
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gtk/Private/RemoteVolumeMonitor
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gtk/Private/RemoteVolumeMonitor
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gtk.vfs.MTPVolumeMonitor{,.*}}"),
+  dbus send bus=session path=/org/gtk/Private/RemoteVolumeMonitor
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mr,
+
+  include if exists <local/gvfs-mtp-volume-monitor>
+}
+
+# vim:syntax=apparmor

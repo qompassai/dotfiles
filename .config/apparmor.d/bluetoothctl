@@ -1,0 +1,51 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2015-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/bluetoothctl
+profile bluetoothctl /{,usr/}bin/bluetoothctl flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/bus-system>
+
+  network bluetooth raw,
+
+  dbus (send receive) bus=system path=/org/bluez{,/**}
+       interface=org.bluez{,.*}
+       peer=(name="{@{busname},org.bluez{,.*}}", label="@{p_bluetoothd}"),
+  dbus (send receive) bus=system path=/org/bluez{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.bluez{,.*}}", label="@{p_bluetoothd}"),
+  dbus send bus=system path=/org/bluez{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.bluez{,.*}}", label="@{p_bluetoothd}"),
+  dbus send bus=system path=/org/bluez{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.bluez{,.*}}", label="@{p_bluetoothd}"),
+  dbus receive bus=system path=/org/bluez{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.bluez{,.*}}", label="@{p_bluetoothd}"),
+
+  @{exec_path} mr,
+
+  /usr/share/terminfo/** r,
+
+  /etc/inputrc r,
+
+  owner @{user_cache_dirs}/ rw,
+  owner @{user_cache_dirs}/.bluetoothctl_history rw,
+  owner @{user_cache_dirs}/.bluetoothctl_history-@{pid}.tmp rw,
+
+  include if exists <local/bluetoothctl>
+}
+
+# vim:syntax=apparmor

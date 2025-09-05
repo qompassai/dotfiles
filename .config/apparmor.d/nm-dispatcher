@@ -1,0 +1,164 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+# TODO: rethink how the scripts should be managed
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,NetworkManager/}nm-dispatcher
+profile nm-dispatcher /{,usr/}lib{,exec,32,64}/{,NetworkManager/}nm-dispatcher  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/nameservice-strict>
+  include <abstractions/python>
+
+  capability net_admin,
+  capability sys_nice,
+  capability sys_ptrace,
+
+  ptrace (read) peer=@{p_systemd},
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.freedesktop.nm_dispatcher{,.*},
+  dbus receive bus=system path=/org/freedesktop/nm_dispatcher{,/**}
+       interface=org.freedesktop.nm_dispatcher{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/freedesktop/nm_dispatcher{,/**}
+       interface=org.freedesktop.nm_dispatcher{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/freedesktop/nm_dispatcher{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/freedesktop/nm_dispatcher{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/freedesktop/nm_dispatcher{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.nm_dispatcher{,.*}}"),
+  dbus send bus=system path=/org/freedesktop/nm_dispatcher{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus send bus=system path=/org/freedesktop
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name=@{busname}, label=NetworkManager),
+
+  dbus send bus=system path=/org/freedesktop/NetworkManager/Settings/@{int}
+       interface=org.freedesktop.NetworkManager.Settings.Connection
+       member=GetSettings
+       peer=(name=@{busname}, label=NetworkManager),
+
+  @{exec_path} mr,
+
+  @{sh_path}                rix,
+  @{bin}/basename           rix,
+  @{bin}/cat                rix,
+  @{bin}/chown              rix,
+  @{bin}/chronyc           rpux,
+  @{bin}/date               rix,
+  @{bin}/{m,g,}awk          rix,
+  @{bin}/{,e}grep           rix,
+  @{bin}/id                 rix,
+  @{sbin}/invoke-rc.d       rcx -> invoke-rc,
+  @{bin}/logger             rix,
+  @{bin}/mkdir              rix,
+  @{bin}/mktemp             rix,
+  @{bin}/netconfig         rpux,
+  @{bin}/nmcli              rix,
+  @{python_path}            rix,
+  @{bin}/readlink           rix,
+  @{bin}/rm                 rix,
+  @{bin}/run-parts          rcx -> run-parts,
+  @{bin}/sed                rix,
+  @{bin}/systemctl          rcx -> systemctl,
+  @{bin}/systemd-cat        rix,
+  @{bin}/tr                 rix,
+  /usr/share/tlp/tlp-readconfs  rpux,
+
+  @{lib}/NetworkManager/dispatcher.d/ r,
+  @{lib}/NetworkManager/dispatcher.d/** rix,
+  /etc/NetworkManager/dispatcher.d/ r,
+  /etc/NetworkManager/dispatcher.d/** rix,
+  /etc/dhcp/dhclient-exit-hooks.d/ntp r,
+
+  /usr/share/tlp/{,**} rw,
+
+  /etc/fstab r,
+  /etc/ntp.conf r,
+  /etc/sysconfig/network/config r,
+
+  / r,
+
+        @{run}/chrony-dhcp/ rw,
+        @{run}/ntp.conf.dhcp rw,
+        @{run}/systemd/netif/leases/ r,
+        @{run}/systemd/notify rw,
+        @{run}/tlp/{,*} rw,
+  owner @{run}/ntp.conf.dhcp.@{rand6} rw,
+
+  @{sys}/class/net/ r,
+
+  owner @{PROC}/@{pid}/fd/ r,
+
+  /dev/tty rw,
+
+  @{run}/modem-manager-gui/{,timestamps} rw,
+
+  profile systemctl flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    capability net_admin,
+
+    @{etc_ro}/ r,
+    @{etc_ro}/systemd/ r,
+    @{etc_ro}/systemd/system/ r,
+    @{etc_ro}/systemd/system/ntp.service r,
+
+    include if exists <local/nm-dispatcher_systemctl>
+  }
+
+  profile invoke-rc flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+
+    @{sbin}/invoke-rc.d rm,
+    @{sh_path}       rix,
+    @{bin}/basename  rix,
+    @{bin}/ls        rix,
+    # This doesn't seem to work, profile transition not found.
+    @{bin}/systemctl rcx -> systemctl,
+
+    / r,
+
+    /etc/ r,
+    @{etc_ro}/rc{[0-9],S}.d/{,*} r,
+    @{etc_ro}/init.d/ntp r,
+
+    include if exists <local/nm-dispatcher_invoke-rc>
+  }
+
+  profile run-parts flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+
+    /{usr/,}bin/run-parts mr,
+
+    /etc/network/if-*.d/ r,
+    /etc/network/if-*.d/* rpux,
+    /etc/wpa_supplicant/ifupdown.sh rpux,
+
+    include if exists <local/nm-dispatcher_run-parts>
+  }
+
+  include if exists <local/nm-dispatcher>
+}
+
+# vim:syntax=apparmor

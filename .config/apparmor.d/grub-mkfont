@@ -1,0 +1,20 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/grub-mkfont
+profile grub-mkfont /{,usr/}bin/grub-mkfont flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  @{exec_path} mr,
+
+  include if exists <local/grub-mkfont>
+}
+
+
+# vim:syntax=apparmor

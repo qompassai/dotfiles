@@ -1,0 +1,127 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{share_dirs}  = /usr/share/gnome-shell/extensions/ding@rastersoft.com
+@{share_dirs} += @{user_share_dirs}/gnome-shell/extensions/ding@rastersoft.com
+
+@{exec_path} = @{share_dirs}/{,app/}ding.js
+profile gnome-extension-ding /{usr/share/gnome-shell/extensions/ding@rastersoft.com/{,app/}ding.js,home/*/.local/share/gnome-shell/extensions/ding@rastersoft.com/{,app/}ding.js,home/*/.local/share/gnome-shell/extensions/ding@rastersoft.com/{,app/}ding.js} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/net.hadess.SwitcherooControl>
+  include <abstractions/bus/org.a11y>
+  include <abstractions/bus/org.freedesktop.FileManager1>
+  include <abstractions/bus/org.freedesktop.Notifications>
+  include <abstractions/bus/org.gnome.ArchiveManager1>
+  include <abstractions/bus/org.gnome.Nautilus.FileOperations2>
+  include <abstractions/bus/org.gtk.Private.RemoteVolumeMonitor>
+  include <abstractions/bus/org.gtk.vfs.Daemon>
+  include <abstractions/bus/org.gtk.vfs.Metadata>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/dconf-write>
+  include <abstractions/gnome-strict>
+  include <abstractions/nameservice-strict>
+
+  unix (send,receive) type=stream addr=none peer=(label=gnome-shell),
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=com.rastersoft.ding{,.*},
+  dbus receive bus=session path=/com/rastersoft/ding{,/**}
+       interface=com.rastersoft.ding{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/com/rastersoft/ding{,/**}
+       interface=com.rastersoft.ding{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/com/rastersoft/ding{,/**}
+       interface=org.gtk.Actions
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/com/rastersoft/ding{,/**}
+       interface=org.gtk.Actions
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/com/rastersoft/ding{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/com/rastersoft/ding{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/com/rastersoft/ding{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},com.rastersoft.ding{,.*}}"),
+  dbus send bus=session path=/com/rastersoft/ding{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/com/rastersoft/dingextension{,/**}
+       interface=com.rastersoft.dingextension{,.*}
+       peer=(name="{@{busname},com.rastersoft.dingextension{,.*}}", label=gnome-shell),
+  dbus (send receive) bus=session path=/com/rastersoft/dingextension{,/**}
+       interface=org.gtk.Actions
+       peer=(name="{@{busname},com.rastersoft.dingextension{,.*}}", label=gnome-shell),
+  dbus (send receive) bus=session path=/com/rastersoft/dingextension{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},com.rastersoft.dingextension{,.*}}", label=gnome-shell),
+  dbus send bus=session path=/com/rastersoft/dingextension{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},com.rastersoft.dingextension{,.*}}", label=gnome-shell),
+  dbus send bus=session path=/com/rastersoft/dingextension{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},com.rastersoft.dingextension{,.*}}", label=gnome-shell),
+  dbus receive bus=session path=/com/rastersoft/dingextension{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},com.rastersoft.dingextension{,.*}}", label=gnome-shell),
+
+  dbus send bus=session path=/org/freedesktop/DBus
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=org.freedesktop.DBus, label="@{p_dbus_session}"),
+
+  dbus send bus=session path=/org/freedesktop/DBus
+       interface=org.freedesktop.DBus*
+       peer=(name=org.freedesktop.DBus, label="@{p_dbus_session}"),
+  dbus send bus=system path=/org/freedesktop/DBus
+       interface=org.freedesktop.DBus*
+       peer=(name=org.freedesktop.DBus, label="@{p_dbus_system}"),
+
+  @{exec_path} mr,
+
+  @{sh_path}                   rix,
+  @{bin}/env                   rix,
+  @{bin}/gjs-console           rix,
+  @{bin}/gnome-control-center  rpx,
+  @{bin}/nautilus              rpx,
+
+  @{share_dirs}/{,**} r,
+  /usr/share/thumbnailers/{,*.thumbnailer} r,
+
+  owner @{HOME}/@{XDG_TEMPLATES_DIR}/ r,
+  owner @{HOME}/@{XDG_DESKTOP_DIR}/ r,
+
+  owner @{user_share_dirs}/nautilus/scripts/ r,
+
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/stat r,
+  owner @{PROC}/@{pid}/task/@{tid}/stat r,
+
+  deny owner @{user_share_dirs}/gvfs-metadata/{,*} r,
+
+  include if exists <local/gnome-extension-ding>
+}
+
+# vim:syntax=apparmor

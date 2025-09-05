@@ -1,0 +1,98 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/gsd-color
+profile gsd-color /{,usr/}lib{,exec,32,64}/gsd-color  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.a11y>
+  include <abstractions/bus/org.gnome.Mutter.DisplayConfig>
+  include <abstractions/bus/org.gnome.SessionManager>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/dconf-write>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/gnome-strict>
+  include <abstractions/nameservice-strict>
+
+  network inet stream,
+
+  signal (receive) set=(term, hup) peer=gdm*,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.SettingsDaemon.Color{,.*},
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.gnome.SettingsDaemon.Color{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.gnome.SettingsDaemon.Color{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Color{,.*}}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus (send receive) bus=system path=/org/freedesktop/ColorManager{,/**}
+       interface=org.freedesktop.ColorManager{,.*}
+       peer=(name="{@{busname},org.freedesktop.ColorManager{,.*}}", label="@{p_colord}"),
+  dbus (send receive) bus=system path=/org/freedesktop/ColorManager{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.ColorManager{,.*}}", label="@{p_colord}"),
+  dbus send bus=system path=/org/freedesktop/ColorManager{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.ColorManager{,.*}}", label="@{p_colord}"),
+  dbus send bus=system path=/org/freedesktop/ColorManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.ColorManager{,.*}}", label="@{p_colord}"),
+  dbus receive bus=system path=/org/freedesktop/ColorManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.ColorManager{,.*}}", label="@{p_colord}"),
+
+  dbus receive bus=session path=/org/gtk/Settings
+       interface=org.freedesktop.DBus.Properties
+       member=PropertiesChanged
+       peer=(name=:*, label=gsd-xsettings),
+
+  @{exec_path} mr,
+
+  /usr/share/dconf/profile/gdm r,
+  /usr/share/gdm/greeter-dconf-defaults r,
+
+  /etc/timezone r,
+
+  owner @{GDM_HOME}/greeter-dconf-defaults r,
+  owner @{gdm_config_dirs}/dconf/user r,
+  owner @{gdm_share_dirs}/icc/ rw,
+  owner @{gdm_share_dirs}/icc/edid-@{hex32}.icc rw,
+
+  owner @{user_share_dirs}/icc/ rw,
+  owner @{user_share_dirs}/icc/edid-@{hex32}.icc rw,
+
+  include if exists <local/gsd-color>
+}
+
+# vim:syntax=apparmor

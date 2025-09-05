@@ -1,0 +1,126 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/gnome-initial-setup
+profile gnome-initial-setup /{,usr/}lib{,exec,32,64}/gnome-initial-setup flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.a11y>
+  include <abstractions/bus/org.freedesktop.Accounts>
+  include <abstractions/bus/org.freedesktop.NetworkManager>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/dconf-write>
+  include <abstractions/disks-read>
+  include <abstractions/gnome-strict>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.InitialSetup{,.*},
+  dbus receive bus=session path=/org/gnome/InitialSetup{,/**}
+       interface=org.gnome.InitialSetup{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/InitialSetup{,/**}
+       interface=org.gnome.InitialSetup{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/InitialSetup{,/**}
+       interface=org.gtk.Actions
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/InitialSetup{,/**}
+       interface=org.gtk.Actions
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/InitialSetup{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/InitialSetup{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/InitialSetup{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.InitialSetup{,.*}}"),
+  dbus send bus=session path=/org/gnome/InitialSetup{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus send bus=system path=/com/canonical/UbuntuAdvantage/Manager
+       interface=org.freedesktop.DBus.Properties
+       member=Get
+       peer=(name=com.canonical.UbuntuAdvantage),
+
+  @{exec_path} mr,
+
+  @{bin}/df      rpx,
+  @{bin}/dpkg    rpx -> child-dpkg,
+  @{bin}/locale  rix,
+  @{bin}/lscpu   rpx,
+  @{bin}/lspci   rpx,
+  @{bin}/xrandr  rpx,
+
+  @{lib}/gnome-initial-setup-goa-helper rix,
+  @{lib}/@{multiarch}/ld-linux-*.so* rix,
+
+  /usr/share/dconf/profile/gdm r,
+  /usr/share/gnome-initial-setup/{,**} r,
+  /usr/share/xml/iso-codes/{,**} r,
+
+  @{etc_ro}/security/pwquality.conf r,
+  @{etc_ro}/security/pwquality.conf.d/{,**} r,
+  /etc/timezone r,
+
+  /etc/gdm{,3}/custom.conf r,
+
+
+
+  owner @{GDM_HOME}/greeter-dconf-defaults r,
+
+  owner @{user_config_dirs}/gnome-initial-setup-done w,
+  owner @{user_config_dirs}/gnome-initial-setup-done.@{rand6} rw,
+
+  owner @{user_config_dirs}/ibus/bus/ r,
+  owner @{user_config_dirs}/ibus/bus/@{hex32}-unix-{,wayland-}@{int} r,
+
+  owner @{run}/user/@{uid}/avatar.png rw,
+
+  @{run}/snapd.socket rw,
+
+  @{run}/systemd/sessions/@{int} r,
+  @{run}/systemd/users/@{uid} r,
+
+        @{sys}/fs/cgroup/user.slice/cpu.max r,
+        @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/cpu.max r,
+        @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/cpu.max r,
+  owner @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/app.slice/cpu.max r,
+  owner @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/app.slice/gnome-initial-setup-first-login.service/memory.* r,
+
+  @{sys}/devices/virtual/dmi/id/bios_vendor r,
+  @{sys}/devices/virtual/dmi/id/bios_version r,
+  @{sys}/devices/virtual/dmi/id/product_family r,
+  @{sys}/devices/virtual/dmi/id/product_name r,
+  @{sys}/devices/virtual/dmi/id/sys_vendor r,
+
+        @{PROC}/zoneinfo r,
+  owner @{PROC}/@{pid}/cgroup r,
+
+  include if exists <local/gnome-initial-setup>
+}
+
+# vim:syntax=apparmor

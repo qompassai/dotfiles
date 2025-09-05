@@ -1,0 +1,82 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gsmartcontrol
+profile gsmartcontrol /{,usr/}bin/gsmartcontrol {
+  include <abstractions/base>
+  include <abstractions/desktop>
+  include <abstractions/nameservice-strict>
+
+  capability dac_read_search,
+  capability sys_nice,
+
+  @{exec_path} mr,
+
+  @{bin}/dbus-launch        cx -> bus,
+  @{bin}/dbus-send          cx -> bus,
+  @{sbin}/smartctl          px,
+  @{bin}/xterm              cx -> terminal,
+
+  /etc/fstab r,
+
+  /var/lib/dbus/machine-id r,
+  /etc/machine-id r,
+
+  # For saving SMART raport
+  owner /root/ r,
+  owner /root/**.txt w,
+
+  owner @{user_config_dirs}/gsmartcontrol/ rw,
+  owner @{user_config_dirs}/gsmartcontrol/** rw,
+
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/partitions r,
+  owner @{PROC}/devices r,
+  owner @{PROC}/scsi/scsi r,
+  owner @{PROC}/scsi/sg/devices r,
+
+  # The Help menu (and links in it) requires access to a web browser. Since gsmartcontrol is run as
+  # root (even when used sudo or gsmartcontrol-root), the web browser will also be run as root and
+  # hence this behavior should be blocked.
+  deny @{open_path} rx,
+
+  profile bus flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/bus>
+
+    include if exists <local/gsmartcontrol_bus>
+  }
+
+  profile terminal {
+    include <abstractions/base>
+    include <abstractions/consoles>
+    include <abstractions/desktop>
+    include <abstractions/nameservice-strict>
+    include <abstractions/shells>
+
+    capability fsetid,
+    capability setgid,
+    capability setuid,
+
+    @{bin}/xterm mr,
+    @{sbin}/update-smart-drivedb rpx,
+
+    /usr/include/X11/bitmaps/vlines2 r,
+
+    /dev/ptmx rw,
+
+    include if exists <local/gsmartcontrol_terminal>
+  }
+
+  include if exists <local/gsmartcontrol>
+}
+
+# vim:syntax=apparmor

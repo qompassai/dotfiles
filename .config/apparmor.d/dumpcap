@@ -1,0 +1,58 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/dumpcap
+profile dumpcap /{,usr/}bin/dumpcap flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/nameservice-strict>
+
+  # To capture packekts
+  capability net_raw,
+  capability net_admin,
+
+  network inet dgram,
+  network inet6 dgram,
+  network netlink raw,
+  network packet dgram,
+  network packet raw,
+  network bluetooth raw,
+
+  signal (receive) peer=wireshark,
+
+  dbus (eavesdrop) bus=session,
+
+  @{exec_path} mr,
+
+  @{sys}/class/net/ r,
+  @{sys}/bus/usb/devices/ r,
+  @{sys}/devices/virtual/net/*/type r,
+  @{sys}/devices/virtual/net/*/statistics/* r,
+  @{sys}/devices/@{pci}/net/*/type r,
+  @{sys}/devices/@{pci}/net/*/statistics/* r,
+
+  @{PROC}/@{pid}/net/dev r,
+  @{PROC}/@{pid}/net/psched r,
+
+  /dev/ r,
+
+  # Traffic log files
+  owner @{tmp}/wireshark_*.pcapng rw,
+  owner @{tmp}/*.pcap rw,
+
+  # file_inherit
+  owner @{HOME}/.xsession-errors w,
+  /usr/share/GeoIP/* r,
+  /dev/dri/card[0-9] rw,
+
+  include if exists <local/dumpcap>
+}
+
+# vim:syntax=apparmor

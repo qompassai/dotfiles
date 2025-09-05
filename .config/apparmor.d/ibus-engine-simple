@@ -1,0 +1,35 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,ibus/}ibus-engine-simple
+profile ibus-engine-simple /{,usr/}lib{,exec,32,64}/{,ibus/}ibus-engine-simple  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/ibus>
+
+  signal (receive) set=term peer=ibus-daemon,
+
+  unix (send, receive, connect) type=stream peer=(addr="@/var/lib/gdm{3,}/.cache/ibus/dbus-????????", label=ibus-daemon),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mr,
+
+  owner @{desktop_cache_dirs}/ibus/dbus-@{rand8} rw,
+  owner @{desktop_config_dirs}/ibus/bus/ r,
+  owner @{desktop_config_dirs}/ibus/bus/@{hex32}-unix-{,wayland-}@{int} r,
+
+  include if exists <local/ibus-engine-simple>
+}
+
+# vim:syntax=apparmor

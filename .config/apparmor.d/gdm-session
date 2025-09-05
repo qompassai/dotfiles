@@ -1,0 +1,60 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,gdm/}gdm-{x,wayland}-session
+profile gdm-session /{,usr/}lib{,exec,32,64}/{,gdm/}gdm-{x,wayland}-session flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.systemd1-session>
+  include <abstractions/bus/org.gnome.DisplayManager>
+
+  signal (receive) set=(hup term) peer=gdm-session-worker,
+  signal (receive) set=(term) peer=gdm,
+  signal (send)    set=(term) peer=dbus-session,
+  signal (send)    set=(term) peer=gnome-session-binary,
+  signal (send)    set=(term) peer=xorg,
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mr,
+
+  @{bin}/env                        rix,
+  @{bin}/gnome-session              rpx,
+  @{bin}/dbus-run-session           rpx -> dbus-session,
+  @{bin}/dbus-daemon                rpx -> dbus-session,
+
+  # only: xorg
+  @{bin}/Xorg                       rpx,
+  /etc/gdm{3,}/Prime/Default        rpx,
+  /etc/gdm{3,}/Xsession             rpx,
+
+  /usr/share/gdm{3,}/gdm.schemas r,
+
+  /etc/gdm{3,}/custom.conf r,
+  /etc/gdm{3,}/daemon.conf r,
+  /etc/sysconfig/displaymanager r,
+
+  owner @{gdm_cache_dirs}/gdm/ rw,
+  owner @{gdm_cache_dirs}/gdm/Xauthority rw,
+  owner @{gdm_config_dirs}/dconf/user r,
+  owner @{GDM_HOME}/greeter-dconf-defaults r,
+
+        @{run}/gdm{3,}/custom.conf r,
+  owner @{run}/user/@{uid}/gdm/ w,
+  owner @{run}/user/@{uid}/gdm/Xauthority rw,  # only: xorg
+
+  /dev/tty@{int} rw,
+
+  include if exists <local/gdm-session>
+}
+
+# vim:syntax=apparmor

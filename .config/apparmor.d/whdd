@@ -1,0 +1,38 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2017-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/whdd
+profile whdd /{,usr/}bin/whdd flags=(complain) {
+  include <abstractions/base>
+
+  capability sys_rawio,
+  capability sys_admin,
+
+  # Needed?
+  deny capability sys_nice,
+
+  @{exec_path} mr,
+
+  @{sh_path}        rix,
+  @{bin}/{,e}grep   rix,
+  @{bin}/{m,g,}awk  rix,
+  @{bin}/tr         rix,
+
+  # To read SMART attributes
+  @{sbin}/smartctl  rpx,
+
+  owner @{PROC}/@{pid}/mounts r,
+        @{PROC}/partitions r,
+
+  /dev/sd[a-z]* rw,
+
+  include if exists <local/whdd>
+}
+
+# vim:syntax=apparmor

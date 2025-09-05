@@ -1,0 +1,52 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/umount
+profile umount /{,usr/}bin/umount flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/disks-read>
+  include <abstractions/nameservice-strict>
+
+  capability chown,
+  capability dac_read_search,
+  capability setgid,
+  capability setuid,
+  capability sys_admin,
+
+  network inet stream,
+  network inet6 stream,
+
+  umount,
+
+  @{exec_path} mr,
+
+  @{bin}/umount.*  rpx,
+  @{bin}/mount.*   rpx,
+
+  /etc/mtab r,
+  /etc/fstab r,
+
+  # Mount points
+  @{HOME}/ r,
+  @{HOME}/*/ r,
+  @{HOME}/*/*/ r,
+  @{user_cache_dirs}/*/*/ r,
+  @{MOUNTS}/*/ r,
+  @{MOUNTS}/*/*/ r,
+
+  owner @{run}/mount/ rw,
+  owner @{run}/mount/utab{,.*} rwk,
+
+  owner @{PROC}/@{pid}/mountinfo r,
+
+  include if exists <local/umount>
+}
+
+# vim:syntax=apparmor

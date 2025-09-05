@@ -1,0 +1,76 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/blueman-mechanism @{lib}/blueman/blueman-mechanism
+profile blueman-mechanism /{{,usr/}lib{,exec,32,64}/blueman-mechanism,{,usr/}lib{,exec,32,64}/blueman/blueman-mechanism}  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/nameservice-strict>
+  include <abstractions/python>
+
+  capability mknod,
+  capability net_admin,
+  capability sys_nice,
+
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.blueman.Mechanism{,.*},
+  dbus receive bus=system path=/org/blueman/Mechanism{,/**}
+       interface=org.blueman.Mechanism{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/blueman/Mechanism{,/**}
+       interface=org.blueman.Mechanism{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/blueman/Mechanism{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/blueman/Mechanism{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/blueman/Mechanism{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.blueman.Mechanism{,.*}}"),
+  dbus send bus=system path=/org/blueman/Mechanism{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{lib}/ r,
+
+  /var/lib/blueman/network.state rw,
+
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  /dev/rfkill rw,
+
+  # For network AP
+  #@{sbin}/ip                 rix,
+  #@{sbin}/xtables-nft-multi rix,
+  #@{sbin}/dnsmasq           rpx,
+  #@{bin}/dhclient          rpx,
+  #      @{PROC}/sys/net/ipv4/ip_forward w,
+  #      @{PROC}/sys/net/ipv4/conf/ r,
+  #      @{PROC}/sys/net/ipv4/conf/*/forwarding w,
+  #owner @{run}/blueman-iptables rw,
+  #owner @{run}/blueman-netconfig rw,
+
+  include if exists <local/blueman-mechanism>
+}
+
+# vim:syntax=apparmor

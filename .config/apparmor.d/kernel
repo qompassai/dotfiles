@@ -1,0 +1,76 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2025 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = /etc/kernel/{,header_}postinst.d/* /etc/kernel/postrm.d/*
+@{exec_path} += /etc/kernel/preinst.d/* /etc/kernel/prerm.d/*
+profile kernel /{etc/kernel/{,header_}postinst.d/*,etc/kernel/postrm.d/*,etc/kernel/preinst.d/*,etc/kernel/prerm.d/*,etc/kernel/preinst.d/*,etc/kernel/prerm.d/*} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{sh_path}        rix,
+  @{bin}/{,e}grep   rix,
+  @{bin}/{,m,g}awk  rix,
+  @{bin}/cat        rix,
+  @{bin}/chmod      rix,
+  @{bin}/cut        rix,
+  @{bin}/dirname    rix,
+  @{bin}/kmod       rcx -> kmod,
+  @{bin}/mv         rix,
+  @{bin}/rm         rix,
+  @{bin}/rmdir      rix,
+  @{bin}/sed        rix,
+  @{bin}/sort       rix,
+  @{bin}/touch      rix,
+  @{bin}/tr         rix,
+  @{bin}/uname      rix,
+  @{bin}/which{,.debianutils}  rix,
+
+  @{bin}/apt-config               rpx,
+  @{bin}/bootctl                  rpx,
+  @{bin}/dpkg                     rpx -> child-dpkg,
+  @{bin}/kernel-install           rpx,
+  @{bin}/systemd-detect-virt      rpx,
+  @{bin}/update-alternatives      rpx,
+  @{lib}/dkms/dkms_autoinstaller  rpx,
+  @{sbin}/dkms                    rpx,
+  @{sbin}/update-grub             rpx,
+  @{sbin}/update-initramfs        rpx,
+
+  @{lib}/modules/*/updates/ w,
+  @{lib}/modules/*/updates/dkms/ w,
+
+  /etc/kernel/header_postinst.d/* r,
+  /etc/kernel/{postinst,postrm,preinst,prerm}.d/* r,
+
+  # For shell pwd
+  / r,
+  @{efi}/ r,
+
+  /etc/apt/apt.conf.d/ r,
+  /etc/apt/apt.conf.d/01autoremove-kernels{,.dpkg-new} rw,
+
+  @{run}/reboot-required w,
+  @{run}/reboot-required.pkgs rw,
+
+  @{PROC}/devices r,
+  @{PROC}/cmdline r,
+
+  profile kmod flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/kmod>
+
+    include if exists <local/kernel_kmod>
+  }
+
+  include if exists <local/kernel>
+}
+
+# vim:syntax=apparmor

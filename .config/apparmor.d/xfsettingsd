@@ -1,0 +1,54 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xfsettingsd
+profile xfsettingsd /{,usr/}bin/xfsettingsd flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/xfce>
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.xfce.SettingsDaemon{,.*},
+  dbus receive bus=session path=/org/xfce/SettingsDaemon{,/**}
+       interface=org.xfce.SettingsDaemon{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/xfce/SettingsDaemon{,/**}
+       interface=org.xfce.SettingsDaemon{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/xfce/SettingsDaemon{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/xfce/SettingsDaemon{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/xfce/SettingsDaemon{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.xfce.SettingsDaemon{,.*}}"),
+  dbus send bus=session path=/org/xfce/SettingsDaemon{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  /etc/xdg/autostart/xfsettingsd.desktop r,
+
+  owner @{PROC}/@{pid}/cgroup r,
+
+  include if exists <local/xfsettingsd>
+}
+
+# vim:syntax=apparmor

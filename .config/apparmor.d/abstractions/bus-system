@@ -1,0 +1,19 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+  abi <abi/4.0>,
+
+  unix bind type=stream addr=@@{udbus}/bus/@{profile_name}/system,
+
+  dbus send bus=system path=/org/freedesktop/DBus
+       interface=org.freedesktop.DBus
+       member={Hello,AddMatch,RemoveMatch,GetNameOwner,NameHasOwner,StartServiceByName}
+       peer=(name=org.freedesktop.DBus, label="@{p_dbus_system}"),
+
+         @{run}/dbus/system_bus_socket rw,
+  @{att}/@{run}/dbus/system_bus_socket rw,
+
+  include if exists <abstractions/bus-system.d>
+
+# vim:syntax=apparmor

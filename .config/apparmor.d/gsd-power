@@ -1,0 +1,133 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/gsd-power
+profile gsd-power /{,usr/}lib{,exec,32,64}/gsd-power  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/net.hadess.PowerProfiles>
+  include <abstractions/bus/org.a11y>
+  include <abstractions/bus/org.freedesktop.hostname1>
+  include <abstractions/bus/org.freedesktop.login1.Session>
+  include <abstractions/bus/org.freedesktop.login1>
+  include <abstractions/bus/org.freedesktop.systemd1>
+  include <abstractions/bus/org.freedesktop.UPower.PowerProfiles>
+  include <abstractions/bus/org.freedesktop.UPower>
+  include <abstractions/bus/org.gnome.Mutter.IdleMonitor>
+  include <abstractions/bus/org.gnome.ScreenSaver>
+  include <abstractions/bus/org.gnome.SessionManager>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/consoles>
+  include <abstractions/dconf-write>
+  include <abstractions/fontconfig-cache-write>
+  include <abstractions/gnome-strict>
+  include <abstractions/nameservice-strict>
+
+  network inet stream,
+  network netlink raw,
+
+  signal (receive) set=(term, hup) peer=gdm*,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.SettingsDaemon.Power{,.*},
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Power{,/**}
+       interface=org.gnome.SettingsDaemon.Power{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Power{,/**}
+       interface=org.gnome.SettingsDaemon.Power{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Power{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Power{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Power{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Power{,.*}}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Power{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus (send receive) bus=session path=/org/gnome/Mutter/DisplayConfig{,/**}
+       interface=org.gnome.Mutter.DisplayConfig{,.*}
+       peer=(name="{@{busname},org.gnome.Mutter.DisplayConfig{,.*}}", label=gnome-shell),
+  dbus (send receive) bus=session path=/org/gnome/Mutter/DisplayConfig{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.Mutter.DisplayConfig{,.*}}", label=gnome-shell),
+  dbus send bus=session path=/org/gnome/Mutter/DisplayConfig{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.Mutter.DisplayConfig{,.*}}", label=gnome-shell),
+  dbus send bus=session path=/org/gnome/Mutter/DisplayConfig{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.Mutter.DisplayConfig{,.*}}", label=gnome-shell),
+  dbus receive bus=session path=/org/gnome/Mutter/DisplayConfig{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.Mutter.DisplayConfig{,.*}}", label=gnome-shell),
+
+  dbus send bus=system path=/org/freedesktop/UPower/KbdBacklight
+       interface=org.freedesktop.UPower.KbdBacklight
+       member=GetBrightness
+       peer=(name=:*, label="@{p_upowerd}"),
+
+  dbus receive bus=session path=/org/gtk/Settings
+       interface=org.freedesktop.DBus.Properties
+       member=PropertiesChanged
+       peer=(name=:*, label=gsd-xsettings),
+
+  @{exec_path} mr,
+
+  /usr/share/dconf/profile/gdm r,
+  /usr/share/gdm/greeter-dconf-defaults r,
+
+  owner @{GDM_HOME}/greeter-dconf-defaults r,
+  owner @{gdm_config_dirs}/dconf/user r,
+
+  @{run}/udev/data/+backlight:* r,
+  @{run}/udev/data/+drm:card@{int}-* r,   # For screen outputs
+  @{run}/udev/data/+leds:* r,
+
+  @{att}/@{run}/systemd/inhibit/@{int}.ref rw,
+
+  @{sys}/bus/ r,
+  @{sys}/class/ r,
+  @{sys}/class/backlight/ r,
+
+  @{sys}/devices/@{pci}/*_backlight/{,max_,actual_}brightness rw,
+  @{sys}/devices/@{pci}/*_backlight/{uevent,type,enabled} r,
+  @{sys}/devices/@{pci}/backlight/**/{,max_,actual_}brightness rw,
+  @{sys}/devices/@{pci}/backlight/**/{uevent,type,enabled} r,
+  @{sys}/devices/@{pci}/backlight/**/brightness rw,
+  @{sys}/devices/@{pci}/class r,
+  @{sys}/devices/@{pci}/drm/card@{int}/**/{,max_,actual_}brightness rw,
+  @{sys}/devices/@{pci}/drm/card@{int}/**/{uevent,type,enabled} r,
+  @{sys}/devices/@{pci}/drm/card@{int}/**/brightness rw,
+  @{sys}/devices/**/leds/**/{,max_,actual_}brightness rw,
+  @{sys}/devices/**/leds/**/{uevent,type,enabled} r,
+  @{sys}/devices/**/leds/**/brightness_hw_changed r,
+
+        @{PROC}/cmdline r,
+        @{PROC}/sys/kernel/osrelease r,
+  owner @{PROC}/@{pid}/cgroup r,
+
+  include if exists <local/gsd-power>
+}
+
+# vim:syntax=apparmor

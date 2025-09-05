@@ -1,0 +1,78 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/ksmserver
+profile ksmserver /{,usr/}bin/ksmserver  flags=(attach_disconnected,mediate_deleted,complain) {
+  include <abstractions/base>
+  include <abstractions/app-launcher-user>
+  include <abstractions/audio-client>
+  include <abstractions/bus/org.freedesktop.login1.Session>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+
+  signal send set=(usr1,term) peer=kscreenlocker_greet,
+
+  ptrace (read) peer=kbuildsycoca5,
+
+  @{exec_path} mr,
+
+  @{bin}/rm            rix,
+  @{thunderbird_path}  rpx,
+
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}DiscoverNotifier Px,
+  /{,usr/}lib{,exec,32,64}/DiscoverNotifier Px,
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}drkonqi Px,
+  /{,usr/}lib{,exec,32,64}/drkonqi Px,
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kscreenlocker_greet Px,
+  /{,usr/}lib{,exec,32,64}/kscreenlocker_greet Px,
+
+  /usr/share/color-schemes/{,**} r,
+  /usr/share/kservices{5,6}/{,**} r,
+  /usr/share/kservicetypes{5,6}/{,**} r,
+
+  /etc/xdg/menus/applications-merged/{,*} r,
+  /etc/machine-id r,
+  /etc/xdg/kscreenlockerrc r,
+  /etc/xdg/menus/{,*} r,
+
+  owner @{HOME}/@{rand6} rw,
+  owner @{HOME}/.Xauthority rw,
+
+  owner @{user_cache_dirs}/fontconfig/*-le64.cache-* r,
+
+  owner @{user_config_dirs}/#@{int} rw,
+  owner @{user_config_dirs}/kdedefaults/kscreenlockerrc r,
+  owner @{user_config_dirs}/kscreenlockerrc r,
+  owner @{user_config_dirs}/ksmserverrc rw,
+  owner @{user_config_dirs}/ksmserverrc.@{rand6} rwl,
+  owner @{user_config_dirs}/ksmserverrc.lock rwk,
+  owner @{user_config_dirs}/menus/ r,
+  owner @{user_config_dirs}/menus/applications-merged/ r,
+  owner @{user_config_dirs}/session/*_[0-9]*_[0-9]*_[0-9]* rw,
+
+  owner @{user_share_dirs}/kservices{5,6}/ r,
+  owner @{user_share_dirs}/kservices{5,6}/ServiceMenus/ r,
+
+  owner @{run}/user/@{uid}/#@{int} rw,
+  owner @{run}/user/@{uid}/iceauth_@{rand6} wl -> @{run}/user/@{uid}/#@{int},
+  owner @{run}/user/@{uid}/iceauth_@{rand6}-c w,
+  owner @{run}/user/@{uid}/iceauth_@{rand6}-l wl -> @{run}/user/@{uid}/iceauth_@{rand6}-c,
+  owner @{run}/user/@{uid}/iceauth_@{rand6}-n rw,
+
+  owner @{tmp}/@{rand6} rw,
+
+        @{att}/@{run}/systemd/inhibit/@{int}.ref rw,
+  owner @{run}/user/@{uid}/KSMserver__[0-9] rw,
+
+  /dev/tty r,
+
+  include if exists <local/ksmserver>
+}
+
+# vim:syntax=apparmor

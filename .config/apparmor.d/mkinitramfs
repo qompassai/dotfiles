@@ -1,0 +1,200 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2022 Mikhail Morfikov
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/mkinitramfs
+profile mkinitramfs /{,usr/}{,s}bin/mkinitramfs flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  capability syslog,
+  capability chown,
+  capability fowner,
+  capability fsetid,
+
+  @{exec_path} r,
+  @{sh_path}   rix,
+
+  @{bin}/ r,
+  @{lib}/ r,
+
+  @{bin}/{,e}grep   rix,
+  @{bin}/basename   rix,
+  @{bin}/bzip2      rix,
+  @{bin}/cat        rix,
+  @{bin}/chmod      rix,
+  @{bin}/cp         rix,
+  @{bin}/cpio       rix,
+  @{bin}/dirname    rix,
+  @{bin}/env        rix,
+  @{bin}/getopt     rix,
+  @{bin}/gzip       rix,
+  @{bin}/id         rix,
+  @{bin}/ln         rix,
+  @{bin}/lzma       rix,
+  @{bin}/lzop       rix,
+  @{bin}/mkdir      rix,
+  @{bin}/mktemp     rix,
+  @{bin}/readlink   rix,
+  @{bin}/realpath   rix,
+  @{bin}/rm         rix,
+  @{bin}/rmdir      rix,
+  @{bin}/sed        rix,
+  @{bin}/sort       rix,
+  @{bin}/stat       rix,
+  @{bin}/touch      rix,
+  @{bin}/tr         rix,
+  @{bin}/tsort      rix,
+  @{bin}/uname      rix,
+  @{bin}/uniq       rix,
+  @{bin}/xargs      rix,
+  @{bin}/xz         rix,
+  @{bin}/zstd       rix,
+  @{sbin}/blkid     rpx,
+  @{lib}/dracut/dracut-install rix,
+
+  @{bin}/find                 rcx -> find,
+  @{bin}/kmod                 rcx -> kmod,
+  @{sbin}/ldconfig            rcx -> ldconfig,
+  @{bin}/ldd                  rcx -> ldd,
+  @{lib}/@{multiarch}/ld-linux-*so* rcx -> ldd,
+  @{lib}/ld-linux.so*         rcx -> ldd,
+
+  @{bin}/dpkg          rpx -> child-dpkg,
+  @{bin}/linux-version rpx,
+
+  @{lib}/initramfs-tools/hooks/**         rpx,
+  /etc/initramfs-tools/hooks/**           rpx,
+  /etc/initramfs-tools/scripts/**         rpx,
+  /usr/share/initramfs-tools/hooks/**     rpx,
+  /usr/share/initramfs-tools/scripts/**   rpx,
+
+  /usr/share/initramfs-tools/{,**} r,
+  /etc/initramfs-tools/{,**} r,
+
+  /etc/xattr.conf r,
+
+  # For shell pwd
+  / r,
+  /etc/ r,
+  /root/ r,
+
+  /etc/modprobe.d/{,*.conf} r,
+
+        @{efi}/ r,
+  owner @{efi}/config-* r,
+  owner @{efi}/initrd.img-*.new rw,
+
+  owner /var/lib/kdump/initramfs-tools/** rw,
+  owner /var/lib/kdump/initrd.* rw,
+
+  /var/tmp/ r,
+  /var/tmp/mkinitramfs_@{rand6}/** w,
+  /var/tmp/modules_@{rand6} rw,
+  /var/tmp/mkinitramfs_@{rand6} rw,
+  /var/tmp/mkinitramfs_@{rand6}/ rw,
+  /var/tmp/mkinitramfs_@{rand6}/** rwl -> /var/tmp/mkinitramfs_@{rand6}/**,
+  /var/tmp/mkinitramfs-@{rand6} rw,
+  /var/tmp/mkinitramfs-*_@{rand6} rw,
+
+  owner /tmp/tmp.@{rand10}/mkinitramfs_@{rand6} rw,
+  owner /tmp/tmp.@{rand10}/mkinitramfs_@{rand6}/ rw,
+  owner /tmp/tmp.@{rand10}/mkinitramfs_@{rand6}/** rwl -> /tmp/tmp.@{rand10}/mkinitramfs_@{rand6}/**,
+  owner /tmp/tmp.@{rand10}/mkinitramfs_@{rand6}/** w,
+  owner /tmp/tmp.@{rand10}/mkinitramfs-@{rand6} rw,
+  owner /tmp/tmp.@{rand10}/mkinitramfs-*_@{rand6} rw,
+  owner /tmp/tmp.@{rand10}/modules_@{rand6} rw,
+
+  @{sys}/bus/ r,
+  @{sys}/bus/*/drivers/ r,
+  @{sys}/devices/platform/ r,
+  @{sys}/devices/platform/**/ r,
+  @{sys}/devices/platform/**/modalias r,
+  @{sys}/module/compression r,
+  @{sys}/module/firmware_class/parameters/path r,
+
+        @{PROC}/@{pid}/mounts r,
+        @{PROC}/cmdline r,
+        @{PROC}/modules r,
+  owner @{PROC}/@{pid}/fd/ r,
+
+  profile ldd flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+    include <abstractions/nameservice-strict>
+
+    @{bin}/ldd mr,
+    @{lib}/@{multiarch}/ld-linux-*so* mr,
+    @{lib}/ld-linux.so* mr,
+
+    @{sh_path}        rix,
+    @{bin}/kmod mr,
+    @{lib}/initramfs-tools/bin/* mr,
+
+    @{lib}/@{multiarch}/ld-*.so*  rix,
+    @{lib}/ld-*.so{,.2}           rix,
+
+    include if exists <local/mkinitramfs_ldd>
+  }
+
+  profile ldconfig flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+
+    capability sys_chroot,
+
+    @{sbin}/ldconfig  mr,
+
+    @{sh_path}               rix,
+    @{sbin}/ldconfig.real    rix,
+
+    owner /var/tmp/mkinitramfs_@{rand6}/** rwl -> /var/tmp/mkinitramfs_@{rand6}/**,
+    owner /tmp/tmp.@{rand10}/mkinitramfs_@{rand6}/** rwl -> /tmp/tmp.@{rand10}/mkinitramfs_@{rand6}/**,
+
+    include if exists <local/mkinitramfs_ldconfig>
+  }
+
+  profile find flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+
+    @{bin}/find mr,
+
+    # pwd dir
+    / r,
+    /etc/ r,
+    /root/ r,
+
+    /usr/share/initramfs-tools/scripts/{,**/} r,
+    /etc/initramfs-tools/scripts/{,**/} r,
+
+    owner /var/tmp/mkinitramfs_@{rand6}/{,**/} r,
+
+    include if exists <local/mkinitramfs_find>
+  }
+
+  profile kmod flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/kmod>
+
+    owner /var/tmp/mkinitramfs_@{rand6}/usr/lib/modules/*/ r,
+    owner /var/tmp/mkinitramfs_@{rand6}/usr/lib/modules/*/modules.* rw,
+    owner /var/tmp/mkinitramfs_@{rand6}/usr/lib/modules/*/updates/{,**} r,
+    owner /var/tmp/mkinitramfs_@{rand6}/usr/lib/modules/*/kernel/{,**/} r,
+    owner /var/tmp/mkinitramfs_@{rand6}/usr/lib/modules/*/kernel/**/*.ko* r,
+
+    @{sys}/module/compression r,
+
+    include if exists <local/mkinitramfs_kmod>
+  }
+
+  include if exists <local/mkinitramfs>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,32 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/cockpit/cockpit-ws
+profile cockpit-ws /{,usr/}lib{,exec,32,64}/cockpit/cockpit-ws  flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{sh_path} rix,
+  @{lib}/cockpit/cockpit-session  rpx,
+
+  /usr/share/cockpit/{,**} r,
+  /usr/share/pixmaps/{,**} r,
+  /etc/cockpit/ws-certs.d/ r,
+
+  @{run}/cockpit/wsinstance/https@@{hex64}.sock r,
+
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/fd/ r,
+
+  include if exists <local/cockpit-ws>
+}
+
+# vim:syntax=apparmor

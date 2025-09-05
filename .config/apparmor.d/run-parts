@@ -1,0 +1,146 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2022 Mikhail Morfikov
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/run-parts
+profile run-parts /{,usr/}bin/run-parts flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+
+  capability mknod,
+
+  @{exec_path} mrix,
+
+  @{sh_path}         rix,
+  @{sbin}/anacron    rix,
+  @{bin}/cat         rix,
+  @{bin}/date        rix,
+  @{bin}/nice        rix,
+  @{bin}/snapper     rix,
+
+  /usr/share/update-notifier/notify-reboot-required   rpx,
+  /usr/share/update-notifier/notify-updates-outdated  rpx,
+
+  /etc/ r,
+  /etc/anacrontab                                      r,
+  /etc/conf.d/snapper{,**}                             r,
+  /etc/default/*                                       r,
+  /etc/profile.d/{,**}                                 r,
+  /etc/snapper/configs/root                            r,
+
+  # Crontab
+  /etc/cron.{hourly,daily,weekly,monthly}/                     r,
+  /etc/cron.{hourly,daily,weekly,monthly}/0anacron             rix,
+  /etc/cron.{hourly,daily,weekly,monthly}/apport               rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/apt-compat           rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/apt-listbugs         rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/apt-show-versions    rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/apt-xapian-index     rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/aptitude             rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/bsdmainutils        rpux,
+  /etc/cron.{hourly,daily,weekly,monthly}/checksecurity       rpux,
+  /etc/cron.{hourly,daily,weekly,monthly}/debsums              rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/debtags              rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/dlocate              rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/dpkg                rpux,
+  /etc/cron.{hourly,daily,weekly,monthly}/etckeeper            rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/exim4-base           rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/logrotate            rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/man-db               rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/mlocate              rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/passwd              rpux,
+  /etc/cron.{hourly,daily,weekly,monthly}/plocate              rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/popularity-contest   rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/snapper             rpux,
+  /etc/cron.{hourly,daily,weekly,monthly}/spamassassin        rpux,
+  /etc/cron.{hourly,daily,weekly,monthly}/sysstat              rpx,
+  /etc/cron.{hourly,daily,weekly,monthly}/tor                 rpux,
+  /etc/cron.{hourly,daily,weekly,monthly}/vrms                rpux,
+  /var/spool/anacron/cron.{hourly,daily,weekly,monthly}       rw,
+
+  # Network
+  /etc/network/if-down.d/ r,
+  /etc/network/if-down.d/openvpn             rpux,
+  /etc/network/if-down.d/resolvconf          rpux,
+  /etc/network/if-down.d/wpasupplicant       rpux,
+
+  /etc/hostapd/ifupdown.sh                   rpux,
+  /etc/macchanger/ifupdown.sh                rpux,
+  /etc/wpa_supplicant/ifupdown.sh            rpux,
+
+  /etc/network/if-post-down.d/ r,
+  /etc/network/if-post-down.d/bridge         rpux,
+  /etc/network/if-post-down.d/chrony         rpux,
+  /etc/network/if-post-down.d/hostapd        rpux,
+  /etc/network/if-post-down.d/ifenslave      rpux,
+  /etc/network/if-post-down.d/macchanger     rpux,
+  /etc/network/if-post-down.d/wireless-tools rpux,
+  /etc/network/if-post-down.d/wpasupplicant  rpux,
+
+  /etc/network/if-pre-up.d/ r,
+  /etc/network/if-pre-up.d/bridge            rpux,
+  /etc/network/if-pre-up.d/ethtool           rpux,
+  /etc/network/if-pre-up.d/hostapd           rpux,
+  /etc/network/if-pre-up.d/ifenslave         rpux,
+  /etc/network/if-pre-up.d/macchanger        rpux,
+  /etc/network/if-pre-up.d/random-secret     rpux,
+  /etc/network/if-pre-up.d/wireless-tools    rpux,
+  /etc/network/if-pre-up.d/wpasupplicant     rpux,
+
+  /etc/network/if-up.d/ r,
+  /etc/network/if-up.d/*resolvconf           rpux,
+  /etc/network/if-up.d/avahi-autoipd         rpux,
+  /etc/network/if-up.d/chrony                rpux,
+  /etc/network/if-up.d/ethtool               rpux,
+  /etc/network/if-up.d/ifenslave             rpux,
+  /etc/network/if-up.d/openvpn               rpux,
+  /etc/network/if-up.d/postfix               rpux,
+  /etc/network/if-up.d/ubuntu-fan             rpx,
+  /etc/network/if-up.d/wpasupplicant         rpux,
+
+  # Motd
+  /etc/update-motd.d/ r,
+  /etc/update-motd.d/* rpx,
+
+  # Kernel
+  /etc/kernel/{,header_}postinst.d/ r,
+  /etc/kernel/{,header_}postinst.d/* rpx,
+  /etc/kernel/postrm.d/ r,
+  /etc/kernel/postrm.d/* rpx,
+  /etc/kernel/preinst.d/ r,
+  /etc/kernel/preinst.d/* rpx,
+  /etc/kernel/prerm.d/ r,
+  /etc/kernel/prerm.d/* rpx,
+
+  # Finalrd
+  /usr/share/finalrd/ r,
+  /usr/share/finalrd/mdadm.finalrd                rpux,
+  /usr/share/finalrd/open-iscsi.finalrd           rpux,
+
+  /usr/share/landscape/landscape-sysinfo.wrapper  rpx,
+
+  /root/ r,
+
+  /var/spool/anacron/cron.daily k,
+
+  owner @{tmp}/#@{int} rw,
+  owner @{tmp}/$anacron@{rand6} rw,
+  owner @{tmp}/file@{rand6} rw,
+
+  owner @{sys}/class/power_supply/ r,
+
+  @{run}/motd.dynamic.new w,
+
+  /dev/tty@{int} rw,
+
+  include if exists <local/run-parts>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,47 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+  abi <abi/4.0>,
+
+  @{bin}/nvidia-modprobe px -> child-modprobe-nvidia,
+
+  /opt/cuda/targets/@{multiarch}/lib/libOpenCL.so.* mr,
+
+  /usr/share/nvidia/nvidia-application-profiles-* r,
+
+  /etc/nvidia/nvidia-application-profiles-* r,
+  /etc/vdpau_wrapper.cfg r,
+
+  owner @{HOME}/.nv/ w,
+  owner @{HOME}/.nv/ComputeCache/ w,
+  owner @{HOME}/.nv/ComputeCache/** rw,
+  owner @{HOME}/.nv/ComputeCache/index rwk,
+  owner @{HOME}/.nv/nvidia-application-profiles-* r,
+
+        @{user_cache_dirs}/nvidia/GLCache/@{hex32}/ rw,
+  owner @{user_cache_dirs}/nvidia/ w,
+  owner @{user_cache_dirs}/nvidia/GLCache/ rw,
+  owner @{user_cache_dirs}/nvidia/GLCache/** rwk,
+
+  @{sys}/devices/system/memory/block_size_bytes r,
+  @{sys}/module/nvidia/version r,
+
+        @{PROC}/driver/nvidia/params r,
+        @{PROC}/modules r,
+        @{PROC}/sys/vm/max_map_count r,
+        @{PROC}/sys/vm/mmap_min_addr r,
+        @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/comm r,
+  owner @{PROC}/@{pid}/task/@{tid}/comm r,
+
+  /dev/char/195:@{int} w,  # Nvidia graphics devices
+  /dev/nvidia-modeset rw,
+  /dev/nvidia@{int} rw,
+  /dev/nvidiactl rw,
+
+  deny owner @{HOME}/.nv/.local/share/gvfs-metadata/* r,
+
+  include if exists <abstractions/nvidia-strict.d>
+
+# vim:syntax=apparmor

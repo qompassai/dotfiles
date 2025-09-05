@@ -1,0 +1,27 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{lib}/kf{5,6}/kio_http_cache_cleaner
+@{exec_path} += @{lib}/@{multiarch}/{,libexec/}kf{5,6}/kio_http_cache_cleaner
+profile kio_http_cache_cleaner /{{,usr/}lib{,exec,32,64}/kf{5,6}/kio_http_cache_cleaner,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf{5,6}/kio_http_cache_cleaner,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf{5,6}/kio_http_cache_cleaner} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/qt5>
+
+  @{exec_path} mr,
+
+  /usr/share/icu/@{int}.@{int}/*.dat r,
+
+  owner @{user_cache_dirs}/kio_http/{,*} rw,
+  owner @{user_config_dirs}/kio_httprc r,
+
+  owner @{run}/user/@{uid}/kio_http_cache_cleaner rw,
+
+  include if exists <local/kio_http_cache_cleaner>
+}
+
+# vim:syntax=apparmor

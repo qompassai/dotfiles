@@ -1,0 +1,663 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gnome-control-center
+profile gnome-control-center /{,usr/}bin/gnome-control-center  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.a11y>
+  include <abstractions/bus/org.freedesktop.portal.Desktop>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/cups-client>
+  include <abstractions/dconf-write>
+  include <abstractions/gnome-strict>
+  include <abstractions/graphics>
+  include <abstractions/gstreamer>
+  include <abstractions/nameservice-strict>
+  include <abstractions/p11-kit>
+  include <abstractions/ssl_certs>
+  include <abstractions/thumbnails-cache-write>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  signal send set=kill peer=unconfined,
+  signal send set=kill peer=passwd,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.Settings{,.*},
+  dbus receive bus=session path=/org/gnome/Settings{,/**}
+       interface=org.gnome.Settings{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/Settings{,/**}
+       interface=org.gnome.Settings{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/Settings{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/Settings{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/Settings{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.Settings{,.*}}"),
+  dbus send bus=session path=/org/gnome/Settings{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.bluez.obex.Agent1{,.*},
+  dbus receive bus=session path=/org/bluez/obex/Agent1{,/**}
+       interface=org.bluez.obex.Agent1{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/bluez/obex/Agent1{,/**}
+       interface=org.bluez.obex.Agent1{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/bluez/obex/Agent1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/bluez/obex/Agent1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/bluez/obex/Agent1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.bluez.obex.Agent1{,.*}}"),
+  dbus send bus=session path=/org/bluez/obex/Agent1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus (send receive) bus=session path=/org/bluez/obex{,/**}
+       interface=org.bluez.obex{,.*}
+       peer=(name="{@{busname},org.bluez.obex{,.*}}", label=obexd),
+  dbus (send receive) bus=session path=/org/bluez/obex{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.bluez.obex{,.*}}", label=obexd),
+  dbus send bus=session path=/org/bluez/obex{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.bluez.obex{,.*}}", label=obexd),
+  dbus send bus=session path=/org/bluez/obex{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.bluez.obex{,.*}}", label=obexd),
+  dbus receive bus=session path=/org/bluez/obex{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.bluez.obex{,.*}}", label=obexd),
+  dbus (send receive) bus=session path=/org/freedesktop/impl/portal/PermissionStore{,/**}
+       interface=org.freedesktop.impl.portal.PermissionStore{,.*}
+       peer=(name="{@{busname},org.freedesktop.impl.portal.PermissionStore{,.*}}", label=xdg-permission-store),
+  dbus (send receive) bus=session path=/org/freedesktop/impl/portal/PermissionStore{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.impl.portal.PermissionStore{,.*}}", label=xdg-permission-store),
+  dbus send bus=session path=/org/freedesktop/impl/portal/PermissionStore{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.impl.portal.PermissionStore{,.*}}", label=xdg-permission-store),
+  dbus send bus=session path=/org/freedesktop/impl/portal/PermissionStore{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.impl.portal.PermissionStore{,.*}}", label=xdg-permission-store),
+  dbus receive bus=session path=/org/freedesktop/impl/portal/PermissionStore{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.impl.portal.PermissionStore{,.*}}", label=xdg-permission-store),
+  dbus (send receive) bus=session path=/org/gnome/Mutter{,/**}
+       interface=org.gnome.Mutter{,.*}
+       peer=(name="{@{busname},org.gnome.Mutter{,.*}}", label=gnome-shell),
+  dbus (send receive) bus=session path=/org/gnome/Mutter{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.Mutter{,.*}}", label=gnome-shell),
+  dbus send bus=session path=/org/gnome/Mutter{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.Mutter{,.*}}", label=gnome-shell),
+  dbus send bus=session path=/org/gnome/Mutter{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.Mutter{,.*}}", label=gnome-shell),
+  dbus receive bus=session path=/org/gnome/Mutter{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.Mutter{,.*}}", label=gnome-shell),
+  dbus (send receive) bus=session path=/org/gnome/SessionManager{,/**}
+       interface=org.gnome.SessionManager{,.*}
+       peer=(name="{@{busname},org.gnome.SessionManager{,.*}}", label=gnome-session-binary),
+  dbus (send receive) bus=session path=/org/gnome/SessionManager{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.SessionManager{,.*}}", label=gnome-session-binary),
+  dbus send bus=session path=/org/gnome/SessionManager{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.SessionManager{,.*}}", label=gnome-session-binary),
+  dbus send bus=session path=/org/gnome/SessionManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.SessionManager{,.*}}", label=gnome-session-binary),
+  dbus receive bus=session path=/org/gnome/SessionManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.SessionManager{,.*}}", label=gnome-session-binary),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.gnome.SettingsDaemon.Color{,.*}
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Color{,.*}}", label=gsd-color),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Color{,.*}}", label=gsd-color),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Color{,.*}}", label=gsd-color),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Color{,.*}}", label=gsd-color),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Color{,.*}}", label=gsd-color),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Power{,/**}
+       interface=org.gnome.SettingsDaemon.Power{,.*}
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Power{,.*}}", label=gsd-power),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Power{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Power{,.*}}", label=gsd-power),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Power{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Power{,.*}}", label=gsd-power),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Power{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Power{,.*}}", label=gsd-power),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Power{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Power{,.*}}", label=gsd-power),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Rfkill{,/**}
+       interface=org.gnome.SettingsDaemon.Rfkill{,.*}
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Rfkill{,.*}}", label=gsd-rfkill),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Rfkill{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Rfkill{,.*}}", label=gsd-rfkill),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Rfkill{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Rfkill{,.*}}", label=gsd-rfkill),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Rfkill{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Rfkill{,.*}}", label=gsd-rfkill),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Rfkill{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Rfkill{,.*}}", label=gsd-rfkill),
+  dbus (send receive) bus=session path=/org/gnome/Shell{,/**}
+       interface=org.gnome.Shell{,.*}
+       peer=(name="{@{busname},org.gnome.Shell{,.*}}", label=gnome-shell),
+  dbus (send receive) bus=session path=/org/gnome/Shell{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.Shell{,.*}}", label=gnome-shell),
+  dbus send bus=session path=/org/gnome/Shell{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.Shell{,.*}}", label=gnome-shell),
+  dbus send bus=session path=/org/gnome/Shell{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.Shell{,.*}}", label=gnome-shell),
+  dbus receive bus=session path=/org/gnome/Shell{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.Shell{,.*}}", label=gnome-shell),
+
+  dbus (send receive) bus=system path=/com/ubuntu/WhoopsiePreferences{,/**}
+       interface=com.ubuntu.WhoopsiePreferences{,.*}
+       peer=(name="{@{busname},com.ubuntu.WhoopsiePreferences{,.*}}", label=whoopsie-preferences),
+  dbus (send receive) bus=system path=/com/ubuntu/WhoopsiePreferences{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},com.ubuntu.WhoopsiePreferences{,.*}}", label=whoopsie-preferences),
+  dbus send bus=system path=/com/ubuntu/WhoopsiePreferences{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},com.ubuntu.WhoopsiePreferences{,.*}}", label=whoopsie-preferences),
+  dbus send bus=system path=/com/ubuntu/WhoopsiePreferences{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},com.ubuntu.WhoopsiePreferences{,.*}}", label=whoopsie-preferences),
+  dbus receive bus=system path=/com/ubuntu/WhoopsiePreferences{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},com.ubuntu.WhoopsiePreferences{,.*}}", label=whoopsie-preferences),
+  dbus (send receive) bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=net.hadess.SwitcherooControl{,.*}
+       peer=(name="{@{busname},net.hadess.SwitcherooControl{,.*}}", label=switcheroo-control),
+  dbus (send receive) bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},net.hadess.SwitcherooControl{,.*}}", label=switcheroo-control),
+  dbus send bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},net.hadess.SwitcherooControl{,.*}}", label=switcheroo-control),
+  dbus send bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},net.hadess.SwitcherooControl{,.*}}", label=switcheroo-control),
+  dbus receive bus=system path=/net/hadess/SwitcherooControl{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},net.hadess.SwitcherooControl{,.*}}", label=switcheroo-control),
+  dbus (send receive) bus=system path=/net/reactivated/Fprint/Manager{,/**}
+       interface=net.reactivated.Fprint.Manager{,.*}
+       peer=(name="{@{busname},net.reactivated.Fprint.Manager{,.*}}", label="@{p_fprintd}"),
+  dbus (send receive) bus=system path=/net/reactivated/Fprint/Manager{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},net.reactivated.Fprint.Manager{,.*}}", label="@{p_fprintd}"),
+  dbus send bus=system path=/net/reactivated/Fprint/Manager{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},net.reactivated.Fprint.Manager{,.*}}", label="@{p_fprintd}"),
+  dbus send bus=system path=/net/reactivated/Fprint/Manager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},net.reactivated.Fprint.Manager{,.*}}", label="@{p_fprintd}"),
+  dbus receive bus=system path=/net/reactivated/Fprint/Manager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},net.reactivated.Fprint.Manager{,.*}}", label="@{p_fprintd}"),
+  dbus (send receive) bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.Accounts{,.*}
+       peer=(name="{@{busname},org.freedesktop.Accounts{,.*}}", label="@{p_accounts_daemon}"),
+  dbus (send receive) bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.Accounts{,.*}}", label="@{p_accounts_daemon}"),
+  dbus send bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.Accounts{,.*}}", label="@{p_accounts_daemon}"),
+  dbus send bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.Accounts{,.*}}", label="@{p_accounts_daemon}"),
+  dbus receive bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.Accounts{,.*}}", label="@{p_accounts_daemon}"),
+  dbus (send receive) bus=system path=/org/freedesktop/bolt1{,/**}
+       interface=org.freedesktop.bolt1{,.*}
+       peer=(name="{@{busname},org.freedesktop.bolt1{,.*}}", label=boltd),
+  dbus (send receive) bus=system path=/org/freedesktop/bolt1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.bolt1{,.*}}", label=boltd),
+  dbus send bus=system path=/org/freedesktop/bolt1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.bolt1{,.*}}", label=boltd),
+  dbus send bus=system path=/org/freedesktop/bolt1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.bolt1{,.*}}", label=boltd),
+  dbus receive bus=system path=/org/freedesktop/bolt1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.bolt1{,.*}}", label=boltd),
+  dbus (send receive) bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.hostname1{,.*}
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}", label="@{p_systemd_hostnamed}"),
+  dbus (send receive) bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}", label="@{p_systemd_hostnamed}"),
+  dbus send bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}", label="@{p_systemd_hostnamed}"),
+  dbus send bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}", label="@{p_systemd_hostnamed}"),
+  dbus receive bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}", label="@{p_systemd_hostnamed}"),
+  dbus (send receive) bus=system path=/org/freedesktop/login1{,/**}
+       interface=org.freedesktop.login1{,.*}
+       peer=(name="{@{busname},org.freedesktop.login1{,.*}}", label="@{p_systemd_logind}"),
+  dbus (send receive) bus=system path=/org/freedesktop/login1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.login1{,.*}}", label="@{p_systemd_logind}"),
+  dbus send bus=system path=/org/freedesktop/login1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.login1{,.*}}", label="@{p_systemd_logind}"),
+  dbus send bus=system path=/org/freedesktop/login1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.login1{,.*}}", label="@{p_systemd_logind}"),
+  dbus receive bus=system path=/org/freedesktop/login1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.login1{,.*}}", label="@{p_systemd_logind}"),
+  dbus (send receive) bus=system path=/org/freedesktop/ModemManager1{,/**}
+       interface=org.freedesktop.ModemManager1{,.*}
+       peer=(name="{@{busname},org.freedesktop.ModemManager1{,.*}}", label="@{p_ModemManager}"),
+  dbus (send receive) bus=system path=/org/freedesktop/ModemManager1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.ModemManager1{,.*}}", label="@{p_ModemManager}"),
+  dbus send bus=system path=/org/freedesktop/ModemManager1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.ModemManager1{,.*}}", label="@{p_ModemManager}"),
+  dbus send bus=system path=/org/freedesktop/ModemManager1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.ModemManager1{,.*}}", label="@{p_ModemManager}"),
+  dbus receive bus=system path=/org/freedesktop/ModemManager1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.ModemManager1{,.*}}", label="@{p_ModemManager}"),
+  dbus (send receive) bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.NetworkManager{,.*}
+       peer=(name="{@{busname},org.freedesktop.NetworkManager{,.*}}", label=NetworkManager),
+  dbus (send receive) bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.NetworkManager{,.*}}", label=NetworkManager),
+  dbus send bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.NetworkManager{,.*}}", label=NetworkManager),
+  dbus send bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.NetworkManager{,.*}}", label=NetworkManager),
+  dbus receive bus=system path=/org/freedesktop/NetworkManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.NetworkManager{,.*}}", label=NetworkManager),
+  dbus (send receive) bus=system path=/org/freedesktop/PolicyKit1{,/**}
+       interface=org.freedesktop.PolicyKit1{,.*}
+       peer=(name="{@{busname},org.freedesktop.PolicyKit1{,.*}}", label="@{p_polkitd}"),
+  dbus (send receive) bus=system path=/org/freedesktop/PolicyKit1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.PolicyKit1{,.*}}", label="@{p_polkitd}"),
+  dbus send bus=system path=/org/freedesktop/PolicyKit1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.PolicyKit1{,.*}}", label="@{p_polkitd}"),
+  dbus send bus=system path=/org/freedesktop/PolicyKit1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.PolicyKit1{,.*}}", label="@{p_polkitd}"),
+  dbus receive bus=system path=/org/freedesktop/PolicyKit1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.PolicyKit1{,.*}}", label="@{p_polkitd}"),
+  dbus (send receive) bus=system path=/org/freedesktop/systemd1{,/**}
+       interface=org.freedesktop.systemd1{,.*}
+       peer=(name="{@{busname},org.freedesktop.systemd1{,.*}}", label="@{p_systemd}"),
+  dbus (send receive) bus=system path=/org/freedesktop/systemd1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.systemd1{,.*}}", label="@{p_systemd}"),
+  dbus send bus=system path=/org/freedesktop/systemd1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.systemd1{,.*}}", label="@{p_systemd}"),
+  dbus send bus=system path=/org/freedesktop/systemd1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.systemd1{,.*}}", label="@{p_systemd}"),
+  dbus receive bus=system path=/org/freedesktop/systemd1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.systemd1{,.*}}", label="@{p_systemd}"),
+  dbus (send receive) bus=system path=/org/freedesktop/UDisks2{,/**}
+       interface=org.freedesktop.UDisks2{,.*}
+       peer=(name="{@{busname},org.freedesktop.UDisks2{,.*}}", label=udisksd),
+  dbus (send receive) bus=system path=/org/freedesktop/UDisks2{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.UDisks2{,.*}}", label=udisksd),
+  dbus send bus=system path=/org/freedesktop/UDisks2{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.UDisks2{,.*}}", label=udisksd),
+  dbus send bus=system path=/org/freedesktop/UDisks2{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.UDisks2{,.*}}", label=udisksd),
+  dbus receive bus=system path=/org/freedesktop/UDisks2{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.UDisks2{,.*}}", label=udisksd),
+  dbus (send receive) bus=system path=/org/freedesktop/UPower{,/**}
+       interface=org.freedesktop.UPower{,.*}
+       peer=(name="{@{busname},org.freedesktop.UPower{,.*}}", label="@{p_upowerd}"),
+  dbus (send receive) bus=system path=/org/freedesktop/UPower{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.UPower{,.*}}", label="@{p_upowerd}"),
+  dbus send bus=system path=/org/freedesktop/UPower{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.UPower{,.*}}", label="@{p_upowerd}"),
+  dbus send bus=system path=/org/freedesktop/UPower{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.UPower{,.*}}", label="@{p_upowerd}"),
+  dbus receive bus=system path=/org/freedesktop/UPower{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.UPower{,.*}}", label="@{p_upowerd}"),
+  dbus (send receive) bus=system path=/org/freedesktop/UPower/PowerProfiles{,/**}
+       interface=org.freedesktop.UPower.PowerProfiles{,.*}
+       peer=(name="{@{busname},org.freedesktop.UPower.PowerProfiles{,.*}}", label=@{p_power_profiles_daemon}),
+  dbus (send receive) bus=system path=/org/freedesktop/UPower/PowerProfiles{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.UPower.PowerProfiles{,.*}}", label=@{p_power_profiles_daemon}),
+  dbus send bus=system path=/org/freedesktop/UPower/PowerProfiles{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.UPower.PowerProfiles{,.*}}", label=@{p_power_profiles_daemon}),
+  dbus send bus=system path=/org/freedesktop/UPower/PowerProfiles{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.UPower.PowerProfiles{,.*}}", label=@{p_power_profiles_daemon}),
+  dbus receive bus=system path=/org/freedesktop/UPower/PowerProfiles{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.UPower.PowerProfiles{,.*}}", label=@{p_power_profiles_daemon}),
+
+  @{exec_path} mr,
+
+  @{bin}/@{shells}     rux,
+
+  @{bin}/gcm-viewer    rix,
+  @{bin}/{,e}grep      rix,
+  @{bin}/locale        rix,
+  @{bin}/sed           rix,
+  @{bin}/tecla         rpx,
+
+  @{bin}/bwrap                                   rcx -> bwrap,
+  @{bin}/gkbd-keyboard-display                   rpx,
+  @{bin}/gnome-software                          rpx,
+  @{sbin}/openvpn                                rpx,
+  @{bin}/passwd                                  rpx,
+  @{bin}/pkexec                                  rcx -> pkexec,
+  @{bin}/software-properties-gtk                 rpx,
+  @{sbin}/usermod                                rpx,
+  @{lib}/{,@{multiarch}/}webkit{2,}gtk-*/WebKitNetworkProcess rix,
+  @{lib}/cups/backend/snmp                       rpx,
+  @{lib}/gnome-control-center-goa-helper         rpx,
+  @{lib}/gnome-control-center-print-renderer     rpx,
+  /usr/share/language-tools/language2locale      rix,
+  /usr/share/language-tools/language-options    rpux,
+
+  @{open_path}                                   rpx -> child-open-any,
+
+  /opt/**/share/icons/{,**} r,
+  /snap/*/@{int}/**.png r,
+  /usr/share/backgrounds/{,**} r,
+  /usr/share/cups/data/testprint r,
+  /usr/share/firefox{,-esr}/browser/chrome/icons/{,**} r,
+  /usr/share/gnome-background-properties/{,**} r,
+  /usr/share/gnome-bluetooth{-*,}/{,**} r,
+  /usr/share/gnome-color-manager/{,**} r,
+  /usr/share/gnome-control-center/{,**} r,
+  /usr/share/gnome-shell/search-providers/{,**} r,
+  /usr/share/gnome/gnome-version.xml r,
+  /usr/share/language-tools/main-countries r,
+  /usr/share/thumbnailers/{,*} r,
+  /usr/share/wallpapers/{,**} r,
+  /usr/share/xml/iso-codes/{,**} r,
+
+  @{etc_ro}/security/pwquality.conf r,
+  @{etc_ro}/security/pwquality.conf.d/{,**} r,
+  /etc/machine-info r,
+  /etc/rygel.conf r,
+
+  /etc/fstab r,
+  /etc/machine-id r,
+  /var/lib/dbus/machine-id r,
+
+  /var/cache/cracklib/cracklib_dict.* r,
+  /var/cache/samba/ rw,
+  /var/lib/AccountsService/icons/* r,
+
+  / r,
+
+  owner @{HOME}/.cat_installer/ca.pem r,
+  owner @{HOME}/.cert/nm-openvpn/*.pem r,
+  owner @{HOME}/.face r,
+  owner @{HOME}/@{XDG_WALLPAPERS_DIR}/{,**} r,
+
+  owner @{user_cache_dirs}/gnome-control-center/{,**} rw,
+  owner @{user_cache_dirs}/thumbnails/fail/gnome-thumbnail-factory/@{hex32}.png.@{rand6} rw,
+
+  owner @{user_config_dirs}/background rw,
+  owner @{user_config_dirs}/gnome-control-center/{,**} rw,
+  owner @{user_config_dirs}/ibus/bus/ r,
+  owner @{user_config_dirs}/ibus/bus/@{hex32}-unix-{,wayland-}@{int} r,
+  owner @{user_config_dirs}/mimeapps.list{,.@{rand6}} rw,
+  owner @{user_config_dirs}/rygel.conf{,.@{rand6}} rw,
+
+  owner @{user_games_dirs}/**.png r,
+
+  owner @{user_share_dirs}/backgrounds/{,**} rw,
+  owner @{user_share_dirs}/gnome-remote-desktop/ w,
+  owner @{user_share_dirs}/gnome-remote-desktop/rdp-tls.{crt,key}{,.@{rand6}} rw,
+  owner @{user_share_dirs}/icc/{,edid-*} r,
+
+  owner @{tmp}/@{hex12}@{h} rw,
+  owner @{tmp}/@{rand8} rw,
+  owner @{tmp}/gdkpixbuf-xpm-tmp.@{rand6} rw,
+
+        @{run}/samba/ rw,
+        @{run}/systemd/sessions/  r,
+        @{run}/systemd/sessions/* r,
+        @{run}/systemd/users/@{uid} r,
+  owner @{run}/user/@{uid}/gnome-control-center-region-needs-restart w,
+  owner @{run}/user/@{uid}/gnome-shell-disable-extensions w,
+  owner @{run}/user/@{uid}/gvfsd/socket-@{rand8} rw,
+
+  @{run}/udev/data/+dmi:* r,              # for motherboard info
+  @{run}/udev/data/+input:input@{int} r,  # for mouse, keyboard, touchpad
+  @{run}/udev/data/+pci:* r,              # Identifies all PCI devices (CPU, GPU, Network, Disks, USB, etc.)
+  @{run}/udev/data/c13:@{int} r,          # for /dev/input/*
+  @{run}/udev/data/c@{dynamic}:@{int} r,  # For dynamic assignment range 234 to 254, 384 to 511
+  @{run}/udev/data/n@{int} r,
+
+  @{sys}/bus/ r,
+  @{sys}/class/ r,
+  @{sys}/class/input/ r,
+  @{sys}/devices/**/{name,vendor,product,uevent} r,
+  @{sys}/devices/**/power_supply/{,**} r,
+  @{sys}/devices/platform/**/uevent r,
+  @{sys}/devices/virtual/**/uevent r,
+  @{sys}/devices/virtual/dmi/id/chassis_type r,
+  @{sys}/devices/virtual/thermal/thermal_zone@{int}/hwmon@{int}/temp* r,
+  @{sys}/firmware/acpi/pm_profile r,
+
+        @{sys}/fs/cgroup/user.slice/cpu.max r,
+        @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/cpu.max r,
+        @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/cpu.max r,
+  owner @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/{,**} rw,
+
+        @{PROC}/cmdline r,
+        @{PROC}/sys/net/ipv6/conf/all/disable_ipv6 r,
+        @{PROC}/zoneinfo r,
+        @{PROC}/1/cgroup r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/fdinfo/@{int} r,
+  owner @{PROC}/@{pid}/loginuid r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/stat r,
+  owner @{PROC}/@{pid}/statm r,
+  owner @{PROC}/@{pid}/task/*/comm rw,
+
+  /dev/ r,
+  /dev/media@{int} r,
+  /dev/video@{int} rw,
+
+  deny owner @{user_share_dirs}/gvfs-metadata/{,*} r,
+
+  profile bwrap  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/common/bwrap>
+
+    @{bin}/bwrap mr,
+
+    include if exists <local/gnome-control-center_bwrap>
+  }
+
+  profile pkexec flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/pkexec>
+
+    include if exists <local/gnome-control-center_pkexec>
+  }
+
+  include if exists <local/gnome-control-center>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,121 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xfce4-panel @{lib}/{,@{multiarch}/}xfce4/panel/wrapper-2.0
+profile xfce-panel /{{,usr/}bin/xfce4-panel,{,usr/}lib{,exec,32,64}/{,*-linux-gnu*/}xfce4/panel/wrapper-2.0} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-system>
+  include <abstractions/bus-session>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/thumbnails-cache-read>
+  include <abstractions/app-launcher-user>
+  include <abstractions/audio-client>
+  include <abstractions/dconf-write>
+  include <abstractions/nameservice-strict>
+  include <abstractions/xfce>
+
+  ptrace (read) peer=xfce-terminal,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.xfce.Panel{,.*},
+  dbus receive bus=session path=/org/xfce/Panel{,/**}
+       interface=org.xfce.Panel{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/xfce/Panel{,/**}
+       interface=org.xfce.Panel{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/xfce/Panel{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/xfce/Panel{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/xfce/Panel{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.xfce.Panel{,.*}}"),
+  dbus send bus=session path=/org/xfce/Panel{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.kde.StatusNotifierWatcher{,.*},
+  dbus receive bus=session path=/org/kde/StatusNotifierWatcher{,/**}
+       interface=org.kde.StatusNotifierWatcher{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/kde/StatusNotifierWatcher{,/**}
+       interface=org.kde.StatusNotifierWatcher{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/kde/StatusNotifierWatcher{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/kde/StatusNotifierWatcher{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/kde/StatusNotifierWatcher{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.kde.StatusNotifierWatcher{,.*}}"),
+  dbus send bus=session path=/org/kde/StatusNotifierWatcher{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{bin}/exo-open                                     rix,
+  @{bin}/xfce4-mime-helper                            rix,
+  @{lib}/{,@{multiarch}/}xfce4/panel/wrapper-2.0      rix,
+  @{lib}/@{multiarch}/glib-@{version}/gio-launch-desktop  rix,
+  @{lib}/gio-launch-desktop                           rix,
+
+  @{bin}/sudo rcx -> root,
+
+  /usr/share/desktop-directories/{,**} r,
+  /usr/share/firefox{,-esr}/browser/chrome/icons/{,**} r,
+  /usr/share/livecheck/** r,
+  /usr/share/xfce4/{,**} r,
+
+  /etc/fstab r,
+  /etc/machine-id r,
+  /etc/timezone r,
+  /etc/xdg/menus/{,**} r,
+  /etc/xdg/{,xdg-xubuntu/}xfce4/{,**} r,
+
+  owner @{user_cache_dirs}/xfce4/notifyd/icons/ rw,
+  owner @{user_cache_dirs}/xfce4-indicator-plugin.log w,
+  owner @{user_config_dirs}/xfce4/panel/{,**} rw,
+
+  owner @{tmp}/gdkpixbuf-xpm-tmp.@{rand6} w,
+
+        @{PROC}/cmdline r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/mountinfo r,
+
+  deny @{user_share_dirs}/gvfs-metadata/{,*} r,
+
+  profile root flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/sudo>
+
+    @{bin}/lsblk rpx,
+
+    include if exists <local/xfce-panel_root>
+  }
+
+  include if exists <local/xfce-panel>
+}
+
+# vim:syntax=apparmor

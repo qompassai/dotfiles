@@ -1,0 +1,137 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/gpartedbin @{lib}/{,gparted/}gpartedbin
+profile gpartedbin /{{,usr/}{,s}bin/gpartedbin,{,usr/}lib{,exec,32,64}/{,gparted/}gpartedbin}  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/dconf-write>
+  include <abstractions/desktop>
+  include <abstractions/disks-write>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/nameservice-strict>
+
+  capability dac_override,
+  capability dac_read_search,
+  capability ipc_lock,
+  capability sys_admin,
+  capability sys_rawio,
+
+  ptrace read,
+
+  signal send peer=mke2fs,
+
+  @{exec_path} mr,
+
+  @{sh_path}        rix,
+
+  @{sbin}/blkid     rpx,
+  @{sbin}/dmidecode rpx,
+  @{sbin}/hdparm    rpx,
+  @{bin}/kmod       rpx,
+
+  @{bin}/mount      rcx -> mount,
+  @{bin}/udevadm    rcx -> udevadm,
+  @{bin}/umount     rcx -> umount,
+
+  @{sbin}/btrfs     rpx,
+  @{sbin}/btrfstune rpx,
+  @{sbin}/dmraid    rpux,
+  @{sbin}/dmsetup   rpux,
+  @{sbin}/dumpe2fs  rpx,
+  @{sbin}/e2fsck    rpx,
+  @{sbin}/e2image   rpx,
+  @{sbin}/fsck.*    rpux,
+  @{sbin}/lvm       rpux,
+  @{sbin}/mdadm     rpux,
+  @{sbin}/mke2fs    rpx,
+  @{sbin}/mkfs.*    rpux,
+  @{sbin}/mkntfs    rpx,
+  @{sbin}/mkswap    rpx,
+  @{bin}/mtools     rpx,
+  @{bin}/ntfsinfo   rpx,
+  @{sbin}/ntfslabel rpx,
+  @{sbin}/ntfsresize rpx,
+  @{sbin}/resize2fs rpx,
+  @{sbin}/swaplabel rpx,
+  @{sbin}/swapoff   rpx,
+  @{sbin}/swapon    rpx,
+  @{bin}/tune.*     rpux,
+  @{sbin}/tune2fs   rpx,
+  @{sbin}/xfs_io    rpux,
+
+  @{open_path}      rpx -> child-open,
+
+  /etc/fstab r,
+
+        @{HOME}/.Xauthority r,
+  owner @{HOME}/*.htm w,
+
+  owner @{tmp}/gparted-*/ rw,
+
+  @{run}/mount/utab r,
+
+        @{PROC}/devices r,
+        @{PROC}/partitions r,
+        @{PROC}/swaps r,
+        @{PROC}/version r,
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  profile mount flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/disks-read>
+
+    capability sys_admin,
+
+    mount /dev/{s,v}d[a-z]*@{int} -> /tmp/gparted-*/,
+
+    mount /dev/{s,v}d[a-z]*@{int} -> @{efi}/,
+    mount /dev/{s,v}d[a-z]*@{int} -> @{MOUNTS}/,
+    mount /dev/{s,v}d[a-z]*@{int} -> @{MOUNTS}/*/,
+
+    @{bin}/mount mr,
+
+    include if exists <local/gpartedbin_mount>
+  }
+
+  profile umount flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+
+    capability sys_admin,
+
+    umount /tmp/gparted-*/,
+
+    umount @{efi}/,
+    umount @{MOUNTS}/,
+    umount @{MOUNTS}/*/,
+
+    @{bin}/umount mr,
+
+    owner @{run}/mount/ rw,
+    owner @{run}/mount/utab{,.*} rw,
+    owner @{run}/mount/utab.lock wk,
+
+    owner @{PROC}/@{pid}/mountinfo r,
+
+    include if exists <local/gpartedbin_umount>
+  }
+
+  profile udevadm flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/udevadm>
+    include <abstractions/disks-write>
+
+    include if exists <local/gpartedbin_udevadm>
+  }
+
+  include if exists <local/gpartedbin>
+}
+
+# vim:syntax=apparmor

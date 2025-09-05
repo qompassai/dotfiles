@@ -1,0 +1,92 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2022 Mikhail Morfikov
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/dhclient-script
+profile dhclient-script /{,usr/}bin/dhclient-script flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+
+  capability net_admin,
+  capability sys_admin,
+  audit capability sys_module,
+
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{sh_path}          mrix,
+  @{bin}/chmod         rix,
+  @{bin}/chown         rix,
+  @{bin}/chronyc       rpux,
+  @{bin}/date          rix,
+  @{bin}/ddclient      rpx,
+  @{bin}/fold          rix,
+  @{bin}/head          rix,
+  @{bin}/hostname      rix,
+  @{bin}/ip            rix,
+  @{bin}/logger        rix,
+  @{bin}/mkdir         rix,
+  @{bin}/mv            rix,
+  @{bin}/paste         rix,
+  @{bin}/ping          rpx,
+  @{bin}/printenv      rix,
+  @{bin}/readlink      rix,
+  @{sbin}/resolvconf   rpx,
+  @{bin}/rm            rix,
+  @{bin}/run-parts     rcx -> run-parts,
+  @{bin}/sed           rix,
+  @{sbin}/sysctl       rix,
+  @{bin}/tr            rix,
+  @{bin}/xxd           rix,
+
+  /etc/default/ddclient r,
+  /etc/dhcp/{,**} r,
+  /etc/fstab r,
+  /etc/iproute2/rt_tables r,
+  /etc/iproute2/rt_tables.d/{,*} r,
+  @{etc_rw}/resolv.conf rw,
+  @{etc_rw}/resolv.conf.dhclient-new.@{pid} rw,
+  @{etc_rw}/samba/dhcp.conf{,.new} rw,
+
+  /var/lib/dhcp/dhclient.leases r,
+  /var/lib/samba/dhcp.conf{,.new} rw,
+
+  owner @{tmp}/dhclient-script.debug rw,
+  owner @{tmp}/variables.txt w,
+
+  @{run}/chrony-dhcp/ rw,
+  @{run}/systemd/netif/leases/ r,
+
+  @{sys}/devices/virtual/dmi/id/board_vendor r,
+
+  owner @{PROC}/@{pid}/loginuid r,
+        @{PROC}/sys/net/ipv6/conf/*/stable_secret w,
+
+  profile run-parts flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/run-parts mr,
+
+    /etc/dhcp/dhclient-{enter,exit}-hooks.d/ r,
+
+    # file_inherit
+    owner /var/lib/dhcp/dhclient.leases r,
+
+    include if exists <local/dhclient-script_run-parts>
+  }
+
+  include if exists <local/dhclient-script>
+}
+
+# vim:syntax=apparmor

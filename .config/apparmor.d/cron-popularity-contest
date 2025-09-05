@@ -1,0 +1,160 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = /etc/cron.{hourly,daily,weekly,monthly}/popularity-contest
+profile cron-popularity-contest /etc/cron.{hourly,daily,weekly,monthly}/popularity-contest flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} r,
+  @{sh_path}                 rix,
+
+  @{bin}/popularity-contest rpx,
+
+  @{bin}/cat                 rix,
+  @{bin}/date                rix,
+  @{bin}/{,e}grep            rix,
+  @{bin}/logger              rix,
+  @{bin}/mkdir               rix,
+  @{bin}/mktemp              rix,
+  @{bin}/mv                  rix,
+  @{bin}/rm                  rix,
+  @{bin}/setsid              rix,
+
+  # To send reports via TOR
+  @{bin}/torify              rix,
+  @{bin}/torsocks            rix,
+  @{sbin}/getcap             rix,
+
+  /usr/share/popularity-contest/popcon-upload rcx -> popcon-upload,
+  @{bin}/gpg{,2}             rcx -> gpg,
+  @{sbin}/runuser            rcx -> runuser,
+  @{bin}/savelog             rcx -> savelog,
+
+  /usr/share/popularity-contest/ r,
+  /usr/share/popularity-contest/default.conf r,
+
+  /etc/popularity-contest.conf r,
+
+  # For shell pwd
+  / r,
+  /root/ r,
+
+  /var/log/ r,
+  /var/log/popularity-contest{,.new} rw,
+  /var/log/popularity-contest{,.new}.gpg rw,
+  /var/log/popularity-contest.@{int} rw,
+  /var/log/popularity-contest.@{int}.gpg rw,
+
+  # Store last successful http submission timestamp
+  /var/lib/popularity-contest/ rw,
+  /var/lib/popularity-contest/lastsub rw,
+
+  owner @{tmp}/tmp.*/ rw,
+  owner @{tmp}/tmp.*/random_seed w,
+
+  # file_inherit
+  owner @{tmp}/#@{int} rw,
+
+
+  profile savelog flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/savelog mr,
+
+    @{bin}/basename   rix,
+    @{bin}/date       rix,
+    @{bin}/dirname    rix,
+    @{bin}/gzip       rix,
+    @{bin}/mv         rix,
+    @{bin}/rm         rix,
+    @{bin}/touch      rix,
+    @{bin}/which{,.debianutils}  rix,
+    @{sh_path}        rix,
+
+    /var/log/ r,
+    /var/log/popularity-contest.@{int}.gz rw,
+    /var/log/popularity-contest.@{int} rw,
+    /var/log/popularity-contest rw,
+
+    owner @{tmp}/#@{int} rw,  # file_inherit
+
+    include if exists <local/cron-popularity-contest_savelog>
+  }
+
+  profile runuser flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+    include <abstractions/nameservice-strict>
+    include <abstractions/authentication>
+
+    @{sbin}/runuser mr,
+
+    @{sh_path}                 rix,
+    @{bin}/popularity-contest  rpx,
+
+    @{etc_ro}/security/limits.d/ r,
+
+    /var/log/popularity-contest.new w,
+
+          @{PROC}/1/limits r,
+    owner @{PROC}/@{pids}/loginuid r,
+
+    owner @{tmp}/#@{int} rw,  # file_inherit
+
+    include if exists <local/cron-popularity-contest_runuser>
+  }
+
+  profile gpg flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/nameservice-strict>
+
+    @{bin}/gpg{,2} mr,
+
+    /usr/share/popularity-contest/debian-popcon.gpg r,
+
+    /var/log/popularity-contest.new r,
+    /var/log/popularity-contest.new.gpg rw,
+    /var/log/popularity-contest.@{int} r,
+    /var/log/popularity-contest.@{int}.gpg rw,
+
+    owner @{tmp}/tmp.*/** rwkl -> /tmp/tmp.*/**,
+
+    owner @{tmp}/#@{int} rw,  # file_inherit
+
+    include if exists <local/cron-popularity-contest_gpg>
+  }
+
+  profile popcon-upload flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/nameservice-strict>
+    include <abstractions/perl>
+
+    network inet dgram,
+    network inet6 dgram,
+    network inet stream,
+    network inet6 stream,
+    network netlink raw,
+
+    @{bin}/gzip rix,
+
+    /usr/share/popularity-contest/popcon-upload r,
+
+    /var/log/ r,
+    /var/log/popularity-contest.new.gpg r,
+    /var/log/popularity-contest.@{int}.gpg r,
+
+    owner @{tmp}/#@{int} rw,  # file_inherit
+
+    include if exists <local/cron-popularity-contest_popcon-upload>
+  }
+
+  include if exists <local/cron-popularity-contest>
+}
+
+# vim:syntax=apparmor

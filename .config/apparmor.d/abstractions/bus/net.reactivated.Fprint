@@ -1,0 +1,42 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+  abi <abi/4.0>,
+
+  # DBus.Properties: read all properties from the interface
+  dbus send bus=system path=/net/reactivated/Fprint{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll}
+       peer=(name="{@{busname},net.reactivated.Fprint{,.*}}", label="@{p_fprintd}"),
+
+  # DBus.Properties: receive property changed events
+  dbus receive bus=system path=/net/reactivated/Fprint{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member=PropertiesChanged
+       peer=(name="{@{busname},net.reactivated.Fprint{,.*}}", label="@{p_fprintd}"),
+
+  # DBus.Introspectable: allow clients to introspect the service
+  dbus send bus=system path=/net/reactivated/Fprint{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},net.reactivated.Fprint{,.*}}", label="@{p_fprintd}"),
+
+  dbus send bus=system path=/net/reactivated/Fprint/Manager
+       interface=net.reactivated.Fprint.Manager
+       member={GetDevices,GetDefaultDevice}
+       peer=(name="@{busname}", label="@{p_fprintd}"),
+
+  dbus send bus=system path=/net/reactivated/Fprint/Manager
+       interface=net.reactivated.Fprint.Manager
+       member={GetDevices,GetDefaultDevice}
+       peer=(name=net.reactivated.Fprint),
+
+  dbus send bus=system path=/net/reactivated/Fprint/Manager
+       interface=net.reactivated.Fprint.Manager
+       member={GetDevices,GetDefaultDevice}
+       peer=(name=net.reactivated.Fprint, label="@{p_fprintd}"),
+
+  include if exists <abstractions/bus/net.reactivated.Fprint.d>
+
+# vim:syntax=apparmor

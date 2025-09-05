@@ -1,0 +1,105 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xfce4-session
+profile xfce-session /{,usr/}bin/xfce4-session  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/desktop>
+  include <abstractions/bus-session>
+  include <abstractions/bus-accessibility>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/app-launcher-user>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/xfce>
+
+  signal (receive) set=(term) peer=lightdm,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.xfce.SessionManager{,.*},
+  dbus receive bus=session path=/org/xfce/SessionManager{,/**}
+       interface=org.xfce.SessionManager{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/xfce/SessionManager{,/**}
+       interface=org.xfce.SessionManager{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/xfce/SessionManager{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/xfce/SessionManager{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/xfce/SessionManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.xfce.SessionManager{,.*}}"),
+  dbus send bus=session path=/org/xfce/SessionManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{sh_path} rix,
+
+  @{bin}/sleep rix,
+
+  @{bin}/dbus-update-activation-environment            rcx -> dbus,
+  @{bin}/systemctl                                     rcx -> systemctl,
+  @{lib}/legacy-dist/deprecation-popup                rpux,
+  /usr/share/system-config-printer/applet.py           rpx,
+  /{,usr/}lib{,exec,32,64}/{,*-linux-gnu*/}xfce4/notifyd/xfce4-notifyd Px,
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}polkit-gnome-authentication-agent-1 Px,
+  /{,usr/}lib{,exec,32,64}/policykit-1-gnome/polkit-gnome-authentication-agent-1 Px,
+  /{,usr/}lib{,exec,32,64}/polkit-gnome-authentication-agent-1 Px,
+  /{,usr/}lib{,exec,32,64}/polkit-gnome/polkit-gnome-authentication-agent-1 Px,
+
+  /usr/share/kde-power-savings-disable-in-vms/{,**} r,
+  /usr/share/kde-screen-locker-disable-in-vms/{,**} r,
+
+  /etc/xdg/ r,
+  /etc/xdg/autostart/ r,
+  /etc/xdg/autostart/*.desktop r,
+
+  owner @{user_cache_dirs}/sessions/{,**} rw,
+  owner @{user_config_dirs}/autostart/ r,
+  owner @{user_config_dirs}/autostart/*.desktop r,
+
+  owner @{tmp}/.xfsm-ICE-@{rand6} rw,
+
+  owner @{PROC}/@{pid}/stat r,
+
+  @{sys}/class/i2c-adapter/ r,
+
+  /dev/tty rw,
+
+  profile systemctl  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    include if exists <local/xfce-session_systemctl>
+  }
+
+  profile dbus  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/bus-session>
+
+    @{bin}/dbus-update-activation-environment mr,
+
+    owner @{user_share_dirs}/sddm/xorg-session.log rw,
+
+    include if exists <local/xfce-session_dbus>
+  }
+
+  include if exists <local/xfce-session>
+}
+
+# vim:syntax=apparmor

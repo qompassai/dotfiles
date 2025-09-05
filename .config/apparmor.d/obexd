@@ -1,0 +1,63 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/bluetooth/obexd
+profile obexd /{,usr/}lib{,exec,32,64}/bluetooth/obexd flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/bus-session>
+  include <abstractions/user-download-strict>
+
+  network bluetooth stream,
+  network bluetooth seqpacket,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.bluez.obex{,.*},
+  dbus receive bus=session path=/org/bluez/obex{,/**}
+       interface=org.bluez.obex{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/bluez/obex{,/**}
+       interface=org.bluez.obex{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/bluez/obex{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/bluez/obex{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/bluez/obex{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.bluez.obex{,.*}}"),
+  dbus send bus=session path=/org/bluez/obex{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus receive bus=system path=/org/bluez/obex/@{uuid}
+       interface=org.bluez.Profile1
+       member=Release
+       peer=(name=:*, label="@{p_bluetoothd}"),
+
+  @{exec_path} mr,
+
+  owner @{user_cache_dirs}/ rw,
+  owner @{user_cache_dirs}/obexd/{,**} rw,
+
+  owner @{HOME}/bluetooth/* rw,
+
+  @{run}/systemd/users/@{uid} r,
+
+  include if exists <local/obexd>
+}
+
+# vim:syntax=apparmor

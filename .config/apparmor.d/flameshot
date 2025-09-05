@@ -1,0 +1,62 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/flameshot
+profile flameshot /{,usr/}bin/flameshot flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/desktop>
+  include <abstractions/dconf-write>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/qt5-compose-cache-write>
+  include <abstractions/qt5-settings-write>
+  include <abstractions/ssl_certs>
+  include <abstractions/thumbnails-cache-read>
+  include <abstractions/user-download-strict>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+  network netlink dgram,
+
+  @{exec_path} mr,
+
+  @{bin}/whoami     rix,
+
+  @{open_path} rpx -> child-open-help,
+
+  /var/lib/dbus/machine-id r,
+  /etc/machine-id r,
+  /usr/share/flameshot/{,**} r,
+
+  owner @{user_cache_dirs}/flameshot/ rw,
+  owner @{user_cache_dirs}/flameshot/** rw,
+  owner @{user_config_dirs}/flameshot/ rw,
+  owner @{user_config_dirs}/flameshot/** rwlk -> @{user_config_dirs}/flameshot/**,
+  owner @{user_config_dirs}/ibus/bus/@{hex32}-unix-{,wayland-}@{int} r,
+
+  owner @{tmp}/*= rw,
+  owner @{tmp}/*.png rw,
+  owner @{tmp}/qipc_{systemsem,sharedmemory}_*@{hex} rw,
+  owner @{tmp}/.@{rand8}/ rw,
+  owner @{tmp}/.@{rand8}/** rw,
+  owner /dev/shm/#@{int} rw,
+
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  include if exists <local/flameshot>
+}
+
+# vim:syntax=apparmor

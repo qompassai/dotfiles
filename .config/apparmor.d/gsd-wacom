@@ -1,0 +1,63 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/gsd-wacom
+profile gsd-wacom /{,usr/}lib{,exec,32,64}/gsd-wacom  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.a11y>
+  include <abstractions/bus/org.gnome.SessionManager>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/dconf-write>
+  include <abstractions/fontconfig-cache-write>
+  include <abstractions/gnome-strict>
+  include <abstractions/nameservice-strict>
+
+  signal (receive) set=(term, hup) peer=gdm*,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.SettingsDaemon.Wacom{,.*},
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Wacom{,/**}
+       interface=org.gnome.SettingsDaemon.Wacom{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Wacom{,/**}
+       interface=org.gnome.SettingsDaemon.Wacom{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Wacom{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Wacom{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Wacom{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Wacom{,.*}}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Wacom{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  /usr/share/dconf/profile/gdm r,
+  /usr/share/gdm/greeter-dconf-defaults r,
+  /usr/share/libwacom/{,*} r,
+
+  owner @{gdm_config_dirs}/dconf/user r,
+  owner @{GDM_HOME}/greeter-dconf-defaults r,
+
+  include if exists <local/gsd-wacom>
+}
+
+# vim:syntax=apparmor

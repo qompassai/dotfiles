@@ -1,0 +1,29 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = /usr/share/org.gnome.Characters/org.gnome.Characters.BackgroundService
+profile gnome-characters-backgroudservice /usr/share/org.gnome.Characters/org.gnome.Characters.BackgroundService flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/dconf-write>
+  include <abstractions/gnome-strict>
+
+  @{exec_path} mr,
+
+  @{bin}/gjs-console rix,
+
+  /usr/share/org.gnome.Characters/org.gnome.Characters.BackgroundService.*.gresource r,
+
+  owner @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/stat r,
+  owner @{PROC}/@{pid}/task/@{tid}/stat r,
+
+  include if exists <local/gnome-characters-backgroudservice>
+}
+
+# vim:syntax=apparmor

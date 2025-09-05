@@ -1,0 +1,46 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022 Mikhail Morfikov
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+# This abstraction is for chromium based application. Chromium based browsers
+# need to use abstractions/chromium instead.
+
+  abi <abi/4.0>,
+
+  userns,
+
+  capability setgid, # If kernel.unprivileged_userns_clone = 1
+  capability setuid, # If kernel.unprivileged_userns_clone = 1
+  capability sys_admin,
+  capability sys_chroot,
+  capability sys_ptrace,
+
+  owner @{HOME}/.pki/ rw,
+  owner @{HOME}/.pki/nssdb/ rw,
+  owner @{HOME}/.pki/nssdb/pkcs11.txt rw,
+  owner @{HOME}/.pki/nssdb/{cert9,key4}.db rwk,
+  owner @{HOME}/.pki/nssdb/{cert9,key4}.db-journal rw,
+
+  owner @{user_share_dirs}/.org.chromium.Chromium.@{rand6} rw,
+
+        /tmp/ r,
+        /var/tmp/ r,
+  owner @{tmp}/.org.chromium.Chromium.@{rand6} rw,
+  owner @{tmp}/.org.chromium.Chromium.@{rand6}/{,**} rw,
+  owner @{tmp}/scoped_dir@{rand6}/ rw,
+  owner @{tmp}/scoped_dir@{rand6}/SingletonCookie w,
+  owner @{tmp}/scoped_dir@{rand6}/SingletonSocket w,
+  owner @{tmp}/scoped_dir@{rand6}/SS w,
+
+        /dev/shm/ r,
+  owner /dev/shm/.org.chromium.Chromium.@{rand6} rw,
+
+  # If kernel.unprivileged_userns_clone = 1
+  owner @{PROC}/@{pid}/setgroups w,
+  owner @{PROC}/@{pid}/gid_map w,
+  owner @{PROC}/@{pid}/uid_map w,
+
+  include if exists <abstractions/common/chromium.d>
+
+# vim:syntax=apparmor

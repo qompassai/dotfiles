@@ -1,0 +1,25 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = /usr/share/xfce4/exo/exo-compose-mail
+profile exo-compose-mail /usr/share/xfce4/exo/exo-compose-mail flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/perl>
+
+  @{exec_path} r,
+
+  # Mail clients
+  @{bin}/thunderbird                 rpx,
+  @{lib}/thunderbird/thunderbird     rpx,
+  @{lib}/thunderbird/thunderbird-bin rpx,
+
+  include if exists <local/exo-compose-mail>
+}
+
+# vim:syntax=apparmor

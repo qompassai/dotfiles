@@ -1,0 +1,168 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/hardinfo
+profile hardinfo /{,usr/}bin/hardinfo flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/desktop>
+  include <abstractions/nameservice-strict>
+  include <abstractions/python>
+  include <abstractions/user-download-strict>
+
+  # This is needed to display some content of devices -> resources
+  capability sys_admin,
+
+  # This is for benchmarks
+  capability sys_nice,
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+
+  @{exec_path} mrix,
+
+  @{sh_path}             rix,
+  @{bin}/gdb             rix,
+  @{bin}/iconv           rix,
+  @{bin}/last            rix,
+  @{bin}/ldd             rix,
+  @{bin}/locale          rix,
+  @{bin}/make            rix,
+  @{bin}/perl            rix,
+  @{python_path}         rix,
+  @{sbin}/route          rix,
+  @{bin}/ruby@{int}.@{int} rix,
+  @{bin}/strace          rix,
+  @{bin}/tr              rix,
+  @{bin}/valgrind{,.bin} rix,
+  @{lib}/@{multiarch}/valgrind/memcheck-*-linux rix,
+
+  @{bin}/lsb_release rpx,
+  @{open_path}       rpx -> child-open,
+  @{bin}/ccache      rcx -> ccache,
+  @{bin}/kmod        rcx -> kmod,
+
+  @{bin}/glxinfo     rpx,
+  @{bin}/xdpyinfo    rpx,
+  @{bin}/lspci       rpx,
+  @{bin}/lsusb       rpx,
+  @{bin}/netstat     rpx,
+  @{bin}/qtchooser   rpx,
+
+  @{lib}/jvm/java-[0-9]*-openjdk-@{arch}/bin/javac rcx -> javac,
+
+  /usr/share/gdb/python/ r,
+  /usr/share/gdb/python/** r,
+  /usr/share/hardinfo/{,**} r,
+
+  /etc/fstab r,
+  /etc/exports r,
+  /etc/samba/smb.conf  r,
+
+  /etc/gdb/gdbinit.d/ r,
+
+  /var/log/wtmp r,
+
+  owner @{HOME}/.hardinfo/ rw,
+
+  owner @{tmp}/#@{int} rw,
+
+  @{sys}/class/power_supply/ r,
+  @{sys}/class/thermal/ r,
+  @{sys}/bus/i2c/drivers/eeprom/ r,
+
+  @{sys}/devices/system/cpu/** r,
+  @{sys}/devices/virtual/dmi/id/* r,
+  @{sys}/devices/virtual/thermal/thermal_zone@{int}/hwmon@{int}/temp* r,
+  @{sys}/devices/virtual/thermal/thermal_zone@{int}/temp* r,
+  @{sys}/devices/platform/**/hwmon/hwmon@{int}/temp* r,
+  @{sys}/devices/platform/**/hwmon/hwmon@{int}/fan* r,
+  @{sys}/devices/@{pci}/eeprom r,
+  @{sys}/devices/@{pci}/hwmon/hwmon@{int}/temp* r,
+  @{sys}/devices/**/power_supply/** r,
+
+        @{PROC}/@{pid}/net/arp r,
+        @{PROC}/@{pid}/net/dev r,
+        @{PROC}/@{pid}/net/route r,
+        @{PROC}/@{pid}/net/wireless r,
+        @{PROC}/@{pids}/loginuid r,
+        @{PROC}/asound/cards r,
+        @{PROC}/bus/input/devices r,
+        @{PROC}/dma r,
+        @{PROC}/iomem r,
+        @{PROC}/ioports r,
+        @{PROC}/loadavg r,
+        @{PROC}/scsi/scsi r,
+        @{PROC}/sys/kernel/random/entropy_avail r,
+        @{PROC}/uptime r,
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  owner /dev/tty@{int} rw,
+
+  deny /usr/share/gdb/python/** w,
+
+  profile ccache flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/ccache mr,
+
+    @{lib}/llvm-[0-9]*/bin/clang      rix,
+    @{bin}/{,@{multiarch}-}gcc-[0-9]* rix,
+    @{bin}/{,@{multiarch}-}g++-[0-9]* rix,
+
+    /media/ccache/*/** rw,
+
+    /etc/debian_version r,
+
+    include if exists <local/hardinfo_ccache>
+  }
+
+  profile javac flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/nameservice-strict>
+
+    @{lib}/jvm/java-[0-9]*-openjdk-@{arch}/bin/* mr,
+    @{lib}/jvm/java-[0-9]*-openjdk-@{arch}/lib/** mr,
+
+    /etc/java-[0-9]*-openjdk/** r,
+
+    /usr/share/java/*.jar r,
+
+    owner @{PROC}/@{pid}/mountinfo r,
+    owner @{PROC}/@{pid}/cgroup r,
+    owner @{PROC}/@{pid}/coredump_filter rw,
+
+    @{sys}/fs/cgroup/{,**} r,
+
+    owner @{tmp}/hsperfdata_@{user}/ rw,
+    owner @{tmp}/hsperfdata_@{user}/@{pid} rw,
+
+    include if exists <local/hardinfo_javac>
+  }
+
+  profile kmod flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/kmod>
+
+    @{sys}/module/** r,
+
+    @{PROC}/ioports r,
+
+    include if exists <local/hardinfo_kmod>
+  }
+
+  include if exists <local/hardinfo>
+}
+
+# vim:syntax=apparmor

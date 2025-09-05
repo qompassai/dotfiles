@@ -1,0 +1,96 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/hwinfo
+profile hwinfo /{,usr/}{,s}bin/hwinfo flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/disks-read>
+
+  capability net_raw, # Needed for network related options
+  capability sys_admin, # Needed for /proc/ioports
+  capability sys_rawio, # Needed for disk related options
+  capability syslog, # Needed for /proc/kmsg
+
+  network inet dgram,
+  network inet6 dgram,
+  network packet raw,
+
+  @{exec_path} mr,
+
+  @{sh_path}        rix,
+
+  @{bin}/kmod       rcx -> kmod,
+  @{bin}/udevadm    rcx -> udevadm,
+  @{sbin}/acpidump  rpux,
+  @{bin}/lsscsi     rpx,
+
+  @{sbin}/dmraid rpux,
+
+  /usr/share/hwinfo/{,**} r,
+
+  /var/lib/hardware/udi/{,**} r,
+
+  owner @{tmp}/hwinfo*.txt rw,
+
+  @{sys}/bus/{,**/} r,
+  @{sys}/class/*/ r,
+  @{sys}/devices/@{pci}/{,**} r,
+  @{sys}/devices/**/{modalias,uevent} r,
+  @{sys}/devices/**/input/**/dev r,
+  @{sys}/devices/virtual/net/*/{type,carrier,address} r,
+  @{sys}/firmware/dmi/tables/DMI r,
+  @{sys}/firmware/dmi/tables/smbios_entry_point r,
+  @{sys}/firmware/edd/{,**} r,
+
+  @{PROC}/bus/input/devices r,
+  @{PROC}/cmdline r,
+  @{PROC}/dma r,
+  @{PROC}/driver/nvram r,
+  @{PROC}/interrupts r,
+  @{PROC}/ioports r,
+  @{PROC}/modules r,
+  @{PROC}/partitions r,
+  @{PROC}/sys/dev/cdrom/info r,
+  @{PROC}/tty/driver/serial r,
+  @{PROC}/version r,
+
+  /dev/console rw,
+  /dev/fb@{int} r,
+  /dev/mem r,
+  /dev/nvram r,
+  /dev/psaux r,
+  /dev/ttyS@{int} r,
+
+  profile kmod flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/kmod>
+
+    capability sys_module,
+
+    owner @{tmp}/hwinfo*.txt rw,
+
+    @{sys}/devices/@{pci}/drm/card@{int}/ r,
+    @{sys}/module/compression r,
+
+    include if exists <local/hwinfo_kmod>
+  }
+
+  profile udevadm flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/udevadm>
+
+    owner @{tmp}/hwinfo*.txt rw,
+
+    include if exists <local/hwinfo_udevadm>
+  }
+
+  include if exists <local/hwinfo>
+}
+
+# vim:syntax=apparmor

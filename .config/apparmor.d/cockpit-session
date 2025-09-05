@@ -1,0 +1,59 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/cockpit/cockpit-session
+profile cockpit-session /{,usr/}lib{,exec,32,64}/cockpit/cockpit-session  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/authentication>
+  include <abstractions/nameservice-strict>
+  include <abstractions/shells>
+
+  capability audit_write,
+  capability dac_read_search,
+  capability net_admin,
+  capability setgid,
+  capability setuid,
+
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{shells_path}         rix,
+  @{bin}/cockpit-bridge  rpx,
+  @{lib}/cockpit/cockpit-pcp  rpx,
+
+  @{etc_ro}/environment r,
+  @{etc_ro}/security/limits.d/{,*.conf} r,
+  /etc/cockpit/disallowed-users r,
+  /etc/group r,
+  /etc/machine-id r,
+  /etc/motd r,
+  /etc/motd.d/ r,
+  /etc/shells r,
+
+  @{att}/@{run}/systemd/sessions/*.ref rw,
+
+  @{run}/cockpit/* r,
+  @{run}/faillock/@{user} rwk,
+  @{run}/motd.d/{,*} r,
+  @{run}/utmp rwk,
+
+  /var/log/btmp rw,
+  /var/log/lastlog rw,
+  /var/log/wtmp rwk,
+
+  owner @{PROC}/@{pid}/loginuid rw,
+  owner @{PROC}/@{pid}/uid_map r,
+        @{PROC}/@{pids}/fd/ r,
+
+  /dev/tty rw,
+
+  include if exists <local/cockpit-session>
+}
+
+# vim:syntax=apparmor

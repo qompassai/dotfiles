@@ -1,0 +1,42 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/grub-probe
+profile grub-probe /{,usr/}{,s}bin/grub-probe flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/disks-read>
+
+  capability dac_read_search,
+  capability sys_admin,
+
+  @{exec_path} mr,
+
+  /{usr/,}{local/,}{s,}bin/zpool rpx,
+  @{bin}/lsb_release        rpx,
+  @{sbin}/lvm               rpx,
+  @{bin}/udevadm            rpx,
+
+  /usr/share/grub/* r,
+
+  / r,
+  @{efi}/ r,
+  @{efi}/grub/ r,
+  @{efi}/grub/themes/{,**} r,
+
+  @{PROC}/@{pids}/mountinfo r,
+  @{PROC}/devices r,
+
+  /dev/**/ r,
+  /dev/mapper/control w,
+
+  include if exists <local/grub-probe>
+}
+
+# vim:syntax=apparmor

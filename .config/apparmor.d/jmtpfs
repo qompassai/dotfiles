@@ -1,0 +1,50 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/jmtpfs
+profile jmtpfs /{,usr/}bin/jmtpfs flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/devices-usb>
+
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{bin}/fusermount{,3} rcx -> fusermount,
+
+  /etc/magic r,
+
+  # Mount points
+  owner @{HOME}/*/ r,
+  owner @{HOME}/*/*/ r,
+
+  owner @{user_cache_dirs}/*/mtp{,-@{int}}/ rw,
+
+  owner @{tmp}/tmp* rw,
+  owner @{tmp}/#@{int} rw,
+
+  profile fusermount flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/fusermount>
+
+    mount fstype={fuse,fuse.jmtpfs} -> @{HOME}/*/,
+    mount fstype={fuse,fuse.jmtpfs} -> @{HOME}/*/*/,
+    mount fstype={fuse,fuse.jmtpfs} -> @{user_cache_dirs}/*/*/,
+
+    umount @{HOME}/*/,
+    umount @{HOME}/*/*/,
+    umount @{user_cache_dirs}/*/*/,
+
+    include if exists <local/jmtpfs_fusermount>
+  }
+
+  include if exists <local/jmtpfs>
+}
+
+# vim:syntax=apparmor

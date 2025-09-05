@@ -1,0 +1,70 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xfdesktop
+profile xfdesktop /{,usr/}bin/xfdesktop flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/app-launcher-user>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/nameservice-strict>
+  include <abstractions/thumbnails-cache-read>
+  include <abstractions/xfce>
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.xfce.xfdesktop{,.*},
+  dbus receive bus=session path=/org/xfce/xfdesktop{,/**}
+       interface=org.xfce.xfdesktop{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/xfce/xfdesktop{,/**}
+       interface=org.xfce.xfdesktop{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/xfce/xfdesktop{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/xfce/xfdesktop{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/xfce/xfdesktop{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.xfce.xfdesktop{,.*}}"),
+  dbus send bus=session path=/org/xfce/xfdesktop{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{bin}/xfce4-mime-helper rix,
+
+  /etc/xdg/{,xdg-xubuntu/}xfce4/helpers.rc r,
+  /etc/xdg/menus/{,*.menu} r,
+  /usr/share/xfce4/helpers/{,*.desktop} r,
+  /usr/share/desktop-directories/{,*.directory} r,
+  /usr/share/backgrounds/xfce/{,**} r,
+
+  /etc/fstab r,
+
+  owner @{HOME}/@{XDG_DESKTOP_DIR}/{,**} r,
+
+  owner @{user_config_dirs}/Thunar/{,**} rw,
+  owner @{user_config_dirs}/xfce4/desktop/{,**} rw,
+
+  owner @{PROC}/@{pid}/mountinfo r,
+
+  deny @{user_share_dirs}/gvfs-metadata/{,*} r,
+
+  include if exists <local/xfdesktop>
+}
+
+# vim:syntax=apparmor

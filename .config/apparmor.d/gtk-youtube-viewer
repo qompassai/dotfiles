@@ -1,0 +1,98 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gtk{,2,3}-youtube-viewer
+profile gtk-youtube-viewer /{,usr/}bin/gtk{,2,3}-youtube-viewer flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/fonts>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/freedesktop.org>
+  include <abstractions/gtk>
+  include <abstractions/nameservice-strict>
+  include <abstractions/perl>
+  include <abstractions/ssl_certs>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  @{exec_path} r,
+
+  @{sh_path}              rix,
+
+  @{bin}/xterm            rcx -> xterm,
+  @{bin}/rxvt             rcx -> xterm,
+  @{bin}/urxvt            rcx -> xterm,
+
+  # Players
+  @{bin}/mpv              rpx,
+  @{bin}/vlc              rpx,
+  @{bin}/smplayer         rpx,
+
+  @{lib}/firefox/firefox  rpx,
+
+  @{open_path}            rpx -> child-open,
+
+  owner @{user_config_dirs}/youtube-viewer/{,*} rw,
+
+  owner @{user_cache_dirs}/ rw,
+  owner @{user_cache_dirs}/youtube-viewer/ rw,
+
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mounts r,
+
+
+  profile xterm flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+    include <abstractions/fonts>
+    include <abstractions/fontconfig-cache-read>
+    include <abstractions/freedesktop.org>
+    include <abstractions/nameservice-strict>
+    include <abstractions/perl>
+    include <abstractions/wutmp>
+
+    signal (send) set=(hup, winch) peer=youtube-viewer,
+    signal (send) set=(hup, winch) peer=youtube-viewer//wget,
+
+    @{bin}/xterm mr,
+    @{bin}/rxvt  mr,
+    @{bin}/urxvt mr,
+
+    @{bin}/zsh            rix,
+    @{sh_path}            rix,
+
+    @{bin}/youtube-viewer rpx,
+
+    owner @{PROC}/@{pid}/loginuid r,
+
+    /etc/shells r,
+    /etc/zsh/* r,
+
+    /etc/X11/app-defaults/* r,
+
+    /usr/include/X11/bitmaps/vlines2 r,
+
+    owner @{HOME}/.urxvt/** r,
+
+    owner @{HOME}/.Xauthority r,
+    owner @{HOME}/.ICEauthority r,
+
+    # file_inherit
+    owner @{HOME}/.xsession-errors w,
+
+    include if exists <local/gtk-youtube-viewer_xterm>
+  }
+
+  include if exists <local/gtk-youtube-viewer>
+}
+
+# vim:syntax=apparmor

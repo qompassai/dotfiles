@@ -1,0 +1,62 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/gsd-a11y-settings
+profile gsd-a11y-settings /{,usr/}lib{,exec,32,64}/gsd-a11y-settings  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.gnome.SessionManager>
+  include <abstractions/dconf-write>
+
+  signal (receive) set=(term, hup) peer=gdm*,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.SettingsDaemon.A11ySettings{,.*},
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/A11ySettings{,/**}
+       interface=org.gnome.SettingsDaemon.A11ySettings{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/A11ySettings{,/**}
+       interface=org.gnome.SettingsDaemon.A11ySettings{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/A11ySettings{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/A11ySettings{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/A11ySettings{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.A11ySettings{,.*}}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/A11ySettings{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mr,
+
+  /usr/share/dconf/profile/gdm r,
+  /usr/share/gdm/greeter-dconf-defaults r,
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+
+  @{gdm_config_dirs}/dconf/user r,
+  @{GDM_HOME}/greeter-dconf-defaults r,
+
+  include if exists <local/gsd-a11y-settings>
+}
+
+# vim:syntax=apparmor

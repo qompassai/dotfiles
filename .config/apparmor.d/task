@@ -1,0 +1,48 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Zane Zakraisek <zz@eng.utah.edu>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/task
+profile task /{,usr/}bin/task flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+
+  # Task can optionally connect to a taskserver
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  @{exec_path}            mr,
+
+  @{sh_path}             rix,
+  @{editor_path}         rcx -> editor,
+
+  /usr/share/{doc/,}task{warrior,}/** r,
+
+  # Task can edit it's own config, so write is needed
+  owner @{HOME}/.taskrc      rw,
+  owner @{HOME}/.task/{,**} rwk,
+
+  profile editor flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/editor>
+
+    # Taskwarrior related files
+    owner @{HOME}/.task/   r,
+    owner @{HOME}/.task/* rw,
+
+    include if exists <local/task_editor>
+  }
+
+  include if exists <local/task>
+}
+
+# vim:syntax=apparmor

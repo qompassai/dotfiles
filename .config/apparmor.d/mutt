@@ -1,0 +1,146 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023 Zane Zakraisek <zz@eng.utah.edu>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/mutt
+profile mutt /{,usr/}bin/mutt flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+  include <abstractions/user-download-strict>
+  include <abstractions/user-read-strict>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  # Used to exec programs defined in the mailcap.
+  # There are countless programs that can be executed from the mailcap.
+  # This profile includes only the most basic.
+  @{sh_path}                      rix,
+
+  @{lib}/{,sendmail/}sendmail    rpux,
+  @{bin}/ispell                  rpux,
+  @{bin}/abook                   rpux,
+  @{bin}/mutt_dotlock             rix,
+  # Misc mutt scripts
+  @{lib}/mutt/*                   rix,
+
+  @{bin}/w3m             rcx -> html-renderer,
+  @{bin}/lynx            rcx -> html-renderer,
+  @{editor_path}         rcx -> editor,
+  @{pager_path}          rcx -> pager,
+
+  @{bin}/gpg{2,}         rcx -> gpg,
+  @{bin}/gpgconf         rcx -> gpg,
+  @{bin}/gpgsm           rcx -> gpg,
+  @{bin}/pgpewrap        rcx -> gpg,
+
+  /usr/share/terminfo/** r,
+  /usr/share/mutt/** r,
+
+  @{etc_ro}/mailcap r,
+  /etc/mime.types r,
+  /etc/mutt{,**} r,
+  /etc/Muttrc r,
+  /etc/Muttrc.d/{*,} r,
+
+  owner @{HOME}/.mail_aliases r, # Common location for mail aliases
+  owner @{HOME}/.mailcap r,
+  owner @{HOME}/.mime.types r,
+  owner @{HOME}/.mutt_certificates rwk,
+  owner @{HOME}/.mutt/{,**} r,
+  owner @{HOME}/.mutthistory rwk,
+  owner @{HOME}/.muttrc* r,
+  owner @{HOME}/.signature r,  # Mutt signature file
+  owner @{HOME}/ r,
+
+  # User mbox
+  # Could be a file or dir depending on mbox_type variable
+  owner /var/{spool/,}mail/*             rwlk,
+  owner @{HOME}/{mbox,postponed,sent}*   rwlk,
+  owner @{HOME}/{mbox,postponed,sent}/   rw,
+  owner @{HOME}/{mbox,postponed,sent}/** rwlk,
+
+  owner @{user_config_dirs}/mutt/{,**} r,
+  owner @{user_cache_dirs}/mutt rwk,
+
+  # User maildir
+  owner @{user_mail_dirs}/ rw,
+  owner @{user_mail_dirs}/** rwlk -> @{user_mail_dirs}/**,
+
+  # Needed to compose a message
+  owner /{var/,}tmp/.mutt*/  rw,
+  owner /{var/,}tmp/.mutt*/* lrwk,
+  owner /{var/,}tmp/mutt*    lrwk,
+
+  # Used When viewing attachments
+  owner /{var/,}tmp/* lrw,
+
+  profile html-renderer flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/w3m     mrix,
+    @{bin}/lynx    mrix,
+
+    owner @{HOME}/.w3m/{,**} rw,
+    owner @{user_mail_dirs}/{,**} r,
+    owner @{user_mail_dirs}/tmp/{,**} rw,
+    owner /{var/,}tmp/mutt* rw,
+
+    owner /tmp/w3m-@{rand6} rw,
+    owner /tmp/w3m-@{rand6}/{,**} rw,
+
+    include if exists <local/mutt_html-renderer>
+  }
+
+  profile editor flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/editor>
+
+    # This is the file that holds the message
+    owner /{var/,}tmp/{.,}mutt* rw,
+
+    include if exists <local/mutt_editor>
+  }
+
+  profile pager flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/pager>
+
+    # This is the file that holds the message
+    owner /{var/,}tmp/mutt* rw,
+
+    include if exists <local/mutt_pager>
+  }
+
+  profile gpg flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/nameservice-strict>
+
+    @{bin}/gpg{,2}  mrix,
+    @{bin}/gpgconf  mr,
+    @{bin}/gpgsm    mr,
+    @{bin}/pgpewrap mr,
+
+    owner @{HOME}/@{XDG_GPG_DIR}/ rw,
+    owner @{HOME}/@{XDG_GPG_DIR}/** rwkl -> @{HOME}/@{XDG_GPG_DIR}/**,
+
+    owner /{var/,}tmp/mutt* lrw,
+
+    include if exists <local/mutt_gpg>
+  }
+
+  include if exists <local/mutt>
+}
+
+# vim:syntax=apparmor

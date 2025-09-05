@@ -1,0 +1,55 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xdg-email
+profile xdg-email /{,usr/}bin/xdg-email flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/freedesktop.org>
+
+  @{exec_path}  r,
+
+  @{sh_path}       rix,
+  @{bin}/{,e}grep   ix,
+  @{bin}/{m,g,}awk  ix,
+  @{bin}/basename   ix,
+  @{bin}/cat        ix,
+  @{bin}/cut        ix,
+  @{bin}/readlink   ix,
+  @{bin}/realpath   ix,
+  @{bin}/sed        ix,
+  @{bin}/tail       ix,
+  @{bin}/tr         ix,
+  @{bin}/uname      ix,
+
+  # To get DE information
+  @{bin}/kde{,4}-config       ix,
+  @{bin}/gconftool{,-2}       ix,
+  @{bin}/qtxdg-mat            ix,
+
+  @{bin}/dbus-send            cx -> bus,
+  @{bin}/gdbus                cx -> bus,
+  @{bin}/kreadconfig{,5}      px,
+  @{bin}/xdg-mime             px,
+  @{bin}/xprop                px,
+  @{open_path}                px -> child-open-email,
+  @{thunderbird_path}         px,
+
+  profile bus flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/bus>
+    include <abstractions/bus-session>
+
+    include if exists <local/xdg-email_bus>
+  }
+
+  include if exists <local/xdg-email>
+}
+
+# vim:syntax=apparmor

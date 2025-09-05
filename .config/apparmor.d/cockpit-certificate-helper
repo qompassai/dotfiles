@@ -1,0 +1,36 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/cockpit/cockpit-certificate-helper
+profile cockpit-certificate-helper /{,usr/}lib{,exec,32,64}/cockpit/cockpit-certificate-helper flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{sh_path}      rix,
+  @{bin}/chmod    rix,
+  @{bin}/id       rix,
+  @{bin}/mkdir    rix,
+  @{bin}/mv       rix,
+  @{bin}/openssl  rix,
+  @{bin}/rm       rix,
+  @{bin}/sscg     rix,
+  @{bin}/sync     rix,
+  @{bin}/tr       rix,
+
+  /etc/machine-id r,
+  /etc/cockpit/ws-certs.d/* w,
+
+  owner @{run}/cockpit/certificate-helper/{,**} rw,
+
+  include if exists <local/cockpit-certificate-helper>
+
+}
+
+# vim:syntax=apparmor

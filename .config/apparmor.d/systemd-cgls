@@ -1,0 +1,37 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/systemd-cgls
+profile systemd-cgls /{,usr/}bin/systemd-cgls flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.systemd1>
+  include <abstractions/consoles>
+
+  capability sys_ptrace,
+
+  ptrace read,
+
+  signal send set=cont peer=child-pager,
+
+  unix bind type=stream addr=@@{udbus}/bus/systemd-cgls/system,
+
+  @{exec_path} mr,
+
+  @{pager_path} rpx -> child-pager,
+
+  @{sys}/fs/cgroup/{,**} r,
+
+  @{PROC}/@{pids}/cgroup r,
+  @{PROC}/@{pids}/cmdline r,
+  @{PROC}/@{pids}/stat r,
+
+  include if exists <local/systemd-cgls>
+}
+
+# vim:syntax=apparmor

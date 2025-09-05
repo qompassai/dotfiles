@@ -1,0 +1,77 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/kernel-install
+profile kernel-install /{,usr/}bin/kernel-install flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/disks-read>
+  include <abstractions/nameservice-strict>
+
+  capability sys_rawio,
+  capability sys_resource,
+
+  ptrace read peer=@{p_systemd},
+
+  @{exec_path} r,
+  @{sh_path}        rix,
+  @{coreutils_path} rix,
+  @{bin}/kmod       rcx -> kmod,
+  @{bin}/mountpoint rix,
+  @{pager_path}     rpx -> child-pager,
+
+  @{lib}/kernel/install.d/ r,
+  @{lib}/kernel/install.d/@{int2}-*.install rix,
+
+  /etc/kernel/install.d/ r,
+  /etc/kernel/install.d/*.install rix,
+
+  @{lib}/os-release r,
+  /etc/kernel/cmdline r,
+  /etc/kernel/tries r,
+  /etc/kernel/entry-token r,
+  /etc/machine-id r,
+  /etc/os-release r,
+  /var/lib/dbus/machine-id r,
+
+  @{lib}/modules/*/modules.* w,
+
+  / r,
+
+        @{efi}/@{hex32}/** rw,
+        @{efi}/loader/entries.srel r,
+  owner @{efi}/{vmlinuz,initrd.img}-* r,
+  owner @{efi}/loader/ rw,
+  owner @{efi}/loader/entries/ rw,
+  owner @{efi}/loader/entries/*.conf w,
+
+  owner /tmp/kernel-install.staging.@{rand6}/{,**} rw,
+
+  owner @{tmp}/sh-thd.* rw,
+
+  @{PROC}/@{pid}/mountinfo r,
+  @{PROC}/1/environ r,
+  @{PROC}/cmdline r,
+  @{PROC}/sys/kernel/osrelease r,
+
+  profile kmod flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/kmod>
+
+    @{lib}/modules/*/modules.* w,
+
+    @{sys}/module/compression r,
+
+    include if exists <local/kernel-install_kmod>
+  }
+
+  include if exists <local/kernel-install>
+}
+
+# vim:syntax=apparmor

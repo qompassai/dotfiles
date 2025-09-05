@@ -1,0 +1,111 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/tailscaled
+profile tailscaled /{,usr/}bin/tailscaled  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+
+  capability dac_read_search,
+  capability mknod,
+  capability net_admin,
+  capability net_raw,
+  capability sys_ptrace,
+  capability syslog,
+
+  network inet dgram,
+  network inet raw,
+  network inet stream,
+  network inet6 dgram,
+  network inet6 raw,
+  network inet6 stream,
+  network netlink raw,
+  network packet dgram,
+
+  ptrace (read),
+
+  dbus (send receive) bus=system path=/org/freedesktop/resolve1{,/**}
+       interface=org.freedesktop.resolve1{,.*}
+       peer=(name="{@{busname},org.freedesktop.resolve1{,.*}}", label="@{p_systemd_resolved}"),
+  dbus (send receive) bus=system path=/org/freedesktop/resolve1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.resolve1{,.*}}", label="@{p_systemd_resolved}"),
+  dbus send bus=system path=/org/freedesktop/resolve1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.resolve1{,.*}}", label="@{p_systemd_resolved}"),
+  dbus send bus=system path=/org/freedesktop/resolve1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.resolve1{,.*}}", label="@{p_systemd_resolved}"),
+  dbus receive bus=system path=/org/freedesktop/resolve1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.resolve1{,.*}}", label="@{p_systemd_resolved}"),
+
+  @{exec_path} mr,
+
+  @{bin}/ip                 rix,
+  @{bin}/resolvectl         rpx,
+  @{sbin}/xtables-nft-multi rix,
+
+  @{bin}/systemctl  rcx -> systemctl,
+
+  /etc/iproute2/rt_tables r,
+  /etc/apt/sources.list.d/tailscale.list r,
+
+  @{etc_rw}/resolv.*.conf rw,
+  @{etc_rw}/resolv.conf rw,
+  @{etc_rw}/resolv.conf.*.tmp rw,
+
+  owner /var/cache/{,**} rw,
+  owner /var/lib/tailscale/{,**} rw,
+
+  owner @{user_share_dirs}/tailscale/{,**} rw,
+
+  owner @{run}/systemd/notify w,
+  owner @{run}/tailscale/{,**} rw,
+
+  @{sys}/devices/virtual/dmi/id/{bios_vendor,product_name} r,
+
+  @{PROC}/ r,
+  @{PROC}/@{pid}/mounts r,
+  @{PROC}/@{pid}/net/{,**} r,
+  @{PROC}/@{pids}/cmdline r,
+  @{PROC}/@{pids}/fd/ r,
+  @{PROC}/@{pids}/net/route r,
+  @{PROC}/1/cgroup r,
+  @{PROC}/1/environ r,
+  @{PROC}/1/stat r,
+  @{PROC}/cmdline r,
+  @{PROC}/sys/kernel/osrelease r,
+  @{PROC}/sys/net/{,**} r,
+
+  /dev/net/tun rw,
+
+  profile systemctl flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    capability mknod,
+    capability net_admin,
+
+    network netlink raw,
+
+    /dev/net/tun rw,
+
+    include if exists <local/tailscaled_systemctl>
+  }
+
+  include if exists <local/tailscaled>
+}
+
+# vim:syntax=apparmor

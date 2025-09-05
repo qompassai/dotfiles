@@ -1,0 +1,25 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/cni/portmap /opt/cni/bin/portmap
+profile cni-portmap /{{,usr/}lib{,exec,32,64}/cni/portmap,opt/cni/bin/portmap} flags=(complain) {
+  include <abstractions/base>
+
+  capability net_admin,
+
+  network netlink raw,
+
+  @{exec_path} mr,
+  @{sbin}/xtables-nft-multi rpx -> cni-xtables-nft,
+
+  @{PROC}/sys/net/ipv{4,6}/conf/cali[0-9a-z]*/route_localnet rw,
+
+  include if exists <local/cni-portmap>
+}
+
+# vim:syntax=apparmor

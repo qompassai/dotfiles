@@ -1,0 +1,28 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/hbbr
+profile hbbr /{,usr/}bin/hbbr flags=(complain) {
+  include <abstractions/base>
+
+  network inet stream,
+  network inet6 stream,
+
+  @{exec_path} mr,
+
+  owner @{PROC}/@{pid}/cgroup r,
+
+  owner /var/lib/rustdesk-server/ r,
+  owner /var/lib/rustdesk-server/id_ed25519.pub r,
+  # Unknown non-essential purpose
+#  owner /var/lib/rustdesk-server/id_ed25519 r,
+
+  include if exists <local/hbbr>
+}
+
+# vim:syntax=apparmor

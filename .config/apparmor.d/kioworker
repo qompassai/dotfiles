@@ -1,0 +1,108 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{lib}/kf6/kioworker @{lib}/@{multiarch}/{,libexec/}kf6/kioworker
+@{exec_path} += @{lib}/kf5/kioslave5 @{lib}/@{multiarch}/{,libexec/}kf5/kioslave5
+profile kioworker /{{,usr/}lib{,exec,32,64}/kf6/kioworker,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf6/kioworker,{,usr/}lib{,exec,32,64}/kf5/kioslave5,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf5/kioslave5,{,usr/}lib{,exec,32,64}/kf5/kioslave5,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf5/kioslave5} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/deny-sensitive-home>
+  include <abstractions/fontconfig-cache-write>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+  include <abstractions/thumbnails-cache-write>
+  include <abstractions/trash-strict>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+  network netlink dgram,
+
+  signal receive set=term peer=dolphin,
+  signal receive set=term peer=firefox-kmozillahelper,
+  signal receive set=term peer=plasma-discover,
+  signal receive set=term peer=plasmashell,
+  signal receive set=term peer=xdg-desktop-portal-kde,
+
+  @{exec_path} mr,
+
+  @{lib}/libheif/ r,
+  @{lib}/libheif/*.so* rm,
+
+  @{bin}/wrestool rpux,
+  @{bin}/gs rix,
+
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf{5,6}/kio_http_cache_cleaner Px,
+  /{,usr/}lib{,exec,32,64}/kf{5,6}/kio_http_cache_cleaner Px,
+
+  /usr/share/kio_desktop/{,**} r,
+  /usr/share/kservices{5,6}/{,**} r,
+  /usr/share/kservicetypes{5,6}/*.desktop r,
+  /usr/share/remoteview/* r,
+
+  /etc/fstab r,
+  /etc/xdg/kioslaverc r,
+  /etc/xdg/menus/{,**} r,
+
+  # Full access to user's data
+  / r,
+  /*/ r,
+  @{bin}/ r,
+  @{bin}/* r,
+  @{sbin}/ r,
+  @{sbin}/* r,
+  @{lib}/ r,
+  @{MOUNTDIRS}/ r,
+  @{MOUNTS}/ r,
+  @{MOUNTS}/** rw,
+  owner @{HOME}/{,**} rw,
+  owner @{run}/user/@{uid}/{,**} rw,
+  owner @{tmp}/{,**} rw,
+
+  # Silence non user's data
+  deny @{efi}/{,**} r,
+  deny /etc/{,**} r,
+  deny /opt/{,**} r,
+  deny /root/{,**} r,
+  deny /tmp/.* rw,
+  deny /tmp/.*/{,**} rw,
+
+  owner @{HOME}/@{XDG_DESKTOP_DIR}/.directory l -> @{HOME}/@{XDG_DESKTOP_DIR}/#@{int},
+
+  owner @{user_cache_dirs}/kio_http/* rwl,
+
+  owner @{user_config_dirs}/kio_httprc r,
+  owner @{user_config_dirs}/menus/{,**} r,
+
+  owner @{user_share_dirs}/baloo/index rw,
+  owner @{user_share_dirs}/baloo/index-lock rwk,
+  owner @{user_share_dirs}/kactivitymanagerd/resources/database rk,
+  owner @{user_share_dirs}/kactivitymanagerd/resources/database-shm rwk,
+  owner @{user_share_dirs}/kactivitymanagerd/resources/database-wal rw,
+  owner @{user_share_dirs}/kservices{5,6}/{,**} r,
+
+  owner @{tmp}/#@{int} rw,
+
+        @{run}/mount/utab r,
+  owner @{run}/user/@{uid}/#@{int} rw,
+  owner @{run}/user/@{uid}/kio_*.socket rwl -> @{run}/user/@{uid}/#@{int},
+  owner @{run}/user/@{uid}/kioworker*.kioworker.socket rwl -> @{run}/user/@{uid}/#@{int},
+
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  /dev/tty r,
+
+  include if exists <local/kioworker>
+}
+
+# vim:syntax=apparmor

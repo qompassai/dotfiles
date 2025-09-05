@@ -1,0 +1,67 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,qemu/}virtiofsd @{bin}/virtiofsd
+profile virtiofsd /{{,usr/}lib{,exec,32,64}/{,qemu/}virtiofsd,{,usr/}bin/virtiofsd} flags=(complain,attach_disconnected) {
+  include <abstractions/base>
+
+  userns,
+
+  capability chown,
+  capability dac_override,
+  capability dac_read_search,
+  capability fowner,
+  capability fsetid,
+  capability mknod,
+  capability setfcap,
+  capability setgid,
+  capability setpcap,
+  capability setuid,
+  capability sys_admin,
+  capability sys_resource,
+
+  mount options=(rw, bind) @{PROC}/1/fd/ -> @{PROC},
+  mount options=(rw, nosuid, nodev, noexec, relatime) -> @{PROC},
+  mount options=(rw, rslave) -> /,
+
+  mount options=(rw, rbind) -> @{user_publicshare_dirs}/,
+  mount options=(rw, rbind) -> @{user_vm_dirs}/,
+  mount options=(rw, rbind) -> @{user_vmshare_dirs}/,
+
+  umount /,
+
+  pivot_root @{user_publicshare_dirs}/, # TODO: -> pivoted,
+  pivot_root @{user_vm_dirs}/,
+  pivot_root @{user_vmshare_dirs}/,
+
+  signal (receive) set=term peer=libvirtd,
+
+  unix (send, receive) type=stream peer=(addr=none, label=libvirt-@{uuid}),
+
+  @{exec_path} mr,
+
+  / r,
+  /var/lib/libvirt/qemu/*/fs@{int}-fs.sock rw,
+
+  @{user_publicshare_dirs}/{,**} r,
+  @{user_vm_dirs}/{,**} r,
+  @{user_vmshare_dirs}/{,**} r,
+
+  owner @{run}/libvirt/qemu/*.pid rw,
+
+  @{PROC}/ r,
+  @{PROC}/sys/fs/file-max r,
+
+  # profile pivoted flags=(complain,attach_disconnected) {
+  #   /{,**} rwl,
+  # }
+
+  include if exists <local/virtiofsd>
+}
+
+# vim:syntax=apparmor

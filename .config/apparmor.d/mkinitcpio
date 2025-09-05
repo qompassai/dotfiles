@@ -1,0 +1,119 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/mkinitcpio
+profile mkinitcpio /{,usr/}bin/mkinitcpio  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/fonts>
+  include <abstractions/nameservice-strict>
+
+  capability dac_read_search,
+  capability mknod,
+  capability sys_admin,
+  capability sys_chroot,
+
+  network unix stream,
+
+  @{exec_path} rmix,
+
+  @{sh_path}                 rix,
+  @{coreutils_path}          rix,
+  @{bin}/{m,g,}awk           rix,
+  @{bin}/bsdtar              rix,
+  @{bin}/fc-match            rix,
+  @{bin}/findmnt             rpx,
+  @{sbin}/fsck               rix,
+  @{bin}/getent              rix,
+  @{bin}/gzip                rix,
+  @{bin}/hexdump             rix,
+  @{sbin}/ldconfig           rix,
+  @{bin}/ldd                 rix,
+  @{bin}/loadkeys            rix,
+  @{bin}/objcopy             rix,
+  @{bin}/objdump             rix,
+  @{bin}/tput                rix,
+  @{bin}/xz                  rix,
+  @{bin}/zcat                rix,
+  @{bin}/zstd                rix,
+
+  @{bin}/kmod                rpx,
+  @{bin}/plymouth            rpx,
+  @{sbin}/plymouth-set-default-theme rpx,
+  @{bin}/sbctl               rpx,
+  @{bin}/sync                rpx,
+
+  @{lib}/initcpio/busybox    rix,
+  @{lib}/initcpio/post/**    rix,
+  @{lib}/ld-*.so*            rix,
+
+  /etc/fstab r,
+  /etc/initcpio/{,**} r,
+  /etc/locale.conf r,
+  /etc/lvm/lvm.conf r,
+  /etc/mkinitcpio.conf r,
+  /etc/mkinitcpio.conf.d/{,**} r,
+  /etc/mkinitcpio.d/{,**} r,
+  /etc/modprobe.d/{,**} r,
+  /etc/os-release r,
+  /etc/plymouth/plymouthd.conf r,
+  /etc/vconsole.conf r,
+
+  /usr/share/kbd/{,**} r,
+  /usr/share/plymouth/*.png r,
+  /usr/share/plymouth/plymouthd.defaults r,
+  /usr/share/plymouth/themes/{,**} r,
+  /usr/share/terminfo/** r,
+
+  # Can copy any program to the initframs
+  /{usr/,}{local/,}{s,}bin/ r,
+  @{bin}/* mr,
+  @{bin}/*/ r,
+  @{lib}/ r,
+  @{lib}/plymouth/plymouthd-* mr,
+  @{lib}/systemd/{,**} mr,
+  @{lib}/udev/* mr,
+
+  # Manage /boot
+  / r,
+  @{efi}/ r,
+  @{efi}/@{hex32}/{,**} rw,
+  @{efi}/EFI/{,**} rw,
+  @{efi}/initramfs-*.img* rw,
+  @{efi}/vmlinuz-* r,
+
+  /usr/share/systemd/bootctl/** r,
+
+  /etc/kernel/** r,
+
+        /tmp/mkinitcpio.@{rand6} rw,
+        /tmp/mkinitcpio.@{rand6}.tmp rw,
+  owner @{tmp}/mkinitcpio.@{rand6} rw,
+  owner @{tmp}/mkinitcpio.@{rand6}/{,**} rwl,
+
+  owner @{run}/initcpio-tmp/mkinitcpio.@{rand6}/{,**} rwl,
+  owner @{run}/initramfs/{,**} rw,
+  owner @{run}/mkinitcpio.@{rand6}/{,**} rwl,
+
+  @{sys}/class/block/ r,
+  @{sys}/devices/{,**} r,
+  @{sys}/firmware/efi/fw_platform_size r,
+
+  owner @{PROC}/@{pid}/mountinfo r,
+
+  /dev/tty@{int}* rw,
+
+  # Inherit silencer
+  deny @{HOME}/** r,
+  deny network inet stream,
+  deny network inet6 stream,
+
+  include if exists <local/mkinitcpio>
+}
+
+# vim:syntax=apparmor

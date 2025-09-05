@@ -1,0 +1,25 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/console-setup/console-setup.sh
+profile console-setup /{,usr/}lib{,exec,32,64}/console-setup/console-setup.sh flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} mr,
+
+  @{sh_path} r,
+  @{bin}/uname rpx,
+  @{bin}/mkdir rix,
+
+  @{run}/console-setup/ rw,
+  @{run}/console-setup/boot_completed w,
+
+  include if exists <local/console-setup>
+}
+
+# vim:syntax=apparmor

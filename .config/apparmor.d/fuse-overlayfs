@@ -1,0 +1,40 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/fuse-overlayfs
+profile fuse-overlayfs /{,usr/}bin/fuse-overlayfs flags=(complain) {
+  include <abstractions/base>
+
+  capability chown,
+  capability dac_override,
+  capability dac_read_search,
+  capability fowner,
+  capability setfcap,
+  capability setuid,
+  capability sys_admin,
+
+  mount fstype=fuse.* options=(rw,nodev,noatime) @{user_share_dirs}/containers/storage/overlay/**/merged/ -> **,
+  mount fstype=fuse.overlayfs  options=(rw,nodev,noatime) fuse-overlayfs -> @{user_share_dirs}/containers/storage/overlay/**/merged/,
+
+  @{exec_path} mr,
+
+  @{bin}/mount          rix,
+  @{bin}/umount         rix,
+
+  owner @{user_share_dirs}/containers/storage/overlay/{,**} rwl,
+
+  @{PROC}/sys/kernel/overflowgid r,
+  @{PROC}/sys/kernel/overflowuid r,
+  @{PROC}/sys/fs/pipe-max-size r,
+
+  /dev/fuse rw,
+
+  include if exists <local/fuse-overlayfs>
+}
+
+# vim:syntax=apparmor

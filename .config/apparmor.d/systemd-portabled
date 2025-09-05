@@ -1,0 +1,65 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/systemd/systemd-portabled
+profile systemd-portabled /{,usr/}lib{,exec,32,64}/systemd/systemd-portabled flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/common/systemd>
+
+  capability chown,
+  capability dac_override,
+  capability dac_read_search,
+  capability fowner,
+  capability fsetid,
+  capability kill,
+  capability mknod,
+  capability setgid,
+  capability sys_admin,
+  capability sys_chroot,
+  capability sys_ptrace,
+
+  network inet stream,
+  network inet6 stream,
+  network inet dgram,
+  network inet6 dgram,
+  network netlink raw,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.freedesktop.portable1{,.*},
+  dbus receive bus=system path=/org/freedesktop/portable1{,/**}
+       interface=org.freedesktop.portable1{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/freedesktop/portable1{,/**}
+       interface=org.freedesktop.portable1{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/freedesktop/portable1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/freedesktop/portable1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/freedesktop/portable1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.portable1{,.*}}"),
+  dbus send bus=system path=/org/freedesktop/portable1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  /var/lib/portables/{,**} rw,
+
+  include if exists <local/systemd-portabled>
+}
+
+# vim:syntax=apparmor

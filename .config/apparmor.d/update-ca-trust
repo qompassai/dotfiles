@@ -1,0 +1,40 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/update-ca-trust
+profile update-ca-trust /{,usr/}bin/update-ca-trust flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/ssl_certs>
+
+  capability dac_read_search,
+
+  @{exec_path} mr,
+
+  @{sh_path}    rix,
+  @{bin}/find   rix,
+  @{bin}/ln     rix,
+  @{bin}/mkdir  rix,
+  @{bin}/trust  rix,
+
+  / r,
+  /usr/share/p11-kit/modules/{,*} r,
+
+  /etc/ca-certificates/extracted/** rw,
+  /etc/ssl/certs/{,*} rw,
+  /etc/ssl/certs/java/** rw,
+
+  /dev/tty rw,
+
+  # Inherit silencer
+  deny network inet6 stream,
+  deny network inet stream,
+
+  include if exists <local/update-ca-trust>
+}
+
+# vim:syntax=apparmor

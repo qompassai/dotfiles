@@ -1,0 +1,60 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 EricLin
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{name} = wechat-universal
+@{lib_dirs} = /opt/wechat-universal/
+@{config_dirs} = @{user_config_dirs}/@{name}
+@{cache_dirs} = @{user_cache_dirs}/@{name}
+
+@{exec_path} = @{bin}/wechat-universal @{lib_dirs}/wechat
+profile wechat-universal /{{,usr/}bin/wechat-universal,opt/wechat-universal/wechat}  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/common/bwrap>
+  include <abstractions/common/electron>
+  include <abstractions/consoles>
+  include <abstractions/fontconfig-cache-read>
+
+  network netlink raw,
+  network netlink dgram,
+  network inet stream,
+  network inet dgram,
+  network inet6 dgram,
+  network inet6 stream,
+
+  @{exec_path} mrix,
+
+  @{sh_path}  rix,
+  @{lib}/wechat-universal/common.sh ix,
+  @{bin}/sed ix,
+  @{bin}/ln ix,
+  @{bin}/mkdir ix,
+  @{bin}/lsblk px,
+  @{bin}/bwrap rix,
+  @{bin}/xdg-user-dir rix,
+  @{lib_dirs}/crashpad_handler ix,
+  @{open_path} rpx -> child-open-strict,
+
+  /etc/lsb-release r,
+  /etc/machine-id r,
+
+  owner @{HOME}/@{XDG_DOCUMENTS_DIR}/WeChat_Data/{,**} rwk,
+  owner @{HOME}/.xwechat/{,**} rwk,
+  owner @{HOME}/.sys1og.conf rw,
+
+  @{att}/@{run}/systemd/inhibit/@{int}.ref rw,
+  @{run}/utmp r,
+
+  @{PROC}/@{pid}/net/route r,
+
+  /dev/tty rw,
+
+  include if exists <local/wechat-universal>
+}
+
+# vim:syntax=apparmor

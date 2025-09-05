@@ -1,0 +1,101 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/loupe
+profile loupe /{,usr/}bin/loupe  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/dconf-write>
+  include <abstractions/gnome-strict>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/thumbnails-cache-write>
+  include <abstractions/trash-strict>
+  include <abstractions/user-read-strict>
+  include <abstractions/user-write-strict>
+
+  unix type=stream peer=(label=loupe//bwrap),
+
+  signal send set=kill peer=loupe//bwrap,
+
+  dbus (send receive) bus=session path=/org/gtk/vfs{,/**}
+       interface=org.gtk.vfs{,.*}
+       peer=(name="{@{busname},org.gtk.vfs{,.*}}", label="gvfsd{,-*}"),
+  dbus (send receive) bus=session path=/org/gtk/vfs{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gtk.vfs{,.*}}", label="gvfsd{,-*}"),
+  dbus send bus=session path=/org/gtk/vfs{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gtk.vfs{,.*}}", label="gvfsd{,-*}"),
+  dbus send bus=session path=/org/gtk/vfs{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gtk.vfs{,.*}}", label="gvfsd{,-*}"),
+  dbus receive bus=session path=/org/gtk/vfs{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gtk.vfs{,.*}}", label="gvfsd{,-*}"),
+
+  dbus send bus=system path=/org/freedesktop/hostname1
+       interface=org.freedesktop.DBus.Properties
+       member=GetAll
+       peer=(name=@{busname}, label=@{p_systemd_hostnamed}),
+
+  @{exec_path} mr,
+
+  @{bin}/bwrap rcx -> bwrap,
+  @{open_path} rpx -> child-open-help,
+
+  /usr/share/glycin-loaders/{,**} r,
+
+  / r,
+
+  owner @{user_cache_dirs}/glycin/{,**} rw,
+
+        @{run}/mount/utab r,
+  owner @{run}/user/@{uid}/gvfsd/socket-@{rand8} rw,
+
+  @{sys}/fs/cgroup/user.slice/cpu.max r,
+  @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/cpu.max r,
+  @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/app.slice/cpu.max r,
+  @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/cpu.max r,
+
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/stat r,
+  owner @{PROC}/@{pid}/task/@{tid}/comm rw,
+
+  deny @{user_share_dirs}/gvfs-metadata/* r,
+
+  profile bwrap  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/common/bwrap>
+
+    unix type=stream peer=(label=loupe),
+
+    signal receive set=kill peer=loupe,
+
+    @{bin}/bwrap mr,
+    @{lib}/glycin-loaders/*/glycin-* rix,
+
+    owner @{PROC}/@{pid}/fd/ r,
+
+    deny @{user_share_dirs}/gvfs-metadata/* r,
+
+    include if exists <local/loupe_bwrap>
+  }
+
+  include if exists <local/loupe>
+}
+
+# vim:syntax=apparmor

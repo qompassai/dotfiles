@@ -1,0 +1,97 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/terminator
+profile terminator /{,usr/}bin/terminator  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.a11y>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/consoles>
+  include <abstractions/dconf-write>
+  include <abstractions/desktop>
+  include <abstractions/mesa>
+  include <abstractions/nameservice-strict>
+  include <abstractions/python>
+
+  capability sys_ptrace,
+
+  ptrace,
+
+  signal send set=hup peer=unconfined,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=net.tenshu.Terminator@{hex}{,.*},
+  dbus receive bus=session path=/net/tenshu/Terminator@{hex}{,/**}
+       interface=net.tenshu.Terminator@{hex}{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/net/tenshu/Terminator@{hex}{,/**}
+       interface=net.tenshu.Terminator@{hex}{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/net/tenshu/Terminator@{hex}{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/net/tenshu/Terminator@{hex}{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/net/tenshu/Terminator@{hex}{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},net.tenshu.Terminator@{hex}{,.*}}"),
+  dbus send bus=session path=/net/tenshu/Terminator@{hex}{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{bin}/ r,
+  @{python_path} rix,
+
+  # The shell is not confined on purpose.
+  @{bin}/@{shells}      rux,
+
+  @{open_path} rpx,
+
+  owner @{user_config_dirs}/terminator/{,**} rw,
+
+  owner @{tmp}/#@{int} rw,
+
+        @{PROC}/ r,
+        @{PROC}/@{pid}/net/tcp{,6} r,
+        @{PROC}/@{pid}/net/udp{,6} r,
+        @{PROC}/@{pids}/cmdline r,
+        @{PROC}/@{pids}/stat r,
+        @{PROC}/1/cgroup r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/environ r,
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/fdinfo/@{tid} r,
+  owner @{PROC}/@{pid}/io r,
+  owner @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/smaps r,
+  owner @{PROC}/@{pid}/smaps_rollup r,
+  owner @{PROC}/@{pid}/statm r,
+  owner @{PROC}/@{pid}/task/ r,
+  owner @{PROC}/@{pid}/task/@{tid}/stat r,
+
+  /dev/ r,
+  /dev/dri/card@{int} rw,
+  /dev/ptmx rw,
+
+  deny @{user_share_dirs}/gvfs-metadata/{,*} r,
+
+  include if exists <local/terminator>
+}
+
+# vim:syntax=apparmor

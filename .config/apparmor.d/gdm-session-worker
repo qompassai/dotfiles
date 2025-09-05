@@ -1,0 +1,183 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,gdm/}gdm-session-worker
+profile gdm-session-worker /{,usr/}lib{,exec,32,64}/{,gdm/}gdm-session-worker  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/authentication>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/nameservice-strict>
+
+  capability audit_write,
+  capability chown,
+  capability dac_override,
+  capability dac_read_search,
+  capability fowner,
+  capability fsetid,
+  capability kill,
+  capability net_admin,
+  capability setgid,
+  capability setuid,
+  capability sys_nice,
+  capability sys_resource,
+  capability sys_tty_config,
+
+  network netlink raw,
+  network unix stream,
+
+  signal receive set=term peer=gdm,
+  signal send set=(hup term) peer=gdm-session,
+  signal send set=hup peer=at-spi*,
+  signal send set=hup peer=dbus-accessibility,
+  signal send set=hup peer=dbus-session,
+  signal send set=hup peer=dconf-service,
+  signal send set=hup peer=gjs-console,
+  signal send set=hup peer=gnome-*,
+  signal send set=hup peer=gsd-*,
+  signal send set=hup peer=ibus-*,
+  signal send set=hup peer=mutter-x11-frames,
+  signal send set=hup peer=tracker-miner,
+  signal send set=hup peer=xdg-*,
+  signal send set=hup peer=xorg,
+  signal send set=hup peer=xwayland,
+
+  unix bind type=stream addr=@@{udbus}/bus/gdm-session-wor/system,
+
+  dbus (send receive) bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.Accounts{,.*}
+       peer=(name="{@{busname},org.freedesktop.Accounts{,.*}}", label="@{p_accounts_daemon}"),
+  dbus (send receive) bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.Accounts{,.*}}", label="@{p_accounts_daemon}"),
+  dbus send bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.Accounts{,.*}}", label="@{p_accounts_daemon}"),
+  dbus send bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.Accounts{,.*}}", label="@{p_accounts_daemon}"),
+  dbus receive bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.Accounts{,.*}}", label="@{p_accounts_daemon}"),
+  dbus (send receive) bus=system path=/org/freedesktop/home1{,/**}
+       interface=org.freedesktop.home1.Manager
+       peer=(name="{@{busname},org.freedesktop.home1{,.*}}", label="@{p_systemd_homed}"),
+  dbus (send receive) bus=system path=/org/freedesktop/home1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.home1{,.*}}", label="@{p_systemd_homed}"),
+  dbus send bus=system path=/org/freedesktop/home1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.home1{,.*}}", label="@{p_systemd_homed}"),
+  dbus send bus=system path=/org/freedesktop/home1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.home1{,.*}}", label="@{p_systemd_homed}"),
+  dbus receive bus=system path=/org/freedesktop/home1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.home1{,.*}}", label="@{p_systemd_homed}"),
+
+  dbus send bus=system path=/org/freedesktop/login1
+       interface=org.freedesktop.login1.Manager
+       member={*Session,CreateSessionWithPIDFD}
+       peer=(name=org.freedesktop.login1, label="@{p_systemd_logind}"),
+
+  @{exec_path} mrix,
+
+  @{bin}/gnome-keyring-daemon             rpx,
+  @{etc_ro}/X11/xdm/Xstartup             rpux,
+  @{lib}/{,gdm/}gdm-{x,wayland}-session   rpx -> gdm-session,
+  /etc/gdm{3,}/{Pre,Post}Session/Default  rix,
+  /etc/gdm{3,}/PostLogin/Default          rix,
+  /etc/gdm{3,}/PrimeOff/Default           rix,
+
+  /usr/share/gdm/gdm.schemas r,
+  /usr/share/wayland-sessions/*.desktop r,
+  /usr/share/xsessions/gnome-xorg.desktop r,
+
+  # Add user; set password on first login
+  /etc/.pwd.lock wk,
+  /etc/nshadow rw,
+  /etc/shadow w,
+
+  @{etc_ro}/environment r,
+  @{etc_ro}/security/limits.d/{,*.conf} r,
+  /etc/default/locale r,
+  /etc/fscrypt.conf r,
+  /etc/gdm{3,}/custom.conf r,
+  /etc/gdm{3,}/daemon.conf r,
+  /etc/locale.conf r,
+  /etc/machine-id r,
+  /etc/motd r,
+  /etc/motd.d/ r,
+  /etc/shells r,
+  /etc/sysconfig/displaymanager r,
+  /etc/sysconfig/windowmanager r,
+
+  /var/lib/lastlog/ r,
+  /var/lib/lastlog/* rwk,
+
+  /var/lib/wtmpdb/ r,
+  /var/lib/wtmpdb/* rwk,
+
+        /.fscrypt/policies/ r,
+        /.fscrypt/protectors/ r,
+  owner /.fscrypt/protectors/@{hex16} r,
+
+  #aa:lint ignore=tunables
+        /home/ r,
+        /home/.fscrypt/policies/ r,
+  owner /home/.fscrypt/policies/@{hex32} r,
+  owner /home/.fscrypt/protectors/@{hex16}.link r,
+
+  owner @{HOME}/.pam_environment r,
+
+  owner @{user_cache_dirs}/ w,
+
+        @{run}/cockpit/active.issue r,
+        @{run}/cockpit/inactive.motd r,
+  owner @{run}/systemd/seats/seat@{int} r,
+  owner @{run}/user/@{uid}/keyring/control rw,
+
+        @{run}/gdm{3,}/custom.conf r,
+        @{run}/gdm{3,}/dbus/dbus-@{rand8} r,
+  owner @{run}/gdm{3,}/dbus/ w,
+  owner @{run}/gdm{3,}/dbus/dbus-@{rand8} w,
+
+  @{att}/@{run}/systemd/sessions/{,@{l}}@{int}.ref rw,
+  @{run}/cockpit/active.motd r,
+  @{run}/faillock/@{user} rwk,
+  @{run}/fscrypt/ rw,
+  @{run}/fscrypt/@{uid}.count rwk,
+  @{run}/motd.d/{,*} r,
+  @{run}/systemd/sessions/* r,
+  @{run}/systemd/users/@{uid} r,
+  @{run}/utmp rwk,
+
+        @{PROC}/@{pid}/mountinfo r,
+        @{PROC}/@{pids}/cgroup r,
+        @{PROC}/1/limits r,
+        @{PROC}/keys r,
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/loginuid rw,
+  owner @{PROC}/@{pid}/task/@{tid}/attr/exec rw,
+  owner @{PROC}/@{pid}/uid_map r,
+
+  /dev/tty rw,
+  /dev/tty@{int} rw,
+
+  include if exists <local/gdm-session-worker>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,83 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{lib}/DiscoverNotifier
+@{exec_path} += @{lib}/@{multiarch}/{,libexec/}DiscoverNotifier
+profile DiscoverNotifier /{{,usr/}lib{,exec,32,64}/DiscoverNotifier,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}DiscoverNotifier,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}DiscoverNotifier} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/dconf-write>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
+  network netlink dgram,
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{bin}/apt-config          rpx,
+
+  @{bin}/gpg{,2}             rcx -> gpg,
+  @{bin}/gpgconf             rcx -> gpg,
+  @{bin}/gpgsm               rcx -> gpg,
+
+  /usr/share/metainfo/{,**} r,
+
+  /etc/machine-id r,
+  /etc/flatpak/remotes.d/{,**} r,
+
+  /var/lib/flatpak/{,**} r,
+
+  /var/cache/swcatalog/cache/ w,
+  /var/cache/swcatalog/xml/{,**} r,
+
+  owner @{user_cache_dirs}/appstream/ rw,
+  owner @{user_cache_dirs}/appstream/** rw,
+  owner @{user_cache_dirs}/flatpak/{,**} rw,
+
+  owner @{user_config_dirs}/@{int} rw,
+  owner @{user_config_dirs}/breezerc r,
+  owner @{user_config_dirs}/PlasmaDiscoverUpdates rw,
+  owner @{user_config_dirs}/PlasmaDiscoverUpdates.@{rand6} rwl -> @{user_config_dirs}/@{int},
+  owner @{user_config_dirs}/PlasmaDiscoverUpdates.lock rwk,
+
+  owner @{user_share_dirs}/flatpak/{,**} rw,
+
+  owner @{tmp}/ostree-gpg-@{rand6}/ rw,
+  owner @{tmp}/ostree-gpg-@{rand6}/pubring.gpg rw,
+  owner @{tmp}/ostree-gpg-@{rand6}/trustdb.gpg rw,
+
+  /dev/tty r,
+
+  profile gpg flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/gpg{,2}  mr,
+    @{bin}/gpgconf  mr,
+    @{bin}/gpgsm    mr,
+
+    @{HOME}/@{XDG_GPG_DIR}/*.conf r,
+
+          @{tmp}/ r,
+    owner @{tmp}/ostree-gpg-@{rand6}/ r,
+    owner @{tmp}/ostree-gpg-@{rand6}/** rwkl -> /tmp/ostree-gpg-@{rand6}/**,
+
+    owner @{run}/user/@{uid}/gnupg/ w,
+
+    include if exists <local/DiscoverNotifier_gpg>
+  }
+
+  include if exists <local/DiscoverNotifier>
+}
+
+# vim:syntax=apparmor

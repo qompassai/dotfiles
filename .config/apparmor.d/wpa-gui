@@ -1,0 +1,32 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/wpa_gui
+profile wpa-gui /{,usr/}bin/wpa_gui flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/graphics>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/desktop>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  owner @{tmp}/wpa_ctrl_@{pid}-@{d} w,
+  owner /dev/shm/#@{int} rw,
+
+  @{run}/wpa_supplicant/ r,
+
+  owner @{PROC}/@{pid}/cmdline r,
+
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/wpa-gui>
+}
+
+# vim:syntax=apparmor

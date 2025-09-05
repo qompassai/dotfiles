@@ -1,0 +1,47 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/sbctl
+profile sbctl /{,usr/}bin/sbctl flags=(complain) {
+  include <abstractions/base>
+
+  capability dac_read_search,
+  capability linux_immutable,
+
+  @{exec_path} mr,
+
+  @{bin}/lsblk  rpx,
+
+  /usr/share/secureboot/{,**} rw,
+  /var/lib/sbctl/{,**} rw,
+
+  /{boot,efi}/{,**} r,
+  /{boot,efi}/EFI/{,**} rw,
+  /{boot,efi}/vmlinuz-linux* rw,
+  @{lib}/fwupd/efi/{,**} rw,
+  @{lib}/systemd/boot/efi/systemd-boot*.efi.signed rw,
+
+  @{sys}/devices/virtual/dmi/id/* r,
+
+  @{sys}/firmware/efi/efivars/db-@{uuid} rw,
+  @{sys}/firmware/efi/efivars/KEK-@{uuid} rw,
+  @{sys}/firmware/efi/efivars/PK-@{uuid} rw,
+  @{sys}/firmware/efi/efivars/SecureBoot-@{uuid} r,
+  @{sys}/firmware/efi/efivars/SetupMode-@{uuid} r,
+
+  /dev/pts/@{int} rw,
+  /dev/tpmrm@{int} rw,
+
+  # File Inherit
+  deny network inet stream,
+  deny network inet6 stream,
+
+  include if exists <local/sbctl>
+}
+
+# vim:syntax=apparmor

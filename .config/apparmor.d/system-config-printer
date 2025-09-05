@@ -1,0 +1,60 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2022 Mikhail Morfikov
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{bin}/system-config-printer
+@{exec_path} += /usr/share/system-config-printer/system-config-printer.py
+profile system-config-printer /{{,usr/}bin/system-config-printer,usr/share/system-config-printer/system-config-printer.py,usr/share/system-config-printer/system-config-printer.py} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.hostname1>
+  include <abstractions/bus/org.freedesktop.PolicyKit1>
+  include <abstractions/dconf-write>
+  include <abstractions/desktop>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/nameservice-strict>
+  include <abstractions/python>
+
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  @{exec_path} mrix,
+
+  @{sh_path}                  rix,
+  @{python_path}                r,
+  @{lib}/cups/*/*            rpux,
+  /usr/share/hplip/query.py  rpux,
+
+  /usr/share/cups/data/testprint r,
+  /usr/share/system-config-printer/{,**} r,
+
+  /etc/cups/cupsd.conf r,
+  /etc/cupshelpers/preferreddrivers.xml r,
+  /etc/fstab r,
+  /etc/papersize r,
+
+  owner @{HOME}/.cups/ rw,
+  owner @{HOME}/.cups/lpoptions rw,
+
+        @{run}/cups/cups.sock rw,
+  owner @{run}/user/@{uid}/gvfsd/socket-@{rand8} rw,
+
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/fdinfo/@{int} r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/stat r,
+
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/system-config-printer>
+}
+
+# vim:syntax=apparmor

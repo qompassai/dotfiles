@@ -1,0 +1,24 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+  abi <abi/4.0>,
+
+  unix bind type=stream addr=@@{udbus}/bus/@{profile_name}/session,
+
+  dbus send bus=session path=/org/freedesktop/{dbus,DBus}
+       interface=org.freedesktop.DBus
+       member={Hello,AddMatch,RemoveMatch,GetNameOwner,NameHasOwner,StartServiceByName}
+       peer=(name=org.freedesktop.DBus, label="@{p_dbus_session}"),
+
+  /etc/machine-id r,
+  /var/lib/dbus/machine-id r,
+
+  owner @{tmp}/dbus-@{rand8} rw,
+  owner @{tmp}/dbus-@{rand10} rw,
+
+  owner @{run}/user/@{uid}/bus rw,
+
+  include if exists <abstractions/bus-session.d>
+
+# vim:syntax=apparmor

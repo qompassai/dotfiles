@@ -1,0 +1,47 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/ytdl
+profile ytdl /{,usr/}bin/ytdl flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+  include <abstractions/python>
+  include <abstractions/ssl_certs>
+  include <abstractions/user-download-strict>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  signal (receive) set=(term, kill),
+
+  @{exec_path} r,
+  @{python_path} r,
+
+  @{bin}/ r,
+  @{sbin}/ldconfig rix,
+  @{bin}/uname     rix,
+
+  /etc/mime.types r,
+
+  owner @{HOME}/ r,
+  owner @{user_music_dirs}/{,**} rw,
+  owner @{user_videos_dirs}/{,**} rw,
+
+  owner @{user_cache_dirs}/youtube-dl/youtube-sigfuncs/js*.json r,
+
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  include if exists <local/ytdl>
+}
+
+# vim:syntax=apparmor

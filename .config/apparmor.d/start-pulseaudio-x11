@@ -1,0 +1,29 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/start-pulseaudio-x11
+profile start-pulseaudio-x11 /{,usr/}bin/start-pulseaudio-x11 flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/X-strict>
+
+  @{exec_path} mr,
+
+  @{sh_path}         rix,
+  @{bin}/head        rix,
+  @{bin}/pactl       rpx,
+  @{bin}/plasmashell rpx,
+  @{bin}/sed         rix,
+
+  /etc/sysconfig/sound r,
+
+  /dev/tty rw,
+
+  include if exists <local/start-pulseaudio-x11>
+}
+
+# vim:syntax=apparmor

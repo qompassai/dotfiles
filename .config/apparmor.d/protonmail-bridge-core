@@ -1,0 +1,91 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+# To force the use of the Gnome Keyring or Kwallet secret-service, add the
+# following lines in your local/protonmail-bridge-core file:
+#   deny @{bin}/pass x,
+#   deny owner @{user_passwordstore_dirs}/** r,
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/protonmail/bridge/bridge
+profile protonmail-bridge-core /{,usr/}lib{,exec,32,64}/protonmail/bridge/bridge  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{bin}/pass cx -> pass,
+
+  @{lib}/protonmail/bridge/bridge-gui ix,
+
+  /etc/lsb-release r,
+  /etc/machine-id r,
+
+  owner @{user_passwordstore_dirs}/docker-credential-helpers/{,**} r,
+  owner @{user_passwordstore_dirs}/protonmail-credentials/{,**} r,
+
+  owner @{user_cache_dirs}/protonmail/{,**} rwk,
+  owner @{user_config_dirs}/protonmail/{,**} rwk,
+  owner @{user_share_dirs}/protonmail/{,**} rwk,
+
+  owner "@{user_config_dirs}/autostart/Proton Mail Bridge.desktop" rw,
+
+  owner @{tmp}/bridge@{int} rw,
+  owner @{tmp}/etilqs_@{sqlhex} rw,
+  owner /var/tmp/etilqs_@{sqlhex} rw,
+
+  @{PROC}/ r,
+  @{PROC}/1/cgroup r,
+  @{PROC}/sys/net/core/somaxconn r,
+
+  deny owner @{user_passwordstore_dirs}/** r,
+
+  profile pass flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/nameservice-strict>
+
+    @{bin}/pass         mr,
+
+    @{sh_path}         rix,
+    @{bin}/base64      rix,
+    @{bin}/dirname     rix,
+    @{bin}/env         rix,
+    @{bin}/getopt      rix,
+    @{bin}/git         rpx -> pass//git,
+    @{bin}/gpg{,2}     rpx -> pass//gpg,
+    @{bin}/mkdir       rix,
+    @{bin}/rm          rix,
+    @{bin}/rmdir       rix,
+    @{bin}/sed         rix,
+    @{bin}/tail        rix,
+    @{bin}/tree        rix,
+    @{bin}/tty         rix,
+    @{bin}/which{,.debianutils}  rix,
+
+         owner @{user_passwordstore_dirs}/ r,
+         owner @{user_passwordstore_dirs}/.gpg-id r,
+         owner @{user_passwordstore_dirs}/docker-credential-helpers/{,**} rw,
+         owner @{user_passwordstore_dirs}/protonmail-credentials/{,**} rw,
+    deny owner @{user_passwordstore_dirs}/**/ r,
+
+    /dev/tty rw,
+
+    include if exists <local/protonmail-bridge-core_pass>
+  }
+
+  include if exists <local/protonmail-bridge-core>
+}
+
+# vim:syntax=apparmor

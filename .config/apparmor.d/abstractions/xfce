@@ -1,0 +1,21 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+  abi <abi/4.0>,
+
+  include <abstractions/fonts>
+  include <abstractions/freedesktop.org>
+  include <abstractions/gtk>
+  include <abstractions/wayland>
+  include <abstractions/X-strict>
+  include <abstractions/xdg-desktop>
+
+  /usr/share/xfce{,4}/ r,
+
+  owner @{user_config_dirs}/xfce4/help{,ers}.rc rw,
+  owner @{user_config_dirs}/xfce4/help{,ers}.rc.@{int}.tmp rw,
+
+  include if exists <abstractions/xfce.d>
+
+# vim:syntax=apparmor

@@ -1,0 +1,22 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/utmpdump
+profile utmpdump /{,usr/}bin/utmpdump flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} mr,
+
+  /var/log/wtmp{,.@{int}} r,
+  /var/log/btmp{,.@{int}} r,
+
+  include if exists <local/utmpdump>
+}
+
+# vim:syntax=apparmor

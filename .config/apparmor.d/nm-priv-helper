@@ -1,0 +1,46 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/nm-priv-helper
+profile nm-priv-helper /{,usr/}bin/nm-priv-helper flags=(complain) {
+  include <abstractions/base>
+
+  capability dac_override,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.freedesktop.nm_priv_helper{,.*},
+  dbus receive bus=system path=/org/freedesktop/nm_priv_helper{,/**}
+       interface=org.freedesktop.nm_priv_helper{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/freedesktop/nm_priv_helper{,/**}
+       interface=org.freedesktop.nm_priv_helper{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/freedesktop/nm_priv_helper{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/freedesktop/nm_priv_helper{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/freedesktop/nm_priv_helper{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.nm_priv_helper{,.*}}"),
+  dbus send bus=system path=/org/freedesktop/nm_priv_helper{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  include if exists <local/nm-priv-helper>
+}
+
+# vim:syntax=apparmor

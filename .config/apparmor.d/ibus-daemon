@@ -1,0 +1,112 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/ibus-daemon
+profile ibus-daemon /{,usr/}bin/ibus-daemon  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/ibus>
+  include <abstractions/nameservice-strict>
+
+  signal (receive) set=(usr1) peer=gnome-shell,
+  signal (send) set=(term) peer=ibus*,
+
+  unix (bind, listen)          type=stream addr="@/var/lib/gdm{3,}/.cache/ibus/dbus-????????",
+  unix (send, receive, accept) type=stream addr="@/var/lib/gdm{3,}/.cache/ibus/dbus-????????" peer=(label=ibus-*),
+  unix (send, receive, accept) type=stream addr="@/var/lib/gdm{3,}/.cache/ibus/dbus-????????" peer=(label=gnome-shell),
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.freedesktop.portal.IBus{,.*},
+  dbus receive bus=session path=/org/freedesktop/portal/IBus{,/**}
+       interface=org.freedesktop.portal.IBus{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/freedesktop/portal/IBus{,/**}
+       interface=org.freedesktop.portal.IBus{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/freedesktop/portal/IBus{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/freedesktop/portal/IBus{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/freedesktop/portal/IBus{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.portal.IBus{,.*}}"),
+  dbus send bus=session path=/org/freedesktop/portal/IBus{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.freedesktop.IBus{,.*},
+  dbus receive bus=session path=/org/freedesktop/IBus{,/**}
+       interface=org.freedesktop.IBus{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/freedesktop/IBus{,/**}
+       interface=org.freedesktop.IBus{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/freedesktop/IBus{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/freedesktop/IBus{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/freedesktop/IBus{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.IBus{,.*}}"),
+  dbus send bus=session path=/org/freedesktop/IBus{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus send bus=session path=/org/freedesktop/IBus
+       interface=org.freedesktop.DBus.Peer
+       member=Ping
+       peer=(name=org.freedesktop.portal.IBus),
+  dbus send bus=session path=/org/freedesktop/IBus
+       interface=org.freedesktop.DBus.Peer
+       member=Ping
+       peer=(name=org.freedesktop.portal.IBus, label=ibus-portal),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mrix,
+
+  @{sh_path}             rix,
+  @{lib}/{,ibus/}ibus-*  rpux,
+  @{lib}/ibus-*/ibus-*   rpux,
+
+  /usr/share/ibus/{,**} r,
+  /usr/share/ibus-table/{,**} r,
+
+  owner @{desktop_cache_dirs}/ibus/{,**} rw,
+  owner @{desktop_config_dirs}/ibus/{,**} rw,
+
+  owner @{user_cache_dirs}/ibus/{,**} rw,
+  owner @{user_config_dirs}/ibus/ibus/{,**} rw,
+
+  owner @{PROC}/@{pids}/fd/ r,
+
+  owner @{att}/dev/tty@{int} rw,
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/ibus-daemon>
+}
+
+# vim:syntax=apparmor

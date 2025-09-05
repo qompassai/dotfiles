@@ -1,0 +1,59 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = /usr/share/libalpm/scripts/systemd-hook
+profile pacman-hook-systemd /usr/share/libalpm/scripts/systemd-hook flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+
+  capability dac_read_search,
+
+  @{exec_path} mr,
+
+  @{sh_path}   rix,
+  @{bin}/touch rix,
+
+  @{bin}/journalctl             rpx,
+  @{bin}/systemctl              rcx -> systemctl,
+  @{bin}/systemd-detect-virt    rpx,
+  @{bin}/systemd-hwdb           rpx,
+  @{bin}/systemd-notify         rpx,
+  @{bin}/systemd-sysusers       rpx,
+  @{bin}/systemd-tmpfiles       rpx,
+  @{bin}/udevadm                rpx,
+  @{lib}/systemd/systemd-binfmt rpx,
+  @{lib}/systemd/systemd-sysctl rpx,
+
+  /usr/ rw,
+
+        /dev/tty rw,
+        /dev/tty@{int} rw,
+  owner /dev/pts/@{int} rw,
+
+  # Inherit silencer
+  deny network inet6 stream,
+  deny network inet stream,
+
+  profile systemctl  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    capability net_admin,
+    capability sys_resource,
+
+    signal send set=(cont, term) peer=systemd-tty-ask-password-agent,
+
+    @{bin}/systemd-tty-ask-password-agent px,
+
+    include if exists <local/pacman-hook-systemd_systemctl>
+  }
+
+  include if exists <local/pacman-hook-systemd>
+}
+
+# vim:syntax=apparmor

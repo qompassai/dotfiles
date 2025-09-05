@@ -1,0 +1,76 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/i3lock-fancy
+profile i3lock-fancy /{,usr/}bin/i3lock-fancy flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/fonts>
+  include <abstractions/X-strict>
+
+  @{exec_path} r,
+
+  @{sh_path}        rix,
+  @{bin}/{m,g,}awk  rix,
+  @{bin}/basename   rix,
+  @{bin}/env        rix,
+  @{bin}/fc-match   rix,
+  @{bin}/getopt     rix,
+  @{bin}/mktemp     rix,
+  @{bin}/rm         rix,
+  @{bin}/wmctrl     rix,
+
+  @{bin}/i3lock     rpx,
+  @{bin}/xrandr     rpx,
+
+  @{bin}/convert-im6.q16 rcx -> imagemagic,
+  @{bin}/import-im6.q16  rcx -> imagemagic,
+  @{bin}/scrot           rcx -> imagemagic,
+
+  /usr/share/i3lock-fancy/{,*} r,
+
+  owner @{tmp}/tmp.*.png rw,
+  owner @{tmp}/tmp.* rw,
+  owner @{tmp}/sh-thd.* rw,
+
+  # file_inherit
+  owner /dev/tty@{int} rw,
+
+  profile imagemagic flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/fonts>
+    include <abstractions/fontconfig-cache-read>
+
+    @{bin}/convert-im6.q16 mr,
+    @{bin}/import-im6.q16  mr,
+    @{bin}/scrot           mr,
+
+    /usr/share/ImageMagick-@{int}/*.xml r,
+    /etc/ImageMagick-@{int}/*.xml r,
+
+    owner @{HOME}/.Xauthority r,
+
+    /usr/share/i3lock-fancy/**.png r,
+
+    # For gray scale (doesn't seem to be required). It produces files like /home/*/PIHFhJ .
+    deny owner @{HOME}/* rw,
+
+    owner @{tmp}/tmp.*.png rw,
+
+    # file_inherit
+    owner /dev/tty@{int} rw,
+
+    include if exists <local/i3lock-fancy_imagemagic>
+  }
+
+  include if exists <local/i3lock-fancy>
+}
+
+# vim:syntax=apparmor

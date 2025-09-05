@@ -1,0 +1,56 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2017-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/lightdm-gtk-greeter
+profile lightdm-gtk-greeter /{,usr/}bin/lightdm-gtk-greeter flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/desktop>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+
+  signal (receive) set=(term, kill) peer=lightdm,
+
+  @{exec_path} mr,
+
+  @{bin}/locale rix,
+
+  @{lib}/systemd/systemd rcx -> systemd,
+  @{lib}/{,at-spi2{,-core}/}at-spi-bus-launcher rpx,
+
+  /usr/share/backgrounds/xfce/{,**} r,
+  /usr/share/lightdm/{,**} r,
+  /usr/share/wayland-sessions/{,*.desktop} r,
+
+  /etc/lightdm/{,**} r,
+
+  /var/lib/AccountsService/{,**} r,
+  /var/lib/lightdm/{,**} rw,
+  /var/log/lightdm/{,**} rw,
+
+  owner @{PROC}/@{pid}/fd/ r,
+
+  profile systemd flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/common/systemd>
+    include <abstractions/nameservice-strict>
+
+    @{lib}/systemd/systemd mr,
+
+    /etc/systemd/user.conf r,
+
+    owner @{PROC}/@{pid}/oom_score_adj r,
+
+    include if exists <local/lightdm-gtk-greeter_systemd>
+  }
+
+  include if exists <local/lightdm-gtk-greeter>
+}
+
+# vim:syntax=apparmor

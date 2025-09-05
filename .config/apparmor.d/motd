@@ -1,0 +1,93 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2025 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = /etc/update-motd.d/*
+profile motd /etc/update-motd.d/* flags=(complain) {
+  include <abstractions/base>
+
+  capability net_admin,
+
+  @{exec_path} mr,
+  @{bin}/ r,
+
+  @{sh_path}         rix,
+  @{coreutils_path}  rix,
+  @{bin}/cloud-id    rix,
+  @{bin}/systemctl   rcx -> systemctl,
+  @{bin}/hostname    rpx,
+  @{bin}/snap        rpx,
+  @{bin}/dpkg        rpx -> child-dpkg,
+  @{bin}/systemd-detect-virt rpx,
+  @{bin}/wget        rcx -> wget,
+
+  @{lib}/ubuntu-release-upgrader/release-upgrade-motd            rpx,
+  @{lib}/update-notifier/update-motd-fsck-at-reboot              rpx,
+  @{lib}/update-notifier/update-motd-reboot-required             rix,
+  /usr/share/unattended-upgrades/update-motd-unattended-upgrades rix,
+  /usr/share/update-notifier/notify-updates-outdated             rpx,
+
+  / r,
+  /etc/cloud/cloud.cfg r,
+  /etc/cloud/cloud.cfg.d/{,*} r,
+  /etc/default/motd-news r,
+  /etc/lsb-release r,
+  /etc/update-motd.d/* r,
+  /etc/wgetrc r,
+
+  /var/cache/motd-news rw,
+  /var/lib/update-notifier/updates-available r,
+  /var/lib/ubuntu-advantage/messages/motd-esm-announce r,
+  /var/lib/cloud/instances/nocloud/cloud-config.txt r,
+
+  # /tmp/tmp.@{rand10} rw,
+
+  @{run}/cloud-init/cloud.cfg r,
+  @{run}/motd.d/{,*} r,
+  @{run}/motd.dynamic.new rw,
+  @{run}/reboot-required r,
+
+  @{PROC}/@{pids}/mounts r,
+  @{PROC}/1/environ r,
+  @{PROC}/cmdline r,
+
+  /dev/tty@{int} rw,
+
+  profile wget flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/nameservice-strict>
+    include <abstractions/ssl_certs>
+
+    network inet dgram,
+    network inet stream,
+    network inet6 dgram,
+    network inet6 stream,
+    network netlink raw,
+
+    @{bin}/wget mr,
+
+    /tmp/tmp.@{rand10} rw,
+
+    include if exists <local/motd_wget>
+  }
+
+  profile systemctl flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    capability net_admin,
+    capability sys_ptrace,
+
+    @{run}/systemd/private rw,
+
+    include if exists <local/motd_systemctl>
+  }
+
+  include if exists <local/motd>
+}
+
+# vim:syntax=apparmor

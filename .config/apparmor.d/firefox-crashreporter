@@ -1,0 +1,73 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2022 Mikhail Morfikov
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{name} = firefox{,.sh,-esr,-bin}
+@{lib_dirs} = @{lib}/@{name} /opt/@{name}
+@{config_dirs} = @{HOME}/.mozilla/
+@{cache_dirs} = @{user_cache_dirs}/mozilla/
+
+@{exec_path} = @{lib_dirs}/crashreporter
+profile firefox-crashreporter /{{,usr/}lib{,exec,32,64}/firefox{,.sh,-esr,-bin}/crashreporter,opt/firefox{,.sh,-esr,-bin}/crashreporter}  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/dconf-write>
+  include <abstractions/desktop>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/nameservice-strict>
+
+  signal (receive) set=(term, kill) peer=firefox,
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  @{exec_path} mrix,
+
+  @{bin}/curl rix,
+  @{bin}/mv   rix,
+
+  @{lib_dirs}/minidump-analyzer rpx,
+
+  owner "@{config_dirs}/firefox/Crash Reports/{,**}" rw,
+  owner @{config_dirs}/firefox/*.*/crashes/{,**} rw,
+  owner @{config_dirs}/firefox/*.*/crashes/events/@{uuid} rw,
+  owner @{config_dirs}/firefox/*.*/extensions/*.xpi r,
+  owner @{config_dirs}/firefox/*.*/minidumps/{,**} rw,
+  owner @{config_dirs}/firefox/*.*/minidumps//@{uuid}.{dmp,extra} r,
+  owner @{config_dirs}/firefox/*.*/prefs.js r,
+  owner @{config_dirs}/firefox/*.*/storage-sync-v2.sqlite-shm r,
+  owner @{config_dirs}/firefox/*.*/storage/default/* r,
+  owner @{config_dirs}/firefox/Profile*/*.sqlite-shm r,
+
+  owner @{cache_dirs}/firefox/*.*/** r,
+
+        /tmp/ r,
+    /var/tmp/ r,
+  owner @{tmp}/@{hex}.{dmp,extra} rw,
+  owner @{tmp}/firefox/.parentlock w,
+
+  owner /dev/shm/org.mozilla.ipc.@{int}.@{int} r,
+
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/mountinfo r,
+
+  /dev/dri/card@{int} rw,
+  /dev/dri/renderD128 rw,
+  /dev/nvidia@{int} r,
+  /dev/nvidiactl r,
+
+  # Silencer
+  deny owner @{user_share_dirs}/gvfs-metadata/{,*} r,
+
+  include if exists <local/firefox-crashreporter>
+}
+
+# vim:syntax=apparmor

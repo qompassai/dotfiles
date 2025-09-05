@@ -1,0 +1,148 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+# LOGPROF-SUGGEST: no
+
+# Common rules for applications sandboxed using bwrap.
+
+# This abstraction is wide on purpose. It is meant to be used by sandbox
+# applications (bwrap) that have no way to restrict access depending on the
+# application being confined.
+
+  abi <abi/4.0>,
+
+  include <abstractions/audio-client>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.a11y>
+  include <abstractions/consoles>
+  include <abstractions/cups-client>
+  include <abstractions/desktop>
+  include <abstractions/devices-usb>
+  include <abstractions/disks-read>
+  include <abstractions/enchant>
+  include <abstractions/fontconfig-cache-write>
+  include <abstractions/graphics>
+  include <abstractions/gstreamer>
+  include <abstractions/nameservice-strict>
+  include <abstractions/p11-kit>
+  include <abstractions/path>
+  include <abstractions/ssl_certs>
+  include <abstractions/video>
+
+  dbus bus=accessibility,
+  dbus bus=session,
+  dbus bus=system,
+
+  /usr/** r,
+  /usr/share/** rk,
+
+  /etc/{,**} r,
+
+        /.* r,
+        @{lib}/ r,
+  owner /_@{int}_/ w,
+  owner /@{uuid}/ w,
+  owner /var/cache/ldconfig/{,**} rw,
+
+  # Full access to user's data
+  / r,
+  /*/ r,
+  @{MOUNTDIRS}/ r,
+  @{MOUNTS}/ r,
+  @{MOUNTS}/** rwl,
+  owner @{HOME}/ r,
+  owner @{HOME}/.var/app/** rmix,
+  owner @{HOME}/** rwmlk -> @{HOME}/**,
+  owner @{run}/user/@{uid}/ r,
+  owner @{run}/user/@{uid}/** rwlk -> @{run}/user/@{uid}/**,  #aa:lint ignore=too-wide
+  owner @{user_games_dirs}/** rmix,
+
+  #aa:lint ignore=too-wide
+  owner @{tmp}/** rmwk,
+  owner /dev/shm/** rwlk -> /dev/shm/**,
+  owner /var/cache/tmp/** rwlk -> /var/cache/tmp/**,
+  owner /var/tmp/etilqs_@{sqlhex} rw,
+
+  @{att}/@{run}/systemd/inhibit/@{int}.ref rw,
+
+  @{run}/havahi-daemon/socket rw, # Allow access to avahi-daemon socket.
+  @{run}/host/{,**} r,
+  @{run}/pcscd/pcscd.comm rw, # Allow access to pcscd socket.
+  @{run}/utmp rk,
+
+  @{run}/udev/data/c13:@{int}  r,         # for /dev/input/*
+
+  @{sys}/ r,
+  @{sys}/block/ r,
+  @{sys}/bus/ r,
+  @{sys}/bus/*/devices/ r,
+  @{sys}/bus/pci/slots/ r,
+  @{sys}/bus/pci/slots/@{int}-@{int}/address r,
+  @{sys}/bus/pci/slots/@{int}/address r,
+  @{sys}/class/*/ r,
+  @{sys}/devices/** r,
+
+        @{sys}/fs/cgroup/user.slice/* r,
+        @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/* r,
+        @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/* r,
+  owner @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/app.slice/* r,
+
+        @{PROC}/ r,
+        @{PROC}/@{pid}/cgroup r,
+        @{PROC}/@{pid}/cmdline r,
+        @{PROC}/@{pid}/comm rk,
+        @{PROC}/@{pid}/fd/ r,
+        @{PROC}/@{pid}/mountinfo r,
+        @{PROC}/@{pid}/net/** r,
+        @{PROC}/@{pid}/smaps r,
+        @{PROC}/@{pid}/stat r,
+        @{PROC}/@{pid}/statm r,
+        @{PROC}/@{pid}/task/@{tid}/stat r,
+        @{PROC}/@{pid}/task/@{tid}/status r,
+        @{PROC}/bus/pci/devices r,
+        @{PROC}/cmdline r,
+        @{PROC}/driver/** r,
+        @{PROC}/locks r,
+        @{PROC}/pressure/cpu r,
+        @{PROC}/pressure/io r,
+        @{PROC}/pressure/memory r,
+        @{PROC}/sys/fs/inotify/max_user_watches r,
+        @{PROC}/sys/kernel/osrelease r,
+        @{PROC}/sys/kernel/pid_max r,
+        @{PROC}/sys/kernel/sched_autogroup_enabled r,
+        @{PROC}/sys/kernel/yama/ptrace_scope r,
+        @{PROC}/sys/net/core/bpf_jit_enable r,
+        @{PROC}/uptime r,
+        @{PROC}/version r,
+        @{PROC}/zoneinfo r,
+  owner @{PROC}/@{pid}/autogroup rw,
+  owner @{PROC}/@{pid}/clear_refs w,
+  owner @{PROC}/@{pid}/comm rw,
+  owner @{PROC}/@{pid}/environ r,
+  owner @{PROC}/@{pid}/fd/@{int} rw,
+  owner @{PROC}/@{pid}/fdinfo/@{int} r,
+  owner @{PROC}/@{pid}/io r,
+  owner @{PROC}/@{pid}/limits r,
+  owner @{PROC}/@{pid}/loginuid r,
+  owner @{PROC}/@{pid}/mem r,
+  owner @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/net/if_inet6 r,
+  owner @{PROC}/@{pid}/oom_score_adj rw,
+  owner @{PROC}/@{pid}/pagemap r,
+  owner @{PROC}/@{pid}/statm r,
+  owner @{PROC}/@{pid}/task/ r,
+  owner @{PROC}/@{pid}/task/@{tid}/comm rw,
+
+  /dev/hidraw@{int} rw,
+  /dev/input/ r,
+  /dev/input/event@{int} rw,
+  /dev/ptmx rw,
+  /dev/pts/ptmx rw,
+  /dev/tty rw,
+  /dev/udmabuf rw,
+
+  include if exists <abstractions/common/app.d>
+
+# vim:syntax=apparmor

@@ -1,0 +1,44 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{lib}/baloorunner
+@{exec_path} += @{lib}/@{multiarch}/{,libexec/}baloorunner
+profile baloorunner /{{,usr/}lib{,exec,32,64}/baloorunner,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}baloorunner,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}baloorunner} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/deny-sensitive-home>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{bin}/* rpx,
+
+  # Allow to search user files
+  owner @{HOME}/{,**} r,
+  owner @{MOUNTS}/{,**} r,
+  owner @{tmp}/*/{,**} r,
+
+  owner @{user_share_dirs}/baloo/{,**} rwk,
+
+  /tmp/ r,
+
+  @{run}/udev/data/+*:* r,
+  @{run}/udev/data/c@{int}:@{int} r,
+
+  @{sys}/bus/ r,
+  @{sys}/bus/*/devices/ r,
+  @{sys}/class/*/ r,
+  @{sys}/devices/**/uevent r,
+
+  /dev/tty r,
+
+  include if exists <local/baloorunner>
+}
+
+# vim:syntax=apparmor

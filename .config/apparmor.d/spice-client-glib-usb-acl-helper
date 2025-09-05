@@ -1,0 +1,25 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/spice-client-glib-usb-acl-helper
+profile spice-client-glib-usb-acl-helper /{,usr/}lib{,exec,32,64}/spice-client-glib-usb-acl-helper flags=(complain) {
+  include <abstractions/base>
+
+  capability sys_ptrace,
+  capability fowner,
+
+  ptrace (read) peer=virt-manager,
+
+  @{exec_path} mr,
+
+  owner @{PROC}/@{pid}/stat r,
+
+  include if exists <local/spice-client-glib-usb-acl-helper>
+}
+
+# vim:syntax=apparmor

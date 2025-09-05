@@ -1,0 +1,117 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2017-2022 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gnome-keyring-daemon
+profile gnome-keyring-daemon /{,usr/}bin/gnome-keyring-daemon  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.login1.Session>
+  include <abstractions/bus/org.freedesktop.portal.Desktop>
+  include <abstractions/bus/org.gnome.SessionManager>
+
+  capability ipc_lock,
+
+  signal (receive) set=(term) peer=gdm,
+  signal (send) set=(term) peer=ssh-agent,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.keyring{,.*},
+  dbus receive bus=session path=/org/gnome/keyring{,/**}
+       interface=org.gnome.keyring{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/keyring{,/**}
+       interface=org.gnome.keyring{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/keyring{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/keyring{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/keyring{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.keyring{,.*}}"),
+  dbus send bus=session path=/org/gnome/keyring{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.freedesktop.{S,s}ecret{,s}{,.*},
+  dbus receive bus=session path=/org/freedesktop/{S,s}ecret{,s}{,/**}
+       interface=org.freedesktop.{S,s}ecret{,s}{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/freedesktop/{S,s}ecret{,s}{,/**}
+       interface=org.freedesktop.{S,s}ecret{,s}{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/freedesktop/{S,s}ecret{,s}{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/freedesktop/{S,s}ecret{,s}{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/freedesktop/{S,s}ecret{,s}{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.{S,s}ecret{,s}{,.*}}"),
+  dbus send bus=session path=/org/freedesktop/{S,s}ecret{,s}{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  dbus send bus=system path=/org/freedesktop/login1
+       interface=org.freedesktop.login1.Manager
+       member=GetSession
+       peer=(name=org.freedesktop.login1, label="@{p_systemd_logind}"),
+
+  @{exec_path} mr,
+
+  @{bin}/ssh-add   rix,
+  @{bin}/ssh-agent rpx,
+  @{lib}/gcr-ssh-askpass rpux,
+
+  /etc/gcrypt/hwf.deny r,
+
+  owner @{gdm_local_dirs}/ rw,
+  owner @{gdm_share_dirs}/ rw,
+  owner @{gdm_share_dirs}/keyrings/ rw,
+
+  # Keyrings location
+  owner @{user_share_dirs}/keyrings/ rw,
+  owner @{user_share_dirs}/keyrings/* rwl,
+
+  # Seahorse and SSH keys
+  owner @{HOME}/@{XDG_SSH_DIR}/{,**} r,
+
+  owner @{HOME}/.local/ w,
+  owner @{user_share_dirs}/ w,
+  owner @{run}/user/@{uid}/keyring/ rw,
+  owner @{run}/user/@{uid}/keyring/* rw,
+  owner @{run}/user/@{uid}/ssh-askpass.@{rand6}/{,*} rw,
+        @{run}/user/@{uid}/keyring/control r,
+
+  owner @{PROC}/@{pid}/fd/ r,
+
+  include if exists <local/gnome-keyring-daemon>
+}
+
+# vim:syntax=apparmor

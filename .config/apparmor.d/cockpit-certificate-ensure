@@ -1,0 +1,28 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/cockpit/cockpit-certificate-ensure
+profile cockpit-certificate-ensure /{,usr/}lib{,exec,32,64}/cockpit/cockpit-certificate-ensure  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+
+  capability dac_override,
+  capability dac_read_search,
+  capability chown,
+
+  @{exec_path} mr,
+
+  @{lib}/cockpit/cockpit-certificate-helper rpx,
+
+  /etc/cockpit/ws-certs.d/{,*} r,
+
+  owner @{run}/cockpit/tls/server/{,**} rw,
+
+  include if exists <local/cockpit-certificate-ensure>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,31 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+# LOGPROF-SUGGEST: no
+
+# Minimal set of rules for pgrep/pkill.
+
+  abi <abi/4.0>,
+
+  include <abstractions/consoles>
+
+  capability sys_ptrace,
+
+  ptrace read,
+
+  @{bin}/pgrep mr,
+
+  @{sys}/devices/system/node/ r,
+  @{sys}/devices/system/node/node@{int}/meminfo r,
+
+  @{PROC}/ r,
+  @{PROC}/@{pids}/cgroup r,
+  @{PROC}/@{pids}/cmdline r,
+  @{PROC}/@{pids}/environ r,
+  @{PROC}/@{pids}/stat r,
+  @{PROC}/sys/kernel/osrelease r,
+  @{PROC}/uptime r,
+
+  include if exists <abstractions/app/pgrep.d>
+
+# vim:syntax=apparmor

@@ -1,0 +1,44 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/update-cracklib
+profile update-cracklib /{,usr/}{,s}bin/update-cracklib flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  capability dac_read_search,
+
+  @{exec_path} mr,
+
+  @{sh_path}                  rix,
+  @{sbin}/cracklib-format     rix,
+  @{sbin}/cracklib-packer     rpx,
+  @{bin}/env                  rix,
+  @{bin}/file                 rix,
+  @{bin}/find                 rix,
+  @{bin}/{,e}grep             rix,
+  @{bin}/gzip                 rix,
+  @{bin}/install              rix,
+  @{bin}/install              rix,
+  @{bin}/sort                 rix,
+  @{bin}/tr                   rix,
+
+  / r,
+  /usr/share/dict/{,*} r,
+
+  /etc/magic r,
+  /etc/cracklib/cracklib.conf r,
+
+  owner /var/cache/cracklib/{,**} rw,
+
+  owner @{tmp}/sort@{rand6} rw,
+
+  include if exists <local/update-cracklib>
+}
+
+# vim:syntax=apparmor

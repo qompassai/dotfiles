@@ -1,0 +1,120 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# Copyright (C) 2024 Barmogund <set508@proton.me>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/tlp
+profile tlp /{,usr/}{,s}bin/tlp  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.PolicyKit1>
+  include <abstractions/consoles>
+  include <abstractions/devices-usb-read>
+  include <abstractions/disks-read>
+  include <abstractions/nameservice-strict>
+  include <abstractions/perl>
+
+  capability dac_read_search,
+  capability sys_nice,
+  capability sys_rawio,
+  capability sys_tty_config,
+
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{sh_path}                    rix,
+  @{bin}/cat                    rix,
+  @{bin}/chmod                  rix,
+  @{bin}/cp                     rix,
+  @{sbin}/ethtool               rix,
+  @{bin}/flock                  rix,
+  @{bin}/{,e}grep               rix,
+  @{sbin}/hdparm                rpx,
+  @{bin}/head                   rix,
+  @{bin}/id                     rpx,
+  @{sbin}/iw                    rpx,
+  @{bin}/logger                 rix,
+  @{bin}/mktemp                 rix,
+  @{bin}/readlink               rix,
+  @{bin}/rm                     rix,
+  @{bin}/sed                    rix,
+  @{bin}/sort                   rix,
+  @{bin}/systemctl              rcx -> systemctl,
+  @{bin}/touch                  rix,
+  @{bin}/tr                     rix,
+  @{bin}/udevadm                rcx -> udevadm,
+  @{bin}/uname                  rix,
+  @{bin}/timeout                rix,
+  /usr/share/tlp/tlp-readconfs  rix,
+
+  / r,
+
+  /etc/tlp.d/ r,
+  /etc/tlp.d/** rw,
+  /etc/tlp.conf rw,
+
+  /usr/share/tlp/{,**} r,
+
+  /var/lib/tlp/{,**} rw,
+  /var/lib/power-profiles-daemon/state.ini rw,
+
+  owner /tmp/tlp-run.conf_tmp@{rand6} rw,
+
+  owner @{run}/tlp/{,**} rw,
+  owner @{run}/tlp/lock_tlp  rwk,
+
+  @{run}/udev/data/+platform:* r,
+
+  @{sys}/bus/pci/devices/ r,
+  @{sys}/bus/pci/drivers/*/ r,
+  @{sys}/bus/platform/devices/ r,
+  @{sys}/class/drm/ r,
+  @{sys}/class/net/ r,
+  @{sys}/class/power_supply/ r,
+  @{sys}/devices/@{pci}/ r,
+  @{sys}/devices/@{pci}/{,**/}power/control w,
+  @{sys}/devices/@{pci}/**/host@{int}/**/link_power_management_policy w,
+  @{sys}/devices/@{pci}/class r,
+  @{sys}/devices/**/net/**/uevent r,
+  @{sys}/devices/system/cpu/cpufreq/policy@{int}/energy_performance_preference rw,
+  @{sys}/devices/virtual/dmi/id/chassis_type r,
+  @{sys}/devices/virtual/dmi/id/product_version r,
+  @{sys}/devices/virtual/net/**/uevent r,
+  @{sys}/firmware/acpi/platform_profile* rw,
+  @{sys}/firmware/acpi/pm_profile* rw,
+  @{sys}/module/*/parameters/power_save rw,
+  @{sys}/module/*/parameters/power_save_controller rw,
+  @{sys}/module/pcie_aspm/parameters/policy rw,
+
+  owner @{PROC}/sys/fs/xfs/xfssyncd_centisecs rw,
+  owner @{PROC}/sys/kernel/nmi_watchdog rw,
+  owner @{PROC}/sys/vm/dirty_*_centisecs rw,
+  owner @{PROC}/sys/vm/laptop_mode rw,
+
+  profile systemctl flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    capability net_admin,
+
+    include if exists <local/tlp_systemctl>
+  }
+
+  profile udevadm flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/udevadm>
+
+    @{run}/tlp/lock_tlp rw, # file_inherit
+
+    include if exists <local/tlp_udevadm>
+  }
+
+  include if exists <local/tlp>
+}
+
+# vim:syntax=apparmor

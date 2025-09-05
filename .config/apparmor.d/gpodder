@@ -1,0 +1,62 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gpodder
+profile gpodder /{,usr/}bin/gpodder flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/desktop>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/nameservice-strict>
+  include <abstractions/python>
+  include <abstractions/ssl_certs>
+  include <abstractions/user-download-strict>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  @{exec_path} r,
+  @{python_path} r,
+
+  @{bin}/           r,
+  @{sh_path}        rix,
+  @{bin}/uname      rix,
+
+  @{bin}/xdg-settings    rpx,
+  @{open_path}           rpx -> child-open,
+
+  # A/V players
+  @{bin}/smplayer        rpux,
+  @{bin}/vlc             rpux,
+  @{bin}/mpv             rpux,
+
+  /usr/share/gpodder/{,**} r,
+
+  /etc/fstab r,
+  /etc/mime.types r,
+
+  owner @{HOME}/ r,
+  owner @{HOME}/gPodder/ rw,
+  owner @{HOME}/gPodder/** rwk,
+
+  owner @{tmp}/etilqs_@{sqlhex} rw,
+  owner /var/tmp/etilqs_@{sqlhex} rw,
+
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/mountinfo r,
+
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/gpodder>
+}
+
+# vim:syntax=apparmor

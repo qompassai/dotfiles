@@ -1,0 +1,69 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/epiphany
+profile epiphany /{,usr/}bin/epiphany  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/audio-server>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.GeoClue2>
+  include <abstractions/common/bwrap>
+  include <abstractions/common/gnome>
+  include <abstractions/gstreamer>
+  include <abstractions/nameservice-strict>
+  include <abstractions/p11-kit>
+  include <abstractions/ssl_certs>
+  include <abstractions/user-download-strict>
+  include <abstractions/webkit>
+
+  capability dac_override,
+
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{open_path}  rpx -> child-open,
+
+  @{bin}/bwrap           rix,
+
+  /usr/share/enchant*/{,**} r,
+
+  owner @{HOME}/.ephy-download-@{rand6} rw,
+  owner @{HOME}/.ephy-web-app-icon-@{rand6} rw,
+
+  owner @{user_config_dirs}/glib-2.0/ w,
+  owner @{user_config_dirs}/glib-2.0/settings/ w,
+
+  owner @{user_share_dirs}/org.gnome.Epiphany.WebApp_@{hex}/{,**} rw,
+
+  owner @{tmp}/ContentRuleList@{rand6} rw,
+  owner @{tmp}/epiphany-*-@{rand6}/{,**} rw,
+  owner @{tmp}/Serialized@{rand9} rw,
+  owner @{tmp}/WebKit-Media-@{rand6} rw,
+
+  @{sys}/devices/virtual/dmi/id/chassis_type r,
+  @{sys}/fs/cgroup/user.slice/user-@{uid}.slice/user@@{uid}.service/app.slice/app-gnome-org.gnome.Epiphany-@{int}.scope/memory.* r,
+
+        @{PROC}/@{pid}/cgroup r,
+        @{PROC}/sys/net/ipv6/conf/all/disable_ipv6 r,
+        @{PROC}/zoneinfo r,
+  owner @{PROC}/@{pid}/smaps r,
+  owner @{PROC}/@{pid}/statm r,
+
+  deny @{user_share_dirs}/gvfs-metadata/* r,
+
+  /dev/video@{int} rw,
+
+  include if exists <local/epiphany>
+}
+
+# vim:syntax=apparmor

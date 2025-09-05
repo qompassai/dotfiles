@@ -1,0 +1,31 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2017-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/tpacpi-bat
+profile tpacpi-bat /{,usr/}bin/tpacpi-bat flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/perl>
+
+  @{exec_path} mr,
+
+  @{sh_path}        rix,
+  @{bin}/cat        rix,
+
+  # To load the acpi_call module
+  @{bin}/kmod rpx,
+
+  @{PROC}/acpi/call rw,
+
+  @{sys}/devices/virtual/dmi/id/product_version r,
+  @{sys}/devices/**/path r,
+
+  include if exists <local/tpacpi-bat>
+}
+
+# vim:syntax=apparmor

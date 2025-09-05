@@ -1,0 +1,67 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2002-2005 Novell/SUSE
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/wireshark
+profile wireshark /{,usr/}bin/wireshark flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/consoles>
+  include <abstractions/desktop>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/user-download-strict>
+  include <abstractions/user-read-strict>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  signal (send) peer=dumpcap,
+
+  @{exec_path} mr,
+
+  @{bin}/dumpcap          rpx,
+  @{open_path}            rpx -> child-open-browsers,
+
+  @{lib}/@{multiarch}/wireshark/extcap/* rix,
+  @{lib}/@{multiarch}/wireshark/plugins/*/{codecs,epan,wiretap}/*.so mr,
+
+  /usr/share/GeoIP/{,**} r,
+  /usr/share/wireshark/** r,
+
+  /etc/wireshark/init.lua r,
+  /etc/fstab r,
+
+  # For reading pcaps
+  owner @{user_projects_dirs}/{,**} r,
+
+  owner @{HOME}/.wireshark/{,**} rw,
+  owner @{user_config_dirs}/wireshark/{,**} rw,
+
+  owner @{tmp}/wireshark_extcap_ciscodump_@{int}_* rw,
+
+  deny       @{PROC}/sys/kernel/random/boot_id r,
+  deny owner @{PROC}/@{pid}/cmdline r,
+       owner @{PROC}/@{pid}/fd/ r,
+       owner @{PROC}/@{pid}/comm r,
+             @{PROC}/@{pid}/net/dev r,
+             @{PROC}/@{pid}/mountinfo r,
+             @{PROC}/@{pid}/mounts r,
+
+  owner /dev/shm/#@{int} rw,
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/wireshark>
+}
+
+# vim:syntax=apparmor

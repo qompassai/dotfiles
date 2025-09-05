@@ -1,0 +1,43 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/orage
+profile orage /{,usr/}bin/orage flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/gtk>
+  include <abstractions/fonts>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/freedesktop.org>
+  include <abstractions/user-download-strict>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{bin}/globaltime rpx,
+
+  @{open_path}      rpx -> child-open,
+
+  /etc/fstab r,
+
+  owner @{user_config_dirs}/orage/ rw,
+  owner @{user_config_dirs}/orage/* rw,
+
+  owner @{user_share_dirs}/orage/ rw,
+  owner @{user_share_dirs}/orage/* rwk,
+
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/orage>
+}
+
+# vim:syntax=apparmor

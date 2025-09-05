@@ -1,0 +1,56 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,@{multiarch}/}xfce4/xfconf/xfconfd
+profile xfconfd /{,usr/}lib{,exec,32,64}/{,*-linux-gnu*/}xfce4/xfconf/xfconfd flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/xfce>
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.xfce.Xfconf{,.*},
+  dbus receive bus=session path=/org/xfce/Xfconf{,/**}
+       interface=org.xfce.Xfconf{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/xfce/Xfconf{,/**}
+       interface=org.xfce.Xfconf{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/xfce/Xfconf{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/xfce/Xfconf{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/xfce/Xfconf{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.xfce.Xfconf{,.*}}"),
+  dbus send bus=session path=/org/xfce/Xfconf{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  /etc/xdg/{,xdg-xubuntu/}xfce4/xfconf/** r,
+
+  owner @{HOME}/ r,
+
+  owner @{user_config_dirs}/xfce4/ r,
+  owner @{user_config_dirs}/xfce4/xfconf/{,**} rw,
+
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/xfconfd>
+}
+
+# vim:syntax=apparmor

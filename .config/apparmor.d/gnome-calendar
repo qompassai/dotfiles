@@ -1,0 +1,221 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gnome-calendar
+profile gnome-calendar /{,usr/}bin/gnome-calendar flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.login1>
+  include <abstractions/bus/org.freedesktop.NetworkManager>
+  include <abstractions/bus/org.freedesktop.portal.Desktop>
+  include <abstractions/bus/org.freedesktop.timedate1>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/common/gnome>
+  include <abstractions/nameservice-strict>
+  include <abstractions/p11-kit>
+  include <abstractions/ssl_certs>
+
+  network netlink raw,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.Calendar{,.*},
+  dbus receive bus=session path=/org/gnome/Calendar{,/**}
+       interface=org.gnome.Calendar{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/Calendar{,/**}
+       interface=org.gnome.Calendar{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/Calendar{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/Calendar{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/Calendar{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.Calendar{,.*}}"),
+  dbus send bus=session path=/org/gnome/Calendar{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  #aa-dbus own bus=session name=org.gnome.Calendar.SearchProvider interface+=org.gnome.Shell.SearchProvider2
+
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/AddressBook@{int}{,/**}
+       interface=org.gnome.evolution.dataserver.AddressBook@{int}{,.*}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.AddressBook@{int}{,.*}}", label=evolution-addressbook-factory),
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/AddressBook@{int}{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.AddressBook@{int}{,.*}}", label=evolution-addressbook-factory),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/AddressBook@{int}{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.AddressBook@{int}{,.*}}", label=evolution-addressbook-factory),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/AddressBook@{int}{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.AddressBook@{int}{,.*}}", label=evolution-addressbook-factory),
+  dbus receive bus=session path=/org/gnome/evolution/dataserver/AddressBook@{int}{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.AddressBook@{int}{,.*}}", label=evolution-addressbook-factory),
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/Calendar@{int}{,/**}
+       interface=org.gnome.evolution.dataserver.Calendar@{int}{,.*}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Calendar@{int}{,.*}}", label=evolution-calendar-factory),
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/Calendar@{int}{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Calendar@{int}{,.*}}", label=evolution-calendar-factory),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/Calendar@{int}{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Calendar@{int}{,.*}}", label=evolution-calendar-factory),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/Calendar@{int}{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Calendar@{int}{,.*}}", label=evolution-calendar-factory),
+  dbus receive bus=session path=/org/gnome/evolution/dataserver/Calendar@{int}{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Calendar@{int}{,.*}}", label=evolution-calendar-factory),
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/CalendarView{,/**}
+       interface=org.gnome.evolution.dataserver.CalendarView{,.*}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.CalendarView{,.*}}", label=evolution-calendar-factory),
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/CalendarView{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.CalendarView{,.*}}", label=evolution-calendar-factory),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/CalendarView{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.CalendarView{,.*}}", label=evolution-calendar-factory),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/CalendarView{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.CalendarView{,.*}}", label=evolution-calendar-factory),
+  dbus receive bus=session path=/org/gnome/evolution/dataserver/CalendarView{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.CalendarView{,.*}}", label=evolution-calendar-factory),
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/Source{,/**}
+       interface=org.gnome.evolution.dataserver.Source{,.*}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Source{,.*}}", label=evolution-source-registry),
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/Source{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Source{,.*}}", label=evolution-source-registry),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/Source{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Source{,.*}}", label=evolution-source-registry),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/Source{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Source{,.*}}", label=evolution-source-registry),
+  dbus receive bus=session path=/org/gnome/evolution/dataserver/Source{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Source{,.*}}", label=evolution-source-registry),
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/Sources@{int}{,/**}
+       interface=org.gnome.evolution.dataserver.Sources@{int}{,.*}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Sources@{int}{,.*}}", label=evolution-source-registry),
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/Sources@{int}{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Sources@{int}{,.*}}", label=evolution-source-registry),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/Sources@{int}{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Sources@{int}{,.*}}", label=evolution-source-registry),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/Sources@{int}{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Sources@{int}{,.*}}", label=evolution-source-registry),
+  dbus receive bus=session path=/org/gnome/evolution/dataserver/Sources@{int}{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Sources@{int}{,.*}}", label=evolution-source-registry),
+  dbus (send receive) bus=session path=/org/gnome/OnlineAccounts{,/**}
+       interface=org.gnome.OnlineAccounts{,.*}
+       peer=(name="{@{busname},org.gnome.OnlineAccounts{,.*}}", label=goa-daemon),
+  dbus (send receive) bus=session path=/org/gnome/OnlineAccounts{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.OnlineAccounts{,.*}}", label=goa-daemon),
+  dbus send bus=session path=/org/gnome/OnlineAccounts{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.OnlineAccounts{,.*}}", label=goa-daemon),
+  dbus send bus=session path=/org/gnome/OnlineAccounts{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.OnlineAccounts{,.*}}", label=goa-daemon),
+  dbus receive bus=session path=/org/gnome/OnlineAccounts{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.OnlineAccounts{,.*}}", label=goa-daemon),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.gnome.SettingsDaemon.Color{,.*}
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Color{,.*}}", label=gsd-color),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Color{,.*}}", label=gsd-color),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Color{,.*}}", label=gsd-color),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Color{,.*}}", label=gsd-color),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Color{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Color{,.*}}", label=gsd-color),
+  dbus (send receive) bus=system path=/org/freedesktop/GeoClue2{,/**}
+       interface=org.freedesktop.GeoClue2{,.*}
+       peer=(name="{@{busname},org.freedesktop.GeoClue2{,.*}}", label="@{p_geoclue}"),
+  dbus (send receive) bus=system path=/org/freedesktop/GeoClue2{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.GeoClue2{,.*}}", label="@{p_geoclue}"),
+  dbus send bus=system path=/org/freedesktop/GeoClue2{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.GeoClue2{,.*}}", label="@{p_geoclue}"),
+  dbus send bus=system path=/org/freedesktop/GeoClue2{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.GeoClue2{,.*}}", label="@{p_geoclue}"),
+  dbus receive bus=system path=/org/freedesktop/GeoClue2{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.GeoClue2{,.*}}", label="@{p_geoclue}"),
+
+  dbus send bus=session path=/org/gnome/evolution/dataserver/SourceManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name=:*, label=evolution-source-registry),
+
+  @{exec_path} mr,
+  @{open_path}  rpx -> child-open-help,
+
+  /usr/share/evolution-data-server/{,**} r,
+  /usr/share/libgweather/Locations.xml r,
+
+  owner @{tmp}/pid-@{pid}/*.ics r,
+
+  include if exists <local/gnome-calendar>
+}
+
+# vim:syntax=apparmor

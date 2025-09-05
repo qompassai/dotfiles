@@ -1,0 +1,18 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/cni/bridge /opt/cni/bin/bridge
+profile cni-bridge /{{,usr/}lib{,exec,32,64}/cni/bridge,opt/cni/bin/bridge} flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} mr,
+
+  include if exists <local/cni-bridge>
+}
+
+# vim:syntax=apparmor

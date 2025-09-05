@@ -1,0 +1,91 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gnome-clocks
+profile gnome-clocks /{,usr/}bin/gnome-clocks flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.portal.Desktop>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/common/gnome>
+  include <abstractions/gstreamer>
+  include <abstractions/nameservice-strict>
+
+  network netlink raw,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.clocks{,.*},
+  dbus receive bus=session path=/org/gnome/clocks{,/**}
+       interface=org.gnome.clocks{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/clocks{,/**}
+       interface=org.gnome.clocks{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/clocks{,/**}
+       interface=org.gtk.Actions
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/clocks{,/**}
+       interface=org.gtk.Actions
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/clocks{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/clocks{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/clocks{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.clocks{,.*}}"),
+  dbus send bus=session path=/org/gnome/clocks{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.clocks.SearchProvider{,.*},
+  dbus receive bus=session path=/org/gnome/clocks/SearchProvider{,/**}
+       interface=org.gnome.clocks.SearchProvider{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/clocks/SearchProvider{,/**}
+       interface=org.gnome.clocks.SearchProvider{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/clocks/SearchProvider{,/**}
+       interface=org.gnome.Shell.SearchProvider2
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/clocks/SearchProvider{,/**}
+       interface=org.gnome.Shell.SearchProvider2
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/clocks/SearchProvider{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/clocks/SearchProvider{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/clocks/SearchProvider{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.clocks.SearchProvider{,.*}}"),
+  dbus send bus=session path=/org/gnome/clocks/SearchProvider{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+  @{open_path}  rpx -> child-open-help,
+
+  include if exists <local/gnome-clocks>
+}
+
+# vim:syntax=apparmor

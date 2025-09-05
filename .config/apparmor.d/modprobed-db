@@ -1,0 +1,48 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/modprobed-db
+profile modprobed-db /{,usr/}bin/modprobed-db flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{sh_path}           rix,
+  @{bin}/cat           rix,
+  @{bin}/cp            rix,
+  @{bin}/cut           rix,
+  @{bin}/{m,g,}awk     rix,
+  @{bin}/getent        rix,
+  @{bin}/{,e}grep      rix,
+  @{bin}/logname       rix,
+  @{bin}/md5sum        rix,
+  @{bin}/rm            rix,
+  @{bin}/sed           rix,
+  @{bin}/sort          rix,
+  @{bin}/uniq          rix,
+  @{bin}/wc            rix,
+
+  /usr/share/modprobed-db/** r,
+  /usr/share/terminfo/** r,
+
+  owner @{user_config_dirs}/modprobed-db.conf rw,
+  owner @{user_config_dirs}/modprobed.db rw,
+
+  owner @{tmp}/.inmem rw,
+  owner @{tmp}/.potential_new_db rw,
+
+        @{PROC}/modules r,
+  owner @{PROC}/@{pid}/loginuid r,
+
+  /dev/tty rw,
+
+  include if exists <local/modprobed-db>
+}
+
+# vim:syntax=apparmor

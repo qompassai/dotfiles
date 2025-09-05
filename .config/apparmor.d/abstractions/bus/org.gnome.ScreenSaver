@@ -1,0 +1,37 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+  abi <abi/4.0>,
+
+  # DBus.Properties: read all properties from the interface
+  dbus send bus=session path=/org/gnome/ScreenSaver{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll}
+       peer=(name="{@{busname},org.gnome.ScreenSaver{,.*}}", label=gjs-console),
+
+  # DBus.Properties: receive property changed events
+  dbus receive bus=session path=/org/gnome/ScreenSaver{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member=PropertiesChanged
+       peer=(name="{@{busname},org.gnome.ScreenSaver{,.*}}", label=gjs-console),
+
+  # DBus.Introspectable: allow clients to introspect the service
+  dbus send bus=session path=/org/gnome/ScreenSaver{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.ScreenSaver{,.*}}", label=gjs-console),
+
+  dbus send bus=session path=/org/gnome/ScreenSaver
+       interface=org.gnome.ScreenSaver
+       member=GetActive
+       peer=(name="@{busname}", label=gjs-console),
+
+  dbus receive bus=session path=/org/gnome/ScreenSaver
+       interface=org.gnome.ScreenSaver
+       member={ActiveChanged,WakeUpScreen}
+       peer=(name="@{busname}", label=gjs-console),
+
+  include if exists <abstractions/bus/org.gnome.ScreenSaver.d>
+
+# vim:syntax=apparmor

@@ -1,0 +1,40 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2015-2020 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/volumeicon
+profile volumeicon /{,usr/}bin/volumeicon flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/dri-enumerate>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/desktop>
+  include <abstractions/mesa>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  # Start the PulseAudio sound mixer
+  @{sh_path}           rix,
+  @{bin}/pavucontrol  rpux,
+  @{bin}/pulseeffects rpux,
+
+  /usr/share/volumeicon/** r,
+
+  /var/lib/dbus/machine-id r,
+  /etc/machine-id r,
+
+  owner @{user_config_dirs}/volumeicon/ rw,
+  owner @{user_config_dirs}/volumeicon/volumeicon* rw,
+
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/volumeicon>
+}
+
+# vim:syntax=apparmor

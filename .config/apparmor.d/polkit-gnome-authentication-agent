@@ -1,0 +1,34 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{lib}/@{multiarch}/{,libexec/}polkit-gnome-authentication-agent-1
+@{exec_path} += @{lib}/policykit-1-gnome/polkit-gnome-authentication-agent-1
+@{exec_path} += @{lib}/polkit-gnome-authentication-agent-1
+@{exec_path} += @{lib}/polkit-gnome/polkit-gnome-authentication-agent-1
+profile polkit-gnome-authentication-agent /{{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}polkit-gnome-authentication-agent-1,{,usr/}lib{,exec,32,64}/policykit-1-gnome/polkit-gnome-authentication-agent-1,{,usr/}lib{,exec,32,64}/polkit-gnome-authentication-agent-1,{,usr/}lib{,exec,32,64}/polkit-gnome/polkit-gnome-authentication-agent-1,{,usr/}lib{,exec,32,64}/polkit-gnome-authentication-agent-1,{,usr/}lib{,exec,32,64}/polkit-gnome/polkit-gnome-authentication-agent-1} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/bus-accessibility>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/nameservice-strict>
+  include <abstractions/dconf-write>
+  include <abstractions/gnome-strict>
+
+  signal (send) set=(term) peer=polkit-agent-helper,
+
+  @{exec_path} mr,
+
+  @{lib}/polkit-[0-9]/polkit-agent-helper-[0-9] rpx,
+  @{lib}/polkit-agent-helper-[0-9] rpx,
+
+  @{PROC}/@{pid}/cgroup r,
+
+  include if exists <local/polkit-gnome-authentication-agent>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,27 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/e2image
+profile e2image /{,usr/}{,s}bin/e2image flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/disks-write>
+  include <abstractions/user-download-strict>
+
+  @{exec_path} mr,
+
+  # A place for the metadata image file
+  owner @{user_img_dirs}/{,**} rwk,
+
+        @{PROC}/swaps r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  include if exists <local/e2image>
+}
+
+# vim:syntax=apparmor

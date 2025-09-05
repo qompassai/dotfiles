@@ -1,0 +1,21 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 valoq <valoq@mailbox.org>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/vendor_perl/exiftool
+profile exiftool /{,usr/}bin/vendor_perl/exiftool flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/perl>
+  include <abstractions/user-read-strict>
+  include <abstractions/user-write-strict>
+
+  @{exec_path} mr,
+
+  include if exists <local/exiftool>
+}
+
+# vim:syntax=apparmor

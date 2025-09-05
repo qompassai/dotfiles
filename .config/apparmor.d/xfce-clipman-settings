@@ -1,0 +1,53 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xfce4-clipman-settings
+profile xfce-clipman-settings /{,usr/}bin/xfce4-clipman-settings flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/xfce>
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.xfce.clipman.settings{,.*},
+  dbus receive bus=session path=/org/xfce/clipman/settings{,/**}
+       interface=org.xfce.clipman.settings{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/xfce/clipman/settings{,/**}
+       interface=org.xfce.clipman.settings{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/xfce/clipman/settings{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/xfce/clipman/settings{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/xfce/clipman/settings{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.xfce.clipman.settings{,.*}}"),
+  dbus send bus=session path=/org/xfce/clipman/settings{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{open_path} rpx -> child-open-help,
+
+  /etc/xdg/xfce4/panel/xfce4-clipman-actions.xml r,
+
+  owner @{user_config_dirs}/xfce4/panel/xfce4-clipman-actions.xml rw,
+
+  include if exists <local/xfce-clipman-settings>
+}
+
+# vim:syntax=apparmor

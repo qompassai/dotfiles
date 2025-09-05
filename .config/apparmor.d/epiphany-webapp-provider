@@ -1,0 +1,20 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/epiphany-webapp-provider
+profile epiphany-webapp-provider /{,usr/}lib{,exec,32,64}/epiphany-webapp-provider flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} mr,
+
+  owner @{user_share_dirs}/ r,
+
+  include if exists <local/epiphany-webapp-provider>
+}
+
+# vim:syntax=apparmor

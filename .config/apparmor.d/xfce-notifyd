@@ -1,0 +1,86 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,@{multiarch}/}xfce4/notifyd/xfce4-notifyd
+profile xfce-notifyd /{,usr/}lib{,exec,32,64}/{,*-linux-gnu*/}xfce4/notifyd/xfce4-notifyd flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/xfce>
+
+  # TODO: local only
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
+  network netlink raw,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.xfce.Notifyd{,.*},
+  dbus receive bus=session path=/org/xfce/Notifyd{,/**}
+       interface=org.xfce.Notifyd{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/xfce/Notifyd{,/**}
+       interface=org.xfce.Notifyd{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/xfce/Notifyd{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/xfce/Notifyd{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/xfce/Notifyd{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.xfce.Notifyd{,.*}}"),
+  dbus send bus=session path=/org/xfce/Notifyd{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.freedesktop.Notifications{,.*},
+  dbus receive bus=session path=/org/freedesktop/Notifications{,/**}
+       interface=org.freedesktop.Notifications{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/freedesktop/Notifications{,/**}
+       interface=org.freedesktop.Notifications{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/freedesktop/Notifications{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/freedesktop/Notifications{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/freedesktop/Notifications{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.Notifications{,.*}}"),
+  dbus send bus=session path=/org/freedesktop/Notifications{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  owner @{user_cache_dirs}/xfce4/notifyd/ rw,
+  owner @{user_cache_dirs}/xfce4/notifyd/** rwk,
+
+  include if exists <local/xfce-notifyd>
+}
+
+# vim:syntax=apparmor

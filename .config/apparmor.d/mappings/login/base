@@ -1,0 +1,25 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2025 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+# It is used by login to run pre login scripts (as root) such as the motd.
+# After the login, Apparmor libpam will transition to the roles defined in
+# other files under <mappings/login>
+
+  @{shells_path} rcx -> shell,
+
+  profile shell  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+    include <abstractions/shells>
+
+    @{shells_path}    rix,
+    @{bin}/env        rix,
+
+
+
+
+    include if exists <local/mappings/login/shell>
+  }
+
+# vim:syntax=apparmor

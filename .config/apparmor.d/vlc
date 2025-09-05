@@ -1,0 +1,140 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2017-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/{c,}vlc
+profile vlc /{,usr/}bin/{c,}vlc flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.a11y>
+  include <abstractions/bus/org.freedesktop.ScreenSaver>
+  include <abstractions/bus/org.freedesktop.secrets>
+  include <abstractions/bus/org.kde.kwalletd>
+  include <abstractions/bus/org.kde.StatusNotifierWatcher>
+  include <abstractions/dconf-write>
+  include <abstractions/desktop>
+  include <abstractions/devices-usb>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/gstreamer>
+  include <abstractions/ibus>
+  include <abstractions/nameservice-strict>
+  include <abstractions/qt5-settings-write>
+  include <abstractions/ssl_certs>
+  include <abstractions/user-download-strict>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.mpris.MediaPlayer2.vlc{,.*},
+  dbus receive bus=session path=/org/mpris/MediaPlayer2/vlc{,/**}
+       interface=org.mpris.MediaPlayer2.vlc{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/mpris/MediaPlayer2/vlc{,/**}
+       interface=org.mpris.MediaPlayer2.vlc{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/mpris/MediaPlayer2/vlc{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/mpris/MediaPlayer2/vlc{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/mpris/MediaPlayer2/vlc{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.mpris.MediaPlayer2.vlc{,.*}}"),
+  dbus send bus=session path=/org/mpris/MediaPlayer2/vlc{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/mpris/MediaPlayer2/Player{,/**}
+       interface=org.mpris.MediaPlayer2.Player{,.*}
+       peer=(name="{@{busname},org.mpris.MediaPlayer2.Player{,.*}}", label=unconfined),
+  dbus (send receive) bus=session path=/org/mpris/MediaPlayer2/Player{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.mpris.MediaPlayer2.Player{,.*}}", label=unconfined),
+  dbus send bus=session path=/org/mpris/MediaPlayer2/Player{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.mpris.MediaPlayer2.Player{,.*}}", label=unconfined),
+  dbus send bus=session path=/org/mpris/MediaPlayer2/Player{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.mpris.MediaPlayer2.Player{,.*}}", label=unconfined),
+  dbus receive bus=session path=/org/mpris/MediaPlayer2/Player{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.mpris.MediaPlayer2.Player{,.*}}", label=unconfined),
+
+  @{exec_path} mrix,
+
+  @{open_path}           rpx -> child-open-help,
+  @{bin}/xdg-screensaver rpx,
+
+  /usr/share/vlc/{,**} r,
+
+  /etc/fstab r,
+
+  owner @{HOME}/ r,
+  owner @{MOUNTS}/ r,
+
+  owner @{user_music_dirs}/{,**} rw,
+  owner @{user_pictures_dirs}/{,**} rw,
+  owner @{user_torrents_dirs}/{,**} rw,
+  owner @{user_videos_dirs}/{,**} rw,
+
+  owner @{user_cache_dirs}/vlc/ rw,
+  owner @{user_cache_dirs}/vlc/{,**} rw,
+
+  owner @{user_config_dirs}/vlc/ rw,
+  owner @{user_config_dirs}/vlc/** rwkl -> @{user_config_dirs}/vlc/#@{int},
+
+  owner @{user_share_dirs}/vlc/{,**} rw,
+
+  owner @{run}/user/@{uid}/gvfs/smb-share:server=*,share=**/ r,
+  owner @{run}/user/@{uid}/gvfs/smb-share:server=*,share=** r,
+
+        @{PROC}/@{pids}/net/if_inet6 r,
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+  owner @{PROC}/@{pid}/task/@{tid}/comm rw,
+
+  @{run}/mount/utab r,
+
+  @{sys}/devices/virtual/dmi/id/board_name r,
+  @{sys}/devices/virtual/dmi/id/board_vendor r,
+  @{sys}/devices/virtual/dmi/id/board_version r,
+  @{sys}/devices/virtual/dmi/id/product_name r,
+  @{sys}/devices/virtual/dmi/id/product_version r,
+  @{sys}/devices/virtual/dmi/id/sys_vendor r,
+
+        /dev/shm/#@{int} rw,
+        /dev/snd/ r,
+        /dev/tty r,
+        /dev/video@{int} rw,
+  owner /dev/tty@{int} rw,
+
+  # Silencer
+  deny @{lib}/@{multiarch}/vlc/{,**} w,
+  deny @{user_share_dirs}/gvfs-metadata/{*,} r,
+
+  include if exists <local/vlc>
+}
+
+# vim:syntax=apparmor

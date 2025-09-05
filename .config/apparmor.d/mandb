@@ -1,0 +1,40 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/mandb
+profile mandb /{,usr/}bin/mandb flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+
+  capability dac_read_search,
+
+  @{exec_path} mr,
+
+  /etc/man_db.conf r,
+  /etc/manpath.config r,
+
+  /usr/share/man/{,**} r,
+  /usr/local/man/{,**} r,
+  /usr/local/share/man/{,**} r,
+
+  /usr/{,share/}man/{,**} r,
+  /usr/local/{,share/}man/{,**} r,
+
+  /usr/share/**/man/man@{u8}/*.@{int}.gz r,
+
+  owner /var/cache/man/ rw,
+  owner /var/cache/man/** rwk,
+
+  owner @{user_share_dirs}/man/** rwk,
+
+  include if exists <local/mandb>
+}
+
+# vim:syntax=apparmor

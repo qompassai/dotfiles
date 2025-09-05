@@ -1,0 +1,27 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = /usr/share/grub/grub-check-signatures
+profile grub-check-signatures /usr/share/grub/grub-check-signatures flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/common/debconf>
+
+  @{exec_path} mr,
+
+  @{bin}/{m,g,}awk    ix,
+  @{bin}/mktemp       ix,
+  @{bin}/od           ix,
+
+  owner @{tmp}/tmp.@{rand10}/ rw,
+
+  @{sys}/firmware/efi/efivars/SecureBoot-@{uuid} r,
+
+  include if exists <local/grub-check-signatures>
+}
+
+# vim:syntax=apparmor

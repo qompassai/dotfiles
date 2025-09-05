@@ -1,0 +1,87 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2022 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/fwupdmgr
+profile fwupdmgr /{,usr/}bin/fwupdmgr  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.NetworkManager>
+  include <abstractions/dconf-write>
+  include <abstractions/freedesktop.org>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+
+  capability sys_nice,
+
+  signal send,
+
+  network inet stream,
+  network inet6 stream,
+  network inet dgram,
+  network inet6 dgram,
+  network netlink raw,
+
+  dbus (send receive) bus=system path=/
+       interface=org.freedesktop.fwupd{,.*}
+       peer=(name="{@{busname},org.freedesktop.fwupd{,.*}}", label="@{p_fwupd}"),
+  dbus (send receive) bus=system path=/
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.fwupd{,.*}}", label="@{p_fwupd}"),
+  dbus send bus=system path=/
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.fwupd{,.*}}", label="@{p_fwupd}"),
+  dbus send bus=system path=/
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.fwupd{,.*}}", label="@{p_fwupd}"),
+  dbus receive bus=system path=/
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.fwupd{,.*}}", label="@{p_fwupd}"),
+
+  @{exec_path} mr,
+
+  @{bin}/dbus-launch   cx -> bus,
+  @{bin}/pkttyagent    px,
+
+  /usr/share/terminfo/** r,
+
+  /etc/inputrc r,
+  /etc/machine-id r,
+
+  owner /var/cache/private/fwupdmgr/fwupd/lvfs-metadata.xml.gz{,.asc}.* rw,
+  owner /var/cache/private/fwupdmgr/fwupd/lvfs-metadata.xml.gz{,.asc} rw,
+
+  owner /var/lib/fwupd/.cache/ w,
+
+        @{user_cache_dirs}/dconf/user rw,
+  owner @{user_cache_dirs}/ rw,
+  owner @{user_cache_dirs}/fwupd/ rw,
+  owner @{user_cache_dirs}/fwupd/lvfs-metadata.xml.gz{,.*} rw,
+
+  owner @{run}/systemd/.cache/ rw,
+
+  owner @{PROC}/@{pid}/fd/ r,
+
+  /dev/i2c-@{int} rw,
+  /dev/tty rw,
+  /dev/pts/@{int} rw,
+
+  profile bus  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/bus>
+    include if exists <local/fwupdmgr_bus>
+  }
+
+  include if exists <local/fwupdmgr>
+}
+
+# vim:syntax=apparmor

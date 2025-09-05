@@ -1,0 +1,58 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/mozilla/kmozillahelper
+profile firefox-kmozillahelper /{,usr/}lib{,exec,32,64}/mozilla/kmozillahelper flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/graphics>
+  include <abstractions/kde-globals-write>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+  include <abstractions/qt5-settings-write>
+  include <abstractions/recent-documents-write>
+  include <abstractions/thumbnails-cache-read>
+
+  ptrace (read) peer=firefox,
+
+  @{exec_path} mr,
+
+  @{lib}/libheif/            r,
+  @{lib}/libheif/*.so*      rm,
+
+  /usr/share/kservices{5,6}/{,**} r,
+
+  /etc/xdg/menus/ r,
+  /etc/xdg/menus/applications-merged/ r,
+
+  owner @{HOME}/@{XDG_DESKTOP_DIR}/ r,
+  owner @{HOME}/@{XDG_DESKTOP_DIR}/*.desktop r,
+
+  owner @{user_config_dirs}/kmozillahelperrc r,
+  owner @{user_config_dirs}/kmozillahelperrc.@{rand6} rwl,
+  owner @{user_config_dirs}/menus/ r,
+  owner @{user_config_dirs}/menus/applications-merged/ r,
+
+  owner @{user_share_dirs}/kservices5/ r,
+  owner @{user_share_dirs}/kservices5/searchproviders/ r,
+
+  owner @{run}/user/@{uid}/kmozillahelper@{rand6}.@{int}.kioworker.socket wl,
+  owner @{run}/user/@{uid}/xauth_@{rand6} rl,
+
+  @{run}/udev/data/+usb:* r,              # For /dev/bus/usb/**
+
+  @{run}/udev/data/c189:@{int} r,     # for /dev/bus/usb/**
+
+  owner @{PROC}/@{pid}/mountinfo r,
+
+  /dev/tty r,
+
+  include if exists <local/firefox-kmozillahelper>
+}
+
+# vim:syntax=apparmor

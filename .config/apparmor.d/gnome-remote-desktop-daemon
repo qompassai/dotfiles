@@ -1,0 +1,80 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/gnome-remote-desktop-daemon
+profile gnome-remote-desktop-daemon /{,usr/}lib{,exec,32,64}/gnome-remote-desktop-daemon flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.PolicyKit1>
+  include <abstractions/dconf-write>
+  include <abstractions/gnome-strict>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+
+  network inet dgram,
+  network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
+  network netlink raw,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.gnome.RemoteDesktop{,.*},
+  dbus receive bus=system path=/org/gnome/RemoteDesktop{,/**}
+       interface=org.gnome.RemoteDesktop{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/gnome/RemoteDesktop{,/**}
+       interface=org.gnome.RemoteDesktop{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/gnome/RemoteDesktop{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/gnome/RemoteDesktop{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/gnome/RemoteDesktop{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.RemoteDesktop{,.*}}"),
+  dbus send bus=system path=/org/gnome/RemoteDesktop{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/gnome/DisplayManager{,/**}
+       interface=org.gnome.DisplayManager{,.*}
+       peer=(name="{@{busname},org.gnome.DisplayManager{,.*}}", label=gdm),
+  dbus (send receive) bus=system path=/org/gnome/DisplayManager{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.DisplayManager{,.*}}", label=gdm),
+  dbus send bus=system path=/org/gnome/DisplayManager{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.DisplayManager{,.*}}", label=gdm),
+  dbus send bus=system path=/org/gnome/DisplayManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.DisplayManager{,.*}}", label=gdm),
+  dbus receive bus=system path=/org/gnome/DisplayManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.DisplayManager{,.*}}", label=gdm),
+
+  @{exec_path} mr,
+
+  /usr/share/gnome-remote-desktop/{,**} r,
+
+  owner /var/lib/gnome-remote-desktop//{,**} r,
+
+  include if exists <local/gnome-remote-desktop-daemon>
+}
+
+# vim:syntax=apparmor

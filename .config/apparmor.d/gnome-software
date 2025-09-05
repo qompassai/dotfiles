@@ -1,0 +1,170 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gnome-software
+profile gnome-software /{,usr/}bin/gnome-software flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/common/gnome>
+  include <abstractions/fontconfig-cache-write>
+  include <abstractions/nameservice-strict>
+  include <abstractions/p11-kit>
+  include <abstractions/ssl_certs>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  mount fstype=fuse.revokefs-fuse options=(rw, nosuid, nodev) -> /var/tmp/flatpak-cache-*/*/,
+  umount /var/tmp/flatpak-cache-*/*/,
+
+  @{exec_path} mr,
+
+  @{bin}/baobab              rpux,
+  @{bin}/bwrap               rpx -> flatpak-app,
+  @{bin}/fusermount{,3}      rcx -> fusermount,
+  @{bin}/gpg{,2}             rcx -> gpg,
+  @{bin}/gpgconf             rcx -> gpg,
+  @{bin}/gpgsm               rcx -> gpg,
+  @{lib}/revokefs-fuse       rix,
+  @{open_path}               rpx -> child-open,
+
+  /usr/share/app-info/{,**} r,
+  /usr/share/appdata/{,**} r,
+  /usr/share/flatpak/remotes.d/ r,
+  /usr/share/metainfo/{,**} r,
+  /usr/share/swcatalog/{,**} r,
+  /usr/share/xml/iso-codes/{,**} r,
+
+  /etc/appstream.conf r,
+  /etc/flatpak/remotes.d/{,**} r,
+  /etc/PackageKit/Vendor.conf r,
+  /etc/pulse/client.conf r,
+
+  /var/lib/dbus/machine-id r,
+  /etc/machine-id r,
+
+  /var/cache/app-info/icons/**.png r,
+  /var/cache/app-info/xmls/{,**} r,
+  /var/cache/swcatalog/xml/{,**} r,
+
+  /var/lib/apt/lists/*.yml.gz r,
+
+  /var/lib/flatpak/app/{,**} r,
+  /var/lib/flatpak/appstream/{,**} r,
+  /var/lib/flatpak/repo/{,**} r,
+  /var/lib/flatpak/runtime/{,**} r,
+
+  /var/lib/PackageKit/offline-update-competed r,
+  /var/lib/PackageKit/prepared-update r,
+  /var/lib/swcatalog/** r,
+
+  /var/tmp/flatpak-cache-*/ rw,
+  /var/tmp/flatpak-cache-*/** rwkl,
+  /var/tmp/#@{int} rw,
+
+  owner @{HOME}/.var/app/{,**} rw,
+
+  owner @{user_download_dirs}/*.flatpakref r,
+
+  owner @{user_cache_dirs}/flatpak/{,**} rwl,
+
+  owner @{user_config_dirs}/flatpak/{,**} r,
+  owner @{user_config_dirs}/pulse/*.conf r,
+
+  owner @{user_share_dirs}/ r,
+  owner @{user_share_dirs}/flatpak/.changed w,
+  owner @{user_share_dirs}/flatpak/{app,runtime}/ r,
+  owner @{user_share_dirs}/flatpak/{app,runtime}/*/ r,
+  owner @{user_share_dirs}/flatpak/{app,runtime}/*/**/@{hex64}/deploy r,
+  owner @{user_share_dirs}/flatpak/{app,runtime}/*/**/@{hex64}/metadata r,
+  owner @{user_share_dirs}/flatpak/{app,runtime}/*/*/ r,
+  owner @{user_share_dirs}/flatpak/overrides/* r,
+  owner @{user_share_dirs}/flatpak/repo/ rw,
+  owner @{user_share_dirs}/flatpak/repo/** rwl -> @{user_share_dirs}/flatpak/repo/**,
+
+  owner @{tmp}/ostree-gpg-@{rand6}/ rw,
+  owner @{tmp}/ostree-gpg-@{rand6}/** rwkl -> /tmp/ostree-gpg-@{rand6}/**,
+  owner @{tmp}/#@{int} rw,
+
+  owner @{run}/user/@{uid}/.dbus-proxy/ rw,
+  owner @{run}/user/@{uid}/.dbus-proxy/a11y-bus-proxy-@{rand6} rw,
+  owner @{run}/user/@{uid}/.dbus-proxy/session-bus-proxy-@{rand6} rw,
+  owner @{run}/user/@{uid}/.dbus-proxy/system-bus-proxy-@{rand6} rw,
+  owner @{run}/user/@{uid}/.flatpak-cache rw,
+  owner @{run}/user/@{uid}/.flatpak/{,**} rwl,
+  owner @{run}/user/@{uid}/.flatpak/**/*.ref rwk,
+  owner @{run}/user/@{uid}/app/{,*/} rw,
+
+  owner /dev/shm/flatpak-com.*/ rw,
+  owner /dev/shm/flatpak-com.*/.flatpak-tmpdir rw,
+
+  @{att}/@{run}/systemd/inhibit/@{int}.ref rw,
+  @{run}/systemd/sessions/@{int} r,
+  @{run}/systemd/users/@{uid} r,
+
+  @{sys}/module/nvidia/version r,
+
+        @{PROC}/@{pids}/mounts r,
+        @{PROC}/1/cgroup r,
+        @{PROC}/sys/fs/pipe-max-size r,
+        @{PROC}/sys/net/ipv6/conf/all/disable_ipv6 r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/fdinfo/@{int} r,
+
+  /dev/fuse rw,
+
+  deny owner @{user_share_dirs}/gvfs-metadata/* r,
+
+  profile gpg flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/gpg{,2}  mr,
+    @{bin}/gpgconf  mr,
+    @{bin}/gpgsm    mr,
+
+    @{bin}/gpg-agent         rix,
+    @{bin}/gpg-connect-agent rix,
+    @{lib}/{,gnupg/}scdaemon rix,
+
+    @{HOME}/@{XDG_GPG_DIR}/*.conf r,
+
+          @{tmp}/ r,
+    owner @{tmp}/ostree-gpg-@{rand6}/ r,
+    owner @{tmp}/ostree-gpg-@{rand6}/** rwkl -> /tmp/ostree-gpg-@{rand6}/**,
+
+    owner @{run}/user/@{uid}/ r,
+    owner @{run}/user/@{uid}/gnupg/ rw,
+    owner @{run}/user/@{uid}/gnupg/d.@{rand}/ rw,
+    owner @{run}/user/@{uid}/gnupg/d.@{rand}/S.gpg-agent{,.ssh,.browser,.extra} rw,
+    owner @{run}/user/@{uid}/gnupg/d.@{rand}/S.scdaemon rw,
+    owner @{run}/user/@{uid}/gnupg/S.scdaemon rw,
+
+    owner @{PROC}/@{pid}/fd/ r,
+    owner @{PROC}/@{pid}/task/@{tid}/comm rw,
+
+    include if exists <local/gnome-software_gpg>
+  }
+
+  profile fusermount flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/fusermount>
+
+    capability setuid,
+
+    mount fstype=fuse.revokefs-fuse options=(rw, nosuid, nodev) -> /var/tmp/flatpak-cache-*/*/,
+    umount /var/tmp/flatpak-cache-*/*/,
+
+    include if exists <local/gnome-software_fusermount>
+  }
+
+  include if exists <local/gnome-software>
+}
+
+# vim:syntax=apparmor

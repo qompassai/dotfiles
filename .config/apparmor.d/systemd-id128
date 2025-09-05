@@ -1,0 +1,23 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/systemd-id128
+profile systemd-id128 /{,usr/}bin/systemd-id128 flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  @{exec_path} mr,
+
+  /etc/machine-id r,
+
+  @{PROC}/sys/kernel/random/boot_id r,
+
+  include if exists <local/systemd-id128>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,114 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{name} = {F,f}ree{T,t}ube{,-vue}
+@{lib_dirs} = @{lib}/@{name} /opt/@{name}
+@{config_dirs} = @{user_config_dirs}/@{name}
+@{cache_dirs} = @{user_cache_dirs}/@{name}
+
+@{exec_path} = @{bin}/@{name} @{lib_dirs}/@{name}
+profile freetube /{{,usr/}bin/{F,f}ree{T,t}ube{,-vue},{,usr/}lib{,exec,32,64}/{F,f}ree{T,t}ube{,-vue}/{F,f}ree{T,t}ube{,-vue},opt/{F,f}ree{T,t}ube{,-vue}/{F,f}ree{T,t}ube{,-vue}}  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.freedesktop.ScreenSaver>
+  include <abstractions/bus/org.gnome.SessionManager>
+  include <abstractions/common/electron>
+  include <abstractions/consoles>
+  include <abstractions/user-download-strict>
+  include <abstractions/video>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.mpris.MediaPlayer2.freetube{,.*},
+  dbus receive bus=session path=/org/mpris/MediaPlayer2
+       interface=org.mpris.MediaPlayer2.freetube{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/mpris/MediaPlayer2
+       interface=org.mpris.MediaPlayer2.freetube{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/mpris/MediaPlayer2
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/mpris/MediaPlayer2
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/mpris/MediaPlayer2
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.mpris.MediaPlayer2.freetube{,.*}}"),
+  dbus send bus=session path=/org/mpris/MediaPlayer2
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mrix,
+
+  @{open_path}         rpx -> child-open-strict,
+
+
+  @{bin}/xdg-settings  rpx -> freetube//&xdg-settings,
+
+  deny @{sys}/devices/@{pci}/usb@{int}/** r,
+  deny /dev/ r,
+
+  # Stacked profile: xdg-settings
+  include <abstractions/consoles>
+  include <abstractions/freedesktop.org>
+  @{sh_path}       rix,
+  @{bin}/{,e}grep  rix,
+  @{bin}/basename  rix,
+  @{bin}/cat        ix,
+  @{bin}/cut       rix,
+  @{bin}/head       ix,
+  @{bin}/mkdir      ix,
+  @{bin}/mktemp     ix,
+  @{bin}/mv         ix,
+  @{bin}/readlink   ix,
+  @{bin}/realpath  rix,
+  @{bin}/rm         ix,
+  @{bin}/sed        ix,
+  @{bin}/sleep      ix,
+  @{bin}/sort       ix,
+  @{bin}/touch      ix,
+  @{bin}/tr         ix,
+  @{bin}/uname      ix,
+  @{bin}/wc         ix,
+  # To set/get DE information
+  @{bin}/gconftool{,-2}       ix,
+  @{bin}/kde{,4}-config       ix,
+  @{bin}/kwriteconfig{,5,6}   ix,
+  @{bin}/qtxdg-mat            ix,
+  @{bin}/dbus-send            Cx -> bus,
+  @{bin}/kreadconfig{,5}      Px,
+  @{bin}/xdg-mime             Px,
+  @{bin}/xprop                Px,
+  owner @{user_config_dirs}/xfce4/helpers.rc{,.@{rand6}} rw,
+  owner @{user_share_dirs}/applications/{,**} rw,
+  @{PROC}/version r,
+  owner /dev/pts/@{int} rw,
+  profile bus flags=(complain) {
+    include <abstractions/app/bus>
+    include <abstractions/bus-session>
+    include if exists <local/xdg-settings_bus>
+  }
+  include if exists <local/xdg-settings>
+
+  include if exists <local/freetube>
+}
+
+# vim:syntax=apparmor

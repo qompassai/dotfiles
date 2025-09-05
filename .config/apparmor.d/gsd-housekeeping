@@ -1,0 +1,78 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/gsd-housekeeping
+profile gsd-housekeeping /{,usr/}lib{,exec,32,64}/gsd-housekeeping  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/app-launcher-user>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.freedesktop.systemd1-session>
+  include <abstractions/bus/org.gnome.SessionManager>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/consoles>
+  include <abstractions/dconf-write>
+  include <abstractions/gnome-strict>
+  include <abstractions/thumbnails-cache-write>
+
+  signal (receive) set=(term, hup) peer=gdm*,
+  signal (receive) set=(term, hup) peer=gnome*,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.SettingsDaemon.Housekeeping{,.*},
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Housekeeping{,/**}
+       interface=org.gnome.SettingsDaemon.Housekeeping{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Housekeeping{,/**}
+       interface=org.gnome.SettingsDaemon.Housekeeping{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Housekeeping{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Housekeeping{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Housekeeping{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Housekeeping{,.*}}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Housekeeping{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus send bus=session path=/org/freedesktop/systemd1
+       interface=org.freedesktop.systemd1.Manager
+       member=Subscribe
+       peer=(name=org.freedesktop.systemd1),
+
+  @{exec_path} mr,
+
+  /etc/fstab r,
+
+  /usr/share/dconf/profile/gdm r,
+  /usr/share/gdm/greeter-dconf-defaults r,
+
+  owner @{GDM_HOME}/greeter-dconf-defaults r,
+  owner @{gdm_config_dirs}/dconf/user r,
+  owner @{gdm_share_dirs}/applications/ w,
+
+  owner @{user_share_dirs}/applications/ rw,
+
+        @{run}/mount/utab r,
+  owner @{run}/user/@{uid}/gvfsd/socket-@{rand8} rw,
+
+  owner @{PROC}/@{pids}/cgroup r,
+  owner @{PROC}/@{pids}/mountinfo r,
+
+  include if exists <local/gsd-housekeeping>
+}
+
+# vim:syntax=apparmor

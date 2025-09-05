@@ -1,0 +1,49 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/baobab
+profile baobab /{,usr/}bin/baobab flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus/org.freedesktop.hostname1>
+  include <abstractions/common/gnome>
+  include <abstractions/deny-sensitive-home>
+
+  dbus (send receive) bus=session path=/org/gtk/vfs{,/**}
+       interface=org.gtk.vfs{,.*}
+       peer=(name="{@{busname},org.gtk.vfs{,.*}}", label="gvfsd{,-*}"),
+  dbus (send receive) bus=session path=/org/gtk/vfs{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gtk.vfs{,.*}}", label="gvfsd{,-*}"),
+  dbus send bus=session path=/org/gtk/vfs{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gtk.vfs{,.*}}", label="gvfsd{,-*}"),
+  dbus send bus=session path=/org/gtk/vfs{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gtk.vfs{,.*}}", label="gvfsd{,-*}"),
+  dbus receive bus=session path=/org/gtk/vfs{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gtk.vfs{,.*}}", label="gvfsd{,-*}"),
+
+  @{exec_path} mr,
+
+  @{open_path}  rpx -> child-open-help,
+
+  # As a directory tree analyzer it needs full access to the filesystem
+  / r,
+  /** r,
+
+  deny @{efi}/{,**} r,
+
+  include if exists <local/baobab>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,30 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gssproxy
+profile gssproxy /{,usr/}bin/gssproxy flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/authentication>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  @{lib}/ r,
+
+  /etc/gssproxy/{,**} r,
+
+  owner /var/lib/gssproxy/{,**} rw,
+  owner @{run}/gssproxy.pid rw,
+  owner @{run}/gssproxy.sock rw,
+
+  owner @{PROC}/@{pids}/net/rpc/use-gss-proxy rw,
+
+  include if exists <local/gssproxy>
+}
+
+# vim:syntax=apparmor

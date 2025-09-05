@@ -1,0 +1,91 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{lib}/org_kde_powerdevil
+@{exec_path} += @{lib}/@{multiarch}/{,libexec/}org_kde_powerdevil
+profile kde-powerdevil /{{,usr/}lib{,exec,32,64}/org_kde_powerdevil,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}org_kde_powerdevil,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}org_kde_powerdevil}  flags=(attach_disconnected,mediate_deleted,complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+
+  capability wake_alarm,
+
+  network netlink raw,
+
+  @{exec_path} mrix,
+
+  @{sh_path}          rix,
+  @{bin}/find         rix,
+  @{bin}/{,e}grep     rix,
+  @{bin}/kcminit      rpx,
+  @{bin}/sed          rix,
+  @{bin}/uname        rpx,
+  @{bin}/xargs        rix,
+  @{lib}/drkonqi      rpx,
+
+  /etc/fstab r,
+  /etc/machine-id r,
+
+  owner @{HOME}/ r,
+
+  owner @{user_cache_dirs}/ddcutil/* r,
+  owner @{user_cache_dirs}/kcrash-metadata/{,*} rw,
+
+  owner @{user_config_dirs}/#@{int} rw,
+  owner @{user_config_dirs}/ksmserverrc r,
+  owner @{user_config_dirs}/powerdevilrc.lock rwk,
+  owner @{user_config_dirs}/powerdevilrc{,.@{rand6}} rwl -> @{user_config_dirs}/#@{int},
+  owner @{user_config_dirs}/powermanagementprofilesrc.lock rwk,
+  owner @{user_config_dirs}/powermanagementprofilesrc{,.@{rand6}} rwl -> @{user_config_dirs}/#@{int},
+
+  @{att}/@{run}/systemd/inhibit/@{int}.ref rw,
+
+        @{run}/mount/utab r,
+  owner @{run}/user/@{uid}kcrash_@{int} rw,
+
+  @{run}/udev/data/c189:@{int} r,       # for /dev/bus/usb/**
+
+  @{sys}/bus/ r,
+  @{sys}/bus/i2c/devices/ r,
+  @{sys}/class/ r,
+  @{sys}/class/drm/ r,
+  @{sys}/class/i2c-dev/ r,
+  @{sys}/class/usbmisc/ r,
+  @{sys}/devices/ r,
+  @{sys}/devices/@{pci}/*_backlight/{,max_,actual_}brightness r,
+  @{sys}/devices/@{pci}/card@{int}/*/dpms r,
+  @{sys}/devices/@{pci}/drm/card@{int}/**/{,max_,actual_}brightness r,
+  @{sys}/devices/@{pci}/drm/card@{int}/**/*_id r,
+  @{sys}/devices/@{pci}/drm/card@{int}/**/dev r,
+  @{sys}/devices/@{pci}/drm/card@{int}/**/name r,
+  @{sys}/devices/@{pci}/drm/card@{int}/*/dpms r,
+  @{sys}/devices/@{pci}/drm/card@{int}/*/edid r,
+  @{sys}/devices/@{pci}/drm/card@{int}/*/enabled r,
+  @{sys}/devices/@{pci}/drm/card@{int}/*/status r,
+  @{sys}/devices/@{pci}/i2c-*/{,**/}name r,
+  @{sys}/devices/@{pci}/i2c-*/**/dev r,
+  @{sys}/devices/**/ r,
+  @{sys}/devices/i2c-*/name r,
+  @{sys}/devices/platform/**/i2c-*/**/name r,
+  @{sys}/devices/platform/*/i2c-*/name r,
+
+  @{PROC}/@{pid}/fd/ r,
+  @{PROC}/@{pid}/mountinfo r,
+  @{PROC}/@{pid}/mounts r,
+
+  /dev/i2c-@{int} rwk,
+  /dev/rfkill r,
+  /dev/tty rw,
+
+  include if exists <local/kde-powerdevil>
+}
+
+# vim:syntax=apparmor

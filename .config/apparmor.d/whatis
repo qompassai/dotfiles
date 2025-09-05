@@ -1,0 +1,34 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Zane Zakraisek <zz@eng.utah.edu>
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/whatis
+profile whatis /{,usr/}bin/whatis flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  @{exec_path} mr,
+  @{bin}/{,e}grep  rix,
+
+  /usr/{,**/}man/{,**/}{,whatis} r,
+
+  /usr/share/man/{,**/}index.{bt,db,dir,pag} rk,
+  /var/cache/man/{,**/}index.{bt,db,dir,pag} rk,
+
+  /etc/man_db.conf    r,
+  /etc/manpath.config r,
+
+  owner @{HOME}/.manpath r,
+
+  owner @{user_share_dirs}/man/{,**/}{,whatis} r,
+  owner @{user_share_dirs}/man/{,**/}index.{bt,db,dir,pag} rk,
+
+  include if exists <local/whatis>
+}
+
+# vim:syntax=apparmor

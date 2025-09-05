@@ -1,0 +1,45 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = /usr/share/landscape/landscape-sysinfo.wrapper
+profile landscape-sysinfo.wrapper /usr/share/landscape/landscape-sysinfo.wrapper flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  capability dac_override,
+  capability fowner,
+  capability fsetid,
+
+  @{exec_path} mr,
+  @{python_path} mr,
+
+  @{sh_path}                rix,
+  @{bin}/bc                 rix,
+  @{bin}/cat                rix,
+  @{bin}/chmod              rix,
+  @{bin}/cut                rix,
+  @{bin}/date               rix,
+  @{bin}/find               rix,
+  @{bin}/{,e}grep           rix,
+  @{bin}/landscape-sysinfo  rpx,
+
+  / r,
+  /etc/default/locale r,
+
+  /var/lib/landscape/landscape-sysinfo.cache rw,
+
+  @{run}/motd.dynamic.new w,
+
+  @{PROC}/loadavg r,
+
+  /dev/tty@{int} rw,
+
+  include if exists <local/landscape-sysinfo.wrapper>
+}
+
+# vim:syntax=apparmor

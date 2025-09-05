@@ -1,0 +1,48 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/systemd/systemd-userdbd
+profile systemd-userdbd /{,usr/}lib{,exec,32,64}/systemd/systemd-userdbd  flags=(attach_disconnected,mediate_deleted,complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+  include <abstractions/common/systemd>
+
+  capability dac_read_search,
+  capability sys_resource,
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet raw,
+  network inet6 raw,
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{lib}/systemd/systemd-userwork rix,
+
+  /etc/gshadow r,
+  /etc/shadow r,
+
+  /etc/machine-id r,
+
+  @{att}/@{run}/systemd/notify w,
+  @{att}/@{run}/systemd/userdb/io.systemd.DynamicUser rw,
+  @{att}/@{run}/systemd/userdb/io.systemd.Home rw,
+  @{att}/@{run}/systemd/userdb/io.systemd.Machine rw,
+
+  @{run}/systemd/userdb/{,**} rw,
+
+  @{PROC}/@{pid}/cgroup r,
+  @{PROC}/pressure/cpu r,
+  @{PROC}/pressure/io r,
+  @{PROC}/pressure/memory r,
+
+  include if exists <local/systemd-userdbd>
+}
+
+# vim:syntax=apparmor

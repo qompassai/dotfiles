@@ -1,0 +1,22 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/grub-editenv
+profile grub-editenv /{,usr/}bin/grub-editenv flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  @{exec_path} mr,
+
+  @{efi}/grub/grubenv rw,
+
+  include if exists <local/grub-editenv>
+}
+
+
+# vim:syntax=apparmor

@@ -1,0 +1,24 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,kf6/}kauth/{,libexec/}chargethresholdhelper
+profile kauth-chargethresholdhelper /{,usr/}lib{,exec,32,64}/{,kf6/}kauth/{,libexec/}chargethresholdhelper flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  /usr/share/icu/@{int}.@{int}/*.dat r,
+
+  @{sys}/class/power_supply/ r,
+  @{sys}/devices/**/power_supply/** r,
+
+  include if exists <local/kauth-chargethresholdhelper>
+}
+
+# vim:syntax=apparmor

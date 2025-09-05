@@ -1,0 +1,39 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/yadifad
+profile yadifad /{,usr/}bin/yadifad flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+  include <abstractions/nis>
+
+  capability dac_override,
+  capability chown,
+  capability setgid,
+  capability setuid,
+
+  network inet dgram,
+  network inet6 dgram,
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  /etc/yadifa/* r,
+
+  /var/log/yadifa/{,**} rw,
+
+  owner /var/lib/yadifa/ rw,
+  owner /var/lib/yadifa/** rwk,
+
+  owner @{run}/yadifa/ rw,
+  owner @{run}/yadifa/** rwk,
+
+  include if exists <local/yadifad>
+}
+
+# vim:syntax=apparmor

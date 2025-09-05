@@ -1,0 +1,33 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/swtpm
+profile swtpm /{,usr/}bin/swtpm flags=(complain) {
+  include <abstractions/base>
+
+  signal (receive) set=(term) peer=libvirtd,
+
+  @{exec_path} mr,
+
+  /var/log/swtpm/libvirt/qemu/*-swtpm.log  w,
+
+  owner /var/lib/libvirt/swtpm/@{uuid}/tpm2/.lock wk,
+  owner /var/lib/libvirt/swtpm/@{uuid}/tpm2/* rw,
+
+  /tmp/.swtpm_setup.pidfile.* rw,
+  /tmp/@{int}/.lock rwk,
+  /tmp/@{int}/TMP* rw,
+  /tmp/@{int}/vtpm.sock rw,
+
+  @{run}/libvirt/qemu/swtpm/*.sock w,
+  @{run}/libvirt/qemu/swtpm/*.pid w,
+
+  include if exists <local/swtpm>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,61 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/birdtray
+profile birdtray /{,usr/}bin/birdtray flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/desktop>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/qt5-settings-write>
+  include <abstractions/ssl_certs>
+
+  network inet dgram,
+  network inet6 dgram,
+  network netlink dgram,
+
+  @{exec_path} mr,
+
+  @{bin}/thunderbird  rpx,
+  @{open_path}        rpx -> child-open,
+
+  /usr/share/ulduzsoft/birdtray/{,**} r,
+
+  /var/lib/dbus/machine-id r,
+  /etc/machine-id r,
+
+  # Thunderbird mail dirs
+  owner @{HOME}/ r,
+  owner @{HOME}/.thunderbird/ r,
+  owner @{HOME}/.thunderbird/*.*/ r,
+  owner @{HOME}/.thunderbird/*.*/{Imap,}Mail/ r,
+  owner @{HOME}/.thunderbird/*.*/{Imap,}Mail/**/ r,
+  owner @{HOME}/.thunderbird/*.*/{Imap,}Mail/**/*.msf r,
+
+  owner @{user_config_dirs}/ulduzsoft/ rw,
+  owner @{user_config_dirs}/ulduzsoft/* rwkl -> @{user_config_dirs}/ulduzsoft/*,
+
+  owner @{user_config_dirs}/birdtray-config.json rwl -> @{user_config_dirs}/#@{int},
+  owner @{user_config_dirs}/birdtray-config.json.* rwl -> @{user_config_dirs}/#@{int},
+
+  owner @{tmp}/birdtray.ulduzsoft.single.instance.server.socket w,
+
+  /dev/shm/#@{int} rw,
+
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/birdtray>
+}
+
+# vim:syntax=apparmor

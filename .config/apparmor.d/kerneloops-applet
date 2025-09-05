@@ -1,0 +1,32 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/kerneloops-applet
+profile kerneloops-applet /{,usr/}bin/kerneloops-applet flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.a11y>
+  include <abstractions/desktop>
+  include <abstractions/fontconfig-cache-read>
+
+  @{exec_path} mr,
+
+  /usr/share/kerneloops/{,**} r,
+
+  owner @{HOME}/.kerneloops rw,
+
+  # When found a kernel OOPS make a tmp file and fill it with the OOPS message
+  /tmp/kerneloops.* rw,
+
+  include if exists <local/kerneloops-applet>
+}
+
+# vim:syntax=apparmor

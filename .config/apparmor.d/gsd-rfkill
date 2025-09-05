@@ -1,0 +1,66 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/gsd-rfkill
+profile gsd-rfkill /{,usr/}lib{,exec,32,64}/gsd-rfkill  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/bus-session>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.hostname1>
+  include <abstractions/bus/org.freedesktop.ModemManager1>
+  include <abstractions/bus/org.freedesktop.NetworkManager>
+  include <abstractions/bus/org.gnome.SessionManager>
+
+  signal (receive) set=(term, hup) peer=gdm*,
+
+  network netlink raw,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.SettingsDaemon.Rfkill{,.*},
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Rfkill{,/**}
+       interface=org.gnome.SettingsDaemon.Rfkill{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Rfkill{,/**}
+       interface=org.gnome.SettingsDaemon.Rfkill{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/SettingsDaemon/Rfkill{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Rfkill{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/SettingsDaemon/Rfkill{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.SettingsDaemon.Rfkill{,.*}}"),
+  dbus send bus=session path=/org/gnome/SettingsDaemon/Rfkill{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mr,
+
+  @{sys}/devices/virtual/misc/rfkill/uevent r,
+
+  @{run}/udev/data/c10:@{int} r,          # for non-serial mice, misc features
+
+  /dev/rfkill rw,
+
+  include if exists <local/gsd-rfkill>
+}
+
+# vim:syntax=apparmor

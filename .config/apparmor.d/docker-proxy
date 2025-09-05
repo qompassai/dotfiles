@@ -1,0 +1,29 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/docker-proxy
+profile docker-proxy /{,usr/}bin/docker-proxy flags=(complain) {
+  include <abstractions/base>
+
+  capability net_admin,
+  capability net_bind_service,
+
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  signal receive set=int peer=dockerd,
+
+  @{exec_path} mr,
+
+  @{PROC}/sys/net/core/somaxconn r,
+
+  include if exists <local/docker-proxy>
+}
+
+# vim:syntax=apparmor

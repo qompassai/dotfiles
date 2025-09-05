@@ -1,0 +1,26 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/systemd/systemd-makefs
+profile systemd-makefs /{,usr/}lib{,exec,32,64}/systemd/systemd-makefs flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/disks-write>
+  include <abstractions/common/systemd>
+
+  capability net_admin,
+  capability sys_resource,
+
+  @{exec_path} mr,
+
+  @{sbin}/mkfs.*     rpx,
+  @{sbin}/mkswap     rpx,
+
+  include if exists <local/systemd-makefs>
+}
+
+# vim:syntax=apparmor

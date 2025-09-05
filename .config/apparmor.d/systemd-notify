@@ -1,0 +1,22 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/systemd-notify
+profile systemd-notify /{,usr/}bin/systemd-notify flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  capability sys_admin,
+  capability net_admin,
+
+  @{exec_path} mr,
+
+  include if exists <local/systemd-notify>
+}
+
+# vim:syntax=apparmor

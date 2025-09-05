@@ -1,0 +1,38 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+  abi <abi/4.0>,
+
+  include <abstractions/common/game>
+
+  @{lib_dirs}/ r,
+
+  owner @{HOME}/.steam/steam.pid r,
+  owner @{HOME}/.steam/steam.pipe r,
+
+  owner @{app_dirs}/ r,
+  owner @{app_dirs}/[^S]*/** rwlk, # No access to "SteamLinuxRuntime_sniper"
+
+  owner @{share_dirs}/ r,
+  owner @{share_dirs}/* r,
+  owner @{share_dirs}/appcache/** rk,
+  owner @{share_dirs}/config/ r,
+  owner @{share_dirs}/config/* rwk,
+  owner @{share_dirs}/logs/ rw,
+  owner @{share_dirs}/logs/* rwk,
+  owner @{share_dirs}/shader_cache_temp_dir_*/fozpipelinesv@{int}/{,**} rw,
+  owner @{share_dirs}/steamapps/ r,
+  owner @{share_dirs}/steamapps/appmanifest_* rw,
+  owner @{share_dirs}/steamapps/shadercache/{,**} rwk,
+
+  owner /dev/shm/u@{uid}-Shm_@{hex4}@{h} rw,
+  owner /dev/shm/u@{uid}-Shm_@{hex6} rw,
+  owner /dev/shm/u@{uid}-Shm_@{hex6}@{h} rw,
+  owner /dev/shm/u@{uid}-Shm_@{hex8} rw,
+  owner /dev/shm/u@{uid}-ValveIPCSharedObj-Steam rwk,
+  owner /dev/shm/ValveIPCSHM_@{uid} rw,
+
+  include if exists <abstractions/common/steam-game.d>
+
+# vim:syntax=apparmor

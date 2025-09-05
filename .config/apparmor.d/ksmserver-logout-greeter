@@ -1,0 +1,60 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Jeroen Rijken
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{bin}/ksmserver-logout-greeter
+@{exec_path} += @{lib}/@{multiarch}/{,libexec/}ksmserver-logout-greeter
+profile ksmserver-logout-greeter /{{,usr/}bin/ksmserver-logout-greeter,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}ksmserver-logout-greeter,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}ksmserver-logout-greeter}  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/kde-strict>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/qt5-shader-cache>
+
+  @{exec_path} mr,
+
+  @{lib}/os-release r,
+
+  / r,
+  /etc/machine-id r,
+  /etc/timezone r,
+
+  /usr/share/plasma/desktoptheme/** r,
+  /usr/share/plasma/look-and-feel/** r,
+  /var/lib/AccountsService/icons/ r,
+
+  owner @{HOME}/ r,
+
+  owner @{user_cache_dirs}/ r,
+  owner @{user_cache_dirs}/#@{int} rwlk,
+  owner @{user_cache_dirs}/kcrash-metadata/ r,
+  owner @{user_cache_dirs}/ksmserver-logout-greeter/ rw,
+  owner @{user_cache_dirs}/ksmserver-logout-greeter/** rwlk,
+  owner @{user_cache_dirs}/plasma_theme_*.kcache rw,
+  owner @{user_cache_dirs}/plasma-svgelements rw,
+  owner @{user_cache_dirs}/plasma-svgelements.@{rand6} rwl -> @{user_cache_dirs}/#@{int},
+  owner @{user_cache_dirs}/plasma-svgelements.lock rwk,
+
+  owner @{user_config_dirs}/ r,
+  owner @{user_config_dirs}/kdedefaults/kscreenlockerrc r,
+  owner @{user_config_dirs}/kdedefaults/plasmarc r,
+  owner @{user_config_dirs}/kscreenlockerrc r,
+  owner @{user_config_dirs}/ksmserverrc r,
+  owner @{user_config_dirs}/plasmarc r,
+
+  owner @{run}/user/@{uid}/ r,
+
+        @{PROC}/sys/dev/i915/perf_stream_paranoid r,
+  owner @{PROC}/@{pid}/exe r,
+
+  include if exists <local/ksmserver-logout-greeter>
+}
+
+# vim:syntax=apparmor

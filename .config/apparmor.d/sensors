@@ -1,0 +1,42 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2015-2022 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/sensors
+profile sensors /{,usr/}bin/sensors flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  @{exec_path} mr,
+
+  # Sensors config files
+  /etc/sensors.d/{,*} r,
+  /etc/sensors3.conf r,
+
+  @{sys}/bus/i2c/devices/ r,
+  @{sys}/class/hwmon/ r,
+  @{sys}/class/i2c-adapter/ r,
+  @{sys}/devices/{,platform/*.{i2c,hdmi}/}i2c-*/name r,
+  @{sys}/devices/@{pci}/name r,
+  @{sys}/devices/**/hwmon*/{,**} r,
+
+  # file_inherit
+  deny @{PROC}/@{pid}/net/dev r,
+  deny @{PROC}/@{pid}/stat r,
+  deny @{PROC}/@{pid}/net/tcp{,6} r,
+  deny @{PROC}/@{pid}/net/if_inet6 r,
+  deny @{PROC}/@{pid}/cmdline r,
+  deny @{PROC}/uptime r,
+  deny @{PROC}/diskstats r,
+  deny @{PROC}/loadavg r,
+  deny @{PROC}/@{pid}/io r,
+
+  include if exists <local/sensors>
+}
+
+# vim:syntax=apparmor

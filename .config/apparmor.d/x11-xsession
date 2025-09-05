@@ -1,0 +1,150 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2017-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = /etc/X11/Xsession
+profile x11-xsession /etc/X11/Xsession flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+  include <abstractions/X-strict>
+
+  @{exec_path} r,
+
+  @{sh_path}        rix,
+  @{bin}/{,e}grep   rix,
+  @{bin}/{m,g,}awk  rix,
+  @{bin}/basename   rix,
+  @{bin}/cat        rix,
+  @{bin}/chmod      rix,
+  @{bin}/cut        rix,
+  @{bin}/date       rix,
+  @{bin}/fold       rix,
+  @{bin}/head       rix,
+  @{bin}/id         rix,
+  @{bin}/mktemp     rix,
+  @{bin}/readlink   rix,
+  @{bin}/rm         rix,
+  @{bin}/sed        rix,
+  @{bin}/sleep      rix,
+  @{bin}/tail       rix,
+  @{bin}/tempfile   rix,
+  @{bin}/touch      rix,
+  @{bin}/which{,.debianutils}  rix,
+
+  @{bin}/dbus-update-activation-environment rcx -> dbus,
+
+  @{bin}/gpgconf           rcx -> gpg,
+  @{bin}/run-parts         rcx -> run-parts,
+  @{bin}/udevadm           rcx -> udevadm,
+
+  @{bin}/flatpak              rpx,
+  @{bin}/glxinfo              rpx,
+  @{bin}/numlockx             rpx,
+  @{bin}/systemd-detect-virt  rpx,
+  @{bin}/xhost                rpx,
+  @{bin}/xrdb                 rpx,
+  @{bin}/xset                 rpx,
+
+  # Allowed GUI sessions to start
+  @{bin}/openbox-session      rpx,
+  @{bin}/enlightenment_start  rpux,
+  @{bin}/sway                 rpux,
+  @{bin}/ssh-agent            rcx -> ssh-agent,
+
+
+  @{lib}/*/*.sh r,
+
+  /etc/default/{,*} r,
+  /etc/profile.d/*.sh r,
+  /etc/X11/{,**} r,
+
+  owner @{tmp}/file* rw,
+  owner @{tmp}/tmp.@{rand10} rw,
+
+  profile ssh-agent flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/ssh-agent mr,
+
+    @{sh_path}                   rix,
+
+    @{bin}/gpg-agent             rpx,
+    @{bin}/enlightenment_start  rpux,
+    @{bin}/env                   rix,
+    @{bin}/im-launch             rpx,
+    @{bin}/kwalletaskpass       rpux,
+    @{bin}/openbox-session       rpx,
+    @{bin}/startkde             rpux,
+    @{bin}/startxfce4           rpux,
+    @{bin}/sway                 rpux,
+
+    owner @{HOME}/.xsession-errors w,
+
+    owner @{tmp}/ssh-*/ rw,
+    owner @{tmp}/ssh-*/agent.* rw,
+
+    include if exists <local/x11-xsession_ssh-agent>
+  }
+
+  profile run-parts flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/run-parts mr,
+
+    /etc/X11/Xsession.d/{,*} r,
+    /etc/X11/Xresources/{,*} r,
+
+    /etc/default/kexec.d/ r,
+
+    owner @{HOME}/.xsession-errors w,
+
+    include if exists <local/x11-xsession_run-parts>
+  }
+
+  profile dbus flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/dbus-update-activation-environment mr,
+
+    /var/lib/dbus/machine-id r,
+
+    owner @{HOME}/.xsession-errors rw,
+
+    owner @{PROC}/@{pid}/fd/ r,
+
+    include if exists <local/x11-xsession_dbus>
+  }
+
+  profile gpg flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/gpgconf mr,
+
+    @{bin}/gpg-agent rix,
+
+    owner @{HOME}/.xsession-errors w,
+
+    owner @{HOME}/@{XDG_GPG_DIR}/ rw,
+    owner @{HOME}/@{XDG_GPG_DIR}/** rwkl -> @{HOME}/@{XDG_GPG_DIR}/**,
+
+    @{PROC}/@{pid}/fd/ r,
+
+    include if exists <local/x11-xsession_gpg>
+  }
+
+  profile udevadm flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/udevadm>
+
+    include if exists <local/x11-xsession_udevadm>
+  }
+
+  include if exists <local/x11-xsession>
+}
+
+# vim:syntax=apparmor

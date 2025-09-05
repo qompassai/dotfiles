@@ -1,0 +1,44 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/fail2ban-server
+profile fail2ban-server /{,usr/}bin/fail2ban-server  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/nameservice-strict>
+  include <abstractions/python>
+
+  capability dac_read_search,
+  capability net_admin,
+
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{sh_path}                rix,
+  @{sbin}/xtables-nft-multi rix,
+  @{bin}/iptables           rix,
+
+  @{bin}/ r,
+  @{python_path} r,
+
+  /etc/fail2ban/{,**} r,
+
+  /var/lib/fail2ban/fail2ban.sqlite3 rwk,
+  /var/log/auth.log r,
+  /var/log/fail2ban.log w,
+  /var/log/journal/@{hex32}/system.journal r,
+
+  @{run}/fail2ban/fail2ban.pid rw,
+  @{run}/fail2ban/fail2ban.sock rw,
+
+  owner @{PROC}/@{pid}/fd/ r,
+
+  include if exists <local/fail2ban-server>
+}
+
+# vim:syntax=apparmor

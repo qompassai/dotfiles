@@ -1,0 +1,18 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+  include <abstractions/openssl>
+
+  # FIPS-140-2 versions of some crypto libraries need to access their
+  # associated integrity verification file, or they will abort.
+  @{lib}/.lib*.so*.hmac      r,
+  @{lib}/@{multiarch}/.lib*.so*.hmac r,
+
+  @{etc_ro}/gnutls/config r,
+  @{etc_ro}/gnutls/pkcs11.conf r,
+
+  # Used to determine if Linux is running in FIPS mode
+  @{PROC}/sys/crypto/fips_enabled r,
+
+# vim:syntax=apparmor

@@ -1,0 +1,76 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/qnapi
+profile qnapi /{,usr/}bin/qnapi flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/desktop>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/qt5-compose-cache-write>
+  include <abstractions/qt5-settings-write>
+  include <abstractions/user-download-strict>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+  network netlink dgram,
+
+  # Some apps can use qnapi to automate downloading of subtitles. When a user wants to abort the
+  # action (stop qnapi), the apps send the term/kill signal to qnapi.
+  signal (receive) set=(kill, term),
+
+  @{exec_path} mr,
+
+  @{bin}/7z        rix,
+  @{lib}/p7zip/7z  rix,
+
+  @{bin}/ffprobe   rpx,
+  @{open_path}     rpx -> child-open,
+  @{lib}/firefox/firefox rpx,
+
+  /etc/fstab r,
+  /etc/machine-id r,
+  /var/lib/dbus/machine-id r,
+
+  owner @{HOME}/ r,
+  owner @{user_music_dirs}/{,**} rw,
+  owner @{user_pictures_dirs}/{,**} rw,
+  owner @{user_torrents_dirs}/{,**} rw,
+  owner @{user_videos_dirs}/{,**} rw,
+
+  owner @{user_config_dirs}/qnapi.ini rw,
+  owner @{user_config_dirs}/qnapi.ini.lock rwk,
+  owner @{user_config_dirs}/qnapi.ini.* rwl -> @{user_config_dirs}/#@{int},
+  owner @{user_config_dirs}/qnapi.ini.mlXXXY rwl -> @{user_config_dirs}/#@{int},
+
+        /tmp/ r,
+  owner @{tmp}/@{hex}.* rw,
+  owner @{tmp}/#@{int} rw,
+  owner @{tmp}/QNapi-*-rc wl -> /tmp/#@{int},
+  owner @{tmp}/QNapi-*-rc.lock rwk,
+  owner @{tmp}/QNapi.@{int}.tmp rw,
+  owner @{tmp}/QNapi.@{int}.tmp.* rw,
+  owner @{tmp}/QNapi.@{int}.tmp.* rwl -> /tmp/#@{int},
+  owner @{tmp}/QNapi.@{int} rw,
+
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  owner /dev/shm/#@{int} rw,
+  owner /dev/tty@{int} rw,
+
+  include if exists <local/qnapi>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,56 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/glib-pacrunner
+profile glib-pacrunner /{,usr/}lib{,exec,32,64}/glib-pacrunner flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/bus-session>
+  include <abstractions/nameservice-strict>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gtk.GLib.PACRunner{,.*},
+  dbus receive bus=session path=/org/gtk/GLib/PACRunner{,/**}
+       interface=org.gtk.GLib.PACRunner{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gtk/GLib/PACRunner{,/**}
+       interface=org.gtk.GLib.PACRunner{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gtk/GLib/PACRunner{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gtk/GLib/PACRunner{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gtk/GLib/PACRunner{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gtk.GLib.PACRunner{,.*}}"),
+  dbus send bus=session path=/org/gtk/GLib/PACRunner{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{PROC}/cmdline r,
+  @{PROC}/sys/kernel/osrelease r,
+
+  include if exists <local/glib-pacrunner>
+}
+
+# vim:syntax=apparmor

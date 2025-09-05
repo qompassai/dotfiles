@@ -1,0 +1,30 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/obamenu
+profile obamenu /{,usr/}bin/obamenu flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/python>
+
+  @{exec_path} r,
+  @{python_path} rix,
+
+  @{bin}/ r,
+
+  /usr/share/*/*.desktop r,
+
+  # freedesktop.org-strict
+  /usr/share/applications/ r,
+  /usr/share/applications/*.desktop r,
+  /usr/share/pixmaps/ r,
+
+  include if exists <local/obamenu>
+}
+
+# vim:syntax=apparmor

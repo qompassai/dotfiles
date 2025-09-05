@@ -1,0 +1,58 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2022 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,gvfs/}gvfsd-fuse
+profile gvfsd-fuse /{,usr/}lib{,exec,32,64}/{,gvfs/}gvfsd-fuse flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/nameservice-strict>
+
+  capability sys_admin,
+
+  mount fstype={fuse,fuse.*} -> @{run}/user/@{uid}/gvfs/,
+
+  unix (send,receive) type=stream addr=none peer=(label=gvfsd-fuse//fusermount),
+
+  dbus send bus=session path=/org/gtk/vfs/mounttracker
+       interface=org.gtk.vfs.MountTracker
+       member=RegisterFuse
+       peer=(name=:*, label=gvfsd),
+
+  dbus receive bus=session path=/
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mr,
+
+  @{bin}/fusermount{,3} rcx -> fusermount,
+
+  @{PROC}/sys/fs/pipe-max-size r,
+
+  /dev/fuse rw,
+
+  profile fusermount flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/fusermount>
+
+    capability setuid,
+
+    mount fstype={fuse,fuse.*} -> @{run}/user/@{uid}/gvfs/,
+    umount @{run}/user/@{uid}/**/,
+
+    unix (send,receive) type=stream addr=none peer=(label=gvfsd-fuse),
+
+    include if exists <local/gvfsd-fuse_fusermount>
+  }
+
+  include if exists <local/gvfsd-fuse>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,115 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/xdg-document-portal
+profile xdg-document-portal /{,usr/}lib{,exec,32,64}/xdg-document-portal  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.freedesktop.impl.portal.PermissionStore>
+  include <abstractions/consoles>
+  include <abstractions/deny-sensitive-home>
+  include <abstractions/freedesktop.org>
+  include <abstractions/nameservice-strict>
+
+  capability sys_admin,
+  capability sys_nice,
+  capability sys_ptrace,
+  capability sys_resource,
+
+  mount fstype=fuse.portal -> @{run}/user/@{uid}/doc/,
+
+  signal receive set=term peer=gdm,
+  signal receive set=hup  peer=gdm-session-worker,
+
+  ptrace (read),
+
+  unix (send receive) type=stream peer=(label=xdg-document-portal//fusermount),
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.freedesktop.portal.Documents{,.*},
+  dbus receive bus=session path=/org/freedesktop/portal/documents
+       interface=org.freedesktop.portal.Documents{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/freedesktop/portal/documents
+       interface=org.freedesktop.portal.Documents{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/freedesktop/portal/documents
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/freedesktop/portal/documents
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/freedesktop/portal/documents
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.portal.Documents{,.*}}"),
+  dbus send bus=session path=/org/freedesktop/portal/documents
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mr,
+
+  @{bin}/flatpak         rpx,
+  @{bin}/fusermount{,3}  rcx -> fusermount,
+  @{bin}/snap            rpx,
+
+              / r,
+  owner @{att}/ r,
+  owner @{att}/.flatpak-info r,
+
+  owner @{HOME}/ r,
+  owner @{HOME}/*/{,**} rw,
+  owner @{MOUNTS}/ r,
+
+  owner @{user_share_dirs}/flatpak/db/documents r,
+  owner @{user_share_dirs}/Trash/files/** r,
+
+  owner @{run}/user/@{uid}/doc/ rw,
+
+        @{PROC}/1/cgroup r,
+        @{PROC}/sys/fs/pipe-max-size r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/fd/ r,
+
+  /dev/fuse rw,
+
+  profile fusermount  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+    include <abstractions/app/fusermount>
+
+    capability dac_read_search,
+    capability dac_override,
+    capability setuid,
+
+    mount options=(rw, rprivate) -> /,
+    mount options=(rw, rbind) @{run}/user/@{uid}/ -> /,
+    mount fstype=fuse.portal -> @{run}/user/@{uid}/doc/,
+
+    umount @{run}/user/@{uid}/doc/,
+
+    unix (send receive) type=stream peer=(label=xdg-document-portal),
+
+    owner @{run}/user/@{uid}/doc/ rw,
+
+    include if exists <local/xdg-document-portal_fusermount>
+  }
+
+  include if exists <local/xdg-document-portal>
+}
+
+# vim:syntax=apparmor

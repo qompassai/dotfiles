@@ -1,0 +1,38 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/cctk /opt/dell/dcc/cctk
+profile cctk /{{,usr/}bin/cctk,opt/dell/dcc/cctk} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  capability dac_read_search,
+  capability mknod,
+  capability sys_admin,
+  capability sys_rawio,
+
+  @{exec_path} mr,
+
+  @{lib}/ r,
+  /opt/dell/dcc/*.so* mr,
+  /opt/dell/srvadmin/{,**} r,
+  /opt/dell/srvadmin/lib64/*.so* rm,
+  /opt/dell/srvadmin/var/lib/openmanage/.ipc/* rwk,
+
+  @{sys}/devices/platform/dcdbas/smi_data* rwk,
+  @{sys}/firmware/dmi/tables/DMI r,
+  @{sys}/firmware/dmi/tables/smbios_entry_point r,
+  @{sys}/firmware/efi/systab r,
+
+  /dev/mem r,
+  /dev/wmi/dell-smbios r,
+
+  include if exists <local/cctk>
+}
+
+# vim:syntax=apparmor

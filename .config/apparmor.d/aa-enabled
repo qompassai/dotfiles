@@ -1,0 +1,23 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/aa-enabled
+profile aa-enabled /{,usr/}bin/aa-enabled flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  @{exec_path} mr,
+
+  @{sys}/module/apparmor/parameters/enabled r,
+
+  owner @{PROC}/@{pid}/mounts r,
+
+  include if exists <local/aa-enabled>
+}
+
+# vim:syntax=apparmor

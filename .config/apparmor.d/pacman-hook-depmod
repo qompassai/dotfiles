@@ -1,0 +1,36 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = /usr/share/libalpm/scripts/depmod
+profile pacman-hook-depmod /usr/share/libalpm/scripts/depmod flags=(complain) {
+  include <abstractions/base>
+
+  capability dac_read_search,
+
+  @{exec_path} mr,
+
+  @{sh_path}       rix,
+  @{bin}/basename  rix,
+  @{bin}/kmod      rpx,
+  @{bin}/rm        rix,
+  @{bin}/rmdir     rix,
+
+  @{lib}/modules/*/{,**} rw,
+
+        /dev/tty rw,
+        /dev/tty@{int} rw,
+  owner /dev/pts/@{int} rw,
+
+  # Inherit Silencer
+  deny network inet6 stream,
+  deny network inet stream,
+
+  include if exists <local/pacman-hook-depmod>
+}
+
+# vim:syntax=apparmor

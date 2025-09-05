@@ -1,0 +1,95 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/gparted
+profile gparted /{,usr/}{,s}bin/gparted  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  ptrace read,
+
+  @{exec_path} r,
+
+  @{bin}/            r,
+  @{coreutils_path}  rix,
+  @{sh_path}         rix,
+
+  @{sbin}/killall5   rcx -> killall,
+  @{bin}/systemctl   rcx -> systemctl,
+  @{bin}/udevadm     rcx -> udevadm,
+
+  @{bin}/pidof       rpx,
+  @{bin}/pkexec      rpx,
+  @{bin}/ps          rpx,
+  @{bin}/xhost       rpx,
+
+  @{sbin}/gpartedbin         rpx,
+  @{lib}/gparted/gpartedbin  rpx,
+  @{lib}/gpartedbin          rpx,
+
+  @{lib}/{,udisks2/}udisks2-inhibit  rix,
+
+  @{run}/udev/rules.d/ rw,
+  @{run}/udev/rules.d/@{int}-*.rules rw,
+
+  # For shell pwd
+  / r,
+  /root/ r,
+
+  /usr/local/bin/ r,
+  /usr/local/sbin/ r,
+
+  @{PROC}/@{pids}/cmdline r,
+  @{PROC}/@{pids}/stat r,
+
+  # file_inherit
+  owner /dev/tty@{int} rw,
+
+  profile udevadm flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/udevadm>
+
+    @{sys}/devices/virtual/block/**/uevent rw,
+    @{sys}/devices/@{pci}/block/**/uevent rw,
+
+    include if exists <local/gparted_udevadm>
+  }
+
+  profile killall  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/consoles>
+
+    capability sys_ptrace,
+
+    signal (send) set=(int, term, kill),
+
+    ptrace (read),
+
+    @{sbin}/killall5 mr,
+
+    @{PROC}/ r,
+    @{PROC}/@{pids}/stat r,
+    @{PROC}/@{pids}/cmdline r,
+
+    include if exists <local/gparted_killall>
+  }
+
+  profile systemctl flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    capability net_admin,
+
+    include if exists <local/gparted_systemctl>
+  }
+
+  include if exists <local/gparted>
+}
+
+# vim:syntax=apparmor

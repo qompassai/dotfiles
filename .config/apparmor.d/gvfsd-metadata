@@ -1,0 +1,64 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,gvfs/}gvfsd-metadata
+profile gvfsd-metadata /{,usr/}lib{,exec,32,64}/{,gvfs/}gvfsd-metadata flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/disks-read>
+
+  network netlink raw,
+
+  signal (receive) set=(usr1) peer=pacman,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gtk.vfs.Metadata{,.*},
+  dbus receive bus=session path=/org/gtk/vfs/{m,M}etadata
+       interface=org.gtk.vfs.Metadata{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gtk/vfs/{m,M}etadata
+       interface=org.gtk.vfs.Metadata{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gtk/vfs/{m,M}etadata
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gtk/vfs/{m,M}etadata
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gtk/vfs/{m,M}etadata
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gtk.vfs.Metadata{,.*}}"),
+  dbus send bus=session path=/org/gtk/vfs/{m,M}etadata
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus receive bus=session
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name=:*, label=gnome-shell),
+
+  @{exec_path} mr,
+
+  owner @{gdm_share_dirs}/gvfs-metadata/{,*} rw,
+
+  owner @{HOME}/.local/ w,
+
+  owner @{user_share_dirs}/ w,
+  owner @{user_share_dirs}/gvfs-metadata/{,*} rw,
+  owner @{HOME}/.var/app/*/data/gvfs-metadata/{,*} rw,
+
+  include if exists <local/gvfsd-metadata>
+}
+
+# vim:syntax=apparmor

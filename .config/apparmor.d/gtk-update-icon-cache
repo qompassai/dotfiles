@@ -1,0 +1,30 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gtk-update-icon-cache @{bin}/gtk4-update-icon-cache
+profile gtk-update-icon-cache /{{,usr/}bin/gtk-update-icon-cache,{,usr/}bin/gtk4-update-icon-cache}  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  capability fowner,
+
+  @{exec_path} mr,
+
+  @{system_share_dirs}/icons/{,**/} r,
+  @{system_share_dirs}/icons/**/.icon-theme.cache rw,
+  @{system_share_dirs}/icons/**/icon-theme.cache w,
+
+  owner @{user_share_dirs}/** r,
+  owner @{user_share_dirs}/**/.icon-theme.cache rw,
+  owner @{user_share_dirs}/**/icon-theme.cache rw,
+
+  include if exists <local/gtk-update-icon-cache>
+}
+
+# vim:syntax=apparmor

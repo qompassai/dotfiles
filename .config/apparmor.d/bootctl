@@ -1,0 +1,80 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/bootctl
+profile bootctl /{,usr/}bin/bootctl  flags=(attach_disconnected,mediate_deleted,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/disks-read>
+  include <abstractions/common/systemd>
+
+  capability linux_immutable,
+  capability mknod,
+  capability net_admin,
+  capability sys_rawio,
+  capability sys_resource,
+
+  signal send peer=child-pager,
+
+  ptrace read peer=unconfined,
+
+  @{exec_path} mr,
+
+  @{pager_path} rpx -> child-pager,
+
+  @{efi}/ r,
+  @{efi}/@{hex32}/ rw,
+  @{efi}/EFI/{,**} rwl,
+  @{efi}/loader/ rw,
+  @{efi}/loader/** rwl -> @{efi}/loader/#@{int},
+
+  /etc/kernel/.#entry-token@{hex16} rw,
+  /etc/kernel/entry-token rw,
+  /etc/machine-id r,
+  /etc/machine-info r,
+
+  @{run}/host/container-manager r,
+
+  @{sys}/class/tpmrm/ r,
+
+  @{sys}/devices/pnp@{int}/**/tpm/tpm@{int}/tpm_version_major r,
+  @{sys}/devices/virtual/dmi/id/{board_vendor,bios_vendor} r,
+  @{sys}/devices/virtual/dmi/id/{sys_vendor,product_version,product_name} r,
+
+  @{sys}/firmware/dmi/entries/*/raw r,
+  @{sys}/firmware/efi/efivars/ r,
+  @{sys}/firmware/efi/efivars/AuditMode-@{uuid} r,
+  @{sys}/firmware/efi/efivars/Boot@{hex}-@{uuid} rw,
+  @{sys}/firmware/efi/efivars/BootOrder-@{uuid} rw,
+  @{sys}/firmware/efi/efivars/DeployedMode-@{uuid} r,
+  @{sys}/firmware/efi/efivars/LoaderDevicePartUUID-@{uuid} r,
+  @{sys}/firmware/efi/efivars/LoaderEntries-@{uuid} r,
+  @{sys}/firmware/efi/efivars/LoaderEntrySelected-@{uuid} r,
+  @{sys}/firmware/efi/efivars/LoaderFeatures-@{uuid} r,
+  @{sys}/firmware/efi/efivars/LoaderFirmwareInfo-@{uuid} r,
+  @{sys}/firmware/efi/efivars/LoaderFirmwareType-@{uuid} r,
+  @{sys}/firmware/efi/efivars/LoaderImageIdentifier-@{uuid} r,
+  @{sys}/firmware/efi/efivars/LoaderInfo-@{uuid} r,
+  @{sys}/firmware/efi/efivars/LoaderSystemToken-@{uuid} rw,
+  @{sys}/firmware/efi/efivars/OsIndications-@{uuid} rw,
+  @{sys}/firmware/efi/efivars/OsIndicationsSupported-@{uuid} r,
+  @{sys}/firmware/efi/efivars/SecureBoot-@{uuid} r,
+  @{sys}/firmware/efi/efivars/SetupMode-@{uuid} r,
+  @{sys}/firmware/efi/fw_platform_size r,
+
+        @{PROC}/sys/kernel/random/poolsize r,
+  owner @{PROC}/@{pid}/cgroup r,
+
+  # Inherit silencer
+  deny network inet6 stream,
+  deny network inet stream,
+
+  include if exists <local/bootctl>
+}
+
+# vim:syntax=apparmor

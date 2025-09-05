@@ -1,0 +1,40 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{sbin}/runuser
+profile runuser /{,usr/}{,s}bin/runuser flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/authentication>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+  include <abstractions/wutmp>
+
+  capability setuid,
+  capability setgid,
+  capability audit_write,
+  capability sys_resource,
+
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{bin}/@{shells}    rux,
+
+  @{etc_ro}/security/limits.d/ r,
+  /etc/default/runuser r,
+
+  owner @{tmp}/debian-security-support.postinst.*/output w,
+
+        @{PROC}/1/limits r,
+  owner @{PROC}/@{pid}/loginuid r,
+
+  include if exists <local/runuser>
+}
+
+# vim:syntax=apparmor

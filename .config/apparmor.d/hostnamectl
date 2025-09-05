@@ -1,0 +1,51 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/hostnamectl
+profile hostnamectl /{,usr/}bin/hostnamectl flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.systemd1>
+  include <abstractions/consoles>
+
+  capability net_admin,
+
+  dbus (send receive) bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.hostname1{,.*}
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}", label="@{p_systemd_hostnamed}"),
+  dbus (send receive) bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}", label="@{p_systemd_hostnamed}"),
+  dbus send bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}", label="@{p_systemd_hostnamed}"),
+  dbus send bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}", label="@{p_systemd_hostnamed}"),
+  dbus receive bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}", label="@{p_systemd_hostnamed}"),
+  dbus send bus=system path=/org/freedesktop/hostname1
+       interface=org.freedesktop.DBus.Properties
+       member=GetAll
+       peer=(name=org.freedesktop.hostname1),
+
+  @{exec_path} mr,
+
+  /etc/machine-id r,
+
+  @{PROC}/sys/kernel/random/boot_id r,
+
+  include if exists <local/hostnamectl>
+}
+
+# vim:syntax=apparmor

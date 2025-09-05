@@ -1,0 +1,48 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/mono-sgen
+profile mono-sgen /{,usr/}bin/mono-sgen flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/freedesktop.org>
+  include <abstractions/graphics>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+  include <abstractions/wayland>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  @{exec_path} mr,
+
+  @{bin}/ r,
+  /{usr/,}local/bin/ r,
+  @{bin}/* rpux,
+
+  /usr/share/.mono/{,**} rw,
+
+  /etc/mono/{,**} r,
+  /etc/machine-id r,
+
+  owner @{user_config_dirs}/openra/{,**} rw,
+  owner @{user_config_dirs}/.mono/{,**} r,
+
+  owner @{tmp}/*.* rw,
+  owner @{tmp}/CASESENSITIVETEST* rw,
+  owner /dev/shm/mono.* rw,
+
+  owner @{PROC}/@{pid}/fd/ r,
+
+  include if exists <local/mono-sgen>
+}
+
+# vim:syntax=apparmor

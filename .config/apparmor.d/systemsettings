@@ -1,0 +1,147 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/systemsettings
+profile systemsettings /{,usr/}bin/systemsettings flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/bus-session>
+  include <abstractions/cups-client>
+  include <abstractions/dconf-write>
+  include <abstractions/graphics>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+  include <abstractions/qt5-shader-cache>
+  include <abstractions/thumbnails-cache-write>
+
+  network netlink raw,
+
+  signal send set=term peer=kioworker,
+
+  @{exec_path} mr,
+
+  @{sh_path} rix,
+  @{bin}/cat rix,
+  @{bin}/eglinfo rpux,
+  @{bin}/kcminit rpx,
+  @{bin}/lspci rpx,
+  @{bin}/openssl rix,
+  @{bin}/pactl rpx,
+  @{bin}/plasma-discover rpx,
+  @{bin}/plasmashell rpx,
+  @{bin}/xdpyinfo rpux,
+  @{lib}/qt{5,6}/bin/qdbus rpx,
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf5/kioslave5 Px,
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf6/kioworker Px,
+  /{,usr/}lib{,exec,32,64}/kf5/kioslave5 Px,
+  /{,usr/}lib{,exec,32,64}/kf6/kioworker Px,
+
+  /usr/share/kcm_networkmanagement/{,**} r,
+  /usr/share/kcm_recentFiles/{,**} r,
+  /usr/share/kcmkeys/{,*.kksrc} r,
+  /usr/share/kglobalaccel/* r,
+  /usr/share/kinfocenter/{,**} r,
+  /usr/share/solid/{,**} r,
+  /usr/share/kpackage/{,**} r,
+  /usr/share/kservices{5,6}/{,**} r,
+  /usr/share/kservicetypes5/{,**} r,
+  /usr/share/kwin/{,**} r,
+  /usr/share/kxmlgui5/systemsettings/systemsettingsui.rc r,
+  /usr/share/plasma/{,**} r,
+  /usr/share/sddm/themes/{,**} r,
+  /usr/share/systemsettings/{,**} r,
+  /usr/share/wallpapers/{,**} r,
+  /usr/share/thumbnailers/{,**} r,
+
+  /etc/fstab r,
+  /etc/machine-id r,
+  /etc/xdg/menus/{,applications-merged/} r,
+  /etc/xdg/plasmanotifyrc r,
+  /etc/xdg/ui/ui_standards.rc r,
+  /var/lib/dbus/machine-id r,
+  /etc/xdg/* r,
+
+  /var/cache/cracklib/cracklib_dict.* r,
+  /var/cache/samba/ rw,
+  /var/lib/AccountsService/icons/* r,
+  /var/lib/flatpak/repo/{,**} r,
+
+  owner @{HOME}/@{XDG_WALLPAPERS_DIR}/{,**} r,
+
+  owner @{user_cache_dirs}/kcrash-metadata/*.ini rw,
+  owner @{user_cache_dirs}/kinfocenter/{,**} rwlk,
+  owner @{user_cache_dirs}/ksvg-elements rw,
+  owner @{user_cache_dirs}/ksvg-elements.@{rand6} rwlk -> @{user_cache_dirs}/#@{int},
+  owner @{user_cache_dirs}/ksvg-elements.lock rwlk,
+  owner @{user_cache_dirs}/plasma_theme_*.kcache rw,
+  owner @{user_cache_dirs}/systemsettings/ rw,
+  owner @{user_cache_dirs}/systemsettings/** rwlk -> @{user_cache_dirs}/systemsettings/**,
+
+  owner @{user_config_dirs}/{P,p}lasma* r,
+  owner @{user_config_dirs}/*rc r,
+  owner @{user_config_dirs}/#@{int} rw,
+  owner @{user_config_dirs}/device_automounter_kcmrc.lock rwk,
+  owner @{user_config_dirs}/emaildefaults r,
+  owner @{user_config_dirs}/kde.org/{,**} rwlk,
+  owner @{user_config_dirs}/kdedefaults/kscreenlockerrc r,
+  owner @{user_config_dirs}/kdedefaults/plasmarc r,
+  owner @{user_config_dirs}/kinfocenterrc* rwlk,
+  owner @{user_config_dirs}/libaccounts-glib/ rw,
+  owner @{user_config_dirs}/libaccounts-glib/accounts.db{,-shm,-wal,-journal} rwk,
+  owner @{user_config_dirs}/menus/ r,
+  owner @{user_config_dirs}/menus/applications-merged/ r,
+  owner @{user_config_dirs}/session/ rw,
+  owner @{user_config_dirs}/session/** rwlk,
+  owner @{user_config_dirs}/systemsettingsrc.lock rwk,
+  owner @{user_config_dirs}/systemsettingsrc{,.@{rand6}} rwl -> @{user_config_dirs}/#@{int},
+  owner @{user_share_dirs}/baloo/index r,
+
+  owner @{user_share_dirs}/kactivitymanagerd/resources/database rwk,
+  owner @{user_share_dirs}/kactivitymanagerd/resources/database-shm rwk,
+  owner @{user_share_dirs}/kactivitymanagerd/resources/database-wal rw,
+  owner @{user_share_dirs}/kinfocenter/ rw,
+  owner @{user_share_dirs}/kinfocenter/** rwlk,
+  owner @{user_share_dirs}/knotifications{5,6}/{,**} r,
+  owner @{user_share_dirs}/krdpserver/ rw,
+  owner @{user_share_dirs}/kservices{5,6}/{,ServiceMenus/} r,
+  owner @{user_share_dirs}/systemsettings/ rw,
+  owner @{user_share_dirs}/systemsettings/** rwlk,
+  owner @{user_share_dirs}/wallpapers/{,**} r,
+
+  owner @{user_state_dirs}/#@{int} rw,
+  owner @{user_state_dirs}/systemsettingsstaterc rw,
+  owner @{user_state_dirs}/systemsettingsstaterc.@{rand6} rwlk,
+  owner @{user_state_dirs}/systemsettingsstaterc.lock rwlk,
+
+  owner @{run}/user/@{uid}/#@{int} rw,
+  owner @{run}/user/@{uid}/systemsettings@{rand6}.@{int}.kioworker.socket rwl -> @{run}/user/@{uid}/#@{int},
+
+  @{run}/udev/data/+drm:card@{int}-* r,   # For screen outputs
+
+  @{sys}/bus/ r,
+  @{sys}/bus/acpi/devices/ r,
+  @{sys}/bus/cpu/devices/ r,
+  @{sys}/class/ r,
+  @{sys}/firmware/acpi/pm_profile r,
+
+        @{PROC}/interrupts r,
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/mounts r,
+
+  /dev/ r,
+  /dev/bus/usb/ r,
+  /dev/input/ r,
+  /dev/rfkill r,
+  /dev/tty r,
+
+  include if exists <local/systemsettings>
+}
+
+# vim:syntax=apparmor

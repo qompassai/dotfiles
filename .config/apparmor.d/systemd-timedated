@@ -1,0 +1,69 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2022 Mikhail Morfikov
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/systemd/systemd-timedated
+profile systemd-timedated /{,usr/}lib{,exec,32,64}/systemd/systemd-timedated  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/common/systemd>
+
+  capability sys_time,
+
+  unix bind type=stream addr=@@{udbus}/bus/systemd-timedat/system,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.freedesktop.timedate1{,.*},
+  dbus receive bus=system path=/org/freedesktop/timedate1{,/**}
+       interface=org.freedesktop.timedate1{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/freedesktop/timedate1{,/**}
+       interface=org.freedesktop.timedate1{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/freedesktop/timedate1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/freedesktop/timedate1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/freedesktop/timedate1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.timedate1{,.*}}"),
+  dbus send bus=system path=/org/freedesktop/timedate1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus send bus=system path=/org/freedesktop/systemd1/unit/*
+       interface=org.freedesktop.DBus.Properties
+       member=GetAll
+       peer=(name=org.freedesktop.systemd1, label="@{p_systemd}"),
+
+  @{exec_path} mr,
+
+  @{etc_rw}/.#adjtime* rw,
+  @{etc_rw}/adjtime rw,
+
+  /etc/.#localtime* rw,
+  /etc/localtime rw,
+
+  /etc/.#timezone* rw,
+  /etc/timezone rw,
+
+  @{att}/@{run}/systemd/notify rw,
+
+  /dev/rtc@{int} r,
+
+  include if exists <local/systemd-timedated>
+}
+
+# vim:syntax=apparmor

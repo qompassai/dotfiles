@@ -1,0 +1,32 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2022 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/systemd/systemd-fsck
+profile systemd-fsck /{,usr/}lib{,exec,32,64}/systemd/systemd-fsck  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/disks-read>
+  include <abstractions/common/systemd>
+
+  capability net_admin,
+  capability sys_resource,
+
+  @{exec_path} mr,
+
+  @{sbin}/e2fsck rpx,
+  @{sbin}/fsck   rpx,
+  @{sbin}/fsck.* rpx,
+
+  owner @{run}/systemd/quotacheck w,
+  owner @{run}/systemd/fsck.progress rw,
+
+  include if exists <local/systemd-fsck>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,23 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/systemd/system-generators/systemd-veritysetup-generator
+profile systemd-generator-veritysetup /{,usr/}lib{,exec,32,64}/systemd/system-generators/systemd-veritysetup-generator  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/common/systemd>
+
+  ptrace (read) peer=@{p_systemd},
+
+  @{exec_path} mr,
+
+  @{PROC}/@{pid}/cgroup r,
+
+  include if exists <local/systemd-generator-veritysetup>
+}
+
+# vim:syntax=apparmor

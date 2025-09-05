@@ -1,0 +1,113 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/gnome-contacts
+profile gnome-contacts /{,usr/}bin/gnome-contacts flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus/org.freedesktop.portal.Desktop>
+  include <abstractions/common/gnome>
+  include <abstractions/gstreamer>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+
+  network netlink raw,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gnome.Contacts{,.*},
+  dbus receive bus=session path=/org/gnome/Contacts{,/**}
+       interface=org.gnome.Contacts{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gnome/Contacts{,/**}
+       interface=org.gnome.Contacts{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gnome/Contacts{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gnome/Contacts{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gnome/Contacts{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.Contacts{,.*}}"),
+  dbus send bus=session path=/org/gnome/Contacts{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/AddressBookFactory{,/**}
+       interface=org.gnome.evolution.dataserver.AddressBookFactory{,.*}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.AddressBookFactory{,.*}}", label=evolution-addressbook-factory),
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/AddressBookFactory{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.AddressBookFactory{,.*}}", label=evolution-addressbook-factory),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/AddressBookFactory{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.AddressBookFactory{,.*}}", label=evolution-addressbook-factory),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/AddressBookFactory{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.AddressBookFactory{,.*}}", label=evolution-addressbook-factory),
+  dbus receive bus=session path=/org/gnome/evolution/dataserver/AddressBookFactory{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.AddressBookFactory{,.*}}", label=evolution-addressbook-factory),
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/Source{,/**}
+       interface=org.gnome.evolution.dataserver.Source{,.*}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Source{,.*}}", label=evolution-source-registry),
+  dbus (send receive) bus=session path=/org/gnome/evolution/dataserver/Source{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Source{,.*}}", label=evolution-source-registry),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/Source{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Source{,.*}}", label=evolution-source-registry),
+  dbus send bus=session path=/org/gnome/evolution/dataserver/Source{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Source{,.*}}", label=evolution-source-registry),
+  dbus receive bus=session path=/org/gnome/evolution/dataserver/Source{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.evolution.dataserver.Source{,.*}}", label=evolution-source-registry),
+  dbus (send receive) bus=session path=/org/gnome/OnlineAccounts{,/**}
+       interface=org.gnome.OnlineAccounts{,.*}
+       peer=(name="{@{busname},org.gnome.OnlineAccounts{,.*}}", label=goa-daemon),
+  dbus (send receive) bus=session path=/org/gnome/OnlineAccounts{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.gnome.OnlineAccounts{,.*}}", label=goa-daemon),
+  dbus send bus=session path=/org/gnome/OnlineAccounts{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="{@{busname},org.gnome.OnlineAccounts{,.*}}", label=goa-daemon),
+  dbus send bus=session path=/org/gnome/OnlineAccounts{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gnome.OnlineAccounts{,.*}}", label=goa-daemon),
+  dbus receive bus=session path=/org/gnome/OnlineAccounts{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.gnome.OnlineAccounts{,.*}}", label=goa-daemon),
+
+  @{exec_path} mr,
+  @{open_path}  rpx -> child-open-help,
+
+  owner @{user_cache_dirs}/evolution/addressbook/{,**} r,
+  owner @{user_share_dirs}/folks/relationships.ini r,
+
+  include if exists <local/gnome-contacts>
+}
+
+# vim:syntax=apparmor

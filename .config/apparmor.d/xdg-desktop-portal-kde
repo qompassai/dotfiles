@@ -1,0 +1,56 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{lib}/xdg-desktop-portal-kde
+@{exec_path} += @{lib}/@{multiarch}/{,libexec/}xdg-desktop-portal-kde
+profile xdg-desktop-portal-kde /{{,usr/}lib{,exec,32,64}/xdg-desktop-portal-kde,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}xdg-desktop-portal-kde,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}xdg-desktop-portal-kde} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/graphics>
+  include <abstractions/kde-globals-write>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+  include <abstractions/qt5-shader-cache>
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,
+
+  signal send set=term peer=kioworker,
+
+  @{exec_path} mr,
+
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf5/kioslave5 Px,
+  /{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}kf6/kioworker Px,
+  /{,usr/}lib{,exec,32,64}/kf5/kioslave5 Px,
+  /{,usr/}lib{,exec,32,64}/kf6/kioworker Px,
+
+  /usr/share/plasma/look-and-feel/** r,
+
+  owner @{HOME}/ r,
+
+  owner @{desktop_config_dirs}/user-dirs.dirs r,
+
+  owner @{user_cache_dirs}/xdg-desktop-portal-kde/{,**} rw,
+
+  owner @{user_config_dirs}/autostart/org.kde.*.desktop r,
+  owner @{user_config_dirs}/breezerc r,
+  owner @{user_config_dirs}/xdg-desktop-portal-kderc{,.*} rwlk,
+
+  owner @{run}/user/@{uid}/xdg-desktop-portal-kde@{rand6}.*.socket rw,
+
+  owner @{PROC}/@{pid}/mountinfo r,
+
+  /dev/tty r,
+
+  include if exists <local/xdg-desktop-portal-kde>
+}
+
+# vim:syntax=apparmor

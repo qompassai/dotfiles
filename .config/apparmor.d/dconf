@@ -1,0 +1,33 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/dconf
+profile dconf /{,usr/}bin/dconf  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/dconf-write>
+
+  capability sys_nice,
+  capability dac_override,
+
+  @{exec_path} mr,
+
+  /etc/dconf/db/** rw,
+  /etc/gdm{3,}/greeter.dconf-defaults r,
+
+  /usr/share/gdm/dconf/{,**} r,
+
+  owner @{GDM_HOME}/ r,
+  owner @{GDM_HOME}/greeter-dconf-defaults{,.@{rand6}} rw,
+
+  owner @{user_config_dirs}/dconf/ rw,
+  owner @{user_config_dirs}/dconf/user{,.*} rw,
+
+  include if exists <local/dconf>
+}
+
+# vim:syntax=apparmor

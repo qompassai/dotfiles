@@ -1,0 +1,22 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = /etc/cron.{hourly,daily,weekly,monthly}/debtags
+profile cron-debtags /etc/cron.{hourly,daily,weekly,monthly}/debtags flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} r,
+
+  @{sh_path}        rix,
+  @{bin}/debtags    rpx,
+
+  include if exists <local/cron-debtags>
+}
+
+# vim:syntax=apparmor

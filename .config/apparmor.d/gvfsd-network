@@ -1,0 +1,69 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,gvfs/}gvfsd-network
+profile gvfsd-network /{,usr/}lib{,exec,32,64}/{,gvfs/}gvfsd-network flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.gtk.vfs.Daemon>
+  include <abstractions/bus/org.gtk.vfs.MountTracker>
+  include <abstractions/dconf-write>
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.gtk.vfs.mountpoint_@{int}{,.*},
+  dbus receive bus=session path=/org/gtk/vfs/mountpoint_@{int}{,/**}
+       interface=org.gtk.vfs.mountpoint_@{int}{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/gtk/vfs/mountpoint_@{int}{,/**}
+       interface=org.gtk.vfs.mountpoint_@{int}{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/gtk/vfs/mountpoint_@{int}{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/gtk/vfs/mountpoint_@{int}{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/gtk/vfs/mountpoint_@{int}{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.gtk.vfs.mountpoint_@{int}{,.*}}"),
+  dbus send bus=session path=/org/gtk/vfs/mountpoint_@{int}{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  dbus send bus=session path=/org/gtk/gvfs/exec_spaw/@{int}
+       interface=org.gtk.vfs.Spawner
+       member=Spawned
+       peer=(name="@{busname}", label=gvfsd),
+
+  dbus receive bus=session path=/org/gtk/vfs/mountable
+       interface=org.gtk.vfs.Mountable
+       member=Mount
+       peer=(name="@{busname}", label=gvfsd),
+
+  dbus send bus=session path=/org/gtk/vfs/mounttracker
+       interface=org.gtk.vfs.MountTracker
+       member={MountLocation,LookupMount,RegisterMount}
+       peer=(name="@{busname}", label=gvfsd),
+
+  @{exec_path} mr,
+
+  /usr/share/glib-2.0/schemas/gschemas.compiled r,
+
+  owner @{run}/user/@{uid}/gvfsd/ rw,
+  owner @{run}/user/@{uid}/gvfsd/socket-@{rand8} rw,
+
+  include if exists <local/gvfsd-network>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,75 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+# System Paths
+# ------------
+
+# @{MOUNTDIRS} is a space-separated list of where user mount directories
+# are stored, for programs that must enumerate all mount directories on a
+# system.
+@{MOUNTDIRS}=/media/ @{run}/media/@{user}/ /mnt/
+
+# @{MOUNTS} is a space-separated list of all user mounted directories.
+@{MOUNTS}=@{MOUNTDIRS}/*/ @{run}/user/@{uid}/gvfs/
+
+# Common places for binaries and libraries across distributions
+@{bin}=/{,usr/}bin
+
+@{sbin}=/{,usr/}{,s}bin
+@{lib}=/{,usr/}lib{,exec,32,64}
+
+# Common places for temporary files
+@{tmp}=/tmp/ /tmp/user/@{uid}/
+
+# Common places for EFI
+@{efi}=/boot/ /efi/ /boot/efi/
+
+# System Variables
+# ----------------
+
+# Common architecture names
+@{arch}=x86_64 amd64 i386 i686
+
+# Dbus unique name
+@{busname}=:1.@{u16} :not.active.yet
+
+# Unix dbus address prefix
+@{udbus}=@{h}{@{h},}{@{h},}{@{h},}{@{h},}{@{h},}{@{h},}{@{h},}{@{h},}{@{h},}{@{h},}{@{h},}{@{h},}{@{h},}{@{h},}{@{h},}
+
+# Universally unique identifier
+@{uuid}=@{h}@{h}@{h}@{h}@{h}@{h}@{h}@{h}[-_]@{h}@{h}@{h}@{h}[-_]@{h}@{h}@{h}@{h}[-_]@{h}@{h}@{h}@{h}[-_]@{h}@{h}@{h}@{h}@{h}@{h}@{h}@{h}@{h}@{h}@{h}@{h}
+
+# Username & group valid characters
+@{user}=[a-zA-Z_]{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}{@{w},}
+@{group}=@{user}
+
+# Semantic version
+@{version}=@{u16}{.@{u16},}{.@{u16},}{{-,_}@{rand},}
+
+# OpenSUSE does not have the same multiarch structure
+
+
+
+# System Internal
+# ---------------
+
+# SQlite temporary files (hexadecimal from 12 to 16 characters)
+@{sqlhex}=@{hex12} @{hex12}@{h} @{hex12}@{hex2} @{hex15} @{hex16}
+
+# Shortcut for PCI device
+@{pci_id}=@{h}@{h}@{h}@{h}:@{h}@{h}:@{h}@{h}.@{h}
+@{pci_bus}=pci@{h}@{h}@{h}@{h}:@{h}@{h}
+@{pci}=@{pci_bus}/**/
+
+# Udev data dynamic assignment ranges
+@{dynamic}=23[4-9] 24[0-9] 25[0-4]                       # range 234 to 254
+@{dynamic}+=38[4-9] 39[0-9] 4[0-9][0-9] 50[0-9] 51[0-1]  # range 384 to 511
+
+# Attachment path for attach_disconnected.path flag.
+# Automatically generated and set in profile preamble on ABI4. Disabled on ABI3.
+@{att}=/
+
+alias // -> /,
+
+# vim:syntax=apparmor

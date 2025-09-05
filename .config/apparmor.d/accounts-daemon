@@ -1,0 +1,101 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2022 Mikhail Morfikov
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,accountsservice/}accounts-daemon
+profile accounts-daemon /{,usr/}lib{,exec,32,64}/{,accountsservice/}accounts-daemon  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.PolicyKit1>
+  include <abstractions/nameservice-strict>
+  include <abstractions/wutmp>
+
+  capability dac_read_search,
+  capability setgid,
+  capability setuid,
+  capability sys_nice,
+  capability sys_ptrace,
+
+  ptrace read peer=unconfined,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.freedesktop.Accounts{,.*},
+  dbus receive bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.Accounts{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.Accounts{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.Accounts{,.*}}"),
+  dbus send bus=system path=/org/freedesktop/Accounts{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{sbin}/adduser    rpx,
+  @{bin}/cat         rix,
+  @{bin}/chage       rpx,
+  @{bin}/passwd      rpx,
+  @{sbin}/chpasswd   rpx,
+  @{sbin}/userdel    rpx,
+  @{sbin}/usermod    rpx,
+  @{bin}/locale     rpux,
+
+  /usr/share/language-tools/language-validate   rpx,
+  /usr/share/language-tools/set-language-helper rpux,
+  /usr/share/language-tools/save-to-pam-env rpux,
+
+  /usr/share/accountsservice/{,**} r,
+  /usr/share/dbus-1/interfaces/*.xml r,
+
+  /etc/default/locale r,
+  /etc/gdm{3,}/ r,
+  /etc/gdm{3,}/custom.conf{,.@{rand6}} rw,
+  /etc/gdm{3,}/daemon.conf{,.@{rand6}} rw,
+  /etc/lightdm/lightdm.conf r,
+  /etc/machine-id r,
+  /etc/shadow r,
+  /etc/shells r,
+  /etc/sysconfig/displaymanager r,
+
+  /var/log/wtmp r,
+
+  owner /var/lib/AccountsService/ r,
+  owner /var/lib/AccountsService/** rw,
+
+        @{HOME}/ r,
+  owner @{HOME}/.pam_environment r,
+
+  owner @{tmp}/gnome-control-center-user-icon-@{rand6} rw,
+
+        @{PROC}/@{pid}/cmdline r,
+        @{PROC}/@{pid}/loginuid r,
+        @{PROC}/1/environ r,
+        @{PROC}/cmdline r,
+        @{PROC}/sys/kernel/osrelease r,
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/loginuid rw,
+
+  include if exists <local/accounts-daemon>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,37 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022 Jeroen Rijken
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/grub-mkrelpath
+profile grub-mkrelpath /{,usr/}bin/grub-mkrelpath flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+
+  capability sys_admin,
+
+  @{exec_path} mr,
+
+  /{usr/,}{local/,}{s,}bin/zpool rpx,
+
+  / r,
+  /usr/share/grub/* r,
+
+  @{efi}/ r,
+  @{efi}/grub/themes/{,**} r,
+
+  /tmp/grub-btrfs.*/@snapshots/@{int}/snapshot/boot/ r,
+  /tmp/grub-btrfs.*/@/.snapshots/@{int}/snapshot/boot/ r,
+  /tmp/grub-btrfs.*/@_backup_@{int}/boot/ r,
+  /tmp/grub-btrfs.*/ r,
+
+  @{PROC}/@{pids}/mountinfo r,
+
+  include if exists <local/grub-mkrelpath>
+}
+
+# vim:syntax=apparmor

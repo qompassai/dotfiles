@@ -1,0 +1,82 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2022 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/systemd/systemd-hostnamed
+profile systemd-hostnamed /{,usr/}lib{,exec,32,64}/systemd/systemd-hostnamed  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.PolicyKit1>
+  include <abstractions/common/systemd>
+
+  capability sys_admin,  # To set a hostname
+
+  network unix stream,
+
+  unix (bind) type=stream addr=@@{udbus}/bus/systemd-hostnam/system,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.freedesktop.hostname1{,.*},
+  dbus receive bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.hostname1{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.hostname1{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.hostname1{,.*}}"),
+  dbus send bus=system path=/org/freedesktop/hostname1{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{etc_rw}/.#hostname* rw,
+  @{etc_rw}/hostname rw,
+  /etc/.#machine-info@{hex16} rw,
+  /etc/.#machine-info@{rand6} rw,
+  /etc/machine-id r,
+  /etc/machine-info rw,
+  /etc/os-release r,
+
+  @{att}/@{run}/systemd/notify rw,
+
+  @{run}/systemd/default-hostname rw,
+  @{run}/udev/data/+dmi:* r,              # for motherboard info
+
+  @{sys}/devices/virtual/dmi/id/ r,
+  @{sys}/devices/virtual/dmi/id/bios_date r,
+  @{sys}/devices/virtual/dmi/id/bios_vendor r,
+  @{sys}/devices/virtual/dmi/id/bios_version r,
+  @{sys}/devices/virtual/dmi/id/board_vendor r,
+  @{sys}/devices/virtual/dmi/id/chassis_type r,
+  @{sys}/devices/virtual/dmi/id/product_name r,
+  @{sys}/devices/virtual/dmi/id/product_version r,
+  @{sys}/devices/virtual/dmi/id/sys_vendor r,
+  @{sys}/devices/virtual/dmi/id/uevent r,
+  @{sys}/firmware/acpi/pm_profile r,
+  @{sys}/firmware/dmi/entries/*/raw r,
+
+  /dev/vsock r,
+
+  include if exists <local/systemd-hostnamed>
+}
+
+# vim:syntax=apparmor

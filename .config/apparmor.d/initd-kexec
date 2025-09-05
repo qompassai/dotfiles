@@ -1,0 +1,58 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = /etc/init.d/kexec
+profile initd-kexec /etc/init.d/kexec flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} r,
+  @{sh_path}        rix,
+
+  @{bin}/cat        rix,
+  @{bin}/readlink   rix,
+  @{bin}/tput       rix,
+  @{bin}/echo       rix,
+
+  @{sbin}/kexec     rpx,
+
+  @{bin}/run-parts  rcx -> run-parts,
+  @{bin}/systemctl  rcx -> systemctl,
+
+  /etc/default/kexec r,
+
+  @{sys}/kernel/kexec_loaded r,
+
+  profile run-parts flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/run-parts mr,
+
+    /etc/default/kexec.d/ r,
+
+    include if exists <local/initd-kexec_run-parts>
+  }
+
+  profile systemctl flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    capability sys_resource,
+
+    @{bin}/systemd-tty-ask-password-agent rix,
+
+    owner @{run}/systemd/ask-password/ rw,
+    owner @{run}/systemd/ask-password-block/* rw,
+
+    include if exists <local/initd-kexec_systemctl>
+  }
+
+  include if exists <local/initd-kexec>
+}
+
+# vim:syntax=apparmor

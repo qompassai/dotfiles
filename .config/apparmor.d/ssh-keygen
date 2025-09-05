@@ -1,0 +1,32 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022 Roman Beslik <me@beroal.in.ua>
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/ssh-keygen
+profile ssh-keygen /{,usr/}bin/ssh-keygen flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} mr,
+
+  /etc/ssh/ssh_host_*_key* rw,
+
+  owner @{HOME}/@{XDG_SSH_DIR}/ w,
+  owner @{HOME}/@{XDG_SSH_DIR}/*_*{,.pub} rw,
+
+  /tmp/snapd@{int}/*_*{,.pub} w,
+  /tmp/snapd@{int}/*.key{,.pub} w,
+
+  /dev/tty@{int} rw,
+  /dev/ttyS@{int} rw,
+
+  include if exists <local/ssh-keygen>
+}
+
+# vim:syntax=apparmor

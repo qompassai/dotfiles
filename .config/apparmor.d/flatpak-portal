@@ -1,0 +1,73 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/flatpak-portal
+profile flatpak-portal /{,usr/}lib{,exec,32,64}/flatpak-portal  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-session>
+  include <abstractions/nameservice-strict>
+
+  capability sys_ptrace,
+
+  network netlink raw,
+
+  ptrace read,
+
+  signal send,
+
+  include <abstractions/bus/own-session>
+
+  dbus bind bus=session name=org.freedesktop.portal.Flatpak{,.*},
+  dbus receive bus=session path=/org/freedesktop/portal/Flatpak{,/**}
+       interface=org.freedesktop.portal.Flatpak{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=session path=/org/freedesktop/portal/Flatpak{,/**}
+       interface=org.freedesktop.portal.Flatpak{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=session path=/org/freedesktop/portal/Flatpak{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=session path=/org/freedesktop/portal/Flatpak{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=session path=/org/freedesktop/portal/Flatpak{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.portal.Flatpak{,.*}}"),
+  dbus send bus=session path=/org/freedesktop/portal/Flatpak{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mr,
+
+  @{bin}/flatpak rpx,
+
+  /usr/share/mime/mime.cache r,
+  /usr/share/xdg-desktop-portal/portals/{,*.portal} r,
+
+  /var/lib/flatpak/exports/share/mime/mime.cache r,
+
+  owner @{att}/ r,
+  owner @{att}/.flatpak-info r,
+
+  owner @{HOME}/.var/app/*/**/.ref rw,
+  owner @{HOME}/.var/app/*/**/logs/* rw,
+
+  owner @{user_config_dirs}/user-dirs.dirs r,
+  owner @{user_share_dirs}/mime/mime.cache r,
+
+  owner @{run}/user/@{uid}/.flatpak/@{int}/* r,
+  owner @{run}/user/@{uid}/.flatpak/@{int}-private/* r,
+
+  include if exists <local/flatpak-portal>
+}
+
+# vim:syntax=apparmor

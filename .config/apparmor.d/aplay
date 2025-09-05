@@ -1,0 +1,27 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/aplay
+profile aplay /{,usr/}bin/aplay flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+
+  @{exec_path} mr,
+
+  /var/lib/dbus/machine-id r,
+  /etc/machine-id r,
+
+  owner @{HOME}/.Xauthority r,
+
+  /dev/snd/controlC@{int} rw,
+
+  include if exists <local/aplay>
+}
+
+# vim:syntax=apparmor

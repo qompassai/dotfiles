@@ -1,0 +1,32 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022 Jeroen Rijken
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/sanoid
+profile sanoid /{,usr/}bin/sanoid flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/perl>
+
+  @{exec_path}            mr,
+  @{sh_path}              rix,
+  @{bin}/perl             rix,
+  @{bin}/ps               rpx,
+  @{bin}/zfs              rpx,
+
+  /usr/share/sanoid/{,**} r,
+
+  /etc/sanoid/{,*} r,
+
+  /var/cache/sanoid/{,**} rw,
+
+  @{run}/sanoid/ rw,
+  @{run}/sanoid/** rwk,
+
+  include if exists <local/sanoid>
+}
+
+# vim:syntax=apparmor

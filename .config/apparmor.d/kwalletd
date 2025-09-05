@@ -1,0 +1,65 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2023-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/kwalletd{5,6}
+profile kwalletd /{,usr/}bin/kwalletd{5,6} flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/consoles>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/graphics>
+  include <abstractions/gtk>
+  include <abstractions/kde-strict>
+  include <abstractions/nameservice-strict>
+  include <abstractions/qt5-compose-cache-write>
+
+  @{exec_path} mr,
+
+  @{bin}/gpgconf rcx -> gpg,
+  @{bin}/gpg{,2} rcx -> gpg,
+  @{bin}/gpgsm   rcx -> gpg,
+
+  /usr/share/color-schemes/{,**} r,
+
+  /etc/machine-id r,
+  /var/lib/dbus/machine-id r,
+
+  owner @{user_config_dirs}/#@{int} rw,
+  owner @{user_config_dirs}/breezerc r,
+  owner @{user_config_dirs}/kwalletrc r,
+  owner @{user_config_dirs}/kwalletrc rwl -> @{user_config_dirs}/#@{int},
+  owner @{user_config_dirs}/kwalletrc.lock rwk,
+
+  owner @{user_share_dirs}/kwalletd/ rw,
+  owner @{user_share_dirs}/kwalletd/** rwkl -> @{user_share_dirs}/kwalletd/#@{int},
+
+  owner @{tmp}/kwalletd5.* rw,
+
+  owner @{PROC}/@{pid}/cmdline r,
+  owner @{PROC}/@{pid}/fd/ r,
+
+  /dev/shm/#@{int} rw,
+
+  profile gpg flags=(complain) {
+    include <abstractions/base>
+
+    @{bin}/gpgconf mr,
+    @{bin}/gpg{,2} mr,
+    @{bin}/gpgsm mr,
+
+    owner @{HOME}/@{XDG_GPG_DIR}/ rw,
+    owner @{HOME}/@{XDG_GPG_DIR}/** rwkl -> @{HOME}/@{XDG_GPG_DIR}/**,
+
+    include if exists <local/kwalletd_gpg>
+  }
+
+  include if exists <local/kwalletd>
+}
+
+# vim:syntax=apparmor

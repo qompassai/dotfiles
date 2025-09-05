@@ -1,0 +1,100 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2022 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{lib}/{,colord/}colord{,-sane}
+profile colord /{,usr/}lib{,exec,32,64}/{,colord/}colord{,-sane}  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/bus/org.freedesktop.Avahi>
+  include <abstractions/bus/org.freedesktop.PolicyKit1>
+  include <abstractions/devices-usb>
+  include <abstractions/nameservice-strict>
+
+  network inet dgram,
+  network inet6 dgram,
+  network netlink raw,
+
+  include <abstractions/bus/own-system>
+
+  dbus bind bus=system name=org.freedesktop.ColorManager{,.*},
+  dbus receive bus=system path=/org/freedesktop/ColorManager{,/**}
+       interface=org.freedesktop.ColorManager{,.*}
+       peer=(name="@{busname}"),
+  dbus send bus=system path=/org/freedesktop/ColorManager{,/**}
+       interface=org.freedesktop.ColorManager{,.*}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus (send receive) bus=system path=/org/freedesktop/ColorManager{,/**}
+       interface=org.freedesktop.DBus.Properties
+       member={Get,GetAll,Set,PropertiesChanged}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+  dbus receive bus=system path=/org/freedesktop/ColorManager{,/**}
+       interface=org.freedesktop.DBus.Introspectable
+       member=Introspect
+       peer=(name="@{busname}"),
+  dbus receive bus=system path=/org/freedesktop/ColorManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member=GetManagedObjects
+       peer=(name="{@{busname},org.freedesktop.ColorManager{,.*}}"),
+  dbus send bus=system path=/org/freedesktop/ColorManager{,/**}
+       interface=org.freedesktop.DBus.ObjectManager
+       member={InterfacesAdded,InterfacesRemoved}
+       peer=(name="{@{busname},org.freedesktop.DBus}"),
+
+  @{exec_path} mrix,
+  @{lib}/colord-sane ix,
+
+  /etc/machine-id r,
+  /etc/sane.d/{,**} r,
+  /etc/snmp/snmp.conf r,
+  /etc/udev/hwdb.bin r,
+
+  /usr/share/color/icc/{,**} r,
+  /usr/share/mime/mime.cache r,
+  /usr/share/snmp/mibs/{,*} r,
+
+  @{system_share_dirs}/mime/mime.cache r,
+
+  owner /var/lib/colord/.cache/ rw,
+  owner /var/lib/colord/.cache/** rw,
+  owner /var/lib/colord/{mapping,storage}.db{,-journal} rwk,
+  owner /var/lib/colord/** r,
+
+  owner /var/lib/snmp/{mib,cert}_indexes/ rw,
+  owner /var/lib/snmp/mibs/{iana,ietf}/ r,
+  owner /var/lib/snmp/mibs/{iana,ietf}/[A-Z]* r,
+
+  @{att}/@{desktop_share_dirs}/icc/edid-@{hex32}.icc r,
+  @{att}/@{user_share_dirs}/icc/edid-@{hex32}.icc r,
+
+  @{run}/systemd/sessions/* r,
+
+  @{run}/udev/data/+pci:* r,              # Identifies all PCI devices (CPU, GPU, Network, Disks, USB, etc.)
+  @{run}/udev/data/c81:@{int}  r,         # For video4linux
+
+  @{sys}/bus/scsi/devices/ r,
+  @{sys}/class/drm/ r,
+  @{sys}/class/video4linux/ r,
+  @{sys}/devices/@{pci}/{vendor,model,type} r,
+  @{sys}/devices/@{pci}/drm/card@{int}/**/{enabled,edid} r,
+  @{sys}/devices/@{pci}/uevent r,
+  @{sys}/devices/virtual/dmi/id/{sys_vendor,product_version,product_name} r,
+
+        @{PROC}/sys/dev/parport/ r,
+        @{PROC}/sys/dev/parport/parport@{int}/base-addr r,
+        @{PROC}/sys/dev/parport/parport@{int}/irq r,
+        @{PROC}/@{pids}/cgroup r,
+        @{PROC}/@{pids}/cmdline r,
+  owner @{PROC}/@{pid}/fd/ r,
+
+  /dev/parport@{int} r,
+
+  include if exists <local/colord>
+}
+
+# vim:syntax=apparmor

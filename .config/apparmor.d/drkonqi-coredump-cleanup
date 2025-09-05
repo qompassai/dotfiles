@@ -1,0 +1,22 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{lib}/drkonqi-coredump-cleanup
+@{exec_path} += @{lib}/@{multiarch}/{,libexec/}drkonqi-coredump-cleanup
+profile drkonqi-coredump-cleanup /{{,usr/}lib{,exec,32,64}/drkonqi-coredump-cleanup,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}drkonqi-coredump-cleanup,{,usr/}lib{,exec,32,64}/*-linux-gnu*/{,libexec/}drkonqi-coredump-cleanup} flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} mr,
+
+        @{user_cache_dirs}/kcrash-metadata/ r,
+  owner @{user_cache_dirs}/kcrash-metadata/plasmashell.@{hex32}.@{int4}.ini w,
+
+  include if exists <local/drkonqi-coredump-cleanup>
+}
+
+# vim:syntax=apparmor

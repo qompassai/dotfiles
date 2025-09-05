@@ -1,0 +1,58 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2018-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/xdg-desktop-menu
+profile xdg-desktop-menu /{,usr/}bin/xdg-desktop-menu flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/consoles>
+  include <abstractions/freedesktop.org>
+  include <abstractions/nameservice-strict>
+
+  @{exec_path} r,
+
+  @{sh_path}       rix,
+  @{bin}/{,e}grep   ix,
+  @{bin}/{m,g,}awk  ix,
+  @{bin}/basename   ix,
+  @{bin}/cat        ix,
+  @{bin}/chmod      ix,
+  @{bin}/cp         ix,
+  @{bin}/cut        ix,
+  @{bin}/dirname    ix,
+  @{bin}/ln         ix,
+  @{bin}/mkdir      ix,
+  @{bin}/mktemp     ix,
+  @{bin}/mv         ix,
+  @{bin}/readlink   ix,
+  @{bin}/realpath   ix,
+  @{bin}/rm         ix,
+  @{bin}/sed        ix,
+  @{bin}/touch      ix,
+  @{bin}/tr         ix,
+  @{bin}/umask      ix,
+  @{bin}/uname      ix,
+
+  # To get DE information
+  @{bin}/kde{,4}-config           ix,
+
+  @{bin}/dbus-send                cx -> bus,
+  @{bin}/update-desktop-database  px,
+  @{bin}/xprop                    px,
+
+  profile bus flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/bus>
+    include <abstractions/bus-session>
+    include if exists <local/xdg-desktop-menu_bus>
+  }
+
+  include if exists <local/xdg-desktop-menu>
+}
+
+# vim:syntax=apparmor

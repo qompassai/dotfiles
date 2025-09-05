@@ -1,0 +1,43 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2020-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path}  = @{sbin}/kvm-ok
+profile kvm-ok /{,usr/}{,s}bin/kvm-ok flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} r,
+  @{sh_path}        rix,
+
+  @{bin}/uname      rix,
+  @{bin}/{,e}grep   rix,
+  @{bin}/id         rix,
+
+  @{bin}/kmod       rcx -> kmod,
+
+  @{sbin}/rdmsr     rpx,
+
+  #/proc/cpuinfo r,
+  #/dev/kvm r,
+  #/dev/cpu/@{int}/msr r,
+
+  # For shell pwd
+  /root/ r,
+
+
+  profile kmod flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/kmod>
+
+    include if exists <local/kvm-ok_kmod>
+  }
+
+  include if exists <local/kvm-ok>
+}
+
+# vim:syntax=apparmor

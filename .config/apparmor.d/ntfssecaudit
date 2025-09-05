@@ -1,0 +1,25 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/ntfssecaudit
+profile ntfssecaudit /{,usr/}bin/ntfssecaudit flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/disks-write>
+  include <abstractions/nameservice-strict>
+
+  capability sys_admin,
+
+  @{exec_path} mr,
+
+  owner @{PROC}/@{pid}/mounts r,
+
+  include if exists <local/ntfssecaudit>
+}
+
+# vim:syntax=apparmor

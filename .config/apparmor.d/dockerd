@@ -1,0 +1,195 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/dockerd
+profile dockerd /{,usr/}bin/dockerd  flags=(attach_disconnected,complain) {
+  include <abstractions/base>
+  include <abstractions/bus-system>
+  include <abstractions/nameservice-strict>
+  include <abstractions/ssl_certs>
+
+  capability chown,
+  capability dac_override,
+  capability dac_read_search,
+  capability fowner,
+  capability fsetid,
+  capability kill,
+  capability mknod,
+  capability net_admin,
+  capability net_bind_service,
+  capability net_raw,
+  capability setfcap,
+  capability sys_admin,
+  capability sys_chroot,
+  capability sys_ptrace,
+
+  network inet dgram,
+  network inet raw,
+  network inet stream,
+  network inet6 dgram,
+  network inet6 stream,
+  network netlink raw,
+  network packet dgram,
+
+  mount                        /tmp/containerd-mount@{int}/,
+  mount                        /var/lib/docker/**/,
+  mount options=(rw bind)                                   -> @{run}/docker/netns/*,
+  mount options=(rw rprivate)                               -> /.pivot_root@{int}/,
+  mount options=(rw rslave)                                 -> /,
+
+  remount /tmp/containerd-mount@{int10}/,
+  remount /var/lib/docker/**/,
+
+  umount /.pivot_root@{int}/,
+  umount @{run}/docker/netns/*,
+  umount /tmp/containerd-mount@{int}/,
+  umount /var/lib/docker/**/,
+
+  pivot_root oldroot=/var/lib/docker/overlay*/**/.pivot_root@{int}/               /var/lib/docker/overlay2/**/,
+  pivot_root oldroot=/var/lib/docker/rootfs/overlayfs/@{hex64}/.pivot_root@{int}/ /var/lib/docker/rootfs/overlayfs/@{hex64}/,
+  pivot_root oldroot=/var/lib/docker/tmp/**/.pivot_root@{int}/                    /var/lib/docker/tmp/**/,
+
+  ptrace read peer=docker-*,
+  ptrace read peer=runc,
+  ptrace read peer=unconfined,
+
+  signal send set=int  peer=docker-proxy,
+  signal send set=kill peer=docker-*,
+  signal send set=term peer=containerd,
+
+  @{exec_path} mrix,
+
+  @{sbin}/apparmor_parser        rpx,
+  @{bin}/containerd              rpx,
+  @{bin}/docker-init             rcx -> init,
+  @{lib}/docker/docker-init      rcx -> init,
+  @{bin}/docker-proxy            rpx,
+  @{bin}/git                     rcx -> git,
+  @{bin}/kmod                    rcx -> kmod,
+  @{bin}/ps                      rpx,
+  @{sbin}/runc                   rux,
+  @{bin}/runc                    rux, #aa:lint ignore=sbin
+  @{bin}/unpigz                  rix,
+  @{sbin}/xtables-nft-multi      rcx -> nft,
+  @{sbin}/xtables-legacy-multi   rcx -> nft,
+
+  # Docker needs full access of the containers it manages.
+  # TODO: should be in a sub profile started with pivot_root, not supported yet.
+
+
+  @{att}/@{lib}/containerd/** rw,
+  @{att}/var/lib/docker/{,**} rwk,
+
+  /etc/docker/{,**} r,
+
+  @{att}/ r,
+
+  owner @{lib}/docker/overlay2/*/work/{,**} rw,
+  owner /var/lib/containerd/** rw,
+  owner /var/lib/docker/{,**} rwk,
+  owner /var/lib/docker/tmp/qemu-check@{int}/check rix,
+
+  /tmp/build/ w,
+  /tmp/containerd-mount@{int}/{,**} rw,
+
+  @{run}/systemd/notify rw,
+
+        @{run}/containerd/containerd.sock rw,
+  owner @{run}/docker.pid rw,
+  owner @{run}/docker/ rw,
+  owner @{run}/docker/** rwlk,
+
+  @{sys}/devices/virtual/net/** r,
+  @{sys}/fs/cgroup/cgroup.controllers r,
+  @{sys}/fs/cgroup/cpuset.cpus.effective r,
+  @{sys}/fs/cgroup/cpuset.mems.effective r,
+  @{sys}/kernel/security/apparmor/profiles r,
+  @{sys}/module/apparmor/parameters/enabled r,
+
+        @{PROC}/1/cgroup r,
+        @{PROC}/1/environ r,
+        @{PROC}/cmdline r,
+        @{PROC}/pressure/cpu r,
+        @{PROC}/pressure/io r,
+        @{PROC}/pressure/memory r,
+        @{PROC}/sys/kernel/keys/root_maxkeys r,
+        @{PROC}/sys/kernel/osrelease r,
+        @{PROC}/sys/kernel/threads-max r,
+        @{PROC}/sys/net/bridge/bridge-nf-call-ip*tables r,
+        @{PROC}/sys/net/core/somaxconn r,
+        @{PROC}/sys/net/ipv{4,6}/conf/*/disable_ipv{4,6} rw,
+        @{PROC}/sys/net/ipv{4,6}/conf/docker@{int}/accept_ra rw,
+        @{PROC}/sys/net/ipv{4,6}/ip_forward rw,
+        @{PROC}/sys/net/ipv{4,6}/ip_local_port_range r,
+  owner @{PROC}/@{pid}/attr/current r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/fd/ r,
+  owner @{PROC}/@{pid}/mountinfo r,
+  owner @{PROC}/@{pid}/task/@{tid}/mountinfo r,
+  owner @{PROC}/@{pid}/uid_map r,
+
+  /dev/ r,
+  /dev/**/ r,
+
+  profile nft  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+
+    capability net_admin,
+    capability net_raw,
+
+    network inet raw,
+    network inet6 raw,
+    network netlink raw,
+
+    @{sbin}/xtables-nft-multi     rix,
+    @{sbin}/xtables-legacy-multi  rix,
+    @{bin}/kmod                   rpx -> dockerd//kmod,
+
+    @{PROC}/@{pid}/net/ip{,6}_tables_names r,
+    @{PROC}/sys/kernel/modprobe r,
+
+    @{run}/xtables.lock rwk,
+
+    include if exists <local/dockerd_nft>
+  }
+
+  profile kmod flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+    include <abstractions/app/kmod>
+
+    capability sys_module,
+
+    @{run}/xtables.lock r,
+
+    @{sys}/module/compression r,
+    @{sys}/module/*/initstate r,
+
+    include if exists <local/dockerd_kmod>
+  }
+
+  profile init  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+
+    @{bin}/docker-init mr,
+    @{lib}/docker/docker-init mr,
+
+    include if exists <local/dockerd_init>
+  }
+
+  profile git  flags=(attach_disconnected,complain) {
+    include <abstractions/base>
+
+    @{bin}/git mr,
+
+    include if exists <local/dockerd_git>
+  }
+
+  include if exists <local/dockerd>
+}
+
+# vim:syntax=apparmor

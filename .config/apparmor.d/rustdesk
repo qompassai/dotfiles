@@ -1,0 +1,131 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/rustdesk
+profile rustdesk /{,usr/}bin/rustdesk flags=(complain) {
+  include <abstractions/base>
+  include <abstractions/audio-client>
+  include <abstractions/bus-accessibility>
+  include <abstractions/bus-session>
+  include <abstractions/bus/org.a11y>
+  include <abstractions/desktop>
+  include <abstractions/fontconfig-cache-read>
+  include <abstractions/nameservice-strict>
+
+  capability dac_read_search,
+  capability dac_override,
+
+  network inet dgram,
+  network inet6 dgram,
+  network inet stream,
+  network inet6 stream,
+  network netlink raw,  # discovery
+
+  @{exec_path} mrix,
+
+  @{bin}/w        rpx,
+  @{bin}/ps       rpx,
+  @{bin}/whoami   rpx,
+  @{bin}/loginctl rpx,
+  @{bin}/curl     rix,
+  @{bin}/ls       rix,
+
+  @{bin}/sudo           rcx -> sudo,
+  @{python_path}        rcx -> python,
+  @{sh_path}            rcx -> shell,
+
+  /etc/gdm{,3}/custom.conf r,
+
+  owner @{HOME}/ r,  # fails otherwise
+  owner @{HOME}/[rR]ust[dD]esk/{,**} rw,
+
+  owner @{HOME}/.local/ w,
+  owner @{user_share_dirs}/ w,
+  owner @{user_share_dirs}/logs/ w,
+  owner @{user_share_dirs}/logs/[rR]ust[dD]esk/{,**} rw,
+  owner @{user_config_dirs}/[rR]ust[dD]esk/{,**} rw,
+
+  /tmp/[rR]ust[dD]esk/{,**} rw,
+
+  @{sys}/devices/system/cpu/cpufreq/policy@{int}/scaling_{cur,min,max}_freq r,
+
+        @{PROC}/uptime r,
+  owner @{PROC}/@{pid}/cgroup r,
+  owner @{PROC}/@{pid}/cmdline r,
+
+  profile sudo flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/sudo>
+    include <abstractions/python>
+
+    @{bin}/rustdesk rpx,
+    @{python_path}  rpx -> rustdesk//python,
+
+    include if exists <local/rustdesk_sudo>
+  }
+
+  profile python flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/python>
+
+    capability dac_read_search,
+    capability dac_override,
+
+    @{python_path} r,
+
+    @{sh_path}   rix,
+    @{bin}/chmod rix,
+    @{bin}/uname rix,
+    /usr/share/rustdesk/files/pynput_service.py rix,
+
+    /usr/share/[rR]ust[dD]esk/files/{,**} r,
+    /tmp/[rR]ust[dD]esk/ w,
+    /tmp/[rR]ust[dD]esk/pynput_service rw,
+
+    @{run}/user/@{uid}/gdm{,3}/Xauthority r,
+
+    owner @{PROC}/@{pid}/fd/ r,
+
+    # X-tiny
+    /tmp/.X11-unix/* rw,
+    owner @{HOME}/.xsession-errors w,
+    owner @{HOME}/.Xauthority r,
+
+    include if exists <local/rustdesk_python>
+  }
+
+  profile shell flags=(complain) {
+    include <abstractions/base>
+
+    capability dac_override,
+    capability dac_read_search,
+    capability sys_ptrace,
+
+    ptrace read,
+
+    @{sh_path}        r,
+
+    @{bin}/tr       rix,
+    @{bin}/{,e}grep rix,
+    @{bin}/tail     rix,
+    @{bin}/xargs    rix,
+    @{bin}/sed      rix,
+    @{bin}/cat      rix,
+
+    @{bin}/ps rpx,
+
+          @{PROC}/@{pid}/environ r,
+    owner @{PROC}/@{pid}/fd/ r,
+
+    include if exists <local/rustdesk_shell>
+  }
+
+  include if exists <local/rustdesk>
+}
+
+# vim:syntax=apparmor

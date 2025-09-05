@@ -1,0 +1,48 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2019-2021 Mikhail Morfikov
+# Copyright (C) 2021-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{exec_path} = @{bin}/cpupower
+profile cpupower /{,usr/}bin/cpupower flags=(complain) {
+  include <abstractions/base>
+
+  # Needed to read the /dev/cpu/@{int}/msr device, and hence remove the following error:
+  #  Could not read perf-bias value[-1]
+  capability sys_rawio,
+
+  # Needed to operate on CPU IDLE states
+  capability sys_admin,
+
+  @{exec_path} mr,
+
+  @{sh_path}        rix,
+  @{bin}/kmod       rcx -> kmod,
+  @{bin}/man        rpx,
+
+  @{sys}/devices/system/cpu/{cpufreq,cpuidle}/ r,
+  @{sys}/devices/system/cpu/{cpufreq,cpuidle}/** r,
+  @{sys}/devices/system/cpu/cpu@{int}/{cpufreq,cpuidle}/ r,
+  @{sys}/devices/system/cpu/cpu@{int}/{cpufreq,cpuidle}/** r,
+  @{sys}/devices/system/cpu/cpu@{int}/cpuidle/state@{int}/disable rw,
+  @{sys}/devices/system/cpu/cpu@{int}/online r,
+  @{sys}/devices/system/cpu/cpu@{int}/topology/{physical_package_id,core_id} r,
+  @{sys}/devices/system/cpu/cpufreq/policy@{int}/* rw,
+
+  /dev/cpu/@{int}/msr r,
+
+  profile kmod flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/kmod>
+
+    include if exists <local/cpupower_kmod>
+  }
+
+  include if exists <local/cpupower>
+}
+
+# vim:syntax=apparmor

@@ -1,0 +1,35 @@
+# apparmor.d - Full set of apparmor profiles
+# Copyright (C) 2022-2024 Alexandre Pujol <alexandre@pujol.io>
+# SPDX-License-Identifier: GPL-2.0-only
+
+abi <abi/4.0>,
+
+include <tunables/global>
+
+@{lib_dirs} = @{lib}/ /snap/{snapd,core}/@{int}@{lib}
+
+@{exec_path} = @{lib_dirs}/snapd/snap-failure
+profile snap-failure /{{,usr/}lib{,exec,32,64}/snapd/snap-failure,snap/{snapd,core}/[0-9]{[0-9],}{[0-9],}{[0-9],}{[0-9],}{[0-9],}{[0-9],}{[0-9],}{[0-9],}{[0-9],}/{,usr/}lib{,exec,32,64}/snapd/snap-failure} flags=(complain) {
+  include <abstractions/base>
+
+  @{exec_path} mr,
+  @{lib_dirs}/**.so* mr,
+
+  @{bin}/systemctl         rcx -> systemctl,
+  @{lib_dirs}/snapd/snapd  rpx,
+
+  /var/lib/snapd/sequence/snapd.json r,
+
+  @{PROC}/cmdline r,
+
+  profile systemctl flags=(complain) {
+    include <abstractions/base>
+    include <abstractions/app/systemctl>
+
+    include if exists <local/snap-failure_systemctl>
+  }
+
+  include if exists <local/snap-failure>
+}
+
+# vim:syntax=apparmor
