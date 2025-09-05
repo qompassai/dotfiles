@@ -1,0 +1,8 @@
+// qompasssai/dotfiles/.config/bob/config.jsonc
+// Qompass AI Bob Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+
+{
+  "add_neovim_binary_to_path": true
+}
