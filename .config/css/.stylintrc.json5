@@ -1,0 +1,20 @@
+// /qompassai/dotfiles/.config/css/.stylintrc.json5
+// Qompass AI Stylint Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+
+{
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-recommended-tailwindcss"
+  ],
+  "rules": {
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["tailwind", "apply", "variants", "responsive", "screen"]
+      }
+    ]
+  }
+}
+
