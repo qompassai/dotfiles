@@ -1,0 +1,13 @@
+# /qompassai/dotfiles/.config/rhash/rhashrc
+# Qompass AI Rhash Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+crc32=on
+#md5=on
+#sha1=on
+ansi=on
+ignore-case=on
+recursive=on
+skip-ok=on
+crc-accept=.sfv,.md5,.sha1,.tiger,.tth,.aich
+percents=on

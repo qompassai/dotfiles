@@ -2,15 +2,8 @@ xml:readonly:/etc/gconf/gconf.xml.mandatory
 include /etc/gconf/2/local-mandatory.path
 include "$(USERCONFIGDIR)/gconf/path"
 include "$(HOME)/.gconf.path"
-
-# $(USERCONFIGDIR)/gconf (or $(HOME)/.gconf when it exists, for backward compatibility)
 xml:readwrite:$(DEFAULTUSERSOURCE)
-
 xml:readonly:/etc/gconf/gconf.xml.system
-
 include /etc/gconf/2/local-defaults.path
-
 xml:readonly:/etc/gconf/gconf.xml.defaults
-
-
 

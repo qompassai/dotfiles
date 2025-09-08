@@ -1,0 +1,86 @@
+# /qompassai/rust/cargo/config.toml
+# Qompass AI Cargo Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+
+[build]
+pipelining = true
+jobs = 4
+
+[alias]
+b = "build"
+r = "run"
+t = "test"
+zig-x86_64-release = "zigbuild --release --target x86_64-unknown-linux-gnu"
+zig-aarch64-release = "zigbuild --release --target aarch64-unknown-linux-gnu"
+zigtest-aarch64 = "zigbuild test --target aarch64-unknown-linux-gnu"
+zigrun-aarch64 = "zigbuild run --target aarch64-unknown-linux-gnu"
+
+
+
+[target.x86_64-unknown-linux-gnu]
+linker = "zig cc -target x86_64-linux-gnu"
+rustflags = ["-C", "link-arg=-target=x86_64-linux-gnu"]
+
+[target.aarch64-unknown-linux-gnu]
+linker = "zig cc -target aarch64-linux-gnu"
+rustflags = ["-C", "link-arg=-target=aarch64-linux-gnu"]
+
+[target.x86_64-unknown-linux-musl]
+linker = "zig cc -target x86_64-linux-musl"
+
+[env]
+SCCACHE_DIR = "/home/phaedrus/.cache/sccache"
+SCCACHE_IDLE_TIMEOUT = "1200"
+CARGO_INCREMENTAL = "0"
+ZIG_GLOBAL_CACHE_DIR = "/home/phaedrus/.cache/zig"
+
+[future-incompat-report]
+frequency = "always"
+
+[registries.crates-io]
+protocol = "sparse"
+index = "sparse+https://index.crates.io/"
+
+[term]
+verbose = true
+color = "auto"
+
+[unstable]
+gc = true
+script = true
+
+[http]
+debug = false
+timeout = 60
+
+[net]
+retry = 3
+git-fetch-with-cli = true
+
+[unstable]
+gc = true
+script = true
+build-std = ["std", "panic_abort"]
+build-std-features = ["panic_immediate_abort"]
+
+[build]
+rustflags = ["-C", "target-cpu=native"]
+
+[target.x86_64-unknown-linux-gnu]
+linker = "zig cc -target x86_64-linux-gnu"
+
+[target.aarch64-unknown-linux-gnu]
+linker = "zig cc -target aarch64-linux-gnu"
+
+[target.x86_64-pc-windows-gnu]
+linker = "zig cc -target x86_64-windows-gnu"
+
+[target.aarch64-apple-darwin]
+linker = "zig cc -target aarch64-macos-gnu"
+
+[target.x86_64-apple-darwin]
+linker = "zig cc -target x86_64-macos-gnu"
+
+[target.nvptx64-nvidia-cuda]
+linker = "ptx-linker"

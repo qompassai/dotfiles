@@ -1,0 +1,105 @@
+security.provider.1=SUN
+security.provider.2=SunRsaSign
+security.provider.3=SunEC
+security.provider.4=SunJSSE
+security.provider.5=SunJCE
+security.provider.6=SunJGSS
+security.provider.7=SunSASL
+security.provider.8=XMLDSig
+security.provider.9=SunPCSC
+security.provider.10=JdkLDAP
+security.provider.11=JdkSASL
+security.provider.12=SunPKCS11
+jdk.security.provider.preferred=AES/GCM/NoPadding:SunJCE, \
+MessageDigest.SHA-256:SUN, Group.HmacSHA2:SunJCE
+securerandom.source=file:/dev/random
+securerandom.strongAlgorithms=NativePRNGBlocking:SUN,DRBG:SUN
+securerandom.drbg.config=CTR_DRBG,AES-256,192,pr_and_reseed,use_df
+login.configuration.provider=sun.security.provider.ConfigFile
+#login.config.url.1=file:${user.home}/.java.login.config
+policy.expandProperties=true
+policy.allowSystemProperty=true
+keystore.type=pkcs12
+keystore.type.compat=true
+security.overridePropertiesFile=true
+ssl.KeyManagerFactory.algorithm=SunX509
+ssl.TrustManagerFactory.algorithm=PKIX
+#networkaddress.cache.ttl=-1
+#networkaddress.cache.stale.ttl=0
+networkaddress.cache.negative.ttl=10
+krb5.kdc.bad.policy = tryLast
+sun.security.krb5.disableReferrals=false
+sun.security.krb5.maxReferrals=5
+#jdk.disabled.namedCurves=
+jdk.security.legacyAlgorithms=SHA1, \
+    RSA keySize < 2048, DSA keySize < 2048, \
+    DES, DESede, MD5, RC2, ARCFOUR
+jdk.jar.disabledAlgorithms=MD2, MD5, RSA keySize < 1024, \
+      DSA keySize < 1024, SHA1 denyAfter 2019-01-01
+http.auth.digest.disabledAlgorithms = MD5, SHA-1
+jdk.tls.disabledAlgorithms=SSLv3, TLSv1, TLSv1.1, DTLSv1.0, RC4, DES, \
+    MD5withRSA, DH keySize < 1024, EC keySize < 224, 3DES_EDE_CBC, anon, NULL, \
+    ECDH, TLS_RSA_*
+jdk.tls.legacyAlgorithms=NULL, anon, RC4, DES, 3DES_EDE_CBC
+jdk.tls.keyLimits=AES/GCM/NoPadding KeyUpdate 2^37, \
+                  ChaCha20-Poly1305 KeyUpdate 2^37
+crypto.policy=unlimited
+jdk.xml.dsig.secureValidationPolicy=\
+    disallowAlg http://www.w3.org/TR/1999/REC-xslt-19991116,\
+    disallowAlg http://www.w3.org/2001/04/xmldsig-more#rsa-md5,\
+    disallowAlg http://www.w3.org/2001/04/xmldsig-more#hmac-md5,\
+    disallowAlg http://www.w3.org/2001/04/xmldsig-more#md5,\
+    disallowAlg http://www.w3.org/2000/09/xmldsig#sha1,\
+    disallowAlg http://www.w3.org/2000/09/xmldsig#dsa-sha1,\
+    disallowAlg http://www.w3.org/2000/09/xmldsig#rsa-sha1,\
+    disallowAlg http://www.w3.org/2007/05/xmldsig-more#sha1-rsa-MGF1,\
+    disallowAlg http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha1,\
+    maxTransforms 5,\
+    maxReferences 30,\
+    disallowReferenceUriSchemes file http https,\
+    minKeySize RSA 1024,\
+    minKeySize DSA 1024,\
+    minKeySize EC 224,\
+    noDuplicateIds,\
+    noRetrievalMethodLoops
+jdk.xml.dsig.hereFunctionSupported=true
+#jdk.serialFilterFactory=<classname>
+jdk.serialFilter=pattern;pattern
+sun.rmi.registry.registryFilter=\
+    maxarray=1000000;\
+    maxdepth=20;\
+    java.lang.String;\
+    java.lang.Number;\
+    java.lang.reflect.Proxy;\
+    java.rmi.Remote;\
+    sun.rmi.server.UnicastRef;\
+    sun.rmi.server.RMIClientSocketFactory;\
+    sun.rmi.server.RMIServerSocketFactory;\
+    java.rmi.server.UID
+sun.rmi.transport.dgcFilter=\
+    java.rmi.server.ObjID;\
+    java.rmi.server.UID;\
+    java.rmi.dgc.VMID;\
+    java.rmi.dgc.Lease;\
+    maxdepth=5;maxarray=10000
+jdk.jceks.iterationCount = 200000
+keystore.pkcs12.certProtectionAlgorithm = PBEWithHmacSHA256AndAES_256
+keystore.pkcs12.certPbeIterationCount = 10000
+keystore.pkcs12.keyProtectionAlgorithm = PBEWithHmacSHA256AndAES_256
+keystore.pkcs12.keyPbeIterationCount = 10000
+keystore.pkcs12.macAlgorithm = HmacPBESHA256
+keystore.pkcs12.macIterationCount = 10000
+jdk.includeInExceptions=hostInfo,jar
+jdk.sasl.disabledMechanisms=PLAIN, CRAM-MD5, DIGEST-MD5
+jdk.security.caDistrustPolicies=SYMANTEC_TLS,ENTRUST_TLS,CAMERFIRMA_TLS
+jdk.io.permissionsUseCanonicalPath=false
+jdk.security.krb5.default.initiate.credential=always-impersonate
+jdk.security.allowNonCaAnchor=true
+jdk.tls.alpnCharset=ISO_8859_1
+jdk.jndi.object.factoriesFilter=*
+#"java.naming/com.sun.jndi.ldap.**;!*".
+jdk.jndi.ldap.object.factoriesFilter=java.naming/com.sun.jndi.ldap.**;!*
+#"jdk.naming.rmi/com.sun.jndi.rmi.**;!*".
+jdk.jndi.rmi.object.factoriesFilter=jdk.naming.rmi/com.sun.jndi.rmi.**;!*
+jdk.security.krb5.s4u2proxy.acceptNonForwardableServiceTicket=false
+jdk.security.krb5.name.case.sensitive=false

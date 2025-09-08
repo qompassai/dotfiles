@@ -1,30 +1,84 @@
-[feature]
-    manyFiles = true
-
+# /qompassai/dotfiles/.config/git/config
+# Qompass AI Git Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+[alias]
+    br = branch
+    ci = commit
+    co = checkout
+    di = diff
+    lg = log --graph --abbrev-commit --decorate --date=relative --all
+    rebasei = rebase -i
+    st = status
+    fixup = commit --fixup
+[branch]
+    sort = -committerdate
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+    ui = auto
+[commit]
+    verbose = true
 [core]
-    preloadindex = true
-    untrackedCache = true
-    fsmonitor = true
-    commitgraph = true
     bigFileThreshold = 50m
+    commitgraph = true
+    editor = nvim
+    excludesfile = ~/.gitignore
+    fsmonitor = true
     packedGitLimit = 512m
     packedGitWindowSize = 512m
-
-[pack]
-    threads = 0
-    windowMemory = 5g
-    packSizeLimit = 2g
-
-[index]
-    version = 4
-    skipHash = true
-
-[fetch]
-    writeCommitGraph = true
-
+    pager = delta
+    preloadindex = true
+    untrackedCache = true
 [checkout]
-    workers = -1
     thresholdForParallelism = 1000
-
+    workers = -1
+[diff]
+    algorithm = histogram
+    mnemonicPrefix = true
+    renames = true
+[fetch]
+    fsckobjects = true
+    prune = true
+    pruneTags = true
+    writeCommitGraph = true
 [gc]
     auto = 8000
+    pruneExpire = 2.weeks.ago
+    aggressiveWindow = 250
+[help]
+    autocorrect = 20
+[index]
+    skipHash = true
+    version = 4
+[init]
+    defaultBranch = main
+    templateDir = ~/.git-templates
+[merge]
+    conflictstyle = zdiff3
+    tool = meld
+[pack]
+    packSizeLimit = 2g
+    threads = 0
+    windowMemory = 5g
+    deltaCacheSize = 128m
+[pull]
+    rebase = true
+[push]
+    autoSetupRemote = true
+    default = current
+    followTags = true
+[receive]
+    fsckobjects = true
+[rebase]
+    autosquash = true
+    autostash = true
+    updateRefs = true
+[rerere]
+    autoupdate = true
+    enabled = true
+[tag]
+    sort = version:refname
+[transfer]
+    fsckobjects = true

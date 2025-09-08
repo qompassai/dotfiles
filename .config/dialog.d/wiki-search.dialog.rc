@@ -1,0 +1,7 @@
+# /qompassai/dotfiles/.config/dialog.d/wiki-search.dialog.rc
+# Qompass AI Dialog.d Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+############################################################
+
+use_shadow = OFF
+screen_color = (BLACK,DEFAULT,OFF)
