@@ -1,0 +1,11 @@
+// /qopmassai/dotfiles/.config/blendnet/agent.jsonc
+// Qompass AI Blendnet Agent Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+    "%comment%": "Remove the header _ from the configuration keys to enable them",
+    "_auth_user": "$(pass show blendnet/u)",
+    "_auth_password": "$(pass show blendnet/p)",
+    "_listen_host": "",
+    "_listen_port": 9443
+}
