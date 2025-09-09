@@ -1,0 +1,7 @@
+# /qompassai/dotfiles/.config/containers/registries.d/default.yaml
+# Qompass AI Container Registries.d Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#####################################################
+default-docker:
+  lookaside: file:///home/phaedrus/.local/share/containers/sigstore
+  lookaside-staging: file:///home/phaedrus/.local/share/containers/sigstore

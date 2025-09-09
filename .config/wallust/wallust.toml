@@ -2,6 +2,7 @@
 # Qompass AI Wallust Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 #####################################################
+# Reference: https://explosion-mental.codeberg.page/wallust/
 backend = "kmeans"
 color_space = "labmixed"
 palette = "dark16"
@@ -9,27 +10,11 @@ threshold = 11
 [templates]
 cava.template = 'colors-cava'
 cava.target = '~/.config/cava/config'
-
 hypr.template = 'colors-hyprland.conf'
-hypr.target = '~/.config/hypr/wallust/wallust-hyprland.conf'
-
+hypr.target = '~/.config/wallust/templates/colors-hyprland.conf'
 rofi.template = 'colors-rofi.rasi'
 rofi.target = '~/.config/rofi/wallust/colors-rofi.rasi'
-
 waybar.template = 'colors-waybar.css'
 waybar.target = '~/.config/waybar/wallust/colors-waybar.css'
-
 kitty.template = 'colors-kitty.conf'
-kitty.target = '~/.config/kitty/kitty-themes/01-Wallust.conf'
-
-#swaync.template = 'colors-swaync.css'
-#swaync.target = '~/.config/swaync/wallust/colors-wallust.css'
-
-#macchina.template = 'colors-macchina.toml'
-#macchina.target = '~/.config/macchina/themes/wallust.toml'
-
-#wezterm.template = 'colors-wezterm.toml'
-#wezterm.target = '~/.config/wezterm/colors/wallust.toml'
-
-#zathura.template = 'colors-zathura'
-#zathura.target = '~/.config/zathura/zathurarc'
+kitty.target = '~/.config/wallust/templates/colors-kitty.conf'

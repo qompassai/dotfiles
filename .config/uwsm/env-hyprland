@@ -2,17 +2,17 @@
 # Qompass AI UWSM Env-Hyprland Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
-
 export AQ_DRM_DEVICES="/dev/dri/card0:/dev/dri/card1"
+export AQ_FORCE_LINEAR_BLIT=0
 export AQ_MGPU_NO_EXPLICIT=1
 export AQ_NO_MODIFIERS=1
 export AQ_RENDER_BACKEND=gl
 export __GL_SHADER_DISK_CACHE_SIZE=10737418240
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 export __GL_SHADER_DISK_CACHE=1
-export __GL_SHADER_DISK_CACHE_PATH=$XDG_CACHE_HOME/nvidia/GLCache
+export __GL_SHADER_DISK_CACHE_PATH="$XDG_CACHE_HOME/nvidia/GLCache"
 export MESA_SHADER_CACHE_MAX_SIZE=10G
-export MESA_GLSL_CACHE_DIR=/home/phaedrus/.cache/mesa_shader_cache_db
+export MESA_GLSL_CACHE_DIR="$XDG_CACHE_HOME/mesa_shader_cache_db"
 export MESA_GLSL_CACHE_ENABLE=true
 export MOZ_ENABLE_WAYLAND=1
 export MOZ_DBUS_REMOTE=1
@@ -22,7 +22,7 @@ export OZONE_PLATFORM,auto
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export QT_QPA_PLATFORMTHEME=qt6ct
 export QT_SCALE_FACTOR=1
-export QT_QPA_PLATFORM=wayland;xcb
+export QT_QPA_PLATFORM=wayland
 export QT_STYLE_OVERRIDE=kvantum
 export QML2_IMPORT_PATH=/usr/lib/qt6/qml
 export QT_WAYLAND_DISABLE_WINDOWDECORATION=1

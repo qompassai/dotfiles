@@ -1,56 +1,6 @@
-# NAME
-#        generic - Postfix generic table format
-# 
-# SYNOPSIS
-#        postmap /etc/postfix/generic
-# 
-#        postmap -q "string" /etc/postfix/generic
-# 
-#        postmap -q - /etc/postfix/generic <inputfile
-#        /etc/postfix/main.cf:
-#            smtp_generic_maps = hash:/etc/postfix/generic
-#        /etc/postfix/generic:
-#            his@localdomain.local   hisaccount@hisisp.example
-#            her@localdomain.local   heraccount@herisp.example
-#            @localdomain.local      hisaccount+local@hisisp.example
-#        postconf(5) for more details including examples.
-#        smtp_generic_maps (empty)
-#        propagate_unmatched_extensions (canonical, virtual)
-#        inet_interfaces (all)
-#        proxy_interfaces (empty)
-#        mydestination  ($myhostname,  localhost.$mydomain,  local-
-#        host)
-#               The  list  of  domains  that  are delivered via the
-#               $local_transport mail delivery transport.
-# 
-#        myorigin ($myhostname)
-#               The domain name that locally-posted mail appears to
-#               come  from,  and that locally posted mail is deliv-
-#               ered to.
-# 
-#        owner_request_special (yes)
-#               Enable special treatment for owner-listname entries
-#               in the aliases(5) file, and don't split owner-list-
-#               name and listname-request address  localparts  when
-#               the recipient_delimiter is set to "-".
-# 
-# SEE ALSO
-#        postmap(1), Postfix lookup table manager
-#        postconf(5), configuration parameters
-#        smtp(8), Postfix SMTP client
-# 
-# README FILES
-#        Use  "postconf  readme_directory" or "postconf html_direc-
-#        tory" to locate this information.
-#        ADDRESS_REWRITING_README, address rewriting guide
-#        DATABASE_README, Postfix lookup table overview
-#        STANDARD_CONFIGURATION_README, configuration examples
-# 
-# LICENSE
-#        The Secure Mailer license must be  distributed  with  this
-#        software.
-# 
-# HISTORY
-#        A genericstable feature appears in the Sendmail MTA.
-# 
-#        This feature is available in Postfix 2.2 and later.
+phaedrus@localhost          matt@aflabs.io
+phaedrus                   matt@aflabs.io
+otherlocal@localhost        foamedmap@gmail.com
+anotherlocal@localhost      matt.a.porter26@gmail.com
+@localhost                  map@qompass.ai
+@yourhostname               map@qompass.ai

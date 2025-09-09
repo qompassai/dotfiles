@@ -1,12 +1,12 @@
-/*.config/wallust/templates/colors-waybar.css*/
-/*-------------------------------------------------*/
+/*/qompassai/dotfiles/.config/wallust/templates/colors-waybar.css*/
+/* Qompass AI Wallust Waybar Colors Config */
 /* Copyright (C) 2025 Qompass AI, All rights reserved */
-
- @define-color foreground {{foreground}};
+/*---------------------------------------------------------------*/
+/* Reference: https://explosion-mental.codeberg.page/wallust/ */
+@define-color foreground {{foreground}};
  @define-color background {{background}};
  @define-color background-alt rgba({{background | rgb}},0.25);
  @define-color cursor {{cursor}};
- 
  @define-color color0 {{color0}};
  @define-color color1 {{color1}};
  @define-color color2 {{color2}};

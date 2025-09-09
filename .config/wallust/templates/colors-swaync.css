@@ -1,7 +1,8 @@
-/*.config/wallust/templates/colors-swaync.css*/
-/*-------------------------------------------------*/
+/*/qompassai/dotfiles/.config/wallust/templates/colors-swaync.css*/
+/* Qompass AI Wallust Sway Colors Config*/
 /* Copyright (C) 2025 Qompass AI, All rights reserved */
-
+/*---------------------------------------------------------------*/
+/* Reference: https://explosion-mental.codeberg.page/wallust/ */
 @define-color text {{foreground}};
 @define-color background rgba({{background | rgb}},0.25);
 @define-color background-alt {{background}};

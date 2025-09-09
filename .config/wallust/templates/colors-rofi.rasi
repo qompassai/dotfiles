@@ -1,8 +1,8 @@
-// ~/.config/wallust/templates/colors-rofi.rasi
-// -------------------------------------------------
+// /qompassai/dotfiles/.config/wallust/templates/colors-cava.conf
+// Qompass AI Wallust Cava Template
 // Copyright (C) 2025 Qompass AI, All rights reserved
-
-
+//################################################################ 
+// Reference: https://explosion-mental.codeberg.page/wallust/
 * {
 active-background: {{color12}};
 active-foreground: {{foreground}};
@@ -10,26 +10,22 @@ normal-background: {{background}};
 normal-foreground: {{foreground}};
 urgent-background: {{color13}};
 urgent-foreground: {{foreground}};
-
 alternate-active-background: {{color11}};
 alternate-active-foreground: {{foreground}};
 alternate-normal-background: {{background}};
 alternate-normal-foreground: {{foreground}};
 alternate-urgent-background: {{background}};
 alternate-urgent-foreground: {{foreground}};
-
 selected-active-background: {{color13}};
 selected-active-foreground: {{foreground}};
 selected-normal-background: {{color13}};
 selected-normal-foreground: {{foreground}};
 selected-urgent-background: {{color12}};
 selected-urgent-foreground: {{foreground}};
-
 background-color: {{background}};
 background: rgba(0,0,0,0.7);
 foreground: {{foreground}};
 border-color: {{color12}};
-
 color0: {{color0}};
 color1: {{color1}};
 color2: {{color2}};
@@ -46,7 +42,4 @@ color12: {{color12}};
 color13: {{color13}};
 color14: {{color14}};
 color15: {{color15}};
-
-
 }
-

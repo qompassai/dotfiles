@@ -1,38 +1,38 @@
 # /qompassai/dotfiles/.config/wallabag/parameters.yml
-# # Qompass AI Wallabag Config
+# Qompass AI Wallabag Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
 parameters:
     database_driver: pdo_mysql
     database_host: 127.0.0.1
-    database_port: null
+    database_port: "$(pass show wallabag/dbportt)"
     database_name: wallabag
-    database_user: root
-    database_password: null
-    database_path: null
+    database_user: "$(pass show wallabag/u)"
+    database_password: "$(pass show wallabag/dbpass)"
+    database_path: "$(pass show wallabag/dbpath)"
     database_table_prefix: wallabag_
-    database_socket: null
+    database_socket: "$$$(pass show wallabag/dbsocket)"
     database_charset: utf8mb4
-    domain_name: 'https://your-wallabag-instance.wallabag.org'
-    server_name: 'Your wallabag instance'
+    domain_name: '$(pass show wallabag/d)'
+    server_name: '$(pass show wallabag/i)'
     mailer_dsn: 'smtp://127.0.0.1'
     locale: en
-    secret: CHANGE_ME_TO_SOMETHING_SECRET_AND_RANDOM
-    twofactor_sender: no-reply@wallabag.org
+    secret: "$(pass show wallabag/s)"
+    twofactor_sender: "$(pass show wallabag/2fa)"
     fosuser_registration: true
     fosuser_confirmation: true
     fos_oauth_server_access_token_lifetime: 3600
     fos_oauth_server_refresh_token_lifetime: 1209600
-    from_email: no-reply@wallabag.org
+    from_email: "$(pass show wallabag/email)"
     rss_limit: 50
     rabbitmq_host: localhost
     rabbitmq_port: 5672
-    rabbitmq_user: guest
-    rabbitmq_password: guest
+    rabbitmq_user: "$(pass show rabbitmq/u)"
+    rabbitmq_password: "$(pass show rabbittmq/p)"
     rabbitmq_prefetch_count: 10
     redis_scheme: tcp
     redis_host: localhost
     redis_port: 6379
-    redis_path: null
-    redis_password: null
-    sentry_dsn: null
+    redis_path: "$(pass show redis/path)"
+    redis_password: "$(pass show redis/p)"
+    sentry_dsn: "$(pass show sentry/dns)"

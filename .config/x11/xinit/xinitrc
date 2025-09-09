@@ -1,5 +1,8 @@
 #!/bin/sh
-
+# /qompassai/dotfiles/.config/x11/xinit/xinitrc
+# Qompass AI X11 Xinit Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 prefix="/usr"
 exec_prefix="${prefix}"
 xrdb="xrdb"

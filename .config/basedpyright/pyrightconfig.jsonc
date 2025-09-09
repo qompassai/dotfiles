@@ -1,0 +1,35 @@
+// qompassai/dotfiles/.config/basedpyright/pyrightconfig.jsonc
+// Qompass AI BasedPyright Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+//////////////////////////////////////////////////////////////
+// References: https://docs.basedpyright.com/latest/
+{
+	"pythonVersion": "3.13",
+	"typeCheckingMode": "strict",
+	"pythonPlatform": "Linux",
+	"venvPath": "'$HOME'/.pyenv/versions",
+	"venv": "3.13.5",
+	"stubPath": "",
+	"analysis": {
+		"inlayHints": {
+			"variableTypes": true,
+			"callArgumentNames": true,
+			"functionReturnTypes": true,
+			"genericTypes": false
+		},
+		"diagnosticMode": "workspace",
+		"useLibraryCodeForTypes": true,
+		"autoSearchPaths": true,
+		"reportMissingImports": "error",
+		"reportMissingTypeStubs": true,
+		"reportUnusedImport": true,
+		"reportUnusedVariable": true,
+		"reportPrivateImportUsage": true,
+		"exclude": [
+			"**/node_modules",
+			"**/__pycache__",
+			".venv",
+			".env"
+		]
+	}
+}
