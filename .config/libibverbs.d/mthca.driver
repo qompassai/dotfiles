@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/libibverbs.d/mthca.driver
+# Qompass AI Libibverbs.d Legacy Mellanox InfiniBand Host Channel Adapter Driver Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+driver mthca

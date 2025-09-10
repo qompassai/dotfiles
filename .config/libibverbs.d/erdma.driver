@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/libibverbs.d/erdma.driver
+# Qompass AI Libibverbs.d Alibaba Elastic RDMA (iWarp) Adapter Driver Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+driver erdma

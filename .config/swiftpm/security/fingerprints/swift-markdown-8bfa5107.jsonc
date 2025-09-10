@@ -1,0 +1,22 @@
+// /qompassai/dotfiles/.config/swiftpm/security/fingerprints
+// Qompass AI Swiftpm Security Fingerprint Swift Markdown Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+  "version" : 2,
+  "versionFingerprints" : {
+    "0.6.0" : {
+      "sourceControl" : {
+        "sourceCode" : {
+          "contentType" : {
+            "sourceCode" : {
+
+            }
+          },
+          "fingerprint" : "ea79e83c8744d2b50b0dc2d5bbd1e857e1253bf9",
+          "origin" : "https://github.com/apple/swift-markdown.git"
+        }
+      }
+    }
+  }
+}

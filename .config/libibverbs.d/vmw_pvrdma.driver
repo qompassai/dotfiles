@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/libibverbs.d/vmw_pvrdma.driver
+# Qompass AI Libibverbs.d VMware paravirtual RDMA Driver Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+driver vmw_pvrdma

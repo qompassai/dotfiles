@@ -1,68 +1,59 @@
+# /qompassai/dotfiles/.config/fcitx5/conf/cached_layouts
+# Qompass AI Fcitx5 Cached Layouts Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 [keyboard-bqn]
 Description="Keyboard - BQN"
 Language=en
 Label=bqn
-
 [keyboard-apl]
 Description="Keyboard - APL"
 Language=en
 Label=apl
-
 [keyboard-apl-dyalog]
 Description="Keyboard - APL - APL symbols (Dyalog APL)"
 Language=en
 Label="dlg (dyalog)"
-
 [keyboard-apl-sax]
 Description="Keyboard - APL - APL symbols (SAX, Sharp APL for Unix)"
 Language=en
 Label=sax
-
 [keyboard-apl-unified]
 Description="Keyboard - APL - APL symbols (unified)"
 Language=en
 Label="ufd (unified)"
-
 [keyboard-apl-apl2]
 Description="Keyboard - APL - APL symbols (IBM APL2)"
 Language=en
 Label=apl2
-
 [keyboard-apl-aplplusII]
 Description="Keyboard - APL - APL symbols (Manugistics APL*PLUS II)"
 Language=en
 Label="aplII (aplplusII)"
-
 [keyboard-apl-aplx]
 Description="Keyboard - APL - APL symbols (APLX unified)"
 Language=en
 Label=aplx
-
 [keyboard-ua]
 Description="Keyboard - Ukrainian"
 Language=uk
 Label=uk
-
 [keyboard-ua-phonetic]
 Description="Keyboard - Ukrainian - Ukrainian (phonetic)"
 Language=uk
 Label="ua (phonetic)"
-
 [keyboard-ua-typewriter]
 Description="Keyboard - Ukrainian - Ukrainian (typewriter)"
 Language=uk
 Label="ua (typewriter)"
-
 [keyboard-ua-winkeys]
 Description="Keyboard - Ukrainian - Ukrainian (Windows)"
 Language=uk
 Label="ua (winkeys)"
-
 [keyboard-ua-macOS]
 Description="Keyboard - Ukrainian - Ukrainian (macOS)"
 Language=uk
 Label="ua (macOS)"
-
 [keyboard-ua-legacy]
 Description="Keyboard - Ukrainian - Ukrainian (legacy)"
 Language=uk
@@ -3227,12 +3218,10 @@ Label="hu (qwerty)"
 Description="Keyboard - Hungarian - Hungarian (QWERTZ, 101-key, comma, dead keys)"
 Language=hu
 Label="hu (101_qwertz_comma_dead)"
-
 [keyboard-hu-101_qwertz_comma_nodead]
 Description="Keyboard - Hungarian - Hungarian (QWERTZ, 101-key, comma, no dead keys)"
 Language=hu
 Label="hu (101_qwertz_comma_nodead)"
-
 [keyboard-hu-101_qwertz_dot_dead]
 Description="Keyboard - Hungarian - Hungarian (QWERTZ, 101-key, dot, dead keys)"
 Language=hu
@@ -3332,27 +3321,22 @@ Label=en
 Description="Keyboard - English (Nigeria) - Hausa (Nigeria)"
 Language=ha
 Label="ha (hausa)"
-
 [keyboard-ng-igbo]
 Description="Keyboard - English (Nigeria) - Igbo"
 Language=ig
 Label="ig (igbo)"
-
 [keyboard-ng-yoruba]
 Description="Keyboard - English (Nigeria) - Yoruba"
 Language=yo
 Label="yo (yoruba)"
-
 [keyboard-is]
 Description="Keyboard - Icelandic"
 Language=is
 Label=is
-
 [keyboard-is-mac_legacy]
 Description="Keyboard - Icelandic - Icelandic (Macintosh, legacy)"
 Language=is
 Label="is (mac_legacy)"
-
 [keyboard-is-mac]
 Description="Keyboard - Icelandic - Icelandic (Macintosh)"
 Language=is
@@ -3687,24 +3671,19 @@ Label="jp (OADG109A)"
 Description="Keyboard - Japanese - Japanese (Macintosh)"
 Language=ja
 Label="jp (mac)"
-
 [keyboard-jp-dvorak]
 Description="Keyboard - Japanese - Japanese (Dvorak)"
 Language=ja
 Label="jp (dvorak)"
-
 [keyboard-jp-sun_type6]
 Description="Keyboard - Japanese - Japanese (Sun Type 6)"
 Language=ja
 Label="jp (sun_type6)"
-
 [keyboard-jp-sun_type7]
 Description="Keyboard - Japanese - Japanese (Sun Type 7, PC-compatible)"
 Language=ja
 Label="jp (sun_type7)"
-
 [keyboard-jp-sun_type7_suncompat]
 Description="Keyboard - Japanese - Japanese (Sun Type 7, Sun-compatible)"
 Language=ja
 Label="jp (sun_type7_suncompat)"
-
