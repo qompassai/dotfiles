@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/drbl/auto_login_host_id_passwd.conf
+# Qompass AI DRBL Auto Login Host ID Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+host-01 autouser-01 "$(pass show autologin1/p1)"
+host-02 autouser-01 "$(pass show autologin2/p2)"
+cust-host-03  "$(pass show autologin3/p3)"
+

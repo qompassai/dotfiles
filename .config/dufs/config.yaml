@@ -1,0 +1,27 @@
+# /qompassai/dotfiles/.config/dufs/config.yaml
+# Qompass AI Dufs Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+serve-path: "."
+bind: /run/user/1000/dufs 
+port: 5000
+hidden:
+  - tmp
+  - "*.log"
+  - "*.lock"
+allow-all: false
+allow-upload: true
+allow-delete: true
+allow-search: true
+allow-symlink: false
+allow-archive: true
+enable-cors: false
+render-index: true
+render-try-index: true
+render-spa: false
+assets: ./assets/
+log-format: '$remote_addr "$request" $status $http_user_agent'
+log-file: /var/log/dufs/dufs.log
+compress: low
+tls-cert: "$(pass show dufs/tc)"
+tls-key: "$(pass show dufs/tk)"
