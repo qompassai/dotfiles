@@ -1,5 +1,9 @@
-#%PAM-1.0 | /etc/pam.d/groupmems
-auth        sufficient  pam_fprintd.so
+#%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/groupmems
+# Qompass AI Pam Daemon Group Members Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
+auth        	sufficient  	pam_fprintd.so
 auth		sufficient	pam_rootok.so
 account		required	pam_permit.so
 password	include		system-auth

@@ -1,4 +1,7 @@
-# PAM config file for Partimaged
+## /qompassai/dotfiles/.config/pam.d/vmtoolsd
+# Qompass AI Pam Daemon VM Tools Daemon Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+################################################### PAM config file for Partimaged
 
 auth 	required	pam_unix.so
 auth	required	pam.warn.so

@@ -1,4 +1,8 @@
-# This is a default PAM configuration for NoMachine.
-# Used to obtain nx user and nxhtd user limits.
+#%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/vmtoolsd
+# Qompass AI Pam Daemon VM Tools Daemon Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
+
 
 session   optional pam_limits.so

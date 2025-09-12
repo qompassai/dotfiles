@@ -2,11 +2,11 @@
 ////////////////////////////////////////////
 // Copyright (C) 2025 Qompass AI, All rights reserved
 {
-    "layer": "top", // Waybar at top layer
-    "position": "top", // Waybar position (top|bottom|left|right)
-    "height": 34, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    "spacing": 4, // Gaps between modules (4px)
+    "layer": "top",
+    "position": "top",
+    "height": 34,
+    // "width": 1280,
+    "spacing": 4,
      "reload_style_on_change": false,
     "gtk-layer-shell": true,
     "start_hidden": false,
@@ -101,7 +101,7 @@
     },
     "clock": {
         "interval": 1,
-        // "timezone": "America/New_York",
+         "timezone": "America/Los_Angeles",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
      },
@@ -136,7 +136,7 @@
         "format-charging": "{capacity}% 🗲",
         "format-plugged": "{capacity}% ",
         "format-alt": "{time} {icon}",
-        // "format-good": "", // An empty format will hide the module
+        // "format-good": "",
         // "format-full": "",
         "format-icons": ["", "", "", "", ""]
     },

@@ -1,3 +1,7 @@
+# /qompassai/dotfiles/.config/pam.d/vmtoolsd
+# Qompass AI Pam Daemon VM Tools Daemon Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
 auth       sufficient   pam_fprintd.so
 auth		required	pam_unix.so
 account		required	pam_unix.so

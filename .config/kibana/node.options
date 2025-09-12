@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/kibana/node.options
+# Qompass AI Kibana Node Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+--max-old-space-size=4096
+ --unhandled-rejections=warn
+--dns-result-order=ipv4first
+--no-experimental-require-module

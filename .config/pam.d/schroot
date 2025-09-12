@@ -1,6 +1,7 @@
-#
-# The PAM configuration file for the sbuild `schroot' service
-#
+## /qompassai/dotfiles/.config/pam.d/vmtoolsd
+# Qompass AI Pam Daemon VM Tools Daemon Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
 
 # Uncomment this to force users to be a member of group root
 # before they can use `schroot'. You can also add "group=foo"

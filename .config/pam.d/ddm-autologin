@@ -1,4 +1,8 @@
 #%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/ddm-autologin
+# Qompass AI Pam Daemon Ddm Autologin Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
 auth        required    pam_env.so
 auth        required    pam_faillock.so preauth
 auth        required    pam_shells.so

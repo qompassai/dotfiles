@@ -1,4 +1,8 @@
 #%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/vmtoolsd
+# Qompass AI Pam Daemon VM Tools Daemon Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
 auth            sufficient      pam_rootok.so
 # Uncomment the following line to implicitly trust users in the "wheel" group.
 #auth           sufficient      pam_wheel.so trust use_uid
