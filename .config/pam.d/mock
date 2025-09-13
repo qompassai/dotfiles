@@ -1,6 +1,6 @@
 #%PAM-1.0
 # /qompassai/dotfiles/.config/pam.d/mock
-# Qompass AI Pam Daemon VM Tools Daemon Config
+# Qompass AI Pam Daemon Mock Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ###################################################
 auth		sufficient	pam_rootok.so

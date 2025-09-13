@@ -1,6 +1,6 @@
 #%PAM-1.0
-# /qompassai/dotfiles/.config/pam.d/dovecot
-# Qompass AI Pam Daemon Dovecot Config
+# /qompassai/dotfiles/.config/pam.d/exec-oauth2
+# Qompass AI Pam Daemon Oauth2 Exec Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ###################################################
 auth sufficient pam_exec.so expose_authtok /usr/bin/pam-exec-oauth2 --config /etc/pam-exec-oauth2.yml

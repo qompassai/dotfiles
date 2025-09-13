@@ -1,9 +1,8 @@
-# /qompassai/dotfiles/.config/pam.d/vmtoolsd
-# Qompass AI Pam Daemon VM Tools Daemon Config
+#%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/rsh
+# Qompass AI Pam Daemon Rsh Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
-###################################################%PAM-1.0
-# For root login to succeed here with pam_securetty, "rsh" must be
-# listed in /etc/securetty.
+##################################################
 auth       required     pam_nologin.so
 auth       required     pam_securetty.so
 auth       required     pam_env.so

@@ -1,6 +1,6 @@
-# /qompassai/dotfiles/.config/pam.d/vmtoolsd
-# Qompass AI Pam Daemon VM Tools Daemon Config
+# /qompassai/dotfiles/.config/pam.d/screen
+# Qompass AI Pam Daemon Screenlock Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ###################################################
 auth        sufficient  pam_fprintd.so
-auth		required	pam_unix.so
+auth	    required	pam_unix.so

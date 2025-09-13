@@ -1,7 +1,7 @@
-# /qompassai/dotfiles/.config/pam.d/vmtoolsd
-# Qompass AI Pam Daemon VM Tools Daemon Config
+%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/runuser
+# Qompass AI Pam Daemon Runuser Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
-###################################################%PAM-1.0
-
+###################################################
 auth    sufficient      pam_rootok.so
 session include         system-login

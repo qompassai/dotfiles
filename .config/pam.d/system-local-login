@@ -1,9 +1,8 @@
 #%PAM-1.0
-# /qompassai/dotfiles/.config/pam.d/vmtoolsd
-# Qompass AI Pam Daemon VM Tools Daemon Config
+# /qompassai/dotfiles/.config/pam.d/system-local-login
+# Qompass AI Pam Daemon Sustem Local Login Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ###################################################
-
 auth      include   system-login
 account   include   system-login
 password  include   system-login

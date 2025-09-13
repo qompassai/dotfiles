@@ -1,9 +1,8 @@
 #%PAM-1.0
-# /qompassai/dotfiles/.config/pam.d/vmtoolsd
-# Qompass AI Pam Daemon VM Tools Daemon Config
+# /qompassai/dotfiles/.config/pam.d/oauth2
+# Qompass AI Pam Daemon Oauth2 Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ###################################################
-
 auth     sufficient pam_fprintd.so
 auth     sufficient pam_oauth2.so https://example.com/oauth2/tokeninfo?access_token= uid grp=tester,qaiadmin,qaidev
 auth     include    system-auth

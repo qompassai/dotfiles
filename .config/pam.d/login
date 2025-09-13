@@ -1,18 +1,14 @@
 #%PAM-1.0
-# /qompassai/dotfiles/.config/pam.d/vmtoolsd
-# Qompass AI Pam Daemon VM Tools Daemon Config
+# /qompassai/dotfiles/.config/pam.d/login
+# Qompass AI Pam Daemon Login Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ###################################################
-
 auth       sufficient   pam_fprintd.so
 auth       requisite    pam_nologin.so
 auth       include      system-local-login
 account    include      system-local-login
 session    include      system-local-login
 password   include      system-local-login
-auth       sufficient   pam_fprintd.so
-auth       requisite    pam_nologin.so
-auth       include      system-local-login
 account    include      system-local-login
 session    include      system-local-login
 password   include      system-local-login

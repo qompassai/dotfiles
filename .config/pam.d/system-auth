@@ -1,8 +1,9 @@
 #%PAM-1.0
-# /qompassai/dotfiles/.config/pam.d/vmtoolsd
-# Qompass AI Pam Daemon VM Tools Daemon Config
+# /qompassai/dotfiles/.config/pam.d/system-auth
+# Qompass AI Pam Daemon System Auth Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ###################################################
+auth       sufficient      	       pam_fprintd.so
 auth       required                    pam_faillock.so      preauth
 -auth      [success=2 default=ignore]  pam_systemd_home.so
 auth       [success=1 default=bad]     pam_unix.so          try_first_pass nullok
@@ -14,11 +15,9 @@ auth       required                    pam_faillock.so      authsucc
 account    required                    pam_unix.so
 account    optional                    pam_permit.so
 account    required                    pam_time.so
-
 -password  [success=1 default=ignore]  pam_systemd_home.so
 password   required                    pam_unix.so          try_first_pass nullok shadow
 password   optional                    pam_permit.so
-
 -session   optional                    pam_systemd_home.so
 session    required                    pam_limits.so
 session    required                    pam_unix.so

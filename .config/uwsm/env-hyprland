@@ -2,15 +2,22 @@
 # Qompass AI UWSM Env-Hyprland Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
+# References: https://github.com/Vladimir-csp/uwsm?tab=readme-ov-file#4-environments-and-shell-profile | https://github.com/Vladimir-csp/uwsm
 export AQ_DRM_DEVICES="/dev/dri/card0:/dev/dri/card1"
 export AQ_FORCE_LINEAR_BLIT=0
 export AQ_MGPU_NO_EXPLICIT=1
 export AQ_NO_MODIFIERS=1
 export AQ_RENDER_BACKEND=gl
+export AQ_TRACE=1
+export CLUTTER_BACKEND=wayland
+export GDK_BACKEND=wayland,x11
 export __GL_SHADER_DISK_CACHE_SIZE=10737418240
 export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1
 export __GL_SHADER_DISK_CACHE=1
 export __GL_SHADER_DISK_CACHE_PATH="$XDG_CACHE_HOME/nvidia/GLCache"
+export HYPRLAND_CONFIG="$XDG_CONFIG_HOME/hypr/hyprland.conf"
+export HYPRLAND_NO_RT=1
+export HYPRLAND_TRACE=1
 export MESA_SHADER_CACHE_MAX_SIZE=10G
 export MESA_GLSL_CACHE_DIR="$XDG_CACHE_HOME/mesa_shader_cache_db"
 export MESA_GLSL_CACHE_ENABLE=true
@@ -22,7 +29,7 @@ export OZONE_PLATFORM,auto
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
 export QT_QPA_PLATFORMTHEME=qt6ct
 export QT_SCALE_FACTOR=1
-export QT_QPA_PLATFORM=wayland
+export QT_QPA_PLATFORM=wayland;xcb
 export QT_STYLE_OVERRIDE=kvantum
 export QML2_IMPORT_PATH=/usr/lib/qt6/qml
 export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
@@ -30,12 +37,17 @@ export SDL_VIDEO_YUV_HWACCEL=1
 export SDL_VIDEO_X11_DGAMOUSE=0
 export SDL_DYNAMIC_API_ALL=1
 export SDL_DYNAMIC_API=/usr/local/lib/libSDL3.so.0
+export SDL_VIDEODRIVER=wayland,x11,
 export UE_WAYLAND_EGL_FORWARD=1
 export WEBKIT_FORCE_WAYLAND=1
 export WEBVIEW_FORCE_WAYLAND=1
 export WLR_DRM_DEVICES="/dev/dri/card0:/dev/dri/card1"
+export WLR_EGL_NO_X11=1
 export WLR_USE_LIBINPUT=1
+export WLR_X11_NO_ATOMS=1
 export WLR_RENDERER=gles2
 export WLR_RENDERER_ALLOW_SOFTWARE=1
+export XCURSOR_SIZE=32
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_SESSION_TYPE="wayland"
+export XWAYLAND_NO_GLAMOR=1
