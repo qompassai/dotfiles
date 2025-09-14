@@ -1,13 +1,11 @@
 # /qompassai/dotfiles/fish/conf.d/abbreviations.fish
-# Fish Abbreviations
+# Qompass AI Fish Abbreviations Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
-#---------------------------------------------------
-
+####################################################
 if status is-interactive
     abbr -a spn 'sudo pacman -Syyu --noconfirm'
     abbr -a psn 'paru -Syyu --noconfirm'
     abbr -a cmx 'chmod +x'
-    abbr -a scrp 'sudo chown -R $USER:$USER'
     abbr -a .. 'cd ..'
     abbr -a ... 'cd ../..'
     abbr -a .... 'cd ../../..'
@@ -29,10 +27,8 @@ if status is-interactive
     abbr -a gpum 'git push -u origin main'
     abbr -a gpl 'git pull'
     abbr -a gs 'git status'
-
     abbr -a python3 '/usr/bin/python3.13'
     abbr -a pip3 '/usr/bin/python3.13 -m pip'
-
     abbr -a nv nvim
     abbr -a sn 'sudo -E nvim'
     abbr -a sv 'sudo -E vim'
