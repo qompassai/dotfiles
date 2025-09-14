@@ -183,6 +183,7 @@ herald
 heroic
 hfdownloader.json
 highlight
+hotplug
 hp
 hydra
 hypr
@@ -210,6 +211,8 @@ karma
 keepalived
 keycloak
 khal
+kibana
+kismet
 krb5
 krita
 kvantum
@@ -265,6 +268,7 @@ neomutt
 nix
 nixpkgs
 nm
+nomad.d
 nvfetcher
 nvidia
 nvidia-container-runtime
@@ -294,6 +298,7 @@ paru
 pavucontrol-qt
 pencil
 pgadmin4
+pgbouncer
 php
 php.d
 pinta

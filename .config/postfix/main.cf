@@ -1,4 +1,7 @@
 # /qompassai/dotfiles/.config/postfix/main.cf
+# Qompass AI Postfix Main Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 compatibility_level = 3.10
 #soft_bounce = no
 queue_directory = /var/spool/postfix
