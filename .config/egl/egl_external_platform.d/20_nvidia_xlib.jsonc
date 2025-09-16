@@ -1,0 +1,10 @@
+// /qompassai/dotfiles./config/egl/egl_external_platform.d/10_nvidia_xlib.jsonc
+// Qompass AI EGL External Platform Nvidia XLib Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+//////////////////////////////////////////////////////////////////////////////////
+{
+    "file_format_version" : "1.0.0",
+    "ICD" : {
+        "library_path" : "libnvidia-egl-xlib.so.1"
+    }
+}

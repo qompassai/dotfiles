@@ -1,0 +1,16 @@
+## /qompassai/dotfiles/.config/usr-dirs.dirs
+# Qompass AI XDG User Dirs Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+XDG_CACHE_HOME="$HOME/.cache"
+XDG_CONFIG_HOME="$HOME/.config"
+XDG_DATA_HOME="$HOME/.local/share" 
+XDG_DESKTOP_DIR="$HOME/.Desktop"
+XDG_DOCUMENTS_DIR="$HOME/.Documents"
+XDG_DOWNLOAD_DIR="$HOME/.Downloads"
+XDG_TEMPLATES_DIR="$HOME/.Templates"
+XDG_PUBLICSHARE_DIR="$HOME/.Public"
+XDG_MUSIC_DIR="$HOME/.Music"
+XDG_PICTURES_DIR="$HOME/.Pictures"
+XDG_RUNTIME_DIR="/run/user/1000/"
+XDG_VIDEOS_DIR="$HOME/.Videos"
