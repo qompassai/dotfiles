@@ -114,9 +114,11 @@ dropbear
 drpcm
 dufs
 dunst
+dxvk
 e2scrub
 easyeffects
 editorconfig
+egl
 enscript
 environment.d
 eslint
@@ -127,6 +129,9 @@ fastfetch
 fauxnix
 fcitx
 fcitx5
+fern-wifi-cracker
+ffmpeg
+ffmulticonverter
 fftrate
 fig2ps
 firebuild
@@ -174,6 +179,7 @@ gss
 gtk-2.0
 gtk-3.0
 gtk-4.0
+gtk-engines
 guvcview2
 haproxy
 hatch
@@ -183,6 +189,7 @@ herald
 heroic
 hfdownloader.json
 highlight
+hostapd
 hotplug
 hp
 hydra
@@ -260,10 +267,12 @@ mke2fs
 mkinitcpio.d
 mock
 modprobe.d
+modulefiles
 modules
 modules-load.d
 msmtp
 mypaint
+nano
 neomutt
 nix
 nixpkgs
@@ -358,6 +367,7 @@ sane.d
 sasl2
 sass
 sccache
+slicer.org
 smartreboot
 sops
 speech-dispatcher
@@ -391,6 +401,7 @@ unbound
 unreal engine
 urlview
 usbguard
+user-dirs.dirs
 uv
 uwsm
 uwufetch
@@ -408,6 +419,7 @@ vim
 vimiv
 violet
 virt-builder
+vkBasalt
 vpnc
 vtund
 vulkan
@@ -429,8 +441,11 @@ wpg
 wsl
 x11
 xapsd
+xcb
 xdg
 xdg-desktop-portal
+xdg-ninja
+xdg-terminal-exec
 xfce4
 xkbsel
 xl2tpd
