@@ -1,8 +1,5 @@
 # BIOS Settings
 
-On supported machines fwupd can enforce BIOS settings policy so that a user's desired settings are configured at bootup
-and prevent fwupd clients from changing them.
-
 ## JSON policies
 
 A policy file can be created using `fwupdmgr`.  First determine what settings you want to enforce by running:

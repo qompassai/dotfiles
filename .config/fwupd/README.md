@@ -1,6 +1,12 @@
-<!-- README.md -->
-<!-- Qompass AI - [Add description here] -->
+<!-- /qompassai/dotfiles/.config/fwupd/README.md -->
+<!-- Qompass AI Fwupd Config docs -->
 <!-- Copyright (C) 2025 Qompass AI, All rights reserved -->
 <!-- ---------------------------------------- -->
-[fwupd]
-# use `man 5 fwupd.conf` for documentation
+
+```sh
+sudo systemctl enable --now fwupd-refresh.timer
+```
+
+
+# References
+- https://wiki.archlinux.org/title/Fwupd
