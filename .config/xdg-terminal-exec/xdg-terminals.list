@@ -2,12 +2,10 @@
 # Qompass AI XDG-Terminal Exec Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
-
 -org.kde.yakuake.desktop
 -kitty-open.desktop
 /execarg_default:com.raggesilver.BlackBox.desktop:--
 /execarg_default:contour.desktop:execute
-/execarg_default:deepin-terminal.desktop:-x
 /execarg_default:io.elementary.terminal.desktop:-x
 /execarg_default:org.codeberg.dnkl.foot.desktop:--
 /execarg_default:org.gnome.Terminal.desktop:--
