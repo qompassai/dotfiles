@@ -1,0 +1,16 @@
+// /qompassai/dotfiles/.config/code/User/keybindings.jsonc
+// Qompass AI Code User Keybindings Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+///////////////////////////////////////////////////////////
+[
+    {
+        "key": "shift+meta+s",
+        "command": "workbench.action.terminal.split",
+        "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
+    },
+    {
+        "key": "ctrl+shift+5",
+        "command": "-workbench.action.terminal.split",
+        "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
+    }
+]
