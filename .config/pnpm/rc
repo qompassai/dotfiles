@@ -1,6 +1,7 @@
 # /qompassai/dotfiles/.config/pnpm/rc
 # Qompass AI Pnpm Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 auto-install-peers = true
 cache-dir = ~/.cache/pnpm
 cafile = null
@@ -64,7 +65,7 @@ peers-suffix-max-length = 1000
 prefer-frozen-lockfile = true
 prefer-symlinked-executables = true
 prefer-workspace-packages = false
-private-hoist-pattern[] = # add patterns here as needed
+private-hoist-pattern[] =
 proxy = null
 public-hoist-pattern[] = *eslint*
 public-hoist-pattern[] = *prettier*

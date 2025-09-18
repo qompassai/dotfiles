@@ -1,0 +1,15 @@
+// /qompassai/dotfiles/.config/vulkan/explicit_layer.d/VKLayer_INTEL_nullhw.jsonc
+// Qompass AI Vulkan Virtio x86_64 ICD Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+////////////////////////////////////////////////////////////////////
+{
+    "file_format_version" : "1.0.0",
+    "layer" : {
+        "name": "VK_LAYER_INTEL_nullhw",
+        "type": "GLOBAL",
+        "library_path": "libVkLayer_INTEL_nullhw.so",
+        "api_version": "1.1.73",
+        "implementation_version": "1",
+        "description": "INTEL NULL HW"
+    }
+}
