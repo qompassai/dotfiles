@@ -1,19 +1,7 @@
-# IMWheel Configuration file ($HOME/.imwheelrc or /etc/imwheelrc)
-# (GPL)Jon Atkins <jcatki@jonatkins.org>
-# Please read the README and/or imwheel(1) manpage for info
-# and this is best operated on using vim (as I said: It's crunchy)
-
-#
-# This is only for demonstration of the priority command...
-# See the other global Exclude command below for the one you want to use!
-# If this is activated it will only apps that have a lower priority
-# priority is based first on the priority command, then the position in this
-# file - the higher the line is in a file the higher in a priority class it is
-# thus for a default priority you can see that the position in the file is
-# important, but the priority command CAN appear anywahere in a window's list
-# of translations, and the priority will be assigned to all translations below
-# it until either a new window is defined or the priority is set again.
-#
+# /qompassai/dotfiles/.config/x11/imwheel/imwheelrc
+# Qompass AI X11 Imwheel Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 #".*"
 #@Priority=-1000 #the default priority is zero, higher numbers take precedence
 #@Exclude
@@ -24,11 +12,6 @@
 #".*"
 #,Up,Shift_L|R|-R|-Shift_L|O|-O|F|-F|L|-L|Return
 
-
-
-# This one rule can send button events, as if you used ZAxisMapping "4 5"
-# Make sure your XF86Config allows for the max buttons needed...
-# otherwise the events will NOT even be generated...
 #".*"
 #, Up, Button4
 #, Down, Button5
@@ -36,7 +19,6 @@
 #, Right, Button7
 #, Thumb1, Button6
 #, Thumb2, Button7
-# alternatively with Button numbers
 #".*"
 #, Button4, Button4
 #, Button5, Button5
@@ -44,63 +26,48 @@
 #, Button7, Button7
 #, Button6, Button6
 #, Button7, Button7
-
-#Thanks to Mathias Weyland <mathias@weyland-wtal.de>
 "^mutt.*"
 None,           Up,     Up
 None,           Down,   Down
 Control_L,      Up,     Page_Up
 Control_L,      Down,   Page_Down
-
-#Thanks to Mathias Weyland <mathias@weyland-wtal.de>
 "^aterm"
 None,           Up,     Shift_L|Page_Up
 None,           Down,   Shift_L|Page_Down
 Control_L,      Up,     Up
 Control_L,      Down,   Down
-
-#Thanks to Mathias Weyland <mathias@weyland-wtal.de>
 "^Xplns"
 None,           Up,     Left
 None,           Down,   Right
 Control_L,      Up,     Up
 Control_L,      Down,   Down
-
 "^kvt"
 None,		Up,		Shift_L|Page_Up
 None,		Down,	Shift_L|Page_Down
-
 "^Konsole"
 None,		Up,		Shift_L|Page_Up
 None,		Down,	Shift_L|Page_Down
-
 "^XMcd"
 None,		Up,		C
 None,		Down,	Shift_L|C
-
 "^XMMS_Player"
 Shift_L,		Up,		Right
 Shift_L,		Down,	Left
-
 "^XMMS_Playlist"
 Shift_L,	Up,		Page_Up
 Shift_L,	Down,	Page_Down
-
 "^xmms"
 Alt_L,		Up,		Z
 Alt_L,		Down,	B
 Control_L,	Up,		V
 Control_L,	Down,	C
-
 "^XATITV-GATOS"
 None,       Down,	KP_Subtract
 None,       Up,		KP_Add
-
 "^Xman"
 None,		Down,	F
 Shift_L,	Down,	3
 None,		Up,		B
-
 "^Gvi(m|ew)"
 Alt_L,	Up,		Page_Up
 Alt_L,	Down,	Page_Down
@@ -157,17 +124,10 @@ Alt_L,		Right,	Control_L|E
 #,	Down,	Button5
 #,	Left,	Alt_L|Left
 #,	Right,	Alt_L|Right
-#
-# If you want to scroll by a few lines then uncomment these 4 lines
-# and comment out the paging 4 lines below these!
-#
 Shift_L,	Down,	Page_Down,			1#,	1000,	1000
 Shift_L,	Up,		Page_Up,			1#,	1000,	1000
 #None,		Down,	Down,				7#,	1000,	1000
 #None,		Up,		Up,					7#,	1000,	1000
-#
-# If you don't like page scrolling then comment these out and uncomment above!
-#
 #Shift_L,	Down,	Down,				7,
 #Shift_L,	Up,		Up,					7,
 #None,		Down,	Page_Down,			1,
@@ -189,10 +149,9 @@ Shift_L,	Thumb2,	Down,				7,
 "^SDL_App"
 #,	Up,		Button4
 #,	Down,	Button5
-,	Thumb1,	Home	#many apps don't understand Button > 5
-,	Thumb2, End		#many apps don't understand Button > 5
+,	Thumb1,	Home
+,	Thumb2, End	
 
-# Thanks to shewp <shewplx@pblx.net>
 "^Opera" 
 #@Repeat    # let qt do it
 None,       Down,   Down,               4,  100,    100
@@ -207,18 +166,10 @@ None,       Thumb2, Left
 #, Down, Button5
 
 "^Netscape"
-#
-# If you don't want to scroll by a few lines then comment out these 4 lines
-# and uncomment the paging 4 lines below these!
-#
 Shift_L,	Down,	Page_Down,			1,	1000,	1000
 Shift_L,	Up,		Page_Up,			1,	1000,	1000
 None,		Down,	Down,				7,	1000,	1000
 None,		Up,		Up,					7,	1000,	1000
-#
-# If you don't like page scrolling then uncomment these
-# and comment out the 4 lines above!
-#
 #Shift_L,	Down,	Shift_L|Down,		7,	1000,	1000
 #Shift_L,	Up,		Shift_L|Up,			7,	1000,	1000
 #None,		Down,	Page_Down,			1,	1000,	1000
@@ -236,16 +187,12 @@ Shift_L,	Thumb2,	Down,				7,	1000,	1000
 #Alt_L,		Up,		Alt_L|Left
 Alt_L,		Down,	Right,				10,	1000,	1000
 Alt_L,		Up,		Left,				10,	1000,	1000
-
-# Thanks to Paul J Collins <sneakums@usa.net>
 "^emacs"
 Shift_L,	Up,		Page_Up
 Shift_L,	Down,	Page_Down
 # you may need Alt instead of Meta....
 None,		Down,	Control_L|Meta_L|Shift_L|parenright
 None,		Up,		Control_L|Meta_L|Shift_L|parenleft
-
-# Thanks to etienne grossmann <etienne@isr.ist.utl.pt>
 "^Xftp"
 ,			Down,	j
 ,			Up,		k
@@ -256,7 +203,6 @@ None,		Up,		Control_L|Meta_L|Shift_L|parenleft
 #,	Up,	Button4
 #,	Down,	Button5
 
-# Thanks to etienne grossmann <etienne@isr.ist.utl.pt>
 "^gv[ :]"
 None,		Up,		Shift_L|space
 None,		Down,	space
@@ -278,7 +224,6 @@ None,	Down,	Tab
 None,	Up,		Delete
 
 "^Untitled"
-# if using wheel fifo, you may switch these.
 #,	Up,		Button4
 #,	Down,	Button5
 #with these
@@ -289,7 +234,6 @@ None,	Up,		Delete
 ,   Thumb2, End
 
 "^No Title"
-# if using wheel fifo, you may switch these.
 #,	Up,		Button4
 #,	Down,	Button5
 #with these
@@ -302,7 +246,6 @@ None,	Up,		Delete
 ,   Thumb2, End
 
 #"\(null\)"
-# if using wheel fifo, you may want the 2nd group
 #,	Up,		Button4
 #,	Down,	Button5
 #,	Left, Button6
@@ -318,32 +261,16 @@ None,	Up,		Delete
 #,	Thumb2, End
 # (end of switch)
 
-# send event to the window manager when in the root window...
 "\(root\)"
 ,	Up,		Control_L|N
 ,	Down,	Control_L|P
 ,   Thumb1,	Alt_L|Left
 ,	Thumb2,	Alt_L|Right
 
-#
-# Uncommment the following to exclude by default.
-# Then you will have to add new apps all the time, but will retain any built-in
-# wheel functionality contained in some KDE and other newer programs.
-# This kinda defeats the original purpose of the program! ;)
-#
 #".*"
 #@Priority=-1000
 #@Exclude
 #@Repeat
-
-#
-# These are the defaults, but note that the defaults for the right side of the
-# keyboard are still handled within the program, unless you add the
-# combinations desired here. (except for the None modifier of course!)
-# If this section is deleted then the hardcoded defaults will be used, which
-# are the same thing.
-# Modifying these has global effects, but doesn't override what is above.
-#
 #".*"
 #@Priority=-1001
 #,	Up,	Button4
@@ -382,5 +309,4 @@ None,	Up,		Delete
 #Shift_L|Control_L|Alt_L,		Down,	Right,		50
 #,   Thumb1, Home
 #,   Thumb2, End
-
 # vim:ts=4:shiftwidth=4:syntax=sh
