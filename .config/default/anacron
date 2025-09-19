@@ -1,4 +1,5 @@
-# /etc/default/anacron
-# Set this to 'yes' to have anacron run while on battery
-# By default it is not run while on battery
-#ANACRON_RUN_ON_BATTERY_POWER=no
+# /qompassai/dotfiles/.config/default/anacron
+# Qompass AI Default Anacron Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+ANACRON_RUN_ON_BATTERY_POWER=no

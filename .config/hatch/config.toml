@@ -8,23 +8,16 @@ shell = ""
 [dirs]
 project = []
 python = "isolated"
-data = "/home/phaedrus/.local/share/hatch"
-cache = "/home/phaedrus/.cache/hatch"
+data = "$XDG_DATA_HOME/hatch"
+cache = "$XDG_CACHE_HOME/hatch"
 [dirs.env]
 [projects]
 [publish.index]
 repo = "main"
 [template]
-name = "phaedrusflow"
-email = "map@qompass.ai"
-[template.licenses]
-headers = true
-default = [
-    "MIT",
-]
 [template.plugins.default]
-tests = true
-ci = true
+tests = false
+ci = false
 src-layout = true
 [terminal.styles]
 info = "bold"

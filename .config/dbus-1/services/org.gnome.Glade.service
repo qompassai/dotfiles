@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=org.gnome.Glade
+Exec=/usr/bin/glade --gapplication-service
+

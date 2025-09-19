@@ -1,8 +1,8 @@
-## default options
+# /qompassai/dotfiles/.config/default/atop
+# Qompass AI Default Atop Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 #LOGOPTS=""
-## default interval in seconds
-#LOGINTERVAL=600
-## default number of days
-#LOGGENERATIONS=28
-## log location
-#LOGPATH="/var/log/atop"
+LOGINTERVAL=600
+LOGGENERATIONS=28
+LOGPATH="/var/log/atop"

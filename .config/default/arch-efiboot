@@ -1,12 +1,9 @@
-# Primary configuration for ESP and boot directories
+# /qompassai/dotfiles/.config/default/arch-efiboot
+# Qompass AI Default Arch-EfiBoot Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 BOOTDIR="/boot"
-ESP="/boot"  # Mount ESP directly at /boot instead of /boot/efi
 CMDLINE_DIR="/boot"
-
-# Set this to 1 if you want to automatically update the default boot entry
+ESP="/boot"
+EFI_DIR="/boot/EFI/"
 SETNEXT=0
-
-# Specify the correct EFI directory structure for your system
-# This ensures files are placed in the right location
-EFI_DIR="EFI/ArchLinux"
-

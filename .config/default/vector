@@ -1,4 +1,4 @@
-# /etc/default/vector
-# This file can theoretically contain a bunch of environment variables
-# for Vector.  See https://vector.dev/docs/setup/configuration/#environment-variables
-# for details.
+# /qompassai/dotfiles/.config/default/vector
+# Qompass AI Default Vector Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################

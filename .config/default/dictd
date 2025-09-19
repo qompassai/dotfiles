@@ -1,5 +1,7 @@
-# Config file for /etc/rc.d/dictd
-
+# /qompassai/dotfiles/.config/default/dictd
+# Qompass AI Default Dictd Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 DICTD_CONF=/etc/dict/dictd.conf
 DICTD_DICTDIR=/usr/share/dictd
 DICTD_TMPCONF=/etc/dict/dictd.conf.$$

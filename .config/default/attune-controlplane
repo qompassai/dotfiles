@@ -1,16 +1,12 @@
-######## These are the environment variables used by the control plane. ########
-
+# /qompassai/dotfiles/.config/default/attune-controlplane
+# Qompass AI Default Attune-ControlPlane Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 ATTUNE_DATABASE_URL=postgres://attune:attune@localhost:5432/attune
 # Generate using `openssl rand -hex 32`.
 ATTUNE_SECRET=ATTUNE_DEV_INSECURE_SECRET_REPLACE_ME
-# Set to your S3 bucket name. This is currently set to our development Minio
-# default.
 ATTUNE_S3_BUCKET_NAME=attune-dev-0
-
-# Set these to the credentials provided by your S3-compatible object storage:
-## These are currently set to our development Minio defaults.
-AWS_REGION=us-east-1
+AWS_REGION=us-west-1
 AWS_ACCESS_KEY_ID=attuneminio
 AWS_SECRET_ACCESS_KEY=attuneminio
 AWS_ENDPOINT_URL_S3=http://localhost:9000
-

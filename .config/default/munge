@@ -1,4 +1,5 @@
-# MUNGE configuration
-
-# Pass additional command-line options to munged.
+# /qompassai/dotfiles/.config/default/munge
+# Qompass AI Default Munge Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 # OPTIONS="--key-file=/etc/munge/munge.key --num-threads=2"

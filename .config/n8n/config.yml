@@ -1,0 +1,70 @@
+# /qompassai/dotfiles/.config/n8n/config.yml
+# Qompass AI N8n Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+host: "localhost"
+port: 5678
+protocol: "https"
+listen_address: "0.0.0.0"
+timezone: "UTC"
+language: "en"
+security:
+  basicAuth:
+    active: true
+    user: "$(pass show n8n/u)"
+    password: "$(pass show n8n/p)"
+  userManagement:
+    enabled: true
+    oauth2_login_enabled: false
+    jwtSecret: "$(pass show n8n/jwt)"
+  allowLocalFiles: true
+executions:
+  process: "main"
+  saveDataSuccess: "all"
+  saveDataError: "all"
+  pruneDataTimeout: 336
+  timeout: 120
+  queueMode: false
+database:
+  type: "$(pass show n8n/dbt)"
+  postgresdb:
+    host: "$(pass show n8n/h)"
+    port: 5432
+    user: "$(pass show n8n/dbu)"
+    password: "$(pass show n8n/dbp)"
+    database: "n8n"
+    ssl: false
+logs:
+  level: "info"
+  output: "console"
+  execution_data_save_on_error: true
+personalization_enabled: true
+version_notifications_enabled: true
+version_notifications_endpoint: "https://api.n8n.io/versions/"
+version_notifications_info_url: "https://docs.n8n.io/getting-started/installation/updating.html"
+diagnostics_enabled: false
+ssl:
+  key: "$(pass show n8n/sslk)"
+  cert: "$(pass show n8n/sslc)"
+  enabled: true
+externalHooks:
+  path: "$XDG_CONFIG_HOME/n8n/external-hooks.js"
+workflows_folder: "$XDG_CONFIG_HOME/n8n/workflows"
+data_folder: "/var/lib/n8n"
+binary_data_mode: "default"
+files_folder: "$XDG_CONFIG_HOME/n8n/files"
+ai:
+  enabled: true
+  api_key: "$(pass show n8n/aik)"
+  prompts_suggestions: true
+community_packages_allow_usage: true
+community_nodes_enabled: true
+max_workflow_execution_time: 1800
+max_active_workflows: 20
+max_executions_timeout: 100
+max_executions_per_user: 10
+templates_enabled: true
+encryption_key: "$(pass show n8n/aiek)"
+enable_tagging: true
+enable_workflow_tags: true
+enable_user_tags: true

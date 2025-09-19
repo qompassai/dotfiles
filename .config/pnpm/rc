@@ -87,7 +87,6 @@ strict-ssl = true
 strict-store-pkg-content-check = true
 symlink = true
 tag = latest
-tokenHelper = ~/.config/pnpm/token-helper.sh
 unsafe-perm = false
 update-notifier = true
 use-beta-cli = true

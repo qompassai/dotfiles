@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=io.github.finefindus.Hieroglyphic
+Exec=/usr/bin/hieroglyphic --gapplication-service
