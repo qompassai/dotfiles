@@ -1,0 +1,9 @@
+# /qompassai/dotfiles/.config/photoprism
+# Qompass AI PhotoPrism Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+AssetsPath: /usr/share/photoprism
+ConfigPath: /var/lib/photoprism/config
+ImportPath: /var/lib/photoprism/import
+OriginalsPath: /var/lib/photoprism/originals
+StoragePath: /var/lib/photoprism/storage

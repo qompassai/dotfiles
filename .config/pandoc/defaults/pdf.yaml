@@ -1,8 +1,7 @@
-# pdf.yaml
-# Qompass AI - [Add description here]
+# /qompassai/dotfiles/.config/defaults/pdf.yaml
+# Qompass AI Pandoc Default PDF Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
-# ----------------------------------------
-# ~/.config/pandoc/defaults/pdf.yaml
+####################################################
 from: markdown
 to: pdf
 pdf-engine: lualatex

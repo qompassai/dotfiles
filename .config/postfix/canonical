@@ -1,73 +1,13 @@
 # /qompassai/dotfiles/.config/postfix/canonical
-#                   smtpd_recipient_restrictions =
-#                       ...
-#                       reject_unauth_destination
-#                       check_recipient_access
-#                           inline:{example.com=reject_unverified_recipient}
-#                   unverified_recipient_reject_code = 550
-# 
-#               In  the above example, Postfix may contact a remote
-#               server if the recipient is rewritten  to  a  remote
-#               address.
-# CONFIGURATION PARAMETERS
-#        The following main.cf parameters are especially  relevant.
-#        The  text  below  provides  only  a parameter summary. See
-#        postconf(5) for more details including examples.
-#        canonical_classes  (envelope_sender,   envelope_recipient,
-#        header_sender, header_recipient)
-#               What  addresses  are  subject   to   canonical_maps
-#               address mapping.
-#        canonical_maps (empty)
-#               Optional  address mapping lookup tables for message
-#               headers and envelopes.
-#        recipient_canonical_maps (empty)
-#               Optional address mapping lookup tables for envelope
-#               and header recipient addresses.
-#        sender_canonical_maps (empty)
-#               Optional address mapping lookup tables for envelope
-#               and header sender addresses.
-#        propagate_unmatched_extensions (canonical, virtual)
-#               What address lookup tables copy an  address  exten-
-#               sion from the lookup key to the lookup result.
-#        inet_interfaces (all)
-#               The  local  network  interface  addresses that this
-#               mail system receives mail on.
-#        local_header_rewrite_clients (permit_inet_interfaces)
-#               Rewrite or add message headers in mail  from  these
-#               clients,  updating  incomplete  addresses  with the
-#               domain name in $myorigin or $mydomain,  and  adding
-#               missing headers.
-#        proxy_interfaces (empty)
-#               The  remote  network  interface addresses that this
-#               mail system receives mail on by way of a  proxy  or
-#               network address translation unit.
-#        masquerade_classes     (envelope_sender,    header_sender,
-#        header_recipient)
-#               What addresses are subject to address masquerading.
-#        masquerade_domains (empty)
-#               Optional list of domains whose subdomain  structure
-#               will be stripped off in email addresses.
-#        masquerade_exceptions (empty)
-#               Optional  list of user names that are not subjected
-#               to address masquerading, even when their  addresses
-#               match $masquerade_domains.
-#        mydestination  ($myhostname,  localhost.$mydomain,  local-
-#        host)
-#               The  list  of  domains  that  are delivered via the
-#               $local_transport mail delivery transport.
-#        myorigin ($myhostname)
-#               The domain name that locally-posted mail appears to
-#               come  from,  and that locally posted mail is deliv-
-#               ered to.
-#        owner_request_special (yes)
-#               Enable special treatment for owner-listname entries
-#               in the aliases(5) file, and don't split owner-list-
-#               name and listname-request address  localparts  when
-#               the recipient_delimiter is set to "-".
-##        remote_header_rewrite_domain (empty)
-#               Rewrite  or add message headers in mail from remote
-#               clients if the remote_header_rewrite_domain parame-
-#               ter   value   is   non-empty,  updating  incomplete
-#               addresses  with  the  domain   specified   in   the
-#               remote_header_rewrite_domain  parameter, and adding
-#               missing headers.
+
+canonical_maps
+recipient_canonical_maps
+sender_canonical_maps (empty)
+propagate_unmatched_extensions
+inet_interfaces
+        local_header_rewrite_clients (permit_inet_interfaces)
+        proxy_interfaces (empty)
+        masquerade_domains (empty)
+        masquerade_exceptions (empty)
+        myorigin ($myhostname)
+        owner_request_special (yes)
