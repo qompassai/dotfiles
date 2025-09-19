@@ -1,3 +1,7 @@
+// qompassai/dotfiles/.config/heroic/config.jsonc
+// Qompass AI Heroic Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
 {
   "defaultSettings": {
     "checkUpdatesInterval": 10,
@@ -12,21 +16,21 @@
     "checkForUpdatesOnStartup": true,
     "autoUpdateGames": true,
     "customWinePaths": [],
-    "defaultInstallPath": "/home/phaedrus/Games/Heroic",
+    "defaultInstallPath": "$HOME/.Games/Heroic",
     "libraryTopSection": "disabled",
-    "defaultSteamPath": "/home/phaedrus/.steam/steam",
-    "defaultWinePrefix": "/home/phaedrus/Games/Heroic/Prefixes/default",
+    "defaultSteamPath": "$HOME/.steam/steam",
+    "defaultWinePrefix": "$HOME/.Games/Heroic/Prefixes/default",
     "hideChangelogsOnStartup": false,
     "language": "en",
     "maxWorkers": 0,
     "minimizeOnLaunch": false,
-    "nvidiaPrime": false,
+    "nvidiaPrime": true,
     "enviromentOptions": [],
     "wrapperOptions": [],
     "showFps": false,
     "useGameMode": false,
     "wineCrossoverBottle": "Heroic",
-    "winePrefix": "/home/phaedrus/Games/Heroic/Prefixes/default",
+    "winePrefix": "$HOME/.Games/Heroic/Prefixes/default",
     "wineVersion": {
       "bin": "/usr/bin/wine",
       "name": "Wine Default - wine-9.0 (Staging)",
