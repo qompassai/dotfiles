@@ -1,21 +1,20 @@
-# ~/.config/arti/arti.d/arti.toml
-# -------------------------------
+# /qompassai/dotfiles/.config/arti/arti.d/arti.toml
+# Qompass AI Arti Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
-
-data_dir = "/home/phaedrus/.local/share/arti"
-cache_dir = "/home/phaedrus/.cache/arti"
+####################################################
+data_dir = "$XDG_DATA_DIR/arti"
+cache_dir = "$XDG_CACHE_DIR/arti"
 [proxy]
 socks = { enabled = true, port = 9150, address = "127.0.0.1" }
 http = { enabled = false, port = 8118, address = "127.0.0.1" }
 [logging]
-# Set log level (trace, debug, info, warn, error)
 level = "info"
-file = "/home/phaedrus/.config/arti/arti.log"
+file = "$XDG_CONFIG_DIR/arti/arti.log"
 [bridges]
  enabled = true
  transport = "obfs4"
  bridges = [
-   "obfs4 192.0.2.1:443 ...",  # Replace with your bridge lines
+   "obfs4 192.0.2.1:443 ...", 
  ]
 [pt]
 client_transport_plugin_dir = "/usr/bin"

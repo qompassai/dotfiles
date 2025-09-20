@@ -1,0 +1,224 @@
+#!/usr/bin/env bash
+# /qompassai/dotfiles/.config/bash/statemgr
+# Qompass AI Bash State Manager Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+set -e
+shopt -s nullglob
+script_name_="${0##*/}"
+if [[ -z $XDG_CONFIG_HOME ]]
+then
+  export XDG_CONFIG_HOME="$HOME"/.config
+  echo "warning: XDG_CONFIG_HOME is not set. Defaulting to $XDG_CONFIG_HOME"
+fi
+state_dir_="$XDG_CONFIG_HOME/statemgr/$name_"
+function help_()
+{
+  cat <<HELP
+$script_name_ - save and restore $name_ states
+USAGE
+  $script_name_ [statedir <path>] <save|load|delete|rename> <state name> [<state name>]
+  $script_name_ [purge|list|where|help]
+  If <state name> is '?zenity?', then zenity will be used to prompt for the state name.
+  statedir <path>
+    Select the state directory to use.
+  save <state name>
+    Save the current $name_ state.
+    Previous saved states with the same name will be overwritten.
+  load <state name>
+    Load a saved $name_ state.
+    Loading a state while an application is running may cause it to crash.
+  delete <state name>
+    Delete a saved $name_ state.
+  delete <old state name> <new state name>
+    Rename a saved $name_ state.
+  purge
+    Delete all saved states.
+    This can be useful when switching equalizer plugins.
+  list
+    List the saved states.
+  where
+    Show the path to the current state directory.
+  help
+    Display this help message and exit.
+HELP
+}
+function no_state_message_()
+{
+  error_message_ 'no state name specified'
+}
+
+function error_message_()
+{
+  echo "error: $1"
+  echo "see \"$script_name_ help\" for usage"
+  exit 1
+}
+
+function save_()
+{
+  name_="$1"
+  if [[ $name_ == '?zenity?' ]]
+  then
+    name_="$(zenity --title="$script_name_" --entry --text="Save state as")"
+  fi
+
+  if [[ -z $name_ ]]
+  then
+    no_state_message_
+  fi
+
+  [[ -e $state_dir_ ]] || mkdir -p $state_dir_
+  save_state_ "$state_dir_/$name_"
+  echo "saved state \"$name_\""
+}
+
+function load_()
+{
+  name_="$1"
+  if [[ $name_ == '?zenity?' ]]
+  then
+    name_="$(zenity --title="$script_name_" --entry --text="Load state")"
+  fi
+  if [[ -z $name_ ]]
+  then
+    no_state_message_
+  fi
+
+  if [[ ! -e "$state_dir_/$name_" ]]
+  then
+    echo "error: \"$state_dir_/$name_\" does not exist"
+    exit 1
+  fi
+  load_state_ "$state_dir_/$name_"
+  echo "loaded state \"$name_\""
+}
+
+function delete_()
+{
+  name_="$1"
+  if [[ $name_ == '?zenity?' ]]
+  then
+    name_="$(zenity --title="$script_name_" --entry --text="Delete state")"
+  fi
+  if [[ -z $name_ ]]
+  then
+    no_state_message_
+  fi
+
+  if [[ -e $state_dir_/$name_ ]]
+  then
+    rm "$state_dir_/$name_"
+    echo "deleted state \"$name_\""
+#   else
+#     echo "error: \"$state_dir_/$name_\" does not exist"
+#     exit 1
+  fi
+}
+
+function rename_()
+{
+  old_name_="$1"
+  new_name_="$2"
+  if [[ $old_name_ == '?zenity?' ]]
+  then
+    old_name_="$(zenity --title="$script_name_" --entry --text="Current state")"
+  fi
+  if [[ $new_name_ == '?zenity?' ]]
+  then
+    new_name_="$(zenity --title="$script_name_" --entry --text="New state")"
+  fi
+  if [[ -z $old_name_ ]] \
+  || [[ -z $new_name_ ]]
+  then
+    error_message_ 'old and new state names required'
+  fi
+
+  if [[ -e $state_dir_/$old_name_ ]]
+  then
+    mv "$state_dir_/"{"$old_name_","$new_name_"}
+    echo "renamed state \"$old_name_\" to \"$new_name_\""
+  else
+    echo "error: \"$state_dir_/$old_name_\" does not exist"
+    exit 1
+  fi
+}
+
+function purge_()
+{
+  if [[ -d $state_dir ]]
+  then
+    rm "$state_dir_"/*
+    rmdir "$state_dir_"
+    echo "purged all states"
+  fi
+}
+function list_()
+{
+  if [[ -d $state_dir_ ]]
+  then
+    cd "$state_dir_"
+    ls -1
+  fi
+}
+if [[ -z $1 ]]
+then
+  help_
+  exit 1
+fi
+shift_by_=0
+while [[ ! -z $1 ]]
+do
+  case "$1" in
+    statedir)
+      state_dir_="$2"
+      shift_by_=2
+    ;;
+
+    save)
+      save_ "$2"
+      shift_by_=2
+    ;;
+
+    load)
+      load_ "$2"
+      shift_by_=2
+    ;;
+
+    delete)
+      delete_ "$2"
+      shift_by_=2
+    ;;
+
+    rename)
+      rename_ "$2" "$3"
+      shift_by_=3
+    ;;
+
+    purge)
+      purge_ "$2"
+      shift_by_=2
+    ;;
+
+    list)
+      list_
+      shift_by_=1
+    ;;
+
+    where)
+      echo "$state_dir_"
+      shift_by_=1
+    ;;
+
+    help)
+      help_
+      exit 0
+    ;;
+
+    *)
+      help_
+      exit 1
+    ;;
+  esac
+  shift $shift_by_
+done
