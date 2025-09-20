@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- /qompassai/dotfiles./config/gtk-engines/hcengine.xml -->
+<!-- Qompass AI HCE GTK Engine Config -->
+<!-- Copyright (C) 2025 Qompass AI, All rights reserved -->
 <engine schema_version="0.1" module_name="hcengine" long_name="High Contrast">
-
   <metainfo>
     <version>2.21.0</version>
     <website>http://www.gnome.org</website>
@@ -9,7 +11,6 @@
       <email>bill.haneman@sun.com</email>
     </author>
   </metainfo>
-
   <option type="integer" name="edge_thickness" default="2">
     <minimum>1</minimum>
     <maximum>10</maximum>

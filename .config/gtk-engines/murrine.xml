@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- /qompassai/dotfiles./config/gtk-engines/murrine.xml -->
+<!-- Qompass AI Murrine GTK Engine Config -->
+<!-- Copyright (C) 2025 Qompass AI, All rights reserved -->
 <engine schema_version="0.1" module_name="murrine" long_name="Murrine">
-
 	<metainfo>
 		<version>0.98.2</version>
 		<website>http://www.cimitan.com/murrine</website>
@@ -9,7 +11,6 @@
 			<email>andrea.cimitan@gmail.com</email>
 		</author>
 	</metainfo>
-
 	<option type="boolean" name="animation" default="TRUE">
 		<long_name>Animations</long_name>
 		<long_name xml:lang="ca">Animacions</long_name>

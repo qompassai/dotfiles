@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- /qompassai/dotfiles./config/gtk-engines/industrial.xml -->
+<!-- Qompass AI Industrial GTK Engine Config -->
+<!-- Copyright (C) 2025 Qompass AI, All rights reserved -->
 <engine schema_version="0.1" module_name="industrial" long_name="Industrial">
-
   <metainfo>
     <version>2.21.0</version>
     <website>http://www.gnome.org</website>
@@ -19,7 +21,6 @@
       <email>benjamin@sipsolutions.net</email>
     </author>
   </metainfo>
-
   <option type="real" name="contrast" default="1.0">
     <minimum>0</minimum>
     <maximum>5</maximum>

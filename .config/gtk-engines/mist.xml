@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- /qompassai/dotfiles./config/gtk-engines/mist.xml -->
+<!-- Qompass Mist GTK Engine Config -->
+<!-- Copyright (C) 2025 Qompass AI, All rights reserved -->
 <engine schema_version="0.1" module_name="mist" long_name="Mist">
 
   <metainfo>

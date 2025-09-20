@@ -1,3 +1,7 @@
+# /qompassai/dotfiles/.config/java-jdk/security/java.security
+# Qompass AI Java JDK Security Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+######################################################
 security.provider.1=SUN
 security.provider.2=SunRsaSign
 security.provider.3=SunEC
