@@ -8,6 +8,7 @@ alsacontrol
 alvr
 amsynth
 anacrontab
+android-studio
 ansible-bundler
 ant
 anthy
@@ -176,10 +177,13 @@ greetd
 grekllm
 grub.d
 gss
+gsu
 gtk-2.0
 gtk-3.0
 gtk-4.0
 gtk-engines
+gufetch
+gummi
 guvcview2
 haproxy
 hatch
@@ -187,12 +191,15 @@ headlines
 healthd
 herald
 heroic
+hf
 hfdownloader.json
 highlight
 hostapd
 hotplug
 hp
+hwinfo
 hydra
+hypnotix
 hypr
 i2pd
 ibus
@@ -210,9 +217,11 @@ ipython
 iwd
 iwgtk
 java-jdk
+jcryptool
 jellyfin
 jj
 john
+julia
 jupyter
 karma
 keepalived
@@ -246,6 +255,7 @@ luarocks
 lynx
 mail
 mailcap
+makepkg.conf.d
 mangohud
 markdown
 matplotlib
@@ -272,6 +282,7 @@ modules
 modules-load.d
 msmtp
 mypaint
+n8n
 nano
 neomutt
 nix
@@ -283,6 +294,7 @@ nvidia
 nvidia-container-runtime
 nvim
 nvimpager
+nvoc.d
 nvtop
 nyx
 obs-studio
@@ -293,6 +305,7 @@ openldap
 openmpi
 opensearch
 openvpn
+openxr
 oss
 overlayroot
 p2pool
@@ -301,6 +314,7 @@ pacman
 pacman.d
 pacredir
 pamac
+pam-configs
 pam.d
 pandoc
 paru
@@ -308,13 +322,20 @@ pavucontrol-qt
 pencil
 pgadmin4
 pgbouncer
+pgmodeler
+photoprism
 php
+php84
 php.d
+picom
+pico-tts
 pinta
 pip
+piper-tts
 pipewire
 pipewire.conf.d
 pkcs11
+plan9
 playwright
 pnpm
 polkit-1
@@ -368,14 +389,19 @@ sasl2
 sass
 sccache
 slicer.org
+slurm-llnl
 smartreboot
 sops
 speech-dispatcher
 sql-formatter
+sshesame
+sshguard
+sshuttle
 stack
 steam
 steamos-compositor-plus
 steam-tools-ng
+strfry
 strongswan.d
 swapspace
 swiftpm
@@ -399,6 +425,7 @@ tuned
 ufw
 unbound
 unreal engine
+unrealengine
 urlview
 usbguard
 user-dirs.dirs
@@ -420,6 +447,7 @@ vimiv
 violet
 virt-builder
 vkBasalt
+vlc
 vpnc
 vtund
 vulkan
@@ -459,6 +487,6 @@ zeronet
 zfs
 zig
 zls
-zoom.conf
+zoom
 zotero
 zotero-translation-server
