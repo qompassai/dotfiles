@@ -1,7 +1,7 @@
 # /qompassai/dotfiles/.config/fish/vulkan.fish
 # Qompass AI Fish Vulkan Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
-# ----------------------------------------
+####################################################
 set ARCH (uname -m)
 set VULKAN_SDK "$HOME/.local/share/vulkan-sdk/$ARCH"
 set PATH "$VULKAN_SDK/bin" $PATH

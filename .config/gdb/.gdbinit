@@ -1,11 +1,6 @@
-python
-import gdb.printing
-import sys
-
-sys.path.append('/home/phaedrus/.config/Epic/GDBPrinters/')
-
-from UEPrinters import register_ue_printers
-register_ue_printers(None)
-print("Registered pretty printers for UE classes")
-end
+# /qompassai/dotfiles/.config/gdb/.gdbinit
+# Qompass AI GDB Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 set debuginfod enabled on
+skip -rfu Catch

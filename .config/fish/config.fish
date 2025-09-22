@@ -23,3 +23,5 @@ abbr -a gpu 'watch -n 1 nvidia-smi'
 
 set -x PATH $HOME/.dotnet $PATH
 set -x DOTNET_ROOT $HOME/.dotnet
+
+
