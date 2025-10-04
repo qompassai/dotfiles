@@ -39,7 +39,7 @@
     mnemonicPrefix = true
     renames = true
 [fetch]
-    fsckobjects = true
+    fsckobjects = false
     prune = true
     pruneTags = true
     writeCommitGraph = true
@@ -54,7 +54,7 @@
     version = 4
 [init]
     defaultBranch = main
-    templateDir = ~/.git-templates
+    #templateDir = ~/.git-templates
 [merge]
     conflictstyle = zdiff3
     tool = meld
@@ -70,7 +70,7 @@
     default = current
     followTags = true
 [receive]
-    fsckobjects = true
+    fsckobjects = false
 [rebase]
     autosquash = true
     autostash = true
@@ -81,4 +81,4 @@
 [tag]
     sort = version:refname
 [transfer]
-    fsckobjects = true
+    fsckobjects = false

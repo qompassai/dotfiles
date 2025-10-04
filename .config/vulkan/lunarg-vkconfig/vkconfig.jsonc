@@ -159,12 +159,12 @@
                 "last_modified": "2025-03-06T19:57:47",
                 "validated": false
             },
-            "{VULKAN_HOME}/explicit_layer.d/VkLayer_INTEL_nullhw.json": {
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_INTEL_nullhw.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-04-16T18:26:06",
                 "validated": false
             },
-            "{VULKAN_HOME}/explicit_layer.d/VkLayer_MESA_overlay.json": {
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_MESA_overlay.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-04-16T18:26:06",
                 "validated": false
@@ -184,97 +184,97 @@
                 "last_modified": "2025-03-20T19:49:27",
                 "validated": false
             },
-            "{VULKAN_HOME}/explicit_layer.d/VkLayer_khronos_shader_object.json": {
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_khronos_shader_object.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-03-29T23:13:58",
                 "validated": false
             },
-            "{VULKAN_HOME}/explicit_layer.d/VkLayer_khronos_synchronization2.json": {
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_khronos_synchronization2.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-03-29T23:13:58",
                 "validated": false
             },
-            "{VULKAN_HOME}/explicit_layer.d/VkLayer_khronos_timeline_semaphore.json": {
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_khronos_timeline_semaphore.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-03-29T23:13:58",
                 "validated": false
             },
-            "{VULKAN_HOME}/explicit_layer.d/VkLayer_khronos_validation.json": {
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_khronos_validation.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-03-20T19:48:57",
                 "validated": false
             },
-            "{VULKAN_HOME}/explicit_layer.d/VkLayer_monitor.json": {
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_monitor.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-03-20T19:49:27",
                 "validated": false
             },
-            "{VULKAN_HOME}/explicit_layer.d/VkLayer_screenshot.json": {
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_screenshot.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-03-20T19:49:27",
                 "validated": false
             },
-            "/usr/share/vulkan/explicit_layer.d/alvr_x86_64.json": {
+            "{VULKAN_HOME}/explicit_layer.d/alvr_x86_64.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-03-29T15:09:15",
                 "validated": false
             },
-            "/usr/share/vulkan/implicit_layer.d/MangoHud.x86.json": {
+            "/usr/share/vulkan/implicit_layer.d/MangoHud.x86.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-03-05T09:18:54",
                 "validated": false
             },
-            "/usr/share/vulkan/implicit_layer.d/MangoHud.x86_64.json": {
+            "/usr/share/vulkan/implicit_layer.d/MangoHud.x86_64.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-03-05T09:10:23",
                 "validated": false
             },
-            "/usr/share/vulkan/implicit_layer.d/VkLayer_DXVK_NVAPI_reflex.json": {
+            "{VULKAN_HOME}/implicit_layer.d/VkLayer_DXVK_NVAPI_reflex.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-04-08T11:02:48",
                 "validated": false
             },
-            "/usr/share/vulkan/implicit_layer.d/VkLayer_FROG_gamescope_wsi.x86_64.json": {
+            "{VULKAN_HOME}/implicit_layer.d/VkLayer_FROG_gamescope_wsi.x86_64.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-04-06T05:33:04",
                 "validated": false
             },
-            "/usr/share/vulkan/implicit_layer.d/VkLayer_MESA_device_select.json": {
+            "{VULKAN_HOME}/implicit_layer.d/VkLayer_MESA_device_select.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-04-16T18:26:06",
                 "validated": false
             },
-            "/usr/share/vulkan/implicit_layer.d/VkLayer_hdr_wsi.x86_64.json": {
+            "{VULKAN_HOME}/implicit_layer.d/VkLayer_hdr_wsi.x86_64.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-04-02T20:57:23",
                 "validated": false
             },
-            "/usr/share/vulkan/implicit_layer.d/latencyflex.json": {
+            "{VULKAN_HOME}/implicit_layer.d/latencyflex.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-03-29T12:12:52",
                 "validated": false
             },
-            "/usr/share/vulkan/implicit_layer.d/libstrangle_vk.json": {
+            "{VULKAN_HOME}/implicit_layer.d/libstrangle_vk.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-03-26T17:37:25",
                 "validated": false
             },
-            "/usr/share/vulkan/implicit_layer.d/nvidia_layers.json": {
+            "{VULKAN_HOME}/implicit_layer.d/nvidia_layers.jsonc": {
                 "disabled": true,
                 "last_modified": "2025-03-29T12:05:43",
                 "validated": false
             },
-            "/usr/share/vulkan/implicit_layer.d/obs_vkcapture_32.json": {
+            "{VULKAN_HOME}/implicit_layer.d/obs_vkcapture_32.jsonc": {
                 "disabled": false,
                 "last_modified": "2025-03-29T14:12:54",
                 "validated": false
             },
-            "/usr/share/vulkan/implicit_layer.d/obs_vkcapture_64.json": {
+            "{VULKAN_HOME}/implicit_layer.d/obs_vkcapture_64.json": {
                 "disabled": false,
                 "last_modified": "2025-03-29T14:12:54",
                 "validated": false
             },
-            "/usr/share/vulkan/implicit_layer.d/vkBasalt.json": {
+            "{VULKAN_HOME}/implicit_layer.d/vkBasalt.json": {
                 "disabled": false,
                 "last_modified": "2025-03-29T16:43:24",
                 "validated": false

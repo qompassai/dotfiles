@@ -1,12 +1,12 @@
 # /qompassai/Shell/.profile.d/17-qpg.fish
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
-set -gx C_INCLUDE_PATH "/opt/qai/liboqs/include"(test -n "$C_INCLUDE_PATH"; and echo :$C_INCLUDE_PATH)
-set -gx LIBRARY_PATH "/opt/qai/liboqs/lib"(test -n "$LIBRARY_PATH"; and echo :$LIBRARY_PATH)
-set -gx LD_LIBRARY_PATH "/opt/qai/liboqs/lib"(test -n "$LD_LIBRARY_PATH"; and echo :$LD_LIBRARY_PATH)
-set -gx LIBOQS_INCLUDE_DIR "/opt/qai/liboqs/include/oqs"
-set -gx LIBOQS_LIB_DIR "/opt/qai/liboqs/lib"
-set -gx PKG_CONFIG_PATH "/opt/qai/liboqs/lib/pkgconfig"(test -n "$PKG_CONFIG_PATH"; and echo :$PKG_CONFIG_PATH)
+#set -gx C_INCLUDE_PATH "/opt/qai/liboqs/include"(test -n "$C_INCLUDE_PATH"; and echo :$C_INCLUDE_PATH)
+#set -gx LIBRARY_PATH "/opt/qai/liboqs/lib"(test -n "$LIBRARY_PATH"; and echo :$LIBRARY_PATH)
+#set -gx LD_LIBRARY_PATH "/opt/qai/liboqs/lib"(test -n "$LD_LIBRARY_PATH"; and echo :$LD_LIBRARY_PATH)
+#set -gx LIBOQS_INCLUDE_DIR "/opt/qai/liboqs/include/oqs"
+#set -gx LIBOQS_LIB_DIR "/opt/qai/liboqs/lib"
+#set -gx PKG_CONFIG_PATH "/opt/qai/liboqs/lib/pkgconfig"(test -n "$PKG_CONFIG_PATH"; and echo :$PKG_CONFIG_PATH)
 set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 set -gx SSLKEYLOGFILE /tmp/sslkeylog.log
 set -gx GPG_TTY (tty)
@@ -34,5 +34,3 @@ set -gx TPM2_PKCS11_STORE "$XDG_DATA_HOME/tpm2-pkcs11"
 set -gx TSS2_FAPICONF "$HOME/.config/tpm2-tss/fapi-config.json"
 set -gx LANG "en_US.UTF-8"
 set -gx LC_ALL "en_US.UTF-8"
-#set -gx PATH "$PATH:/opt/QAI/qompassl/bin"
-#set -gx LD_LIBRARY_PATH "/opt/qai/qompassl/lib64"(test -n "$LD_LIBRARY_PATH"; and echo :$LD_LIBRARY_PATH)

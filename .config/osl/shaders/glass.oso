@@ -1,0 +1,50 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.14.7.0
+# options: -q -I/build/openshadinglanguage/src/OpenShadingLanguage-1.14.7.0/src/shaders -I/build/openshadinglanguage/src/OpenShadingLanguage-1.14.7.0/src/shaders -I/build/openshadinglanguage/src/OpenShadingLanguage-1.14.7.0/src/shaders -o /build/openshadinglanguage/src/OpenShadingLanguage-1.14.7.0/build/src/shaders/glass.oso
+surface glass	%meta{string,help,"Simple dielectric material"} 
+param	float	Ks	1		%meta{string,help,"Color scaling of the refraction"} %meta{float,min,0} %meta{float,max,1}  %read{8,11} %write{2147483647,-1}
+param	color	Cs	1 1 1		%meta{string,help,"Base color"} %meta{float,min,0} %meta{float,max,1}  %read{4,13} %write{2147483647,-1}
+param	float	eta	1.5		%meta{string,help,"Index of refraction"} %meta{float,min,1} %meta{float,max,3}  %read{2,12} %write{2147483647,-1}
+param	int	TIR	0		%meta{string,help,"Enable Total Internal Reflection"} %meta{string,widget,"checkBox"}  %read{5,5} %write{2147483647,-1}
+global	normal	N	%read{3,12} %write{2147483647,-1}
+global	closure color	Ci	%read{9,9} %write{4,14}
+temp	int	$tmp1	%read{1,1} %write{0,0}
+temp	closure color	$tmp2	%read{4,4} %write{3,3}
+const	float	$const1	1		%read{2,6} %write{2147483647,-1}
+temp	float	$tmp3	%read{3,3} %write{2,2}
+const	string	$const2	"refraction"		%read{3,12} %write{2147483647,-1}
+temp	closure color	$tmp4	%read{8,8} %write{7,7}
+temp	float	$tmp5	%read{7,7} %write{6,6}
+const	string	$const3	"reflection"		%read{7,10} %write{2147483647,-1}
+temp	closure color	$tmp6	%read{9,9} %write{8,8}
+temp	closure color	$tmp7	%read{11,11} %write{10,10}
+temp	closure color	$tmp8	%read{14,14} %write{11,11}
+temp	closure color	$tmp9	%read{13,13} %write{12,12}
+temp	closure color	$tmp10	%read{14,14} %write{13,13}
+code ___main___
+# /build/openshadinglanguage/src/OpenShadingLanguage-1.14.7.0/src/shaders/glass.osl:25
+#     if (backfacing()) {
+	backfacing	$tmp1 	%filename{"/build/openshadinglanguage/src/OpenShadingLanguage-1.14.7.0/src/shaders/glass.osl"} %line{25} %argrw{"w"}
+	if		$tmp1 10 15 	%argrw{"r"}
+# /build/openshadinglanguage/src/OpenShadingLanguage-1.14.7.0/src/shaders/glass.osl:26
+#         Ci = Cs * refraction(N, 1.0 / eta);
+	div		$tmp3 $const1 eta 	%line{26} %argrw{"wrr"}
+	closure		$tmp2 $const2 N $tmp3 	%argrw{"wrrr"}
+	mul		Ci $tmp2 Cs 	%argrw{"wrr"}
+# /build/openshadinglanguage/src/OpenShadingLanguage-1.14.7.0/src/shaders/glass.osl:30
+#         if (TIR)
+	if		TIR 10 10 	%line{30} %argrw{"r"}
+# /build/openshadinglanguage/src/OpenShadingLanguage-1.14.7.0/src/shaders/glass.osl:31
+#            Ci += Ks * reflection(N, 1.0 / eta);
+	div		$tmp5 $const1 eta 	%line{31} %argrw{"wrr"}
+	closure		$tmp4 $const3 N $tmp5 	%argrw{"wrrr"}
+	mul		$tmp6 $tmp4 Ks 	%argrw{"wrr"}
+	add		Ci Ci $tmp6 	%argrw{"wrr"}
+# /build/openshadinglanguage/src/OpenShadingLanguage-1.14.7.0/src/shaders/glass.osl:33
+#         Ci = Ks * reflection(N, eta) + Cs * refraction(N, eta);
+	closure		$tmp7 $const3 N eta 	%line{33} %argrw{"wrrr"}
+	mul		$tmp8 $tmp7 Ks 	%argrw{"wrr"}
+	closure		$tmp9 $const2 N eta 	%argrw{"wrrr"}
+	mul		$tmp10 $tmp9 Cs 	%argrw{"wrr"}
+	add		Ci $tmp8 $tmp10 	%argrw{"wrr"}
+	end
