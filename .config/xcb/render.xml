@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2002-2004 Carl D. Worth, Jamey Sharp, Bart Massey, Josh Triplett
-All Rights Reserved.  See the file COPYING in this directory
-for licensing information.
 -->
 <xcb header="render" extension-xname="RENDER" extension-name="Render"
     major-version="0" minor-version="11">
-  <!-- supports version 0.11 -->
 
   <import>xproto</import>
 
@@ -19,8 +15,6 @@ for licensing information.
     <item name="None"> <value>0</value> </item>
   </enum>
 
-  <!-- Disjoint* and Conjoint* are new in version 0.2 -->
-  <!-- PDF blend modes are new in version 0.11 -->
   <enum name="PictOp">
     <item name="Clear">               <value>0</value> </item>
     <item name="Src">                 <value>1</value> </item>
@@ -62,8 +56,6 @@ for licensing information.
     <item name="ConjointAtop">        <value>41</value> </item>
     <item name="ConjointAtopReverse"> <value>42</value> </item>
     <item name="ConjointXor">         <value>43</value> </item>
-
-    <!-- PDF blend modes are new in version 0.11 -->
     <item name="Multiply">            <value>48</value></item>
     <item name="Screen">              <value>49</value> </item>
     <item name="Overlay">             <value>50</value> </item>
@@ -424,9 +416,6 @@ for licensing information.
     <field type="CARD16" name="width" />
     <field type="CARD16" name="height" />
   </request>
-
-  <!-- opcode 9 reserved for Scale -->
-
   <request name="Trapezoids" opcode="10">
     <field type="CARD8" name="op" enum="PictOp" />
     <pad bytes="3" />
@@ -470,27 +459,17 @@ for licensing information.
     <field type="INT16" name="src_y" />
     <list type="POINTFIX" name="points" />
   </request>
-
-  <!-- opcode 14 reserved for ColorTrapezoids -->
-
-  <!-- opcode 15 reserved for ColorTriangles -->
-
-  <!-- opcode 16 reserved for Transform -->
-
   <request name="CreateGlyphSet" opcode="17">
     <field type="GLYPHSET" name="gsid" />
     <field type="PICTFORMAT" name="format" />
   </request>
-
   <request name="ReferenceGlyphSet" opcode="18">
     <field type="GLYPHSET" name="gsid" />
     <field type="GLYPHSET" name="existing" />
   </request>
-
   <request name="FreeGlyphSet" opcode="19">
     <field type="GLYPHSET" name="glyphset" />
   </request>
-
   <request name="AddGlyphs" opcode="20">
     <field type="GLYPHSET" name="glyphset" />
     <field type="CARD32" name="glyphs_len" />
@@ -502,14 +481,10 @@ for licensing information.
     </list>
     <list type="BYTE" name="data" />
   </request>
-
-  <!-- opcode 21 reserved for AddGlyphsFromPicture -->
-
   <request name="FreeGlyphs" opcode="22">
     <field type="GLYPHSET" name="glyphset" />
     <list type="GLYPH" name="glyphs" />
   </request>
-
   <request name="CompositeGlyphs8" opcode="23">
     <field type="CARD8" name="op" enum="PictOp" />
     <pad bytes="3" />
@@ -521,7 +496,6 @@ for licensing information.
     <field type="INT16" name="src_y" />
     <list type="BYTE" name="glyphcmds" />
   </request>
-
   <request name="CompositeGlyphs16" opcode="24">
     <field type="CARD8" name="op" enum="PictOp" />
     <pad bytes="3" />
@@ -533,7 +507,6 @@ for licensing information.
     <field type="INT16" name="src_y" />
     <list type="BYTE" name="glyphcmds" />
   </request>
-
   <request name="CompositeGlyphs32" opcode="25">
     <field type="CARD8" name="op" enum="PictOp" />
     <pad bytes="3" />
@@ -545,9 +518,6 @@ for licensing information.
     <field type="INT16" name="src_y" />
     <list type="BYTE" name="glyphcmds" />
   </request>
-
-  <!-- new in version 0.1 -->
-
   <request name="FillRectangles" opcode="26">
     <field type="CARD8" name="op" enum="PictOp" />
     <pad bytes="3" />
@@ -555,18 +525,12 @@ for licensing information.
     <field type="COLOR" name="color" />
     <list type="RECTANGLE" name="rects" />
   </request>
-
-  <!-- new in version 0.5 -->
-
   <request name="CreateCursor" opcode="27">
     <field type="CURSOR" name="cid" />
     <field type="PICTURE" name="source" />
     <field type="CARD16" name="x" />
     <field type="CARD16" name="y" />
   </request>
-
-  <!-- new in version 0.6 -->
-
   <struct name="TRANSFORM">
     <field type="FIXED" name="matrix11" />
     <field type="FIXED" name="matrix12" />
@@ -578,12 +542,10 @@ for licensing information.
     <field type="FIXED" name="matrix32" />
     <field type="FIXED" name="matrix33" />
   </struct>
-
   <request name="SetPictureTransform" opcode="28">
     <field type="PICTURE" name="picture" />
     <field type="TRANSFORM" name="transform" />
   </request>
-
   <request name="QueryFilters" opcode="29">
     <field type="DRAWABLE" name="drawable" />
     <reply>
@@ -599,7 +561,6 @@ for licensing information.
       </list>
     </reply>
   </request>
-
   <request name="SetPictureFilter" opcode="30">
     <field type="PICTURE" name="picture" />
     <field type="CARD16" name="filter_len" />
@@ -610,41 +571,29 @@ for licensing information.
     <pad align="4" />
     <list type="FIXED" name="values" />
   </request>
-
-  <!-- new in version 0.8 -->
-
   <struct name="ANIMCURSORELT">
     <field type="CURSOR" name="cursor" />
     <field type="CARD32" name="delay" />
   </struct>
-
   <request name="CreateAnimCursor" opcode="31">
     <field type="CURSOR" name="cid" />
     <list type="ANIMCURSORELT" name="cursors" />
   </request>
-
-  <!-- new in version 0.9 -->
- 
   <struct name="SPANFIX">
     <field type="FIXED" name="l" />
     <field type="FIXED" name="r" />
     <field type="FIXED" name="y" />
   </struct>
-
   <struct name="TRAP">
     <field type="SPANFIX" name="top" />
     <field type="SPANFIX" name="bot" />
   </struct>
-
   <request name="AddTraps" opcode="32">
     <field type="PICTURE" name="picture" />
     <field type="INT16" name="x_off" />
     <field type="INT16" name="y_off" />
     <list type="TRAP" name="traps" />
   </request>
-  
-  <!-- new in version 0.10 -->
-
   <request name="CreateSolidFill" opcode="33">
     <field type="PICTURE" name="picture" />
     <field type="COLOR" name="color" />
@@ -681,7 +630,7 @@ for licensing information.
   <request name="CreateConicalGradient" opcode="36">
     <field type="PICTURE" name="picture" />
     <field type="POINTFIX" name="center" />
-    <field type="FIXED" name="angle" />        <!-- degrees -->
+    <field type="FIXED" name="angle" /> 
     <field type="CARD32" name="num_stops" />
     <list type="FIXED" name="stops">
       <fieldref>num_stops</fieldref>

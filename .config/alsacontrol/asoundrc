@@ -1,8 +1,7 @@
 # /qompassai/dotfiles/.config/alsacontrol/asoundrc
-# Qompass AI Alsacontrol Config
+# Qompass AI Alsacontrol ASound Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
-
 pcm.alsacontrol-dmix {
     type dmix
     ipc_key 92882631
@@ -22,7 +21,6 @@ pcm.alsacontrol-dsnoop {
         pcm "null"
     }
 }
-
 pcm.alsacontrol-output-softvol {
     type softvol
     slave.pcm {
@@ -39,7 +37,6 @@ pcm.alsacontrol-output-softvol {
     }
     resolution 2
 }
-
 pcm.alsacontrol-input-softvol {
     type softvol
     slave.pcm {

@@ -1,10 +1,6 @@
 #        /etc/postfix/main.cf:
 #            virtual_alias_maps = hash:/etc/postfix/virtual
 # 
-#        Note: some systems use dbm databases instead of hash.  See
-#        the output  from  "postconf  -m"  for  available  database
-#        types.
-# 
 #        /etc/postfix/virtual:
 #            virtual-alias.domain    anything (right-hand content does not matter)
 #            postmaster@virtual-alias.domain postmaster
@@ -17,18 +13,5 @@
 #        mydestination  ($myhostname,  localhost.$mydomain,  local-
 #        host)
 #        myorigin ($myhostname)
-#               The domain name that locally-posted mail appears to
-#               come  from,  and that locally posted mail is deliv-
-#               ered to.
-# 
 #        owner_request_special (yes)
-#               Enable special treatment for owner-listname entries
-#               in the aliases(5) file, and don't split owner-list-
-#               name and listname-request address  localparts  when
-#               the recipient_delimiter is set to "-".
-# 
 #        proxy_interfaces (empty)
-#               The  remote  network  interface addresses that this
-#               mail system receives mail on by way of a  proxy  or
-# 
-#                                                                     VIRTUAL(5)

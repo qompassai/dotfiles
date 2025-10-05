@@ -1,0 +1,4 @@
+# VCPKG custom config
+#export VCPKG_ROOT="$HOME/.GH/optix-toolkit/vcpkg"
+#export VCPKG_DEFAULT_TRIPLET="x64-linux"
+#export VCPKG_DOWNLOADS="$HOME/.cache/vcpkg-downloads"

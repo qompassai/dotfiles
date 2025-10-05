@@ -1,0 +1,35 @@
+# Example configuration
+[registry."docker.io"]
+mirrors = ["mirror.gcr.io"]
+
+# For insecure registries
+[registry."myregistry:5000"]
+http = true
+insecure = true
+
+# Cache configuration
+[worker.oci]
+gc = true
+gckeepstorage = 20000
+
+# Set resource limits
+[worker.containerd]
+enabled = true
+platforms = ["linux/amd64", "linux/arm64"]
+memory = "4096M"
+cpus = 4
+
+[metrics]
+address = "127.0.0.1:9436"
+
+[grpc]
+# Unix socket for local client (safe, default for rootless)
+address = ["unix:///run/user/1000/buildkit/buildkitd.sock"]
+
+# Optional: TCP interface for advanced integrations — restrict to localhost only
+# WARNING: Only expose externally with TLS + authentication
+# address = ["tcp://127.0.0.1:1234"]
+
+#[grpc.tls]
+#cert = "/path/to/buildkit-server.crt"
+#key = "/path/to/buildkit-server.key"

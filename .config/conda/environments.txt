@@ -1,0 +1,3 @@
+/home/phaedrus/.cache/paru/clone/miniconda3/pkg/miniconda3/opt/miniconda3
+/home/phaedrus/.conda/envs/quant
+/home/phaedrus/.cache/yay/miniconda3/pkg/miniconda3/opt/miniconda3

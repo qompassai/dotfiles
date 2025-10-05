@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-Copyright (C) 2004 Mikko Torni and Josh Triplett.
-All Rights Reserved.  See the file COPYING in this directory
-for licensing information.
 -->
 <xcb header="sync" extension-xname="SYNC" extension-name="Sync"
     major-version="3" minor-version="1">
