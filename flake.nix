@@ -15,14 +15,19 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-stable.url = "github:nixos/nixpkgs/nixos-25.05";
   };
-  outputs = inputs @ {
-    self,
-    nixpkgs,
-    flake-parts,
-    ...
-  }:
-    flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux" "aarch64-linux"];
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      nvfetcher,
+      flake-parts,
+      ...
+    }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
         inputs.devshell.flakeModule
@@ -30,50 +35,56 @@
         ./flake
       ];
       packages = {
-        x86_64-linux = let
-          pkgs = import nixpkgs {system = "x86_64-linux";};
-        in {
-          userEnvironment = pkgs.buildEnv {
-            name = "qompass-user-environment";
-            paths = with pkgs; [
-              ant
-              burp
-              caja
-              carbonyl
-              cava
-              clamav
-              composer
-              connman
-              discordo
-              distcc
-              docker
-              fuzzel
-              git
-              limine
-              neovim
-              nyx
-              python3
-              rage
-              rkhunter
-              xdg-desktop-portal
-              xdg-desktop-portal-hyprland
-              wine
-              wireguard
-            ];
+        x86_64-linux =
+          let
+            pkgs = import nixpkgs { system = "x86_64-linux"; };
+          in
+          {
+            userEnvironment = pkgs.buildEnv {
+              name = "qompass-user-environment";
+              paths = with pkgs; [
+                ant
+                burp
+                caja
+                carbonyl
+                cava
+                clamav
+                composer
+                connman
+                discordo
+                distcc
+                docker
+                fuzzel
+                git
+                limine
+                neovim
+                nyx
+                python3
+                rage
+                rkhunter
+                vesktop
+                xdg-desktop-portal
+                xdg-desktop-portal-hyprland
+                wine
+                wireguard
+                zathura
+              ];
+            };
           };
-        };
-        aarch64-linux = let
-          pkgs = import nixpkgs {system = "aarch64-linux";};
-        in {
-          userEnvironment = pkgs.buildEnv {
-            name = "qompass-user-environment";
-            paths = with pkgs; [
-              git
-              neovim
-              python311
-            ];
+        aarch64-linux =
+          let
+            pkgs = import nixpkgs { system = "aarch64-linux"; };
+          in
+          {
+            userEnvironment = pkgs.buildEnv {
+              name = "qompass-user-environment";
+              paths = with pkgs; [
+                git
+                neovim
+                python311
+              ];
+            };
           };
-        };
       };
     };
 }
