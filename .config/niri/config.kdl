@@ -2,6 +2,7 @@
 // Qompass AI Niri Config
 // Copyright (C) 2025 Qompass AI, All rights reserved
 /////////////////////////////////////////
+// References: https://github.com/Vortriz/awesome-niri | https://github.com/YaLTeR/niri
 animations {
     config-notification-open-close {
         spring damping-ratio=0.6 stiffness=1000 epsilon=0.001
