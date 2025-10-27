@@ -20,6 +20,7 @@ animations {
         duration-ms 200
         curve "ease-out-quad"
     }
+    slowdown 0.3
     window-close {
         duration-ms 150
         curve "ease-out-quad"
@@ -28,8 +29,8 @@ animations {
         spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
     }
     window-open {
-        duration-ms 150
         curve "ease-out-expo"
+        duration-ms 150
     }
     window-resize {
         spring damping-ratio=1.0 stiffness=800 epsilon=0.0001
@@ -38,99 +39,110 @@ animations {
         spring damping-ratio=1.0 stiffness=1000 epsilon=0.0001
     }
 }
-animations {
-    slowdown 0.3
-}
 binds {
-    Alt+Print { screenshot-window; }
-    Ctrl+Print { screenshot-screen; }
-    Mod+1 { focus-workspace 1; }
-    Mod+2 { focus-workspace 2; }
-    Mod+3 { focus-workspace 3; }
-    Mod+4 { focus-workspace 4; }
-    Mod+5 { focus-workspace 5; }
-    Mod+6 { focus-workspace 6; }
-    Mod+7 { focus-workspace 7; }
-    Mod+8 { focus-workspace 8; }
-    Mod+9 { focus-workspace 9; }
-    Mod+B { spawn "firefox"; }
-    Mod+Alt+B { spawn "vivaldi"; }
-    Mod+C { center-column; }
-    Mod+Comma { consume-window-into-column; }
-    Mod+Ctrl+End { move-column-to-last; }
-    Mod+Ctrl+F { expand-column-to-available-width; }
-    Mod+Ctrl+Home { move-column-to-first; }
-    Mod+Ctrl+J { move-column-left-or-to-monitor-left; }
-    Mod+Ctrl+K { move-column-right-or-to-monitor-right; }
-    Mod+Ctrl+Left { move-column-left-or-to-monitor-left; }
-    Mod+Ctrl+Right { move-column-right-or-to-monitor-right; }
+    Alt+Print                      { screenshot-window; }
+    Ctrl+Print                     { screenshot-screen; }
+    Mod+1                          { focus-workspace 1; }
+    Mod+2                          { focus-workspace 2; }
+    Mod+3                          { focus-workspace 3; }
+    Mod+4                          { focus-workspace 4; }
+    Mod+5                          { focus-workspace 5; }
+    Mod+6                          { focus-workspace 6; }
+    Mod+7                          { focus-workspace 7; }
+    Mod+8                          { focus-workspace 8; }
+    Mod+9                          { focus-workspace 9; }
+    Mod+Alt+B                      { spawn "vivaldi"; }
+    Mod+B                          { spawn "firefox"; }
+    Mod+BracketLeft                { consume-or-expel-window-left; }
+    Mod+BracketRight               { consume-or-expel-window-right; }
+    Mod+C                          { center-column; }
+    Mod+Comma                      { consume-window-into-column; }
+    Mod+Ctrl+1                     { move-column-to-workspace 1; }
+    Mod+Ctrl+2                     { move-column-to-workspace 2; }
+    Mod+Ctrl+3                     { move-column-to-workspace 3; }
+    Mod+Ctrl+4                     { move-column-to-workspace 4; }
+    Mod+Ctrl+5                     { move-column-to-workspace 5; }
+    Mod+Ctrl+6                     { move-column-to-workspace 6; }
+    Mod+Ctrl+7                     { move-column-to-workspace 7; }
+    Mod+Ctrl+8                     { move-column-to-workspace 8; }
+    Mod+Ctrl+9                     { move-column-to-workspace 9; }
+    Mod+Ctrl+End                   { move-column-to-last; }
+    Mod+Ctrl+F                     { expand-column-to-available-width; }
+    Mod+Ctrl+Home                  { move-column-to-first; }
+    Mod+Ctrl+J                     { move-column-left-or-to-monitor-left; }
+    Mod+Ctrl+K                     { move-column-right-or-to-monitor-right; }
+    Mod+Ctrl+Left                  { move-column-left-or-to-monitor-left; }
+    Mod+Ctrl+Right                 { move-column-right-or-to-monitor-right; }
     Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
-    Mod+D { spawn "xfce4-appfinder" "--disable-server"; }
-    Mod+Down { focus-column-or-monitor-right; }
-    // Mod+Down { move-workspace-down; }
-    Mod+End { focus-column-last; }
-    Mod+Equal { set-column-width "+10%"; }
-    Mod+F { spawn "dolphin"; }
-    Mod+Home { focus-column-first; }
-    Mod+J { focus-column-or-monitor-left; }
-    Mod+K { focus-column-or-monitor-right; }
-    Mod+L { focus-window-up; }
-    Mod+Left { focus-column-or-monitor-left; }
-    Mod+Minus { set-column-width "-10%"; }
-    Mod+Period { expel-window-from-column; }
-    Mod+Q { close-window; }
-    Mod+R { switch-preset-column-width; }
-    Mod+Right { focus-column-or-monitor-right; }
-    Mod+Semicolon { focus-window-down; }
-     Mod+Shift+1 { move-window-to-workspace 1; }
-    Mod+Shift+2 { move-window-to-workspace 2; }
-    Mod+Shift+3 { move-window-to-workspace 3; }
-    Mod+Shift+4 { move-window-to-workspace 4; }
-    Mod+Shift+5 { move-window-to-workspace 5; }
-    Mod+Shift+6 { move-window-to-workspace 6; }
-    Mod+Shift+7 { move-window-to-workspace 7; }
-    Mod+Shift+8 { move-window-to-workspace 8; }
-    Mod+Shift+9 { move-window-to-workspace 9; }
-    Mod+Shift+Ctrl+L allow-when-locked=true { spawn "hyprlock"; }
-    Mod+Shift+E { quit; }
-    Mod+Shift+Equal { set-window-height "+2%"; }
-    Mod+Shift+F { fullscreen-window; }
-    Mod+Shift+Minus { set-window-height "-2%"; }
-    Mod+Shift+R { reset-window-height; }
-    Mod+Shift+Slash { show-hotkey-overlay; }
-    Mod+Tab { focus-workspace-previous; }
-    Mod+G { spawn "ghostty"; }
-    Mod+T { spawn "emacsclient" "--no-wait" "--create-frame" "--eval" "(vterm)"; }
-    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
-    Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
-    Mod+WheelScrollRight      { focus-column-right; }
-    Mod+Ctrl+WheelScrollRight { move-column-right; }
-    Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
+    Mod+Ctrl+WheelScrollDown       cooldown-ms=150 { move-column-right-or-to-monitor-right; }
+    //Mod+Ctrl+WheelScrollDown       cooldown-ms=150 { move-column-to-workspace-down; }
+    Mod+Ctrl+WheelScrollUp         cooldown-ms=150 { move-column-left-or-to-monitor-left; }
+    //Mod+Ctrl+WheelScrollUp         cooldown-ms=150 { move-column-to-workspace-up; }
+    Mod+D                          { spawn "vesktop"; }
+    //Mod+D                          { focus-workspace-up; }
+    Mod+Down                       { focus-column-or-monitor-right; }
+    //Mod+Down                       { move-workspace-down; }
+    Mod+End                        { focus-column-last; }
+    Mod+Equal                      { set-column-width "+10%"; }
+    Mod+F                          { spawn "dolphin"; }
+    Mod+G                          { spawn "ghostty"; }
+    Mod+Home                       { focus-column-first; }
+    Mod+J                          { focus-column-or-monitor-left; }
+    Mod+K                          { focus-column-or-monitor-right; }
+    Mod+L                          { focus-window-up; }
+    Mod+Left                       { focus-column-or-monitor-left; }
+    Mod+Minus                      { set-column-width "-10%"; }
+    Mod+Period                     { expel-window-from-column; }
+    Mod+Q                          { close-window; }
+    Mod+R                          { switch-preset-column-width; }
+    Mod+Right                      { focus-column-or-monitor-right; }
+    Mod+Semicolon                  { focus-window-down; }
+    Mod+Shift+1                    { move-window-to-workspace 1; }
+    Mod+Shift+2                    { move-window-to-workspace 2; }
+    Mod+Shift+3                    { move-window-to-workspace 3; }
+    Mod+Shift+4                    { move-window-to-workspace 4; }
+    Mod+Shift+5                    { move-window-to-workspace 5; }
+    Mod+Shift+6                    { move-window-to-workspace 6; }
+    Mod+Shift+7                    { move-window-to-workspace 7; }
+    Mod+Shift+8                    { move-window-to-workspace 8; }
+    Mod+Shift+9                    { move-window-to-workspace 9; }
+    Mod+Shift+Ctrl+L               allow-when-locked=true { spawn "hyprlock"; }
+    Mod+Shift+E                    { quit; }
+    Mod+Shift+Equal                { set-window-height "+2%"; }
+    Mod+Shift+F                    { fullscreen-window; }
+    Mod+Shift+Minus                { set-window-height "-2%"; }
+    Mod+Shift+R                    { reset-window-height; }
+    Mod+Shift+Slash                { show-hotkey-overlay; }
+    Mod+T                          { spawn "blueman-manager"; }
+    Mod+Tab                        { focus-workspace-previous; }
+    Mod+Up                         { focus-column-or-monitor-left; }
+    Mod+WheelScrollRight           { focus-column-right; }
+    Mod+Ctrl+WheelScrollRight      { move-column-right; }
+    Mod+Ctrl+WheelScrollLeft       { move-column-left; }
     Mod+Shift+WheelScrollDown      { focus-column-right; }
     Mod+Shift+WheelScrollUp        { focus-column-left; }
-    Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }    Mod+Z  {spawn "zotero"; }
-    Mod+WheelScrollLeft       { focus-column-left; }
-    Print { screenshot; }
-    Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
-    Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
-    Shift+XF86MonBrightnessDown allow-when-locked=true { spawn "light" "-U" "1"; }
-    Shift+XF86MonBrightnessUp allow-when-locked=true { spawn "light" "-A" "1"; }
-    Super+Alt+L { spawn "swaylock" "-fFkl" "-c" "#008080"; }
-    Super+B { spawn "emacsclient" "-e" "(niri-go-anywhere-external)"; }
-    XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
-    XF86AudioMicMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
-    XF86AudioMute allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
-    XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
-    XF86MonBrightnessDown allow-when-locked=true { spawn "light" "-U" "5"; }
-    XF86MonBrightnessUp allow-when-locked=true { spawn "light" "-A" "5"; }
-    Mod+Up { focus-column-or-monitor-left; }
-    Mod+BracketLeft  { consume-or-expel-window-left; }
-    Mod+BracketRight { consume-or-expel-window-right; }
-    Mod+WheelScrollDown cooldown-ms=150 { focus-column-or-monitor-right; }
-    Mod+WheelScrollUp cooldown-ms=150 { focus-column-or-monitor-left; }
-    Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-right-or-to-monitor-right; }
-    Mod+Ctrl+WheelScrollUp cooldown-ms=150 { move-column-left-or-to-monitor-left; }
+    Mod+WheelScrollLeft            { focus-column-left; }
+    Mod+WheelScrollUp              cooldown-ms=150 { focus-column-or-monitor-left; }
+    Print                          { screenshot; }
+    Mod+WheelScrollDown            cooldown-ms=150 { focus-workspace-down; }
+    Mod+WheelScrollUp              cooldown-ms=150 { focus-workspace-up; }
+    Shift+XF86MonBrightnessDown    allow-when-locked=true { spawn "light" "-U" "1"; }
+    Shift+XF86MonBrightnessUp      allow-when-locked=true { spawn "light" "-A" "1"; }
+    Super+Alt+L                    { spawn "swaylock" "-fFkl" "-c" "#008080"; }
+    Super+B                        { spawn "nvim" "-e" "(niri-go-anywhere-external)"; }
+    XF86AudioLowerVolume           allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
+    XF86AudioMicMute               allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+    XF86AudioMute                  allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+    XF86AudioRaiseVolume           allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"; }
+    XF86MonBrightnessDown          allow-when-locked=true { spawn "light" "-U" "5"; }
+    XF86MonBrightnessUp            allow-when-locked=true { spawn "light" "-A" "5"; }
+    Mod+WheelScrollDown            cooldown-ms=150 { focus-column-or-monitor-right; }
+    Mod+Z                          {spawn "zotero"; }
 }
+config-notification {
+    disable-failed
+    }
 cursor {
     hide-when-typing
     hide-after-inactive-ms 5000
@@ -149,6 +161,11 @@ environment {
     XDG_SESSION_TYPE "wayland"
     XDG_CURRENT_DESKTOP "niri"
     XDG_SESSION_DESKTOP "niri"
+}
+gestures {
+    hot-corners {
+    off
+    }
 }
 hotkey-overlay {
     hide-not-bound
@@ -183,6 +200,10 @@ input {
         scroll-method "two-finger"
         tap
     }
+    trackpoint {
+    }
+    focus-follows-mouse
+    }
 }
 layer-rule {
     match namespace="^wallpaper$"
@@ -191,14 +212,20 @@ layer-rule {
 layout {
     background-color "transparent"
     border {
+        active-color   "#707070"
+        inactive-color "#d0d0d0"
         off
+        urgent-color   "#cc4444"
+        width 4
+
     }
     center-focused-column "never"
     default-column-width {}
     focus-ring {
+        active-color   "#808080"
         active-gradient from="#cca9e8" to="#f8bcbc" angle=180 in="oklch longer hue"
-        width 1
         inactive-color "#141414"
+        width 2
             }
     gaps 12
     preset-column-widths {
@@ -206,6 +233,14 @@ layout {
         proportion 0.5
         proportion 0.66667
     }
+    shadow {
+        color "#0007"
+	    softness 30
+	    spread 5
+	    offset x=0 y=5
+	}
+    struts {
+	}
 }
 overview {
     zoom 0.5
@@ -213,18 +248,125 @@ overview {
     workspace-shadow {
         color "#00000050"
         off
+        offset x=0 y=10
         softness 40
         spread 10
-        offset x=0 y=10
     }
 }
 prefer-no-csd
 screenshot-path "~/.Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
+spawn-at-startup "dms" "run"
 spawn-at-startup "systemctl --user start xss-lock"
 spawn-at-startup "wpaperd" "-d"
 spawn-at-startup "xrandr --output eDP-1 --primary"
 spawn-at-startup "xwayland-satellite"
+window-rule {
+	open-maximized true
+}
+window-rule {
+	match app-id="ghostty"
+	open-on-workspace "terminal"
+	open-maximized false
+	default-column-width { proportion 0.33333; }
+}
+window-rule {
+	match app-id="app.zen_browser.zen"
+	open-on-workspace "browser"
+}
+window-rule {
+	match app-id=r#"^org\.AyuGram\.desktop$"#
+	exclude app-id=r#"^org\.AyuGram\.desktop$"# title="^Media viewer$"
+	match app-id="vesktop"
+	match app-id="Element"
+	open-on-workspace "social"
+	open-maximized false
+	default-column-width { proportion 0.33333; }
+}
+window-rule {
+	match app-id="neomutt"
+	open-on-workspace "mail"
+}
+window-rule {
+	match app-id="nvim"
+	open-on-workspace "code"
+}
+window-rule {
+	match app-id="steam"
+	open-on-workspace "games"
+}	
+window-rule {
+	match app-id="fsearch"
+	match app-id="org.gnome.NautilusPreviewer"
+	match app-id="zernity"
+	match app-id="org.qbittorrent.qBittorrent"
+	match app-id="org.gnome.Calculator"
+	open-maximized false
+	open-floating true
+}
+window-rule {
+	match app-id=r#"^org\.AyuGram\.desktop$"# title="^Media viewer$"
+	open-fullscreen false
+	open-floating true
+}
+window-rule {
+	match app-id=r#"^org\.wezfurlong\.wezterm$"#
+	default-column-width {}
+}
+window-rule {
+	match app-id=r#"^org\.gnome\."#
+	draw-border-with-background false
+	geometry-corner-radius 12
+	clip-to-geometry true
+}
+window-rule {
+	match app-id=r#"^gnome-control-center$"#
+	match app-id=r#"^pavucontrol$"#
+	match app-id=r#"^nm-connection-editor$"#
+	default-column-width { proportion 0.5; }
+	open-floating false
+}
+window-rule {
+	match app-id=r#"^gnome-calculator$"#
+	match app-id=r#"^galculator$"#
+	match app-id=r#"^blueman-manager$"#
+	match app-id=r#"^org\.gnome\.Nautilus$"#
+	match app-id=r#"^xdg-desktop-portal$"#
+	open-floating true
+}
+window-rule {
+	match app-id=r#"^org\.wezfurlong\.wezterm$"#
+	match app-id="Alacritty"
+	match app-id="zen"
+	match app-id="com.mitchellh.ghostty"
+	match app-id="kitty"
+	draw-border-with-background false
+}
+window-rule { 
+	match is-active=false
+	opacity 0.9
+}
+window-rule {
+	match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+	match app-id="zoom"
+	open-floating true
+}
+window-rule {
+	geometry-corner-radius 12
+	clip-to-geometry true
+}
+	
+workspace "terminal"
+workspace "browser"
+workspace "social"
+workspace "mail"
+workspace "code"
+workspace "games"
+workspace "generic1"
+workspace "generic2"
+workspace "music"
+workspace "windows"
+
 xwayland-satellite {
-    // off
     path "xwayland-satellite"
 }

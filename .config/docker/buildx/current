@@ -1,1 +1,1 @@
-{"Key":"unix:///run/user/1000/docker.sock","Name":"qbuild","Global":false}
+{"Key":"unix:///run/user/1000/docker.sock","Name":"qbuild","Global":true}

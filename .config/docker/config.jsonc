@@ -1,21 +1,34 @@
+// /qompassai/dotfiles/.config/docker/config.jsonc
+// Qompass AI Rootless Docker Config
+// Qompass AI - Nix development environment module
+// Copyright (C) 2025 Qompass AI, All rights reserved
+// Reference: https://docs.docker.com/reference/cli/docker/
 {
-	"auths": {
-		"ghcr.io": {
-			"auth": "cGhhZWRydXNmbG93OmdocF90Q2RNY3hLZ3A0dXRQTmtrTTZubzNVeUE1MXROOW40TkxSd0g="
-		},
-		"https://index.docker.io/v1/": {
-			"auth": "cW9tcGFzczpJQW10aGF0aXMzNDQhIQ=="
-		},
-		"https://index.docker.io/v1/access-token": {
-			"auth": "cGhhZWRydXNmbG93OmV5SmhiR2NpT2lKU1V6STFOaUlzSW5SNWNDSTZJa3BYVkNJc0ltdHBaQ0k2SW5oWWEzQkNkRE55VjNNeVJ5MTFZamxzY0VwbmNTSjkuZXlKb2RIUndjem92TDJoMVlpNWtiMk5yWlhJdVkyOXRJanA3SW1WdFlXbHNJam9pYldGMGRFQmhabXhoWW5NdWFXOGlMQ0p6WlhOemFXOXVYMmxrSWpvaU5UQTFZVEV6WkRFdE5EZG1PQzAwTVRZNExUa3pNR1F0TTJRMllUQXdZV000WVdGbUlpd2ljMjkxY21ObElqb2lZWFYwYURBaUxDSjFjMlZ5Ym1GdFpTSTZJbkJvWVdWa2NuVnpabXh2ZHlJc0luVjFhV1FpT2lKaE5UZGpOelExT1MweU16aGhMVFJtTkRZdE9XWXhaUzFsWmprek5EQTBaREZpTVdVaWZTd2lhWE56SWpvaWFIUjBjSE02THk5c2IyZHBiaTVrYjJOclpYSXVZMjl0THlJc0luTjFZaUk2SW1GMWRHZ3dmR0UxTjJNM05EVTVMVEl6T0dFdE5HWTBOaTA1WmpGbExXVm1PVE0wTURSa01XSXhaU0lzSW1GMVpDSTZXeUpvZEhSd2N6b3ZMMmgxWWk1a2IyTnJaWEl1WTI5dElpd2lhSFIwY0hNNkx5OWtiMk5yWlhJdGNISnZaQzUxY3k1aGRYUm9NQzVqYjIwdmRYTmxjbWx1Wm04aVhTd2lhV0YwSWpveE56UXpOREEyT0RnekxDSmxlSEFpT2pFM05ETTBNVEEwT0RNc0luTmpiM0JsSWpvaWIzQmxibWxrSUc5bVpteHBibVZmWVdOalpYTnpJaXdpWVhwd0lqb2lURFIyTUdSdGJFNUNjRmxWYWtkSFlXSXdRekpLZEdkVVoxaHlNVkY2TkdRaWZRLkNteXYzWnlLdnJjemlTUmx3NUdtMEdyOW1ldkVrZ3M0MFZBaUNzdkRLSWxDYmpSNmRaajFpYWdmVmFndTc2UUN1ckNCMmNnd01Yd2lFcXJJNk84cEpucmNnZXZCSVlnb1ZJakNqU3JSTF9jMzNOUkZFSl8wcUJNcVJrd2MyOHA3c0I0aW1waGt6UUkxYzd5ZzhaVFBsaC1MZ2tjY3F0NkRILUpVbW9wbjRmMHdzWVRqOGVLUmMwa0k2X0loMEpSUlo4ckx4ZUpwaEdDODRQVjdwM25vc3liMFVUZktXcl9aUEY1RVZxVU5KOVVuM1BfODdWMG9PYXgyOC1hZThuVlhGV2sxcTZlSDdSallBYVdLVDNzTEozWnJVX3NxM2s4X3ZiOVNzYWNpUTlvajRlNzRjSVFnMksxMER5aTJFYTJiU214UEJmd3phWldTU0dLM1c1My0zZw=="
-		},
-		"https://index.docker.io/v1/refresh-token": {
-			"auth": "cGhhZWRydXNmbG93OnYxLk1hazVBcXVjcTliX1dnTHBVbk9WNlhsVlhOVHRMdTM4MkFPcWZtZnlJaHM0TmlNazgySmc1SkFKVGNDNllHT2M1b1ljcXdmdllFOW5xbFFFU1ZidVU4Zy4uTDR2MGRtbE5CcFlVakdHYWIwQzJKdGdUZ1hyMVF6NGQ="
-		}
+"auths": {
+	"ghcr.io": {
+		"auth": ""
 	},
-	"plugins": {
-		"compose": {
-			"build": "bake"
-		}
+	"https://index.docker.io/v1/": {
+		"auth": ""
+	},
+	"https://index.docker.io/v1/access-token": {
+		"auth": ""
+	},
+	"https://index.docker.io/v1/refresh-token": {
+		"auth": ""
 	}
+},
+"credsStore": "secretservice",
+"currentContext": "default",
+"detachKeys": "ctrl-e,e",
+"experimental": "enabled",
+"nodesFormat": "table {{.ID}}\t{{.Hostname}}\t{{.Availability}}",
+"plugins": {
+	"compose": {
+		"build": "bake"
+	}
+}
+"pluginsFormat": "table {{.ID}}\t{{.Name}}\t{{.Enabled}}",
+"stackOrchestrator": "swarm",
+
 }
