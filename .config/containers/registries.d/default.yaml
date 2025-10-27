@@ -3,5 +3,5 @@
 # Copyright (C) 2025 Qompass AI, All rights reserved
 #####################################################
 default-docker:
-  lookaside: file:///home/phaedrus/.local/share/containers/sigstore
-  lookaside-staging: file:///home/phaedrus/.local/share/containers/sigstore
+  lookaside: file:///$XDG_DATA_HOME/containers/sigstore
+  lookaside-staging: file:///$XDG_DATA_HOME/containers/sigstore
