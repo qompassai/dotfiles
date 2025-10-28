@@ -51,6 +51,8 @@ booster
 btop
 burp
 byobu
+caches-manager
+caddy
 caja
 caja-actions
 calendar
@@ -61,6 +63,7 @@ cava
 cdi
 cg
 chezmoi
+cifs-utils
 clamav
 clight
 clustershell
@@ -255,6 +258,7 @@ llm
 locale
 login
 loki
+looking-glass
 lostfiles
 lprng
 ltrace
@@ -300,6 +304,8 @@ ndctl.conf.d
 neomutt
 nikto
 nim
+niri
+niriswitcher
 nix
 nixpkgs
 nm
@@ -321,6 +327,7 @@ openmpi
 opensearch
 openvpn
 openxr
+osl
 oss
 overlayroot
 p2pool
@@ -350,6 +357,7 @@ piper-tts
 pipewire
 pipewire.conf.d
 pkcs11
+pkgbrowser
 plan9
 playwright
 pnpm
@@ -360,6 +368,7 @@ postfix
 postfix-mysql
 postfix-psql
 postfix-sqlite
+postfwd
 postsqlforms
 postsrsd
 povray
@@ -409,6 +418,7 @@ smartreboot
 sops
 speech-dispatcher
 sql-formatter
+srp
 sshesame
 sshguard
 sshuttle
@@ -484,6 +494,7 @@ wpg
 wsl
 x11
 xapsd
+xattr
 xcb
 xdg
 xdg-desktop-portal
@@ -498,6 +509,7 @@ yamlls
 yass
 yay
 zabbix
+zathura
 zeronet
 zfs
 zig

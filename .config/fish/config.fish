@@ -11,7 +11,7 @@ end
 if command -q zoxide
     zoxide init fish | source
 end
-set -Ux fish_user_paths $HOME/.local/bin $fish_user_paths
+#set -Ux fish_user_paths $HOME/.local/bin $fish_user_paths
 set fish_function_path $fish_function_path ~/.local/share/omf/pkg/foreign-env/functions
 abbr -a rm 'rm -Iv'
 abbr -a cp 'cp -iv'
@@ -19,14 +19,5 @@ abbr -a mv 'mv -iv'
 abbr -a gpu 'watch -n 1 nvidia-smi'
 set -x PATH $HOME/.dotnet $PATH
 set -x DOTNET_ROOT $HOME/.dotnet
-
-
-
-
-# BEGIN opam configuration
-# This is useful if you're using opam as it adds:
-#   - the correct directories to the PATH
-#   - auto-completion for the opam binary
-# This section can be safely removed at any time if needed.
 test -r '/home/phaedrus/.opam/opam-init/init.fish' && source '/home/phaedrus/.opam/opam-init/init.fish' > /dev/null 2> /dev/null; or true
 # END opam configuration

@@ -56,15 +56,22 @@
                 docker
                 fuzzel
                 git
+                hyprland
+                icecream
                 limine
                 neovim
                 nyx
+                postfix
                 python3
                 rage
                 rkhunter
                 vesktop
+                xdg-dbus-proxy
                 xdg-desktop-portal
                 xdg-desktop-portal-hyprland
+                xdg-ninja
+                xdg-user-dirs
+                xdg-utils
                 wine
                 wireguard
                 zathura

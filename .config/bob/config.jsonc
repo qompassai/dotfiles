@@ -4,5 +4,13 @@
 /////////////////////////////////////////////////////
 
 {
-  "add_neovim_binary_to_path": true
+    "add_neovim_binary_to_path": true,
+  "downloads_location": "$XDG_DATA_HOME/bob",
+     "enable_nightly_info": true,
+   "enable_release_build": true,
+    "github_mirror": "https://github.com",
+   "ignore_running_instances": false,
+   "installation_location": "$XDG_DATA_HOME/bob/nvim-bin",
+   "rollback_limit": 3,
+  "version_sync_file_location": "$XDG_CONFIG_HOME/nvim/nvim.version",
 }

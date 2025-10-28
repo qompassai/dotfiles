@@ -17,7 +17,6 @@ no-cgroups = true
 path = "/usr/bin/nvidia-container-cli"
 #root = "/run/nvidia/driver"
 #user = "root:video"
-
 [nvidia-container-runtime]
 #debug = "/var/log/nvidia-container-runtime.log"
 log-level = "info"
@@ -25,18 +24,14 @@ mode = "auto"
 runtimes = ["docker-runc", "runc", "crun"]
 
 [nvidia-container-runtime.modes]
-
 [nvidia-container-runtime.modes.cdi]
 annotation-prefixes = ["cdi.k8s.io/"]
 default-kind = "nvidia.com/gpu"
 spec-dirs = ["home/phaedrus/.config/cdi", "/etc/cdi", "/var/run/cdi"]
-
 [nvidia-container-runtime.modes.csv]
 mount-spec-path = "/etc/nvidia-container-runtime/host-files-for-container.d"
-
 [nvidia-container-runtime-hook]
 path = "nvidia-container-runtime-hook"
 skip-mode-detection = false
-
 [nvidia-ctk]
 path = "nvidia-ctk"
