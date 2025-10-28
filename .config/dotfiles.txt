@@ -113,6 +113,7 @@ dnsmasq
 dnssec-tools
 docker
 dolphin
+dosbox
 dotfiles.txt
 doublecmd
 dovecot
