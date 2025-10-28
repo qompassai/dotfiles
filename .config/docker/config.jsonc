@@ -4,31 +4,30 @@
 // Copyright (C) 2025 Qompass AI, All rights reserved
 // Reference: https://docs.docker.com/reference/cli/docker/
 {
-"auths": {
-	"ghcr.io": {
-		"auth": ""
-	},
-	"https://index.docker.io/v1/": {
-		"auth": ""
-	},
-	"https://index.docker.io/v1/access-token": {
-		"auth": ""
-	},
-	"https://index.docker.io/v1/refresh-token": {
-		"auth": ""
-	}
-},
-"credsStore": "secretservice",
-"currentContext": "default",
-"detachKeys": "ctrl-e,e",
-"experimental": "enabled",
-"nodesFormat": "table {{.ID}}\t{{.Hostname}}\t{{.Availability}}",
-"plugins": {
-	"compose": {
-		"build": "bake"
-	}
-}
-"pluginsFormat": "table {{.ID}}\t{{.Name}}\t{{.Enabled}}",
-"stackOrchestrator": "swarm",
-
+  "auths": {
+    "ghcr.io": {
+      "auth": ""
+    },
+    "https://index.docker.io/v1/": {
+      "auth": ""
+    },
+    "https://index.docker.io/v1/access-token": {
+      "auth": ""
+    },
+    "https://index.docker.io/v1/refresh-token": {
+      "auth": ""
+    }
+  },
+  "credsStore": "secretservice",
+  "currentContext": "default",
+  "detachKeys": "ctrl-e,e",
+  "experimental": "enabled",
+  "nodesFormat": "table {{.ID}}\t{{.Hostname}}\t{{.Availability}}",
+  "plugins": {
+    "compose": {
+      "build": "bake"
+    }
+  },
+  "pluginsFormat": "table {{.ID}}\t{{.Name}}\t{{.Enabled}}",
+  "stackOrchestrator": "swarm"
 }
