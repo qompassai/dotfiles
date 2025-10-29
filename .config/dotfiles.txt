@@ -123,6 +123,7 @@ draw.io
 drbl
 drcom
 dri
+drirc.d
 dropbear
 drpcm
 dufs
@@ -169,6 +170,7 @@ fuzzel
 fvm
 fwupd
 gai
+gamescope
 ganesha
 gconf
 gdb
@@ -204,7 +206,6 @@ hatch
 headlines
 healthd
 herald
-heroic
 hf
 hfdownloader.json
 highlight
@@ -215,6 +216,7 @@ hwinfo
 hydra
 hypnotix
 hypr
+hyprlux
 i2pd
 ibus
 icecream
@@ -224,6 +226,7 @@ ieamaudioplugins
 iemaudioplugins
 imagemagick-7
 imv
+infiniband-diags
 init.d
 inkscape
 inwx
