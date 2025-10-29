@@ -1,0 +1,11 @@
+# /qompassai/dotfiles/.config/taplo/taplo.toml
+# Qompass AI Taplo Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+# ###################################################
+include = [
+  "**/*.toml",
+  "~/.config/**/*.toml",
+  "/etc/xdg/**/*.toml",
+  "/usr/share/xdg/**/*.toml",
+  "/root/.config/**/*.toml"
+]
