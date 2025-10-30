@@ -188,7 +188,7 @@ input {
          scroll-method "no-scroll"
     }
     touchpad {
-         // off
+     
         accel-profile "flat"
         accel-speed 0.2
         disabled-on-external-mouse
@@ -197,12 +197,13 @@ input {
         dwtp
         drag-lock
         natural-scroll
+        //off
         scroll-method "two-finger"
         tap
     }
     trackpoint {
     }
-    focus-follows-mouse
+    focus-follows-mouse max-scroll-amount="0%"
     }
 }
 layer-rule {
@@ -257,10 +258,17 @@ prefer-no-csd
 screenshot-path "~/.Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
 spawn-at-startup "dms" "run"
+spawn-at-startup "systemctl" "--user" "start" "pipewire"
+spawn-at-startup "systemctl" "--user" "start" "wireplumber"
+spawn-at-startup "systemctl" "--user" "start" "pipewire-pulse"
 spawn-at-startup "systemctl --user start xss-lock"
 spawn-at-startup "wpaperd" "-d"
 spawn-at-startup "xrandr --output eDP-1 --primary"
 spawn-at-startup "xwayland-satellite"
+window-rule {
+    match app-id="blueman-manager"
+    open-floating true
+}
 window-rule {
 	open-maximized true
 }
