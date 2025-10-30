@@ -1,60 +1,147 @@
-# ~/.config/discordo/config.toml
-# ------------------------------
+# /qompassai/dotfiles/.config/discordo/config.toml
+# Qompass AI Discordo Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+# References:
+# https://github.com/ayn2op/discordo/blob/main/internal/config/config.toml
+# https://pkg.go.dev/github.com/ayntgl/discordo#section-readme
 
-[discord]
-
-mouse = true
-editor = "nvim"
-hide_blocked_users = true
-show_attachment_links = true
-messages_limit = 50
-compact_mode = false
-disable_rich_presence = true
-auto_reconnect = true
-auto_scroll = true
-
-[identify]
-status = "online"
-browser_version = "123.0.0"
-user_agent = "Discordo/1.0"
+[advanced]
+cache_dir = "~/.cache/discordo"
+cache_messages = true
+debug_mode = true
+log_level = "info"
 
 [appearance]
-timestamps = true
-show_user_badges = true
 show_separators = true
+show_user_badges = true
+timestamps = true
+
+[discord]
+autocomplete_limit = 20
+auto_reconnect = true
+auto_scroll = true
+compact_mode = false
+dm_only = false
+disable_rich_presence = true
+editor = "nvim"
+guilds_limit = 10
+hide_blocked_users = true
+markdown = true
+messages_limit = 50
+mouse = true
+order_guilds_alphabetically = true
+show_attachment_links = true
+show_typing_indicators = true
+status = "online"
+token = "$(pass show discordo/token)"
+
+[display]
+image_viewer = "imv"
+
+[identify]
+browser_version = "123.0.0"
+show_typing_indicators = true
+status = "online"
+user_agent = "Discordo/1.0"
+
+[keys]
+down = "j"
+edit_message = "e"
+focus_message_input = "i"
+help = "?"
+next_channel = "<Tab>"
+previous_channel = "<S-Tab>"
+quit = "q"
+scroll_down = "<C-d>"
+scroll_up = "<C-u>"
+send_message = "<Enter>"
+up = "k"
+
+[keys.guilds_tree]
+collapse_parent_node = "Rune[-]"
+move_to_parent_node = "Rune[p]"
+select_current = "Enter"
+select_first = "Rune[g]"
+select_last = "Rune[G]"
+select_next = "Rune[j]"
+select_previous = "Rune[k]"
+yank_id = "Rune[i]"
+
+[keys.message_input]
+cancel = "Esc"
+open_editor = "Ctrl+E"
+open_file_picker = "Ctrl+\\"
+paste = "Ctrl+V"
+send = "Enter"
+tab_complete = "Tab"
+
+[keys.messages_list]
+cancel = "Esc"
+delete = "Rune[D]"
+delete_confirm = "Rune[d]"
+edit = "Rune[e]"
+open = "Rune[o]"
+reply = "Rune[r]"
+reply_mention = "Rune[R]"
+select_first = "Rune[g]"
+select_last = "Rune[G]"
+select_next = "Rune[j]"
+select_previous = "Rune[k]"
+select_reply = "Rune[s]"
+yank_content = "Rune[y]"
+yank_id = "Rune[i]"
+yank_url = "Rune[u]"
+
+[keys.mentions_list]
+down = "Ctrl+N"
+up = "Ctrl+P"
 
 [notifications]
-enabled = true
 duration = 500
+enabled = true
+hide_blocked_users = true
+show_attachment_links = true
 
 [notifications.sound]
 enabled = true
 only_on_ping = true
 
-[advanced]
-debug_mode = true
-log_level = "info"
-cache_messages = true
-cache_dir = "~/.cache/discordo"
-
-[keys]
-up = "k"
-down = "j"
-send_message = "<Enter>"
-edit_message = "e"
-quit = "q"
-help = "?"
-focus_message_input = "i"
-next_channel = "<Tab>"
-previous_channel = "<S-Tab>"
-scroll_up = "<C-u>"
-scroll_down = "<C-d>"
+[timestamps]
+enabled = true
+format = "3:04PM"
 
 [theme]
 background = "#282828"
 foreground = "#ebdbb2"
 highlight = "#fabd2f"
 
-[display]
-image_viewer = "imv"
+[theme.border]
+active_set = "round"
+active_style = { foreground = "green", attributes = "bold" }
+enabled = true
+normal_set = "round"
+normal_style = { attributes = "dim" }
+padding = [0, 0, 1, 1]
+
+[theme.guilds_tree]
+auto_expand_folders = true
+graphics = true
+graphics_color = "default"
+
+[theme.messages_list]
+attachment_style = { foreground = "yellow" }
+emoji_style = { foreground = "green" }
+forwarded_indicator = "<"
+mention_style = { foreground = "blue" }
+reply_indicator = ">"
+url_style = { foreground = "blue" }
+
+[theme.mentions_list]
+max_height = 0
+min_width = 20
+
+[theme.title]
+active_style = { foreground = "green", attributes = "bold" }
+alignment = "left"
+normal_style = { attributes = "dim" }

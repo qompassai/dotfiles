@@ -206,6 +206,7 @@ hatch
 headlines
 healthd
 herald
+heroic
 hf
 hfdownloader.json
 highlight
@@ -216,9 +217,10 @@ hwinfo
 hydra
 hypnotix
 hypr
-hyprlux
+i2pchat
 i2pd
 ibus
+icaclient
 icecream
 icegrid
 icmake
@@ -438,6 +440,7 @@ swiftpm
 sysctl.d
 systemd
 tailwind
+taplo
 tarsnap
 tcppc
 tenacity
