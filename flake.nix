@@ -41,23 +41,213 @@
           in
           {
             userEnvironment = pkgs.buildEnv {
-              name = "qompass-user-environment";
               paths = with pkgs; [
+                abuild
+                acpi
+                ags
+                akvcam
+                alsa
+                alsacontrol
+                alvr
+                amsynth
+                anacrontab
+                android-studio
+                ansible-bundler
                 ant
+                anthy
+                anubis
+                apparmor
+                appimagelauncher
+                apt-swarm
+                archive
+                ardour8
+                aria2
+                arrpc
+                arti
+                asd
+                astro
+                astroid
+                audacity
+                audiovitamins
+                audit
+                babeld
+                bacon
+                baloo
+                basedpyright
+                bash
+                bauerbill
+                bauh
+                bemenu
+                berg-cli
+                biome
+                biometric-auth
+                bird
+                blacklist-script
+                blender
+                blendnet
+                bluetooth
+                bob
+                bogofilter
+                booster
+                btop
                 burp
+                byobu
+                caches-manager
+                caddy
                 caja
+                caja-actions
+                calendar
                 carbonyl
+                cardinal
+                cargo
                 cava
+                cdi
+                cg
                 clamav
+                clight
+                clustershell
+                cmake
+                cmrt
+                code
+                conda
+                configstore
                 composer
                 connman
+                containers
+                couchdb
+                coursier
+                cowrie
+                create-next-app-nodejs
+                css
+                csync2
+                cuda
+                cvechecker
+                datomic
+                dbeaver
+                dbus-1
+                depot_tools
+                dhtcluster
+                dict
+                diffuser
+                dillo
+                dirsrv
+                discord-irc
                 discordo
+                discover_overlay
+                displaycal
                 distcc
+                dleyna
                 docker
+                dxvk
+                e2scrub
+                easyeffects
+                editorconfig
+                egl
+                enscript
+                eslint
+                f3d
+                fakechroot
+                fastfetch
+                fauxnix
+                fcitx
+                fcitx5
+                fern-wifi-cracker
+                ffmpeg
+                ffmulticonverter
+                fftrate
+                fig2ps
+                firebuild
+                firejail
+                fish
+                flakehub
+                flexiblasrc.d
+                flipper
+                flutter
+                fontconfig
+                fonts
+                foot
+                fop
+                foremost
+                forgejo
+                forgejo-runner
+                fpc
+                fprintd
+                fstab
+                fuse
                 fuzzel
+                fvm
+                fwupd
+                gai
+                gamescope
+                ganesha
+                gconf
+                gdb
+                gdnsd
+                gh
+                ghidra
+                ghostty
+                gimp
                 git
+                githooks
+                github
+                gitlab-container-registry
+                glusterfs
+                gnunet
+                gnuradio
+                gnutls
+                godot
+                goffice
+                greetd
+                grekllm
+                grub.d
+                gss
+                gsu
+                gtk-2
+                .0
+                gtk-3
+                .0
+                gtk-4
+                .0
+                gtk-engines
+                gufetch
+                gummi
+                guvcview2
                 hyprland
                 icecream
+                icegrid
+                icmake
+                ieamaudioplugins
+                imagemagick-7
+                imv
+                infiniband-diags
+                infnoise
+                inkscape
+                input
+                inputplumber
+                input-remapper
+                inspircd
+                intel
+                intelpwm
+                intel-undervolt
+                inwx
+                ipmi
+                ipp-usb
+                ipsec
+                ipython
+                irker
+                irssi
+                isns
+                iwd
+                java-jdk
+                jcryptool
+                jellyfin
+                jflash
+                jgit
+                jitsi-meet-desktop
+                jj
+                john
+                julia
+                jupyter
                 limine
                 neovim
                 nyx
