@@ -229,8 +229,10 @@ iemaudioplugins
 imagemagick-7
 imv
 infiniband-diags
+infnoise
 init.d
 inkscape
+input
 inwx
 ipython
 iwd

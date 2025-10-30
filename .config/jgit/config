@@ -1,0 +1,7 @@
+# /qompassai/dotfiles/.config/jgit/config
+# Qompass AI JGit Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#####################################################
+[filesystem "Arch Linux|17.0.14|/dev/nvme1n1p2"]
+	timestampResolution = 4189 nanoseconds
+	minRacyThreshold = 0 nanoseconds

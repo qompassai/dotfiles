@@ -1,0 +1,36 @@
+# /qompassai/dotfiles/.config/ipmi/ipmisim1.conf
+# Qompass AI Ipmi Ipmisim1 Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+mc_setbmc 0x20
+mc_add 0x20 0 no-device-sdrs 0x23 9 8 0x9f 0x1291 0xf02 persist_sdr
+sel_enable 0x20 1000 0x0a
+sensor_add 0x20 0 0 35 0x6f event-only
+sensor_set_event_support 0x20 0 0 enable scanning per-state \
+	000000000001111 000000000000000 \
+	000000000001111 000000000000000
+
+sensor_add 0x20 0 1 0x01 0x01
+sensor_set_value 0x20 0 1 0x60 0
+sensor_set_threshold 0x20 0 1 settable 111000 0xa0 0x90 0x70 00 00 00
+sensor_set_event_support 0x20 0 1 enable scanning per-state \
+	000111111000000 000111111000000 \
+	000111111000000 000111111000000
+sensor_add 0x20 0 2 37 0x6f
+sensor_set_bit_clr_rest 0x20 0 2 1 1
+#sensor_set_bit_clr_rest 0x20 0 2 0 1
+sensor_set_event_support 0x20 0 2 enable scanning per-state \
+	000000000000011 000000000000011 \
+	000000000000011 000000000000011
+mc_add_fru_data 0x30 3 128 data 0
+mc_add 0x30 2 no-device-sdrs 0x98 0x10 1 0xa0 0x1291 0xf03
+
+sensor_add 0x30 0 1 0x01 0x01
+sensor_add 0x30 0 1 0x01 0x01 poll 1000 file "/tmp/file1.ipm"
+sensor_set_threshold 0x30 0 1 settable 111000 0xa0 0x90 0x70 00 00 00
+sensor_set_event_support 0x30 0 1 enable scanning per-state \
+	000111111000000 000111111000000 \
+	000111111000000 000111111000000
+
+mc_enable 0x30
+mc_enable 0x20
