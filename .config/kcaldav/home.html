@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<!--
+ /qompassai/dotfiles/.config/kcaldav/home.html
+// Qompass AI KCaldav Home Html Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+-->
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta charset="utf-8" /> 
+		<title>kcaldav: home</title>
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" />
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css" />
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="/kcaldav/style.css" />
+		<script src="/kcaldav/home.min.js"></script>
+	</head>
+	<body onload="load();">
+		<section id="loggedout" class="hide">
+			<p>
+				The nonce for this HTTP-authorised session has been deleted.
+				To complete your logout, you'll need to close the browser window to destroy your credentials.
+			</p>
+		</section>
+		<section id="loading">
+			<p>
+				<i class="fa fa-spin fa-spinner"></i> Loading <i>k</i>CalDAV...
+			</p>
+		</section>
+		<section id="loaded" class="hide">
+			<header>
+				<div>
+					<h1>
+						CalDAV
+						<span class="bigonly">Management</span>
+					</h1><nav>
+						<a href="#" onclick="logout();">logout</a>
+					</nav>
+				</div>
+			</header>
+			<article>
+				<p>
+					Welcome, <span class="kcalendar-field kcalendar-principal-name"></span>.
+					Your principal has <span class="kcalendar-field kcalendar-principal-quota-used"></span> used and <span
+						class="kcalendar-field kcalendar-principal-quota-avail"></span> available.
+					<span id="insecure">
+						This connection is <strong>not secure</strong>, so consider that your password hash is being sent in the clear!
+					</span>
+				</p>
+				<section>
+					<h2>
+						Your CalDAV Address
+					</h2>
+					<p>
+						Point your calendar client to this address.
+					</p>
+					<ul>
+						<li>
+							<span class="kcalendar-principal-uri"></span>
+						</li>
+					</ul>
+					<aside>
+						Note: some clients (e.g., <a href="https://www.mozilla.org/en-US/projects/calendar/">Lightning Calendar</a>) may
+						not be able to use this address.  
+						Instead, you'll need to specify the full URL of each individual calendar.
+					</aside>
+					<h3>
+						Reverse CalDAV Proxies
+					</h3>
+					<p>
+						These principals have given you access to their calendars.
+					</p>
+					<ul class="kcalendar-principal-rproxies">
+						<li>
+							<span class="kcalendar-rproxy-uri"></span>
+							<span title="Read Access" class="kcalendar-rproxy-read"><i class="fa fa-search"></i></span>
+							<span title="Write Access" class="kcalendar-rproxy-write"><i class="fa fa-pencil"></i></span>
+						</li>
+					</ul>
+					<ul class="kcalendar-principal-norproxies">
+						<li>
+							<i>You have not been granted any proxies.</i>
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h2>
+						Your CalDAV Calendars
+					</h2>
+					<ul class="kcalendar-principal-colns">
+						<li>
+							<a class="kcalendar-coln-uri"></a>
+						</li>
+					</ul>
+					<ul class="kcalendar-principal-nocolns">
+						<li>
+							<i>You have no calendars.</i>
+						</li>
+					</ul>
+					<p>
+						Add new calendar by specifying the file-system name.
+						This must conform to <a href="https://tools.ietf.org/html/rfc3986">RFC 3986, 3.3</a> and be less than 256 bytes in length.
+					</p>
+					<p class="newcoln-error error hide" id="newcoln-error-form">
+						Collection name must be a valid path component, or collection already exists.
+					</p>
+					<p class="newcoln-error error hide" id="newcoln-error-sys">
+						System failure when creating collection.
+					</p>
+					<form class="pure-form" action="/cgi-bin/kcaldav/newcoln.json" method="post" onsubmit="return(newcoln(this));">
+						<input name="path" type="text" required="required" />
+						<button id="newcoln-btn" type="submit" class="pure-button pure-button-primary">
+							<i class="fa fa-fw fa-folder-o"></i> 
+							<span class="bigonly">Add</span>
+						</button>
+						<button id="newcoln-pbtn" type="submit" class="hide pure-button pure-button-primary">
+							<i class="fa fa-fw fa-spin fa-spinner"></i> 
+							<span class="bigonly">Adding...</span>
+						</button>
+					</form>
+				</section>
+				<section>
+					<h2>
+						Your E-mail Address
+					</h2>
+					<p class="setemail-error error hide" id="setemail-error-form">
+						Malformed or missing e-mail address, or e-mail already exists.
+					</p>
+					<p class="setemail-error error hide" id="setemail-error-sys">
+						A system error occurred.
+					</p>
+					<form class="pure-form" action="/cgi-bin/kcaldav/setemail.json" method="post" onsubmit="return(setemail(this));">
+						<input class="kcalendar-principal-email" name="email" type="email"/>
+						<button id="setemail-btn" type="submit" class="pure-button pure-button-primary">
+							<i class="fa fa-fw fa-envelope-o"></i> 
+							<span class="bigonly">Change</span>
+						</button>
+						<button id="setemail-pbtn" type="submit" class="hide pure-button pure-button-primary">
+							<i class="fa fa-fw fa-spin fa-spinner"></i> 
+							<span class="bigonly">Changing...</span>
+						</button>
+					</form>
+				</section>
+				<section>
+					<h2>
+						Your Password
+					</h2>
+					<p>
+						Your password will be MD5-hashed before being passed to the server.
+						You'll be logged out if you change your password.
+					</p>
+					<p class="setpass-error error hide" id="setpass-error-form">
+						Password not hashed properly?
+					</p>
+					<p class="setpass-error error hide" id="setpass-error-sys">
+						A system error occurred.
+					</p>
+					<form class="pure-form" action="/cgi-bin/kcaldav/setpass.json" method="post" onsubmit="return(setpass(this));">
+						<input placeholder="Password" type="password" onkeyup="updateHash(this);" />
+						<button id="setpass-btn" type="submit" class="pure-button pure-button-primary">
+							<i class="fa fa-fw fa-lock"></i> 
+							<span class="bigonly">Change</span>
+						</button>
+						<button id="setpass-pbtn" type="submit" class="hide pure-button pure-button-primary">
+							<i class="fa fa-fw fa-spin fa-spinner"></i> 
+							<span class="bigonly">Changing...</span>
+						</button>
+						<span class="bigonly">
+							<input name="pass" id="password" type="text" readonly="readonly" />
+						</span>
+					</form>
+				</section>
+				<section>
+					<h2>
+						Your Proxies
+					</h2>
+					<ul class="kcalendar-principal-proxies">
+						<li>
+							<form class="kcalendar-proxy-delete" action="/cgi-bin/kcaldav/delproxy.json" method="post"
+							 onsubmit="return(delproxy(this));" class="pure-form">
+								<span class="kcalendar-proxy-read"><i class="fa fa-search"></i></span>
+								<span class="kcalendar-proxy-write"><i class="fa fa-pencil"></i></span>
+								<a class="kcalendar-proxy-email"></a>
+								<input type="hidden" name="email" class="kcalendar-proxy-email-value" />
+								<button class="btn pure-button pure-button-primary" type="submit">
+									<i class="fa fa-fw fa-remove"></i>
+									Delete
+								</button>
+								<button class="pbtn hide pure-button pure-button-primary" type="button" disabled="disabled">
+									<i class="fa fa-fw fa-delete fa-spin fa-spinner"></i>
+									Delete
+								</button>
+							</form>
+						</li>
+					</ul>
+					<ul class="kcalendar-principal-noproxies">
+						<li>
+							<i>You have not granted any proxies.</i>
+						</li>
+					</ul>
+					<p>
+						Enter the e-mail address of a system user to grant them 
+						<i class="fa fa-pencil"></i> read-write or
+						<i class="fa fa-search"></i> read-only proxy permissions.
+						(This is <q>delegation</q> in the terms of 
+						<a href="https://github.com/apple/ccs-calendarserver/blob/master/doc/Extensions/caldav-proxy.txt">
+							caldav-proxy.txt</a>.)
+						If a proxy already exists for the principal, it is updated.
+						Otherwise it is created.
+					</p>
+					<p class="modproxy-error error hide" id="modproxy-error-form">
+						Requested user does not exist.
+					</p>
+					<p class="modproxy-error error hide" id="modproxy-error-sys">
+						A system error occurred.
+					</p>
+					<form id="modproxy" class="pure-form" action="/cgi-bin/kcaldav/modproxy.json" method="post" onsubmit="return(modproxy(this));">
+						<input placeholder="User" type="email" name="email" required="required" />
+						<label for="modproxy-read" class="pure-radio">
+							<i class="fa fa-search"></i>
+							<input id="modproxy-read" type="radio" name="bits" value="1" required="required" />
+						</label>
+						<label for="modproxy-write" class="pure-radio">
+							<i class="fa fa-pencil"></i>
+							<input id="modproxy-write" type="radio" name="bits" value="2" required="required" />
+						</label>
+						<button id="modproxy-btn" type="submit" class="pure-button pure-button-primary">
+							<i class="fa fa-fw fa-user"></i> 
+							<span class="bigonly">Grant</span>
+						</button>
+						<button id="modproxy-pbtn" type="submit" class="hide pure-button pure-button-primary">
+							<i class="fa fa-fw fa-spin fa-spinner"></i> 
+							<span class="bigonly">Granting...</span>
+						</button>
+					</form>
+				</section>
+			</article>
+			<footer>
+				<a href="https://kristaps.bsd.lv/kcaldav"><i>k</i>CalDAV</a> version 0.2.5
+			</footer>
+		</section>
+	</body>
+</html>

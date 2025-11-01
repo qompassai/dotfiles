@@ -260,7 +260,11 @@ jj
 john
 julia
 jupyter
+kactivitymanager
 karma
+kcaldav
+kde.org
+kea
 keepalived
 keycloak
 khal
@@ -291,6 +295,7 @@ lua
 luacheck
 luarocks
 lynx
+lyx
 mail
 mailcap
 makepkg.conf.d

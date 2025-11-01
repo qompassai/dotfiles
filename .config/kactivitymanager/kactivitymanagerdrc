@@ -1,0 +1,9 @@
+# /qompassai/dotfiles/.config/kactivitymanager/kactivitymanagerdrc
+# Qompass AI KActivityManager Daemon Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+[activities]
+61633623-841d-4933-b386-1b55f0e56f54=Default
+
+[main]
+currentActivity=61633623-841d-4933-b386-1b55f0e56f54
