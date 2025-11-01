@@ -1,0 +1,6 @@
+# /qompassai/dotfiles/.config/kdedefaults/plasmarc
+# Qompass AI kdedefaults Plasma Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##############################################################
+[Theme]
+name=default
