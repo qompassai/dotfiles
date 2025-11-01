@@ -1,0 +1,16 @@
+# /qompassai/dotfiles/.config/metasploit/database.yml.github_actions
+# Qompass AI Metasploit Database Vagrant GH Actions Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+ customize `conifg/database.yml.example`
+development: &pgsql
+  adapter: postgresql
+  database: metasploit_framework_development
+  host: localhost
+  username: "$(pass show metasploit/pgu)"
+  password: "$(pass show metasploit/pgp)"
+  pool: 25
+  timeout: 5
+test:
+  <<: *pgsql
+  database: metasploit_framework_test
