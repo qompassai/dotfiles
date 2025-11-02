@@ -1,0 +1,40 @@
+// /qompassai/dotfiles/.config/yay/config.jsonc
+// Qompass AI Yay Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+  "answerclean": false,
+  "aururl": "https://aur.archlinux.org",
+  "batchInstall": false,
+  "buildDir": "$XDG_CACHE_HOME/yay",
+  "cleanAfter": false,
+  "cleanmenu": false,
+  "combinedUpgrade": true,
+  "devel": false,
+  "diff": false,
+  "editor": "",
+  "editorFlags": "",
+  "gpgflags": "",
+  "makepkg": "makepkg",
+  "mflags": "",
+  "noBatchInstall": false,
+  "nocombinedUpgrade": false,
+  "noconfirm": false,
+  "pacman": "pacman",
+  "pacmanconf": "",
+  "pgpfetch": true,
+  "rebuildtree": false,
+  "removemake": false,
+  "save": false,
+  "searchByName": false,
+  "show": false,
+  "sortByPopularity": false,
+  "sortByVotes": false,
+  "sudo": "sudo",
+  "sudoflags": "",
+  "sudoloop": false,
+  "upgradeMenu": true,
+  "upgradeOverride": false,
+  "useask": false
+}
+

@@ -71,6 +71,7 @@ cmake
 cmrt
 code
 code - oss
+codex
 composer
 conda
 conf
@@ -320,15 +321,18 @@ markdown
 matplotlib
 matrix-appservice-irc
 maven
-mbuffer
 mcontrolcenter
 mcp
 mcproxy
 mdadm
+meilisearch
 menus
 mercurial
 meson
 metabase
+metasploit
+mft
+mgetty+sendfax
 mime
 mimir
 miniflux
@@ -336,12 +340,14 @@ minio
 mirotalk
 mke2fs
 mkinitcpio.d
+mkpxelinux
 mock
 modprobe.d
 modulefiles
 modules
 modules-load.d
 msmtp
+mtools
 mypaint
 n2n
 n8n
