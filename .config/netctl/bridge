@@ -1,0 +1,11 @@
+# /qompassai/dotfiles/.config/netctl/bridge
+# Qompass AI NetCtl Bridge Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+Description="Qompass AI Bridge connection"
+Interface=br0
+Connection=bridge
+BindsToInterfaces=(eth0 eth1 tap0)
+#MACAddress=eth1
+IP=dhcp
+SkipForwardingDelay=yes

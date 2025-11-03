@@ -1,0 +1,45 @@
+// /qompassai/dotfiles/.config/nextjs-nodejs/config.jsonc
+// Qompass AI NextJS-NodeJS Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////
+{
+  "api": {
+    "baseUrl": "https://api.example.com",
+    "timeout": 8000,
+    "corsEnabled": true
+  },
+  "build": {
+    "outputDir": ".next",
+    "minify": true,
+    "target": "server"
+  },
+  "env": {
+    "NODE_ENV": "development",
+    "NEXT_PUBLIC_CUSTOM": "value"
+  },
+  "features": {
+    "enableExperimental": true,
+    "enableDarkMode": true
+  },
+  "images": {
+    "domains": ["images.example.com", "cdn.example.org"],
+    "formats": ["image/webp", "image/avif"],
+    "quality": 85
+  },
+  "logging": {
+    "level": "info",
+    "tracing": false
+  },
+  "telemetry": {
+    "notifiedAt": "1742692270510",
+    "anonymousId": "ae0e33a8c91edbfb28b9dd478645c16b19a9b3ca44045682188de878a9e687fd",
+    "salt": "d3824b50e7b8ebde4da05ea3f025c371",
+    "enabled": true
+  },
+  "ui": {
+    "theme": "system",
+    // Default font family for UI
+    "fontFamily": "Fira Code"
+  }
+}
+

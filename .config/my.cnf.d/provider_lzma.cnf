@@ -1,0 +1,7 @@
+# /qompassai/dotfiles/.config/my.cnf.d/provider_lzma.cnf
+# Qompass AI My.Cnf.d Lzma Provider Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+[server]
+plugin_load_add=provider_lzma
+provider_lzma=force_plus_permanent

@@ -1,0 +1,16 @@
+# /qompassai/dotfiles/.config/my.cnf.d/hashcorp_key_management.preset
+# Qompass AI My.Cnf.d HashiCorp Key Management Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+[mariadb]
+plugin-load-add=hashicorp_key_management.so
+hashicorp-key-management-vault-url="<url>"
+hashicorp-key-management-token="$(mariadb/hashitoken)"
+hashicorp-key-management-vault-ca="$(pass show mariadb/hashivca)"
+hashicorp-key-management-timeout=15
+hashicorp-key-management-retries=3
+hashicorp-key-management-caching-enabled="on"
+hashicorp-key-management-use-cache-on-timeout="off"
+hashicorp-key-management-cache-timeout=0
+#hashicorp-key-management-cache-version-timeout=0
+hashicorp-key-management-check-kv-version=on

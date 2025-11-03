@@ -1,0 +1,9 @@
+# /qompassai/dotfiles/.config/netctl/openvswitch
+# Qompass AI NetCtl OpenVSwitch Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+Description="Qompass AI Open vSwitch connection"
+Interface=ovs-br0
+Connection=openvswitch
+BindsToInterfaces=(eth0 eth1)
+IP=dhcp

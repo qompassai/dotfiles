@@ -1,0 +1,15 @@
+# /qompassai/dotfiles/.config/netlabel/netlabel.rules
+# Qompass AI NetLabel Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+# References: https://github.com/netlabel
+# map del default
+# map add default address:0.0.0.0/0 protocol:unlbl
+# map add default address:::0/0 protocol:unlbl
+
+          selector based configuration that send unlabeled traffic to all
+cipso add doi:9999 local
+map del default
+map add default address:0.0.0.0/0 protocol:unlbl
+map add default address:::0/0 protocol:unlbl
+map add default address:127.0.0.1 protocol:cipso,9999
