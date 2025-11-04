@@ -1,0 +1,68 @@
+[2025-03-30 11:10:40.775] [error] (node:4154677) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `omniverse --trace-deprecation ...` to show where the warning was created)
+[2025-03-30 11:10:40.780] [error] (node:4154677) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+[2025-03-30 11:10:40.977] [info]  Omniverse Launcher 1.9.17 (production)
+[2025-03-30 11:10:40.977] [info]  Argv: /opt/omniverse/omniverse-launcher --no-sandbox
+[2025-03-30 11:10:40.977] [info]  Crash dumps directory: /home/phaedrus/.config/omniverse-launcher/Crashpad
+[2025-03-30 11:10:40.979] [info]  Start polling Launcher updates.
+[2025-03-30 11:10:41.040] [error] Can't create directory for /opt/nvidia-omniverse/data/settings.json data:  Error: EACCES: permission denied, mkdir '/opt/nvidia-omniverse'
+    at async Object.mkdir (node:internal/fs/promises:857:10)
+    at async ie.save (/opt/omniverse/resources/app.asar/dist/main.js:425:40222)
+    at async ce.save (/opt/omniverse/resources/app.asar/dist/main.js:425:46787)
+    at async ce.recover (/opt/omniverse/resources/app.asar/dist/main.js:425:47159)
+    at async ce.load (/opt/omniverse/resources/app.asar/dist/main.js:425:44524)
+    at async ce.init (/opt/omniverse/resources/app.asar/dist/main.js:425:43459)
+    at async Object.initializeApps (/opt/omniverse/resources/app.asar/dist/main.js:425:263506)
+    at async /opt/omniverse/resources/app.asar/dist/main.js:425:273925
+    at async App.<anonymous> (/opt/omniverse/resources/app.asar/dist/main.js:425:281629)
+[2025-03-30 11:10:41.042] [error] Can't create directory for /opt/nvidia-omniverse/data/library.json data:  Error: EACCES: permission denied, mkdir '/opt/nvidia-omniverse'
+    at async Object.mkdir (node:internal/fs/promises:857:10)
+    at async ie.save (/opt/omniverse/resources/app.asar/dist/main.js:425:40222)
+    at async Is.save (/opt/omniverse/resources/app.asar/dist/main.js:425:206431)
+    at async Is.recover (/opt/omniverse/resources/app.asar/dist/main.js:425:206888)
+    at async Is.init (/opt/omniverse/resources/app.asar/dist/main.js:425:196835)
+    at async Object.initializeApps (/opt/omniverse/resources/app.asar/dist/main.js:425:263560)
+    at async /opt/omniverse/resources/app.asar/dist/main.js:425:273925
+    at async App.<anonymous> (/opt/omniverse/resources/app.asar/dist/main.js:425:281629)
+[2025-03-30 11:10:41.043] [error] Can't create directory for /opt/nvidia-omniverse/data/installers.json data:  Error: EACCES: permission denied, mkdir '/opt/nvidia-omniverse'
+    at async Object.mkdir (node:internal/fs/promises:857:10)
+    at async ie.save (/opt/omniverse/resources/app.asar/dist/main.js:425:40222)
+    at async xs.save (/opt/omniverse/resources/app.asar/dist/main.js:425:184663)
+    at async xs.load (/opt/omniverse/resources/app.asar/dist/main.js:425:185739)
+    at async xs.init (/opt/omniverse/resources/app.asar/dist/main.js:425:182138)
+    at async Object.initializeApps (/opt/omniverse/resources/app.asar/dist/main.js:425:263584)
+    at async /opt/omniverse/resources/app.asar/dist/main.js:425:273925
+    at async App.<anonymous> (/opt/omniverse/resources/app.asar/dist/main.js:425:281629)
+[2025-03-30 11:10:41.045] [info]  Running production web server.
+[2025-03-30 11:10:41.057] [info]  HTTP endpoints listening at http://localhost:33480
+[2025-03-30 11:10:41.058] [info]  HTTP endpoints listening at http://127.0.0.1:33480
+[2025-03-30 11:10:41.064] [debug] Sharing: false
+[2025-03-30 11:10:41.107] [info]  Started the Navigator web server on 127.0.0.1:34080.
+[2025-03-30 11:10:42.048] [info]  Saving omniverse-launcher.desktop file to /tmp/omniverse-launcher-gk1or3...
+[2025-03-30 11:10:42.049] [debug] 
+ [Desktop Entry]
+Name=omniverse-launcher
+Exec="undefined" --no-sandbox %u
+Type=Application
+Terminal=false
+MimeType=x-scheme-handler/omniverse-launcher
+
+[2025-03-30 11:10:42.275] [info]  Saving omniverse.desktop file to /tmp/omniverse-launcher-n7K4gx...
+[2025-03-30 11:10:42.275] [debug] 
+ [Desktop Entry]
+Name=omniverse-launcher
+Exec="undefined" --no-sandbox %u
+Type=Application
+Terminal=false
+MimeType=x-scheme-handler/omniverse
+
+[2025-03-30 11:10:42.463] [error] Can't create directory for /opt/nvidia-omniverse/data/settings.json data:  Error: EACCES: permission denied, mkdir '/opt/nvidia-omniverse'
+    at async Object.mkdir (node:internal/fs/promises:857:10)
+    at async ie.save (/opt/omniverse/resources/app.asar/dist/main.js:425:40222)
+    at async ce.save (/opt/omniverse/resources/app.asar/dist/main.js:425:46787)
+    at async Iu (/opt/omniverse/resources/app.asar/dist/main.js:425:264845)
+    at async /opt/omniverse/resources/app.asar/dist/main.js:425:281410
+    at async App.<anonymous> (/opt/omniverse/resources/app.asar/dist/main.js:425:281629)
+[2025-03-30 11:10:42.464] [info]  Initialized.
+[2025-03-30 11:10:49.591] [info]  Login URL opened.
+[2025-03-30 11:10:49.613] [info]  Waiting for login result...

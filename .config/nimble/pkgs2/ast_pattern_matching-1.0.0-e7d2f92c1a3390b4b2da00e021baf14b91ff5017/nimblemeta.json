@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "metaData": {
+    "url": "https://github.com/nim-lang/ast-pattern-matching",
+    "downloadMethod": "git",
+    "vcsRevision": "eb8b99d595517fd5d41ccc954edb896267f2db78",
+    "files": [
+      "/ast_pattern_matching.nimble",
+      "/ast_pattern_matching.nim"
+    ],
+    "binaries": [],
+    "specialVersions": [
+      "1.0.0"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+'Log files:
+/home/phaedrus/.npm/_logs/2025-08-07T19_31_37_582Z-debug-0.log
+
+# npm resolution error report
+
+While resolving: ninja@3.0.8
+Found: react@0.14.7
+node_modules/react
+  react@"0.14.7" from the root project
+
+Could not resolve dependency:
+peer react@"^0.14.8" from react-addons-test-utils@0.14.8
+node_modules/react-addons-test-utils
+  dev react-addons-test-utils@"^0.14.7" from the root project
+
+Fix the upstream dependency conflict, or retry
+this command with --force or --legacy-peer-deps
+to accept an incorrect (and potentially broken) dependency resolution.
