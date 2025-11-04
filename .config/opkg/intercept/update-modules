@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+# /qompassai/dotfiles/.config/opkg/intercept/update-modules
+# Qompass AI Opkg Intercept Update-Modules Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###########################################################
+if [ ! -f $OPKG_INTERCEPT_DIR/update-modules ]; then
+  echo "update-modules" > $OPKG_INTERCEPT_DIR/update-modules
+  chmod +x $OPKG_INTERCEPT_DIR/update-modules
+fi

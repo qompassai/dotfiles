@@ -420,11 +420,16 @@ nvme
 nvoc.d
 nvtop
 nwg-displays
+nwg-dock-hyprland
+nwg-drawer
+nwg-panel
 nx
+nxagent
 nyx
 obs-studio
 onerng
 onionshare
+openal
 opencl
 openldap
 openmpi

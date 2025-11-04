@@ -1,0 +1,14 @@
+// /qompassai/dotfiles/.config/opt/chrome/native-messaging-hosts/com.google.chrome.remote_webauthn.jsonc
+// Qompass AI Chrome Native Messaging Hosts Remote WebAuth Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+{
+  "name": "com.google.chrome.remote_webauthn",
+  "description": "Remote Web Authentication Process for Chrome Remote Desktop",
+  "type": "stdio",
+  "path": "/opt/google/chrome-remote-desktop/remote-webauthn",
+  "allowed_origins": [
+    "chrome-extension://djjmngfglakhkhmgcfdmjalogilepkhd/",
+    "chrome-extension://hfmpidnhglhndeamkbopljnclamhmnaj/"
+  ]
+}
