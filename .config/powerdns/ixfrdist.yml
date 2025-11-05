@@ -1,0 +1,25 @@
+# /qompassai/dotfiles/.config/powerdns/ixfrdist.yml
+# Qompass AI PowerDNS IXFRDist Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+listen:
+  - '127.0.0.1'
+  - '::1'
+acl:
+  - '127.0.0.0/8'
+  - '::1'
+axfr-max-records: 0
+axfr-timeout: 20
+failed-soa-retry: 30
+compress: false
+keep: 20
+tcp-in-threads: 10
+# work-dir: '/var/lib/ixfrdist'
+uid: ixfrdist
+gid: ixfrdist
+webserver-address: 127.0.0.1:8080
+webserver-acl:
+  - 127.0.0.0/8
+  - ::1/128
+webserver-loglevel: normal
+domains: []

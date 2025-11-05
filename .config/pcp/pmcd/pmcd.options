@@ -1,0 +1,49 @@
+# command-line options to pmcd, uncomment/edit lines as required
+
+# listen for connections to pmcd on only the interface bound to this
+# IP address
+# -i 192.168.0.100
+
+# longer IPC timeout delay for slow agents (default 5)
+# -t 10
+
+# or suppress timeouts
+# -t 0
+
+# longer timeout for slow agent startup (default 3)
+# -q 10
+
+# make log go someplace else
+# -l /some/place/else
+
+# debugging knobs, see pmdbg(1)
+# -D fetch,pmns
+
+# run in the foreground (not as a daemon)
+# -f
+
+# disable service advertising (comment out to enable)
+-A
+
+# maximum incoming PDU size (bytes, default 64K)
+# -L 16384 
+
+# maximum number of contexts per PMAPI client (default 64)
+# -C 128
+
+# maximum number of metrics per pmFetch (default 32K)
+# -M 40000
+
+# assume identity of some user other than "pcp"
+# -U root
+
+# enable event tracing bit fields
+#   1	trace client connections
+#   2	trace PDUs
+# 256	unbuffered tracing
+# -T 3
+
+# PMNS controls
+# -n and -N are not recommended (the defaults work better in most cases)
+# -n /some/path
+# -N /some/path

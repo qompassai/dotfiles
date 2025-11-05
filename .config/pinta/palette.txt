@@ -1,4 +1,7 @@
-; Hexadecimal format: aarrggbb
+; /qompassai/dotfiles/.config/pinta/palette.txt
+; Qompass AI Pinta Palette Config
+; Copyright (C) 2025 Qompass AI, All rights reserved
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 FFFFFFFF
 FF000000
 FFA0A0A0

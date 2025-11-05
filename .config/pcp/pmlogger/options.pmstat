@@ -1,0 +1,4 @@
+# pmlogger config options for pmstat.config
+
+%define have_disk_block_stats
+%define have_cpu_virt_stats

@@ -1,0 +1,33 @@
+// /qompassai/dotfiles/.config/session/ephemeral.jsonc
+// Qompass AI Session Ephemeral Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+  "window": {
+    "alwaysOnTop": false,
+    "autoHideMenuBar": false,
+    "backgroundColor": "#222222",
+    "closable": true,
+    "frame": true,
+    "fullscreen": false,
+    "height": 820,
+    "icon": "/usr/share/icons/session.png",
+    "maxHeight": 1200,
+    "maximized": false,
+    "maxWidth": 1920,
+    "minHeight": 400,
+    "minWidth": 600,
+    "movable": true,
+    "opacity": 0.93,
+    "resizable": true,
+    "skipTaskbar": false,
+    "title": "Qompass AI Ephemeral",
+    "transparent": true,
+    "visibleOnAllWorkspaces": false,
+    "width": 880,
+    "x": 6087,
+    "y": 125,
+    "zoomFactor": 1.0
+  }
+}
+
