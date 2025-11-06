@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+# /qompassai/dotfiles/.config/stap-exporter/BPF
+# Qompass AI Stap-Exporter BPF Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###############################################################
+exec stap --bpf -v --example $@ `basename $0 | sed -e s,autostart-,,`
