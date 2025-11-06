@@ -1,0 +1,9 @@
+# /qompassai/dotfiles/.config/sigma/ala-azure-activations.yml
+# Qompass AI Sigma Datadog Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#############################################################
+title: Datadog Config
+order: 20
+backends:
+  - datadog-logs
+tags: []

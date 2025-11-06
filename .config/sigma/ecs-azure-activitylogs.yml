@@ -1,0 +1,15 @@
+# /qompassai/dotfiles/.config/sigma/athen.yml
+# Qompass AI Github Sigma AWS-Athena Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+title: Azure Activity Logs Elasticsearch ecs mapping
+order: 20
+backends:
+  - es-qs
+  - es-rule
+fieldmappings:
+  claims.name: user.name
+  properties.message: event.action
+  properties.eventCategory: azure.activitylogs.event_category
+  status.value: event.outcome
+  resourceType.value: azure.resource.provider

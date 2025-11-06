@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/sgml/sgml-docbook.cat
+# Qompass AI Standard Generalized Markup Language (SGML) Docbook Catalog
+# Copyright (C) 2025 Qompass AI, All rights reserved
+######################################################################
+CATALOG $XDG_CONFIG_HOME/sgml/sgml-ent.cat

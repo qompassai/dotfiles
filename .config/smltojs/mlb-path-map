@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/smltojs/mlb-path-map
+# Qompass AI SmltoJS Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+SML_LIB /usr/lib/smltojs

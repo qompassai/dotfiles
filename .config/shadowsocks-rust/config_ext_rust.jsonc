@@ -1,0 +1,38 @@
+// /qompassai/dotfiles/.config/shadowsocks-rust/config_ext_rust.jsonc
+// Qompass AI ShadowSocks-Rust Extended Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////////////////////
+{
+    "locals": [
+        {
+            "local_address": "$(pass show ssr/local_addr)",
+            "local_port": "$(pass show ssr/localport)"
+        },
+        {
+            "local_address": "$(pass show ssr/local_addr2)",
+            "local_port": "$(pass show ssr/localport2)",
+            "protocol": "$(pass show ssr/protocol1)"
+        },
+        {
+            "local_address": "$(pass show ssr/local_addr)",
+            "local_port": "$(pass show ssr/localport3)",
+            "protocol": "$(pass show ssr/protocl2)",
+            "forward_address": "$(pass show ssr/forwardaddr)",
+            "forward_port": "$(pass show ssr/forward_port)"
+        }
+    ],
+    "servers": [
+        {
+            "server": "$(pass show ssr/local_addr)",
+            "server_port": "(pass show ssr/server_port)",
+            "password": "$(pass show ssr/spass)",
+            "method": "$(pass show ssr/method)"
+        },
+        {
+            "server": "$(pass show ssr/local_addr)",
+            "server_port": "$(pass show ssr/server_port2)",
+            "password": "$(pass show ssr/spass2)",
+            "method": "$(pass show ssr/method2)"
+        }
+    ]
+}

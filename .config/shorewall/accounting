@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/shorewall/accounting
+# Qompass AI ShoreWall Accounting Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+#ACTION		CHAIN	SOURCE		DEST		PROTO	DPORT	SPORT	USER	MARK	IPSEC

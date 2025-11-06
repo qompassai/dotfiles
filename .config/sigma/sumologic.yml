@@ -1,0 +1,173 @@
+# /qompassai/dotfiles/.config/sigma/symlogic.yml
+# Qompass AI Sigma Symlogic Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#############################################################
+title: SumoLogic
+order: 20
+backends:
+  - sumologic
+afl_fields:
+  - _index
+  - EventID
+  - CommandLine
+  - NewProcessName
+  - Image
+  - ParentImage
+  - ParentCommandLine
+  - ParentProcessName
+logsources:
+  unix:
+    product: unix
+    index: UNIX
+  linux:
+    product: linux
+    index: LINUX
+  linux-sshd:
+    product: linux
+    service: sshd
+    index: LINUX
+  linux-auth:
+    product: linux
+    service: auth
+    index: LINUX
+  linux-clamav:
+    product: linux
+    service: clamav
+    index: LINUX
+  windows:
+    product: windows
+    index: WINDOWS
+  windows-sysmon:
+    product: windows
+    service: sysmon
+    conditions:
+      EventChannel: Microsoft-Windows-Sysmon
+    index: WINDOWS
+  windows-security:
+    product: windows
+    service: security
+    conditions:
+      EventChannel: Security
+    index: WINDOWS
+  windows-powershell:
+    product: windows
+    service: powershell
+    conditions:
+      EventChannel: Microsoft-Windows-Powershell
+    index: WINDOWS
+  windows-system:
+    product: windows
+    service: system
+    conditions:
+      EventChannel: System
+    index: WINDOWS
+  windows-dhcp:
+    product: windows
+    service: dhcp
+    conditions:
+      EventChannel: Microsoft-Windows-DHCP-Server
+    index: WINDOWS
+  windows-ntlm:
+    product: windows
+    service: ntlm
+    conditions:
+      EventChannel: 'Microsoft-Windows-NTLM/Operational'
+  windows-printservice-admin:
+    product: windows
+    service: printservice-admin
+    conditions:
+      EventChannel: 'Microsoft-Windows-PrintService/Admin'
+  windows-printservice-operational:
+    product: windows
+    service: printservice-operational
+    conditions:
+      EventChannel: 'Microsoft-Windows-PrintService/Operational'
+  windows-terminalservices-localsessionmanager-operational:
+    product: windows
+    service: terminalservices-localsessionmanager
+    conditions:
+      EventChannel: 'Microsoft-Windows-TerminalServices-LocalSessionManager/Operational'
+  windows-codeintegrity-operational:
+    product: windows
+    service: codeintegrity-operational
+    conditions:
+      EventChannel: 'Microsoft-Windows-CodeIntegrity/Operational'
+  windows-smbclient-security:
+    product: windows
+    service: smbclient-security
+    conditions:
+      EventChannel: 'Microsoft-Windows-SmbClient/Security'
+  windows-msexchange-management:
+    product: windows
+    service: msexchange-management
+    conditions:
+      EventChannel: 'MSExchange Management'
+  windows-firewall-advanced-security:
+    product: windows
+    service: firewall-as
+    conditions:
+      EventChannel: 'Microsoft-Windows-Windows Firewall With Advanced Security/Firewall'
+  windows-bits-client:
+    product: windows
+    service: bits-client
+    conditions:
+      EventChannel: 'Microsoft-Windows-Bits-Client/Operational'
+  windows-security-mitigations:
+    product: windows
+    service: security-mitigations
+    conditions:
+      EventChannel:
+        - 'Microsoft-Windows-Security-Mitigations/Kernel Mode'
+        - 'Microsoft-Windows-Security-Mitigations/User Mode'
+  windows-diagnosis:
+    product: windows
+    service: diagnosis-scripted
+    conditions:
+      EventChannel: 'Microsoft-Windows-Diagnosis-Scripted/Operational'
+  windows-shell-core:
+    product: windows
+    service: shell-core
+    conditions:
+      EventChannel: 'Microsoft-Windows-Shell-Core/Operational'
+  apache:
+    service: apache
+    index: WEBSERVER
+  apache2:
+    service: apache
+    index: WEBSERVER
+  webserver:
+    category: webserver
+    index: WEBSERVER
+  firewall:
+    category: firewall
+    index: FIREWALL
+  firewall2:
+    product: firewall
+    index: FIREWALL
+  network-dns:
+    category: dns
+    index: DNS
+  network-dns2:
+    product: dns
+    index: DNS
+  proxy:
+    category: proxy
+    index: PROXY
+  antivirus:
+    category: antivirus
+    index: ANTIVIRUS
+  application-sql:
+    product: sql
+    index: DATABASE
+  application-python:
+    product: python
+    index: APPLICATIONS
+  application-django:
+    product: django
+    index: DJANGO
+  application-rails:
+    product: rails
+    index: RAILS
+  application-spring:
+    product: spring
+    index: SPRING
