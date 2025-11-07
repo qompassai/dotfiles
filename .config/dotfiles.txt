@@ -591,10 +591,12 @@ slsh
 slurm-llnl
 smartcat
 smartd
+smartdns
 smartreboot
 smbmnt
 smltojs
 snap-pac
+sniffglue
 sniproxy
 sockd
 socks
@@ -602,11 +604,15 @@ softhsm2
 soft-serve
 soju
 solfege
+solr
 sops
+spamass
 speech-dispatcher
 speedify
 sphinx
 sql-formatter
+sqlmap
+squid
 srp
 sshesame
 sshguard
@@ -614,6 +620,7 @@ ssh-ldap-pubkey
 sshuttle
 ssync
 stack
+stap-exporter
 steam
 steamos-compositor-plus
 steam-tools-ng
