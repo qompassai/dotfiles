@@ -1,1 +1,1 @@
-/nix/store/plx9hmh9gbd8s7nbiaijz49501br2vvf-pipewire-1.4.8/share/systemd/user/pipewire-pulse.socket
+/usr/lib/systemd/user/pipewire-pulse.socket

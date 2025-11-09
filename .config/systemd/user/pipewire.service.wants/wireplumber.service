@@ -1,1 +1,1 @@
-/nix/store/mvybipw7h757s8d4v2a2nvsva1v4fbv7-wireplumber-0.5.11/share/systemd/user/wireplumber.service
+/usr/lib/systemd/user/wireplumber.service

@@ -1,0 +1,34 @@
+# /qompassai/dotfiles/.config/subversion/config
+# Qompass AI Subversion Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+[auth]
+password-stores = gpg-agent
+store-auth-creds = yes
+[auto-props]
+enable-auto-props = yes
+*.c      = svn:eol-style=native
+*.cpp    = svn:eol-style=native
+*.dsp    = svn:eol-style=CRLF
+*.dsw    = svn:eol-style=CRLF
+*.h      = svn:keywords=Author Date Id Rev URL;svn:eol-style=native
+*.png    = svn:mime-type=image/png
+*.jpg    = svn:mime-type=image/jpeg
+*.sh     = svn:eol-style=native;svn:executable
+*.txt    = svn:eol-style=native;svn:keywords=Author Date Id Rev URL;
+Makefile = svn:eol-style=native
+[helpers]
+diff-extensions = -u -p
+editor-cmd = nvim
+diff-cmd = diff
+merge-tool-cmd = meld
+[miscellany]
+global-ignores = *.o *.lo *.la *.al .libs *.so *.so.[0-9]* *.a *.pyc *.pyo __pycache__ *.rej *~ #*# .#* .*.swp .DS_Store [Tt]humbs.db
+log-encoding = utf8
+use-commit-times = yes
+[tunnels]
+ssh = $SVN_SSH ssh -q --
+[working-copy]
+busy-timeout = 10000
+exclusive-locking-clients = svn
+exclusive-locking = false

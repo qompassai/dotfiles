@@ -1,0 +1,14 @@
+# /qompassai/dotfiles/.config/superpaper/generaL_settings.
+# Qompass AI SuperPaper Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##########################################################
+# References: https://github.com/hhannine/superpaper
+browser_default_dir=/home/user/.Pictures/Wallpapers
+logging=false
+use_hotkeys=true
+next_wallpaper_hotkey=control+super+w
+pause_wallpaper_hotkey=control+super+shift+p
+show_help_at_start=false
+set_command=gsettings set org.gnome.desktop.background picture-uri file://{image}
+warn_large_img=true
+run_script_after_change=$XDG_CONFIG_HOME/superpaper/scripts/wallpaper_changed.sh
