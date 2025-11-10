@@ -13,7 +13,7 @@
 
             }
           },
-          "fingerprint" : "729e01bc9b9dab466ac85f21fb9ee2bc1c61b258",
+          "fingerprint" : "$(pass show swiftpm/sourcekittenfp)",
           "origin" : "https://github.com/krzyzanowskim/CryptoSwift.git"
         }
       }

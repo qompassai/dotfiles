@@ -13,7 +13,7 @@
 
             }
           },
-          "fingerprint" : "b4f23e24b5a1bff301efc5e70871083ca029ff95",
+          "fingerprint" : "$(pass show swiftpm/cckitfp)",
           "origin" : "https://github.com/JohnSundell/CollectionConcurrencyKit.git"
         }
       }

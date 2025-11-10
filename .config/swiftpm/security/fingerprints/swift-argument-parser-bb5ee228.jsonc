@@ -13,7 +13,7 @@
 
             }
           },
-          "fingerprint" : "41982a3656a71c768319979febd796c6fd111d5c",
+          "fingerprint" : "$(pass show swiftpm/argparsfp)",
           "origin" : "https://github.com/apple/swift-argument-parser.git"
         }
       }
@@ -26,7 +26,7 @@
 
             }
           },
-          "fingerprint" : "011f0c765fb46d9cac61bca19be0527e99c98c8b",
+          "fingerprint" : "$(pass show swiftpm/argpars151fp)",
           "origin" : "https://github.com/apple/swift-argument-parser.git"
         }
       }

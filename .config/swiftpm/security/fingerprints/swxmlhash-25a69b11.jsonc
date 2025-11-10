@@ -13,7 +13,7 @@
 
             }
           },
-          "fingerprint" : "a853604c9e9a83ad9954c7e3d2a565273982471f",
+          "fingerprint" : "$(pass show swiftpm/swxmlhashfp)",
           "origin" : "https://github.com/drmohundro/SWXMLHash.git"
         }
       }

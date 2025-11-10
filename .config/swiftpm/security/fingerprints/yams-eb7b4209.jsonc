@@ -1,5 +1,5 @@
-// /qompassai/dotfiles/.config/swiftpm/security/fingerprints
-// Qompass AI Swiftpm Security Fingerprint Yams Config
+// /qompassai/dotfiles/.config/swiftpm/security/fingerprints/yams-eb7b4209.jsonc
+// Qompass AI Swiftpm Security YAMS Fingerprint Config
 // Copyright (C) 2025 Qompass AI, All rights reserved
 /////////////////////////////////////////////////////
 
@@ -14,7 +14,7 @@
 
             }
           },
-          "fingerprint" : "b4b8042411dc7bbb696300a34a4bf3ba1b7ad19b",
+          "fingerprint" : "$(pass show swiftpm/yamsfp)",
           "origin" : "https://github.com/jpsim/Yams.git"
         }
       }

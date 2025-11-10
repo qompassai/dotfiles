@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/sysconfig/chronyd
+# Qompass AI SysConfig Chrony Daemon Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+OPTIONS=""

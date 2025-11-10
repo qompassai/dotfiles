@@ -634,6 +634,12 @@ stratum-v2
 strfry
 strongswan
 strongswan.d
+stubby
+stunnel
+stylint
+subversion
+supermaven
+superpaper
 swapspace
 swiftpm
 sysctl.d

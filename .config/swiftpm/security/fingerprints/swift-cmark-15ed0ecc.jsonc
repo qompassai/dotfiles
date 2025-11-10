@@ -10,10 +10,9 @@
         "sourceCode" : {
           "contentType" : {
             "sourceCode" : {
-
             }
           },
-          "fingerprint" : "b022b08312decdc46585e0b3440d97f6f22ef703",
+          "fingerprint" : "$(pass show swiftpm/swiftcmarkfp)",
           "origin" : "https://github.com/swiftlang/swift-cmark.git"
         }
       }

@@ -13,7 +13,7 @@
 
             }
           },
-          "fingerprint" : "1103c45ece4f7fe160b8f75b4ea1ee2e5fac1841",
+          "fingerprint" : "$(pass show swiftpm/syntaxfp)",
           "origin" : "https://github.com/swiftlang/swift-syntax.git"
         }
       }
