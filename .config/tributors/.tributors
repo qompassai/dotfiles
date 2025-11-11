@@ -1,0 +1,7 @@
+# /qompassai/dotfiles/.config/tributors/.tributors
+# Qompass AI Tributors Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+{
+  "parsers": ["github", "zenodo", "allcontrib"]
+}

@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/udev/rules.d/40-surface_dtx.rules
+# Qompass AI UDev Surface DTX Rules Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###############################################################
+KERNEL=="surface_dtx", TAG+="systemd"

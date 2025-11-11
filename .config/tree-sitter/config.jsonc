@@ -4,10 +4,13 @@
 /////////////////////////////////////////////////////
 {
 	"parser-directories": [
+		"/home/phaedrus",
+		"/home/phaedrus/git",
 		"/home/phaedrus/.GH",
-		"/home/phaedrus/.GH/Qompass/mojo.nvim/lua/mojo/treesitter",
-		"/home/phaedrus/git"
-	],
+		"/usr/local/share/tree-sitter",
+		"/usr/share/tree-sitter",
+		"."
+	]
 	"theme": {
 		"comment": {
 			"color": 245,

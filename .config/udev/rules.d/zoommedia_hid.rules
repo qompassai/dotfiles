@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/udev/rules.d/zoommedia_hid.rules
+# Qompass AI UDev Zoom Media Rules Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#####################################################
+KERNEL=="hiddev*", GROUP="plugdev", MODE="0660"
