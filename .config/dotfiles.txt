@@ -718,10 +718,16 @@ vale
 valkey
 vaporizer2
 varnish
+vault
+vaultwarden
 vconsole
 vcpkg
+vcpkg-overlays
+vde2
 vdirsyncr
+vdpau_wrapper
 vdr
+vdrpbd
 vector
 vesktop
 vfio-kvm
