@@ -729,6 +729,7 @@ vdpau_wrapper
 vdr
 vdrpbd
 vector
+vencord
 vesktop
 vfio-kvm
 vim
@@ -737,6 +738,7 @@ violet
 virt-builder
 vkBasalt
 vlc
+vmware-tools
 vpnc
 vtund
 vulkan
