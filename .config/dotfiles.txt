@@ -747,6 +747,7 @@ wallust
 warnquota
 waybar
 waypaper
+webdis
 webhook
 wikicurses
 wine
@@ -758,6 +759,7 @@ wofi
 wofi-pass
 wpg
 wsl
+wt
 x11
 xapsd
 xattr
