@@ -1,0 +1,11 @@
+/*
+* /qompassai/dotfiles/.config/webapps/dokuwiki/users.auth.php.dist
+* Qompass AI DokuWiki User Auth Config
+* Copyright (C) 2025 Qompass AI, All rights reserved
+ ****************************************************
+*/
+users.auth.php
+<?php exit()?>
+Userfile
+Format:
+login:passwordhash:Real Name:email:groups,comma,separated

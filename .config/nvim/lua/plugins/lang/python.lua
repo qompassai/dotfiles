@@ -29,7 +29,7 @@ return {
   --			}
   {
     'linux-cultist/venv-selector.nvim',
-    branch = 'regexp',
+    branch = 'main',
     ft = py_ft,
     opts = {
       stay_on_this_version = true,

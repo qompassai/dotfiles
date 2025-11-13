@@ -496,6 +496,7 @@ pico-tts
 pinta
 pip
 piper-tts
+pipeswitch
 pipewire
 pipewire.conf.d
 pkcs11
@@ -720,6 +721,7 @@ vaporizer2
 varnish
 vault
 vaultwarden
+vbox
 vconsole
 vcpkg
 vcpkg-overlays
@@ -730,6 +732,7 @@ vdr
 vdrpbd
 vector
 vencord
+venv
 vesktop
 vfio-kvm
 vim
@@ -740,6 +743,7 @@ vkBasalt
 vlc
 vmware-tools
 vpnc
+vsftpd
 vtund
 vulkan
 wallabag
@@ -747,7 +751,9 @@ wallust
 warnquota
 waybar
 waypaper
+weasis
 webdis
+webex
 webhook
 wikicurses
 wine
