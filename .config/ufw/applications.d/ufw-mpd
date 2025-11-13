@@ -1,3 +1,7 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/ufw-mpd
+# Qompass AI UFW Application Daemon MPD Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##########################################################
 [MPD]
 title=MPD server
 description=Flexible, powerful, server-side application for playing music

@@ -1,3 +1,7 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/ufw-bittorent
+# Qompass AI UFW Applications Daemon BitTorrent Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##############################################################
 [Transmission]
 title=Transmission
 description=Transmission BitTorrent client

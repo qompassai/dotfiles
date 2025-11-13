@@ -1,3 +1,7 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/ufw-syncthing
+# Qompass AI UFW Application Daemon SyncThing Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###############################################################
 [syncthing]
 title=Syncthing
 description=Syncthing file synchronisation

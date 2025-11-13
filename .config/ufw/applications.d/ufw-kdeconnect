@@ -1,3 +1,7 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/ufw-kdeconnect
+# Qompass AI UFW Application Daemon KDE Connect Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+################################################################
 [KDE Connect]
 title=KDE Connect
 description=KDE Connect enables your devices to communicate with each other

@@ -1,0 +1,9 @@
+# /qompassai/dotfiles/.config/vsftpd/pyproject.toml
+# Qompass AI VSFTPD PyProject Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+[project]
+name = "vsftpd"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = []

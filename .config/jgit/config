@@ -5,3 +5,6 @@
 [filesystem "Arch Linux|17.0.14|/dev/nvme1n1p2"]
 	timestampResolution = 4189 nanoseconds
 	minRacyThreshold = 0 nanoseconds
+[filesystem "Arch Linux|11.0.29|/dev/mapper/root"]
+	timestampResolution = 4000 nanoseconds
+	minRacyThreshold = 0 nanoseconds
