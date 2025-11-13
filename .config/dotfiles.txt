@@ -752,6 +752,7 @@ warnquota
 waybar
 waypaper
 weasis
+webapps
 webdis
 webex
 webhook
