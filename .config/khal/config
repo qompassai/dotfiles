@@ -1,3 +1,7 @@
+# /qompassai/dotfiles/.config/khal/config
+# Qompass AI Khal Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 [calendars]
 [[qompass]]
 path = ~/.local/share/calendars/qompass/
