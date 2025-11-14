@@ -1,11 +1,12 @@
 <?php
 /** 
+* References: http://de3.php.net/manual/en/reference.pcre.pattern.syntax.php
  */
 
 
 global $CONF;
 $CONF['configured'] = false;
-$CONF['setup_password'] = 'changeme';
+$CONF['setup_password'] = '$(pass show postfixadmin/pass)';
 $CONF['default_language'] = 'en';
 $CONF['language_hook'] = '';
 function language_hook($PALANG, $language) {
@@ -24,9 +25,9 @@ function language_hook($PALANG, $language) {
 }
 $CONF['database_type'] = 'mysqli';
 $CONF['database_host'] = 'localhost';
-$CONF['database_user'] = 'postfix';
-$CONF['database_password'] = 'postfixadmin';
-$CONF['database_name'] = 'postfix';
+$CONF['database_user'] = '$(pass show postfixadmin/dbuser)';
+$CONF['database_password'] = 'pass show postfixadmin/dbpass';
+$CONF['database_name'] = '$(pass show postfixadmin/dbname)';
 $CONF['database_use_ssl'] = false;
 $CONF['database_ssl_key'] = NULL;
 $CONF['database_ssl_cert'] = NULL;
@@ -34,12 +35,7 @@ $CONF['database_ssl_ca'] = NULL;
 $CONF['database_ssl_ca_path'] = NULL;
 $CONF['database_ssl_cipher'] = NULL;
 $CONF['database_ssl_verify_server_cert'] = true;
-
-// If you need to specify a different port for a MYSQL database connection, use e.g.
-//   $CONF['database_host'] = '172.30.33.66:3308';
-//
-// If you need to specify a different port for MySQLi(3306)/POSTGRESQL(5432) database connection
-//   uncomment and change the following
+   $CONF['database_host'] = '172.30.33.66:3308';
 // $CONF['database_port'] = '5432';
 //
 // If you wish to connect using a local socket file (e.g /var/run/mysql.sock) set this to the socket path.
@@ -49,7 +45,6 @@ $CONF['database_socket'] = '';
 // If sqlite is used, specify the database file path:
 //   $CONF['database_name'] = '/etc/postfix/sqlite/postfixadmin.db'
 
-// Here, if you need, you can customize table names.
 $CONF['database_prefix'] = '';
 $CONF['database_tables'] = array (
     'admin' => 'admin',
@@ -66,27 +61,12 @@ $CONF['database_tables'] = array (
     'quota' => 'quota',
 	'quota2' => 'quota2',
 );
-
-// Site Admin
-// Define the Site Admin's email address below.
-// This will be used to send emails from to create mailboxes and
-// from Send Email / Broadcast message pages.
-// Leave blank to send email from the logged-in Admin's Email address.
 $CONF['admin_email'] = '';
-
-// Define the smtp password for admin_email.
-// This will be used to send emails from to create mailboxes and
-// from Send Email / Broadcast message pages.
-// Leave blank to send emails without authentification
 $CONF['admin_smtp_password'] = '';
 
 // Site admin name
 // This will be used as signature in notification messages
 $CONF['admin_name'] = 'Postmaster';
-
-// Mail Server
-// Hostname (FQDN) of your mail server.
-// This is used to send email to Postfix in order to create mailboxes.
 $CONF['smtp_server'] = 'localhost';
 $CONF['smtp_port'] = '25';
 
@@ -146,7 +126,7 @@ if(@file_exists('/usr/bin/doveadm')) { // @ to silence openbase_dir stuff; see h
 // New/changed passwords will be validated using all regular expressions in the array.
 // If a password doesn't match one of the regular expressions, the corresponding
 // error message from $PALANG (see languages/*.lang) will be displayed.
-// See http://de3.php.net/manual/en/reference.pcre.pattern.syntax.php for details
+// See  for details
 // about the regular expression syntax.
 // If you need custom error messages, you can add them using $CONF['language_hook'].
 // If a $PALANG text contains a %s, you can add its value after the $PALANG key
@@ -171,10 +151,7 @@ $CONF['generate_password'] = 'NO';
 // If you want to always see what password was set set this to 'YES'.
 $CONF['show_password'] = 'NO';
 
-// Page Size
-// Set the number of entries that you would like to see
-// in one page.
-$CONF['page_size'] = '10';
+$CONF['page_size'] = '50';
 
 // Default Aliases
 // The default aliases that need to be created for all domains.
@@ -270,101 +247,36 @@ $CONF['alias_struct_hook']          = '';
 $CONF['mailbox_struct_hook']        = '';
 $CONF['alias_domain_struct_hook']   = '';
 $CONF['fetchmail_struct_hook']      = '';
-
-
-// Default Domain Values
-// Specify your default values below. Quota in MB.
 $CONF['aliases'] = '10';
 $CONF['mailboxes'] = '10';
 $CONF['maxquota'] = '10';
 $CONF['domain_quota_default'] = '2048';
-
-// Quota
-// When you want to enforce quota for your mailbox users set this to 'YES'.
 $CONF['quota'] = 'NO';
-// If you want to enforce domain-level quotas set this to 'YES'.
 $CONF['domain_quota'] = 'YES';
-// You can either use '1024000' or '1048576'
-$CONF['quota_multiplier'] = '1024000';
-// fill state threshold (in per cent) for medium level (displayed as orange)
+$CONF['quota_multiplier'] = '1048576';
 $CONF['quota_level_med_pct'] = 55;
-// fill state threshold (in per cent) for high level (displayed as red)
 $CONF['quota_level_high_pct'] = 90;
-
-// Transport
-// If you want to define additional transport options for a domain set this to 'YES'.
-// Read the transport file of the Postfix documentation.
-$CONF['transport'] = 'NO';
-// Transport options
-// If you want to define additional transport options put them in array below.
+$CONF['transport'] = 'YES';
 $CONF['transport_options'] = array (
-    'virtual',  // for virtual accounts
-    'local',    // for system accounts
-    'relay'     // for backup mx
+    'virtual',
+    'local',
+    'relay'
 );
-// Transport default
-// You should define default transport. It must be in array above.
 $CONF['transport_default'] = 'virtual';
 
 
-//
-//
-// Virtual Vacation Stuff
-//
-//
-
-// If you want to use virtual vacation for you mailbox users set this to 'YES'.
-// NOTE: Make sure that you install the vacation module. (See VIRTUAL-VACATION/)
 $CONF['vacation'] = 'NO';
-
-// This is the autoreply domain that you will need to set in your Postfix
-// transport maps to handle virtual vacations. It does not need to be a
-// real domain (i.e. you don't need to setup DNS for it).
-// This domain must exclusively be used for vacation. Do NOT use it for "normal" mail addresses.
 $CONF['vacation_domain'] = 'autoreply.change-this-to-your.domain.tld';
-
-// Vacation Control
-// If you want users to take control of vacation set this to 'YES'.
 $CONF['vacation_control'] ='YES';
-
-// Vacation Control for admins
-// Set to 'YES' if your domain admins should be able to edit user vacation.
 $CONF['vacation_control_admin'] = 'YES';
-
-// ReplyType options
-// If you want to define additional reply options put them in array below.
-// The array has the format   seconds between replies => $PALANG text
-// Special values for seconds are: 
-// 0 => only reply to the first mail while on vacation 
-// 1 => reply on every mail
 $CONF['vacation_choice_of_reply'] = array (
-   0 => 'reply_once',        // Sends only Once the message during Out of Office
-   # considered annoying - only send a reply on every mail if you really need it
-   # 1 => 'reply_every_mail',       // Reply on every email
-   60*60 *24*7 => 'reply_once_per_week'        // Reply if last autoreply was at least a week ago
+   0 => 'reply_once',
+   # 1 => 'reply_every_mail',
+   60*60 *24*7 => 'reply_once_per_week'
 );
-
-//
-// End Vacation Stuff.
-//
-
-// Alias Control
-// Postfix Admin inserts an alias in the alias table for every mailbox it creates.
-// The reason for this is that when you want catch-all and normal mailboxes
-// to work you need to have the mailbox replicated in the alias table.
-// If you want to take control of these aliases as well set this to 'YES'.
-
-// If you don't want edit alias tab (user mode) set this to 'NO';
 $CONF['edit_alias'] = 'YES';
-
-// Alias control for superadmins
 $CONF['alias_control'] = 'YES';
-
-// Alias Control for domain admins
 $CONF['alias_control_admin'] = 'YES';
-
-// Special Alias Control
-// Set to 'NO' if your domain admins shouldn't be able to edit the default aliases
 // as defined in $CONF['default_aliases']
 $CONF['special_alias_control'] = 'NO';
 
