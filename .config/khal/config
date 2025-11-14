@@ -1,60 +1,26 @@
-# /qompassai/dotfiles/.config/khal/config
-# Qompass AI Khal Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
 [calendars]
-
 [[qompass]]
-path = ~/.calendars/qompass/
-type = caldav
-url = https://mail.qompass.ai/dav/calendars/map@qompass.ai/
-username = map@qompass.ai
-password = hunter2  # Use passwordcmd for secure storage
-auth = basic
+path = ~/.local/share/calendars/qompass/
+type = calendar
 readonly = false
 
 [[foamedmapgm]]
-path = ~/.calendars/gmail/
-type = caldav
-url = https://apidata.googleusercontent.com/caldav/v2/your@gmail.com/events/
-username = foamedmap@gmail.com
-password = app-specific-password
-auth = basic
+path = ~/.local/share/calendars/gmail/
+type = calendar
 readonly = false
+
 [[map26gm]]
-path = ~/.calendars/gmail/
-type = caldav
-url = https://apidata.googleusercontent.com/caldav/v2/matt.a.porter26@gmail.com/events/
-username = matt.a.porter26@gmail.com
-password = app-specific-password  # Use OAuth2 via vdirsyncer instead
-auth = basic
+path = ~/.local/share/calendars/gmail/
+type = calendar
 readonly = false
-[[client]]
-path = ~/.calendars/client/
-type = caldav
-url = https://outlook.office365.com/api/v1.0/me/events/
-username = user@company.com
-password = outlook-password  # Consider OAuth2
-auth = basic
-readonly = true  # For client-facing calendar
 
 [default]
-default_calendar = work
-timedelta = 2h
-highlight_event_days = true
-timeformat = %H:%M
-dateformat = %Y-%m-%d
-locale = en_US.UTF-8
-default_timezone = America/Los_Angeles
-
-[sqlite]
-path = ~/.local/share/khal/khal.db
+default_calendar = qompass
 
 [view]
 frame = color
 theme = dark
 agenda_event_format = {calendar-color}{start-end-time-style} {title} ({location})
-agenda_event_separator = " | "
-[hooks]
-pre_import = vdirsyncer sync
-post_import = khal calendar
+
+[sqlite]
+path = ~/.local/share/khal/khal.db
