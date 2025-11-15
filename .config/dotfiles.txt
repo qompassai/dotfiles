@@ -104,6 +104,7 @@ discordo
 discover_overlay
 displaycal
 distccd
+dkms
 dleyna
 dma
 dmd
@@ -596,6 +597,7 @@ smartdns
 smartreboot
 smbmnt
 smltojs
+snapborg
 snap-pac
 sniffglue
 sniproxy
@@ -751,11 +753,16 @@ wallust
 warnquota
 waybar
 waypaper
+wazuh-dashboard
 weasis
 webapps
 webdis
 webex
 webhook
+weron
+wget
+whois
+wifite
 wikicurses
 wine
 wireguard

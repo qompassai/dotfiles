@@ -1,0 +1,8 @@
+#!/sbin/openrc-run
+
+name="ImapGoose"
+description="Keep local Maildir directories synchronised with an IMAP server"
+
+supervisor=supervise-daemon
+command="imapgoose"
+command_args=""

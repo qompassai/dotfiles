@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+/qompassai/dotfiles/.config/thunar/uca.xml
+# Qompass AI Thunar Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+-->
 <actions>
 <action>
 	<icon>utilities-terminal</icon>

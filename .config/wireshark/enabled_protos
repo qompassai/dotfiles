@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/wireshark/enabled_protos
+# Qompass AI WireShark Enabled Protocol Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#######################################################
+communityid
+eobi
+stcsig
+transum
