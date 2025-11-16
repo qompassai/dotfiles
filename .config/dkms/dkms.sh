@@ -7,6 +7,7 @@ PKGS=(acpi_call-dkms
 	akvcam-dkms
 	blackmagic
 	broadcom-wl-dkms
+	chipsec-dkms-git
 	corefreq-dkms
 	cryptodev-linux-dkms
 	drbd-dkms
@@ -34,8 +35,9 @@ PKGS=(acpi_call-dkms
 	nvidia-mft
 	ovpn-dco-dkms
 	pfring-dkms
-	rapiddisk-dkms
 	r8125-dkms
+	rapiddisk-dkms
+	rtpengine-kernel-dkms
 	rtw89-dkms-git
 	rtw89bt-dkms-git
 	scap-dkms

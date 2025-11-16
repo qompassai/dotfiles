@@ -12,6 +12,7 @@ if command -q zoxide
     zoxide init fish | source
 end
 eval (ssh-agent -c)
+set -x SSH_AUTH_SOCK $SSH_AUTH_SOCK
 #set -Ux fish_user_paths $HOME/.local/bin $fish_user_paths
 set fish_function_path $fish_function_path ~/.local/share/omf/pkg/foreign-env/functions
 abbr -a rm 'rm -Iv'

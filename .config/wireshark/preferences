@@ -1023,97 +1023,27 @@ lwl4.check_crc: TRUE
 # A string
 #lwm.lwmes_key: 
 
-# Version used by Wireshark
-# One of: Internet Draft version 2, Internet Draft version 8, RFC 4165
-# (case-insensitive).
-#m2pa.version: RFC 4165
-
-# The value of the parameter tag for protocol data 1
-# One of: 0x000e (Draft 7), 0x0300 (RFC3331)
-# (case-insensitive).
-#m2ua.protocol_data_1_tag: 0x0300 (RFC3331)
-
-# Version used by Wireshark
-# One of: Internet Draft version 5, Internet Draft version 6, Internet Draft version 7, RFC 4666
-# (case-insensitive).
-#m3ua.version: RFC 4666
-
-# Whether the M3UA dissector should desegment all messages spanning multiple TCP segments
-# true or false (case-insensitive)
-#m3ua.desegment: TRUE
-
-# TSN size in bits, either 6 or 14 bit
-# One of: 6 bits, 14 bits
-# (case-insensitive).
-#mac.tsn_size: 6 bits
-
-# Number of Re-Transmits before expert warning triggered
-# A decimal number
-#mac-lte.retx_count_warn: 3
-
-# Attempt to decode BCH, PCH and CCCH data using LTE RRC dissector
-# true or false (case-insensitive)
-#mac-lte.attempt_rrc_decode: TRUE
-
-# Attempt to dissect frames that have failed CRC check
-# true or false (case-insensitive)
-#mac-lte.attempt_to_dissect_crc_failures: FALSE
-
-# Will call LTE RLC dissector with standard settings as per RRC spec
-# true or false (case-insensitive)
-#mac-lte.attempt_to_dissect_srb_sdus: TRUE
-
-# Will call LTE RLC dissector for MCH LCID 0
-# true or false (case-insensitive)
-#mac-lte.attempt_to_dissect_mcch: FALSE
-
-# Call RLC dissector MTCH LCIDs
-# true or false (case-insensitive)
-#mac-lte.call_rlc_for_mtch: FALSE
-
-# Set whether LCID -> drb Table is taken from static table (below) or from info learned from control protocol (e.g. RRC)
-# One of: From static table, From configuration protocol
-# (case-insensitive).
-#mac-lte.lcid_to_drb_mapping_source: From static table
-
-# If any BSR report is >= this number, an expert warning will be added
-# A decimal number
-#mac-lte.bsr_warn_threshold: 50
-
-# Track status of SRs, providing links between requests, failure indications and grants
-# true or false (case-insensitive)
-#mac-lte.track_sr: TRUE
-
-# Can show PHY, MAC or RLC layer info in Info column
-# One of: PHY Info, MAC Info, RLC Info
-# (case-insensitive).
-#mac-lte.layer_to_show: RLC Info
-
-# Attempt to decode 6 bytes of Contention Resolution body as an UL CCCH PDU
-# true or false (case-insensitive)
-#mac-lte.decode_cr_body: FALSE
-
-# Apply DRX config and show DRX state within each UE
-# true or false (case-insensitive)
-#mac-lte.show_drx: FALSE
-
-# Add as a generated field the middle of the range indicated by the BSR index
-# true or false (case-insensitive)
-#mac-lte.show_bsr_median: FALSE
-
-# Attempt to decode BCCH, PCCH and CCCH data using NR RRC dissector
-# true or false (case-insensitive)
-#mac-nr.attempt_rrc_decode: TRUE
-
-# Will call NR RLC dissector with standard settings as per RRC spec, unless LCID 3,4 are being used for user-plane
-# true or false (case-insensitive)
-#mac-nr.attempt_to_dissect_srb_sdus: TRUE
-
-# Set whether LCID -> drb Table is taken from static table (below) or from info learned from control protocol (i.e. RRC)
-# One of: From static table, From configuration protocol
-# (case-insensitive).
-#mac-nr.lcid_to_drb_mapping_source: From static table
-
+m2pa.version: RFC 4165
+m2ua.protocol_data_1_tag: 0x0300 (RFC3331)
+m3ua.version: RFC 4666
+m3ua.desegment: TRUE
+mac.tsn_size: 6 bits
+mac-lte.retx_count_warn: 3
+mac-lte.attempt_rrc_decode: TRUE
+mac-lte.attempt_to_dissect_crc_failures: FALSE
+mac-lte.attempt_to_dissect_srb_sdus: TRUE
+mac-lte.attempt_to_dissect_mcch: FALSE
+mac-lte.call_rlc_for_mtch: FALSE
+mac-lte.lcid_to_drb_mapping_source: From static table
+mac-lte.bsr_warn_threshold: 50
+mac-lte.track_sr: TRUE
+mac-lte.layer_to_show: RLC Info
+mac-lte.decode_cr_body: FALSE
+mac-lte.show_drx: FALSE
+mac-lte.show_bsr_median: FALSE
+mac-nr.attempt_rrc_decode: TRUE
+mac-nr.attempt_to_dissect_srb_sdus: TRUE
+mac-nr.lcid_to_drb_mapping_source: From static table
 # Pre-Shared AES-GCM-128 Key as a HEX string (16 bytes).
 # A string
 #macsec.psk: 
@@ -1121,7 +1051,6 @@ lwl4.check_crc: TRUE
 # The name of the file containing the mate module's configuration
 # A path to a file
 #mate.config: 
-
 mbim.control_decode_unknown_itf: FALSE
 mbim.sms_pdu_format: Automatic
 mbim.extended_version: 1.0
@@ -1129,1261 +1058,327 @@ mcpe.udp.port: 19132
 mdshdr.decode_if_etype_zero: FALSE
 megaco.display_raw_text: TRUE
 megaco.display_dissect_tree: TRUE
-
-# Maintain relationships between transactions and contexts and display an extra tree showing context data
-# true or false (case-insensitive)
-#megaco.ctx_info: FALSE
-
-# Whether the MEMCACHE dissector should reassemble headers of a request spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#memcache.desegment_headers: TRUE
-
-# Whether the memcache dissector should reassemble PDUs spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#memcache.desegment_pdus: TRUE
-
-# If the trailer is found using heuristics, then the trailer may or may not be added and the FCS may or may not be captured. One of the heuristics is the timestamp seconds value being within specified bounds. Set ranges of valid seconds to adjust this particular heuristic.
-# A string denoting an positive integer range (e.g., "1-20,30-40")
-#metamako.secs_bounds: 3600-4294967295
-
-# If the trailer is found using heuristics, then the trailer may or may not be added and the FCS may or may not be captured. One of the heuristics is the number of days difference between the capture (PCAP) timestamp and the Ethernet trailer timestamp. Set an upper bound (in days) to adjust this particular heuristic.
-# A decimal number
-#metamako.days_diff_limit: 30
-
-# This option can override the trailer detection heuristic so that the Metamako trailer is either never or always present.
-# One of: According to heuristic, Never, Always
+megaco.ctx_info: FALSE
+memcache.desegment_headers: TRUE
+memcache.desegment_pdus: TRUE
+metamako.secs_bounds: 3600-4294967295
+metamako.days_diff_limit: 30
+metamako.trailer_present: According to heuristic
+metamako.fcs: According to heuristic
+metamako.check_fcs: TRUE
+mgcp.tcp.gateway_port: 2427
+mgcp.udp.gateway_port: 2427
+mgcp.tcp.callagent_port: 2727
+mgcp.udp.callagent_port: 2727
+mgcp.display_raw_text: FALSE
+mgcp.display_mgcp_message_count: FALSE
+mime_multipart.display_unknown_body_as_text: FALSE
+mime_multipart.remove_base64_encoding: FALSE
+mime_multipart.uncompress_data: TRUE
+miwi_p2pstar.miwi_ethertype: 0x809a
+miwi_p2pstar.fcs_format: CRC -16 BIT
+miwi_p2pstar.miwi_fcs_ok: TRUE
+miwi_p2pstar.miwi_ack_tracking: FALSE
+mle.meshlink_mic_ok: FALSE
+mms.use_iec61850_mapping: TRUE
+modbus.mbus_register_format: UINT32     
+mbrtu.desegment: TRUE
+mbrtu.crc_verification: FALSE
+mbtcp.desegment: TRUE
+monero.desegment: TRUE
+mpeg_dsmcc.verify_crc: TRUE
+mpeg_sect.verify_crc: TRUE
+mpls.try_heuristic_first FALSE
+mpls.flowlabel_in_mpls_header: FALSE
+mplspwatmaal5sdu.allow_cw_length_nonzero_aal5: FALSE
+mplspwatmaal5sdu.extend_cw_length_with_rsvd_aal5: FALSE
+mplspwatmn1cw.allow_cw_length_nonzero: FALSE
+mplspwatmn1cw.extend_cw_length_with_rsvd: FALSE
+mptcp.analyze_mptcp: TRUE
+mptcp.relative_sequence_numbers: TRUE
+mptcp.analyze_mappings: FALSE
+mptcp.intersubflows_retransmission: FALSE
+mq.desegment: TRUE
+mq.reassembly: TRUE
+mqpcf.maxprm: 999
+mqpcf.maxlst: 20000
+mqtt.default_version: MQTT v5.0
+mqtt.show_msg_as_text: TRUE
+msrp.display_raw_text: TRUE
+msrp.show_setup_info: TRUE
+mtp2.use_extended_sequence_numbers: FALSE
+mtp2.capture_contains_frame_check_sequence: FALSE
+mtp2.reverse_bit_order_mtp2: FALSE
+mtp3.heuristic_standard: FALSE
+mtp3.standard: ITU
+mtp3.itu_pc_structure: Unstructured
+mtp3.japan_pc_structure: Unstructured
+mtp3.ansi_5_bit_sls: FALSE
+mtp3.japan_5_bit_sls: FALSE
+mtp3.addr_format: Dashed
+mtp3.itu_priority: FALSE
+mysql.desegment_buffers: TRUE
+mysql.show_sql_query: TRUE
+nas-5gs.null_decipher: FALSE
 # (case-insensitive).
-#metamako.trailer_present: According to heuristic
-
-# Some Ethernet adapters and drivers include the FCS at the end of a packet, others do not.  Some capture file formats and protocols do not indicate whether or not the FCS is included. The Metamako dissector attempts to guess whether a captured packet has an FCS, but it cannot always guess correctly. This option can override that heuristic and assume that the FCS is either never or always present.
-# One of: According to heuristic, Never, Always
-# (case-insensitive).
-#metamako.fcs: According to heuristic
-
-# Whether to validate the Frame Check Sequence
-# true or false (case-insensitive)
-#metamako.check_fcs: TRUE
-
-# Set the UDP port for gateway messages (if other than the default of 2427)
-# A decimal number
-#mgcp.tcp.gateway_port: 2427
-
-# Set the TCP port for gateway messages (if other than the default of 2427)
-# A decimal number
-#mgcp.udp.gateway_port: 2427
-
-# Set the TCP port for callagent messages (if other than the default of 2727)
-# A decimal number
-#mgcp.tcp.callagent_port: 2727
-
-# Set the UDP port for callagent messages (if other than the default of 2727)
-# A decimal number
-#mgcp.udp.callagent_port: 2727
-
-# Specifies that the raw text of the MGCP message should be displayed instead of (or in addition to) the dissection tree
-# true or false (case-insensitive)
-#mgcp.display_raw_text: FALSE
-
-# Display the number of MGCP messages found in a packet in the protocol column.
-# true or false (case-insensitive)
-#mgcp.display_mgcp_message_count: FALSE
-
-# Display multipart bodies with no media type dissector as raw text (may cause problems with binary data).
-# true or false (case-insensitive)
-#mime_multipart.display_unknown_body_as_text: FALSE
-
-# Remove any base64 content-transfer encoding from bodies. This supports export of the body and its further dissection.
-# true or false (case-insensitive)
-#mime_multipart.remove_base64_encoding: FALSE
-
-# Uncompress parts which are compressed. GZIP for example. This supports export of the body and its further dissection.
-# true or false (case-insensitive)
-#mime_multipart.uncompress_data: TRUE
-
-# (Hexadecimal) Ethertype used to indicate IEEE 802.15.4 frame.
-# A hexadecimal number
-#miwi_p2pstar.miwi_ethertype: 0x809a
-
-# The FCS format in the captured payload
-# One of: CRC -16 BIT
-# (case-insensitive).
-#miwi_p2pstar.fcs_format: CRC -16 BIT
-
-# Dissect payload only if FCS is valid.
-# true or false (case-insensitive)
-#miwi_p2pstar.miwi_fcs_ok: TRUE
-
-# Match frames with ACK request to ACK packets
-# true or false (case-insensitive)
-#miwi_p2pstar.miwi_ack_tracking: FALSE
-
-# Dissect payload only if MIC is valid.
-# true or false (case-insensitive)
-#mle.meshlink_mic_ok: FALSE
-
-# Enables or disables dissection as IEC-61850 on top of MMS
-# true or false (case-insensitive)
-#mms.use_iec61850_mapping: TRUE
-
-# Register Format
-# One of: UINT16     , INT16      , UINT32     , INT32      , IEEE FLT   , MODICON FLT
-# (case-insensitive).
-#modbus.mbus_register_format: UINT16     
-
-# Whether the Modbus RTU dissector should desegment all messages spanning multiple TCP segments
-# true or false (case-insensitive)
-#mbrtu.desegment: TRUE
-
-# Whether to validate the CRC
-# true or false (case-insensitive)
-#mbrtu.crc_verification: FALSE
-
-# Whether the Modbus RTU dissector should desegment all messages spanning multiple TCP segments
-# true or false (case-insensitive)
-#mbtcp.desegment: TRUE
-
-# Whether the Monero dissector should desegment all messages spanning multiple TCP segments
-# true or false (case-insensitive)
-#monero.desegment: TRUE
-
-# Whether the section dissector should verify the CRC or checksum
-# true or false (case-insensitive)
-#mpeg_dsmcc.verify_crc: FALSE
-
-# Whether the section dissector should verify the CRC
-# true or false (case-insensitive)
-#mpeg_sect.verify_crc: FALSE
-
-# Try to decode a packet heuristically, e.g. as Ethernet without control word, before trying sub-dissectors based upon the first nibble.
-# true or false (case-insensitive)
-#mpls.try_heuristic_first: FALSE
-
-# Lowest label is used to segregate flows inside a pseudowire
-# true or false (case-insensitive)
-#mpls.flowlabel_in_mpls_header: FALSE
-
-# Enable to allow non-zero Length in Control Word. This may be needed to correctly decode traffic from some legacy devices which generate non-zero Length even if there is no padding in the packet. Note that Length should have proper value (dissector checks this anyway).
-# 
-# Disable to blame all packets with CW.Length <> 0. This conforms to RFC4717.
-# true or false (case-insensitive)
-#mplspwatmaal5sdu.allow_cw_length_nonzero_aal5: FALSE
-
-# Enable to use reserved bits (8..9) of Control Word as an extension of CW.Length. This may be needed to correctly decode traffic from some legacy devices which uses reserved bits as extension of Length
-# 
-# Disable to blame all packets with CW.Reserved <> 0. This conforms to RFC4717.
-# true or false (case-insensitive)
-#mplspwatmaal5sdu.extend_cw_length_with_rsvd_aal5: FALSE
-
-# Enable to allow non-zero Length in Control Word. This may be needed to correctly decode traffic from some legacy devices which generate non-zero Length even if there is no padding in the packet. Note that Length should have proper value (dissector checks this anyway).
-# 
-# Disable to blame all packets with CW.Length <> 0. This conforms to RFC4717.
-# true or false (case-insensitive)
-#mplspwatmn1cw.allow_cw_length_nonzero: FALSE
-
-# Enable to use reserved bits (8..9) of Control Word as an extension of CW.Length. This may be needed to correctly decode traffic from some legacy devices which uses reserved bits as extension of Length
-# 
-# Disable to blame all packets with CW.Reserved <> 0. This conforms to RFC4717.
-# true or false (case-insensitive)
-#mplspwatmn1cw.extend_cw_length_with_rsvd: FALSE
-
-# To use this option you must also enable "Analyze TCP sequence numbers". 
-# true or false (case-insensitive)
-#mptcp.analyze_mptcp: TRUE
-
-# In case you don't capture the key, it will use the first DSN seen
-# true or false (case-insensitive)
-#mptcp.relative_sequence_numbers: TRUE
-
-# Scales logarithmically with the number of packetsYou need to capture the handshake for this to work."Map TCP subflows to their respective MPTCP connections"
-# true or false (case-insensitive)
-#mptcp.analyze_mappings: FALSE
-
-# (Greedy algorithm: Scales linearly with number of subflows and logarithmic scaling with number of packets)You need to enable DSS mapping analysis for this option to work
-# true or false (case-insensitive)
-#mptcp.intersubflows_retransmission: FALSE
-
-# Whether the MQ dissector should reassemble messages spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#mq.desegment: TRUE
-
-# Whether the MQ dissector should reassemble MQ messages spanning multiple TSH segments
-# true or false (case-insensitive)
-#mq.reassembly: TRUE
-
-# When dissecting PCF there can be a lot of parameters. You can limit the number of parameter decoded, before it continue with the next PCF.
-# A decimal number
-#mqpcf.maxprm: 999
-
-# When dissecting a parameter of a PCFm, if it is a StringList, IntegerList or Integer64 List,  You can limit the number of elements displayed, before it continues with the next Parameter.
-# A decimal number
-#mqpcf.maxlst: 20000
-
-# Select the MQTT version to use as protocol version if the CONNECT packet is not captured
-# One of: None, MQTT v3.1, MQTT v3.1.1, MQTT v5.0
-# (case-insensitive).
-#mqtt.default_version: None
-
-# Show Publish Message as text
-# true or false (case-insensitive)
-#mqtt.show_msg_as_text: FALSE
-
-# Specifies that the raw text of the MSRP message should be displayed in addition to the dissection tree
-# true or false (case-insensitive)
-#msrp.display_raw_text: TRUE
-
-# Where available, show which protocol and frame caused this MSRP stream to be created
-# true or false (case-insensitive)
-#msrp.show_setup_info: TRUE
-
-# Whether the MTP2 dissector should use extended sequence numbers as described in Q.703, Annex A as a default.
-# true or false (case-insensitive)
-#mtp2.use_extended_sequence_numbers: FALSE
-
-# Some SS7 capture hardware includes the FCS at the end of the packet, others do not.
-# true or false (case-insensitive)
-#mtp2.capture_contains_frame_check_sequence: FALSE
-
-# Reverse the bit order inside bytes specified in Q.703.
-# true or false (case-insensitive)
-#mtp2.reverse_bit_order_mtp2: FALSE
-
-# This only works for SCCP traffic for now
-# true or false (case-insensitive)
-#mtp3.heuristic_standard: FALSE
-
-# The SS7 standard used in MTP3 packets
-# One of: ITU, ANSI, Chinese ITU, Japan
-# (case-insensitive).
-#mtp3.standard: ITU
-
-# The structure of the pointcodes in ITU networks
-# One of: Unstructured, 3-8-3, 4-3-4-3
-# (case-insensitive).
-#mtp3.itu_pc_structure: Unstructured
-
-# The structure of the pointcodes in Japan networks
-# One of: Unstructured, 7-4-5, 3-4-4-5
-# (case-insensitive).
-#mtp3.japan_pc_structure: Unstructured
-
-# Use 5-bit (instead of 8-bit) SLS in ANSI MTP3 packets
-# true or false (case-insensitive)
-#mtp3.ansi_5_bit_sls: FALSE
-
-# Use 5-bit (instead of 4-bit) SLS in Japan MTP3 packets
-# true or false (case-insensitive)
-#mtp3.japan_5_bit_sls: FALSE
-
-# Format for point code in the address columns
-# One of: Decimal, Hexadecimal, NI-Decimal, NI-Hexadecimal, Dashed
-# (case-insensitive).
-#mtp3.addr_format: Dashed
-
-# Decode the spare bits of the SIO as the MSU priority (a national option in ITU)
-# true or false (case-insensitive)
-#mtp3.itu_priority: FALSE
-
-# Whether the MySQL dissector should reassemble MySQL buffers spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#mysql.desegment_buffers: TRUE
-
-# Whether the MySQL dissector should display the SQL query string in the INFO column.
-# true or false (case-insensitive)
-#mysql.show_sql_query: FALSE
-
-# This should work when the NAS ciphering algorithm is NULL (5G-EEA0)
-# true or false (case-insensitive)
-#nas-5gs.null_decipher: FALSE
-
-# No description
-# One of: None, IP, Non IP, Ethernet
-# (case-insensitive).
-#nas-5gs.decode_user_data_container_as: None
-
+nas-5gs.decode_user_data_container_as: IP
 # No description
 # A dissector name
 #nas-5gs.non_ip_data_dissector: 
-
-# Always dissect NAS EPS messages as plain
-# true or false (case-insensitive)
-#nas-eps.dissect_plain: FALSE
-
-# This should work when the NAS ciphering algorithm is NULL (128-EEA0)
-# true or false (case-insensitive)
-#nas-eps.null_decipher: TRUE
-
-# No description
-# One of: None, IP, Non IP, Ethernet
-# (case-insensitive).
-#nas-eps.decode_user_data_container_as: None
-
-# No description
-# A dissector name
-#nas-eps.non_ip_data_dissector: 
-
-# Whether the Nasdaq ITCH dissector should decode Chi X extensions.
-# true or false (case-insensitive)
-#nasdaq_itch.chi_x: TRUE
-
-# Whether the Nasdaq-SoupTCP dissector should reassemble messages spanning multiple TCP segments.
-# true or false (case-insensitive)
-#nasdaq_soup.desegment: TRUE
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch1_content: MAC_CONTENT_DCCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch2_content: MAC_CONTENT_DCCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch3_content: MAC_CONTENT_DCCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch4_content: MAC_CONTENT_DCCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch5_content: MAC_CONTENT_CS_DTCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch6_content: MAC_CONTENT_CS_DTCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch7_content: MAC_CONTENT_CS_DTCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch8_content: MAC_CONTENT_DCCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch9_content: MAC_CONTENT_PS_DTCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch10_content: MAC_CONTENT_UNKNOWN
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch11_content: MAC_CONTENT_PS_DTCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch12_content: MAC_CONTENT_PS_DTCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch13_content: MAC_CONTENT_CS_DTCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch14_content: MAC_CONTENT_PS_DTCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch15_content: MAC_CONTENT_CCCH
-
-# foo
-# One of: MAC_CONTENT_UNKNOWN, MAC_CONTENT_DCCH, MAC_CONTENT_PS_DTCH, MAC_CONTENT_CS_DTCH, MAC_CONTENT_CCCH
-# (case-insensitive).
-#nbap.lch16_content: MAC_CONTENT_DCCH
-
-# Encoding used for the IB-SG-DATA element carrying segments of information blocks
-# One of: Encoding Variant 1 (TS 25.433 Annex D.2), Encoding Variant 2 (TS 25.433 Annex D.3)
-# (case-insensitive).
-#nbap.ib_sg_data_encoding: Encoding Variant 1 (TS 25.433 Annex D.2)
-
-# Whether the NBD dissector should reassemble messages spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings
-# true or false (case-insensitive)
-#nbd.desegment_nbd_messages: TRUE
-
-# Whether the NBSS dissector should reassemble packets spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#nbss.desegment_nbss_commands: TRUE
-
-# Whether the NCP dissector should reassemble messages spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#ncp.desegment: TRUE
-
-# Whether the NCP dissector should defragment NDS messages spanning multiple reply packets.
-# true or false (case-insensitive)
-#ncp.defragment_nds: TRUE
-
-# Dissect the NetWare Information Structure as NetWare 5.x or higher or as older NetWare 3.x.
-# true or false (case-insensitive)
-#ncp.newstyle: TRUE
-
-# Whether the NCP dissector should echo the NDS Entry ID to name resolves to the expert table.
-# true or false (case-insensitive)
-#ncp.eid_2_expert: TRUE
-
-# Whether the NCP dissector should echo NCP connection information to the expert table.
-# true or false (case-insensitive)
-#ncp.connection_2_expert: FALSE
-
-# Whether the NCP dissector should echo protocol errors to the expert table.
-# true or false (case-insensitive)
-#ncp.error_2_expert: TRUE
-
-# Whether the NCP dissector should echo server information to the expert table.
-# true or false (case-insensitive)
-#ncp.server_2_expert: TRUE
-
-# Whether the NCP dissector should echo file open/close/oplock information to the expert table.
-# true or false (case-insensitive)
-#ncp.file_2_expert: FALSE
-
-# Version of the NDMP protocol to assume if the version can not be automatically detected from the capture
-# One of: Version 2, Version 3, Version 4, Version 5
-# (case-insensitive).
-#ndmp.default_protocol_version: Version 4
-
-# Whether the NDMP dissector should reassemble messages spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#ndmp.desegment: TRUE
-
-# Whether the dissector should defragment NDMP messages spanning multiple packets.
-# true or false (case-insensitive)
-#ndmp.defragment: TRUE
-
-# Whether the NDPS dissector should reassemble messages spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#ndps.desegment_tcp: TRUE
-
-# Whether the NDPS dissector should reassemble fragmented NDPS messages spanning multiple SPX packets
-# true or false (case-insensitive)
-#ndps.desegment_spx: TRUE
-
-# Whether or not the NDPS dissector should show object id's and other details
-# true or false (case-insensitive)
-#ndps.show_oid: FALSE
-
-# Whether the NetBIOS dissector should defragment messages spanning multiple frames
-# true or false (case-insensitive)
-#netbios.defragment: TRUE
-
-# Whether the Netsync dissector should reassemble messages spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#netsync.desegment_netsync_messages: TRUE
-
-# Whether the dissector should snoop the FH to filename mappings by looking inside certain packets
-# true or false (case-insensitive)
-#nfs.file_name_snooping: FALSE
-
-# Whether the dissector should snoop the full pathname for files for matching FH's
-# true or false (case-insensitive)
-#nfs.file_full_name_snooping: FALSE
-
-# With this option display filters for nfs fhandles (nfs.fh.{name|full_name|hash}) will find both the request and response packets for a RPC call, even if the actual fhandle is only present in one of the packets
-# true or false (case-insensitive)
-#nfs.fhandle_find_both_reqrep: FALSE
-
-# When enabled, this option will print the NFSv4 tag (if one exists) in the Info column in the Summary pane
-# true or false (case-insensitive)
-#nfs.display_nfsv4_tag: TRUE
-
-# When enabled, shows only the significant NFSv4 Operations in the info column.  Others (like GETFH, PUTFH, etc) are not displayed
-# true or false (case-insensitive)
-#nfs.display_major_nfsv4_ops: TRUE
-
-# Dissect TransparentContainers that are opaque to NGAP
-# true or false (case-insensitive)
-#ngap.dissect_container: TRUE
-
-# Select whether target NG-RAN container should be decoded automatically (based on NG Setup procedure) or manually
-# One of: automatic, gNB, ng-eNB
-# (case-insensitive).
-#ngap.dissect_target_ng_ran_container_as: automatic
-
-# Select whether LTE container should be dissected as NB-IOT or legacy LTE
-# One of: Automatic, Legacy LTE, NB-IoT
-# (case-insensitive).
-#ngap.dissect_lte_container_as: Automatic
-
-# Whether the Authentication Extension data contains the source address. Some Cisco IOS implementations forgo this part of RFC2332.
-# true or false (case-insensitive)
-#nhrp.auth_ext_has_addr: TRUE
-
-# Whether the dissector will track and match MSG and RES calls for asynchronous NLM
-# true or false (case-insensitive)
-#nlm.msg_res_matching: FALSE
-
-# Whether the NMF dissector should reassemble fragmented payloads
-# true or false (case-insensitive)
-#nmf.reassemble_nmf: TRUE
-
-# Whether the NAS PDU should be shown in the root packet details tree
-# true or false (case-insensitive)
-#nr-rrc.nas_in_root_tree: FALSE
-
-# Whether the NR RRC dissector should attempt to reassemble DCCH segmented messages
-# true or false (case-insensitive)
-#nr-rrc.reassemble_dcch_segments: FALSE
-
+nas-eps.dissect_plain: FALSE
+nas-eps.null_decipher: TRUE
+nas-eps.decode_user_data_container_as: IP
+nasdaq_itch.chi_x: TRUE
+nasdaq_soup.desegment: TRUE
+nbap.lch1_content: MAC_CONTENT_DCCH
+nbap.lch2_content: MAC_CONTENT_DCCH
+nbap.lch3_content: MAC_CONTENT_DCCH
+nbap.lch4_content: MAC_CONTENT_DCCH
+nbap.lch5_content: MAC_CONTENT_CS_DTCH
+nbap.lch6_content: MAC_CONTENT_CS_DTCH
+nbap.lch7_content: MAC_CONTENT_CS_DTCH
+nbap.lch8_content: MAC_CONTENT_DCCH
+nbap.lch9_content: MAC_CONTENT_PS_DTCH
+nbap.lch10_content: MAC_CONTENT_UNKNOWN
+nbap.lch11_content: MAC_CONTENT_PS_DTCH
+nbap.lch12_content: MAC_CONTENT_PS_DTCH
+nbap.lch13_content: MAC_CONTENT_CS_DTCH
+nbap.lch14_content: MAC_CONTENT_PS_DTCH
+nbap.lch15_content: MAC_CONTENT_CCCH
+nbap.lch16_content: MAC_CONTENT_DCCH
+nbap.ib_sg_data_encoding: Encoding Variant 1 (TS 25.433 Annex D.2)
+nbd.desegment_nbd_messages: TRUE
+nbss.desegment_nbss_commands: TRUE
+ncp.desegment: TRUE
+ncp.defragment_nds: TRUE
+ncp.newstyle: TRUE
+ncp.eid_2_expert: TRUE
+ncp.connection_2_expert: FALSE
+ncp.error_2_expert: TRUE
+ncp.server_2_expert: TRUE
+ncp.file_2_expert: FALSE
+ndmp.default_protocol_version: Version 4
+ndmp.desegment: TRUE
+ndmp.defragment: TRUE
+ndps.desegment_tcp: TRUE
+ndps.desegment_spx: TRUE
+ndps.show_oid: TRUE
+netbios.defragment: TRUE
+netsync.desegment_netsync_messages: TRUE
+nfs.file_name_snooping: FALSE
+nfs.file_full_name_snooping: FALSE
+nfs.fhandle_find_both_reqrep: FALSE
+nfs.display_nfsv4_tag: TRUE
+nfs.display_major_nfsv4_ops: TRUE
+ngap.dissect_container: TRUE
+ngap.dissect_target_ng_ran_container_as: automatic
+ngap.dissect_lte_container_as: Automatic
+nhrp.auth_ext_has_addr: TRUE
+nlm.msg_res_matching: FALSE
+nmf.reassemble_nmf: TRUE
+nr-rrc.nas_in_root_tree: FALSE
+nr-rrc.reassemble_dcch_segments: FALSE
 # Cleartext NT Password (used to decrypt payloads, supports only ASCII passwords)
 # A string
 #ntlmssp.nt_password: 
-
-# Range of NVMe Subsystem ports(default 4420)
-# A string denoting an positive integer range (e.g., "1-20,30-40")
-#nvme-rdma.subsystem_ports: 4420
-
-# Range of NVMe Subsystem ports(default 4420)
-# A string denoting an positive integer range (e.g., "1-20,30-40")
-#nvme-tcp.subsystem_ports: 4420
-
-# Whether to validate the PDU header digest or not.
-# true or false (case-insensitive)
-#nvme-tcp.check_hdgst: FALSE
-
-# Whether to validate the PDU data digest or not.
-# true or false (case-insensitive)
-#nvme-tcp.check_ddgst: FALSE
-
-# The bit width of DU Port ID - sum of a,b,c&d (eAxC) must be 16
-# A decimal number
-#oran_fh_cus.oran.du_port_id_bits: 2
-
-# The bit width of BandSector ID - sum of a,b,c&d (eAxC) must be 16
-# A decimal number
-#oran_fh_cus.oran.bandsector_id_bits: 6
-
-# The bit width of CC ID - sum of a,b,c&d (eAxC) must be 16
-# A decimal number
-#oran_fh_cus.oran.cc_id_bits: 4
-
-# The bit width of RU Port ID - sum of a,b,c&d (eAxC) must be 16
-# A decimal number
-#oran_fh_cus.oran.ru_port_id_bits: 4
-
-# The bit width of a sample in the Uplink (if no udcompHdr)
-# A decimal number
-#oran_fh_cus.oran.iq_bitwidth_up: 14
-
-# Uplink User Data Compression
-# One of: No Compression, Block Floating Point Compression, Block Scaling Compression, u-Law Compression, Modulation Compression, BFP + selective RE sending, mod-compr + selective RE sending, BFP + selective RE sending with masks in section header, mod-compr + selective RE sending with masks in section header
-# (case-insensitive).
-#oran_fh_cus.oran.ud_comp_up: Block Floating Point Compression
-
-# The udCompHdr field in U-Plane messages may or may not be present, depending on the configuration of the O-RU. This preference instructs the dissector to expect this field to be present in uplink messages
-# true or false (case-insensitive)
-#oran_fh_cus.oran.ud_comp_hdr_up: FALSE
-
-# The bit width of a sample in the Downlink (if no udcompHdr)
-# A decimal number
-#oran_fh_cus.oran.iq_bitwidth_down: 14
-
-# Downlink User Data Compression
-# One of: No Compression, Block Floating Point Compression, Block Scaling Compression, u-Law Compression, Modulation Compression, BFP + selective RE sending, mod-compr + selective RE sending, BFP + selective RE sending with masks in section header, mod-compr + selective RE sending with masks in section header
-# (case-insensitive).
-#oran_fh_cus.oran.ud_comp_down: Block Floating Point Compression
-
-# The udCompHdr field in U-Plane messages may or may not be present, depending on the configuration of the O-RU. This preference instructs the dissector to expect this field to be present in downlink messages
-# true or false (case-insensitive)
-#oran_fh_cus.oran.ud_comp_hdr_down: FALSE
-
-# This is used if numPrbu is signalled as 0
-# A decimal number
-#oran_fh_cus.oran.rbs_in_uplane_section: 273
-
-# Used in decoding of section extension type 11 (Flexible BF weights)
-# A decimal number
-#oran_fh_cus.oran.num_weights_per_bundle: 32
-
-# Number of BF Antennas (used for C section type 6)
-# A decimal number
-#oran_fh_cus.oran.num_bf_antennas: 32
-
-# When enabled, for U-Plane frames show each I and Q value in PRB
-# true or false (case-insensitive)
-#oran_fh_cus.oran.show_iq_samples: TRUE
-
-# Whether the dissector should put the internal OER data in the tree or if it should hide it
-# true or false (case-insensitive)
-#oer.display_internal_oer_fields: FALSE
-
-# Dissect custom olsr.org message types (compatible with rfc routing agents)
-# true or false (case-insensitive)
-#olsr.ff_olsrorg: TRUE
-
-# Dissect custom nrlolsr tc message (incompatible with rfc routing agents)
-# true or false (case-insensitive)
-#olsr.nrlolsr: TRUE
-
-# SSL/TLS Ports range
-# A string denoting an positive integer range (e.g., "1-20,30-40")
-#opa.fe.tls.port: 3249-3252
-
-# Attempt to parse mad payload even when MAD.Status is non-zero
-# true or false (case-insensitive)
-#opa.mad.parse_mad_error: FALSE
-
-# Attempt to reassemble the mad payload of RMPP segments
-# true or false (case-insensitive)
-#opa.mad.reassemble_rmpp: TRUE
+nvme-rdma.subsystem_ports: 4420
+nvme-tcp.subsystem_ports: 4420
+nvme-tcp.check_hdgst: TRUE
+nvme-tcp.check_ddgst: TRUE
+oran_fh_cus.oran.du_port_id_bits: 2
+oran_fh_cus.oran.bandsector_id_bits: 6
+oran_fh_cus.oran.cc_id_bits: 4
+oran_fh_cus.oran.ru_port_id_bits: 4
+oran_fh_cus.oran.iq_bitwidth_up: 14
+oran_fh_cus.oran.ud_comp_up: Block Floating Point Compression
+oran_fh_cus.oran.ud_comp_hdr_up: FALSE
+oran_fh_cus.oran.iq_bitwidth_down: 14
+oran_fh_cus.oran.ud_comp_down: Block Floating Point Compression
+oran_fh_cus.oran.ud_comp_hdr_down: FALSE
+oran_fh_cus.oran.rbs_in_uplane_section: 273
+oran_fh_cus.oran.num_weights_per_bundle: 32
+oran_fh_cus.oran.num_bf_antennas: 32
+oran_fh_cus.oran.show_iq_samples: TRUE
+oer.display_internal_oer_fields: FALSE
+olsr.ff_olsrorg: TRUE
+olsr.nrlolsr: TRUE
+opa.fe.tls.port: 3249-3252
+opa.mad.parse_mad_error: FALSE
+opa.mad.reassemble_rmpp: TRUE
 
 # Redirect OPC UA Secure Conversion session keys to the file specified to enable decryption.
 # A path to a file
 #opcua.debug_file: 
-
-# Default signature length to use if the OpenSecureChannel message is missing.
-# One of: Unsigned, 20 Bytes, 32 Bytes
-# (case-insensitive).
-#opcua.signature_length: Unsigned
-
-# Whether the OpenFlow dissector should reassemble messages spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#openflow.desegment: TRUE
-
-# To be able to fully dissect SSDO and SPDO packages, a valid UDID for the SCM has to be provided
-# A string
-#opensafety.scm_udid: 00:00:00:00:00:00
-
-# Automatically assign a detected SCM UDID (by reading SNMT->SNTM_assign_UDID_SCM) and set it for the file
-# true or false (case-insensitive)
-#opensafety.scm_udid_autoset: TRUE
+openflow.desegment: TRUE
+opensafety.scm_udid: 00:00:00:00:00:00
+opensafety.scm_udid_autoset: TRUE
 
 # A comma-separated list of nodes to be filtered during dissection
 # A string
 #opensafety.filter_nodes: 
-
-# If set to true, only nodes in the list will be shown, otherwise they will be hidden
-# true or false (case-insensitive)
-#opensafety.filter_show_nodes_in_filterlist: TRUE
-
-# Port used by any UDP demo implementation to transport data
-# A decimal number
-#opensafety.network_udp_port: 9877
-
-# UDP port used by SercosIII to transport data
-# A decimal number
-#opensafety.network_udp_port_sercosiii: 8755
-
-# In an SercosIII/UDP transport stream, openSAFETY frame 2 will be expected before frame 1
-# true or false (case-insensitive)
-#opensafety.network_udp_frame_first_sercosiii: FALSE
-
-# In the transport stream, openSAFETY frame 2 will be expected before frame 1
-# true or false (case-insensitive)
-#opensafety.network_udp_frame_first: FALSE
-
-# Modbus/TCP words can be transcoded either big- or little endian. Default will be little endian
-# true or false (case-insensitive)
-#opensafety.mbtcp_big_endian: FALSE
-
-# Enables additional information in the dissection for better debugging an openSAFETY trace
-# true or false (case-insensitive)
-#opensafety.debug_verbose: FALSE
-
-# Enable heuristic dissection for openSAFETY over UDP encoded traffic
-# true or false (case-insensitive)
-#opensafety.enable_udp: TRUE
-
-# Enable heuristic dissection for Modbus/TCP
-# true or false (case-insensitive)
-#opensafety.enable_mbtcp: TRUE
-
-# Display the data between openSAFETY packets
-# true or false (case-insensitive)
-#opensafety.display_intergap_data: FALSE
-
-# SPDOs may only be found in cyclic data, SSDOs/SNMTS only in acyclic data
-# true or false (case-insensitive)
-#opensafety.classify_transport: TRUE
-
-# Port used by the openSAFETY over UDP data transport
-# A decimal number
-#opensafety_udp.network_udp_port: 9877
-
-# If tls-auth detection fails, you can choose to override detection and set tls-auth yourself
-# true or false (case-insensitive)
-#openvpn.tls_auth_detection_override: FALSE
-
-# Assume the connection uses tls-crypt
-# true or false (case-insensitive)
-#openvpn.tls_crypt: FALSE
-
-# If the parameter --tls-auth is used, the following preferences must also be defined.
-# true or false (case-insensitive)
-#openvpn.tls_auth: FALSE
-
-# If the parameter --tls-auth is used, a HMAC header is being inserted.
-# The default HMAC algorithm is SHA-1 which generates a 160 bit HMAC, therefore 20 bytes should be ok.
-# The value must be between 20 (160 bits) and 64 (512 bits).
-# A decimal number
-#openvpn.tls_auth_hmac_size: 20
-
-# If the parameter --tls-auth is used, an additional packet-id for replay protection is inserted after the HMAC signature. This field can either be 4 bytes or 8 bytes including an optional time_t timestamp long.
-#  This option is only evaluated if tls_auth_hmac_size > 0.
-#  The default value is true.
-# true or false (case-insensitive)
-#openvpn.long_format: TRUE
-
-# Whether the Openwire dissector should reassemble messages spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#openwire.desegment: TRUE
-
-# Whether verbose type and length information are displayed in the protocol tree
-# true or false (case-insensitive)
-#openwire.verbose_type: FALSE
-
-# Whether the OPSI dissector should desegment all messages spanning multiple TCP segments
-# true or false (case-insensitive)
-#opsi.desegment_opsi_messages: TRUE
-
-# Select the option of the network to interpret the Quality Level for
-# One of: Option I network, Option II network
-# (case-insensitive).
-#ossp.option_network: Option I network
-
-# Whether segmented TPKT datagrams should be reassembled
-# true or false (case-insensitive)
-#osi.tpkt_reassemble: FALSE
-
-# Whether segmented RTSE datagrams should be reassembled. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#rtse.reassemble: TRUE
-
-# Whether the IDMP dissector should reassemble messages spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#idmp.desegment_idmp_messages: TRUE
-
-# Whether segmented IDMP datagrams should be reassembled. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#idmp.reassemble: TRUE
-
-# Reassemble fragmented P_Mul packets
-# true or false (case-insensitive)
-#p_mul.reassemble: TRUE
-
-# Make the P_Mul dissector use relative message id number instead of absolute ones
-# true or false (case-insensitive)
-#p_mul.relative_msgid: TRUE
-
-# Calculate sequence/acknowledgement analysis
-# true or false (case-insensitive)
-#p_mul.seq_ack_analysis: TRUE
-
-# Type of content in Data_PDU
-# One of: No decoding, BER encoded ASN.1, Compressed Data Type
-# (case-insensitive).
-#p_mul.decode: No decoding
-
-# Attempt to decode parts of the message that aren't fully understood yet
-# true or false (case-insensitive)
-#papi.experimental_decode: FALSE
-
-# Whether the PCLI summary line should be shown in the protocol tree
-# true or false (case-insensitive)
-#pcli.summary_in_tree: TRUE
-
-# Show uncompressed User-Plane data as IP
-# true or false (case-insensitive)
-#pdcp-lte.show_user_plane_as_ip: TRUE
-
-# Show unciphered Signalling-Plane data as RRC
-# true or false (case-insensitive)
-#pdcp-lte.show_signalling_plane_as_rrc: TRUE
-
-# Do sequence number analysis
-# One of: No-Analysis, Only-RLC-frames, Only-PDCP-frames
-# (case-insensitive).
-#pdcp-lte.check_sequence_numbers: Only-RLC-frames
-
+opensafety.filter_show_nodes_in_filterlist: TRUE
+opensafety.network_udp_port: 9877
+opensafety.network_udp_port_sercosiii: 8755
+opensafety.network_udp_frame_first_sercosiii: FALSE
+opensafety.network_udp_frame_first: FALSE
+opensafety.mbtcp_big_endian: FALSE
+opensafety.debug_verbose: FALSE
+opensafety.enable_udp: TRUE
+opensafety.enable_mbtcp: TRUE
+opensafety.display_intergap_data: FALSE
+opensafety.classify_transport: TRUE
+opensafety_udp.network_udp_port: 9877
+openvpn.tls_auth_detection_override: FALSE
+openvpn.tls_crypt: TRUE
+openvpn.tls_auth: TRUE
+openvpn.tls_auth_hmac_size: 20
+openvpn.long_format: TRUE
+openwire.desegment: TRUE
+openwire.verbose_type: FALSE
+opsi.desegment_opsi_messages: TRUE
+ossp.option_network: Option I network
+osi.tpkt_reassemble: FALSE
+rtse.reassemble: TRUE
+idmp.desegment_idmp_messages: TRUE
+idmp.reassemble: TRUE
+p_mul.reassemble: TRUE
+p_mul.relative_msgid: TRUE
+p_mul.seq_ack_analysis: TRUE
+p_mul.decode: No decoding
+papi.experimental_decode: TRUE
+pcli.summary_in_tree: TRUE
+pdcp-lte.show_user_plane_as_ip: TRUE
+pdcp-lte.show_signalling_plane_as_rrc: TRUE
+pdcp-lte.check_sequence_numbers: Only-RLC-frames
 # Attempt to decode ROHC data
 # true or false (case-insensitive)
-#pdcp-lte.dissect_rohc: FALSE
-
-# Can show RLC, PDCP or Traffic layer info in Info column
-# One of: RLC Info, PDCP Info, Traffic Info
-# (case-insensitive).
-#pdcp-lte.layer_to_show: RLC Info
-
-# If RRC Security Info not seen, e.g. in Handover
-# One of: EEA0 (NULL), EEA1 (SNOW3G), EEA2 (AES), EEA3 (ZUC)
-# (case-insensitive).
-#pdcp-lte.default_ciphering_algorithm: EEA0 (NULL)
-
-# If RRC Security Info not seen, e.g. in Handover
-# One of: EIA0 (NULL), EIA1 (SNOW3G), EIA2 (AES), EIA3 (ZUC)
-# (case-insensitive).
-#pdcp-lte.default_integrity_algorithm: EIA0 (NULL)
-
-# N.B. only possible if build with algorithm support, and have key available and configured
-# true or false (case-insensitive)
-#pdcp-lte.decipher_signalling: TRUE
-
-# N.B. only possible if build with algorithm support, and have key available and configured
-# true or false (case-insensitive)
-#pdcp-lte.decipher_userplane: FALSE
-
-# N.B. only possible if build with algorithm support, and have key available and configured
-# true or false (case-insensitive)
-#pdcp-lte.verify_integrity: TRUE
-
-# Ignore the LTE RRC security algorithm configuration, to be used when PDCP is already deciphered in the capture
-# true or false (case-insensitive)
-#pdcp-lte.ignore_rrc_sec_params: FALSE
-
-# Show uncompressed User-Plane data as IP
-# true or false (case-insensitive)
-#pdcp-nr.show_user_plane_as_ip: TRUE
-
-# Show unciphered Signalling-Plane data as RRC
-# true or false (case-insensitive)
-#pdcp-nr.show_signalling_plane_as_rrc: TRUE
-
-# Do sequence number analysis
-# One of: No-Analysis, Only-RLC-frames, Only-PDCP-frames
-# (case-insensitive).
-#pdcp-nr.check_sequence_numbers: Only-RLC-frames
-
-# Attempt to decode ROHC data
-# true or false (case-insensitive)
-#pdcp-nr.dissect_rohc: FALSE
-
-# Can show RLC, PDCP or Traffic layer info in Info column
-# One of: RLC Info, PDCP Info, Traffic Info
-# (case-insensitive).
-#pdcp-nr.layer_to_show: RLC Info
-
-# If RRC Security Info not seen, e.g. in Handover
-# One of: NEA0 (NULL), NEA1 (SNOW3G), NEA2 (AES), NEA3 (ZUC)
-# (case-insensitive).
-#pdcp-nr.default_ciphering_algorithm: NEA0 (NULL)
-
-# If RRC Security Info not seen, e.g. in Handover
-# One of: NIA0 (NULL), NIA1 (SNOW3G), NIA2 (AES), NIA3 (ZUC)
-# (case-insensitive).
-#pdcp-nr.default_integrity_algorithm: NIA0 (NULL)
-
-# N.B. only possible if build with algorithm support, and have key available and configured
-# true or false (case-insensitive)
-#pdcp-nr.decipher_signalling: TRUE
-
-# N.B. only possible if build with algorithm support, and have key available and configured
-# true or false (case-insensitive)
-#pdcp-nr.decipher_userplane: FALSE
-
-# N.B. only possible if build with algorithm support, and have key available and configured
-# true or false (case-insensitive)
-#pdcp-nr.verify_integrity: TRUE
-
-# Ignore the NR RRC security algorithm configuration, to be used when PDCP is already deciphered in the capture
-# true or false (case-insensitive)
-#pdcp-nr.ignore_rrc_sec_params: FALSE
-
-# Whether the dissector should put the internal PER data in the tree or if it should hide it
-# true or false (case-insensitive)
-#per.display_internal_per_fields: FALSE
-
-# Track PFCP session
-# true or false (case-insensitive)
-#pfcp.track_pfcp_session: FALSE
-
-# Request/reply pair matches only if their timestamps are closer than that value, in ms (default 0, i.e. don't use timestamps)
-# A decimal number
-#pfcp.pair_max_interval: 0
-
-# Whether or not UID and PID fields are dissected in host, big, or little endian byte order
-# One of: Host-endian, Big-endian, Little-endian
-# (case-insensitive).
-#pflog.id_endian: Host-endian
-
-# Whether to check the validity of the PGM checksum
-# true or false (case-insensitive)
-#pgm.check_checksum: TRUE
-
-# Whether the PIM payload is shown off of the main tree or encapsulated within the PIM options
-# true or false (case-insensitive)
-#pim.payload_tree: TRUE
-
+pdcp-lte.dissect_rohc: TRUE
+pdcp-lte.layer_to_show: RLC Info
+pdcp-lte.default_ciphering_algorithm: EEA0 (NULL)
+pdcp-lte.default_integrity_algorithm: EIA0 (NULL)
+pdcp-lte.decipher_signalling: TRUE
+pdcp-lte.decipher_userplane: FALSE
+pdcp-lte.verify_integrity: TRUE
+pdcp-lte.ignore_rrc_sec_params: FALSE
+pdcp-nr.show_user_plane_as_ip: TRUE
+pdcp-nr.show_signalling_plane_as_rrc: TRUE
+pdcp-nr.check_sequence_numbers: Only-RLC-frames
+pdcp-nr.dissect_rohc: FALSE
+pdcp-nr.layer_to_show: RLC Info
+pdcp-nr.default_ciphering_algorithm: NEA0 (NULL)
+pdcp-nr.default_integrity_algorithm: NIA0 (NULL)
+pdcp-nr.decipher_signalling: TRUE
+pdcp-nr.decipher_userplane: FALSE
+pdcp-nr.verify_integrity: TRUE
+pdcp-nr.ignore_rrc_sec_params: FALSE
+per.display_internal_per_fields: FALSE
+pfcp.track_pfcp_session: FALSE
+pfcp.pair_max_interval: 0
+pflog.id_endian: Host-endian
+pgm.check_checksum: TRUE
+pim.payload_tree: TRUE
 # The password to used to decrypt the encrypted elements within the PKCS#12 file
 # A string
 #pkcs12.password: 
-
-# Whether to try and decrypt the encrypted data within the PKCS#12 with a NULL password
-# true or false (case-insensitive)
-#pkcs12.try_null_password: FALSE
-
-# Whether the PN-RT summary line should be shown in the protocol tree
-# true or false (case-insensitive)
-#pn_rt.summary_in_tree: TRUE
-
-# Reassemble PNIO Fragments and get them decoded
-# true or false (case-insensitive)
-#pn_rt.desegment: TRUE
-
-# Protocol payload type
-# One of: Data, Sony FeliCa, NXP MiFare, ISO 7816
-# (case-insensitive).
-#pn532.prtype532: Data
-
-# Whether the PNIO dissector is allowed to use detailed PROFIsafe dissection of cyclic data frames
-# true or false (case-insensitive)
-#pn_io.pnio_ps_selection: TRUE
+pkcs12.try_null_password: FALSE
+pn_rt.summary_in_tree: TRUE
+pn_rt.desegment: TRUE
+pn532.prtype532: Data
+pn_io.pnio_ps_selection: TRUE
 
 # Place GSD files in this folder.
 # A path to a directory
 #pn_io.pnio_ps_networkpath: 
-
-# Whether the POP dissector should reassemble RETR and TOP responses and spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#pop.desegment_data: TRUE
-
-# Whether fragmented 802.11 aggregated MPDUs should be reassembled
-# true or false (case-insensitive)
-#ppi.reassemble: TRUE
-
-# The type of PPP frame checksum (none, 16-bit, 32-bit)
-# One of: None, 16-Bit, 32-Bit
-# (case-insensitive).
-#ppp.fcs_type: None
-
-# Default Protocol ID to be used for PPPMuxCP
-# A hexadecimal number
-#ppp.default_proto_id: 0
-
-# Whether PPP Multilink frames use 12-bit sequence numbers
-# true or false (case-insensitive)
-#mp.short_seqno: FALSE
-
-# Maximum number of PPP Multilink fragments to try to reassemble into one frame
-# A decimal number
-#mp.max_fragments: 6
-
-# Age off unreassembled fragments after this many packets
-# A decimal number
-#mp.fragment_aging: 4000
-
-# Show values of tags and lengths of data fields
-# true or false (case-insensitive)
-#pppoed.show_tags_and_lengths: FALSE
-
-# Load .proto files when Wireshark starts. By default, the .proto files are loaded only when the Protobuf dissector is called for the first time.
-# true or false (case-insensitive)
-#protobuf.preload_protos: FALSE
-
-# If Protobuf messages and fields are defined in loaded .proto files, they will be dissected as wireshark fields if this option is turned on. The names of all these wireshark fields will be prefixed with "pbf." (for fields) or "pbm." (for messages) followed by their full names in the .proto files.
-# true or false (case-insensitive)
-#protobuf.pbf_as_hf: FALSE
-
-# Show the names of message, field, enum and enum_value. Show the wire type and field number format of field. Show value nodes of field and enum_value.
-# true or false (case-insensitive)
-#protobuf.show_details: FALSE
-
-# Show all fields of bytes type as string. For example ETCD string
-# true or false (case-insensitive)
-#protobuf.bytes_as_string: FALSE
-
-# Make Protobuf fields that are not serialized on the wire to be displayed with default values.
-# The default value will be one of the following: 
-#   1) The value of the 'default' option of an optional field defined in 'proto2' file. (explicitly-declared)
-#   2) False for bools.
-#   3) First defined enum value for enums.
-#   4) Zero for numeric types.
-# There are no default values for fields 'repeated' or 'bytes' and 'string' without default value declared.
-# If the missing field is 'required' in a 'proto2' file, a warning item will be added to the tree.
-# One of: None, Only Explicitly-Declared (proto2), Explicitly-Declared, ENUM and BOOL, All
-# (case-insensitive).
-#protobuf.add_default_value: None
-
-# Specifies that the JSON text of the Protobuf message should be displayed in addition to the dissection tree
-# true or false (case-insensitive)
-#protobuf.display_json_mapping: FALSE
-
-# Display timestamp in UTC format
-# true or false (case-insensitive)
-#protobuf.use_utc: FALSE
-
-# Try to dissect all undefined length-delimited fields as string.
-# true or false (case-insensitive)
-#protobuf.try_dissect_as_string: FALSE
-
-# Try to show all possible field types for each undefined field according to wire type.
-# true or false (case-insensitive)
-#protobuf.show_all_types: FALSE
-
+pop.desegment_data: TRUE
+ppi.reassemble: TRUE
+ppp.fcs_type: None
+ppp.default_proto_id: 0
+mp.short_seqno: FALSE
+mp.max_fragments: 6
+mp.fragment_aging: 4000
+pppoed.show_tags_and_lengths: FALSE
+protobuf.preload_protos: FALSE
+protobuf.pbf_as_hf: FALSE
+protobuf.show_details: TRUE
+protobuf.bytes_as_string: TRUE
+protobuf.add_default_value: All
+protobuf.display_json_mapping: TRUE
+protobuf.use_utc: FALSE
+protobuf.try_dissect_as_string: FALSE
+protobuf.show_all_types: FALSE
 # Can be useful e.g. if dissector called through media type
 # A string
 #protobuf.default_type: 
 
-# Make the PTP dissector analyze PTP messages. Accurate Capture Timestamps required!
-# true or false (case-insensitive)
-#ptp.analyze_ptp_messages: TRUE
-
-# Maximum allowed time between messages of same type when finding consecutive messages for analysis calculations.
-# A decimal number
-#ptp.analyze_ptp_delta: 10
-
+ptp.analyze_ptp_messages: TRUE
+ptp.analyze_ptp_delta: 10
 # Properly translates vendor specific opcodes
 # One of: Unknown vendor, Eastman Kodak, Canon, Nikon, Casio EX-F1, Microsoft / MTP, Olympus E series
 # (case-insensitive).
 #ptpip.vendor: Unknown vendor
-
-# Whether the PVFS dissector should reassemble messages spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#pvfs.desegment: TRUE
-
-# Whether the Q.931 dissector should reassemble messages spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#q931.desegment_h323_messages: TRUE
-
-# Reassemble segmented Q.931 messages (Q.931 - Annex H)
-# true or false (case-insensitive)
-#q931.reassembly: TRUE
-
-# Decode ISO/IEC cause coding standard as ITU-T
-# true or false (case-insensitive)
-#q931.iso_iec_cause_coding: FALSE
-
-# Type of Facility encoding
-# One of: Dissect facility as QSIG, Dissect facility as ETSI
-# (case-insensitive).
-#q932.facility_encoding: Dissect facility as QSIG
-
-# Set the UDP base port for the Quake III Arena Server
-# A decimal number
-#quake3.udp.arena_port: 27960
-
-# Set the UDP base port for the Quake III Arena Master Server
-# A decimal number
-#quake3.udp.master_port: 27950
-
-# Whether out-of-order CRYPTO frames should be buffered and reordered before passing them to the TLS handshake dissector.
-# true or false (case-insensitive)
-#quic.reassemble_crypto_out_of_order: TRUE
-
-# Heuristically search for coalesced QUIC packets with a short header (e.g., when Generic Segmentation Offload (GSO) or similar is used), if the DCID is at least this many bytes long (0 to disable). 
-# A decimal number
-#quic.gso_heur_min_dcid_len: 8
+pvfs.desegment: TRUE
+q931.desegment_h323_messages: TRUE
+q931.reassembly: TRUE
+q931.iso_iec_cause_coding: FALSE
+q932.facility_encoding: Dissect facility as QSIG
+quake3.udp.arena_port: 27960
+quake3.udp.master_port: 27950
+quic.reassemble_crypto_out_of_order: TRUE
+quic.gso_heur_min_dcid_len: 8
 
 # Shared secret used to decode User Passwords and validate Accounting Request and Response Authenticators
 # A string
 #radius.shared_secret: 
 
-# Whether to check or not if Authenticator and Message-Authenticator are correct. You need to define shared secret for this to work.
-# true or false (case-insensitive)
-#radius.validate_authenticator: FALSE
-
-# Whether to add or not to the tree the AVP's payload length
-# true or false (case-insensitive)
-#radius.show_length: FALSE
-
-# Whether to interpret 241-246 as extended attributes according to RFC 6929
-# true or false (case-insensitive)
-#radius.disable_extended_attributes: FALSE
-
-# Attempt to dissect RRC message embedded in RRC-Container IE
-# true or false (case-insensitive)
-#ranap.dissect_rrc_container: FALSE
-
-# Where available, show which protocol and frame caused this RDT stream to be created
-# true or false (case-insensitive)
-#rdt.show_setup_info: TRUE
-
-# Whether fragmented RELOAD datagrams should be reassembled
-# true or false (case-insensitive)
-#reload.defragment: TRUE
-
-# Length of the NodeId as defined in the overlay.
-# A decimal number
-#reload.nodeid_length: 16
-
-# topology plugin defined in the overlay
-# A string
-#reload.topology_plugin: CHORD-RELOAD
-
-# Whether the RESP dissector should reassemble command and response lines spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#resp.desegment_data: TRUE
-
-# Display the third and forth bytes of the RIPv2 header as the Routing Domain field (introduced in RFC 1388 [January 1993] and obsolete as of RFC 1723 [November 1994])
-# true or false (case-insensitive)
-#rip.display_routing_domain: FALSE
-
-# Number of measurement points within the packet
-# A decimal number
-#rk512.num_measurement_pts: 541
-
-# When enabled, try to reassemble SDUs from the various PDUs received
-# true or false (case-insensitive)
-#rlc.perform_reassembly: TRUE
-
-# When enabled, if data is not present, don't report as an error, but instead add expert info to indicate that headers were omitted
-# true or false (case-insensitive)
-#rlc.header_only_mode: FALSE
-
-# When enabled, RLC will ignore sequence numbers reported in 'Security Mode Command'/'Security Mode Complete' (RRC) messages when checking if frames are ciphered
-# true or false (case-insensitive)
-#rlc.ignore_rrc_cipher_indication: FALSE
-
-# When enabled, RLC will assume all payloads in RLC frames are ciphered
-# true or false (case-insensitive)
-#rlc.ciphered_data: FALSE
-
-# LI size in bits, either 7 or 15 bit
-# One of: 7 bits, 15 bits, Let upper layers decide
-# (case-insensitive).
-#rlc.li_size: Let upper layers decide
-
-# Attempt to keep track of PDUs for AM channels, and point out problems
-# One of: No-Analysis, Only-MAC-frames, Only-RLC-frames
-# (case-insensitive).
-#rlc-lte.do_sequence_analysis_am: Only-MAC-frames
-
-# Attempt to keep track of PDUs for UM channels, and point out problems
-# One of: No-Analysis, Only-MAC-frames, Only-RLC-frames
-# (case-insensitive).
-#rlc-lte.do_sequence_analysis: Only-MAC-frames
-
-# Call PDCP dissector for signalling PDUs.  Note that without reassembly, it canonly be called for complete PDUs (i.e. not segmented over RLC)
-# true or false (case-insensitive)
-#rlc-lte.call_pdcp_for_srb: TRUE
-
-# Call PDCP dissector for user-plane PDUs.  Note that without reassembly, it canonly be called for complete PDUs (i.e. not segmented over RLC)
-# One of: Off, 7-bit SN, 12-bit SN, 15-bit SN, 18-bit SN, Use signalled value
-# (case-insensitive).
-#rlc-lte.call_pdcp_for_drb: Use signalled value
-
-# Call RRC dissector for CCCH PDUs
-# true or false (case-insensitive)
-#rlc-lte.call_rrc_for_ccch: TRUE
-
-# Call RRC dissector for MCCH PDUs  Note that without reassembly, it canonly be called for complete PDUs (i.e. not segmented over RLC)
-# true or false (case-insensitive)
-#rlc-lte.call_rrc_for_mcch: FALSE
-
-# Call ip dissector for MTCH PDUs  Note that without reassembly, it canonly be called for complete PDUs (i.e. not segmented over RLC)
-# true or false (case-insensitive)
-#rlc-lte.call_ip_for_mtch: FALSE
-
-# When enabled, if data is not present, don't report as an error, but instead add expert info to indicate that headers were omitted
-# true or false (case-insensitive)
-#rlc-lte.header_only_mode: FALSE
-
-# When enabled, attempts to re-assemble upper-layer SDUs that are split over more than one RLC PDU.  Note: does not currently support out-of-order or re-segmentation. N.B. sequence analysis must also be turned on in order for reassembly to work
-# true or false (case-insensitive)
-#rlc-lte.reassembly: TRUE
-
-# Call PDCP dissector for signalling PDUs.  Note that without reassembly, it canonly be called for complete PDUs (i.e. not segmented over RLC)
-# true or false (case-insensitive)
-#rlc-nr.call_pdcp_for_srb: TRUE
-
-# Call PDCP dissector for UL user-plane PDUs.  Note that without reassembly, it canonly be called for complete PDUs (i.e. not segmented over RLC)
-# One of: Off, 12-bit SN, 18-bit SN, Use signalled value
-# (case-insensitive).
-#rlc-nr.call_pdcp_for_ul_drb: Off
-
-# Call PDCP dissector for DL user-plane PDUs.  Note that without reassembly, it canonly be called for complete PDUs (i.e. not segmented over RLC)
-# One of: Off, 12-bit SN, 18-bit SN, Use signalled value
-# (case-insensitive).
-#rlc-nr.call_pdcp_for_dl_drb: Off
-
-# Call RRC dissector for CCCH PDUs
-# true or false (case-insensitive)
-#rlc-nr.call_rrc_for_ccch: TRUE
-
-# When enabled, if data is not present, don't report as an error, but instead add expert info to indicate that headers were omitted
-# true or false (case-insensitive)
-#rlc-nr.header_only_mode: FALSE
-
-# N.B. This should be considered experimental/incomplete, in that it doesn't try to discard reassembled state when reestablishment happens, or in certain packet-loss cases
-# true or false (case-insensitive)
-#rlc-nr.reassemble_am_frames: TRUE
-
-# N.B. This should be considered experimental/incomplete, in that it doesn't try to discard reassembled state when reestablishment happens, or in certain packet-loss cases
-# true or false (case-insensitive)
-#rlc-nr.reassemble_um_frames: FALSE
-
-# Whether the RPC dissector should reassemble messages spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#rpc.desegment_rpc_over_tcp: TRUE
-
-# Whether the RPC dissector should defragment RPC-over-TCP messages.
-# true or false (case-insensitive)
-#rpc.defragment_rpc_over_tcp: TRUE
-
-# Set the maximum size of RPCoverTCP PDUs.  If the size field of the record marker is larger than this value it will not be considered a valid RPC PDU.
-# A decimal number
-#rpc.max_tcp_pdu_size: 4194304
-
-# Whether the RPC dissector should attempt to dissect RPC PDUs containing programs that are not known to Wireshark. This will make the heuristics significantly weaker and elevate the risk for falsely identifying and misdissecting packets significantly.
-# true or false (case-insensitive)
-#rpc.dissect_unknown_programs: FALSE
-
-# Whether the RPC dissector should attempt to locate RPC PDU boundaries when initial fragment alignment is not known.  This may cause false positives, or slow operation.
-# true or false (case-insensitive)
-#rpc.find_fragment_start: FALSE
-
-# Whether the RPCAP dissector should reassemble PDUs spanning multiple TCP segments. To use this option, you must also enable "Allow subdissectors to reassemble TCP streams" in the TCP protocol settings.
-# true or false (case-insensitive)
-#rpcap.desegment_pdus: TRUE
-
-# Whether the packets should be decoded according to the link-layer type.
-# true or false (case-insensitive)
-#rpcap.decode_content: TRUE
-
-# Default link-layer type to use if an Open Reply packet has not been captured.
-# A decimal number
-#rpcap.linktype: 4294967295
-
-# RPKI-Router Protocol TCP TLS port if other than the default
-# A decimal number
-#rpkirtr.tcp.rpkirtr_tls.port: 324
-
-# Whether the NAS PDU should be shown in the root packet details tree
-# true or false (case-insensitive)
-#rrc.nas_in_root_tree: FALSE
-
-# Controls the display of the session's client username in the info column.  This is only displayed if the packet containing it was seen during this capture session.
-# true or false (case-insensitive)
-#rsh.info_show_client_username: FALSE
-
-# Controls the display of the session's server username in the info column.  This is only displayed if the packet containing it was seen during this capture session.
-# true or false (case-insensitive)
-#rsh.info_show_server_username: TRUE
-
-# Controls the display of the command being run on the server by this session in the info column.  This is only displayed if the packet containing it was seen during this capture session.
-# true or false (case-insensitive)
-#rsh.info_show_command: FALSE
-
-# Use ipaccess nanoBTS specific definitions for RSL
-# true or false (case-insensitive)
-#gsm_abis_rsl.use_ipaccess_rsl: FALSE
-
-# Use Osmocom specific definitions for RSL
-# true or false (case-insensitive)
-#gsm_abis_rsl.use_osmocom_rsl: FALSE
-
-# The Physical Context Information field is not specified This information should be not be analysed by BSC, but merely forwarded from one TRX/channel to another.
-# true or false (case-insensitive)
-#gsm_abis_rsl.dissect_phy_ctx_inf: TRUE
-
-# Specifies whether Wireshark should decode and display sub-messages within BUNDLE messages
-# true or false (case-insensitive)
-#rsvp.process_bundle: TRUE
+radius.validate_authenticator: FALSE
+radius.show_length: FALSE
+radius.disable_extended_attributes: FALSE
+ranap.dissect_rrc_container: FALSE
+rdt.show_setup_info: TRUE
+reload.defragment: TRUE
+reload.nodeid_length: 16
+reload.topology_plugin: CHORD-RELOAD
+resp.desegment_data: TRUE
+rip.display_routing_domain: FALSE
+rk512.num_measurement_pts: 541
+rlc.perform_reassembly: TRUE
+rlc.header_only_mode: FALSE
+rlc.ignore_rrc_cipher_indication: FALSE
+rlc.ciphered_data: FALSE
+rlc.li_size: Let upper layers decide
+rlc-lte.do_sequence_analysis_am: Only-MAC-frames
+rlc-lte.do_sequence_analysis: Only-MAC-frames
+rlc-lte.call_pdcp_for_srb: TRUE
+rlc-lte.call_pdcp_for_drb: Use signalled value
+rlc-lte.call_rrc_for_ccch: TRUE
+rlc-lte.call_rrc_for_mcch: FALSE
+rlc-lte.call_ip_for_mtch: FALSE
+rlc-lte.header_only_mode: FALSE
+rlc-lte.reassembly: TRUE
+rlc-nr.call_pdcp_for_srb: TRUE
+rlc-nr.call_pdcp_for_ul_drb: Off
+rlc-nr.call_pdcp_for_dl_drb: Off
+rlc-nr.call_rrc_for_ccch: TRUE
+rlc-nr.header_only_mode: TRUE
+rlc-nr.reassemble_am_frames: TRUE
+rlc-nr.reassemble_um_frames: FALSE
+rpc.desegment_rpc_over_tcp: TRUE
+rpc.defragment_rpc_over_tcp: TRUE
+rpc.max_tcp_pdu_size: 4194304
+rpc.dissect_unknown_programs: FALSE
+rpc.find_fragment_start: FALSE
+rpcap.desegment_pdus: TRUE
+rpcap.decode_content: TRUE
+rpcap.linktype: 4294967295
+rpkirtr.tcp.rpkirtr_tls.port: 324
+rrc.nas_in_root_tree: FALSE
+rsh.info_show_client_username: FALSE
+rsh.info_show_server_username: TRUE
+rsh.info_show_command: FALSE
+gsm_abis_rsl.use_ipaccess_rsl: FALSE
+gsm_abis_rsl.use_osmocom_rsl: FALSE
+gsm_abis_rsl.dissect_phy_ctx_inf: TRUE
+rsvp.process_bundle: TRUE
 
 # Specifies how Wireshark should dissect generalized labels
 # One of: data (no interpretation), SONET/SDH ("S, U, K, L, M" scheme), Wavelength Label (fixed or flexi grid), ODUk Label
