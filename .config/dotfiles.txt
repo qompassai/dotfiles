@@ -539,6 +539,7 @@ qt5ct
 qt6ct
 quilt
 quotatab
+qutebrowser
 r
 radvd
 rage
@@ -584,6 +585,7 @@ shiny-mirrors
 shorewall
 shorewall6
 shstatus
+sidedoor
 sigma
 signal
 signond
@@ -668,6 +670,7 @@ templateengine
 tempo
 tenacity
 termshark
+texlive
 tgr
 tgt
 thorium-flags.conf

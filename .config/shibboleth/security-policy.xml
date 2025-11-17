@@ -1,0 +1,32 @@
+<SecurityPolicies xmlns="urn:mace:shibboleth:3.0:native:sp:config">
+<!--   
+/qompassai/dotfiles/.config/shibbolet/attribute-policy.xml
+Qompass AI Shibboleth Attribute Policy Config
+Copyright (C) 2025 Qompass AI, All rights reserved
+-->
+    <Policy id="default" validate="false">
+        <PolicyRule type="MessageFlow" checkReplay="true" expires="60"/>
+        <PolicyRule type="Conditions">
+            <PolicyRule type="Audience"/>
+             <PolicyRule type="Delegation"/>
+        </PolicyRule>
+        <PolicyRule type="ClientCertAuth" errorFatal="true"/>
+        <PolicyRule type="XMLSigning" errorFatal="true"/>
+        <PolicyRule type="SimpleSigning" errorFatal="true"/>
+    </Policy>
+    <Policy id="blockUnsolicited" validate="false">
+        <PolicyRule type="MessageFlow" blockUnsolicited="true" checkReplay="true" expires="60"/>
+        <PolicyRule type="Conditions">
+            <PolicyRule type="Audience"/>
+        </PolicyRule>
+        <PolicyRule type="ClientCertAuth" errorFatal="true"/>
+        <PolicyRule type="XMLSigning" errorFatal="true"/>
+        <PolicyRule type="SimpleSigning" errorFatal="true"/>
+        <PolicyRule type="Bearer" blockUnsolicited="true"/>
+    </Policy>
+    <Policy id="entity-attributes">
+        <PolicyRule type="Conditions"/>
+        <PolicyRule type="XMLSigning" errorFatal="true"/>
+    </Policy>
+    <ExcludedAlgorithms excludeDefaults="true"/>
+</SecurityPolicies>

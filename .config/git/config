@@ -82,3 +82,6 @@
     sort = version:refname
 [transfer]
     fsckobjects = false
+[user]
+	email = Pass-Automated-Testing-Suite@zx2c4.com
+	name = Pass Automated Testing Suite

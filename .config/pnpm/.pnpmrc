@@ -6,7 +6,8 @@ store-dir=~/.local/share/pnpm/store
 cache-dir=~/.cache/pnpm
 state-dir=~/.local/share/pnpm/state
 
-# dangerously-allow-all-builds=true
+dangerously-allow-all-builds=false
 auto-install-peers=true
 shamefully-hoist=false
 strict-peer-dependencies=false
+use-node-version=22.21.1
