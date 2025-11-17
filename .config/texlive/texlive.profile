@@ -1,0 +1,43 @@
+# /qompassai/dotfiles/.config/texlive/texlive.profile
+# Qompass AI Texlive Profile
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+selected_scheme scheme-full
+collection-basic 1
+collection-bibtexextra 1
+collection-binextra 1
+collection-fontsextra 1
+collection-fontsrecommended 1
+collection-latex 1
+collection-latexextra 1
+collection-latexrecommended 1
+collection-luatex 1
+collection-mathscience 1
+collection-pictures 1
+collection-publishers 1
+collection-xetex 1
+binary_x86_64-linux 1
+TEXDIR /home/phaedrus/.local/share/texlive/2025
+TEXMFCONFIG $XDG_CONFIG_HOME/texlive/texmf-config
+TEXMFHOME /home/phaedrus/.local/share/texmf
+TEXMFVAR /home/phaedrus/.cache/texlive/texmf-var
+TEXMFLOCAL /home/phaedrus/.local/share/texlive/texmf-local
+TEXMFSYSCONFIG /home/phaedrus/.local/share/texlive/texmf-sys-config
+TEXMFSYSVAR /home/phaedrus/.local/share/texlive/texmf-sys-var
+tlpdbopt_create_formats 1
+option_desktop_integration 1
+option_path 1
+option_post_code 0
+tlpdbopt_sys_bin /home/phaedrus/.local/bin
+tlpdbopt_sys_man /home/phaedrus/.local/share/man
+tlpdbopt_sys_info /home/phaedrus/.local/share/info
+tlpdbopt_autobackup 0
+tlpdbopt_backupdir /home/phaedrus/.local/texlive/backups
+option_adjustrepo 1
+option_autobackup 0
+option_doc 1
+option_letter 0
+option_src 0
+option_papersize a4
+option_papersize letter
+option_w32_multi_user 0

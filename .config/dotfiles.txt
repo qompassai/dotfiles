@@ -613,6 +613,7 @@ spamass
 speech-dispatcher
 speedify
 sphinx
+spine
 sql-formatter
 sqlmap
 squid
@@ -644,6 +645,7 @@ subversion
 supermaven
 superpaper
 swapspace
+sway
 swiftpm
 swtpm
 synapse
@@ -708,6 +710,7 @@ update-menus
 upower
 urlview
 usbguard
+user
 user-dirs.dirs
 user.syd-3
 uucp
@@ -745,6 +748,7 @@ vkBasalt
 vlc
 vmware-tools
 vpnc
+vrpn
 vsftpd
 vtund
 vulkan
@@ -754,6 +758,7 @@ warnquota
 waybar
 waypaper
 wazuh-dashboard
+wazuh-indexer
 weasis
 webapps
 webdis
@@ -767,6 +772,7 @@ wikicurses
 wine
 wireguard
 wireplumber
+wireshark
 wlfancurve
 wlogout
 wofi
@@ -790,12 +796,19 @@ xml
 yamlls
 yass
 yay
+youtube-to-mp3
 zabbix
 zathura
+zed
 zeronet
+zeyple
 zfs
+zfsbootmenu
 zig
+zigbee2mqtt
 zls
+zoneinfo
 zoom
+zoomvdi
 zotero
 zotero-translation-server
