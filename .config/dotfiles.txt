@@ -1,8 +1,10 @@
 abuild
+acetoneiso
 acme-redirect.d
 acpi
 ags
 akvcam
+algernon
 alsa
 alsacontrol
 alvr
@@ -581,6 +583,7 @@ shadowsocks-rust
 shadowvpn
 shared-bootdir-helper
 shells
+shibboleth
 shiny-mirrors
 shorewall
 shorewall6

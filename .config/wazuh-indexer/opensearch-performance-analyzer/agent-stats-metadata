@@ -1,2 +1,5 @@
-# All the meta data to be emitted in the agent stats; an example below
+# /qompassai/dotfiles/.config/wazuh-indexer/opensearch-performance-analyzer/agent-stats-metadata
+# Qompass AI Wazuh-Indexer OpenSearch Performance Analyzer Agent Stats Metadata Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################################################################
 Program=PerformanceAnalyzerAgent

@@ -1,15 +1,11 @@
 ---
-# In this file users, backendroles and hosts can be mapped to Open Distro Security roles.
-# Permissions for Opendistro roles are configured in roles.yml
-
+# /qompassai/dotfiles/.config/wazuh-indexer/opensearch-security/roles_mapping.yml
+# Qompass AI Wazuh-Indexer OpenSearch Security Roles Mapping Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##################################################################################
 _meta:
   type: "rolesmapping"
   config_version: 2
-
-# Define your roles mapping here
-
-## Default roles mapping
-
 all_access:
   reserved: true
   hidden: false
@@ -19,7 +15,6 @@ all_access:
   users: []
   and_backend_roles: []
   description: "Maps admin to all_access"
-
 own_index:
   reserved: false
   hidden: false
@@ -29,7 +24,6 @@ own_index:
   - "*"
   and_backend_roles: []
   description: "Allow full access to an index named like the username"
-
 logstash:
   reserved: false
   hidden: false
@@ -38,7 +32,6 @@ logstash:
   hosts: []
   users: []
   and_backend_roles: []
-
 readall:
   reserved: true
   hidden: false
@@ -47,7 +40,6 @@ readall:
   hosts: []
   users: []
   and_backend_roles: []
-
 manage_snapshots:
   reserved: true
   hidden: false
@@ -56,7 +48,6 @@ manage_snapshots:
   hosts: []
   users: []
   and_backend_roles: []
-
 kibana_server:
   reserved: true
   hidden: false
@@ -65,7 +56,6 @@ kibana_server:
   users:
   - "kibanaserver"
   and_backend_roles: []
-
 kibana_user:
   reserved: false
   hidden: false
@@ -75,8 +65,6 @@ kibana_user:
   users: []
   and_backend_roles: []
   description: "Maps kibanauser to kibana_user"
-
-# Wazuh monitoring and statistics index permissions
 manage_wazuh_index:
   reserved: true
   hidden: false

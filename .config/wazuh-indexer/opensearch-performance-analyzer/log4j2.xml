@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+# /qompassai/dotfiles/.config/wazuh-indexer/opensearch-performance-analyzer/log4j2.xml
+# Qompass AI Wazuh-Indexer OpenSearch Performance Analyzer Log4j2 Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+-->
 <Configuration status="INFO">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">

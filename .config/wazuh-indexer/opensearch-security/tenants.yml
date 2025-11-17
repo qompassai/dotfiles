@@ -1,11 +1,10 @@
 ---
+# /qompassai/dotfiles/.config/wazuh-indexer/opensearch-security/tenants.yml
+# Qompass AI Wazuh-Indexer OpenSearch Security Tenants Config                                                       
+# # Copyright (C) 2025 Qompass AI, All rights reserved
+###########################################################################
 _meta:
   type: "tenants"
   config_version: 2
-
-# Define your tenants here
-
-## Demo tenants
 admin_tenant:
   reserved: false
-  description: "Demo tenant for admin user"

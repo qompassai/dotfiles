@@ -8,3 +8,6 @@
 [filesystem "Arch Linux|11.0.29|/dev/mapper/root"]
 	timestampResolution = 4000 nanoseconds
 	minRacyThreshold = 0 nanoseconds
+[filesystem "Arch Linux|17.0.17|/dev/mapper/root"]
+	timestampResolution = 24105 nanoseconds
+	minRacyThreshold = 0 nanoseconds

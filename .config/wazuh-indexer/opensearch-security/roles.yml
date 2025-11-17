@@ -1,15 +1,15 @@
+# /qompassai/dotfiles/.config/wazuh-indexer/opensearch-security/roles.yml
+# Qompass AI Wazuh-Indexer OpenSearch Security Roles Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##################################################################################
 _meta:
   type: "roles"
   config_version: 2
 
-# Restrict users so they can only view visualization and dashboard on OpenSearchDashboards
 kibana_read_only:
   reserved: true
-
-# The security REST API access role is used to assign specific users access to change the security settings through the REST API.
 security_rest_api_access:
   reserved: true
-
 security_rest_api_full_access:
   reserved: true
   cluster_permissions:
@@ -24,7 +24,6 @@ security_rest_api_full_access:
     - 'restapi:admin/ssl/certs/reload'
     - 'restapi:admin/tenants'
 
-# Allows users to view monitors, destinations and alerts
 alerting_read_access:
   reserved: true
   cluster_permissions:
@@ -36,7 +35,6 @@ alerting_read_access:
     - 'cluster:admin/opensearch/alerting/workflow/get'
     - 'cluster:admin/opensearch/alerting/workflow_alerts/get'
 
-# Allows users to view and acknowledge alerts
 alerting_ack_alerts:
   reserved: true
   cluster_permissions:
@@ -44,7 +42,6 @@ alerting_ack_alerts:
     - 'cluster:admin/opendistro/alerting/chained_alerts/*'
     - 'cluster:admin/opendistro/alerting/workflow_alerts/*'
 
-# Allows users to use all alerting functionality
 alerting_full_access:
   reserved: true
   cluster_permissions:
@@ -59,8 +56,6 @@ alerting_full_access:
         - 'indices_monitor'
         - 'indices:admin/aliases/get'
         - 'indices:admin/mappings/get'
-
-# Allow users to read Anomaly Detection detectors and results
 anomaly_read_access:
   reserved: true
   cluster_permissions:
@@ -71,8 +66,6 @@ anomaly_read_access:
     - 'cluster:admin/opendistro/ad/tasks/search'
     - 'cluster:admin/opendistro/ad/detector/validate'
     - 'cluster:admin/opendistro/ad/result/topAnomalies'
-
-# Allows users to use all Anomaly Detection functionality
 anomaly_full_access:
   reserved: true
   cluster_permissions:
@@ -85,8 +78,6 @@ anomaly_full_access:
         - 'indices_monitor'
         - 'indices:admin/aliases/get'
         - 'indices:admin/mappings/get'
-
-# Allow users to execute read only k-NN actions
 knn_read_access:
   reserved: true
   cluster_permissions:
@@ -94,7 +85,6 @@ knn_read_access:
     - 'cluster:admin/knn_get_model_action'
     - 'cluster:admin/knn_stats_action'
 
-# Allow users to use all k-NN functionality
 knn_full_access:
   reserved: true
   cluster_permissions:
@@ -108,27 +98,21 @@ knn_full_access:
     - 'cluster:admin/knn_search_model_action'
     - 'cluster:admin/knn_get_model_action'
     - 'cluster:admin/knn_stats_action'
-
-# Allow users to execute read only ip2geo datasource action
 ip2geo_datasource_read_access:
   reserved: true
   cluster_permissions:
     - 'cluster:admin/geospatial/datasource/get'
 
-# Allow users to use all ip2geo datasource action
 ip2geo_datasource_full_access:
   reserved: true
   cluster_permissions:
     - 'cluster:admin/geospatial/datasource/*'
-
-# Allows users to read Notebooks
 notebooks_read_access:
   reserved: true
   cluster_permissions:
     - 'cluster:admin/opendistro/notebooks/list'
     - 'cluster:admin/opendistro/notebooks/get'
 
-# Allows users to all Notebooks functionality
 notebooks_full_access:
   reserved: true
   cluster_permissions:
@@ -138,13 +122,11 @@ notebooks_full_access:
     - 'cluster:admin/opendistro/notebooks/get'
     - 'cluster:admin/opendistro/notebooks/list'
 
-# Allows users to read observability objects
 observability_read_access:
   reserved: true
   cluster_permissions:
     - 'cluster:admin/opensearch/observability/get'
 
-# Allows users to all Observability functionality
 observability_full_access:
   reserved: true
   cluster_permissions:
@@ -153,7 +135,6 @@ observability_full_access:
     - 'cluster:admin/opensearch/observability/delete'
     - 'cluster:admin/opensearch/observability/get'
 
-# Allows users to all PPL functionality
 ppl_full_access:
   reserved: true
   cluster_permissions:
@@ -166,7 +147,6 @@ ppl_full_access:
         - 'indices:data/read/search*'
         - 'indices:monitor/settings/get'
 
-# Allows users to read and download Reports
 reports_instances_read_access:
   reserved: true
   cluster_permissions:
@@ -174,7 +154,6 @@ reports_instances_read_access:
     - 'cluster:admin/opendistro/reports/instance/get'
     - 'cluster:admin/opendistro/reports/menu/download'
 
-# Allows users to read and download Reports and Report-definitions
 reports_read_access:
   reserved: true
   cluster_permissions:
@@ -183,8 +162,6 @@ reports_read_access:
     - 'cluster:admin/opendistro/reports/instance/list'
     - 'cluster:admin/opendistro/reports/instance/get'
     - 'cluster:admin/opendistro/reports/menu/download'
-
-# Allows users to all Reports functionality
 reports_full_access:
   reserved: true
   cluster_permissions:
@@ -197,8 +174,6 @@ reports_full_access:
     - 'cluster:admin/opendistro/reports/instance/list'
     - 'cluster:admin/opendistro/reports/instance/get'
     - 'cluster:admin/opendistro/reports/menu/download'
-
-# Allows users to use all asynchronous-search functionality
 asynchronous_search_full_access:
   reserved: true
   cluster_permissions:
@@ -208,14 +183,10 @@ asynchronous_search_full_access:
         - '*'
       allowed_actions:
         - 'indices:data/read/search*'
-
-# Allows users to read stored asynchronous-search results
 asynchronous_search_read_access:
   reserved: true
   cluster_permissions:
     - 'cluster:admin/opendistro/asynchronous_search/get'
-
-# Allows user to use all index_management actions - ism policies, rollups, transforms
 index_management_full_access:
   reserved: true
   cluster_permissions:
@@ -230,8 +201,6 @@ index_management_full_access:
         - '*'
       allowed_actions:
         - 'indices:admin/opensearch/ism/*'
-
-# Allows users to use all cross cluster replication functionality at leader cluster
 cross_cluster_replication_leader_full_access:
   reserved: true
   index_permissions:
@@ -241,8 +210,6 @@ cross_cluster_replication_leader_full_access:
         - "indices:admin/plugins/replication/index/setup/validate"
         - "indices:data/read/plugins/replication/changes"
         - "indices:data/read/plugins/replication/file_chunk"
-
-# Allows users to use all cross cluster replication functionality at follower cluster
 cross_cluster_replication_follower_full_access:
   reserved: true
   cluster_permissions:
@@ -259,8 +226,6 @@ cross_cluster_replication_follower_full_access:
         - "indices:admin/plugins/replication/index/stop"
         - "indices:admin/plugins/replication/index/update"
         - "indices:admin/plugins/replication/index/status_check"
-
-# Allows users to use all cross cluster search functionality at remote cluster
 cross_cluster_search_remote_full_access:
   reserved: true
   index_permissions:
@@ -269,8 +234,6 @@ cross_cluster_search_remote_full_access:
       allowed_actions:
         - 'indices:admin/shards/search_shards'
         - 'indices:data/read/search'
-
-# Allow users to read ML stats/models/tasks
 ml_read_access:
   reserved: true
   cluster_permissions:
@@ -280,8 +243,6 @@ ml_read_access:
     - 'cluster:admin/opensearch/ml/models/search'
     - 'cluster:admin/opensearch/ml/tasks/get'
     - 'cluster:admin/opensearch/ml/tasks/search'
-
-# Allows users to use all ML functionality
 ml_full_access:
   reserved: true
   cluster_permissions:
@@ -292,22 +253,16 @@ ml_full_access:
         - '*'
       allowed_actions:
         - 'indices_monitor'
-
-# Allows users to use all Notifications functionality
 notifications_full_access:
   reserved: true
   cluster_permissions:
     - 'cluster:admin/opensearch/notifications/*'
-
-# Allows users to read Notifications config/channels
 notifications_read_access:
   reserved: true
   cluster_permissions:
     - 'cluster:admin/opensearch/notifications/configs/get'
     - 'cluster:admin/opensearch/notifications/features'
     - 'cluster:admin/opensearch/notifications/channels/get'
-
-# Allows users to use all snapshot management functionality
 snapshot_management_full_access:
   reserved: true
   cluster_permissions:
@@ -315,8 +270,6 @@ snapshot_management_full_access:
     - 'cluster:admin/opensearch/notifications/feature/publish'
     - 'cluster:admin/repository/*'
     - 'cluster:admin/snapshot/*'
-
-# Allows users to see snapshots, repositories, and snapshot management policies
 snapshot_management_read_access:
   reserved: true
   cluster_permissions:
@@ -325,8 +278,6 @@ snapshot_management_read_access:
     - 'cluster:admin/opensearch/snapshot_management/policy/explain'
     - 'cluster:admin/repository/get'
     - 'cluster:admin/snapshot/get'
-
-# Allows user to use point in time functionality
 point_in_time_full_access:
   reserved: true
   index_permissions:
@@ -334,8 +285,6 @@ point_in_time_full_access:
         - '*'
       allowed_actions:
         - 'manage_point_in_time'
-
-# Allows users to see security analytics detectors and others
 security_analytics_read_access:
   reserved: true
   cluster_permissions:
@@ -349,8 +298,6 @@ security_analytics_read_access:
     - 'cluster:admin/opensearch/securityanalytics/mapping/view/get'
     - 'cluster:admin/opensearch/securityanalytics/rule/get'
     - 'cluster:admin/opensearch/securityanalytics/rule/search'
-
-# Allows users to use all security analytics functionality
 security_analytics_full_access:
   reserved: true
   cluster_permissions:
@@ -366,14 +313,10 @@ security_analytics_full_access:
       allowed_actions:
         - 'indices:admin/mapping/put'
         - 'indices:admin/mappings/get'
-
-# Allows users to view and acknowledge alerts
 security_analytics_ack_alerts:
   reserved: true
   cluster_permissions:
     - 'cluster:admin/opensearch/securityanalytics/alerts/*'
-
-# Wazuh monitoring and statistics index permissions
 manage_wazuh_index:
   reserved: true
   hidden: false
