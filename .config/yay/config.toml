@@ -4,9 +4,10 @@
 ####################################################
 aururl = "https://aur.archlinux.org"
 buildDir = "/tmp/yaybuild"
+cleanAfter = true
 editor = "nvim"
 devel = true
-cleanAfter = true
 gitBin = "git"
 sortBy = "votes,stars"
 searchSort = "desc"
+pgpfetch = true

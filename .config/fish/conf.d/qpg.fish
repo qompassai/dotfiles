@@ -9,7 +9,7 @@ set -gx LIBOQS_LIB_DIR "/opt/qai/liboqs/lib"
 set -gx PKG_CONFIG_PATH "/opt/qai/liboqs/lib/pkgconfig"(test -n "$PKG_CONFIG_PATH"; and echo :$PKG_CONFIG_PATH)
 #set -gx SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
 set -gx SSLKEYLOGFILE /tmp/sslkeylog.log
-set -gx GPG_TTY (tty)
+#set -gx GPG_TTY (tty)
 set -gx PASSWORD_STORE_DIR "$HOME/.password-store"
 set -gx CPRNG_SEED_SOURCE jitterentropy
 set -gx CURL_CA_BUNDLE /etc/ssl/certs/ca-certificates.crt

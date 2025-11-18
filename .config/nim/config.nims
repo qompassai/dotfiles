@@ -7,11 +7,14 @@ cppDefine "unix"
 cppDefine "NAN_INFINITY"
 cppDefine "INF"
 cppDefine "NAN"
+
 when defined(nimStrictMode):
-   when defined(nimHasWarningAsError):
-     switch("warningAsError", "UnusedImport")
+  when defined(nimHasWarningAsError):
+    switch("warningAsError", "UnusedImport")
   when defined(nimHasHintAsError):
-     switch("hint", "ConvFromXtoItselfNotNeeded")
-    switch("hintAsError", "ConvFromXtoItselfNotNeeded")
-     future work: XDeclaredButNotUsed
+    switch("hint", "ConvFromXtoItselfNotNeeded")
+  switch("hintAsError", "ConvFromXtoItselfNotNeeded")
+  # future work: XDeclaredButNotUsed
+
 switch("define", "nimVersion:" & NimVersion)
+

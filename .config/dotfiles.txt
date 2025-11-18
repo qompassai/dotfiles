@@ -633,6 +633,7 @@ sssd
 sstpc
 ssync
 stack
+stalwart-mail
 stap-exporter
 steam
 steam_hdr
