@@ -1,8123 +1,3854 @@
-#!/usr/bin/env sh
-# /qompassai/dotfiles/.config/pacman/archpkgs.sh
-# Qompass AI Pacman ArchPkgs Script
+#!/usr/bin/env bash
+# /qompassa/dotfiles/.config/pacman/archpkgs.sh
+# Qompass AI Pacman Archpkgs Script
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
+# pacman -Qq | sort > archpkgs.sh
 PKGS=(
-389-ds-base
-3cpio
-6tunnel
-7zip
-a52dec
-aalib
-aarch64-linux-gnu-binutils
-aarch64-linux-gnu-gcc
-aarch64-linux-gnu-glibc
-aarch64-linux-gnu-linux-api-headers
-aardvark-dns
-abeluna
-abseil-cpp
-abseil-cpp11
-abuild
-accounts-qml-module
-accountsservice
-ace
-acl
-acme-cli
-acme-tiny
-acme-user
-acorn
-acpica
-acpi_call-dkms
-acsccid
-act
-actionlint
-ada
-adbfs-rootless-git
-addr-book-combine-git
-adlplug-lv2
-adns
-adriconf
-adwaita-cursors
-adwaita-fonts
-adwaita-icon-theme
-adwaita-icon-theme-legacy
-aeolus
-aerc
-af9015-firmware
-afew
-afpfs-ng
-agda
-agda-stdlib
-age
-age-plugin-tkey
-age-plugin-yubikey
-aha
-aic94xx-firmware
-aida-x
-aida-x-clap
-aida-x-lv2
-aida-x-standalone
-aida-x-vst
-aida-x-vst3
-aircrack-ng
-airgorah
-airshipper
-airspy
-airspyhf-git
-aj-snapshot
-akonadi-calendar
-akonadi-contacts
-akonadi-mime
-akonadi-search
-akvcam-dkms
-alembic
-algernon
-alglib
-allegro4
-alot
-alpine-keyring
-alpm-pkgbuild-bridge
-alsacap
-alsa-card-profiles
-alsa-config-utils
-alsa-control
-alsaequal
-alsa-firmware
-alsa-hdspeconf
-alsa-lib
-alsa-oss
-alsa-plugins
-alsa-rnnoise
-alsa-tools
-alsa-topology-conf
-alsa-ucm-conf
-alsause
-alsa-utils
-alure
-alvr
-amavisd-milter
-amavisd-new
-ambix
-ambix-lv2
-amb-plugins
-amf-headers
-amfora
-aml
-ammonite
-ams
-amsynth
-amsynth-common
-amsynth-dssi
-amsynth-lv2
-amsynth-standalone
-amsynth-vst
-androguard
-android-emulator
-android-environment
-android-file-transfer
-android-google-repository
-android-meson
-android-ndk
-android-pkg-config
-android-platform
-android-sdk
-android-sdk-build-tools
-android-sdk-build-tools-17
-android-sdk-platform-tools
-android-studio-canary
-android-tethering
-android-tools
-android-udev
-angryoxide
-anoise-media
-ansible
-ansible-aur
-ansible-bender
-ansible-core
-ansible-creator
-ansible-gopass
-ansible-gpg-key-git
-ansible-gsetting-git
-ansible-language-server
-ansible-lint
-ansible-navigator
-ansible-runner
-ant
-anthy
-antlr2
-antlr4
-anubis
-anydesk-bin
-anyremote
-aom
-apache
-apache-ant-contrib
-apache-ant-maven-tasks
-apache-cxf
-apache-flink
-apache-lucene
-apache-mod_auth_mellon
-apache-orc
-apfsprogs
-apk-mitm
-apko
-apksigcopier
-apk-tools
-apparmor
-app-icon-preview
-appmenu-gtk-module
-apprise
-appstream
-appstream-glib
-apr
-apr-util
-apt-swarm
-aquamarine
-aravis
-arch-audit
-arch-checkfw
-archinstall
-arch-install-scripts
-archiso
-archivetools
-archlinux-appstream-data
-archlinux-contrib
-archlinux-keyring
-archlinux-xdg-menu
-arch-rebuild-order
-arch-repro-status
-arch-sign-modules
-arch-signoff
-arch-udev-usb-sync
-ardour
-arduino-cli
-arduino-fwuploader
-arduino-language-server
-argon2
-argparse
-argyllcms
-aria2
-aribb24
-arm-none-eabi-binutils
-arm-none-eabi-gcc
-arm-none-eabi-newlib
-arpack
-arpfox
-arp-scan
-arrow
-artyfx
-asar
-ascii
-asciidoc
-asciidoctor
-asciidoctor-pdf
-asciinema
-asciiquarium
-asio
-asm-lsp
-asmx
-asnmap
-asoundconf
-asp
-aspell
-aspnet-runtime
-assimp
-asterisk
-ast-firmware
-astroid
-astronaut
-asymptote
-at
-at51
-atkmm
-atool
-atools
-atop
-at-spi2-core
-attica
-attr
-aubio
-audacity
-audacity-plugins
-audaspace
-audio-convert
-audiofile
-audio-share
-audio-sharing
-audiosource
-audispd-plugins
-audispd-plugins-zos
-audit
-augeas
-augratin
-aurpublish
-authoscope
-autoconf
-autoconf-archive
-autofs
-autogen
-automake
-automattermostatus
-autopep8
-autossh
-avahi
-avisynthplus
-avldrums.lv2
-avr-binutils
-avrdude
-avr-gcc
-avr-gdb
-avr-libc
-awesome
-awesome-omarchy-tui
-awesome-terminal-fonts
-awesome-terminal-fonts-patched
-aws-c-auth
-aws-c-cal
-aws-c-common
-aws-c-compression
-aws-c-event-stream
-aws-checksums
-aws-c-http
-aws-c-io
-aws-c-mqtt
-aws-crt-cpp
-aws-c-s3
-aws-c-sdkutils
-aws-sdk-cpp-core
-aws-sdk-cpp-iam
-aws-sdk-cpp-s3
-awstats
-aws-vault
-awxkit
-ayatana-ido
-ayugram-desktop-bin
-azcopy
-azure-cli
-azure-kubelogin
-b3sum
-b4
-b43-fwcutter
-babl
-bagels
-baikal
-baloo
-baloo-widgets
-bandit
-bankstown
-base
-base-devel
-bash
-bash-completion
-bash-language-server
-bash-statemgr
-bastyon
-bat
-bat-extras
-bats
-bazelisk
-bazelrc-lsp
-bc
-bcg729
-bchoppr
-bcprov
-bear
-bearssl
-bemenu
-bemenu-wayland
-benchmark
-bettercap
-bettercap-caplets
-bettercap-ui
-bezier
-bibclean
-biber
-bibiman
-bibtex2website
-bibtex-tidy
-bibtool
-bigsh0t
-binaryen
-bind
-binutils
-biome
-birdfont
-bison
-bitcoin-daemon
-bitrock-unpacker
-bkcrack
-blackmagic
-black-magic-probe-utils
-bladerf
-blas64-openblas
-blas-openblas
-blendr
-blop
-blosc
-bltui
-bluealsa
-bluemail
-blueman
-blueprint-compiler
-bluesync
-bluetooth-autoconnect
-bluetooth-bitrate-manager
-bluetui
-bluetuith
-bluez
-bluez-cups
-bluez-deprecated-tools
-bluez-hid2hci
-bluez-libs
-bluez-mesh
-bluez-monitor
-bluez-obex
-bluez-qt
-bluez-qt5
-bluez-tools
-bluez-utils
-blur-effect
-bmake
-bmkdep
-bmputil
-bmusb
-bob
-bogofilter-sqlite
-bolt
-bonzomatic
-bookshelf
-boost
-booster
-boost-libs
-bootconfig
-borg
-borgctl
-borgit
-borgmatic
-borgreport
-borgrestore
-botan
-botan2
-bottles
-bounty-git
-bpf
-breeze-icons
-breezy
-brial
-brightnessctl
-brltty
-broadcom-bt-firmware
-broadcom-wl-dkms
-brotli
-browserify
-browserpass
-browserpass-chrome
-browserpass-chromium
-browserpass-firefox
-bs-thread-pool
-btattach
-btcpayserver
-btctl
-bthandler
-btlescan
-btmenu
-btop
-btrfs-assistant
-btrfs-desktop-notification
-btrfs-list-git
-btrfs-progs
-btscanner
-bubblewrap
-buddy
-bugzilla
-buildah
-buildkit
-bully
-burp-backup
-burpsuite
-bus-pirate
-busybox
-bzip2
-cabal-fmt
-cabextract
-cable
-ca-certificates
-ca-certificates-mozilla
-ca-certificates-utils
-cache-cleaner
-cacti
-cacti-spine
-cadaver
-caido-cli
-cairo
-cairomm
-cairomm-1.16
-cairo-perl
-caja
-caja-admin
-caja-audio-video-properties
-caja-extensions-common
-caja-image-converter
-caja-open-any-terminal
-caja-open-terminal
-caja-share
-calendarsupport
-caligula
-cameracontrol-bin
-cameractrls
-caps
-capstone
-capypdf
-carbonyl
-cardinal
-cardinal-clap
-cardinal-data
-cardinal-lv2
-cardinal-standalone
-cardinal-vst
-cardinal-vst3
-c-ares
-cargo-about
-cargo-auditable
-cargo-c
-cargo-make
-cargo-rdme
-cargo-supply-chain
-cargo-zigbuild
-cargs
-carla
-casync
-catatonit
-catch2
-catdoc
-catgirl
-catgirl-engine
-catimg
-cava
-cb3sum
-cbindgen
-cc1541
-ccache
-ccid
-c-client
-ccls
-cddlib
-cdparanoia
-cdrdao
-cdrtools
-celt
-cern-phone-app
-cern-vdt
-certbot
-certbot-apache
-certbot-dns-cloudflare
-cfitsio
-cfssl
-cgasm
-cgproxy
-chafa
-check
-check-cve-2019-19781
-checkra1n-cli
-checkra1n-gui
-chipsec-dkms-git
-chkrootkit
-chntpw
-chromaprint-fftw
-chromium
-chromium-bypass-paywalls-clean
-chrony
-chrpath
-cifs-utils
-cinnamon-desktop
-circumflex
-cjdns
-cjson
-cl-alexandria
-clamav
-clamav-unofficial-sigs
-clang
-clang10
-clang18
-clang19
-clang20
-clap
-clash-ghc
-claude-code
-claude-code-acp
-claude-code-router
-claude-desktop-native
-clazy
-clblast
-clcal
-clcbrowser-git
-cl-clx
-clevis
-cli11
-clightd
-clinfo
-clion-eap-lldb
-clion-lldb
-cliphist
-cliquer
-cln
-cloudflared
-cloudflare-dynamic-dns
-cloudflarespeedtest
-clpeak
-cl-ppcre
-clthreads
-clucene
-cl-unicode
-clusterssh
-clutter
-clutter-gst
-clutter-gtk
-clvk-git
-clxclient
-cmake
-cmake-extras
-cmark
-cmark-gfm
-cmctl
-cmm-svn
-cmocka
-cmt
-cni-plugins
-cobib
-codeberg-cli
-codebook-lsp
-codec2
-codecvisa-bin
-codelldb
-coeurl
-coffeescript
-cogl
-coin-or-asl
-coin-or-clp
-coin-or-coinutils
-coin-or-data-sample
-coin-or-osi
-collision
-colord
-colord-gtk
-colord-gtk4
-colord-gtk-common
-colord-sane
-colorgcc
-comgr
-commitmsgfmt
-compiler-rt
-compiler-rt18
-compiler-rt19
-compiler-rt20
-composefs
-composer
-concrnt-gateway
-concrnt-shared-config
-confuse
-conmon
-connman
-containerd
-container-diff
-containers-common
-context-modules
-convertlit
-convmv
-coolkey
-cops-mikespub-org
-copyparty
-cordova
-corefreq-dkms
-corepack
-coreutils
-corkscrew
-corrosion
-cosign
-cotire
-cotp
-cotp-converters
-courier-unicode
-coursier
-cowpatty
-cowrie
-cowsql
-cpio
-cppcodec
-cppdap
-cppunit
-cppzmq
-cpupower
-crack-attack
-crack-attack-sounds
-cracklib
-crackpkcs12
-cram
-crawl-data
-crawl-ncurses
-crawl-tiles
-cronie
-cryfs
-crypto++
-cryptodev-linux-dkms
-cryptol
-cryptominisat
-cryptonose
-cryptsetup
-cryptsetup-gui
-cryptsetup-multidisk
-cryptsetup-vault
-csfml
-csharp-ls
-csound
-cspell-lsp
-csrf-brute
-ctags
-ctemplate
-ctf-ynetd
-ctranslate2
-cucollections-git
-cuda
-cuda-demux
-cuda-tools
-cudd
-cudnn
-cudss
-cuishark
-cunit
-cups
-cups-filters
-curl
-curlftpfs
-curl-impersonate
-curseforge
-curtail
-cutensor
-c++utilities
-cvc4
-cvechecker
-cvector
-cvs
-cxltx-styles
-cxxbridge
-cxxopts
-cxxsemaphore
-cxxshm
-cxxtools
-cyclops
-cyme
-cyrus-sasl
-cyrus-sasl-gssapi
-cython
-dante
-dark-reader
-darkstat
-dash
-dav1d
-davfs2
-davinconv
-davix
-davmail
-davutils
-db
-db5.3
-dbeaver
-dblatex
-dbmail
-dbmate
-dbus
-dbus-app-launcher
-dbus-broker
-dbus-broker-units
-dbus-c++
-dbus-docs
-dbus-glib
-dbus-soundrecorder
-dbus-term-launcher
-dbus-units
-dbxtool
-dcd
-dcnnt
-dconf
-dconf-editor
-dctl
-ddclient
-ddcutil
-debian-archive-keyring
-debian-keyring
-debian-ports-archive-keyring
-debugedit
-debuginfod
-decklink
-decklink-sdk
-deepin-desktop-base
-default-cursors
-dehydrated
-dehydrated-cloudflare-hook
-dehydrated-pdns-hook
-dejagnu
-delve
-deno
-denoiseit-git
-depthcharge
-desktop-file-utils
-desktop-notify
-desktop-privileges
-desktop-privileges-nogroups
-desync
-detox
-device-mapper
-devilutionx-graphics-tools-git
-devtools
-dex
-dfc
-dfl-applications
-dfl-color-utils
-dfl-hjsonparser
-dfl-ipc
-dfl-keyring
-dfl-layouts
-dfl-settings
-dfrs
-dfu-programmer
-dfu-util
-dgop
-dhall
-dhall-json
-dhall-lsp-server
-dhcp
-dhcpcd
-dhcp-helper
-dialog
-diffstat
-diffutils
-ding-libs
-dioxus-cli
-directx-headers-cmake
-discord_db
-discord-game-sdk
-discordo-git
-discordo-launcher
-discount
-displaycal
-distcc
-distrho-ports
-distrho-ports-lv2
-distrho-ports-vst
-distrho-ports-vst3
-dive
-djvulibre
-dkms
-dleyna
-dleyna-docs
-dlib
-dlpack
-dmenu
-dmidecode
-dms-shell
-dms-shell-hyprland
-dms-shell-niri
-dmtx-utils
-dnschanger-desktop
-dnsdiag
-dnsdist
-dnshunter
-dnsmasq
-dnsperf
-dnssec-anchors
-dnssec-tools
-docbook2x
-docbook5-xml
-docbook-dsssl
-docbook-mathml
-docbook-sgml
-docbook-sgml31
-docbook-utils
-docbook-xml
-docbook-xsl
-docker
-docker-buildx
-docker-compose
-docker-credential-pass
-docker-credential-secretservice
-dockerize
-docker-rootless-extras
-doctest
-dokuwiki
-dolphin
-dolphin-emu
-dolt
-doom3-data
-dos2unix
-dosbox
-dosfstools
-dot2tex
-dotconf
-dotnet-aot-xc
-dotnet-host
-dotnet-install
-dotnet-runtime
-dotnet-runtime-6.0
-dotnet-runtime-8.0
-dotnet-sdk
-dotnet-sdk-8.0
-dotnet-targeting-pack
-dotnet-targeting-pack-8.0
-double-conversion
-dovecot
-doxx
-doxygen
-dpdk
-dpkg
-dqlite
-dra
-draco
-drgn
-drm-info
-drminfo
-drm_tool
-droidcam
-drone-runner-ssh
-dropbear
-drumgizmo-lv2
-drupal
-dsniff
-d-spy
-dssi
-dtc
-dtk6core
-dtk6declarative
-dtk6gui
-dtk6log
-dtkcommon
-duckdb
-duktape
-dumb
-dumpling
-dump-shm
-dump_syms
-dumptorrent
-dune
-dunst
-duplicity
-dvisvgm
-dv-processing
-dxvk-mingw
-e2fsprogs
-easyeffects
-easyeffects-bundy01-presets
-easyeffects-digitalone1-presets-git
-easyeffects-jtrv-presets-git
-easyeffects-record
-easyfeh
-easyframework
-easyjson
-easyrpg-player
-ebook-tools
-ecasound
-ecl
-eclib
-ecryptfs-utils
-ed
-editline
-editorconfig-core-c
-edk2-aarch64
-edk2-arm
-edk2-ovmf
-efibootmgr
-efifs
-efivar
-eglexternalplatform
-egl-gbm
-egl-wayland
-egl-x11
-eigen
-electron
-electron34
-electron35
-electron36
-electron37
-electron38
-element
-elf2nucleus
-elf2uf2-rs
-elfutils
-elixir
-ell
-emacs
-embree
-embree3
-emby-ffmpeg
-enca
-enchant
-enet
-enola
-epic-asset-manager
-epydoc
-eq10q
-erfa
-erlang
-erlang-asn1
-erlang-common_test
-erlang-core
-erlang-debugger
-erlang-dialyzer
-erlang-diameter
-erlang-edoc
-erlang-eldap
-erlang-erl_interface
-erlang-et
-erlang-eunit
-erlang-ftp
-erlang-inets
-erlang-jinterface
-erlang-megaco
-erlang-mnesia
-erlang-observer
-erlang-odbc
-erlang-os_mon
-erlang-parsetools
-erlang-public_key
-erlang-reltool
-erlang-runtime_tools
-erlang-sasl
-erlang-snmp
-erlang-ssh
-erlang-ssl
-erlang-syntax_tools
-erlang-tftp
-erlang-tools
-erlang-wx
-erlang-xmerl
-erofs-utils
-esbonio
-esbuild
-eslint_d
-esound
-espeak-ng
-etc-update
-eteroj.lv2
-ethtool
-ettercap
-evemu
-evilginx
-evolution
-evolution-data-server
-exempi
-exiv2
-exo
-expac
-expat
-expect
-exploitdb
-extra-cmake-modules
-f2fs-tools
-f3
-faac
-faad2
-facetimehd-data
-facetimehd-dkms
-facetimehd-firmware
-facter
-fakechroot
-fakeroot
-falcosecurity-libs
-farstream
-fasm
-fastfetch
-fast_float
-fasttext
-fasttext-langid-models
-fasttuna
-fatfrog.lv2
-faust
-fcft
-fcgi
-fcitx5
-fcitx5-anthy
-fcitx5-gtk
-fcitx5-qt
-fcrackzip
-fd
-fdm
-fdmf
-fdroidserver
-feh
-fehbg-mgr
-ferium
-festival
-festival-english
-festival-us
-fetch-hosts
-fetchmail
-ffcall
-fflas-ffpack
-ffmpeg
-ffmpeg2.1
-ffmpeg2.1-debug
-ffmpeg4.4
-ffmpegthumbnailer
-ffmpegthumbs
-ffms2
-ffnvcodec-headers
-fftw
-fftw-openmpi
-figma-agent-linux
-figma-linux
-figma-linux-font-helper
-file
-filecast
-filesystem
-fil-plugins
-findutils
-fingerprintx
-fingwit
-firecracker
-firecracker-docs
-firefox
-firefox-debugadapter
-firefox-extension-mailvelope
-firefoxpwa
-firefox-syncstorage
-firefox-user-autoconfig
-firmware-manager
-fish
-fish-autopair
-fish-bash2env
-fisher
-fish-fisher_path-git
-fish-fzf
-fish-lsp
-fishui
-flac
-flare-engine
-flare-game
-flashrom
-flatbuffers
-flatpak
-flawz
-flex
-flint
-flite
-fltk
-fltk1.3
-fluidsynth
-fluxcomp
-fmt
-fmtools
-folder-color-switcher
-fomp.lv2
-fontconfig
-fontforge
-fontobene-qt5
-fontobene-qt-qt6
-fontpreview_sixel
-foot
-foot-terminfo
-foremost
-fossil
-fplll
-fprintd
-freealut
-freecell-solver
-freeglut
-freeradius
-freerdp2
-freerdp-sdl3
-freetds
-freetype2
-fribidi
-frog-protocols
-fscrypt
-fstrm
-fsverity-utils
-ftgl
-fulcio
-furmark
-fuse2
-fuse2fs
-fuse3
-fuse-common
-fuseiso
-fuse-overlayfs
-futuresql
-fuzzel
-fuzzel-pass
-fuzzy
-fvm
-fwupd
-fwupd-docs
-fwupd-efi
-fwupd-openrc
-fxload
-fzf
-fzf-extras
-fzffm
-fzf-kill
-fzfmenu
-fzf-vjour-git
-galera
-gallia
-gambas3-gb-db
-gambas3-gb-db2
-gambas3-gb-db2-form
-gambas3-gb-db2-postgresql
-gambas3-gb-db2-sqlite3
-gambas3-gb-db-form
-gambas3-gb-db-postgresql
-gambas3-gb-db-sqlite3
-gambas3-gb-dbus
-gambas3-gb-form
-gambas3-gb-gtk3
-gambas3-gb-gtk3-opengl
-gambas3-gb-image
-gambas3-gb-mime
-gambas3-gb-openal
-gambas3-gb-opengl
-gambas3-gb-opengl-glsl
-gambas3-gb-openssl
-gambas3-gb-qt5
-gambas3-gb-qt5-opengl
-gambas3-gb-v4l
-gambas3-runtime
-game-devices-udev
-gamehub
-gamemode
-gamescope
-gameshell
-gamin
-gap
-gaphor
-gap-packages
-garage
-garcon
-gasket-dkms-git
-gawk
-gc
-gcc
-gcc14
-gcc14-fortran
-gcc14-libs
-gcc-ada
-gcc-d
-gcc-fortran
-gcc-libs
-gcc-m2
-gcc-objc
-gconf
-gcovr
-gcr
-gcr-4
-gd
-gdal
-gdb
-gdb-common
-gdbm
-gdgbatterysaver
-gdk-pixbuf2
-gdk-pixbuf2-docs
-gdk-pixbuf-xlib
-gdm
-gdrcopy
-geckodriver
-gedit
-gef
-gegl
-gemini-cli
-gendesk
-gensio
-geoclue
-geocode-glib-2
-geocode-glib-common
-geoip
-geoip-database
-geoipupdate
-geos
-getmail6
-getnf
-getoptions
-getssl
-gettext
-gexiv2
-gf2x
-gfan
-gflags
-gfxstream
-ghc
-ghc-filesystem
-ghc-libs
-ghidra
-ghostscript
-ghostty
-ghostty-shell-integration
-ghostty-terminfo
-giblib
-gi-docgen
-gif2png
-gifify
-giflib
-gifsicle
-gifski
-ginkgo-hpc-cuda
-girara
-git
-git-credential-azure
-git-credential-github
-git-credential-gopass
-git-credential-keepassxc
-git-credential-msal
-git-credential-oauth
-git-credential-pass
-git-crypt
-git-delta
-gitea
-git-filter-repo
-githttptossh
-github-cli
-gitlab-ci-local
-gitlab-shell
-gitleaks
-git-lfs
-gitoxide
-git-publish
-git-remote-gcrypt
-git-revise
-gitrob
-git-secrets
-gitsign
-givaro
-gjs
-gklib
-gkrellm-bluez
-gkrellm-git
-gl2ps
-glad
-glade
-glaze
-gleam
-glew
-glew1.10
-glfw
-glib
-glib2
-glib2-devel
-glib2-docs
-glibc
-glibmm
-glibmm-2.68
-glib-networking
-glib-perl
-glide
-glm
-glmark2
-globalprotect-openconnect
-glow
-glpk
-glslang
-glu
-glusterfs
-glycin
-gmic
-gmime3
-gmni
-gmp
-gmp-ecm
-gn
-gnome-autoar
-gnome-backgrounds
-gnome-common
-gnome-desktop
-gnome-desktop-4
-gnome-desktop-common
-gnome-firmware
-gnome-menus
-gnome-mime-data
-gnome-online-accounts
-gnome-session
-gnome-settings-daemon
-gnome-shell
-gnu-free-fonts
-gnulib-l10n
-gnupg
-gnupg-pkcs11-scd
-gnuplot
-gnustep-base
-gnutls
-go
-go2rtc
-gobject-introspection
-gobject-introspection-runtime
-go-checksum
-gocr
-godash
-godot
-godot-export-templates-linux
-goenv
-goffice
-gofumpt
-gogs
-goimapnotify
-golangci-lint
-gom
-gom-docs
-goocanvas
-google-chrome-canary
-google-glog
-gopass
-gopass-fuse
-gopass-hibp
-gopass-jsonapi
-gopass-summon-provider
-gopls
-goplus
-gortr
-gosop
-go-tools
-gparted
-gpd-pocket-4-pipewire
-gperf
-gperftools
-gpgme
-gpgmepp
-gpm
-gprename
-gpscorrelate
-gpsd
-gptfdisk
-gpu-screen-recorder
-gpu-trace
-gpu-viewer
-gradle
-granite
-grantlee
-grantleetheme
-graphene
-graphicsmagick
-graphite
-graphviz
-graylog
-grep
-grim
-grobi
-groff
-grpc
-grub
-grub-btrfs
-grub-netboot-archlinux
-grunt-cli
-gsasl
-gscal
-gsettings-desktop-schemas
-gsettings-qt5
-gsettings-qt6
-gsettings-system-schemas
-gsfonts
-gsl
-gsm
-gsound
-gspell
-gssdp
-gss-ntlmssp
-gssproxy
-gst-devtools
-gst-devtools-libs
-gst-editing-services
-gst-libav
-gst-plugin-aws
-gst-plugin-cdg
-gst-plugin-ffv1
-gst-plugin-fmp4
-gst-plugin-gif
-gst-plugin-gtk
-gst-plugin-gtk4
-gst-plugin-hlssink3
-gst-plugin-hsv
-gst-plugin-json
-gst-plugin-libcamera
-gst-plugin-mp4
-gst-plugin-msdk
-gst-plugin-onnx
-gst-plugin-opencv
-gst-plugin-pipewire
-gst-plugin-qml6
-gst-plugin-qsv
-gst-plugin-quinn
-gst-plugin-rsrtp
-gst-plugin-rsvideofx
-gst-plugin-rswebrtc
-gst-plugins-bad
-gst-plugins-bad-libs
-gst-plugins-base
-gst-plugins-base-libs
-gst-plugins-espeak
-gst-plugins-good
-gst-plugin-skia
-gst-plugins-ugly
-gst-plugin-va
-gst-plugin-webrtchttp
-gst-plugin-wpe
-gst-python
-gstreamer
-gstreamer0.10
-gstreamer0.10-base
-gstreamer-docs
-gstreamer-vaapi
-gst-rtsp-server
-gtest
-gtk
-gtk2
-gtk3
-gtk3-demos
-gtk4
-gtk4-demos
-gtk4-layer-shell
-gtk-doc
-gtkglext
-gtkhash
-gtk-layer-shell
-gtkmm
-gtkmm3
-gtkmm-4.0
-gtksourceview3
-gtksourceview4
-gtksourceview5
-gtkspell
-gtkspell3
-gtk-update-icon-cache
-gtk-vnc
-gts
-gucharmap
-guichan
-guile
-guile-bytestructures
-guile-git-lib
-guitarix
-gulkan
-gum
-gumbo-parser
-gummi
-gunicorn
-gupnp
-gupnp-av
-gupnp-dlna
-gupnp-igd
-guvcview
-guvcview-common
-guvcview-qt
-gvfs
-gvfs-dnssd
-gvfs-gphoto2
-gvfs-mtp
-gvfs-smb
-gzip
-hackrf
-hagrid-git
-half
-hamlib
-hamradio-menus
-handlr-regex
-harfbuzz
-harfbuzz-icu
-haruna
-hashcat
-hashcat-utils
-haskell-adjunctions
-haskell-aeson
-haskell-aeson-pretty
-haskell-aeson-yaml
-haskell-algebraic-graphs
-haskell-alsa-core
-haskell-alsa-mixer
-haskell-ansi-terminal
-haskell-ansi-terminal-types
-haskell-ansi-wl-pprint
-haskell-ap-normalize
-haskell-appar
-haskell-apply-refact
-haskell-arithmoi
-haskell-arrows
-haskell-asn1-encoding
-haskell-asn1-parse
-haskell-asn1-types
-haskell-assoc
-haskell-async
-haskell-atomic-write
-haskell-attoparsec
-haskell-attoparsec-aeson
-haskell-auto-update
-haskell-base16-bytestring
-haskell-base64-bytestring
-haskell-base-compat
-haskell-base-compat-batteries
-haskell-basement
-haskell-base-orphans
-haskell-base-prelude
-haskell-base-unicode-symbols
-haskell-bifunctors
-haskell-bimap
-haskell-bin
-haskell-binary-conduit
-haskell-binary-instances
-haskell-binary-orphans
-haskell-binary-parser
-haskell-bitvec
-haskell-bitwise
-haskell-blaze-builder
-haskell-blaze-html
-haskell-blaze-markup
-haskell-blaze-textual
-haskell-boring
-haskell-boundedchan
-haskell-boxes
-haskell-bsb-http-chunked
-haskell-bv-sized
-haskell-byteable
-haskell-byteorder
-haskell-bytestring-strict-builder
-haskell-bytestring-tree-builder
-haskell-bz2
-haskell-cabal-doctest
-haskell-call-stack
-haskell-case-insensitive
-haskell-cassava
-haskell-cborg
-haskell-cborg-json
-haskell-cereal
-haskell-charset
-haskell-chimera
-haskell-citeproc
-haskell-clash-lib
-haskell-clash-prelude
-haskell-clientsession
-haskell-clock
-haskell-cmark-gfm
-haskell-cmdargs
-haskell-code-page
-haskell-co-log-core
-haskell-colour
-haskell-commonmark
-haskell-commonmark-extensions
-haskell-commonmark-pandoc
-haskell-commutative-semigroups
-haskell-comonad
-haskell-concise
-haskell-concurrent-extra
-haskell-conduit
-haskell-conduit-extra
-haskell-configurator-pg
-haskell-config-value
-haskell-constraints
-haskell-constraints-extras
-haskell-contravariant
-haskell-contravariant-extras
-haskell-cookie
-haskell-cpphs
-haskell-cracknum
-haskell-criterion-measurement
-haskell-crypto-api
-haskell-crypto-cipher-types
-haskell-cryptohash-md5
-haskell-cryptohash-sha1
-haskell-cryptohash-sha256
-haskell-crypton
-haskell-crypton-connection
-haskell-cryptonite
-haskell-cryptonite-conduit
-haskell-crypton-socks
-haskell-crypton-x509
-haskell-crypton-x509-store
-haskell-crypton-x509-system
-haskell-crypton-x509-validation
-haskell-crypto-token
-haskell-css-text
-haskell-data-binary-ieee754
-haskell-data-bword
-haskell-data-checked
-haskell-data-default
-haskell-data-default-class
-haskell-data-default-instances-containers
-haskell-data-default-instances-dlist
-haskell-data-default-instances-old-locale
-haskell-data-dword
-haskell-data-endian
-haskell-data-fix
-haskell-data-functor-logistic
-haskell-data-hash
-haskell-data-serializer
-haskell-data-textual
-haskell-dav
-haskell-dbus
-haskell-dec
-haskell-deferred-folds
-haskell-dependent-map
-haskell-dependent-sum
-haskell-deriving-aeson
-haskell-deriving-compat
-haskell-diff
-haskell-digest
-haskell-direct-sqlite
-haskell-distributive
-haskell-djot
-haskell-dlist
-haskell-doclayout
-haskell-doctemplates
-haskell-doctest
-haskell-doctest-discover
-haskell-doctest-driver-gen
-haskell-doctest-exitcode-stdio
-haskell-doctest-lib
-haskell-doctest-parallel
-haskell-dotgen
-haskell-double-conversion
-haskell-easy-file
-haskell-ed25519
-haskell-edit-distance
-haskell-either
-haskell-email-validate
-haskell-emojis
-haskell-encoding
-haskell-entropy
-haskell-enummapset
-haskell-equivalence
-haskell-erf
-haskell-errors
-haskell-exact-pi
-haskell-extensible-exceptions
-haskell-extra
-haskell-fast-logger
-haskell-fclabels
-haskell-fgl
-haskell-file-embed
-haskell-filemanip
-haskell-filepattern
-haskell-filtrable
-haskell-fin
-haskell-fingertree
-haskell-first-class-families
-haskell-floatinghex
-haskell-floskell
-haskell-fmlist
-haskell-focus
-haskell-foldable1-classes-compat
-haskell-foldl
-haskell-fourmolu
-haskell-free
-haskell-fuzzy
-haskell-generically
-haskell-generic-data
-haskell-generic-deriving
-haskell-generic-lens
-haskell-generic-lens-core
-haskell-generics-sop
-haskell-ghc-check
-haskell-ghc-exactprint
-haskell-ghcide
-haskell-ghc-lib-parser
-haskell-ghc-lib-parser-ex
-haskell-ghc-paths
-haskell-ghc-tcplugins-extra
-haskell-ghc-trace-events
-haskell-ghc-typelits-extra
-haskell-ghc-typelits-knownnat
-haskell-ghc-typelits-natnormalise
-haskell-gi
-haskell-gi-atk
-haskell-gi-base
-haskell-gi-cairo
-haskell-gi-dbusmenu
-haskell-gi-dbusmenugtk3
-haskell-gi-freetype2
-haskell-gi-gdk
-haskell-gi-gdk3
-haskell-gi-gdk3x11
-haskell-gi-gdkpixbuf
-haskell-gi-gdkx11
-haskell-gi-gio
-haskell-gi-glib
-haskell-gi-gmodule
-haskell-gi-gobject
-haskell-gi-gtk3
-haskell-gi-harfbuzz
-haskell-gi-overloading
-haskell-gi-pango
-haskell-githash
-haskell-gitrev
-haskell-gi-xlib
-haskell-glob
-haskell-graphscc
-haskell-graphviz
-haskell-gridtables
-haskell-haddock-library
-haskell-half
-haskell-hashable
-haskell-hashtables
-haskell-hasql
-haskell-hasql-dynamic-statements
-haskell-hasql-implicits
-haskell-hasql-notifications
-haskell-hasql-pool
-haskell-hasql-transaction
-haskell-heredoc
-haskell-hgmp
-haskell-hie-bios
-haskell-hie-compat
-haskell-hiedb
-haskell-hint
-haskell-hjsmin
-haskell-hls-alternate-number-format-plugin
-haskell-hls-cabal-fmt-plugin
-haskell-hls-cabal-plugin
-haskell-hls-call-hierarchy-plugin
-haskell-hls-change-type-signature-plugin
-haskell-hls-class-plugin
-haskell-hls-code-range-plugin
-haskell-hls-eval-plugin
-haskell-hls-explicit-fixity-plugin
-haskell-hls-explicit-imports-plugin
-haskell-hls-explicit-record-fields-plugin
-haskell-hls-floskell-plugin
-haskell-hls-fourmolu-plugin
-haskell-hls-gadt-plugin
-haskell-hls-graph
-haskell-hls-hlint-plugin
-haskell-hls-module-name-plugin
-haskell-hls-ormolu-plugin
-haskell-hls-overloaded-record-dot-plugin
-haskell-hls-plugin-api
-haskell-hls-pragmas-plugin
-haskell-hls-qualify-imported-names-plugin
-haskell-hls-refactor-plugin
-haskell-hls-rename-plugin
-haskell-hls-retrie-plugin
-haskell-hls-splice-plugin
-haskell-hls-stylish-haskell-plugin
-haskell-hopenpgp
-haskell-hourglass
-haskell-hscolour
-haskell-hslogger
-haskell-hslua
-haskell-hslua-aeson
-haskell-hslua-classes
-haskell-hslua-core
-haskell-hslua-list
-haskell-hslua-marshalling
-haskell-hslua-module-doclayout
-haskell-hslua-module-path
-haskell-hslua-module-system
-haskell-hslua-module-text
-haskell-hslua-module-version
-haskell-hslua-module-zip
-haskell-hslua-objectorientation
-haskell-hslua-packaging
-haskell-hslua-repl
-haskell-hslua-typing
-haskell-hsopenssl
-haskell-hspec-contrib
-haskell-hspec-core
-haskell-hspec-expectations
-haskell-hsyaml
-haskell-hsyaml-aeson
-haskell-html-conduit
-haskell-http
-haskell-http2
-haskell-http3
-haskell-http-api-data
-haskell-http-client
-haskell-http-client-tls
-haskell-http-conduit
-haskell-http-date
-haskell-http-media
-haskell-http-types
-haskell-hunit
-haskell-hw-fingertree
-haskell-hw-prim
-haskell-ieee754
-haskell-implicit-hie
-haskell-implicit-hie-cradle
-haskell-incremental-parser
-haskell-indexed-profunctors
-haskell-indexed-traversable
-haskell-indexed-traversable-instances
-haskell-infinite-list
-haskell-input-parsers
-haskell-insert-ordered-containers
-haskell-integer-conversion
-haskell-integer-logarithms
-haskell-integer-roots
-haskell-interpolatedstring-perl6
-haskell-invariant
-haskell-io-streams
-haskell-iproute
-haskell-ipynb
-haskell-isocline
-haskell-isomorphism-class
-haskell-ixset-typed
-haskell-jira-wiki-markup
-haskell-jose
-haskell-js-dgtable
-haskell-js-flot
-haskell-js-jquery
-haskell-juicypixels
-haskell-kan-extensions
-haskell-language-c99
-haskell-language-c99-simple
-haskell-language-c99-util
-haskell-language-javascript
-haskell-language-server
-haskell-lazysmallcheck
-haskell-lens
-haskell-lens-aeson
-haskell-lens-family-core
-haskell-lexer
-haskell-libbf
-haskell-libffi
-haskell-libyaml
-haskell-lifted-base
-haskell-lift-type
-haskell-listlike
-haskell-list-t
-haskell-logict
-haskell-lpeg
-haskell-lrucache
-haskell-lsp
-haskell-lsp-types
-haskell-lua
-haskell-lucid
-haskell-megaparsec
-haskell-memory
-haskell-memotrie
-haskell-microlens
-haskell-microlens-mtl
-haskell-microlens-th
-haskell-mime-types
-haskell-mmap
-haskell-mmorph
-haskell-mod
-haskell-monad-control
-haskell-monad-dijkstra
-haskell-monadlib
-haskell-monad-logger
-haskell-monad-loops
-haskell-monadprompt
-haskell-monadrandom
-haskell-monad-time
-haskell-monoid-subclasses
-haskell-mono-traversable
-haskell-murmur-hash
-haskell-nettle
-haskell-network
-haskell-network-bsd
-haskell-network-byte-order
-haskell-network-control
-haskell-network-info
-haskell-network-ip
-haskell-network-udp
-haskell-network-uri
-haskell-newtype-generics
-haskell-numtype-dk
-haskell-old-locale
-haskell-old-time
-haskell-onetuple
-haskell-only
-haskell-openpgp-asciiarmor
-haskell-openssl-streams
-haskell-opentelemetry
-haskell-optics-core
-haskell-optics-extra
-haskell-optics-th
-haskell-optparse-applicative
-haskell-optparse-simple
-haskell-ordered-containers
-haskell-ormolu
-haskell-os-string
-haskell-pandoc
-haskell-pandoc-lua-engine
-haskell-pandoc-lua-marshal
-haskell-pandoc-server
-haskell-pandoc-types
-haskell-panic
-haskell-parallel
-haskell-parameterized-utils
-haskell-parser-combinators
-haskell-parsers
-haskell-path-pieces
-haskell-peano
-haskell-pem
-haskell-persistent
-haskell-persistent-sqlite
-haskell-pgp-wordlist
-haskell-pid1
-haskell-pipes
-haskell-pipes-http
-haskell-pipes-safe
-haskell-polyparse
-haskell-postgresql-binary
-haskell-postgresql-libpq
-haskell-prettyprinter
-haskell-prettyprinter-ansi-terminal
-haskell-prettyprinter-compat-ansi-wl-pprint
-haskell-prettyprinter-interp
-haskell-pretty-show
-haskell-pretty-simple
-haskell-primes
-haskell-primitive
-haskell-primitive-extras
-haskell-primitive-unlifted
-haskell-process-extras
-haskell-profunctors
-haskell-protolude
-haskell-psqueues
-haskell-ptr
-haskell-quic
-haskell-quickcheck
-haskell-quickcheck-io
-haskell-ral
-haskell-random
-haskell-random-shuffle
-haskell-ranged-sets
-haskell-rank2classes
-haskell-raw-strings-qq
-haskell-recursion-schemes
-haskell-recv
-haskell-reducers
-haskell-refact
-haskell-reflection
-haskell-regex
-haskell-regex-applicative
-haskell-regex-base
-haskell-regex-compat
-haskell-regex-pcre
-haskell-regex-posix
-haskell-regex-tdfa
-haskell-repline
-haskell-resource-pool
-haskell-resourcet
-haskell-retrie
-haskell-retry
-haskell-rio
-haskell-row-types
-haskell-rvar
-haskell-safe
-haskell-safecopy
-haskell-safe-exceptions
-haskell-sbv
-haskell-s-cargot
-haskell-scientific
-haskell-securemem
-haskell-semialign
-haskell-semigroupoids
-haskell-semirings
-haskell-serialise
-haskell-servant
-haskell-servant-server
-haskell-setenv
-haskell-setlocale
-haskell-sha
-haskell-shakespeare
-haskell-show-combinators
-haskell-silently
-haskell-simple-sendfile
-haskell-simple-smt
-haskell-singleton-bool
-haskell-singletons
-haskell-skein
-haskell-skylighting
-haskell-skylighting-core
-haskell-skylighting-format-ansi
-haskell-skylighting-format-blaze-html
-haskell-skylighting-format-context
-haskell-skylighting-format-latex
-haskell-sockaddr
-haskell-some
-haskell-sop-core
-haskell-sorted-list
-haskell-split
-haskell-splitmix
-haskell-sqlite-simple
-haskell-src-exts
-haskell-src-meta
-haskell-statevar
-haskell-static-hash
-haskell-stm-chans
-haskell-stm-containers
-haskell-stm-hamt
-haskell-stmonadtrans
-haskell-stream
-haskell-streaming-commons
-haskell-strict
-haskell-strict-list
-haskell-string-interpolate
-haskell-svg-builder
-haskell-swagger2
-haskell-syb
-haskell-tagged
-haskell-tagsoup
-haskell-tamarin-prover-accountability
-haskell-tamarin-prover-export
-haskell-tamarin-prover-sapic
-haskell-tamarin-prover-term
-haskell-tamarin-prover-theory
-haskell-tamarin-prover-utils
-haskell-tasty
-haskell-tasty-ant-xml
-haskell-tasty-golden
-haskell-template-haskell-compat-v0208
-haskell-temporary
-haskell-terminal-size
-haskell-texmath
-haskell-text-binary
-haskell-text-builder
-haskell-text-builder-dev
-haskell-text-conversions
-haskell-text-icu
-haskell-text-iso8601
-haskell-text-latin1
-haskell-text-manipulate
-haskell-text-printer
-haskell-text-rope
-haskell-text-short
-haskell-tf-random
-haskell-th-abstraction
-haskell-th-compat
-haskell-th-env
-haskell-these
-haskell-th-expand-syns
-haskell-th-lift
-haskell-th-lift-instances
-haskell-th-orphans
-haskell-threads
-haskell-th-reify-many
-haskell-time-compat
-haskell-time-locale-compat
-haskell-time-manager
-haskell-tls
-haskell-tls-session-manager
-haskell-toml-parser
-haskell-transformers-base
-haskell-transformers-compat
-haskell-trifecta
-haskell-typed-process
-haskell-type-errors
-haskell-type-hint
-haskell-typst
-haskell-typst-symbols
-haskell-unbounded-delays
-haskell-unicode-collation
-haskell-unicode-data
-haskell-unicode-transforms
-haskell-uniplate
-haskell-universe-base
-haskell-unix-compat
-haskell-unix-time
-haskell-unliftio
-haskell-unliftio-core
-haskell-unordered-containers
-haskell-uri-encode
-haskell-utf8-string
-haskell-uuid
-haskell-uuid-types
-haskell-vault
-haskell-vector
-haskell-vector-algorithms
-haskell-vector-binary-instances
-haskell-vector-hashtables
-haskell-vector-stream
-haskell-versions
-haskell-void
-haskell-wai
-haskell-wai-app-file-cgi
-haskell-wai-app-static
-haskell-wai-conduit
-haskell-wai-cors
-haskell-wai-extra
-haskell-wai-logger
-haskell-warp
-haskell-warp-quic
-haskell-warp-tls
-haskell-what4
-haskell-witherable
-haskell-wl-pprint-text
-haskell-word8
-haskell-x11
-haskell-x11-xft
-haskell-x509
-haskell-xdg-basedir
-haskell-xml
-haskell-xml-conduit
-haskell-xml-hamlet
-haskell-xml-types
-haskell-xss-sanitize
-haskell-yaml
-haskell-yesod-core
-haskell-yesod-static
-haskell-zenc
-haskell-zip-archive
-haskell-zlib
-haskell-zlib-bindings
-hath-rust
-hauk-server
-haxm-dkms-git
-hcxdumptool
-hcxkeys
-hcxtools
-hddtemp
-hdf5-openmpi
-hdisplays
-hdparm
-hdrmerge
-hdx-realtime-media-engine
-headscale
-heimdall
-help2man
-helvum
-hhd-user
-hicolor-icon-theme
-hidapi
-hieroglyphic
-highway
-himalaya
-hipblas
-hipblas-common
-hipify-clang
-hip-runtime-amd
-hiredis
-hlint
-homebank
-hopenpgp-tools
-hostapd
-hostapd-wpe
-hostsblock
-hostsctl
-hotp-totp-php
-hping
-hsa-rocr
-hslua-cli
-hspell
-htmlcxx
-html-xml-utils
-htop
-httpbin
-hub
-hunspell
-huntarr
-hunter
-hwdata
-hwdetect
-hwinfo
-hwloc
-hw-probe
-hydock
-hydra
-hyperkitty
-hyperqueue
-hyperscan
-hyperv
-hyphen
-hyprcap
-hyprcursor
-hypr-dock
-hypremoji
-hyprfindr
-hyprgraphics
-hyprhide
-hypridle
-hyprkeys
-hyprland
-hyprland-guiutils
-hyprland-protocols
-hyprland-qt-support-git
-hyprland-workspaces
-hyprlang
-hyprlauncher
-hyprlax
-hyprlock
-hyprlux
-hyprmixer
-hyprpanel
-hyprpaper
-hyprpicker
-hyprpolkitagent
-hyprproxlock
-hyprpwcenter
-hyprqt6engine
-hyprscratch
-hyprsession
-hyprshade
-hyprshell
-hyprshot
-hyprsunset
-hyprswitch
-hyprtoolkit
-hyprutils-git
-hyprviz
-hyprvoice-bin
-hyprwayland-scanner
-hyprwhspr
-hyprwindow
-hyprwire
-i2c-tools
-iaito
-iana-etc
-ibm-sw-tpm2
-ibm-tss
-ibus
-icaclient
-ical
-ice9-bluetooth-sniffer
-icedtea-web
-icmake
-icoextract
-icon-library
-icon-naming-utils
-icoutils
-icu
-icu73
-id3lib
-iddawc
-idesk
-ifdtool
-ifuse
-igraph
-igsc
-iio-niri
-iio-sensor-proxy
-iioutils
-ijs
-imagemagick
-imaginary
-imake
-imapfilter
-imapgoose
-imath
-img2pdf
-iml
-imlib2
-impacket
-imv
-imvirt
-include-what-you-use
-inetutils
-inferno-aoip
-influxdb
-infnoise
-infnoise-tools
-informant
-iniparser
-innernet
-innoextract
-inotify-info
-inotify-tools
-inspircd
-instaloader
-instamancer
-intel-compute-runtime
-intel-gmmlib
-intel-gpu-tools
-intel-graphics-compiler
-intel-lms
-intel-media-driver
-intel-media-sdk
-intel-metee
-intel-oneapi-basekit
-intel-opencl
-intel-opencl-sdk
-intelpwm
-intel-speed-select
-inteltool
-intel-ucode
-intel-undervolt
-intel-xed
-interception-tools
-interceptty
-inter-font
-intiface-central
-intltool
-invoice
-invoiceninja
-invoiceplane
-inxi
-ipmitool
-ipp-usb
-iproute2
-iptables-nft
-iputils
-ipv6calc
-ipython
-ir.lv2
-isa-l
-iso-codes
-isoimagewriter
-isomd5sum
-ispc
-ispell
-isync
-itstool
-ivre
-iw
-iwd
-jaaa
-jack_delay
-jacktrip
-jadx
-jailbox-git
-jake
-jansson
-janus-gateway
-jasper
-java-batik
-java-commons-daemon
-java-commons-io
-java-commons-lang
-java-commons-logging
-java-environment-common
-java-runtime-common
-java-service-wrapper
-java-xmlgraphics-commons
-jbig2dec
-jbigkit
-jc303-common
-jc303-lv2
-jcli
-jddbusdebugger
-jdk11-openjdk
-jdk17-openjdk
-jdk21-openjdk
-jdk8-openjdk
-jdk-openjdk
-jellyfin-ffmpeg
-jemalloc
-jenkins
-jenq
-jetring
-jfsutils
-jhentai-bin
-jimtcl
-jitsi-meet
-jitterentropy
-jlatexmath
-jlink-software-and-documentation
-jnoisemeter
-john
-jomon
-jose
-journal-gateway-gelf
-jp2-pixbuf-loader
-jpegoptim
-jq
-jre8-openjdk
-jre8-openjdk-headless
-jruby
-js140
-json-c
-jsoncpp
-json-glib
-jsonnet-language-server
-jsonrpc-glib
-jsonrpc-glib-docs
-judy
-jupyterlab
-jupyterlab-lsp
-jupyterlab-pygments
-jupyter-lsp
-jupyter-metakernel
-jupyter-nbclient
-jupyter-nbconvert
-jupyter-nbformat
-jupyter-notebook-shim
-jupyter-server
-just-lsp
-jython
-k9s
-kaccounts-integration
-kakoune
-kakoune-lsp
-kamailio
-karchive
-karchive5
-katex
-kauth
-kauth5
-kbd
-kbookmarks
-kbookmarks5
-kbuilder
-kcaldav
-kcalendarcore
-kcalutils
-kcmutils
-kcodecs
-kcodecs5
-kcolorscheme
-kcompletion
-kcompletion5
-kconfig
-kconfig5
-kconfigwidgets
-kconfigwidgets5
-kcontacts
-kcontacts5
-kcoreaddons
-kcoreaddons5
-kcpuid
-kcrash
-kcrash5
-kcron
-kdbusaddons
-kdbusaddons5
-kdeclarative
-kdeconnect
-kded5
-kdialog
-kdnssd
-kdoctools
-kdsingleapplication
-kdsoap-qt6
-kdsoap-ws-discovery-client
-keepass
-keepass-plugin-keeagent
-keepassxc
-keeper-secrets-manager-core
-kernel-builder
-kernel-modules-hook
-kernelpatch
-kexec-tools
-keychain
-keycloak
-keycloak-metrics-spi
-keystone
-keyutils
-kfilemetadata
-kglobalaccel
-kglobalaccel5
-kguiaddons
-kguiaddons5
-khal
-khip
-kholidays
-ki18n
-ki18n5
-kicad
-kiconthemes
-kiconthemes5
-kidentitymanagement
-kidletime
-kill-net
-kimap
-kio
-kio5
-kio-extras
-kirigami
-kirigami2
-kirigami-addons
-kismet
-kismet-plugin-ubertooth
-kismon
-kitemmodels
-kitemviews
-kitemviews5
-kitty
-kitty-shell-integration
-kitty-terminfo
-kjobwidgets
-kjobwidgets5
-kldap
-kmailtransport
-kmbox
-kmime
-kmod
-kmodcache
-kmon
-kmscon
-kmsvnc
-knewstuff
-knot
-knotifications
-knotifications5
-knot-resolver
-kodi
-kodi-addon-visualization-shadertoy
-kompose
-kotlin
-kotlin-debug-adapter-bin
-kpackage
-kparts
-kparts5
-kpatch
-kpeople
-kpimtextedit
-kpmcore
-kpublictransport
-kraft
-krb5
-kresus
-krita
-krita-plugin-gmic
-krita-plugin-pythonplugindevelopertools-git
-krunner
-ksanecore
-kscript
-kseexpr
-kservice
-kservice5
-ksmtp
-kstatusnotifieritem
-ksvg
-ktextaddons
-ktexteditor5
-ktexttemplate
-ktextwidgets
-ktextwidgets5
-ktlint
-ktoblzcheck
-ktrip
-kubectl
-kube-linter
-kubeseal
-kubetui
-kuserfeedback
-kvantum
-kvantum-qt5
-kwallet
-kwallet5
-kwidgetsaddons
-kwidgetsaddons5
-kwindowsystem
-kwindowsystem5
-kxmlgui
-kxmlgui5
-kyotocabinet
-ladder
-ladspa
-lame
-lasem
-lasem-docs
-lasso
-laszip
-laszip2
-latex2html
-layer-shell-qt
-lazycc
-lazygit
-lazyjj
-lazyssh
-lcalc
-lcms2
-lcov
-ldb
-ldc
-ldns
-leancrypto
-ledger-udev
-lefthook-bin
-legba
-lei
-lemminx
-lemurs
-lensfun
-lenspect
-leptonica
-less
-level-zero-loader
-lftp
-lhasa
-lib32-aalib
-lib32-acl
-lib32-alsa-lib
-lib32-alsa-oss
-lib32-alsa-plugins
-lib32-at-spi2-core
-lib32-attr
-lib32-audit
-lib32-bluez-libs
-lib32-bluez-plugins
-lib32-brotli
-lib32-bzip2
-lib32-cairo
-lib32-cdparanoia
-lib32-check
-lib32-clang
-lib32-colord
-lib32-curl
-lib32-dbus
-lib32-dbus-glib
-lib32-duktape
-lib32-e2fsprogs
-lib32-egl-wayland
-lib32-expat
-lib32-fakeroot
-lib32-flac
-lib32-fluidsynth
-lib32-fontconfig
-lib32-freeglut
-lib32-freetype2
-lib32-fribidi
-lib32-gamemode
-lib32-gcc-libs
-lib32-gdk-pixbuf2
-lib32-gettext
-lib32-giflib
-lib32-glew
-lib32-glew1.10
-lib32-glib2
-lib32-glibc
-lib32-glib-networking
-lib32-glm
-lib32-glslang
-lib32-glu
-lib32-gmp
-lib32-gnutls
-lib32-gpm
-lib32-gst-plugins-base
-lib32-gst-plugins-base-libs
-lib32-gst-plugins-good
-lib32-gstreamer
-lib32-gtk2
-lib32-gtk3
-lib32-harfbuzz
-lib32-icu
-lib32-imlib2
-lib32-json-c
-lib32-keyutils
-lib32-krb5
-lib32-lcms2
-lib32-libappindicator
-lib32-libappindicator-gtk2
-lib32-libasyncns
-lib32-libavc1394
-lib32-libavtp
-lib32-libb2
-lib32-libcaca
-lib32-libcanberra
-lib32-libcap
-lib32-libcups
-lib32-libcurl-compat
-lib32-libcurl-gnutls
-lib32-libdatrie
-lib32-libdbusmenu-glib
-lib32-libdbusmenu-gtk2
-lib32-libdbusmenu-gtk3
-lib32-libdecor
-lib32-libdrm
-lib32-libdv
-lib32-libdxvk
-lib32-libelf
-lib32-libepoxy
-lib32-libevdev
-lib32-libevent
-lib32-libffi
-lib32-libgcrypt
-lib32-libgcrypt15
-lib32-libglvnd
-lib32-libgpg-error
-lib32-libgudev
-lib32-libice
-lib32-libidn11
-lib32-libidn2
-lib32-libiec61883
-lib32-libindicator
-lib32-libindicator-gtk2
-lib32-libjpeg6-turbo
-lib32-libjpeg-turbo
-lib32-libldap
-lib32-libltdl
-lib32-libmikmod
-lib32-libmodplug
-lib32-libnghttp2
-lib32-libnghttp3
-lib32-libnl
-lib32-libnm
-lib32-libnsl
-lib32-libogg
-lib32-libpcap
-lib32-libpciaccess
-lib32-libpipewire
-lib32-libpng
-lib32-libpng12
-lib32-libproxy
-lib32-libpsl
-lib32-libpulse
-lib32-libraw1394
-lib32-librsvg
-lib32-librtmp0
-lib32-libshout
-lib32-libsm
-lib32-libsndfile
-lib32-libsoup
-lib32-libsoup3
-lib32-libsrtp
-lib32-libssh2
-lib32-libtasn1
-lib32-libthai
-lib32-libtheora
-lib32-libtiff
-lib32-libtiff4
-lib32-libtirpc
-lib32-libudev0-shim
-lib32-libunistring
-lib32-libunwind
-lib32-libusb
-lib32-libva
-lib32-libva-intel-driver
-lib32-libvdpau
-lib32-libvorbis
-lib32-libvpx
-lib32-libvpx1.3
-lib32-libwebp
-lib32-libx11
-lib32-libxau
-lib32-libxcb
-lib32-libxcomposite
-lib32-libxcrypt
-lib32-libxcrypt-compat
-lib32-libxcursor
-lib32-libxdamage
-lib32-libxdmcp
-lib32-libxext
-lib32-libxfixes
-lib32-libxft
-lib32-libxi
-lib32-libxinerama
-lib32-libxkbcommon
-lib32-libxkbcommon-x11
-lib32-libxml2
-lib32-libxmu
-lib32-libxrandr
-lib32-libxrender
-lib32-libxshmfence
-lib32-libxss
-lib32-libxt
-lib32-libxtst
-lib32-libxv
-lib32-libxxf86vm
-lib32-llvm
-lib32-llvm-libs
-lib32-lm_sensors
-lib32-l-smash
-lib32-mesa-demos
-lib32-mesa-git
-lib32-mesa-utils
-lib32-mpg123
-lib32-ncurses
-lib32-neon
-lib32-nettle
-lib32-nspr
-lib32-nss
-lib32-nvidia-utils
-lib32-obs-vkcapture
-lib32-ocl-icd
-lib32-openal
-lib32-opencl-nvidia
-lib32-openssl
-lib32-openssl-1.0
-lib32-openssl-1.1
-lib32-opus
-lib32-orc
-lib32-p11-kit
-lib32-pam
-lib32-pango
-lib32-pcre2
-lib32-pcsclite
-lib32-pipewire
-lib32-pipewire-jack
-lib32-pipewire-v4l2
-lib32-pixman
-lib32-polkit
-lib32-popt
-lib32-portaudio
-lib32-readline
-lib32-renderdoc
-lib32-sbc
-lib32-sdl12-compat
-lib32-sdl2-compat
-lib32-sdl2_image
-lib32-sdl2_mixer
-lib32-sdl2_ttf
-lib32-sdl3
-lib32-sdl_image
-lib32-sdl_mixer
-lib32-sdl_ttf
-lib32-shaderc
-lib32-speex
-lib32-spirv-llvm-translator
-lib32-spirv-tools
-lib32-sqlite
-lib32-systemd
-lib32-taglib
-lib32-tdb
-lib32-twolame
-lib32-util-linux
-lib32-v4l-utils
-lib32-vkbasalt
-lib32-vkd3d
-lib32-vulkan-gfxstream
-lib32-vulkan-icd-loader
-lib32-vulkan-nouveau
-lib32-vulkan-utility-libraries
-lib32-vulkan-validation-layers
-lib32-wavpack
-lib32-wayland
-lib32-xcb-util-keysyms
-lib32-xz
-lib32-zlib
-lib32-zstd
-lib3mf
-libabw
-libaccounts-glib
-libaccounts-qt
-libad9361
-libadwaita
-libaec
-libaemu
-libafterimage
-libaio
-libakonadi
-libantlr3c
-libao
-libappindicator
-libarchive
-libart-lgpl
-libartnet
-libasound2-plugin-fftrate
-libass
-libassuan
-libastal-bluetooth-git
-libasyncns
-libatasmart
-libatomic_ops
-libavc1394
-libavif
-libavtp
-libayatana-appindicator
-libayatana-indicator
-libb2
-libbacktrace-git
-libbf
-libblake3
-libblockdev
-libblockdev-crypto
-libblockdev-fs
-libblockdev-loop
-libblockdev-lvm
-libblockdev-mdraid
-libblockdev-nvme
-libblockdev-part
-libblockdev-swap
-libbluray
-libbpf
-libbraiding
-libbs2b
-libbsd
-libbtbb
-libburn
-libbytesize
-libc++
-libc++abi
-libcaca
-libcacard
-libcamera
-libcamera-ipa
-libcamera-tools
-libcanberra
-libcap
-libcap-ng
-libcava
-libcbor
-libcdaudio
-libcdio
-libcdio-paranoia
-libcdr
-libcec
-libcerf
-libcgif
-libcgroup
-libchardet
-libck
-libclc
-libcli
-libcloudproviders
-libcmis
-libcmrt
-libcolord
-libcomps
-libconfig
-libcpuid
-libcryptui
-libcss
-libcue
-libcups
-libcupsfilters
-libcurl-compat
-libcurl-gnutls
-libcvec
-libdaemon
-libdatachannel
-libdatrie
-libdbi
-libdbi-drivers
-libdbusmenu-glib
-libdbusmenu-gtk2
-libdbusmenu-gtk3
-libdbusmenu-qt4
-libdbusmenu-qt5
-libdc1394
-libdca
-libde265
-libdecor
-libdeflate
-libdesq
-libdesqui
-libdex
-libdiscid
-libdispatch
-libdisplay-info
-libdmtx
-libdnet
-libdom
-libdovi
-libdrm
-libdv
-libdvdnav
-libdvdread
-libdwarf
-libdxvk
-libebml
-libe-book
-libebur128
-libedit
-libei
-libelectron
-libelectron-electron-meta
-libelf
-libepc
-libepoxy
-libepubgen
-libesmtp
-libetonyek
-libetpan
-libev
-libevdev
-libevent
-libexif
-libexttextcat
-libfabric
-libfakekey
-libfaketime
-libfbclient
-libfdk-aac
-libffado
-libffi
-libfido2
-libfilteraudio
-libfixposix
-libfm-extra
-libfontenc
-libfprint
-libfreeaptx
-libfreehand
-libfreexl
-libftdi
-libftdi-compat
-libfyaml
-libg15
-libgadu
-libgbinder
-libgccjit
-libgcrypt
-libgcrypt15
-libgdiplus
-libgdm
-libgedit-amtk
-libgedit-gfls
-libgedit-gtksourceview
-libgedit-tepl
-libgee
-libgeotiff
-libgepub
-libgexiv2
-libgfshare
-libggml-cuda-git
-libgig
-libgirepository
-libgit2
-libgit2-glib
-libgit2-glib-docs
-libglade
-libglademm
-libglibutil
-libglvnd
-libgme
-libgmobile
-libgmpris
-libgnomecanvas
-libgnomekbd
-libgoa
-libgovirt
-libgpg-error
-libgphoto2
-libgpiod
-libgravatar
-libgringotts
-libgsf
-libgssglue
-libgtop
-libgudev
-libgusb
-libgweather-4
-libgxps
-libhandy
-libharu
-libheif
-libhomfly
-libhubbub
-libhx
-libibus
-libical
-libice
-libiconv
-libid3tag
-libidn
-libidn11
-libidn2
-libiec61883
-libieee1284
-libiio
-libilbc
-libimagequant
-libimobiledevice
-libimobiledevice-glue
-libindi
-libindicator
-libindicator-gtk2
-libindi-celestronaux
-libinfnoise
-libinih
-libinput
-libinsane
-libinstpatch
-libiptcdata
-libirecovery
-libirecovery-1.0-3
-libiscsi
-libisl
-libisoburn
-libisofs
-libixion
-libjaylink
-libjcat
-libjpeg6-turbo
-libjpeg-turbo
-libjuice
-libjxl
-libkate
-libkdcraw5
-libkdepim
-libkdumpfile
-libkeccak
-libkexiv2
-libkeybinder3
-libkgapi
-libkleo
-libkrun
-libkrunfw
-libksane
-libksba
-liblangtag
-liblc3
-liblcf
-libldac
-libldap
-libldm
-libliftoff
-libliquidsfz
-liblo
-liblouis
-liblphobos
-liblqr
-liblrdf
-libltc
-libluv
-liblzf
-libmad
-libmalcontent
-libmanette
-libmatroska
-libmaxminddb
-libmbim
-libmcrypt
-libmd
-libmediaart
-libmediainfo
-libmemcached-awesome
-libmesode
-libmesode-doc
-libmfx
-libmicrodns
-libmicrohttpd
-libmikmod
-libmilter
-libmm-glib
-libmms
-libmng
-libmnl
-libmodbus
-libmodplug
-libmodule
-libmpc
-libmpcdec
-libmpd
-libmpdclient
-libmpeg2
-libmspack
-libmspub
-libmtp
-libmupdf
-libmwaw
-libmysofa
-libnautilus-extension
-libnbd
-libndp
-libnet
-libnetfilter_conntrack
-libnetfilter_queue
-libnewt
-libnfnetlink
-libnfs
-libnftnl
-libnghttp2
-libnghttp3
-libngtcp2
-libnice
-libnids
-libnl
-libnm
-libnma
-libnma-common
-libnma-gtk4
-libnoise
-libnotify
-libnova
-libnsbmp
-libnsgif
-libnsl
-libnss_nis
-libnsutils
-libnumbertext
-libnvidia-container
-libnvme
-libodfgen
-libofa
-libofx
-libogg
-liboggz
-libolm
-libopencm3
-libopenmpt
-libopusenc
-liboqs
-liborcus
-libosal
-libosinfo
-libosip2
-libosmocore
-libotf
-libotr
-libp11
-libp11-kit
-libpackagekit-glib
-libpagemaker
-libpam-google-authenticator
-libpam_pwdfile
-libpaper
-libparserutils
-libpcap
-libpciaccess
-libpeas
-libpfm
-libpgm
-libpg_query
-libphonenumber
-libpipeline
-libpipewire
-libpkcs11-dnie
-libplacebo
-libplist
-libpng
-libpng12
-libpoly
-libportal
-libportal-gtk4
-libportal-qt6
-libppd
-libprocps
-libproxy
-libpsl
-libpst
-libptytty
-libpulse
-libpurple
-libpwquality
-libqaccessibilityclient-qt5
-libqalculate
-libqatemcontrol-git
-libqmi
-libqrtr-glib
-libqt5xdg
-libquvi
-libquvi-scripts
-libqxp
-librabbitmq-c
-libraqm
-libratbag
-libraw
-libraw1394
-librdkafka
-libreoffice-extension-texmaths
-libreoffice-extension-writer2latex
-libreoffice-fresh
-libresprite
-librest
-libretls
-librevenge
-librsvg
-librsvg-docs
-librsync
-librtmp0
-librttopo
-librustls
-libsamplerate
-libsasl
-libsass
-libsbsms
-libscanmem
-libsdrplay
-libseccomp
-libsecp256k1
-libsecret
-libsecret-docs
-libserialport
-libsfdo
-libshout
-libsidplayfp
-libsieve
-libsigc++
-libsigc++-3.0
-libsigsegv
-libsimple
-libsixel
-libslirp
-libsm
-libsmbios
-libsndfile
-libsodium
-libsonic
-libsoup
-libsoup3
-libsoxr
-libspatialindex
-libspatialite
-libspecbleach
-libspectre
-libspeechd
-libspf2
-libspiro
-libspnav
-libspng
-libsquish
-libsrtp
-libssh
-libssh2
-libstaroffice
-libstemmer
-libstrophe
-libstrophe-doc
-libsvgtiny
-libsynctex
-libsysprof-capture
-libtar
-libtasn1
-libtatsu
-libteam
-libtecla
-libtg_owt
-libthai
-libtheora
-libtiff
-libtiff4
-libtiff5
-libtiger
-libtirpc
-libtlsrpt
-libtomcrypt
-libtommath
-libtool
-libtorch-cxx11abi-cpu
-libtpms
-libtrace
-libtraceevent
-libtracefs
-libtsm
-libtvcontrol
-libudev0-shim
-libuecc
-libuhd
-libuhd-utils
-libultrahdr
-libunibreak
-libuninameslist
-libunistring
-libunwind
-libupnp
-liburcu
-liburing
-libusb
-libusb-compat
-libusbgx
-libusbmuxd
-libusrsctp
-libutempter
-libutf8proc
-libuv
-libuvc-git
-libva
-libva1-compat
-libva-intel-driver
-libvarlink
-libva-utils
-libva-vdpau-driver
-libvdpau
-libvdpau-va-gl
-libverto
-libvips
-libvirt
-libvirt-dbus
-libvirt-glib
-libvirt-python
-libvisio
-libvisual
-libvlc
-libvncserver
-libvoikko
-libvolk
-libvorbis
-libvpl
-libvpl-tools
-libvpx
-libvpx1.10
-libvpx1.3
-libvterm
-libwacom
-libwandio
-libwapcaplet
-libwbclient
-libwebp
-libwebp-utils
-libwebsockets
-libwireplumber
-libwireplumber-4.0-compat
-libwmf
-libwnck
-libwnck3
-libwpd
-libwpe
-libwps
-libwslay
-libx11
-libx86
-libx86emu
-libxau
-libxaw
-libxcb
-libxcomp
-libxcomposite
-libxcrypt
-libxcrypt-compat
-libxcursor
-libxcvt
-libxdamage
-libxdg-basedir
-libxdmcp
-libxdp
-libxext
-libxfce4ui
-libxfce4util
-libxfixes
-libxfont2
-libxft
-libxi
-libxinerama
-libxisf
-libxkbcommon
-libxkbcommon-x11
-libxkbfile
-libxklavier
-libxml++
-libxml2
-libxml++2.6
-libxml2-docs
-libxml2-legacy
-libxmlb
-libxmlbird
-libxmlrpc
-libxmp
-libxmu
-libxnvctrl
-libxp
-libxpid
-libxpm
-libxpresent
-libxrandr
-libxrender
-libxres
-libxsd
-libxshmfence
-libxslt
-libxss
-libxt
-libxtst
-libxv
-libxvmc
-libxxf86vm
-libyaml
-libytnef
-libyuv
-libzdb
-libzen
-libzip
-libzmf
-licenses
-lightdm
-lightdm-webkit2-greeter
-lightdm-webkit-theme-sequoia-git
-lighthouse
-lightning-terminal
-lighttpd
-lilv
-lilypond
-limesuite
-limine
-limine-entry-tool
-limine-snapper-sync
-linbox
-linenoise-ng
-links
-linkwarden
-linset
-linux-a11y-sound-theme
-linux-api-headers
-linuxconsole
-linux-firmware
-linux-firmware-amdgpu
-linux-firmware-atheros
-linux-firmware-broadcom
-linux-firmware-cirrus
-linux-firmware-hauppauge
-linux-firmware-intel
-linux-firmware-liquidio
-linux-firmware-marvell
-linux-firmware-mediatek
-linux-firmware-mellanox
-linux-firmware-nfp
-linux-firmware-nvidia
-linux-firmware-other
-linux-firmware-qcom
-linux-firmware-qlogic
-linux-firmware-radeon
-linux-firmware-realtek
-linux-firmware-valve
-linux-firmware-whence
-linux-gpib-dkms
-linux-headers
-linux-lts-headers
-linux-mdss-dsi-panel-driver-generator
-linux-smart-enumeration-git
-linux-tools-meta
-linux-zen
-linux-zen-headers
-liquid-dsp
-liquidsfz-lv2
-lirc
-livekit-ingress
-live-media
-lkrg-dkms
-lksctp-tools
-lld
-lld20
-lldb
-lldb-mi
-llhttp
-llvm
-llvm10
-llvm10-libs
-llvm15
-llvm15-libs
-llvm18-libs
-llvm19-libs
-llvm20-libs
-llvm-libs
-lmdb
-lmms
-lm_sensors
-localsearch
-log4cplus
-log4j-detector
-log4shib
-logpresso-log4j-scan
-logrotate
-lokalize
-loki-canary
-looking-glass-module-dkms
-loudmouth
-love
-lowdown
-lpsolve
-lrcalc
-lrs
-lsb-release
-lsdvd
-lshw
-lsix
-l-smash
-lsof
-lsp-plugins
-lsp-plugins-clap
-lsp-plugins-gst
-lsp-plugins-ladspa
-lsp-plugins-lv2
-lsp-plugins-standalone
-lsp-plugins-vst
-lsp-plugins-vst3
-lua
-lua51
-lua51-argparse
-lua51-bitop
-lua51-cassowary
-lua51-cldr
-lua51-cliargs
-lua51-cqueues
-lua51-decasify
-lua51-expat
-lua51-filesystem
-lua51-fluent
-lua51-linenoise
-lua51-loadkit
-lua51-lpeg
-lua51-lpeglabel
-lua51-luacheck
-lua51-luaepnf
-lua51-luaossl
-lua51-luarepl
-lua51-luarocks-build-rust-mlua
-lua51-luautf8
-lua51-luv
-lua51-penlight
-lua51-sec
-lua51-socket
-lua51-vstruct
-lua51-zlib
-lua52
-lua52-bitop
-lua52-expat
-lua52-lpeg
-lua52-luajson
-lua52-luarocks-build-rust-mlua
-lua52-socket
-lua53
-lua53-lgi
-lua53-luarocks-build-rust-mlua
-lua-expat
-lua-filesystem
-luajit
-luajit-sdl3-git
-luakit
-lua-language-server
-lua-linenoise
-lua-lpeg
-lua-lpeglabel
-lua-luarocks-build-rust-mlua
-lua-lub
-lua-lut
-lua-luv
-luaoptions-git
-luarocks
-lua-sec
-lua-socket
-luau
-lucene++
-luit
-luky-borg-backup
-lv2
-lv2lint
-lvm2
-lxc
-lxqt-build-tools-qt5
-lynx
-lz4
-lzip
-lzlib
-lzo
-lzop
-m17n-db
-m17n-lib
-m4
-m4acut
-m4ri
-m4rie
-macchanger
-mage
-magic-wormhole
-magiskboot-bin
-magma-cuda
-mail4one
-mailcap
-mailcommon
-mailimporter
-mailman3
-mailman3-hyperkitty
-mailman-web
-mailnag
-mailnag-goa-plugin
-mailspring
-mailutils
-mairix
-make
-makedumpfile
-makepkg-optimize-mold
-mako
-maldet
-mallard-ducktype
-mame
-mame-tools
-man-db
-mangareader
-man-pages
-mariadb
-mariadb-clients
-mariadb-jdbc
-mariadb-libs
-masscanned-git
-mate-desktop
-materialx
-mathjax
-matrix-appservice-irc
-matrix-authentication-service
-matterbridge
-mattermost
-mattermost-plugin-boards
-mattermost-plugin-calls
-mattermost-plugin-collabora
-mattermost-plugin-gitlab
-mattermost-plugin-jitsi
-mattermost-plugin-matterpoll
-mattermost-plugin-playbooks
-mattersend
-matui
-maturin
-maude
-mautrix-meta
-maxima
-maxima-ecl
-maxima-fas
-mbedtls
-mbedtls2
-mbelib
-mbrola
-mbuffer
-mcabber
-mcp-gearbox-git
-mcphost
-mcpp
-mcp-plugins
-mcproxy
-mcptools
-md4c
-mdadm
-mda.lv2
-mdbook
-mdbook-katex
-mdevd
-mdk3
-mdk4
-me_cleaner
-mediaexpress
-mediainfo
-mediamtx
-media-player-info
-med-openmpi
-medusa
-megasync
-mek-security
-meld
-mellite
-memcached
-memtest_vulkan
-mencoder
-menu-cache
-menuconfig-git
-menumaker
-menu-qalc-wayland-git
-mercurial
-mergiraf
-mermaid-cli
-mesa-demos
-mesa-docs
-mesaflash
-mesa-git
-mesarun
-mesa-utils
-meson
-meson-python
-messagelib
-metasploit
-metis
-mhash
-mic-indicator
-mic-mute-led-reverse
-micronucleus
-microsoft-gsl
-midi_matrix.lv2
-mighttpd2
-mill
-mimalloc
-mimemagic
-mimetreeparser
-mimic-bpf-dkms
-mimir
-mingw-w64-binutils
-mingw-w64-cmake
-mingw-w64-configure
-mingw-w64-crt
-mingw-w64-doctest
-mingw-w64-environment
-mingw-w64-expat
-mingw-w64-gcc
-mingw-w64-headers
-mingw-w64-libiconv
-mingw-w64-meson
-mingw-w64-opencl-headers
-mingw-w64-pdcurses
-mingw-w64-pkg-config
-mingw-w64-termcap
-mingw-w64-vulkan-headers
-mingw-w64-winpthreads
-miniflux
-minisign
-ministore
-miniupnpc
-miniz
-minizip
-minizip-ng
-minq-nhentai-git
-mip.rs
-mise
-mitmproxy
-mitmproxy2swagger
-mjpegtools
-mkcert
-mkinitcpio
-mkinitcpio-archiso
-mkinitcpio-bluetooth
-mkinitcpio-btrfs
-mkinitcpio-busybox
-mkinitcpio-encrypt-detached-header
-mkinitcpio-firmware
-mkinitcpio-mlx4
-mkinitcpio-mlx5
-mkinitcpio-netconf
-mkinitcpio-nfs-utils
-mkinitcpio-overlayfs
-mkinitcpio-tinyssh
-mkinitcpio-utils
-mkvtoolnix-cli
-mlir
-mlt
-mmc-utils
-mmm
-mobile-broadband-provider-info
-mobydroid
-mod_authnz_external
-modclean
-mod_dnssd
-modemmanager
-modemmanager-qt
-moderntimeline
-mod_fcgid
-mod_itk
-mod-lv2-extensions
-modo
-mod_passenger
-mod_perl
-mod_rpaf
-mojo-libs
-mokutil
-mold
-monero
-monero-api-cli
-moneydance
-moneymanagerex
-mongo-c-driver
-mono
-monolith
-moony.lv2
-moreutils
-mosh-agent
-mosh-scheme
-mosquitto
-motion
-movit
-mox
-mozplugger
-mp3gain
-mp3unicode
-mpdecimal
-mpfi
-mpfr
-mpg123
-mplayer
-mpop
-mpv
-mpv-mpris
-mpvqt
-mpv-shim-default-shaders
-mqttui
-mr.duppl
-mricrogl
-mscp
-msedit
-msgpack-c
-msi-psu-dkms
-msl
-msmtp
-msodbcsql
-mstflint
-mtdev
-mtd-utils
-mtools
-mtp
-mtpaint
-mtpfs
-mtxclient
-mu
-muchsync
-mujs
-mulle-bashfunctions
-multibg-wayland
-multilib-devel
-multipath-tools
-munge
-muparser
-mupdf-gl
-mupdf-tools
-muse
-mutt
-mutter
-mutt-ics
-mutt-wizard
-mvnd
-mvnsh
-mvnvm
-mxml
-mxml-docs
-mypy
-mytop
-nafe
-namcap
-nano
-nanoflann
-nanomsg
-nanosvg
-nasm
-nautilus
-nauty
-nawk
-nbxplorer
-nccl
-ncdu
-ncnn
-ncrack
-ncurses
-ncurses5-compat-libs
-ndctl
-ndiff
-ndisc6
-neard
-neatvnc
-nebula
-nekoget
-nemo
-nemo-python
-nemo-seahorse
-neocmakelsp
-neomutt
-neon
-neovim
-neovim-decasify
-nerdctl
-nerd-dictation-git
-netatop-dkms
-netavark
-netboot
-netcdf-fortran-openmpi
-netcdf-openmpi
-netexec
-netfilter-fullconenat-dkms-git
-nethsm-pkcs11
-netpbm
-netscout-git
-netsniff-ng
-net-snmp
-netstandard-targeting-pack
-netsurf
-nettle
-net-tools
-networkmanager
-network-manager-applet
-networkmanager-dispatcher-chrony
-networkmanager-dmenu
-networkmanager-fortisslvpn
-networkmanager-l2tp
-networkmanager-openconnect
-networkmanager-openvpn
-networkmanager-pptp
-networkmanager-qt
-networkmanager-ssh
-network-manager-sstp
-networkmanager-strongswan
-networkmanager-vpnc
-networkmanager-vpn-plugin-l2tp
-networkmanager-vpn-plugin-openconnect
-networkmanager-vpn-plugin-openvpn
-networkmanager-vpn-plugin-pptp
-networkmanager-vpn-plugin-sstp
-networkmanager-vpn-plugin-vpnc
-newaita-icons-git
-new-session-manager
-nextcloud
-nextcloud-app-calendar
-nextcloud-app-contacts
-nextcloud-app-mail
-nextcloud-app-spreed
-nextcloud-client
-nfsidmap
-nfs-utils
-nfs-utils-rdma-server
-nftables
-nginx
-nginx-mod-auth-pam
-nginx-mod-dav-ext
-nginx-mod-echo
-nginx-mod-geoip
-nginx-mod-geoip2
-nginx-mod-mail
-nginx-mod-memc
-nginx-mod-naxsi
-nginx-mod-ndk
-nginx-mod-njs
-nginx-mod-perl
-nginx-mod-redis
-nginx-mod-redis2
-nginx-mod-set-misc
-nginx-mod-srcache
-nginx-mod-vts
-nginx-mod-xslt
-nginx-src
-ngrok
-ngspice
-nhentai-git
-nilfs-utils
-nil-git
-ninja
-ninjam-client
-ninjam-server
-niri
-niri-float-sticky
-niri-switch
-niriswitcher
-nirius
-nitrokey-udev-rules
-nitroshare
-nix
-nix-busybox
-nixfmt
-nix-melt
-nix-search-cli
-nlohmann-json
-nltk-data
-nmail
-nmap
-nmap-parse-output
-nm-connection-editor
-nng
-noctalia
-noctalia-shell
-node-gyp
-nodejs-emmet-ls
-nodejs-lts-iron
-nodejs-maildev
-nodejs-nopt
-nodenv
-noise-repellent
-noise-suppression-for-voice
-noisetorch-bin
-nomachine
-nomad
-nomad-driver-containerd
-nomad-driver-lxc
-nomad-driver-nspawn
-nomad-driver-podman
-nordzy-hyprcursors
-notcurses
-notification-daemon
-notify-osd
-notmuch
-notmuch-mutt
-notmuch-runtime
-notmuch-tools-git
-noto-fonts-emoji
-npapi-sdk
-npapi-vlc
-npm
-npth
-nq
-nrf5-sdk
-nrf5x-command-line-tools
-nrf5x-sniffer
-nrf-sniffer-ble
-nrftool
-nrf-udev
-nrfutil
-nspr
-nss
-nsync
-ntfs-3g
-ntl
-nuklear
-nullfsvfs-dkms
-numactl
-nurl
-nuspell
-nvc
-nvcards
-nvchecker
-nvcomp
-nvhpc
-nvhpc-comm-libs
-nvhpc-compilers
-nvidia-cg-toolkit
-nvidia-container-toolkit
-nvidia-docker-compose
-nvidia-fs-dkms
-nvidia-mft
-nvidia-open-dkms
-nvidia-prime
-nvidia-utils
-nvm
-nvme-cli
-nvmetcli
-nvshmem
-nvtop
-nvtx3
-nwg-displays
-nwg-dock-hyprland
-nwg-panel
-nwg-readme-browser
-nxproxy
-nyarchassistant-git
-nyx
-nyxt
-nzsl-git
-oath-toolkit
-obfs4proxy
-obs-backgroundremoval
-obs-face-tracker-dlib-models-git
-obs-gstreamer
-obs-gstreamer-debug
-obs-noise
-obs-pipewire-audio-capture
-obs-studio
-obs-vaapi
-obs-vban
-obs-vban-debug
-obs-vkcapture
-ob-xd-common
-ob-xd-lv2
-ocaml
-ocaml-base
-ocamlbuild
-ocaml-compiler-libs
-ocaml-findlib
-ocaml-intrinsics-kernel
-ocaml-pp
-ocaml-sexplib0
-ocaml-sqlite3
-ocaml-stdio
-ocl-icd
-ocrad
-ocrfeeder
-octave
-octave-doctest
-odin2-synthesizer
-odin2-synthesizer-clap
-odin2-synthesizer-common
-odin2-synthesizer-lv2
-odin2-synthesizer-standalone
-odin2-synthesizer-vst3
-offlineimap
-ofxstatement
-ofxstatement-paypal
-oidc-agent
-oidcwarden
-oidcwarden-web
-ojs
-ollama
-ollama-cuda
-ollama-vulkan
-onednn
-onetbb
-oniguruma
-onionbalance
-onioncat
-onioncircuits
-oniongen-rs
-onionshare
-onnx
-onnxruntime-cuda
-opam
-openai-codex
-openal
-openal-examples
-openblas
-openblas64
-openbsd-netcat
-opencascade
-opencl-caps-viewer-wayland
-opencl-clhpp
-opencl-headers
-openclipart-svg
-opencl-nvidia
-opencolorio
-opencomic
-openconnect
-openconnect-sso
-opencore-amr
-opencryptoki
-opencsg
-opencv-cuda
-opendbx
-opendkim
-openexr
-openfec
-openfire
-openfortivpn
-opengl-man-pages
-opengv
-openh264
-openimagedebugger
-openimagedenoise
-openimageio
-openipmi
-openjade
-openjpeg2
-openldap
-openmp
-openmpi
-openmpi-docs
-openmpt
-openocd
-openpgl
-openpgp-ca
-openpgp-card-ssh-agent
-openpgp-card-tool-git
-openpgp-card-tools
-openpgp-ca-restd
-open-plc-utils
-openpmix
-open-policy-agent
-openra
-openrc
-openrct2
-openresolv
-opensaml
-opensc
-openscad
-openscad-lsp
-openscenegraph
-opensearch
-opensearch-alerting-plugin
-opensearch-analysis-icu-plugin
-opensearch-analysis-kuromoji-plugin
-opensearch-analysis-nori-plugin
-opensearch-analysis-phonetic-plugin
-opensearch-analysis-smartcn-plugin
-opensearch-analysis-stempel-plugin
-opensearch-analysis-ukrainian-plugin
-opensearch-anomaly-detection-plugin
-opensearch-asynchronous-search-plugin
-opensearch-cli
-opensearch-cross-cluster-replication-plugin
-opensearch-dashboards
-opensearch-dashboards-alerting-plugin
-opensearch-dashboards-anomaly-detection-plugin
-opensearch-dashboards-index-management-plugin
-opensearch-dashboards-maps-plugin
-opensearch-dashboards-notifications-plugin
-opensearch-dashboards-observability-plugin
-opensearch-dashboards-query-workbench-plugin
-opensearch-dashboards-reports-plugin
-opensearch-dashboards-security-plugin
-opensearch-discovery-azure-classic-plugin
-opensearch-discovery-ec2-plugin
-opensearch-discovery-gce-plugin
-opensearch-geospatial-plugin
-opensearch-index-management-plugin
-opensearch-ingest-attachment-plugin
-opensearch-job-scheduler-plugin
-opensearch-knn-plugin
-opensearch-mapper-annotated-text-plugin
-opensearch-mapper-murmur3-plugin
-opensearch-mapper-size-plugin
-opensearch-ml-commons-plugin
-opensearch-neural-search-plugin
-opensearch-notifications-plugin
-opensearch-observability-plugin
-opensearch-performance-analyzer-plugin
-opensearch-reports-scheduler-plugin
-opensearch-repository-azure-plugin
-opensearch-repository-gcs-plugin
-opensearch-repository-hdfs-plugin
-opensearch-repository-s3-plugin
-opensearch-security-plugin
-opensearchserver
-opensearch-sql-plugin
-opensearch-store-smb-plugin
-openshadinglanguage
-openslide
-opensmtpd-filter-rspamd
-opensmtpd-table-postgres
-opensp
-openssh
-openssl
-openssl-1.0
-openssl-1.1
-opensubdiv
-opentofu
-opentracker
-openucx
-open-unmix-umxhq-weights
-openvdb
-openvino
-openvino-intel-gpu-plugin
-openvino-models
-openvkl
-openvpn
-openvr
-openxr
-operator-sdk
-optiimage
-opus
-opusfile
-opus-tools
-oqsprovider
-oracle-instantclient-basic
-orc
-orca
-orcania
-ory-hydra
-oryx
-osinfo-db
-osinfo-db-tools
-osl
-osm-gps-map
-ospray
-osslsigncode
-ostree
-otcl
-otf-font-awesome
-otf-ipamjfont
-otf-latin-modern
-otf-latinmodern-math
-otf-league-mono
-otf-material-icons
-otf-monaspace
-otf-monaspace-nerdfonts
-ovenmediaengine
-ovpn-dco-dkms
-oxc-language-server
-oxipng
-oxygen-icons-svg
-p0f
-p11-kit
-p2pool
-p4
-p4d
-p8-platform
-pacfiles
-pacguard
-packagekit
-packer
-pacleaner
-pacman
-pacman-contrib
-pacman-fix-permissions
-pacman-mirrorlist
-pacman-offline
-pacman-venv
-pacquery
-pa-dlna
-padthv1-lv2
-pahole
-paho-mqtt-c
-pairing_tool
-palletizer
-palp
-pam
-pambase
-pam-fprint-grosshack-unlimited-timeout
-pam-ihosts
-pamixer
-pam-krb5
-paml
-pam_mount
-pam_p11
-pam_pkcs11
-pamtester
-pam-u2f
-pam_wrapper
-pam_wrapper-docs
-pandoc-cli
-pango
-pangomm
-pangomm-2.48
-pango-perl
-pangox-compat
-pa-notify
-paperkey
-papirus-icon-theme
-papis
-papis-dmenu
-papis-zotero
-parallel
-pari
-pari-galdata
-pari-seadata-small
-paros
-parsehub
-partclone
-parted
-partimage
-partitionmanager
-paru
-paruz
-pass
-passenger
-pass-git-helper
-passim
-pass-import
-passly
-pass-notify-git
-pass-otp
-pass-secret-service
-passt
-passwordfile
-passwordmanager
-patatt
-patch
-patchelf
-patchmatrix
-patchup
-patchutils
-patool
-pavucontrol
-pax
-pax-utils
-pcaudiolib
-pciutils
-pc-nrfconnect-programmer
-pcp
-pcp-pmda-mysql
-pcp-pmda-nutcracker
-pcre
-pcre2
-pcsclite
-pcsc-perl
-pcsc-tools
-pd
-pdav
-pdf2svg
-pdfcrack
-pdfgrep
-pdfgrep_sixel
-pdfjs
-pdfslicer
-pdftk
-pd-sfizz
-peda
-peergos
-peg
-pentmenu
-perf
-perl
-perl-algorithm-diff
-perl-alien-build
-perl-alien-cmake3
-perl-alien-libxml2
-perl-anyevent
-perl-anyevent-aio
-perl-anyevent-xmpp
-perl-apache2-soap
-perl-appconfig
-perl-archive-cpio
-perl-archive-zip
-perl-authen-radius
-perl-authen-sasl
-perl-autovivification
-perl-bencode
-perl-berkeleydb
-perl-b-hooks-endofscope
-perl-bit-vector
-perl-b-keywords
-perl-boolean
-perl-business-isbn
-perl-business-isbn-data
-perl-business-ismn
-perl-business-issn
-perl-bytes-random-secure
-perl-cache-memcached
-perl-cairo-gobject
-perl-canary-stability
-perl-capture-tiny
-perl-carp-clan
-perl-cgi
-perl-chart
-perl-class-accessor
-perl-class-accessor-chained
-perl-class-accessor-lite
-perl-class-data-inheritable
-perl-class-inspector
-perl-class-load
-perl-class-load-xs
-perl-class-methodmaker
-perl-class-method-modifiers
-perl-class-refresh
-perl-class-returnvalue
-perl-class-singleton
-perl-class-tiny
-perl-class-unload
-perl-class-xsaccessor
-perl-clone
-perl-clone-choose
-perl-common-sense
-perl-config-any
-perl-config-autoconf
-perl-config-inifiles
-perl-config-onion
-perl-config-tiny
-perl-convert-asn1
-perl-convert-binhex
-perl-convert-tnef
-perl-convert-uulib
-perl-coro
-perl-cpan-meta-check
-perl-crypt-openssl-bignum
-perl-crypt-openssl-dsa
-perl-crypt-openssl-guess
-perl-crypt-openssl-random
-perl-crypt-openssl-rsa
-perl-crypt-random-seed
-perl-crypt-rijndael
-perl-crypt-ssleay
-perl-cryptx
-perl-curses
-perl-danga-socket
-perl-data-compare
-perl-data-dump
-perl-data-hexdump
-perl-data-ical
-perl-data-ical-timezone
-perl-data-optlist
-perl-data-perl
-perl-data-random
-perl-data-uniqid
-perl-data-uuid
-perl-date-calc
-perl-date-manip
-perl-datetime
-perl-datetime-calendar-julian
-perl-datetime-event-ical
-perl-datetime-event-recurrence
-perl-datetime-format-builder
-perl-datetime-format-ical
-perl-datetime-format-iso8601
-perl-datetime-format-mail
-perl-datetime-format-strptime
-perl-datetime-format-w3cdtf
-perl-datetime-locale
-perl-datetime-set
-perl-datetime-timezone
-perl-dbd-mariadb
-perl-dbd-mysql
-perl-dbd-odbc
-perl-dbd-pg
-perl-dbd-sqlite
-perl-dbd-sqlite2
-perl-dbi
-perl-debug-adapter
-perl-devel-checkcompiler
-perl-devel-cover
-perl-devel-globaldestruction
-perl-devel-leak
-perl-devel-overloadinfo
-perl-devel-overrideglobalrequire
-perl-devel-stacktrace
-perl-devel-symdump
-perl-device-gsm
-perl-device-modem
-perl-device-serialport
-perl-digest-bubblebabble
-perl-digest-crc
-perl-digest-hmac
-perl-digest-nilsimsa
-perl-digest-sha1
-perl-dist-checkconflicts
-perl-djabberd
-perl-djabberd-rosterstorage-sqlite
-perl-email-abstract
-perl-email-address
-perl-email-address-xs
-perl-email-date-format
-perl-email-messageid
-perl-email-mime
-perl-email-mime-attachment-stripper
-perl-email-mime-contenttype
-perl-email-mime-encodings
-perl-email-reply
-perl-email-send
-perl-email-sender
-perl-email-simple
-perl-email-valid
-perl-encode-locale
-perl-error
-perl-eval-closure
-perl-exception-class
-perl-exporter-tidy
-perl-exporter-tiny
-perl-extutils-cchecker
-perl-extutils-config
-perl-extutils-depends
-perl-extutils-helpers
-perl-extutils-installpaths
-perl-extutils-pkgconfig
-perl-fcgi
-perl-fcgi-client
-perl-ffi-checklib
-perl-file-basedir
-perl-file-chdir
-perl-file-copy-recursive
-perl-file-find-object
-perl-file-find-object-rule
-perl-file-find-rule
-perl-file-homedir
-perl-file-libmagic
-perl-file-listing
-perl-file-pushd
-perl-file-remove
-perl-file-rsyncp
-perl-file-sharedir
-perl-file-sharedir-install
-perl-file-slurp
-perl-file-slurper
-perl-file-slurp-tiny
-perl-file-treecreate
-perl-file-which
-perl-gd
-perl-gdgraph
-perl-gdtextutil
-perl-glib-object-introspection
-perl-gnupg-interface
-perl-graphics-toolkit-color
-perl-gravatar-url
-perl-gssapi
-perl-gtk3
-perl-guard
-perl-hash-merge-simple
-perl-hash-ordered
-perl-hash-safekeys
-perl-html-parser
-perl-html-scrubber
-perl-html-tagset
-perl-html-template
-perl-html-tree
-perl-http-cookiejar
-perl-http-cookies
-perl-http-daemon
-perl-http-date
-perl-http-message
-perl-http-multipartparser
-perl-http-negotiate
-perl-image-sane
-perl-import-into
-perl-inc-latest
-perl-inline
-perl-inline-c
-perl-io-aio
-perl-io-compress-brotli
-perl-io-html
-perl-io-multiplex
-perl-io-sessiondata
-perl-io-socket-inet6
-perl-io-socket-ssl
-perl-io-string
-perl-io-stringy
-perl-io-tty
-perl-ipc-run
-perl-ipc-run3
-perl-ipc-system-simple
-perl-iptables-chainmgr
-perl-iptables-parse
-perl-json
-perl-json-maybexs
-perl-json-xs
-perl-ldap
-perl-libintl-perl
-perl-libwww
-perl-lingua-en-inflect
-perl-lingua-ru-number
-perl-lingua-translit
-perl-linux-pid
-perl-list-allutils
-perl-list-moreutils
-perl-list-moreutils-xs
-perl-list-someutils
-perl-list-utilsby
-perl-locale-gettext
-perl-log-log4perl
-perl-lwp-mediatypes
-perl-lwp-protocol-https
-perl-mail-authenticationresults
-perl-mail-box
-perl-mail-dkim
-perl-mail-imapclient
-perl-mail-message
-perl-mail-sendmail
-perl-mail-spf
-perl-mailtools
-perl-math-random-isaac
-perl-math-round
-perl-memory-process
-perl-memory-usage
-perl-mime-base32
-perl-mime-charset
-perl-mime-lite
-perl-mime-tools
-perl-mime-types
-perl-module-build
-perl-module-build-tiny
-perl-module-build-xsutil
-perl-module-find
-perl-module-implementation
-perl-module-install
-perl-module-pluggable
-perl-module-runtime
-perl-module-runtime-conflicts
-perl-module-scandeps
-perl-moo
-perl-moox-handlesvia
-perl-moox-late
-perl-moox-types-mooselike
-perl-mouse
-perl-mozilla-ca
-perl-mp4-info
-perl-mro-compat
-perl-namespace-autoclean
-perl-namespace-clean
-perl-netaddr-ip
-perl-net-caldavtalk
-perl-net-cidr-lite
-perl-net-davtalk
-perl-net-dns
-perl-net-dns-resolver-mock
-perl-net-dns-sec
-perl-net-domain-tld
-perl-net-http
-perl-net-idn-encode
-perl-net-interface
-perl-net-ip
-perl-net-ipv4addr
-perl-net-ipv6addr
-perl-net-libidn
-perl-net-server
-perl-net-ssleay
-perl-nix
-perl-number-compare
-perl-object-event
-perl-object-realize-later
-perl-package-deprecationmanager
-perl-package-stash
-perl-package-stash-xs
-perl-padwalker
-perl-params-util
-perl-params-validate
-perl-params-validationcompiler
-perl-par-dist
-perl-parse-recdescent
-perl-patchreader
-perl-path-class
-perl-path-tiny
-perl-pegex
-perl-perl-critic
-perl-perlio-utf8-strict
-perl-pod-coverage
-perl-pod-parser
-perl-pod-spell
-perl-ppi
-perl-ppix-quotelike
-perl-ppix-regexp
-perl-ppix-utils
-perl-proc-processtable
-perl-publicinbox
-perl-readonly
-perl-regexp-common
-perl-regexp-ipv6
-perl-return-value
-perl-role-hooks
-perl-role-tiny
-perl-safe-isa
-perl-scope-guard
-perl-search-xapian
-perl-set-infinite
-perl-sgmls
-perl-soap-lite
-perl-socket6
-perl-sort-key
-perl-sort-versions
-perl-specio
-perl-strictures
-perl-string-crc32
-perl-string-format
-perl-string-shellquote
-perl-sub-exporter
-perl-sub-exporter-progressive
-perl-sub-handlesvia
-perl-sub-identify
-perl-sub-install
-perl-sub-name
-perl-sub-override
-perl-sub-prototype
-perl-sub-quote
-perl-sub-uplevel
-perl-super
-perl-switch
-perl-sys-hostname-long
-perl-sys-syscall
-perl-task-weaken
-perl-template-gd
-perl-template-provider-encoding
-perl-template-toolkit
-perl-term-animation
-perl-term-readkey
-perl-term-readline-gnu
-perl-test-deep
-perl-test-differences
-perl-test-exception
-perl-test-failwarnings
-perl-test-fatal
-perl-test-file
-perl-test-longstring
-perl-test-manifest
-perl-test-mockmodule
-perl-test-mockrandom
-perl-test-mocktime
-perl-test-most
-perl-test-needs
-perl-test-nowarnings
-perl-test-output
-perl-test-pod
-perl-test-pod-coverage
-perl-test-reporter
-perl-test-requires
-perl-test-requiresinternet
-perl-test-trailingspace
-perl-test-warn
-perl-test-warnings
-perl-test-xml
-perl-text-bibtex
-perl-text-csv
-perl-text-diff
-perl-text-glob
-perl-text-iconv
-perl-text-levenshteinxs
-perl-text-patch
-perl-text-roman
-perl-text-soundex
-perl-text-template
-perl-text-unidecode
-perl-text-vcardfast
-perl-text-vfile-asdata
-perl-throwable
-perl-tidy
-perl-tie-cycle
-perl-tie-datauuid
-perl-tie-ixhash
-perl-timedate
-perl-time-duration
-perl-tk
-perl-tree-dag-node
-perl-try-tiny
-perl-types-serialiser
-perl-type-tiny
-perl-unicode-linebreak
-perl-unicode-string
-perl-unicode-stringprep
-perl-universal-require
-perl-unix-syslog
-perl-uri
-perl-user-identity
-perl-variable-magic
-perl-www-robotrules
-perl-x11-protocol
-perl-x11-protocol-other
-perl-xml-fast
-perl-xml-filter-buffertext
-perl-xml-libxml
-perl-xml-libxml-simple
-perl-xml-libxslt
-perl-xml-namespacesupport
-perl-xml-parser
-perl-xml-parser-lite
-perl-xml-rpc
-perl-xmlrpc-lite
-perl-xml-rss
-perl-xml-sax
-perl-xml-sax-base
-perl-xml-sax-expat
-perl-xml-sax-writer
-perl-xml-semanticdiff
-perl-xml-simple
-perl-xml-spice
-perl-xml-stream
-perl-xml-tidy-tiny
-perl-xml-treepp
-perl-xml-twig
-perl-xml-writer
-perl-yaml-libyaml
-perl-yaml-pp
-perl-yaml-tiny
-pesign
-pflogsumm
-pg_auto_failover
-pgbackrest
-pgbouncer
-pgcli
-pgformatter
-pgpdump
-pg-safeupdate
-pgvector
-phoc
-phodav
-phonegap
-php
-php81
-php81-cli
-php81-pear
-php81-pecl
-php81-phar
-php81-xml
-phpactor
-php-apache
-php-apcu
-php-box
-php-cgi
-php-codesniffer
-php-codesniffer-drupal
-php-codesniffer-phpcsutils
-php-dblib
-phpdox
-php-embed
-php-enchant
-php-fpm
-php-gd
-php-geoip
-php-grpc
-php-igbinary
-php-imagick
-php-kadm5
-php-language-server-git
-phpldapadmin
-php-legacy
-php-legacy-apache
-php-legacy-apcu
-php-legacy-cgi
-php-legacy-dblib
-php-legacy-embed
-php-legacy-enchant
-php-legacy-fpm
-php-legacy-gd
-php-legacy-geoip
-php-legacy-grpc
-php-legacy-igbinary
-php-legacy-imagick
-php-legacy-memcache
-php-legacy-odbc
-php-legacy-pgsql
-php-legacy-phpdbg
-php-legacy-pspell
-php-legacy-redis
-php-legacy-smbclient
-php-legacy-snmp
-php-legacy-sodium
-php-legacy-sqlite
-php-legacy-tidy
-php-legacy-xsl
-php-memcache
-php-memcached
-php-mongodb
-phpmyadmin
-php-odbc
-php-pgsql
-php-phpdbg
-php-redis
-php-rrd
-php-snmp
-php-snuffleupagus
-php-sodium
-php-sqlite
-php-tidy
-php-virtphp
-phpvirtualbox
-php-xmlrpc
-php-xsl
-physfs
-pigz
-pimcommon
-pimsync
-pinentry
-pinentry-bemenu
-pinentry-dispatch
-pinentry-dmenu
-pipeglade
-pipemixer
-piper-tts
-piper-voices-common
-pipesocks
-pipeswitchd
-pipewire
-pipewire-alsa
-pipewire-audio
-pipewire-autostart
-pipewire-docs
-pipewire-enable-bluez5
-pipewire-ffado
-pipewire-jack
-pipewire-libcamera
-pipewire-module-xrdp
-pipewire-openrc
-pipewire-pulse
-pipewire-pulse-openrc
-pipewire-roc
-pipewire-screenaudio
-pipewire-session-manager
-pipewire-v4l2
-pipewire-zeroconf
-piping-server
-pipxu
-piratebay
-pitivi
-pius
-pixelorama
-pixiecore-git
-pixiewps
-pixman
-pixz
-pkcreate
-pkcs11-helper
-pkcs11-provider
-pkg-audit
-pkgbuild-updater
-pkgbuild-version-updater
-pkgconf
-planarity
-plantuml
-plantuml-ascii-math
-plantuml-server
-plasma-activities
-plasma-activities-stats
-platformflashtoollite
-platformio-core-udev
-playerctl
-plfit
-plocate
-plotutils
-pm-utils
-pnetcdf-openmpi
-png2svg
-pngout
-pngquant
-pnpm
-po4a
-pocketsphinx
-pocl
-podman
-polkit
-polkit-kde-agent
-polkit-qt5
-polkit-qt6
-polly
-polyphone
-poppler
-poppler-data
-poppler-glib
-poppler-qt6
-popsift
-popt
-portaudio
-portchaos
-portmidi
-portsmf
-posix
-posixovl
-posix-user-portability
-postfinger
-postfix
-postfixadmin
-postfix-cdb
-postfix-ldap
-postfix-lmdb
-postfix-mysql
-postfix-pcre
-postfix-pgsql
-postfix-policyd-spf-perl
-postfix-sqlite
-postfix-tlspol
-postfwd
-postgis
-postgresql
-postgresql-docs
-postgresql-ip4r
-postgresql-libs
-postgresql-old-upgrade
-postgrest
-postgrey
-postorius
-postsrsd
-potrace
-povray
-powerdns
-powermanga
-powscript
-poxml
-ppl
-ppp
-pps-tools
-pptpclient
-praat
-pretzel-web
-primecount
-primesieve
-prison
-procps-ng
-profile-cleaner
-profile-sync-daemon
-profile-sync-daemon-zotero
-proj
-promtail
-prosody
-prosody-mod-http-upload-external-hg
-prosody-mod-onions
-protobuf
-protobuf-21
-protobuf-c
-protoc-gen-js-bin
-protols
-protomd
-protonmail-bridge
-protonmail-bridge-core
-proton-vpn-gtk-app
-proxyboi
-proxychains-ng
-proxyguard
-prrte
-psad
-psalm
-psensor
-psi
-psmisc
-psutils
-ptags
-ptex
-publicsuffix-list
-pugixml
-pugl-git
-pulseaudio-alsa
-pulseaudio-dlna
-pulseaudio-qt
-pulse-native-provider
-puncia
-puppet
-puppet-bolt
-puppeteer
-puppeteer-core
-puppet-lint
-puppetserver
-purpose
-pv
-pvoc
-pwru
-pwsp
-pw-volume
-pyalpm
-pybind11
-pydio
-pyenv
-pyenv-latest
-pyenv-virtualenv
-pyinstaller
-pyinstaller-hooks-contrib
-pyopencl-headers
-pyprland
-pyprpaper
-pypy
-pypy3
-pypy3-build
-pypy3-cppy
-pypy3-flit-core
-pypy3-installer
-pypy3-packaging
-pypy3-pyproject-hooks
-pypy3-setuptools
-pypy3-setuptools-scm
-pyrit
-pyside6
-pyside6-tools
-pystring
-python
-python2
-python2-docutils
-python2-setuptools
-python2-v4l2capture
-python3-aria2jsonrpc
-python-aaf2
-python-aafigure
-python-absl
-python-accessible-pygments
-python-acme
-python-adal
-python-addict
-python-advancedhtmlparser
-python-agate
-python-agate-excel
-python-aiobotocore
-python-aiofiles
-python-aiogram
-python-aiohappyeyeballs
-python-aiohttp
-python-aiohttp-socks-git
-python-aioitertools
-python-aiopg
-python-aioquic
-python-aiosignal
-python-aiosmb
-python-aiosmtpd
-python-aiosqlite
-python-aiostream
-python-aiowinreg
-python-ajsonrpc
-python-alembic
-python-altair
-python-altgraph
-python-aniso8601
-python-annotated-doc
-python-annotated-types
-python-ansible-compat
-python-ansibug
-python-ansicolors
-python-antlr4
-python-anyio
-python-anysqlite
-python-api4jenkins
-python-apipkg
-python-apkinspector
-python-appdirs
-python-apsw
-python-argcomplete
-python-argon2-cffi
-python-argon2-cffi-bindings
-python-argparse-from-file
-python-argparse-manpage
-python-arrow
-python-arxiv
-python-asdf
-python-asdf-standard
-python-asdf_transform_schemas
-python-asgi-lifespan
-python-asgiref
-python-asn1crypto
-python-astor
-python-astroid
-python-astropy
-python-astropy-iers-data
-python-asttokens
-python-astunparse
-python-async-lru
-python-asyncpg
-python-asyncssh
-python-async-timeout
-python-asysocks
-python-atomicwrites
-python-atpublic
-python-attrs
-python-audioop-lts
-python-audioread
-python-audit
-python-augeas
-python-authheaders
-python-authres
-python-autobahn
-python-autocommand
-python-automat
-python-autopage
-python-awaitable
-python-awkward
-python-b2sdk
-python-babel
-python-babel-glade
-python-backoff
-python-banal
-python-barectf
-python-base58
-python-bases
-python-bcrypt
-python-beautifulsoup4
-python-beniget
-python-better-exceptions
-python-bibtexparser
-python-bidict
-python-binaryornot
-python-bitarray
-python-bitcoinlib
-python-bitstring
-python-bivalve
-python-black
-python-blake3
-python-bleach
-python-blessed
-python-blinker
-python-bluepy
-python-bluezero
-python-booleanoperations
-python-boolean.py
-python-boto3
-python-botocore
-python-bottle
-python-bottleneck
-python-bracex
-python-branca
-python-breathe
-python-brotli
-python-brotlicffi
-python-bsdiff4
-python-bubop
-python-build
-python-cachecontrol
-python-cachetools
-python-cachy
-python-cairo
-python-cairocffi
-python-cairosvg
-python-caja
-python-caldav
-python-can
-python-capng
-python-capstone
-python-casttube
-python-cattrs
-python-cbor2
-python-cchardet
-python-certifi
-python-cffi
-python-cftime
-python-chacha20poly1305-reuseable
-python-chardet
-python-charset-normalizer
-python-cheroot
-python-cleo
-python-click
-python-click-command-tree
-python-click-completion
-python-click-log
-python-cliff
-python-cli_helpers
-python-cloudflare
-python-cloudpickle
-python-cmarkgfm
-python-cmd2
-python-cobble
-python-colorama
-python-coloredlogs
-python-colored-traceback
-python-colorlog
-python-colorthief
-python-comm
-python-commentjson
-python-commonmark
-python-configargparse
-python-configobj
-python-configshell-fb
-python-constantly
-python-construct
-python-contourpy
-python-convertdate
-python-conway-polynomials
-python-cookiecutter
-python-coqpit
-python-coverage
-python-coverage-conditional-plugin
-python-cppy
-python-cramjam
-python-crashtest
-python-crazy-complete
-python-crc32c
-python-crccheck
-python-crcmod
-python-crds
-python-crispy-bootstrap4
-python-cryptography
-python-cssselect
-python-cssselect2
-python-ctfcli
-python-ctranslate2
-python-cucumber-tag-expressions
-python-cuda
-python-cuda-bindings
-python-cuda-core
-python-cuda-pathfinder
-python-cupy
-python-curl-cffi
-python-cvxopt
-python-cycler
-python-cymem
-python-cymruwhois
-python-cypari2
-python-cysignals
-python-dacite
-python-daemon
-python-daemonize
-python-daemonocle
-python-darkdetect
-python-dasbus
-python-dask
-python-dataclass-wizard
-python-dataset
-python-datasets
-python-dateutil
-python-dbus
-python-dbus-deviation
-python-dbus-fast
-python-dbusmock
-python-dbus-next
-python-ddt
-python-debian
-python-debtcollector
-python-debugpy
-python-decorator
-python-defcon
-python-defusedxml
-python-dep-logic
-python-deprecated
-python-deprecation
-python-devicetree
-python-diff-match-patch
-python-dill
-python-dirty-equals
-python-discid
-python-distlib
-python-distributed
-python-distro
-python-distutils-extra
-python-django
-python-django-allauth
-python-django-appconf
-python-django-classy-tags
-python-django-compressor
-python-django-crispy-forms
-python-django-csp
-python-django-extensions
-python-django-gravatar
-python-django-haystack
-python-django-mailman3
-python-django-modeltranslation
-python-django-ninja
-python-django-paypal
-python-django-picklefield
-python-django-q2
-python-django-rest-framework
-python-django-sekizai
-python-dkim
-python-dleyna
-python-dmenu
-python-dnspython
-python-docker-pycreds
-python-docopt
-python-docstring-parser
-python-docstring-to-markdown
-python-doctest-ignore-unicode
-python-docutils
-python-doi
-python-dokuwikidumper
-python-dominate
-python-dotenv
-python-dulwich
-python-dunamai
-python-durationpy
-python-easyprocess
-python-ecdsa
-python-ed25519-blake2b
-python-edge-tts
-python-editables
-python-elementpath
-python-email-validator
-python-empy3
-python-engineio
-python-enlighten
-python-entrypoint2
-python-entrypoints
-python-etebase
-python-et-xmlfile
-python-euclid3
-python-evdev
-python-eventlet
-python-events
-python-exceptiongroup
-python-execnet
-python-executing
-python-exitcode
-python-expandvars
-python-fabulous
-python-fake-http-header-git
-python-falcon
-python-fastapi
-python-fastbencode
-python-fasteners
-python-fastimport
-python-fastjsonschema
-python-fastrlock
-python-fasttext
-python-feedgenerator
-python-feedparser
-python-ffmpeg-python
-python-fido2
-python-filelock
-python-filetype
-python-findpython
-python-fire
-python-fixtures
-python-flake8
-python-flaky
-python-flasgger
-python-flask
-python-flask-babel
-python-flask-compress
-python-flask-cors
-python-flask-jsonrpc
-python-flask-mail
-python-flask-mailman
-python-flask-restx
-python-flask-socketio
-python-flask-sqlalchemy
-python-flask-wtf
-python-flatbuffers
-python-flexcache
-python-flexparser
-python-flit
-python-flit-core
-python-flufl.bounce
-python-flufl.i18n
-python-flufl-lock
-python-fluidity
-python-flup
-python-folium
-python-fontawesome
-python-fontmath
-python-fontparts
-python-fontpens
-python-fonttools
-python-forbiddenfruit
-python-fpylll
-python-freezegun
-python-frida
-python-frozenlist
-python-fs
-python-fsspec
-python-func-timeout
-python-funk
-python-furl
-python-fusepy
-python-fuzzyfinder
-python-fvs
-python-gaphas
-python-gast
-python-gbinder
-python-generic
-python-geographiclib
-python-geoip
-python-geopy
-python-gevent
-python-gevent-websocket
-python-gitdb
-python-github3py
-python-gitpython
-python-glfw
-python-gmpy2
-python-gnupg
-python-gnupginterface
-python-gobject
-python-google-ai-generativelanguage
-python-google-api-core
-python-google-api-python-client
-python-googleapis-common-protos
-python-google-auth
-python-google-auth-httplib2
-python-google-auth-oauthlib
-python-google-generativeai
-python-gpgme
-python-gp-libs
-python-gpt4all
-python-graphviz
-python-greenlet
-python-grpcio
-python-grpcio-tools
-python-gssapi
-python-gtts
-python-gustaf
-python-h11
-python-h2
-python-h5py-openmpi
-python-habanero
-python-hatch
-python-hatch-fancy-pypi-readme
-python-hatchling
-python-hatch-requirements-txt
-python-hatch-vcs
-python-heapdict
-python-helpdev
-python-hexdump
-python-hf-xet
-python-hidapi
-python-hijridate
-python-hishel
-python-hkdf
-python-hkp4py-git
-python-holidays
-python-hpack
-python-html2text
-python-html5lib
-python-html5tagger
-python-httpcore
-python-httplib2
-python-httptools
-python-httpx
-python-httpx-kerberos
-python-huggingface-hub
-python-humanfriendly
-python-humanize
-python-hunter
-python-hurry-filesize
-python-hydra-core
-python-hyperframe
-python-hyperlink
-python-hyperqueue
-python-hypothesis
-python-i3ipc
-python-icalendar
-python-icecream
-python-id
-python-idna
-python-ifaddr
-python-image
-python-imageio
-python-imageio-ffmpeg
-python-imagesize
-python-imaplib2
-python-imap-tools
-python-importlib-metadata
-python-importlib_resources
-python-incremental
-python-inflection
-python-iniconfig
-python-inline-snapshot
-python-inplace
-python-inquirerpy
-python-instagram-private-api
-python-installer
-python-intelhex
-python-internetarchive
-python-intervaltree
-python-invoke
-python-ipykernel
-python-ipympl
-python-ipyparallel
-python-ipython-pygments-lexers
-python-ipywidgets
-python-isbnlib
-python-iso8601
-python-isodate
-python-isomd5sum
-python-isort
-python-item_synchronizer
-python-iterable-io
-python-itsdangerous
-python-ivre
-python-jack-client
-python-jalali-core
-python-jaraco.classes
-python-jaraco.collections
-python-jaraco.context
-python-jaraco.functools
-python-jaraco.text
-python-jdatetime
-python-jedi
-python-jeepney
-python-jellyfish
-python-jenkinsapi-git
-python-jenkspy
-python-jinja
-python-jiter
-python-jiwer
-python-jmespath
-python-joblib
-python-johnnycanencrypt
-python-josepy
-python-jq
-python-js2py
-python-json5
-python-jsonlines
-python-json-logger
-python-jsonpatch
-python-jsonpath-ng
-python-jsonpointer
-python-jsonschema
-python-jsonschema-specifications
-python-json-stream
-python-json-stream-rs-tokenizer
-python-jupyter-client
-python-jupyter-core
-python-jupyter-events
-python-jupyterlab-server
-python-jupyter-packaging
-python-kaitaistruct
-python-keras
-python-keyring
-python-keyrings.google-artifactregistry-auth
-python-keystone
-python-keystoneauth1
-python-keystoneclient
-python-keyutils
-python-kikit
-python-kismetdb
-python-kismet-rest
-python-kitchen
-python-kivy
-python-kiwisolver
-python-korean_lunar_calendar
-python-kubernetes
-python-lark-parser
-python-latex2mathml
-python-latexcodec
-python-lazr.config
-python-lazr.delegates
-python-lazy-loader
-python-ldap
-python-ldap3
-python-ldapdomaindump
-python-leather
-python-legacy-cgi
-python-levenshtein
-python-lexicon
-python-libcamera
-python-lib-detect-testenv
-python-libevdev
-python-libnmap
-python-libpulse
-python-librosa
-python-libsass
-python-libseccomp
-python-libtmux
-python-libusb1
-python-license-expression
-python-linkify-it-py
-python-linux-procfs
-python-livekit-blingfire
-python-livekit-protocol
-python-livepng
-python-llfuse
-python-llvmlite
-python-lml
-python-locket
-python-lockfile
-python-logfury
-python-logging_tree
-python-loguru
-python-lsp-black
-python-lsp-jsonrpc
-python-lsprotocol
-python-lsp-server
-python-lsp-tree-sitter
-python-luma-core
-python-lxc
-python-lxml
-python-lxml-html-clean
-python-lz4
-python-magic
-python-magic-filter
-python-magic-wormhole-mailbox-server
-python-mailmanclient
-python-mako
-python-manhole
-python-manuf
-python-markdown
-python-markdown2
-python-markdownify
-python-markdown-it-py
-python-markupsafe
-python-marshmallow
-python-matplotlib
-python-matplotlib-inline
-python-matplotlib-sixel-git
-python-mattermostdriver
-python-maturin
-python-mautrix
-python-mccabe
-python-mdit_py_plugins
-python-mdurl
-python-mdx-gh-links
-python-mediafile
-python-memcached
-python-memory-allocator
-python-merge3
-python-mergedeep
-python-mesa
-python-minesight-git
-python-minidb
-python-minidump
-python-minikerberos
-python-misaki
-python-mistune
-python-mitmproxy-rs
-python-mitmproxy-wireguard
-python-mkdoc
-python-mkl-service
-python-ml-dtypes
-python-mock
-python-modern-colorthief
-python-more-itertools
-python-moto
-python-mpi4py
-python-mplhep
-python-mplhep_data
-python-mpmath
-python-mpv
-python-msal
-python-msal-extensions
-python-msgpack
-python-msgspec
-python-msldap
-python-mss
-python-multidict
-python-multi_key_dict
-python-multiprocess
-python-mupdf
-python-musicbrainzngs
-python-mutagen
-python-mutatormath
-python-mutf8
-python-mygpoclient
-python-mypy_extensions
-python-mysql-connector
-python-myst-parser
-python-napf
-python-narwhals
-python-nativemessaging-ng
-python-natsort
-python-nbval
-python-nbxmpp
-python-nclcmaps-git
-python-nest-asyncio
-python-netaddr
-python-netaudio
-python-netcdf4
-python-netifaces
-python-networkx
-python-nh3
-python-nitrokey
-python-nkdfu
-python-nltk
-python-nmap
-python-nodegraphqt
-python-noiseprotocol
-python-nose
-python-notify2
-python-nspektr
-python-ntlm-auth
-python-numba
-python-numba-cuda
-python-numpy
-python-numpydoc
-python-nvidia-ml-py
-python-nvtx
-python-oauth2client
-python-oauthlib
-python-odfpy
-python-olefile
-python-olm
-python-omegaconf
-python-onigurumacffi
-python-onion-location
-python-onnx
-python-onnx-ir
-python-onnxruntime-cuda
-python-onnxscript
-python-openai
-python-openai-whisper
-python-opencensus
-python-opencv-cuda
-python-opengl
-python-openid
-python-openpyxl
-python-opensearch
-python-opentelemetry-api
-python-opentelemetry-exporter-otlp
-python-opentelemetry-exporter-otlp-proto-common
-python-opentelemetry-exporter-otlp-proto-grpc
-python-opentelemetry-exporter-otlp-proto-http
-python-opentelemetry-instrumentation
-python-opentelemetry-instrumentation-dbapi
-python-opentelemetry-proto
-python-opentelemetry-sdk
-python-opentelemetry-semantic-conventions
-python-openvino
-python-openvino-telemetry
-python-opt_einsum
-python-optree
-python-orderedmultidict
-python-orjson
-python-oscrypto
-python-oslo-config
-python-oslo-i18n
-python-oslo-serialization
-python-oslo-utils
-python-os-service-types
-python-outcome
-python-packaging
-python-pam
-python-pandas
-python-pandocfilters
-python-paramiko
-python-parse
-python-parsedatetime
-python-parsel
-python-parse-type
-python-parsley
-python-parso
-python-partd
-python-passlib
-python-pasta
-python-pathspec
-python-pathvalidate
-python-patiencediff
-python-pbr
-python-pbs-installer
-python-pcapy
-python-pcbnewtransition
-python-pdfminer
-python-pdm
-python-pdm-backend
-python-pdm-build-locked
-python-peewee
-python-pefile
-python-pexpect
-python-pfzy
-python-pgpy
-python-pgspecial
-python-pickleshare
-python-pika
-python-pikepdf
-python-pillow
-python-pillowfight
-python-pillow-heif
-python-pillow-heif-docs
-python-pillow-jpegxl-plugin
-python-pint
-python-pip
-python-pipenv
-python-pipx
-python-pkginfo
-python-platformdirs
-python-playwright
-python-plotext
-python-plotly
-python-pltable
-python-pluggy
-python-plumbum
-python-ply
-python-pocketsphinx
-python-poetry
-python-poetry-core
-python-poetry-dynamic-versioning
-python-poetry-plugin-export
-python-polars
-python-polars-runtime-64
-python-polib
-python-pooch
-python-portalocker
-python-portend
-python-postfix-policyd-spf
-python-pplpy
-python-prctl
-python-precisely
-python-precis_i18n
-python-prefixed
-python-prettytable
-python-primecountpy
-python-progressbar
-python-prometheus_client
-python-promise
-python-prompt_toolkit
-python-propcache
-python-protobuf
-python-proton-core
-python-proton-keyring-linux
-python-proton-vpn-api-core
-python-proton-vpn-local-agent
-python-proton-vpn-network-manager
-python-proto-plus
-python-psutil
-python-psycopg
-python-psycopg2
-python-ptyprocess
-python-publicsuffix2
-python-pulsectl
-python-pure-eval
-python-puremagic
-python-pwntools
-python-py
-python-py3nvml
-python-pyacoustid
-python-pyadi-iio
-python-pyalsa
-python-pyalsaaudio
-python-pyaml
-python-pyarrow
-python-pyasn1
-python-pyasn1-modules
-python-pyaudio
-python-pyaxmlparser
-python-pybars3
-python-pybluez
-python-pybrowserstack-screenshots
-python-pybtex
-python-pybtex-docutils
-python-pycdio
-python-pyclipper
-python-pycodestyle
-python-pycountry
-python-pycparser
-python-py-cpuinfo
-python-pycryptodome
-python-pycryptodomex
-python-pycuda
-python-pycurl
-python-pydantic
-python-pydantic-core
-python-pydantic-extra-types
-python-pydantic-settings
-python-pydata-sphinx-theme
-python-pydbus
-python-pydocstyle
-python-pydot
-python-pydub
-python-pyee
-python-pyelftools
-python-pyenchant
-python-pyerfa
-python-pyexcel-io
-python-pyflakes
-python-pygal
-python-pygaljs
-python-pygame
-python-pygelf
-python-pygit2
-python-pygithub
-python-pygls
-python-pygments
-python-pyhibp
-python-pyinotify
-python-pyjsparser
-python-pyjwt
-python-pylatexenc
-python-pylibiio
-python-pyliblo3
-python-pylint
-python-pylint-venv
-python-pylsqpack
-python-pyls-spyder
-python-pymeta3
-python-pymilter
-python-pymongo
-python-pymupdf
-python-pynacl
-python-pynvim
-python-pyodoo
-python-pyopencl
-python-pyopenssl
-python-pyotp
-python-pypandoc
-python-pyparsing
-python-pyparted
-python-pypatchelf
-python-pypdf
-python-pypdf3
-python-pypdfium2
-python-pyperclip
-python-pypng
-python-pypresence
-python-pyproject-hooks
-python-pyproject-metadata
-python-pypubsub
-python-pyqrcode
-python-pyqt5
-python-pyqt5-sip
-python-pyqt5-webengine
-python-pyqt6
-python-pyqt6-sip
-python-pyqt6-webengine
-python-pyrfc3339
-python-pyro
-python-pysaml2
-python-pyscreenshot
-python-pysdl3
-python-pysequoia
-python-pyserial
-python-pyshark
-python-pysmb
-python-pysmbc
-python-pysocks
-python-pyspellchecker
-python-pyspf
-python-pyspnego
-python-pystache
-python-pyte
-python-pytest
-python-pytest-aiohttp
-python-pytest-astropy-header
-python-pytest-asyncio
-python-pytest-benchmark
-python-pytest-click
-python-pytest-cov
-python-pytest-datadir
-python-pytest-django
-python-pytest-doctestplus
-python-pytest-env
-python-pytest-examples
-python-pytest-httpbin
-python-pytest-isort
-python-pytest-lsp
-python-pytest-mock
-python-pytest-mpi
-python-pytest-mpl
-python-pytest-mypy
-python-pytest-playwright
-python-pytest-qt
-python-pytest-recording
-python-pytest-regressions
-python-pytest-remotedata
-python-pytest-repeat
-python-pytest-rerunfailures
-python-pytest-ruff
-python-pytest-runner
-python-pytest-timeout
-python-pytest-trio
-python-pytest-twisted
-python-pytest-xdist
-python-python-multipart
-python-python-pkcs11
-python-python-socks
-python-pythran
-python-pytimeparse
-python-pytimeparse2
-python-pytokens
-python-pytoolconfig
-python-pytools
-python-pytorch-cuda
-python-pyttsx3
-python-pytube
-python-pytz
-python-pyu2f
-python-pyuca
-python-pyudev
-python-pyusb
-python-pyxdameraulevenshtein
-python-pyxdg
-python-pyzfscmds
-python-pyzmq
-python-pyzotero
-python-pyzstd
-python-qdarkstyle
-python-qpageview
-python-qrcode
-python-qstylizer
-python-qtawesome
-python-qtconsole
-python-qt-material
-python-qt.py
-python-qtpy
-python-queryablelist
-python-qutescript-git
-python-railroad-diagrams
-python-rapidfuzz
-python-rapids-dependency-file-generator
-python-rcssmin
-python-rdflib
-python-readability-lxml
-python-readchar
-python-readme-renderer
-python-readthedocs-sphinx-ext
-python-recommonmark
-python-recurring-ical-events
-python-redis
-python-referencing
-python-regex
-python-reportlab
-python-requests
-python-requests-aws4auth
-python-requests-file
-python-requests-gssapi
-python-requests-mock
-python-requests-ntlm
-python-requests-oauthlib
-python-requests-toolbelt
-python-resampy
-python-resolvelib
-python-responses
-python-respx
-python-retrying
-python-rfc3986
-python-rfc6555
-python-rich
-python-rjsmin
-python-robot-detection
-python-roman-numerals-py
-python-rope
-python-rpds-py
-python-rpy2
-python-rpy2-rinterface
-python-rpy2-robjects
-python-rpyc
-python-rsa
-python-rtree
-python-ruamel-yaml
-python-ruamel.yaml.clib
-python-ruff
-python-ruff-api
-python-s3transfer
-python-safetensors
-python-saml
-python-sane
-python-sanic
-python-sanic-routing
-python-scanpydoc
-python-scapy
-python-schema
-python-scikit-build
-python-scikit-build-core
-python-scikit-image
-python-scikit-learn
-python-scipy-mkl
-python-screeninfo
-python-seaborn
-python-secretstorage
-python-selenium
-python-semantic-version
-python-semver
-python-send2trash
-python-sentinels
-python-sentry_sdk
-python-serpent
-python-service-identity
-python-setproctitle
-python-setuptools
-python-setuptools-gettext
-python-setuptools-git-versioning
-python-setuptools-reproducible
-python-setuptools-rust
-python-setuptools-scm
-python-sgmllib3k
-python-sh
-python-shapely
-python-shellingham
-python-shtab
-python-simplejson
-python-simplekml
-python-simple-websocket
-python-six
-python-sixelcrop
-python-slugify
-python-slycot-mkl
-python-smartypants
-python-smbprotocol
-python-smbus2
-python-smmap
-python-sniffio
-python-snowballstemmer
-python-socketio
-python-socksio
-python-solidpython
-python-sortedcontainers
-python-sounddevice
-python-soundfile
-python-soupsieve
-python-soxr
-python-spake2
-python-speechmatics-rt
-python-speechrecognition
-python-sphinx
-python-sphinx-alabaster-theme
-python-sphinx-automodapi
-python-sphinx-click
-python-sphinxcontrib-apidoc
-python-sphinxcontrib-applehelp
-python-sphinxcontrib-autoprogram
-python-sphinxcontrib-bibtex
-python-sphinxcontrib-devhelp
-python-sphinxcontrib-doxylink
-python-sphinxcontrib-htmlhelp
-python-sphinxcontrib-jquery
-python-sphinxcontrib-jsmath
-python-sphinxcontrib-katex
-python-sphinxcontrib-log-cabinet
-python-sphinxcontrib-plantuml
-python-sphinxcontrib-qthelp
-python-sphinxcontrib-serializinghtml
-python-sphinxcontrib-spelling
-python-sphinx-copybutton
-python-sphinx_design
-python-sphinx_rtd_dark_mode
-python-sphinx_rtd_theme
-python-sphinxygen
-python-spsdk-pqc
-python-spur
-python-spyder-kernels
-python-sqlalchemy
-python-sqlite-anyio
-python-sqlitedict
-python-sqlite-fts4
-python-sqlparse
-python-squarify
-python-srcinfo
-python-srctools
-python-srt
-python-sshtunnel
-python-stack-data
-python-standard-aifc
-python-standard-cgi
-python-standard-chunk
-python-standard-mailcap
-python-standard-nntplib
-python-standard-pipes
-python-starlette
-python-steamgriddb
-python-stem
-python-stestr
-python-stevedore
-python-stlib
-python-stlib-plugins
-python-structlog
-python-subprocess-tee
-python-subunit
-python-superqt
-python-svada
-python-svglib
-python-svgwrite
-python-sybil
-python-sympy
-python-syrupy
-python-systemd
-python-tabulate
-python-taskw
-python-tblib
-python-tempman
-python-tempora
-python-tensorboard_plugin_wit
-python-tensorflow
-python-termcolor
-python-term-image
-python-testfixtures
-python-testresources
-python-testscenarios
-python-testtools
-python-textdistance
-python-textual
-python-text-unidecode
-python-tflite
-python-tf-playwright-stealth
-python-tftpy
-python-threadloop
-python-threadpoolctl
-python-three-merge
-python-thrift
-python-tifffile
-python-tika-client
-python-tiktoken
-python-tinycss2
-python-tld
-python-tldextract
-python-tlv8
-python-tokenizers
-python-toml
-python-tomli
-python-tomli-w
-python-tomlkit
-python-toolz
-python-torchattacks
-python-torchcodec
-python-torchvision-cuda
-python-tornado
-python-tpm2-pytss
-python-tqdm
-python-tracerite
-python-traitlets
-python-tree-sitter
-python-tree-sitter-muttrc
-python-tree-sitter-zathurarc
-python-treq
-python-trio
-python-trio-websocket
-python-trove-classifiers
-python-truststore
-python-trytond_account_payment_sepa
-python-trytond_account_payment_stripe
-python-trytond_sale_advance_payment
-python-twisted
-python-txaio
-python-txtorcon
-python-typer
-python-types-python-dateutil
-python-typing_extensions
-python-typing_inspect
-python-typing-inspection
-python-typing-validation
-python-typogrify
-python-tzlocal
-python-uc-micro-py
-python-ufoprocessor
-python-uhd
-python-uhi
-python-ujson
-python-ulid
-python-unearth
-python-unicodedata2
-python-unicorn
-python-unicrypto
-python-unidecode
-python-uproot
-python-uproot-docs
-python-uritemplate
-python-urllib3
-python-urwid
-python-urwidtrees
-python-userpath
-python-utils
-python-uv
-python-uv-build
-python-uvloop
-python-v4l2capture
-python-vagrant
-python-validate-email
-python-vcrpy
-python-vcversioner
-python-vector
-python-virtualenv
-python-virtualenv-clone
-python-vl-convert
-python-vobject
-python-voicevox-client
-python-volume_key
-python-voluptuous
-python-vosk
-python-w3lib
-python-waitress
-python-wand
-python-warlock
-python-watchdog
-python-watchfiles
-python-wcmatch
-python-wcwidth
-python-webcolors
-python-webencodings
-python-webrtcvad
-python-websocket-client
-python-websockets
-python-werkzeug
-python-wget
-python-whatthepatch
-python-wheel
-python-whitenoise
-python-whoosh
-python-willow
-python-winacl
-python-winsspi
-python-wire
-python-wordllama
-python-wrapt
-python-wsaccel
-python-wsgidav
-python-wsproto
-python-wtforms
-python-wurlitzer
-python-wxpython
-python-xarray
-python-xdg-base-dirs
-python-xlib
-python-xlrd
-python-xlsxwriter
-python-xlwt
-python-xmlschema
-python-xmlsec
-python-xmltodict
-python-x-wr-timezone
-python-xxhash
-python-xyzservices
-python-yaml
-python-yarl
-python-zenmoney
-python-zeroconf
-python-ziafont
-python-ziamath
-python-zict
-python-zipp
-python-zipstream-ng
-python-zope-component
-python-zope-configuration
-python-zope-event
-python-zope-hookable
-python-zope-i18nmessageid
-python-zope-interface
-python-zope-schema
-python-zopfli
-python-zstandard
-python-zxcvbn
-qastools
-qatlib
-qbootctl
-qbpm-git
-qca-qt5
-qca-qt6
-qcoro
-qcustomplot
-qd
-qemu-audio-alsa
-qemu-audio-dbus
-qemu-audio-jack
-qemu-audio-oss
-qemu-audio-pa
-qemu-audio-pipewire
-qemu-audio-sdl
-qemu-audio-spice
-qemu-base
-qemu-block-curl
-qemu-block-dmg
-qemu-block-gluster
-qemu-block-iscsi
-qemu-block-nfs
-qemu-block-ssh
-qemu-chardev-baum
-qemu-chardev-spice
-qemu-common
-qemu-desktop
-qemu-docs
-qemu-emulators-full
-qemu-full
-qemu-guest-agent
-qemu-hw-display-qxl
-qemu-hw-display-virtio-gpu
-qemu-hw-display-virtio-gpu-gl
-qemu-hw-display-virtio-gpu-pci
-qemu-hw-display-virtio-gpu-pci-gl
-qemu-hw-display-virtio-gpu-pci-rutabaga
-qemu-hw-display-virtio-gpu-rutabaga
-qemu-hw-display-virtio-vga
-qemu-hw-display-virtio-vga-gl
-qemu-hw-display-virtio-vga-rutabaga
-qemu-hw-s390x-virtio-gpu-ccw
-qemu-hw-uefi-vars
-qemu-hw-usb-host
-qemu-hw-usb-redirect
-qemu-hw-usb-smartcard
-qemu-img
-qemu-pr-helper
-qemu-system-aarch64
-qemu-system-alpha
-qemu-system-alpha-firmware
-qemu-system-arm
-qemu-system-arm-firmware
-qemu-system-avr
-qemu-system-hppa
-qemu-system-hppa-firmware
-qemu-system-loongarch64
-qemu-system-m68k
-qemu-system-microblaze
-qemu-system-microblaze-firmware
-qemu-system-mips
-qemu-system-or1k
-qemu-system-ppc
-qemu-system-ppc-firmware
-qemu-system-riscv
-qemu-system-riscv-firmware
-qemu-system-rx
-qemu-system-s390x
-qemu-system-s390x-firmware
-qemu-system-sh4
-qemu-system-sparc
-qemu-system-sparc-firmware
-qemu-system-tricore
-qemu-system-x86
-qemu-system-x86-firmware
-qemu-system-xtensa
-qemu-tests
-qemu-tools
-qemu-ui-curses
-qemu-ui-dbus
-qemu-ui-egl-headless
-qemu-ui-gtk
-qemu-ui-opengl
-qemu-ui-sdl
-qemu-ui-spice-app
-qemu-ui-spice-core
-qemu-user
-qemu-vhost-user-gpu
-qemu-vmsr-helper
-qflipper
-qgpgme
-qhexedit2
-qhttpengine
-qhull
-qlcplus
-qmdnsengine
-qmidiarp-lv2
-qoi
-qpdf
-qperf-nordma
-qprint
-qqc2-desktop-style
-qrcodegencpp-cmake
-qrencode
-qrupdate
-qscintilla-qt5
-qscintilla-qt6
-qt4
-qt5-3d
-qt5-base
-qt5-charts
-qt5-connectivity
-qt5ct
-qt5-declarative
-qt5-doc
-qt5-graphicaleffects
-qt5-imageformats
-qt5-location
-qt5-multimedia
-qt5pas
-qt5-quickcontrols
-qt5-quickcontrols2
-qt5-remoteobjects
-qt5-script
-qt5-scxml
-qt5-sensors
-qt5-serialport
-qt5-speech
-qt5-svg
-qt5-tools
-qt5-translations
-qt5-wayland
-qt5-webchannel
-qt5-webengine
-qt5-webkit
-qt5-websockets
-qt5-x11extras
-qt5-xcb-private-headers
-qt5-xmlpatterns
-qt6-3d
-qt6-5compat
-qt6-base
-qt6-charts
-qt6-connectivity
-qt6ct
-qt6-declarative
-qt6-graphs
-qt6-grpc
-qt6-imageformats
-qt6-multimedia
-qt6-multimedia-ffmpeg
-qt6-multimedia-gstreamer
-qt6-networkauth
-qt6-positioning
-qt6-quick3d
-qt6-quickeffectmaker
-qt6-quicktimeline
-qt6-scxml
-qt6-serialport
-qt6-shadertools
-qt6-speech
-qt6-svg
-qt6-tools
-qt6-tools-desktop
-qt6-translations
-qt6-wayland
-qt6-webchannel
-qt6-webengine
-qt6-websockets
-qt6-webview
-qt6-xcb-private-headers
-qtdbusextended
-qtkeychain-qt5
-qtkeychain-qt6
-qtutilities
-quake3
-quazip-qt5
-quazip-qt6
-quiche
-quickshell
-quilt
-quota-tools
-qutebrowser
-qutebrowser-profile-git
-qxlsx
-qxmpp
-r
-r10k
-r8125-dkms
-radare2
-radcli
-radicale
-radvd
-raft
-rage-encryption
-ragel
-rainbowcrack
-rainfrog
-randomart
-range-v3
-rankwidth
-rapiddisk-dkms
-rapidjson
-rapids-logger
-raptor
-rarcrack
-rasqal
-rathole
-rattler-build
-rauc
-rav1e
-ravenna-alsa-lkm-dkms
-razor
-rclone
-rdesktop
-rdma-core
-re2
-re2c
-readline
-realtime-privileges
-realtime-suggestions
-reaper
-reaver
-reboot-checker
-recode
-reddit-tui
-reddix
-redland
-redland-storage-sqlite
-redot-git
-relibre
-remake
-remind
-remmina
-remmina-plugin-folder
-remmina-plugin-open
-remmina-plugin-rdesktop
-remmina-plugin-rustdesk
-remmina-plugin-url
-remote-desktop-manager
-renderdoc
-repo
-resvg
-retsnoop
-reuse
-rev-plugins
-rhash
-rhonabwy
-ricochet-refresh
-ripgrep
-ripgrep-all
-rizin
-rkcommon
-rkhunter
-rng-tools
-rnnoise
-rocblas
-rocksdb
-rocksndiamonds-contrib
-rocm-core
-rocm-device-libs
-rocminfo
-rocm-llvm
-rocm-smi-lib
-rocprim
-rocprofiler-register
-rocsolver
-rocsparse
-roc-toolkit
-roctracer
-root-cuda
-rootlesskit
-rootmp-hook
-ropgadget
-rosenpass
-roundcubemail
-roundcubemail-plugin-authres_status
-roundcubemail-plugin-caldavzap
-roundcubemail-plugin-carddav
-roundcubemail-plugin-contextmenu
-roundcubemail-plugin-delete_old
-roundcubemail-plugin-persistent_login
-roundcubemail-plugin-showfoldersize
-roundcubemail-plugin-twofactor-webauthn
-roundcubemail-skin-classic
-roundcubemail-skin-larry
-rpacket
-rpcbind
-rpcsvc-proto
-rpg-cli
-rpgp
-rpm-sequoia
-rpm-tools
-rrdtool
-rsop
-rsop-oct
-rspamd
-rsvndump
-rsync
-rtaudio
-rtirq
-rtkit
-rtl8723du-dkms-git
-rtl-sdr
-rtmidi
-rtmpdump
-rtpengine-kernel-dkms
-rtptools
-rt-tests
-rtw89bt-dkms-git
-rtw89-dkms-git
-rubberband
-ruby
-ruby-abbrev
-ruby-acme-client
-ruby-activesupport
-ruby-addressable
-ruby-afm
-ruby-ascii85
-ruby-augeas
-ruby-base64
-ruby-bcrypt_pbkdf
-ruby-bigdecimal
-ruby-bundled-gems
-ruby-bundler
-ruby-cairo
-ruby-cairo-gobject
-ruby-callbacks_attachable-2.3
-ruby-colored2
-ruby-colorize
-ruby-concurrent
-ruby-connection_pool
-ruby-crack
-ruby-cri
-ruby-css_parser
-ruby-csv
-ruby-dbus
-ruby-debug
-ruby-deep_merge
-ruby-default-gems
-ruby-diff-lcs
-ruby-docile
-ruby-docopt
-ruby-drb
-ruby-dry-core
-ruby-dry-inflector
-ruby-dry-logic
-ruby-dry-types
-ruby-ed25519
-ruby-erb
-ruby-erubi
-ruby-evdev
-ruby-fakefs
-ruby-faraday
-ruby-faraday-follow_redirects
-ruby-faraday-net_http
-ruby-fast_gettext
-ruby-ffi
-ruby-gdk3
-ruby-gdk4
-ruby-gdk_pixbuf2
-rubygems
-ruby-getoptlong
-ruby-gettext
-ruby-gettext-setup
-ruby-gio2
-ruby-glib2
-ruby-gobject-introspection
-ruby-google-protobuf
-ruby-gpgme
-ruby-hashery
-ruby-highline
-ruby-hocon
-ruby-http_parser.rb
-ruby-i18n
-ruby-irb
-ruby-json-schema
-ruby-jwt
-ruby-kramdown
-ruby-kramdown-parser-gfm
-ruby-libevdev
-ruby-libnotify
-ruby-lint_roller
-ruby-linux_input
-ruby-little-plugger
-ruby-locale
-ruby-log4r
-ruby-logging
-ruby-matrix
-ruby-metadata_json_deps
-ruby-metadata-json-lint
-ruby-mime-types
-ruby-mime-types-data
-ruby-mini_portile
-ruby-mini_portile2
-ruby-minitar
-ruby-minitest
-ruby-mocha
-ruby-multi_json
-ruby-mustache
-ruby-mustermann
-ruby-mutex_m
-ruby-native-package-installer
-ruby-net-ftp
-ruby-net-imap
-ruby-net-pop
-ruby-net-sftp
-ruby-net-smtp
-ruby-net-ssh
-ruby-nkf
-ruby-nokogiri
-ruby-observer
-ruby-octokit
-ruby-optimist
-ruby-pango
-ruby-pdf-core
-ruby-pdf-reader
-ruby-pkg-config
-ruby-polyglot
-ruby-power_assert
-ruby-prawn
-ruby-prawn-icon
-ruby-prawn-svg
-ruby-prawn-table
-ruby-prawn-templates
-ruby-prime
-ruby-public_suffix
-ruby-puppet_forge
-ruby-puppet_metadata
-ruby-puppet-resource_api
-ruby-racc
-ruby-rack
-ruby-rack-protection
-ruby-rack-session
-ruby-rainbow
-ruby-rake
-ruby-rake-contrib
-ruby-rbnacl
-ruby-rbs
-ruby-rdiscount
-ruby-rdoc
-ruby-red-colors
-ruby-repl_type_completor
-ruby-resolv-replace
-ruby-revdev
-ruby-rexml
-ruby-rinda
-ruby-ronn-ng
-ruby-rspec
-ruby-rspec-core
-ruby-rspec-expectations
-ruby-rspec-mocks
-ruby-rspec-support
-ruby-rss
-ruby-ruby-rc4
-ruby-rugged
-ruby-sawyer
-ruby-scanf
-ruby-semantic_puppet
-ruby-shadow
-ruby-simplecov
-ruby-simplecov-html
-ruby-simplecov_json_formatter
-ruby-sinatra
-ruby-sinatra-contrib
-ruby-spdx-licenses
-ruby-sqlite3
-ruby-stdlib
-ruby-sys-filesystem
-ruby-syslog
-ruby-test-unit
-ruby-text
-ruby-thor
-ruby-tilt
-ruby-treetop
-ruby-ttfunk
-ruby-typeprof
-ruby-tzinfo
-ruby-uri-ssh_git
-ruby-warning
-ruby-webrick
-ruby-x25519
-ruby-xdg
-ruby-yard
-ruby-zeitwerk
-rudder-agent
-ruff
-ruff-lsp
-runc
-run-parts
-rust-bindgen
-rustdesk
-rustdesk-openrc
-rustdesk-server
-rustup
-rustywind
-rutabaga-ffi
-ruuvitag-listener
-rvm
-rvpk
-rxvt-unicode
-rxvt-unicode-terminfo
-rye
-rz-cutter
-s2n-tls
-sabnzbd-docker
-safu
-sage-data-elliptic_curves
-sage-data-graphs
-sage-data-polytopes_db
-sagemath
-sagetex
-samba
-samsung-ssd-fwupdate
-samurai
-sane
-sane-airscan
-sane-gt68xx-firmware
-sanoid
-sassc
-satintel-git
-sbc
-sbcl
-sbsigntools
-sbt
-scala
-scala3
-scalafmt
-scala-sources
-scanmem
-scap-dkms
-scapy
-sccache-dist
-sccmhunter-git
-scdoc
-schedtool
-schroedinger
-schroot
-scim
-scons
-scotch
-scour
-scrape-cli
-scrcpy
-scream_cypher
-scrypt
-scute
-sd
-sdbus-cpp
-sdcv
-sddm
-sdl12-compat
-sdl2-compat
-sdl2_fontcache
-sdl2_gfx
-sdl2_image
-sdl2_mixer
-sdl2_net
-sdl2_ttf
-sdl3
-sdl3_image
-sdl3_ttf
-sdlconsole
-sdl_image
-sdl_mixer
-sdl_net
-sdl_sound
-sdl_ttf
-sdparm
-sdrpp-git
-sdrpp-headers-git
-sdx
-seabios
-seahorse
-seahorse-nautilus
-seanime
-seatd
-seclists
-secretpixel
-secret-service
-sed
-semt
-semver
-sentry-native
-sequoia-chameleon-gnupg
-sequoia-keyring-linter
-sequoia-octopus-librnp
-sequoia-sop
-sequoia-sqv
-serd
-serf
-serialdv
-servicemix
-session-desktop
-setconf
-sfml
-sfml2
-sfsexp
-sgml-common
-sh4d0wup
-sha3sum
-shaderc
-shadergen
-shader-slang
-shadow
-shadowsocks-v2ray-plugin
-shairport-sync
-shapelib
-shared-bootdir-helper
-shared-mime-info
-sharry
-sharutils
-shell-advancedutils
-shellcheck
-shellspec
-sherlock.lv2
-shfmt
-shibboleth-sp
-shiboken6
-shikane
-shlink
-shufflecake
-sidedoor
-sieve-connect
-signify
-signing-party
-signond
-signon-kwallet-extension
-signon-plugin-oauth2
-signon-ui
-signstar-sign
-sile
-sile-labelrefs
-simde
-simdjson
-simpleid
-simpleini
-simreader
-simtrace
-singular
-sipcrack
-sipvicious
-skalibs
-skopeo
-slang
-slicer-udev
-slirp4netns
-slowhttptest
-slurp
-smail
-smartcam
-smartcam-dkms
-smartcat
-smartmontools
-smartreboot
-smbclient
-smbnetfs
-smpq
-sn0int
-s-nail
-snapback
-snapborg
-snapchat
-snapd
-snapd-glib
-snap-pac
-snapper
-snapper-rollback
-snapper-support
-snappy
-snap-sync
-snd-hdspe-dkms
-sndio
-snd-pcsp-dkms
-snd-usb-audio-fasttrack-dkms
-sniffert
-sniffglue
-sniffit
-sniproxy
-soapyairspy
-soapyaudio
-soapysdr
-socat
-soci
-social-engineer-toolkit
-socid-extractor
-sof-firmware
-sofia-sip
-sof-tools
-soft-serve
-solid
-solid5
-solidigm-sst-storage-tool-cli
-solr
-somoclu
-sonnet
-sonnet5
-sops
-sord
-sound-icons
-sound-theme-freedesktop
-sound-theme-smooth
-soundtouch
-soundwire
-source-highlight
-sox
-spacefm
-spamassassin
-spandsp
-sparsehash
-spdlog
-spdx-license-list-data
-speech-dispatcher
-speex
-speexdsp
-spf-tools
-spice
-spicedb
-spice-gtk
-spice-protocol
-spirv-cross
-spirv-headers
-spirv-llvm-translator
-spirv-tools
-spyder
-spytrap-adb
-sqlcipher
-sqlite
-sqlite-analyzer
-sqlitebrowser
-sqlite-doc
-sqliteodbc
-sqlite-tcl
-sqlmap
-squashfs-tools
-squashfuse
-squid
-sratom
-srt
-ssb
-ssfconv
-ssh-audit
-ssh-chat
-sshfs
-sshguard
-ssh-key-confirmer
-sshpass
-sshs
-sshtool
-ssh-tools
-ssh-tpm-agent
-sshtunnel
-sshuttle
-sshx
-sshyp
-sslh
-sslsplit
-sssd
-sstp-client
-stalwart-cli
-stalwart-mail
-staplegl-git
-startup-notification
-stash
-staticcheck
-stb
-steam
-steamcmd
-steam-hdr
-steamlink
-steam-native-runtime
-steamrun
-steamtinkerlaunch
-steam-tools-ng
-steamworks-sdk
-steghide
-stegseek
-step-ca
-stk
-stoken
-stormlib
-strip-nondeterminism
-strongswan
-sttr
-stumpwm
-stumpwm-contrib
-stunnel
-stylelint
-stylish-haskell
-subcat-git
-subnetcalc
-subversion
-sudo
-sugar-artwork
-suil
-suitesparse
-sundials
-sunshine
-supercollider
-superfile
-supergfxctl
-supervisor
-surge-xt-clap
-surge-xt-common
-surge-xt-vst3
-svgcleaner
-svgo
-svgpart
-svt-av1
-svt-hevc
-svt-vp9
-sway
-swaybg
-sway-scroll-stable
-swaytreesave
-sweeper
-sweethome3d
-sweethome3d-3dmodels-blendswap-cc0
-sweethome3d-3dmodels-blendswap-ccby
-sweethome3d-3dmodels-contributions
-sweethome3d-3dmodels-katorlegaz
-sweethome3d-3dmodels-lucapresidente
-sweethome3d-3dmodels-reallusion
-sweethome3d-3dmodels-scopia
-sweethome3d-3dmodels-trees
-sweethome3d-furniture-library
-sweethome3d-textures-contributions
-sweethome3d-textures-scopia
-swengine
-swh-plugins
-swig
-swtpm
-swww
-syft
-symlinks
-symmetrica
-sympow
-syncplay
-syndication
-syntax-highlighting
-syntax-highlighting5
-sysboost
-sysfsutils
-syslinux
-systemctl-tui
-systemd
-systemd-libs
-systemd-lsp
-systemd-sysvcompat
-sysz
-t1lib
-t1utils
-tachyon
-taglib
-tailwindcss-cli
-tailwindcss-language-server
-talloc
-tamarin-prover
-tar
-tara
-tarantool
-tarsnap
-tarsnapper
-task
-tbtools
-tcl
-tclkit
-tcllib
-tcp-brutal-dkms
-tcpdump
-tdb
-teamtype
-teamviewer
-tectonic
-telegram-desktop
-tempo
-tensorboard
-tensorflow-cuda
-tensorrt
-tensorrt-cross-builder-libs
-terminus-font
-term-pdf
-termshark
-termux-keyring
-terrafire
-terraform
-terraformer
-terraform-ls
-terraform-lsp
-terragrunt
-tesseract
-tesseract-data-afr
-tesseract-data-osd
-testdisk
-testssl.sh
-tevent
-tex-gyre-fonts
-texinfo
-texlab
-texlive-basic
-texlive-bibtexextra
-texlive-bin
-texlive-binextra
-texlive-fontsextra
-texlive-fontsrecommended
-texlive-formatsextra
-texlive-humanities
-texlive-langczechslovak
-texlive-langenglish
-texlive-langfrench
-texlive-langgerman
-texlive-latex
-texlive-latexextra
-texlive-latexrecommended
-texlive-luatex
-texlive-mathscience
-texlive-metapost
-texlive-music
-texlive-pictures
-texlive-plaingeneric
-texlive-pstricks
-texlive-publishers
-texlive-tikz-uml
-texlive-xetex
-texturepacker
-tflint
-tgcli
-thc-ipv6
-thefuck
-thelounge
-thin-provisioning-tools
-thorium
-threejs-sage
-thrift
-throttled
-thunar
-thunderbird
-thunderbird-dark-reader
-thunderbird-dkimverifier
-thunderbird-tbsync
-tidy
-tigervnc
-time
-timescaledb
-timescaledb-old-upgrade
-tinycdb
-tinycompress
-tinygltf
-tinysparql
-tinysparql-docs
-tinyssh
-tinyxml
-tinyxml2
-tk
-tl-expected
-tllist
-tlsh
-tlsrpt-reporter
-tmate
-tmon
-tmpcleaner
-tmux
-tmuxinator
-tmuxp
-tnftpd
-tntnet
-tomb
-tomlplusplus
-toolame
-toolblex
-tor
-torbrowser-launcher
-torcheck
-torchvision-cuda
-torphantom
-totem-pl-parser
-toxcore
-toxic
-tpm2-abrmd
-tpm2-openssl
-tpm2-pkcs11
-tpm2-tools
-tpm2-totp
-tpm2-tss
-tpm2-tss-engine
-trace-cmd
-trackerjacker
-tractor
-traefik
-translate-shell
-tre
-tree
-treeify
-tree-sitter
-tree-sitter-c
-tree-sitter-cli
-tree-sitter-lua
-tree-sitter-markdown
-tree-sitter-query
-tree-sitter-vim
-tree-sitter-vimdoc
-trousers
-trufflehog
-trunk
-tslib
-ts-node
-tsshd
-ttf-arphic-tex-extra
-ttf-bitstream-vera
-ttf-charis
-ttf-charis-sil
-ttf-courier-prime
-ttf-daddytime-mono-nerd
-ttf-dejavu
-ttf-doulos-sil
-ttf-droid
-ttf-fira-code
-ttf-font-icons
-ttf-gentium-plus
-ttf-input-nerd
-ttf-jetbrains-mono-nerd
-ttf-liberation
-ttf-material-symbols-variable
-ttf-mona-sans
-ttf-monaspace-frozen
-ttf-monaspace-variable
-ttf-nerd-fonts-symbols
-ttf-nerd-fonts-symbols-common
-ttf-nerd-fonts-symbols-mono
-ttf-roboto
-ttf-terminus-nerd
-ttmath
-tufw
-tuna
-turbo-attack-git
-turbo-scanner-git
-turbostat
-tutanota-desktop-bin
-twa
-twine
-twolame
-txt2man
-txt2tags
-typescript
-typescript-language-server
-typetalk
-typos-lsp
-tzdata
-uasm
-ubertooth
-ublock-origin
-uboot-tools
-uchardet
-ucl
-ucommon
-udev-hid-bpf
-udev-media-automount
-udftools
-udiskie
-udisks2
-udisks2-lvm2
-udisks2-qt5
-udns
-udpxy
-ueberzugpp
-uefitool
-ufw
-ufw-extras
-ugm
-ugrep
-ulfius
-ultravnc-viewer
-umbrello
-umlet
-uml_utilities
-umockdev
-umu-launcher
-unarchiver
-unbound
-unbound-china-list-git
-unbound-roothints
-unbound-root-hints-updater
-unetbootin
-unhide
-unibilium
-unicode-character-database
-unicorn
-unicorn-cal
-unixodbc
-unoconv
-unordered_dense-git
-unpaper
-unrar
-unrealircd
-unrtf
-unzip
-up
-upd72020x-fw
-updlockfiles
-upower
-uptime-kuma
-upx
-urh
-urlscan
-urlview-xdg-git
-urxvt-perls
-usbasp-udev
-usbip
-usb_modeswitch
-usbmuxd
-usbredir
-usbutils
-usbview
-usd
-uthash
-util-linux
-util-linux-libs
-uudeview
-uusi
-uv
-uvicorn
-uwsgi
-uwsgi-plugin-cgi
-uwsgi-plugin-lua51
-uwsgi-plugin-mono
-uwsgi-plugin-notfound
-uwsgi-plugin-php
-uwsgi-plugin-php-legacy
-uwsgi-plugin-psgi
-uwsgi-plugin-pypy
-uwsgi-plugin-python
-uwsgi-plugin-rack
-uwsgi-plugin-webdav
-uwsgi-plugin-zabbix
-uwsm
-uwufetch
-v2ray
-v2ray-domain-list-community
-v2ray-geoip
-v4l2loopback-dc-dkms
-v4l2loopback-dkms
-v4l2loopback-utils
-v4l2ucp-qt5
-v4l-utils
-vagrant
-vala
-vale
-vale-ls
-valgrind
-valijson
-valkey
-vamp-plugin-sdk
-vanity-monero
-vapoursynth
-vault
-vbetool
-vblade
-vc
-vcal
-vco-plugins
-vcpkg
-vcvrack
-vde2
-vdirsyncer
-vdpauinfo
-vdr
-vdrctl
-vdr-softhddevice-drm-gles
-vector
-vectorchord-bin
-vector-slicer
-verdict
-vesktop
-vesktop-debug
-vfio-isolate
-vfio-kvm
-vhba-module-dkms
-vi
-vid.stab
-vim
-vim-ale
-vim-language-server
-vim-runtime
-violetumleditor
-virglrenderer
-virt-firmware
-virt-install
-virtiofsd
-virtme-ng
-virtualbox-host-dkms
-virt-viewer
-virt-what
-viu
-vivaldi
-vivaldi-ffmpeg-codecs
-vkbasalt
-vkbasalt-cli
-vkd3d
-vkd3d-docs
-vkdevicechooser
-vkmark
-vkvg
-vlc
-vlc-cli
-vlc-gui-qt
-vl-convert
-vlc-plugin-a52dec
-vlc-plugin-aalib
-vlc-plugin-alsa
-vlc-plugin-archive
-vlc-plugin-caca
-vlc-plugin-dav1d
-vlc-plugin-dbus
-vlc-plugin-dbus-screensaver
-vlc-plugin-faad2
-vlc-plugin-ffmpeg
-vlc-plugin-flac
-vlc-plugin-freetype
-vlc-plugin-gnutls
-vlc-plugin-gstreamer
-vlc-plugin-inflate
-vlc-plugin-journal
-vlc-plugin-jpeg
-vlc-plugin-lua
-vlc-plugin-mpg123
-vlc-plugin-ogg
-vlc-plugin-opus
-vlc-plugin-pipewire
-vlc-plugin-png
-vlc-plugin-pulse
-vlc-plugins-base
-vlc-plugin-shout
-vlc-plugin-smb
-vlc-plugin-speex
-vlc-plugin-svg
-vlc-plugins-video-output
-vlc-plugin-tag
-vlc-plugin-theora
-vlc-plugin-twolame
-vlc-plugin-udev
-vlc-plugin-vorbis
-vlc-plugin-vpx
-vlc-plugin-xml
-vmaf
-voa-verifiers-arch
-volk
-volume_key
-vorbis-tools
-vosk-api
-vpl-gpu-rt
-vpnc
-vrpn
-vscode-php-debug
-vsqlite++
-vst3sdk
-vte3
-vte3-utils
-vte4
-vte4-utils
-vte-common
-vtk
-vtsls
-vtun
-vulkan-caps-viewer-wayland
-vulkan-extra-layers
-vulkan-extra-tools
-vulkan-freedreno
-vulkan-gfxstream
-vulkan-headers
-vulkan-html-docs
-vulkan-icd-loader
-vulkan-memory-allocator
-vulkanscenegraph
-vulkan-tools
-vulkan-utility-libraries
-vulkan-validation-layers
-vulkan-wsi-layer-git
-vulscan
-w3m
-wabt
-waf
-wah-plugins
-waifu2x-ncnn-vulkan
-wallabag
-wallutils
-warp-cli
-warp-plus
-wasi-compiler-rt
-wasi-libc
-wasi-libc++
-wasi-libc++abi
-wasm-bindgen
-wasmer
-wasm-pack
-wasmtime
-wavemon
-wavpack
-waybar
-waydroid
-waydroid-magisk
-waydroid-script-git
-waydroidsu
-wayland
-wayland-display-info
-waylandpp
-wayland-protocols
-wayland-utils
-waylock
-waypaper
-waypaper-engine
-waypipe
-wayvnc
-wazuh-agent
-wazuh-dashboard
-wazuh-filebeat
-wazuh-indexer
-wcslib
-wd719x-firmware
-webdavfs
-webkit2gtk
-webkit2gtk-4.1
-webkitgtk-6.0
-webkitgtk-6.0-docs
-weborf
-webp-pixbuf-loader
-webrtc-audio-processing
-webrtc-audio-processing-0.3
-webrtc-audio-processing-1
-websocat
-websocketpp
-websploit
-websvn
-weron
-wev
-wf-recorder
-wgcf
-wget
-which
-whipper
-whisper.cpp-cuda
-whois
-wifi-password
-wifite
-wiggly-stt
-wildcard
-wildmidi
-windutils
-wine
-wine-gecko
-wine-mono
-wine-nine
-winesync-dkms
-winesync-header
-winesync-udev-rule
-winetricks
-wire-desktop
-wireguard-dkms
-wireguard-tools
-wireguard-vanity-address
-wireless-regdb
-wireless_tools
-wiremix
-wireplumber
-wireplumber-docs
-wireplumber-openrc
-wireproxy
-wireshark-cli
-wireshark-minecraft-dissector
-wireshark-qt
-wiresmith
-with-b3-git
-wkd-exporter
-wl-clipboard
-wl-clip-persist
-wlroots0.18
-wlroots0.19
-wlr-protocols
-wlr-randr
-wmenu
-woff2
-woff2-font-awesome
-wofi
-wol
-wolfssl
-woob
-worker-build
-workerd
-wpaperd
-wpa_supplicant
-wpebackend-fdo
-wpebackend-fdo-docs
-wpewebkit
-wpmeta
-wps-office-cn
-wrangler
-wsdd
-wt
-wtype
-wxsqlite3
-wxsvg
-wxwidgets-common
-wxwidgets-common-3.0
-wxwidgets-gtk3
-wxwidgets-gtk3-3.0
-x11-ssh-askpass
-x264
-x265
-x86_energy_perf_policy
-xandikos
-xapian-core
-xapp
-xbitmaps
-xcaddy
-xcb-imdkit
-xcb-proto
-xcb-util
-xcb-util-cursor
-xcb-util-errors
-xcb-util-image
-xcb-util-keysyms
-xcb-util-renderutil
-xcb-util-wm
-xcb-util-xrm
-xclip
-xdebug
-xde-menu
-xdg-autostart
-xdg-base-dir-env
-xdg-dbus-proxy
-xdg-desktop-portal
-xdg-desktop-portal-gnome
-xdg-desktop-portal-gtk
-xdg-desktop-portal-hyprland
-xdg-desktop-portal-shana
-xdg-environment
-xdgmenumaker
-xdg-ninja
-xdg-sanity
-xdg-sound
-xdgterm
-xdg-terminal-exec
-xdg-unused-data-git
-xdg-user-dirs
-xdg-user-dirs-gtk
-xdg-utils
-xdg-utils-cxx
-xdotool
-xdph-dmenu-sharepicker
-xerces-c
-xeus
-xf86-input-evdev
-xf86-input-libinput
-xfconf
-xfmpc
-xfsprogs
-xkeyboard-config
-xl2tpd
-xmake
-xmldiff
-xmlsec
-xml-security-c
-xmlstarlet
-xmlto
-xmltoman
-xmltooling
-xmonad
-xmonad-contrib
-xmonad-dbus
-xmonk.lv2
-xmppc
-xmrig
-xorg-fonts-100dpi
-xorg-fonts-75dpi
-xorg-fonts-alias-100dpi
-xorg-fonts-alias-75dpi
-xorg-fonts-encodings
-xorg-font-util
-xorg-iceauth
-xorg-mkfontscale
-xorgproto
-xorg-server
-xorg-server-common
-xorg-server-xvfb
-xorg-setxkbmap
-xorg-util-macros
-xorg-xauth
-xorg-xdpyinfo
-xorg-xinit
-xorg-xkbcomp
-xorg-xmodmap
-xorg-xprop
-xorg-xrandr
-xorg-xrdb
-xorg-xset
-xorg-xsetroot
-xorg-xvidtune
-xorg-xwayland
-xorg-xwininfo
-xosd
-xray
-xr-hardware
-xsel
-xsimd
-xtables-addons-dkms
-xterm
-xtl
-xtrans
-xt_wgobfs-dkms
-xvidcore
-xxhash
-xz
-yad
-yajl
-yamagi-quake2
-yaml-cpp
-yamlfmt
-yamllint
-yank
-yapf
-yara
-yarn
-yasm
-yay
-yaycache
-yaycache-hook
-yay-debug
-yayfzf
-yder
-ydotool
-yelp-tools
-yelp-xsl
-yggdrasil
-yices
-ynot-fossil
-youtube-tui
-yp-tools
-yq
-ytdl
-yt-dlp
-yt-dlp-ejs
-ytdl-sub
-ytdownloader
-ytfzf
-yubico-c
-yubico-c-client
-yubico-pam
-yubikey-personalization
-yyjson
-z3
-zabbix-agent
-zabbix-common
-zabbix-frontend-php
-zabbix-server
-zabbix-web-service
-zam-plugins-lv2
-zam-plugins-vst
-zathura
-zathura-cb
-zathura-djvu
-zathura-language-server
-zathura-pdf-mupdf
-zathura-ps
-zbar
-zdhpctl
-zectl
-zedenv
-zend-debugger
-zenity
-zenmap
-zephyr-sdk
-zeromq
-zettli
-zfsbootmenu
-zfs-dkms
-zfsnap
-zfs-utils
-zig
-zig0.14-bin
-zigbee2mqtt
-zimg
-zint
-zip
-zita-ajbridge
-zita-alsa-pcmi
-zita-at1
-zita-bls1
-zita-convolver
-zita-resampler
-zix
-zizmor
-zlib
-zlib-ng
-zls
-zmap
-znapzend
-zoiper-classic
-zoom-l8-dkms
-zopfli
-zotero
-zotero-extension-ocr
-zoxide
-zram-generator
-zsa-udev
-zsh
-zstd
-zsync
-zvbi
-zvm
-zxing-cpp
-zycore-c
-zydis
-zziplib
+	389-ds-base
+	3cpio
+	6tunnel
+	aalib
+	abeluna
+	abuild
+	acme-cli
+	acme-user
+	acpi_call-dkms
+	acsccid
+	act
+	actionlint
+	adbfs-rootless-git
+	addr-book-combine-git
+	adlplug-lv2
+	adriconf
+	aeolus
+	aerc
+	af9015-firmware
+	afew
+	afl-utils
+	agda
+	agda-stdlib
+	age
+	age-plugin-tkey
+	age-plugin-tpm
+	age-plugin-yubikey
+	aha
+	aida-x
+	aida-x-clap
+	aida-x-lv2
+	aida-x-vst
+	aida-x-vst3
+	airgorah
+	airshipper
+	airspy
+	akvcam-dkms
+	alejandra
+	algernon
+	alliedvision-vimba-x
+	alot
+	alpine
+	alpm-lint
+	alpm-pkgbuild-bridge
+	alsacap
+	alsa-config-utils
+	alsa-control
+	alsaequal
+	alsa-firmware
+	alsa-hdspeconf
+	alsa-oss
+	alsa-rnnoise
+	alsa-tools
+	alsause
+	alsa-utils
+	alure
+	alvr
+	amavisd-milter
+	amavisd-new
+	ambix
+	ambix-lv2
+	amb-plugins
+	amfora
+	ammonite
+	ams
+	amsynth
+	amsynth-dssi
+	amsynth-lv2
+	amsynth-vst
+	androguard
+	android-emulator
+	android-file-transfer
+	android-google-repository
+	android-meson
+	android-ndk
+	android-platform
+	android-sdk-build-tools
+	android-sdk-build-tools-17
+	android-sdk-platform-tools
+	android-studio-canary
+	android-tethering
+	android-tools
+	android-udev
+	angryoxide
+	anoise-media
+	ansible-aur
+	ansible-bender
+	ansible-creator
+	ansible-gopass
+	ansible-gpg-key-git
+	ansible-gsetting-git
+	ansible-language-server
+	ansible-lint
+	ansible-navigator
+	anthy
+	antigravity-preview
+	anubis
+	anyremote
+	apache-ant-contrib
+	apache-ant-maven-tasks
+	apache-cxf
+	apache-flink
+	apache-lucene
+	apache-mod_auth_mellon
+	apfsprogs
+	apk-mitm
+	apko
+	apksigcopier
+	apparmor
+	app-icon-preview
+	apptainer
+	apt-swarm
+	aravis
+	arch-audit
+	arch-checkfw
+	archinstall
+	archiso
+	archivetools
+	archlinux-contrib
+	archlinux-xdg-menu
+	arch-rebuild-order
+	arch-repro-status
+	arch-sign-modules
+	arch-signoff
+	arch-udev-usb-sync
+	ardour
+	arduino-fwuploader
+	arduino-language-server
+	arpfox
+	arrow-tools
+	artyfx
+	ascii
+	asciidoc
+	asciidoctor
+	asciidoctor-pdf
+	asciinema
+	asciiquarium
+	asm-lsp
+	asmx
+	asnmap
+	asoundconf
+	aspeak
+	aspnet-targeting-pack
+	aspnet-targeting-pack-6.0
+	aspnet-targeting-pack-7.0
+	aspnet-targeting-pack-8.0
+	ast-grep
+	astroid
+	astrojs-language-server
+	astronaut
+	at51
+	atool
+	atools
+	audacity
+	audacity-plugins
+	audaspace
+	audio-convert
+	audio-share
+	audio-sharing
+	audiosource
+	audispd-plugins
+	audispd-plugins-zos
+	augratin
+	aurpublish
+	aur-pull
+	aurum
+	aurutils
+	auth-get-sso-cookie
+	authoscope
+	autofs
+	autogen
+	automattermostatus
+	autossh
+	autotools-language-server
+	avisynthplus
+	avldrums.lv2
+	avrdude
+	avr-gdb
+	avr-libc
+	awesome
+	awesome-omarchy-tui
+	awesome-terminal-fonts
+	awesome-terminal-fonts-patched
+	awk-language-server
+	awstats
+	aws-vault
+	awxkit
+	ayugram-desktop-bin
+	azcopy
+	azure-cli
+	azure-kubelogin
+	b3sum
+	b4
+	b43-fwcutter
+	bacon
+	bagels
+	baikal
+	bandit
+	barnyard2
+	bar-protonmail
+	base
+	base-devel
+	basedpyright
+	bash-completion
+	bashdb
+	bash-debugger
+	bash-language-server
+	bastyon
+	bat-extras
+	bazelrc-lsp
+	bchoppr
+	bear
+	beautysh
+	bettercap
+	bettercap-caplets
+	bettercap-ui
+	bezier
+	bibata-cursor-theme
+	bibata-cursor-translucent
+	bibata-extra-cursor-theme
+	bibclean
+	biber
+	bibiman
+	bibtex2website
+	bibtex-tidy
+	bibtool
+	bigsh0t
+	binaryen
+	biome
+	birdfont
+	bkcrack
+	blackmagic
+	black-magic-probe-utils
+	blade-formatter
+	bladerf
+	blas64-openblas
+	blas-openblas
+	blender
+	blendnet
+	blendr
+	bloop
+	bloop-systemd
+	blop
+	bltui
+	bluealsa
+	bluemail
+	blueman
+	bluesync
+	bluetooth-autoconnect
+	bluetooth-bitrate-manager
+	bluetui
+	bluetuith
+	bluez-cups
+	bluez-deprecated-tools
+	bluez-hid2hci
+	bluez-mesh
+	bluez-monitor
+	bluez-obex
+	bluez-qt
+	bluez-qt5
+	bluez-tools
+	bluez-utils
+	blur-effect
+	bmkdep
+	bmputil
+	bmusb
+	bob
+	bogofilter-sqlite
+	bolt
+	bonzomatic
+	bookshelf
+	bootconfig
+	borgctl
+	borgit
+	borgmatic
+	borgreport
+	borgrestore
+	bottles
+	bounty-git
+	broadcom-bt-firmware
+	broadcom-wl-dkms
+	browserify
+	browserpass
+	browserpass-chrome
+	browserpass-chromium
+	browserpass-firefox
+	bsum
+	btattach
+	btcpayserver
+	btctl
+	bthandler
+	btlescan
+	btmenu
+	btop
+	btrfs-assistant
+	btrfs-desktop-notification
+	btrfs-list-git
+	btrfs-progs
+	btscanner
+	bugzilla
+	buildkit
+	bully
+	burp-backup
+	burpsuite
+	bus-pirate
+	bw-pinentry
+	byobu
+	c3-lsp
+	cable
+	cache-cleaner
+	cacti
+	cacti-spine
+	cadaver
+	caido-cli
+	cairo-xml
+	caja
+	caja-admin
+	caja-audio-video-properties
+	caja-image-converter
+	caja-open-any-terminal
+	caja-open-terminal
+	caja-share
+	calendarsupport
+	caligula
+	cameracontrol-bin
+	cameractrls
+	capnproto
+	capypdf
+	carbonyl
+	cardinal
+	cardinal-clap
+	cardinal-vst
+	cardinal-vst3
+	cargo-make
+	cargo-rdme
+	cargo-supply-chain
+	cargo-zigbuild
+	carla
+	casync
+	catdoc
+	catdvi
+	catgirl
+	catgirl-engine
+	catimg
+	cava
+	cb3sum
+	cc1541
+	ccache
+	ccls
+	cdrtools
+	cern-phone-app
+	cern-vdt
+	certbot-apache
+	certbot-dns-cloudflare
+	cfssl
+	cgasm
+	cgproxy
+	check-cve-2019-19781
+	check-jsonschema
+	checkmake
+	checkra1n-cli
+	checkra1n-gui
+	checkstyle-bin
+	chipsec-dkms-git
+	chkrootkit
+	chromaprint-fftw
+	chromium
+	chromium-bypass-paywalls-clean
+	circumflex
+	cisco-regex
+	cjdns
+	clamav
+	clamav-unofficial-sigs
+	clang18
+	clang19
+	clap
+	clash-ghc
+	claude-code
+	claude-code-acp
+	claude-code-router
+	claude-desktop-native
+	clazy
+	clblast
+	clcal
+	clcbrowser-git
+	clevis
+	clightd
+	clion-eap-lldb
+	clion-gdb
+	clion-lldb
+	cliphist
+	clojure
+	cloudemoticon-rs
+	cloudflared
+	cloudflare-dynamic-dns
+	cloudflarespeedtest
+	clpeak
+	clspv-git
+	clusterssh
+	clutter-gst
+	clvk-git
+	cmake
+	cmake-extras
+	cmake-language-server
+	cmark-gfm
+	cmctl
+	cmm-svn
+	cni-plugins
+	cocogitto
+	codeberg-cli
+	codebook-lsp
+	codec2
+	codecvisa-bin
+	code-format-bin
+	codelldb
+	codeql
+	collision
+	colord-gtk
+	colord-gtk4
+	colord-sane
+	colorgcc
+	commitlint
+	commitmsgfmt
+	compiler-rt18
+	compiler-rt19
+	composer
+	concrnt-gateway
+	connman
+	consul
+	consul-template
+	container-diff
+	context-modules
+	convmv
+	coolkey
+	cops-mikespub-org
+	copyparty
+	corefreq-dkms
+	corkscrew
+	corrosion
+	cosign
+	cotire
+	cotp-converters
+	cowrie
+	cowsql
+	cpio
+	cppcodec
+	cpupower
+	crack-attack
+	crack-attack-sounds
+	crackpkcs12
+	crawl-data
+	crawl-ncurses
+	crawl-tiles
+	crictl
+	cri-o
+	cryfs
+	cryptodev-linux-dkms
+	cryptol
+	cryptominisat
+	cryptonose
+	cryptsetup-gui
+	cryptsetup-multidisk
+	cryptsetup-vault
+	cs-crypto
+	csfml
+	csharp-ls
+	csound
+	cspell-lsp
+	csrf-brute
+	ctags
+	ctf-ynetd
+	cuda
+	cuda-demux
+	cuda-tools
+	cuishark
+	cups-gssapi
+	curlftpfs
+	curl-impersonate
+	curseforge
+	curtail
+	cutensor
+	cvc4
+	cvechecker
+	cvector
+	cvs
+	cxltx-styles
+	cxxbridge
+	cxxopts
+	cyan
+	cyclops
+	cyme
+	cyrus-sasl-gssapi
+	cython
+	dante
+	dark-reader
+	darkstat
+	davfs2
+	davinconv
+	davix
+	davmail
+	davutils
+	dbeaver
+	dblatex
+	dbmail
+	dbmate
+	dbus-app-launcher
+	dbus-docs
+	dbus-soundrecorder
+	dbus-term-launcher
+	dbxtool
+	dcd
+	dcnnt
+	dconf-editor
+	dctl
+	ddclient
+	debian-archive-keyring
+	debian-keyring
+	debian-ports-archive-keyring
+	decklink
+	decklink-sdk
+	dehydrated
+	dehydrated-cloudflare-hook
+	dehydrated-pdns-hook
+	deltachat-rpc-server
+	delve
+	deno
+	denoiseit-git
+	depthcharge
+	deskflow
+	desktop-notify
+	desktop-privileges
+	desktop-privileges-nogroups
+	desync
+	detox
+	devtools
+	dex
+	dfc
+	dfrs
+	dfu-programmer
+	dfu-util
+	dgen-sdl
+	dhall-lsp-server
+	dhcpcd
+	dhcp-helper
+	dialog
+	diffstat
+	dioxus-cli
+	directx-headers-cmake
+	direnv
+	direnv-backup-git
+	discord_db
+	discord-game-sdk
+	discordo-git
+	discordo-launcher
+	displaycal
+	distcc
+	distrho-ports
+	distrho-ports-lv2
+	dive
+	dkms
+	dleyna
+	dleyna-docs
+	dmenu
+	dms-shell-hyprland
+	dms-shell-niri
+	dmtx-utils
+	dnschanger-desktop
+	dnsdiag
+	dnsdist
+	dnshunter
+	dnsperf
+	dnssec-tools
+	docbook2x
+	docbook5-xml
+	docbook-dsssl
+	docbook-mathml
+	docbook-sgml
+	docbook-sgml31
+	docbook-utils
+	docker-buildx
+	docker-credential-pass
+	docker-credential-secretservice
+	dockerfile-language-server
+	dockerize
+	docker-rootless-extras
+	dockle
+	dokuwiki
+	dolphin
+	dolphin-emu
+	dolt
+	dos2unix
+	dot2tex
+	dot-language-server
+	dotnet-aot-xc
+	dotnet-install
+	dotnet-runtime-7.0
+	dotnet-sdk-7.0
+	dotnet-source-built-artifacts
+	dotnet-source-built-artifacts-6.0
+	dotnet-source-built-artifacts-7.0
+	dotnet-source-built-artifacts-8.0
+	dotnet-targeting-pack-7.0
+	dovecot
+	doxx
+	dpdk
+	dprint
+	dqlite
+	dra
+	drgn
+	drm-info
+	drminfo
+	drm_tool
+	droidcam
+	drone-oss
+	drone-runner-ssh
+	dropbear
+	dropbear-socket
+	drumgizmo-lv2
+	drupal
+	dse
+	d-spy
+	dsq
+	dssi
+	dtk6declarative
+	duckdb
+	dumpling
+	dump-shm
+	dumptorrent
+	dunst
+	duplicity
+	dv-processing
+	dwayland
+	dxvk-mingw
+	easyeffects
+	easyeffects-bundy01-presets
+	easyeffects-digitalone1-presets-git
+	easyeffects-jtrv-presets-git
+	easyeffects-record
+	easyfeh
+	easyjson
+	easyrpg-player
+	ecasound
+	eclint
+	ecryptfs-utils
+	edb-debugger
+	editorconfig-checker
+	editorconfiger
+	edk2-aarch64
+	edk2-arm
+	edk2-ovmf
+	efifs
+	efm-langserver
+	element
+	element-desktop
+	elf2nucleus
+	elf2uf2-rs
+	elixir
+	elixir-ls
+	ember-language-server
+	emby-ffmpeg
+	emmylua-ls-bin
+	enola
+	epic-asset-manager
+	epydoc
+	eq10q
+	erdtree
+	erlang
+	erlang_ls
+	esbonio
+	esbuild
+	eslint
+	eslint_d
+	eslint-language-server
+	etckeeper
+	etc-update
+	eteroj.lv2
+	ettercap
+	evemu
+	evilginx
+	evolution
+	exploitdb
+	extra-cmake-modules
+	f3
+	fabric
+	facetimehd-data
+	facetimehd-dkms
+	facetimehd-firmware
+	fasm
+	fastfetch
+	fasttext
+	fasttext-langid-models
+	fasttuna
+	fatfrog.lv2
+	faust
+	fcitx5
+	fcitx5-anthy
+	fcitx5-gtk
+	fcitx5-qt
+	fcrackzip
+	fdm
+	fdmf
+	fdroidserver
+	feh
+	fehbg-mgr
+	fennel
+	ferium
+	fern-wifi-cracker
+	festival-english
+	festival-us
+	fetch-hosts
+	fetchmail
+	ffmpegthumbnailer
+	ffmpegthumbs
+	ffms2
+	ffnvcodec-headers
+	fftw-openmpi
+	figma-agent-linux
+	figma-linux
+	figma-linux-font-helper
+	filecast
+	fil-plugins
+	fingerprintx
+	fingwit
+	firecracker
+	firecracker-docs
+	firefox
+	firefox-debugadapter
+	firefox-extension-mailvelope
+	firefoxpwa
+	firefox-syncstorage
+	firefox-user-autoconfig
+	firmware-manager
+	fish
+	fish-autopair
+	fish-bash2env
+	fisher
+	fish-fisher_path-git
+	fish-fzf
+	fish-lsp
+	fishui
+	flare-game
+	flashmq
+	flawz
+	fluxcomp
+	fmtools
+	fnlfmt
+	folder-color-switcher
+	fomp.lv2
+	fontobene-qt5
+	fontobene-qt-qt6
+	fontpreview_sixel
+	foomatic-db-engine
+	foot
+	foot-terminfo
+	fop
+	foremost
+	fortitude-bin
+	fortls
+	fprintd
+	fractal
+	freealut
+	freecell-solver
+	freehdl
+	freeradius
+	freerdp2
+	freerdp-sdl3
+	frog-protocols
+	fscrypt
+	fsverity-utils
+	fulcio
+	furmark
+	fuse2fs
+	fuseiso
+	fuse-overlayfs
+	futuresql
+	fuzzel
+	fuzzel-pass
+	fuzzy
+	fwupd
+	fwupd-docs
+	fwupd-efi
+	fwupd-openrc
+	fxload
+	fzf
+	fzf-extras
+	fzffm
+	fzf-kill
+	fzfmenu
+	fzf-vjour-git
+	galera
+	gallia
+	gambas3-gb-db2-form
+	gambas3-gb-db2-postgresql
+	gambas3-gb-db2-sqlite3
+	gambas3-gb-db-form
+	gambas3-gb-db-postgresql
+	gambas3-gb-db-sqlite3
+	gambas3-gb-dbus
+	gambas3-gb-gtk3-opengl
+	gambas3-gb-mime
+	gambas3-gb-openal
+	gambas3-gb-opengl-glsl
+	gambas3-gb-openssl
+	gambas3-gb-qt5-opengl
+	gambas3-gb-v4l
+	game-devices-udev
+	gamehub
+	gamemode
+	gamescope
+	gameshell
+	gaphor
+	gap-packages
+	garage
+	garcon
+	gasket-dkms-git
+	gcc14
+	gcc14-fortran
+	gcc14-libs
+	gcc-m2
+	gcc-objc
+	gcovr
+	gdgbatterysaver
+	gdk-pixbuf2-docs
+	gdm
+	gdrcopy
+	gef
+	gegl
+	gemini-cli
+	gensio
+	getnf
+	getssl
+	ghidra
+	ghostty
+	ghostty-shell-integration
+	ghostty-terminfo
+	giblib
+	gif2png
+	gifify
+	gifsicle
+	gifski
+	ginkgo-hpc-cuda
+	ginko-git
+	git
+	git-bug
+	git-credential-azure
+	git-credential-github
+	git-credential-gopass
+	git-credential-keepassxc
+	git-credential-msal
+	git-credential-oauth
+	git-credential-pass
+	git-crypt
+	git-delta
+	gitea
+	gitfetch
+	git-grab
+	githttptossh
+	github-actions-bin
+	github-cli
+	gitlab
+	gitlab-ci-local
+	gitlab-ci-ls
+	gitlab-container-registry
+	gitlab-exporter
+	gitlab-runner
+	gitlab-shell
+	gitleaks
+	git-mr
+	gitoxide
+	git-publish
+	git-remote-gcrypt
+	git-revise
+	gitrob
+	git-secrets
+	gitsign
+	git-smash
+	gitswitcher
+	gitsync
+	gitversion
+	gkrellm-bluez
+	gkrellm-git
+	glab
+	glad
+	glade
+	gleam
+	glide
+	glmark2
+	globalprotect-openconnect
+	gmime3
+	gmni
+	gmsl
+	gnome-firmware
+	gnome-mime-data
+	gnupg-pkcs11-scd
+	gnustep-make
+	go2rtc
+	go-checksum
+	gocr
+	godash
+	goenv
+	goffice
+	gofumpt
+	gogs
+	goimapnotify
+	golangci-lint
+	gom
+	gom-docs
+	google-chrome-canary
+	gopass
+	gopass-fuse
+	gopass-hibp
+	gopass-jsonapi
+	gopass-summon-provider
+	gopls
+	goplus
+	gortr
+	gosop
+	go-tools
+	gparted
+	gpd-pocket-4-pipewire
+	gpgkeymgr
+	gpgsync
+	gprename
+	gpscorrelate
+	gptfdisk
+	gpu-trace
+	gpu-viewer
+	gradle-src
+	granite
+	graphicsmagick
+	graphql-cli
+	graphql-client-cli
+	graphql-lsp
+	graphqurl
+	grayjay
+	graylog
+	grim
+	grobi
+	gron
+	groovy
+	grub-netboot-archlinux
+	gscal
+	gsettings-qt5
+	gsettings-qt6
+	gssproxy
+	gst-devtools
+	gstpeaq
+	gst-plugin-aws
+	gst-plugin-cdg
+	gst-plugin-claxon
+	gst-plugin-dav1d
+	gst-plugin-elevenlabs
+	gst-plugin-fallbackswitch
+	gst-plugin-ffv1
+	gst-plugin-fmp4
+	gst-plugin-gif
+	gst-plugin-gopbuffer
+	gst-plugin-gtk4
+	gst-plugin-hlsmultivariantsink
+	gst-plugin-hsv
+	gst-plugin-json
+	gst-plugin-lewton
+	gst-plugin-libcamera
+	gst-plugin-livesync
+	gst-plugin-mp4
+	gst-plugin-mpegtslive
+	gst-plugin-msdk
+	gst-plugin-onnx
+	gst-plugin-opencv
+	gst-plugin-originalbuffer
+	gst-plugin-pipewire
+	gst-plugin-qml6
+	gst-plugin-qmlgl
+	gst-plugin-qsv
+	gst-plugin-quinn
+	gst-plugin-raptorq
+	gst-plugin-reqwest
+	gst-plugin-rsaudiofx
+	gst-plugin-rsclosedcaption
+	gst-plugin-rsfile
+	gst-plugin-rsflv
+	gst-plugin-rsinter
+	gst-plugin-rsonvif
+	gst-plugin-rspng
+	gst-plugin-rsrtsp
+	gst-plugin-rstracers
+	gst-plugin-rsvideofx
+	gst-plugin-rswebp
+	gst-plugin-rswebrtc
+	gst-plugins-espeak
+	gst-plugins-intel-msdk-git
+	gst-plugin-skia
+	gst-plugin-sodium
+	gst-plugin-speechmatics
+	gst-plugin-spotify
+	gst-plugin-streamgrouper
+	gst-plugins-ugly
+	gst-plugin-textahead
+	gst-plugin-textwrap
+	gst-plugin-threadshare
+	gst-plugin-togglerecord
+	gst-plugin-uriplaylistbin
+	gst-plugin-webrtchttp
+	gst-plugin-wpe
+	gstreamer0.10-bad
+	gstreamer0.10-base-plugins
+	gstreamer-docs
+	gstreamer-vaapi
+	gst-rtsp-server
+	gtk3-demos
+	gtk4-demos
+	gtkhash
+	gtkmm3
+	gucharmap
+	guichan
+	guile-git-lib
+	guile-semver
+	guitarix
+	gulkan
+	gummi
+	guvcview
+	guvcview-qt
+	gvfs-dnssd
+	gvfs-gphoto2
+	gvfs-mtp
+	gvfs-smb
+	hackrf
+	hagrid-git
+	half
+	haruna
+	hashcat
+	hashcat-utils
+	haskell-alsa-core
+	haskell-alsa-mixer
+	haskell-cabal-doctest
+	haskell-cmark-gfm
+	haskell-cracknum
+	haskell-dav
+	haskell-direct-sqlite
+	haskell-doctest
+	haskell-doctest-discover
+	haskell-doctest-driver-gen
+	haskell-doctest-exitcode-stdio
+	haskell-doctest-lib
+	haskell-doctest-parallel
+	haskell-double-conversion
+	haskell-ed25519
+	haskell-email-validate
+	haskell-encoding
+	haskell-floatinghex
+	haskell-genvalidity
+	haskell-genvalidity-hspec
+	haskell-genvalidity-property
+	haskell-gi-dbusmenu
+	haskell-gi-dbusmenugtk3
+	haskell-gi-gdk
+	haskell-gi-gdk3
+	haskell-gi-gdk3x11
+	haskell-gi-gdkpixbuf
+	haskell-gi-gdkx11
+	haskell-hasql
+	haskell-hls-test-utils
+	haskell-hopenpgp
+	haskell-hspec-contrib
+	haskell-html-conduit
+	haskell-iwlib
+	haskell-language-glsl
+	haskell-language-server
+	haskell-lrucache
+	haskell-openssl-streams
+	haskell-persistent-sqlite
+	haskell-pgp-wordlist
+	haskell-pid1
+	haskell-pipes
+	haskell-pipes-http
+	haskell-pipes-safe
+	haskell-ral
+	haskell-rerebase
+	haskell-rvar
+	haskell-skylighting-format-latex
+	haskell-sqlite-simple
+	haskell-svg-builder
+	haskell-tasty-ant-xml
+	haskell-validity
+	haskell-xss-sanitize
+	hath-rust
+	hauk-server
+	haxm-dkms-git
+	hcxdumptool
+	hcxkeys
+	hcxtools
+	hddtemp
+	hdf5-openmpi
+	hdisplays
+	hdparm
+	hdrmerge
+	hdx-realtime-media-engine
+	headscale
+	heimdal
+	heimdall
+	helm-ls
+	helvum
+	heroic-gogdl
+	hhd-user
+	hieroglyphic
+	himalaya
+	homebank
+	hopenpgp-tools
+	hostapd-wpe
+	hostsblock
+	hostsctl
+	hotp-totp-php
+	htmlcxx
+	htmlq
+	html-xml-utils
+	htop
+	hub
+	huntarr
+	hunter
+	hwdetect
+	hwinfo
+	hw-probe
+	hydock
+	hydra
+	hyprcap
+	hyprcursor
+	hypr-dock
+	hypremoji
+	hyprfindr
+	hyprgraphics
+	hyprhide
+	hypridle
+	hyprkeys
+	hyprland
+	hyprland-protocols
+	hyprland-workspaces
+	hyprlang
+	hyprlauncher
+	hyprlax
+	hyprlock
+	hyprlux
+	hyprmixer
+	hyprpanel
+	hyprpaper
+	hyprpicker
+	hyprpolkitagent
+	hyprproxlock
+	hyprpwcenter
+	hyprqt6engine
+	hyprscratch
+	hyprsession
+	hyprshade
+	hyprshell
+	hyprshot
+	hyprsunset
+	hyprswitch
+	hyprviz
+	hyprvoice-bin
+	hyprwayland-scanner
+	hyprwhspr
+	hyprwindow
+	iaito
+	ibm-sw-tpm2
+	ical
+	ice9-bluetooth-sniffer
+	icecream
+	icecream-sundae
+	icedtea-web
+	icemon
+	icmake
+	icon-library
+	icon-naming-utils
+	icoutils
+	id3lib
+	iddawc
+	idesk
+	ifdtool
+	ifuse
+	igsc
+	iio-niri
+	iioutils
+	ijq
+	imaginary
+	imapfilter
+	imapgoose
+	img2pdf
+	imv
+	imvirt
+	inferno-aoip
+	influxdb
+	infnoise
+	infnoise-tools
+	informant
+	innernet
+	inotify-info
+	inspircd
+	instaloader
+	instamancer
+	intel-gpu-tools
+	intel-lms
+	intel-media-driver
+	intel-media-sdk
+	intel-oneapi-basekit
+	intel-opencl
+	intel-opencl-sdk
+	intelpwm
+	intel-speed-select
+	inteltool
+	intel-ucode
+	intel-undervolt
+	intel-xed
+	interception-tools
+	interceptty
+	intiface-central
+	invoice
+	invoiceninja
+	invoiceplane
+	inxi
+	ipmitool
+	ipp-usb
+	ipv6calc
+	ir.lv2
+	isa-l
+	isoimagewriter
+	isomd5sum
+	ispell
+	iucode-tool
+	ivre
+	iwd
+	jaaa
+	jacktrip
+	jad
+	jadx
+	jailbox-git
+	jake
+	janus-gateway
+	jaq
+	java-batik
+	java-commons-daemon
+	java-hamcrest
+	java-rhino
+	java-service-wrapper
+	java-simpleitk
+	jc
+	jc303-lv2
+	jcli
+	jddbusdebugger
+	jdtls
+	jedi-language-server
+	jellyfin-ffmpeg
+	jenkins
+	jenq
+	jenv
+	jetring
+	jfsutils
+	jhentai-bin
+	jitsi-meet
+	jlatexmath
+	jnoisemeter
+	jnv
+	jo
+	jobqueue
+	john
+	jomon
+	journal-gateway-gelf
+	jp2-pixbuf-loader
+	jq-lsp
+	jshon
+	jsonc
+	jsoncons
+	jsoncpp-cmake
+	jsonnet-language-server
+	jsonrpc-glib
+	jsonrpc-glib-docs
+	jujutsu
+	jupyterlab-lsp
+	jupyter-lsp
+	jupyter-metakernel
+	just-lsp
+	jwt-ui
+	jython
+	k9s
+	kakoune-lsp
+	kamailio
+	katex
+	kbfs
+	kbuilder
+	kcaldav
+	kcpuid
+	kcrap
+	kcron
+	kdav
+	kdeconnect
+	kdump
+	keepass-plugin-favicon
+	keepass-plugin-keeagent
+	keepassxc
+	keeper-secrets-manager-core
+	kernel-builder
+	kernel-modules-hook
+	kernelpatch
+	keybase
+	keychain
+	keycloak
+	keycloak-metrics-spi
+	keystone
+	khal
+	khip
+	kill-net
+	kismet
+	kismet-plugin-ubertooth
+	kismon
+	kitty
+	kmodcache
+	kmon
+	kmscon
+	kmsvnc
+	knc
+	knot-resolver
+	kodi-addon-visualization-shadertoy
+	kompose
+	kotlin
+	kotlin-debug-adapter-bin
+	kotlin-language-server
+	kpatch
+	kraft
+	krb5-auth-dialog
+	krita
+	krita-plugin-gmic
+	krita-plugin-pythonplugindevelopertools-git
+	ksanecore
+	kscript
+	kseexpr
+	ksops-bin
+	kstart
+	ksvg
+	ktfmt
+	ktlint
+	ktlint-compose-rules
+	ktoblzcheck
+	ktrip
+	kube-linter
+	kubeseal
+	kubetui
+	kvantum
+	kvantum-qt5
+	kwayland
+	kwayland5
+	ladder
+	laravel-kit
+	laravel-ls-git
+	lasem-docs
+	laszip
+	laszip2
+	latex2html
+	lazycc
+	lazygit
+	lazyjj
+	lazyssh
+	lbb
+	lcov
+	ldc
+	ldns
+	ledger-udev
+	lefthook
+	legba
+	lei
+	leiningen
+	lemminx
+	lemmy
+	lemon
+	lemonade-server
+	lemurs
+	lenspect
+	lftp
+	lib32-alsa-oss
+	lib32-bluez-libs
+	lib32-bluez-plugins
+	lib32-egl-wayland
+	lib32-fluidsynth
+	lib32-gamemode
+	lib32-glm
+	lib32-gst-plugins-base
+	lib32-gst-plugins-base-libs
+	lib32-gst-plugins-good
+	lib32-gstreamer
+	lib32-libappindicator
+	lib32-libavtp
+	lib32-libb2
+	lib32-libdv
+	lib32-libdxvk
+	lib32-libevdev
+	lib32-libevent
+	lib32-libindicator
+	lib32-libnewt
+	lib32-libsodium
+	lib32-libsrtp
+	lib32-libva-intel-driver
+	lib32-libvpx
+	lib32-mesa-demos
+	lib32-mesa-git
+	lib32-mesa-utils
+	lib32-neon
+	lib32-obs-vkcapture
+	lib32-ocl-icd
+	lib32-opencl-nvidia
+	lib32-pipewire-jack
+	lib32-pipewire-v4l2
+	lib32-renderdoc
+	lib32-sbc
+	lib32-shaderc
+	lib32-slang
+	lib32-smpeg
+	lib32-speex
+	lib32-spirv-llvm-translator
+	lib32-spirv-tools
+	lib32-vkbasalt
+	lib32-vkd3d
+	lib32-vulkan-gfxstream
+	lib32-vulkan-nouveau
+	lib32-vulkan-utility-libraries
+	lib32-vulkan-validation-layers
+	libartnet
+	libastal-bluetooth-git
+	libcamera-tools
+	libcgroup
+	libchardet
+	libcmrt
+	libcomps
+	libcss
+	libcups-gssapi
+	libcvec
+	libdbi
+	libdbi-drivers
+	libdwarf
+	libdxvk
+	libepc
+	libesmtp
+	libetpan
+	libfilteraudio
+	libfprint
+	libg15
+	libgdm
+	libgepub
+	libgfshare
+	libgit2-glib
+	libgit2-glib-docs
+	libglademm
+	libgmpris
+	libgpiod
+	libgringotts
+	libgssglue
+	libilbc
+	libindicator
+	libindi-celestronaux
+	libinfnoise
+	libinsane
+	libkcapi
+	libkeybinder3
+	libkrun
+	libkrunfw
+	libksane
+	liblastfm-qt5
+	liblcf
+	libldm
+	libmediaart
+	libmesode
+	libmesode-doc
+	libmodbus
+	libnma
+	libnma-common
+	libnma-gtk4
+	libnoise
+	libnvidia-container
+	libopencm3
+	libopensmtpd
+	liboqs
+	libp11
+	libpam-google-authenticator
+	libpam_pwdfile
+	libpg_query
+	libpkcs11-dnie
+	libqaccessibilityclient-qt5
+	libqatemcontrol-git
+	libqt5xdg
+	libquvi
+	libratbag
+	libraw
+	librdkafka
+	libreoffice-extension-texmaths
+	libreoffice-extension-writer2latex
+	libresprite
+	librsvg-docs
+	librustls
+	libscanmem
+	libsecret-docs
+	libsfdo
+	libsieve
+	libsmbios
+	libspecbleach
+	libstrophe
+	libstrophe-doc
+	libsvgtiny
+	libtiger
+	libtraceevent
+	libuecc
+	libuhd
+	libuhd-utils
+	libultrahdr
+	libusbgx
+	libuvc-git
+	libva1-compat
+	libva-intel-driver
+	libvarlink
+	libva-utils
+	libva-vdpau-driver
+	libvdpau-va-gl
+	libvirt-dbus
+	libvolk
+	libvpl-tools
+	libvpx1.10
+	libwebp-utils
+	libwireplumber-4.0-compat
+	libwmf
+	libxdg-basedir
+	libxml2-docs
+	libxmlrpc
+	libxnvctrl
+	libxpid
+	libxsd
+	lightdm-webkit-theme-sequoia-git
+	lighthouse
+	lightning-terminal
+	limine
+	limine-entry-tool
+	limine-snapper-sync
+	linenoise-ng
+	links
+	linkwarden
+	linset
+	linuxconsole
+	linux-firmware
+	linux-firmware-hauppauge
+	linux-firmware-marvell
+	linux-firmware-qcom
+	linux-firmware-valve
+	linux-gpib-dkms
+	linux-mdss-dsi-panel-driver-generator
+	linux-smart-enumeration-git
+	linux-tools-meta
+	linux-zen
+	linux-zen-headers
+	liquidsfz-lv2
+	litemanager
+	livekit-ingress
+	live-media
+	lkrg-dkms
+	lldb
+	lldb-mi
+	lmms
+	log4j-detector
+	logpresso-log4j-scan
+	lokalize
+	loki-canary
+	looking-glass-module-dkms
+	loop-aes-dkms
+	love
+	lrs
+	lsix
+	lsof
+	lsp-ai
+	lsp-plugins
+	lsp-plugins-clap
+	lsp-plugins-gst
+	lsp-plugins-ladspa
+	lsp-plugins-standalone
+	lsp-plugins-vst
+	lsp-plugins-vst3
+	lua51
+	lua51-cqueues
+	lua51-expat
+	lua51-linenoise
+	lua51-lpeglabel
+	lua51-luacheck
+	lua51-luaossl
+	lua51-luarocks-build-rust-mlua
+	lua51-luv
+	lua51-semver
+	lua51-tl
+	lua52-luarocks-build-rust-mlua
+	lua53-luarocks-build-rust-mlua
+	lua53-sdl2
+	lua-dkjson
+	lua-expat
+	luajit-sdl3-git
+	luakit
+	lua-language-server
+	lua-linenoise
+	lua-lpeglabel
+	lua-luarocks-build-rust-mlua
+	lua-lub
+	lua-lut
+	lua-luv
+	luametatex
+	luaoptions-git
+	luarocks
+	luau
+	lucene++
+	luky-borg-backup
+	lvm2
+	lxqt-build-tools-qt5
+	lynis
+	lynx
+	lzop
+	m4acut
+	macchanger
+	mado
+	maelstrom-worker
+	mage
+	magiskboot-bin
+	mail4one
+	mailcommon
+	mailimporter
+	mailman3-hyperkitty
+	mailman3-public-inbox
+	mailman-web
+	mailnag
+	mailnag-goa-plugin
+	mailspring
+	mailutils
+	mairix
+	makedumpfile
+	makepkg-optimize-mold
+	mako
+	maldet
+	malt
+	mame
+	mame-tools
+	man2html
+	man-db
+	mangareader
+	man-pages
+	mariadb-jdbc
+	markdownlint
+	markdownlint-cli
+	markdownlint-cli2
+	markdown-oxide
+	marksman
+	masscanned-git
+	mathjax
+	matrirc
+	matrix-appservice-irc
+	matrix-authentication-service
+	matrix_cpp
+	matrix-sliding-sync
+	matrix-synapse
+	matterbridge
+	mattermost
+	mattermost-plugin-boards
+	mattermost-plugin-calls
+	mattermost-plugin-collabora
+	mattermost-plugin-gitlab
+	mattermost-plugin-jitsi
+	mattermost-plugin-matterpoll
+	mattermost-plugin-playbooks
+	mattersend
+	matui
+	maubot
+	mautrix-meta
+	mbake
+	mbelib
+	mbrola
+	mcabber
+	mcp-gearbox-git
+	mcphost
+	mcpp
+	mcproxy
+	mcptools
+	mdbook-katex
+	mdevd
+	mdformat
+	mdformat-tables
+	mdpls-git
+	mdserve
+	meanalyzer
+	me_cleaner
+	mediaexpress
+	mediamtx
+	med-openmpi
+	medusa
+	megasync
+	mek-security
+	meld
+	mellite
+	memcached
+	memtest_vulkan
+	menu-cache
+	menuconfig-git
+	menumaker
+	menu-qalc-wayland-git
+	mercurial
+	mergiraf
+	mermaid-cli
+	mesa-demos
+	mesa-docs
+	mesaflash
+	mesa-git
+	mesarun
+	mesa-utils
+	meson
+	mesonlsp
+	meson-python
+	metals
+	metis
+	mic-indicator
+	mic-mute-led-reverse
+	midi_matrix.lv2
+	mighttpd2
+	mill
+	mimemagic
+	mimetreeparser
+	mimic-bpf-dkms
+	mimir
+	mingw-w64-doctest
+	mingw-w64-vulkan-headers
+	miniflux
+	ministore
+	minq-nhentai-git
+	mip.rs
+	mise
+	mitmproxy
+	mitmproxy2swagger
+	mkcert
+	mkinitcpio-archiso
+	mkinitcpio-bluetooth
+	mkinitcpio-btrfs
+	mkinitcpio-encrypt-detached-header
+	mkinitcpio-firmware
+	mkinitcpio-mlx4
+	mkinitcpio-mlx5
+	mkinitcpio-overlayfs
+	mkinitcpio-tinyssh
+	mkinitcpio-utils
+	mkvtoolnix-cli
+	mlir
+	mmc-utils
+	mmm
+	mobydroid
+	mod_authnz_external
+	modclean
+	mod_dnssd
+	modemmanager
+	moderntimeline
+	mod_fcgid
+	mod_itk
+	mod-lv2-extensions
+	modo
+	mod_passenger
+	mod_perl
+	mod_rpaf
+	mokutil
+	mold
+	monero
+	monero-api-cli
+	moneydance
+	moneymanagerex
+	monit
+	mono-msbuild
+	mono-msbuild-sdkresolver
+	moony.lv2
+	moreutils
+	mosh-agent
+	mosh-scheme
+	motion
+	movit
+	mox
+	mozplugger
+	mp3gain
+	mp3unicode
+	mplayer
+	mpls-git
+	mpop
+	mpv-mpris
+	mpv-shim-default-shaders
+	mqtt-cpp
+	mqttui
+	mr.duppl
+	mricrogl
+	mscp
+	msedit
+	msi-psu-dkms
+	msktutil
+	msl
+	msr-tools
+	mstflint
+	mtd-utils
+	mtp
+	mtpaint
+	mtpfs
+	mtxclient
+	mu
+	muchsync
+	mulle-semver
+	multibg-wayland
+	multilib-devel
+	munge
+	mupdf-gl
+	mupdf-tools
+	muse
+	mutt
+	mutt-ics
+	mutt-wizard
+	mvnd
+	mvnsh
+	mvnvm
+	mxml
+	mxml-docs
+	mytop
+	nafe
+	nano
+	nanosvg
+	ncdu
+	ncrack
+	ndiff
+	ndisc6
+	neard
+	nebula
+	nekoget
+	nemo-python
+	nemo-seahorse
+	neocmakelsp
+	neomutt
+	neovim
+	neovim-decasify
+	nerdctl
+	nerd-dictation-git
+	netatop-dkms
+	netboot
+	netcdf-fortran-openmpi
+	netexec
+	netfilter-fullconenat-dkms-git
+	nethsm-pkcs11
+	netscout-git
+	netsniff-ng
+	netsurf
+	networkmanager
+	network-manager-applet
+	networkmanager-dispatcher-chrony
+	networkmanager-dmenu
+	networkmanager-fortisslvpn
+	networkmanager-l2tp
+	networkmanager-openconnect
+	networkmanager-pptp
+	networkmanager-ssh
+	network-manager-sstp
+	networkmanager-strongswan
+	networkmanager-vpnc
+	networkmanager-vpn-plugin-l2tp
+	networkmanager-vpn-plugin-openconnect
+	networkmanager-vpn-plugin-pptp
+	networkmanager-vpn-plugin-sstp
+	networkmanager-vpn-plugin-vpnc
+	newaita-icons-git
+	new-session-manager
+	nextcloud-app-calendar
+	nextcloud-app-contacts
+	nextcloud-app-mail
+	nextcloud-app-spreed
+	nextcloud-client
+	nfs-utils-rdma-server
+	nginx-mod-auth-pam
+	nginx-mod-dav-ext
+	nginx-mod-echo
+	nginx-mod-geoip
+	nginx-mod-geoip2
+	nginx-mod-mail
+	nginx-mod-memc
+	nginx-mod-naxsi
+	nginx-mod-ndk
+	nginx-mod-njs
+	nginx-mod-perl
+	nginx-mod-redis
+	nginx-mod-redis2
+	nginx-mod-set-misc
+	nginx-mod-srcache
+	nginx-mod-vts
+	nginx-mod-xslt
+	nginx-src
+	ngrok
+	nhentai-git
+	nickel-language-server
+	nilfs-utils
+	nil-git
+	ninja-kitware
+	ninjam-client
+	ninjam-server
+	niri
+	niri-float-sticky
+	niri-switch
+	niriswitcher
+	nirius
+	nitrokey-udev-rules
+	nitroshare
+	nix
+	nix-busybox
+	nixfmt
+	nix-melt
+	nixpacks
+	nixpkgs-fmt-git
+	nix-search-cli
+	nmail
+	nmap
+	nmap-parse-output
+	nm-connection-editor
+	noctalia
+	noctalia-shell
+	nodejs-emmet-ls
+	nodejs-intelephense
+	nodejs-maildev
+	noise-repellent
+	noise-suppression-for-voice
+	noisetorch-bin
+	nomachine
+	nomad-driver-containerd
+	nomad-driver-lxc
+	nomad-driver-nspawn
+	nomad-driver-podman
+	nordzy-hyprcursors
+	notcurses
+	notification-daemon
+	notmuch-mutt
+	notmuch-tools-git
+	npapi-vlc
+	nq
+	nrf5-sdk
+	nrf5x-command-line-tools
+	nrf5x-sniffer
+	nrf-sniffer-ble
+	nrftool
+	nrf-udev
+	nrfutil
+	ntfs-3g
+	nuget
+	nullfsvfs-dkms
+	nvc
+	nvcards
+	nvchecker
+	nvhpc
+	nvhpc-comm-libs
+	nvhpc-compilers
+	nvidia-cg-toolkit
+	nvidia-container-toolkit
+	nvidia-docker-compose
+	nvidia-fs-dkms
+	nvidia-mft
+	nvidia-open-dkms
+	nvidia-prime
+	nvm
+	nvme-cli
+	nvmetcli
+	nvshmem
+	nvtop
+	nwg-displays
+	nwg-dock-hyprland
+	nwg-panel
+	nwg-readme-browser
+	nxproxy
+	nyarchassistant-git
+	nyx
+	nyxt
+	nzsl-git
+	obfs4proxy
+	obs-backgroundremoval
+	obs-gstreamer
+	obs-infowriter
+	obs-noise
+	obs-pipewire-audio-capture
+	obs-retro-effects
+	obs-vaapi
+	obs-vban
+	obs-vkcapture
+	ob-xd-lv2
+	ocamlbuild
+	ocaml-pp
+	ocaml-sqlite3
+	ocrad
+	ocrfeeder
+	octave-doctest
+	odin2-synthesizer
+	odin2-synthesizer-clap
+	odin2-synthesizer-lv2
+	odin2-synthesizer-standalone
+	odin2-synthesizer-vst3
+	odinfmt
+	offlineimap
+	ofxstatement-paypal
+	oidc-agent
+	oidcwarden
+	oidcwarden-web
+	oinkmaster
+	ojs
+	ollama-cuda
+	ollama-vulkan
+	onefetch
+	onionbalance
+	onioncat
+	onioncircuits
+	oniongen-rs
+	onionshare
+	opam
+	openai-codex
+	openal-examples
+	openblas64
+	openboardview
+	opencascade
+	opencl-caps-viewer-wayland
+	opencl-clhpp
+	openclipart-svg
+	opencomic
+	openconnect-sso
+	opencryptoki
+	opencsg
+	openfire
+	opengl-man-pages
+	opengv
+	openimagedebugger
+	openimagedenoise
+	openipmi
+	openldap
+	openmp
+	openmpi
+	openmpi-docs
+	openmpt
+	openocd
+	openpgl
+	openpgp-ca
+	openpgp-card-ssh-agent
+	openpgp-card-tool-git
+	openpgp-card-tools
+	openpgp-ca-restd
+	open-plc-utils
+	open-policy-agent
+	openra
+	openrct2
+	opensc
+	openscad
+	openscad-lsp
+	openscenegraph
+	opensearch-alerting-plugin
+	opensearch-analysis-icu-plugin
+	opensearch-analysis-kuromoji-plugin
+	opensearch-analysis-nori-plugin
+	opensearch-analysis-phonetic-plugin
+	opensearch-analysis-smartcn-plugin
+	opensearch-analysis-stempel-plugin
+	opensearch-analysis-ukrainian-plugin
+	opensearch-anomaly-detection-plugin
+	opensearch-asynchronous-search-plugin
+	opensearch-cli
+	opensearch-cross-cluster-replication-plugin
+	opensearch-dashboards-alerting-plugin
+	opensearch-dashboards-anomaly-detection-plugin
+	opensearch-dashboards-index-management-plugin
+	opensearch-dashboards-maps-plugin
+	opensearch-dashboards-notifications-plugin
+	opensearch-dashboards-observability-plugin
+	opensearch-dashboards-query-workbench-plugin
+	opensearch-dashboards-reports-plugin
+	opensearch-dashboards-security-plugin
+	opensearch-discovery-azure-classic-plugin
+	opensearch-discovery-ec2-plugin
+	opensearch-discovery-gce-plugin
+	opensearch-geospatial-plugin
+	opensearch-index-management-plugin
+	opensearch-ingest-attachment-plugin
+	opensearch-job-scheduler-plugin
+	opensearch-knn-plugin
+	opensearch-mapper-annotated-text-plugin
+	opensearch-mapper-murmur3-plugin
+	opensearch-mapper-size-plugin
+	opensearch-ml-commons-plugin
+	opensearch-neural-search-plugin
+	opensearch-notifications-plugin
+	opensearch-observability-plugin
+	opensearch-performance-analyzer-plugin
+	opensearch-reports-scheduler-plugin
+	opensearch-repository-azure-plugin
+	opensearch-repository-gcs-plugin
+	opensearch-repository-hdfs-plugin
+	opensearch-repository-s3-plugin
+	opensearch-security-plugin
+	opensearchserver
+	opensearch-sql-plugin
+	opensearch-store-smb-plugin
+	opensmtpd-filter-rspamd
+	opensmtpd-table-postgres
+	openssh
+	opentracker
+	open-unmix-umxhq-weights
+	openvdb
+	openvino-intel-gpu-plugin
+	openvino-models
+	openvkl
+	openvpn-mbedtls
+	openvr
+	operator-sdk
+	optiimage
+	opus-tools
+	oqsprovider
+	orca
+	ory-hydra
+	oryx
+	osinfo-db-tools
+	osl
+	osslsigncode
+	oss-nonfree
+	otf-font-awesome
+	otf-ipamjfont
+	otf-latin-modern
+	otf-latinmodern-math
+	otf-league-mono
+	otf-material-icons
+	otf-monaspace
+	otf-monaspace-nerdfonts
+	ovenmediaengine
+	ovpn-dco-dkms
+	oxc-language-server
+	oxipng
+	oxygen-icons-svg
+	p0f
+	p2pool
+	p4
+	p4d
+	pacguard
+	packagekit
+	packer
+	pacleaner
+	pacman-fix-permissions
+	pacman-offline
+	pacman-venv
+	pacquery
+	padthv1-lv2
+	pairing_tool
+	palletizer
+	pam-fprint-grosshack-unlimited-timeout
+	pam-gnupg
+	pam-ihosts
+	pamixer
+	pam-krb5
+	pam_mount
+	pam_p11
+	pam_pkcs11
+	pam_rundir
+	pam_ssh
+	pam-ssh-agent
+	pamtester
+	pam-u2f
+	pam_wrapper
+	pam_wrapper-docs
+	pa-notify
+	paperkey
+	papirus-icon-theme
+	paros
+	parsehub
+	partclone
+	partimage
+	partitionmanager
+	paru
+	paruz
+	pass-attr
+	pass-clip
+	passdmenu
+	pass-file
+	pass-git-helper
+	passh
+	passim
+	pass-import
+	pass-ln
+	passly
+	pass-notify-git
+	pass-otp
+	pass-secret-service
+	pass-ssh
+	pass-tomb
+	passtools
+	pass-update
+	passwordfile
+	passwordmanager
+	patatt
+	patchmatrix
+	patchup
+	pavucontrol
+	pc-nrfconnect-programmer
+	pcp-pmda-mysql
+	pcp-pmda-nutcracker
+	pdav
+	pdf2svg
+	pdfcrack
+	pdfgrep_sixel
+	pdfjs
+	pdfslicer
+	pd-sfizz
+	peda
+	peergos
+	pentmenu
+	perf
+	perl-alien-cmake3
+	perl-anyevent-xmpp
+	perl-apache2-soap
+	perl-cache-memcached
+	perl-canary-stability
+	perl-common-sense
+	perl-config-autoconf
+	perl-config-onion
+	perl-convert-uulib
+	perl-crypt-openssl-bignum
+	perl-crypt-smbhash
+	perl-crypt-ssleay
+	perl-data-password
+	perl-dbd-odbc
+	perl-dbd-pg
+	perl-dbd-sqlite
+	perl-dbd-sqlite2
+	perl-debug-adapter
+	perl-device-gsm
+	perl-device-modem
+	perl-device-serialport
+	perl-digest-bubblebabble
+	perl-djabberd-rosterstorage-sqlite
+	perl-email-address
+	perl-email-address-xs
+	perl-email-mime
+	perl-email-mime-attachment-stripper
+	perl-email-mime-contenttype
+	perl-email-mime-encodings
+	perl-email-send
+	perl-email-sender
+	perl-email-simple
+	perl-email-valid
+	perl-fcgi-client
+	perl-file-basedir
+	perl-file-libmagic
+	perl-file-rsyncp
+	perl-file-slurper
+	perl-file-slurp-tiny
+	perl-gnupg-interface
+	perl-gravatar-url
+	perl-gssapi
+	perl-html-formatter
+	perl-html-tree
+	perl-http-multipartparser
+	perl-image-sane
+	perl-lingua-ru-number
+	perl-locale-po
+	perl-mail-imapclient
+	perl-mail-sendmail
+	perl-mime-base32
+	perl-mp4-info
+	perlnavigator
+	perl-net-caldavtalk
+	perl-net-ipv6addr
+	perl-net-openssh
+	perl-nix
+	perl-regexp-ipv6
+	perl-template-provider-encoding
+	perl-test-manifest
+	perl-test-mockmodule
+	perl-text-iconv
+	perl-text-patch
+	perl-unicode-string
+	perl-unix-syslog
+	perl-xml-parser-lite
+	perl-xml-rpc
+	perl-xml-rss
+	perl-xml-stream
+	pesign
+	pflogsumm
+	pg_auto_failover
+	pgbackrest
+	pgbouncer
+	pgcli
+	pgformatter
+	pgindent
+	pgloader
+	pgmodeler
+	pgpdump
+	pg-safeupdate
+	pgxnclient
+	phoc
+	phonegap
+	php81-pecl
+	phpactor
+	php-apache
+	php-codesniffer
+	php-codesniffer-drupal
+	php-dblib
+	phpdox
+	php-enchant
+	php-fpm
+	php-geoip
+	php-grpc
+	php-imagick
+	php-kadm5
+	php-language-server-git
+	phpldapadmin
+	php-legacy-apache
+	php-legacy-apcu
+	php-legacy-cgi
+	php-legacy-dblib
+	php-legacy-enchant
+	php-legacy-fpm
+	php-legacy-gd
+	php-legacy-geoip
+	php-legacy-grpc
+	php-legacy-igbinary
+	php-legacy-imagick
+	php-legacy-memcache
+	php-legacy-odbc
+	php-legacy-pgsql
+	php-legacy-phpdbg
+	php-legacy-pspell
+	php-legacy-redis
+	php-legacy-smbclient
+	php-legacy-snmp
+	php-legacy-sodium
+	php-legacy-sqlite
+	php-legacy-tidy
+	php-legacy-xsl
+	php-memcache
+	php-memcached
+	php-mongodb
+	phpmyadmin
+	php-odbc
+	phppgadmin
+	php-pgsql
+	php-phpdbg
+	php-redis
+	php-rrd
+	php-snuffleupagus
+	php-sodium
+	php-sqlite
+	phpstan-bin
+	php-virtphp
+	phpvirtualbox
+	php-xmlrpc
+	php-xsl
+	picom
+	pigz
+	pimsync
+	pinact
+	pinentry-bemenu
+	pinentry-dispatch
+	pinentry-dmenu
+	pint
+	pipeglade
+	pipemixer
+	piper-voices-common
+	pipesocks
+	pipeswitchd
+	pipewire-alsa
+	pipewire-autostart
+	pipewire-docs
+	pipewire-enable-bluez5
+	pipewire-ffado
+	pipewire-libcamera
+	pipewire-module-xrdp
+	pipewire-openrc
+	pipewire-pulse
+	pipewire-pulse-openrc
+	pipewire-roc
+	pipewire-screenaudio
+	pipewire-session-manager
+	pipewire-v4l2
+	pipewire-zeroconf
+	piping-server
+	pipxu
+	piratebay
+	pitivi
+	pius
+	pixelorama
+	pixiecore-git
+	pixz
+	pkcreate
+	pkcs11-helper
+	pkcs11-provider
+	pkg-audit
+	pkgbuild-updater
+	pkgbuild-version-updater
+	pkgdiff
+	plantuml
+	plantuml-ascii-math
+	plantuml-server
+	platformflashtoollite
+	platformio-core-udev
+	pnetcdf-openmpi
+	png2svg
+	pngout
+	pocketsphinx
+	pocl
+	polkit-kde-agent
+	polkit-qt5
+	polly
+	polyphone
+	popsift
+	portchaos
+	portmux
+	posixovl
+	posix-user-portability
+	postfinger
+	postfixadmin
+	postfix-cdb
+	postfix-ldap
+	postfix-mysql
+	postfix-pcre
+	postfix-pgsql
+	postfix-policyd-spf-perl
+	postfix-sqlite
+	postfix-tlspol
+	postfwd
+	postgis
+	postgresql
+	postgresql-docs
+	postgresql-ip4r
+	postgresql-libs
+	postgresql-old-upgrade
+	postgresql-plsh
+	postgresql-semver
+	postgrest
+	postgrestools-bin
+	postgrey
+	postsrsd
+	potd
+	povray
+	powerdns
+	powerline
+	powermanga
+	powershell
+	powershell-editor-services
+	powscript
+	poxml
+	praat
+	pre-commit
+	premake3
+	prettierd
+	pretzel-web
+	prisma-language-server
+	probe-rs
+	profile-cleaner
+	profile-sync-daemon
+	profile-sync-daemon-zotero
+	promtail
+	prosemd-lsp
+	prosody-mod-http-upload-external-hg
+	prosody-mod-onions
+	protobuf-language-server
+	protolint
+	protols
+	protomd
+	protonmail-bridge
+	protonmail-bridge-core
+	proton-vpn-gtk-app
+	proxyboi
+	proxychains-ng
+	proxyguard
+	psad
+	psalm
+	psensor
+	psi
+	ptags
+	pulldocker
+	pulledpork
+	pulseaudio-alsa
+	pulseaudio-dlna
+	pulse-native-provider
+	pulumi-language-dotnet
+	puncia
+	puppet
+	puppet-bolt
+	puppet-editor-services
+	puppeteer
+	puppet-lint
+	puppetserver
+	pv
+	pvoc
+	pwru
+	pwsp
+	pw-volume
+	pydio
+	pyenv
+	pyenv-latest
+	pyenv-virtualenv
+	pyopencl-headers
+	pyprland
+	pyprpaper
+	pypy3
+	pypy3-cppy
+	pyside6
+	pyside6-tools
+	python2-v4l2capture
+	python3-aria2jsonrpc
+	python-aaf2
+	python-aafigure
+	python-agate-excel
+	python-aiobotocore
+	python-aiogram
+	python-aiohttp-socks-git
+	python-aiopg
+	python-aiosqlite
+	python-ajsonrpc
+	python-ansibug
+	python-ansicolors
+	python-anysqlite
+	python-api4jenkins
+	python-apsw
+	python-ast-grep
+	python-astropy
+	python-asyncpg
+	python-audioread
+	python-audit
+	python-awaitable
+	python-awkward
+	python-b2sdk
+	python-babel-glade
+	python-barectf
+	python-bases
+	python-bitcoinlib
+	python-bivalve
+	python-blake3
+	python-bluepy
+	python-boto3
+	python-botocore
+	python-bottleneck
+	python-cairosvg
+	python-caja
+	python-caldav
+	python-capng
+	python-casttube
+	python-cchardet
+	python-cfn-lint
+	python-chacha20poly1305-reuseable
+	python-chardet
+	python-click-completion
+	python-cloudflare
+	python-cmarkgfm
+	python-colorthief
+	python-cppy
+	python-crazy-complete
+	python-crispy-bootstrap4
+	python-cssselect
+	python-ctfcli
+	python-cucumber-tag-expressions
+	python-cuda
+	python-cuda-bindings
+	python-cuda-core
+	python-curl-cffi
+	python-daemon
+	python-daemonize
+	python-daemonocle
+	python-dbus-deviation
+	python-dbus-fast
+	python-dbusmock
+	python-debugpy
+	python-devicetree
+	python-django-classy-tags
+	python-django-crispy-forms
+	python-django-csp
+	python-django-htmx
+	python-django-modeltranslation
+	python-django-ninja
+	python-django-paypal
+	python-django-sekizai
+	python-dleyna
+	python-docker-pycreds
+	python-doctest-ignore-unicode
+	python-dokuwikidumper
+	python-ed25519-blake2b
+	python-editorconfig
+	python-elementpath
+	python-email-validator
+	python-fabulous
+	python-fastimport
+	python-fasttext
+	python-favicons
+	python-feedgenerator
+	python-fido2
+	python-flask-debug
+	python-flask-jsonrpc
+	python-flask-mail
+	python-flask-mailman
+	python-flippernested
+	python-flup
+	python-fontawesome
+	python-forbiddenfruit
+	python-github3py
+	python-glfw
+	python-gnupg
+	python-gnupginterface
+	python-google-generativeai
+	python-gpgme
+	python-gp-libs
+	python-graphene
+	python-graphql-core
+	python-graphql-relay
+	python-graphql-server-core
+	python-grpcio-tools
+	python-gssapi
+	python-gtts
+	python-h5py-openmpi
+	python-haas-proxy
+	python-hkp4py-git
+	python-hunter
+	python-hvac
+	python-hydra-core
+	python-hyperqueue
+	python-imap-tools
+	python-ipympl
+	python-ipyparallel
+	python-isomd5sum
+	python-jenkinsapi-git
+	python-johnnycanencrypt
+	python-jq
+	python-json-rpc
+	python-k5test
+	python-keyrings.google-artifactregistry-auth
+	python-keystone
+	python-keystoneauth1
+	python-keystoneclient
+	python-kikit
+	python-kismetdb
+	python-kismet-rest
+	python-kivy
+	python-latex2mathml
+	python-latexcodec
+	python-libcamera
+	python-lib-detect-testenv
+	python-libevdev
+	python-libnmap
+	python-librosa
+	python-libsass
+	python-libseccomp
+	python-libusb1
+	python-logging_tree
+	python-lsp-black
+	python-lsp-jsonrpc
+	python-luma-core
+	python-lxc
+	python-lz4
+	python-magic-wormhole-mailbox-server
+	python-manuf
+	python-matplotlib-sixel-git
+	python-mattermostdriver
+	python-mdx-gh-links
+	python-memcached
+	python-mesa
+	python-minesight-git
+	python-minidb
+	python-mitmproxy-rs
+	python-mitmproxy-wireguard
+	python-mkdoc
+	python-mkl-service
+	python-modern-colorthief
+	python-moto
+	python-mplhep
+	python-mpv
+	python-msal
+	python-msal-extensions
+	python-mujson
+	python-mygpoclient
+	python-mypy-protobuf
+	python-mysql-connector
+	python-nativemessaging-ng
+	python-nbval
+	python-nbxmpp
+	python-nclcmaps-git
+	python-netaudio
+	python-netcdf4
+	python-nitrokey
+	python-nkdfu
+	python-nmap
+	python-nodegraphqt
+	python-node-semver
+	python-noiseprotocol
+	python-numpydoc
+	python-olm
+	python-onion-location
+	python-onnxruntime-cuda
+	python-onnxscript
+	python-openai-whisper
+	python-opencv-cuda
+	python-opengl
+	python-opensearch
+	python-openvino
+	python-orjson
+	python-pam
+	python-parsel
+	python-passlib
+	python-pbkdf2
+	python-pbr
+	python-pdm-build-locked
+	python-pgpy
+	python-pillowfight
+	python-pillow-heif
+	python-pillow-heif-docs
+	python-pillow-jpegxl-plugin
+	python-pip
+	python-pipx
+	python-playwright
+	python-pocketsphinx
+	python-postfix-policyd-spf
+	python-promise
+	python-proton-core
+	python-proton-keyring-linux
+	python-proton-vpn-api-core
+	python-proton-vpn-local-agent
+	python-proton-vpn-network-manager
+	python-psycopg
+	python-psycopg2
+	python-pwntools
+	python-py3nvml
+	python-pyacoustid
+	python-pyadi-iio
+	python-pyalsa
+	python-pyaudio
+	python-pyaxmlparser
+	python-pybluez
+	python-pybrowserstack-screenshots
+	python-pycuda
+	python-pydbus
+	python-pydub
+	python-pyfavicon
+	python-pygal
+	python-pygaljs
+	python-pygelf
+	python-pygithub
+	python-pyhibp
+	python-pyinotify
+	python-pykerberos
+	python-pylatexenc
+	python-pylint-venv
+	python-pynvim
+	python-pyodoo
+	python-pyopencl
+	python-pypatchelf
+	python-pypdf
+	python-pypdf3
+	python-pypdfium2
+	python-pypng
+	python-pypresence
+	python-pypubsub
+	python-pyqrcode
+	python-pyqt5-sip
+	python-pyqt5-webengine
+	python-pyqt5-webkit
+	python-pysaml2
+	python-pyscreenshot
+	python-pysdl3
+	python-pysequoia
+	python-pyshark
+	python-pysmb
+	python-pysmbc
+	python-pytest-aiohttp
+	python-pytest-asyncio
+	python-pytest-click
+	python-pytest-django
+	python-pytest-env
+	python-pytest-isort
+	python-pytest-lsp
+	python-pytest-mpi
+	python-pytest-mpl
+	python-pytest-playwright
+	python-pytest-qt
+	python-pytest-repeat
+	python-pytest-ruff
+	python-pytest-trio
+	python-python-pkcs11
+	python-pyttsx3
+	python-pytube
+	python-pyu2f
+	python-pyudev
+	python-pyusb
+	python-pyxdg
+	python-qpageview
+	python-qstylizer
+	python-qtawesome
+	python-qt-material
+	python-qtpy
+	python-qutescript-git
+	python-railroad-diagrams
+	python-rapidjson
+	python-readability-lxml
+	python-readthedocs-sphinx-ext
+	python-requests
+	python-requests-aws4auth
+	python-requests-gssapi
+	python-requests-kerberos
+	python-rstr
+	python-ruff-api
+	python-saml
+	python-sane
+	python-scanpydoc
+	python-scipy-mkl
+	python-securesystemslib
+	python-seedir
+	python-sentinels
+	python-setuptools-protobuf
+	python-shtab
+	python-signedjson
+	python-sixelcrop
+	python-slycot-mkl
+	python-smbprotocol
+	python-sphinxcontrib-apidoc
+	python-sphinxcontrib-autoprogram
+	python-sphinxcontrib-bibtex
+	python-sphinxcontrib-doxylink
+	python-sphinxcontrib-katex
+	python-sphinxcontrib-log-cabinet
+	python-sphinxcontrib-plantuml
+	python-sphinxcontrib-spelling
+	python-sphinx_rtd_dark_mode
+	python-sphinxygen
+	python-spsdk-pqc
+	python-sqlite-anyio
+	python-sqlitedict
+	python-squarify
+	python-srctools
+	python-standard-pipes
+	python-svada
+	python-svglib
+	python-svgwrite
+	python-sybil
+	python-term-image
+	python-tflite
+	python-tf-playwright-stealth
+	python-threadloop
+	python-thrift
+	python-tika-client
+	python-torchattacks
+	python-torchcodec
+	python-torchvision-cuda
+	python-tpm2-pytss
+	python-tree-sitter-zathurarc
+	python-trytond_account_payment_sepa
+	python-trytond_account_payment_stripe
+	python-trytond_sale_advance_payment
+	python-uhd
+	python-unidecode
+	python-uproot
+	python-uproot-docs
+	python-uv
+	python-uv-build
+	python-v4l2capture
+	python-validate-email
+	python-vcversioner
+	python-vector
+	python-vl-convert
+	python-volume_key
+	python-vsg
+	python-vunit_hdl
+	python-warlock
+	python-web-compile
+	python-webrtcvad
+	python-whitenoise
+	python-willow
+	python-x256
+	python-xdg-base-dirs
+	python-xlwt
+	python-xmlformatter
+	python-xtermcolor
+	python-zenmoney
+	python-ziamath
+	qastools
+	qatlib
+	qbootctl
+	qbpm-git
+	qconnect
+	qdirstat-git
+	qemu-audio-alsa
+	qemu-audio-pipewire
+	qemu-guest-agent
+	qemu-hw-display-virtio-gpu
+	qemu-hw-display-virtio-gpu-gl
+	qemu-hw-display-virtio-gpu-pci
+	qemu-hw-display-virtio-gpu-pci-gl
+	qemu-hw-display-virtio-gpu-rutabaga
+	qemu-hw-display-virtio-vga
+	qemu-hw-display-virtio-vga-gl
+	qemu-hw-display-virtio-vga-rutabaga
+	qemu-hw-s390x-virtio-gpu-ccw
+	qemu-hw-usb-host
+	qemu-hw-usb-redirect
+	qemu-hw-usb-smartcard
+	qemu-system-alpha-firmware
+	qemu-system-arm-firmware
+	qemu-system-hppa-firmware
+	qemu-system-microblaze-firmware
+	qemu-system-ppc-firmware
+	qemu-system-riscv-firmware
+	qemu-system-s390x-firmware
+	qemu-system-sparc-firmware
+	qemu-system-x86-firmware
+	qemu-ui-egl-headless
+	qflipper
+	qlcplus
+	qmidiarp-lv2
+	qml-lsp-git
+	qperf-nordma
+	qt5-connectivity
+	qt5ct
+	qt5-tools
+	qt5-wayland
+	qt5-webview
+	qt5-xcb-private-headers
+	qt6-connectivity
+	qt6ct
+	qt6-grpc
+	qt6-languageserver
+	qt6-multimedia-gstreamer
+	qt6-quickeffectmaker
+	qt6-tools-desktop
+	qt6-wayland
+	qt6-xcb-private-headers
+	qtdbusextended
+	qtkeychain-qt5
+	qtkeychain-qt6
+	quickdocs
+	quota-tools
+	qutebrowser
+	qutebrowser-profile-git
+	qxlsx
+	qxmpp
+	r10k
+	r8125-dkms
+	radcli
+	radicale
+	radsecproxy
+	radvd
+	rage-encryption
+	rainbowcrack
+	rainfrog
+	r-air-bin
+	randomart
+	rapiddisk-dkms
+	rarcrack
+	rathole
+	rattler-build
+	rauc
+	razor
+	rclone
+	rdesktop
+	rdma-core
+	realtime-privileges
+	realtime-suggestions
+	reaver
+	reboot-checker
+	redbean
+	reddit-tui
+	reddix
+	redland-storage-sqlite
+	redot-git
+	release-cli
+	relibre
+	remake
+	remark-language-server
+	remctl
+	remind
+	remmina-plugin-folder
+	remmina-plugin-open
+	remmina-plugin-rdesktop
+	remmina-plugin-rustdesk
+	remmina-plugin-url
+	remote-desktop-manager
+	renderdoc
+	restack
+	resvg
+	retsnoop
+	revive
+	rev-plugins
+	ricochet-refresh
+	ripsecrets
+	rkhunter
+	rng-tools
+	rnp
+	robotframework-lint
+	rocksdb
+	rocksndiamonds-contrib
+	root-cuda
+	rootlesskit
+	rootmp-hook
+	rosenpass
+	roundcubemail
+	roundcubemail-plugin-authres_status
+	roundcubemail-plugin-caldavzap
+	roundcubemail-plugin-carddav
+	roundcubemail-plugin-contextmenu
+	roundcubemail-plugin-delete_old
+	roundcubemail-plugin-persistent_login
+	roundcubemail-plugin-showfoldersize
+	roundcubemail-plugin-twofactor-webauthn
+	roundcubemail-skin-classic
+	roundcubemail-skin-larry
+	rpacket
+	rpg-cli
+	rpgp
+	rpm-sequoia
+	rsop
+	rsop-oct
+	rspamd
+	rst2pdf
+	rstcheck
+	rsvndump
+	rtaudio
+	rtirq
+	rtl8723du-dkms-git
+	rtpengine-kernel-dkms
+	rtptools
+	rt-tests
+	rtw89bt-dkms-git
+	rtw89-dkms-git
+	rubocop
+	ruby-bundled-gems
+	ruby-crack
+	ruby-default-gems
+	ruby-evdev
+	ruby-gdk3
+	ruby-gdk4
+	ruby-google-protobuf
+	ruby-gpgme
+	ruby-http_parser.rb
+	ruby-kramdown-parser-gfm
+	ruby-language_server-protocol
+	ruby-lint_roller
+	ruby-lsp
+	ruby-metadata_json_deps
+	ruby-metadata-json-lint
+	ruby-mime-types
+	ruby-mini_portile
+	ruby-octokit
+	ruby-puppet_forge
+	ruby-puppet_metadata
+	ruby-rack-protection
+	ruby-rake-contrib
+	ruby-rbnacl
+	ruby-revdev
+	ruby-rubocop-performance
+	ruby-rubocop-rspec
+	ruby-ruby_wasm
+	ruby-rugged
+	ruby-sinatra-contrib
+	ruby-spdx-licenses
+	ruby-sqlite3
+	ruby-stdlib
+	rudder-agent
+	ruff-lsp
+	rust-analyzer
+	rustdesk
+	rustdesk-openrc
+	rustdesk-server
+	rustywind
+	ruuvitag-listener
+	rvm
+	rvpk
+	rxvt-unicode
+	rxvt-unicode-terminfo
+	rye
+	rz-cutter
+	sabnzbd-docker
+	sagetex
+	samsung-ssd-fwupdate
+	samurai
+	sane
+	sane-airscan
+	sane-gt68xx-firmware
+	sanoid
+	satintel-git
+	sbsigntools
+	scala
+	scala3
+	scalafmt
+	scala-sources
+	scanmem
+	scap-dkms
+	sccache-dist
+	sccmhunter-git
+	scdtools
+	schedtool
+	schroot
+	scim
+	scons
+	scotch
+	scour
+	scrape-cli
+	scrcpy
+	scream_cypher
+	scrypt
+	scute
+	sdcv
+	sddm
+	sdl2_fontcache
+	sdl2_gfx
+	sdl2_mixer
+	sdl2_net
+	sdl3_image
+	sdl3_ttf
+	sdlconsole
+	sdl_gfx
+	sdl_image
+	sdlk
+	sdl_mixer
+	sdl_net
+	sdl_sound
+	sdl_ttf
+	sdparm
+	sdrpp-headers-git
+	seahorse
+	seahorse-nautilus
+	seanime
+	seclists
+	secretpixel
+	secret-service
+	semt
+	semver-cpp
+	sentry-native
+	sequoia-chameleon-gnupg
+	sequoia-keyring-linter
+	sequoia-octopus-librnp
+	sequoia-sop
+	sequoia-sqv
+	serialdv
+	serial-port-json-server
+	servicemix
+	session-desktop
+	sfizz-lib
+	sfml
+	sfml2
+	sh4d0wup
+	sha3sum
+	shadergen
+	shader-slang
+	shadowsocks-v2ray-plugin
+	shairport-sync
+	shared-bootdir-helper
+	sharry
+	shell-advancedutils
+	shellharden
+	sherlock.lv2
+	shfmt
+	shfs-utils
+	shibboleth-sp
+	shikane
+	shlink
+	shufflecake
+	shunit2
+	sidedoor
+	sieve-connect
+	signal-hound-udev
+	signing-party
+	signstar-sign
+	sile-labelrefs
+	simpleid
+	simpleorcapluginsystem-git
+	simreader
+	simtrace
+	sipcrack
+	sipvicious
+	slicer-udev
+	slowhttptest
+	slsa-builder-docker
+	slsa-builder-go
+	slsa-generator-container
+	slsa-generator-generic
+	slsa-github-generator
+	slsa-github-generator-common
+	slskd-bin
+	slurp
+	smail
+	smartcam
+	smartcam-dkms
+	smartcat
+	smartmontools
+	smartreboot
+	smbnetfs
+	smithery-cli
+	smtpdane
+	sn0int
+	s-nail
+	snapback
+	snapborg
+	snapchat
+	snap-pac
+	snapper-rollback
+	snapper-support
+	snap-sync
+	snd-hdspe-dkms
+	snd-pcsp-dkms
+	snd-usb-audio-fasttrack-dkms
+	sniffert
+	sniffglue
+	sniffit
+	sniproxy
+	snort-nfqueue
+	soapyairspy
+	soapyaudio
+	social-engineer-toolkit
+	socid-extractor
+	sof-firmware
+	sofia-sip
+	sof-tools
+	soft-serve
+	solang-bin
+	solidigm-sst-storage-tool-cli
+	solr
+	somoclu
+	sops
+	soulseekqt
+	sound-icons
+	soundwire
+	spamassassin
+	sparsehash
+	spicedb
+	spirv-cross
+	spirv-headers
+	spyder
+	spytrap-adb
+	sqlcipher
+	sqlfluff
+	sqlite-analyzer
+	sqlitebrowser
+	sqlite-doc
+	sqliteodbc
+	sqlite-tcl
+	sql-language-server
+	sqlmap
+	sqls
+	squid
+	squidview
+	srs
+	srsgui
+	srslte-avx2
+	srs-state-threads
+	ssb
+	ssfconv
+	ssh-audit
+	ssh-chat
+	sshesame
+	sshfs
+	sshguard
+	ssh-key-confirmer
+	ssh-list
+	sshpass
+	sshs
+	ssh-studio
+	sshtool
+	ssh-tools
+	ssh-tpm-agent
+	sshtunnel
+	sshuttle
+	ssh-vault
+	sshx
+	sshyp
+	sslh
+	sslsplit
+	stalwart-cli
+	stalwart-mail
+	standard
+	staplegl-git
+	starpls
+	starship
+	stash
+	staticcheck
+	statix-git
+	steam
+	steam-hdr
+	steamlink
+	steamrun
+	steamtinkerlaunch
+	steam-tools-ng
+	steghide
+	stegseek
+	step-ca
+	stoken
+	strongswan
+	sttr
+	stumpwm-contrib
+	stylelint
+	stylelint-config-recommended
+	subcat-git
+	subnetcalc
+	sugar-artwork
+	sunshine
+	superfile
+	supergfxctl
+	superhtml
+	supervisor
+	surge-xt-clap
+	surge-xt-vst3
+	svelte-language-server
+	svgcleaner
+	svgo
+	svgpart
+	svlangserver
+	svls
+	svt-vp9
+	swaybg
+	sway-scroll-stable
+	swaytreesave
+	sweeper
+	sweethome3d
+	sweethome3d-3dmodels-blendswap-cc0
+	sweethome3d-3dmodels-blendswap-ccby
+	sweethome3d-3dmodels-contributions
+	sweethome3d-3dmodels-katorlegaz
+	sweethome3d-3dmodels-lucapresidente
+	sweethome3d-3dmodels-reallusion
+	sweethome3d-3dmodels-scopia
+	sweethome3d-3dmodels-trees
+	sweethome3d-furniture-library
+	sweethome3d-textures-contributions
+	sweethome3d-textures-scopia
+	swengine
+	swtpm
+	swww
+	symlinks
+	syncplay
+	sysboost
+	systemc
+	systemctl-policy
+	systemctl-tui
+	systemd-language-server
+	systemdlint
+	systemd-lsp
+	sysz
+	tailwindcss-cli
+	tailwindcss-language-server
+	tamarin-prover
+	taplo-cli
+	tara
+	tarantool
+	tarsnap
+	tarsnapper
+	tbtools
+	tcp-brutal-dkms
+	tcppc
+	teal
+	teamtype
+	tectonic
+	telegram-desktop
+	templ
+	tempo
+	tensorflow-cuda
+	tensorrt
+	tensorrt-cross-builder-libs
+	terminus-font
+	term-pdf
+	termshark
+	termux-keyring
+	termux-language-server
+	tern
+	terrafire
+	terraform
+	terraformer
+	terraform-ls
+	terraform-lsp
+	terragrunt
+	testdisk
+	testssl.sh
+	tex-fmt
+	texlab
+	texlive-bibtexextra
+	texlive-binextra
+	texlive-fontsextra
+	texlive-formatsextra
+	texlive-humanities
+	texlive-langczechslovak
+	texlive-langenglish
+	texlive-langfrench
+	texlive-langgerman
+	texlive-latexextra
+	texlive-luatex
+	texlive-mathscience
+	texlive-meta
+	texlive-metapost
+	texlive-music
+	texlive-pstricks
+	texlive-publishers
+	texlive-tikz-uml
+	texlive-xetex
+	texturepacker
+	tflint
+	tfsec
+	tgcli
+	thc-ipv6
+	thefuck
+	thelounge
+	thorium
+	throttled
+	thunderbird-dark-reader
+	thunderbird-dkimverifier
+	thunderbird-tbsync
+	tigervnc
+	timescaledb-old-upgrade
+	tinycompress
+	tinymist
+	tinysparql-docs
+	tlsh
+	tlsrpt-reporter
+	tmate
+	tmon
+	tmpcleaner
+	tmux
+	tmux-cssh
+	tmuxinator
+	tmux-language-server
+	tmuxp
+	tmux-resurrect
+	tnftpd
+	tntnet
+	tofu-ls-bin
+	tomb
+	tombi
+	toolame
+	toolblex
+	torbrowser-launcher
+	torcheck
+	torchvision-cuda
+	torphantom
+	toxic
+	tpm2-abrmd
+	tpm2-openssl
+	tpm2-pkcs11
+	tpm2-tools
+	tpm2-totp
+	tpm2-tss-engine
+	trackerjacker
+	tractor
+	traefik
+	treeify
+	trivy
+	trojan
+	trufflehog
+	trunk
+	tslint
+	tsshd
+	ttf-arphic-tex-extra
+	ttf-charis
+	ttf-courier-prime
+	ttf-daddytime-mono-nerd
+	ttf-droid
+	ttf-font-icons
+	ttf-input-nerd
+	ttf-jetbrains-mono-nerd
+	ttf-mona-sans
+	ttf-monaspace-frozen
+	ttf-monaspace-variable
+	ttf-nerd-fonts-symbols
+	ttf-nerd-fonts-symbols-common
+	ttf-nerd-fonts-symbols-mono
+	ttf-terminus-nerd
+	ttmath
+	tufw
+	tuna
+	turbo-attack-git
+	turbo-scanner-git
+	turbostat
+	tutanota-desktop-bin
+	twa
+	twine
+	twitch
+	twitch-cli
+	twitch-indicator
+	txt2tags
+	ty
+	typescript-language-server
+	typetalk
+	typos-lsp
+	uasm
+	ublock-origin
+	uboot-tools
+	udev-hid-bpf
+	udev-media-automount
+	udftools
+	udiskie
+	udisks2-lvm2
+	udisks2-qt5
+	udpxy
+	ueberzugpp
+	uefitool
+	ufw
+	ufw-extras
+	ugm
+	ugrep
+	umbrello
+	umlet
+	uml_utilities
+	umockdev
+	umu-launcher
+	unarchiver
+	unbound
+	unbound-china-list-git
+	unbound-roothints
+	unbound-root-hints-updater
+	unetbootin
+	unhide
+	unicode-character-database
+	unicorn-cal
+	unison
+	unixodbc
+	unoconv
+	unrealircd
+	up
+	updlockfiles
+	uptime-kuma
+	urh
+	urlview-xdg-git
+	urxvt-perls
+	usbasp-udev
+	usbip
+	usb_modeswitch
+	usbmuxd
+	usbview
+	usd
+	util-linux-aes
+	util-linux-libs-aes
+	uudeview
+	uv
+	uvm-systemc
+	uwsgi-plugin-cgi
+	uwsgi-plugin-lua51
+	uwsgi-plugin-mono
+	uwsgi-plugin-notfound
+	uwsgi-plugin-php
+	uwsgi-plugin-php-legacy
+	uwsgi-plugin-psgi
+	uwsgi-plugin-pypy
+	uwsgi-plugin-python
+	uwsgi-plugin-rack
+	uwsgi-plugin-webdav
+	uwsgi-plugin-zabbix
+	uwsm
+	uwufetch
+	v2ray
+	v2ray-domain-list-community
+	v2ray-geoip
+	v4l2loopback-dc-dkms
+	v4l2loopback-dkms
+	v4l2loopback-utils
+	v4l2ucp-qt5
+	vacuum
+	vagrant
+	vale
+	vale-ls
+	valkey
+	vanity-monero
+	vault
+	vbetool
+	vblade
+	vc
+	vcal
+	vco-plugins
+	vcvrack
+	vdirsyncer
+	vdr
+	vdrctl
+	vdr-softhddevice-drm-gles
+	vector
+	vector-slicer
+	verible
+	veridian-bin
+	verilator
+	verus-analyzer-bin
+	verus-bin
+	verusfmt-bin
+	verylup
+	vesktop
+	vfio-isolate
+	vfio-kvm
+	vhba-module-dkms
+	vim
+	vim-ale
+	vim-language-server
+	vint
+	violetumleditor
+	virglrenderer
+	virt-firmware
+	virt-install
+	virtme-ng
+	virtualbox-host-dkms
+	virt-viewer
+	vivaldi
+	vivaldi-ffmpeg-codecs
+	vkbasalt
+	vkbasalt-cli
+	vkd3d
+	vkd3d-docs
+	vkdevicechooser
+	vkmark
+	vkvg
+	vl-convert
+	vlc-plugin-aalib
+	vlc-plugin-caca
+	vlc-plugin-ffmpeg
+	vlc-plugin-freetype
+	vlc-plugin-gstreamer
+	vlc-plugin-pipewire
+	vlc-plugin-smb
+	vlc-plugin-svg
+	vlc-plugin-udev
+	voa-verifiers-arch
+	volk
+	vpl-gpu-rt
+	vrpn
+	vscode-css-languageserver
+	vscode-html-languageserver
+	vscode-js-debug
+	vscode-json-languageserver
+	vscode-php-debug
+	vsqlite++
+	vte3-utils
+	vte4-utils
+	vtsls
+	vtun
+	vue-language-server
+	vulkan-caps-viewer-wayland
+	vulkan-extra-layers
+	vulkan-extra-tools
+	vulkan-freedreno
+	vulkan-gfxstream
+	vulkan-headers
+	vulkan-html-docs
+	vulkan-memory-allocator
+	vulkanscenegraph
+	vulkan-tools
+	vulkan-utility-libraries
+	vulkan-validation-layers
+	vulkan-wsi-layer-git
+	vulscan
+	w3m
+	wabt
+	wah-plugins
+	waifu2x-ncnn-vulkan
+	wallabag
+	wallutils
+	warp-cli
+	warp-plus
+	wasi-compiler-rt
+	wasmer
+	wasm-language-tools
+	wasm-server-runner
+	wasmtime
+	wasm-tools
+	wavemon
+	waybar
+	waybar-weather
+	waydroid-magisk
+	waydroid-script-git
+	waydroidsu
+	wayland-display-info
+	wayland-utils
+	waylock
+	waypaper
+	waypipe
+	wayvnc
+	wayweather
+	wazuh-agent
+	wazuh-dashboard
+	wazuh-filebeat
+	wazuh-indexer
+	webdavfs
+	webkitgtk-6.0
+	webkitgtk-6.0-docs
+	weborf
+	webp-pixbuf-loader
+	webrtc-audio-processing
+	webrtc-audio-processing-0.3
+	websocat
+	websocketpp
+	websploit
+	websvn
+	weron
+	wev
+	wgcf
+	wget
+	whipper
+	whisper.cpp-cuda
+	whois
+	wifi-password
+	wifite
+	wifi_version
+	wiggly-stt
+	wildcard
+	windutils
+	wine
+	wine-gecko
+	wine-mono
+	wine-nine
+	winesync-dkms
+	winesync-header
+	winesync-udev-rule
+	winetricks
+	wire-desktop
+	wireguard-dkms
+	wireguard-vanity-address
+	wireless-regdb
+	wireless_tools
+	wiremix
+	wireplumber
+	wireplumber-docs
+	wireplumber-openrc
+	wireproxy
+	wireshark-cli
+	wireshark-minecraft-dissector
+	wireshark-qt
+	wiresmith
+	with-b3-git
+	wkd-exporter
+	wl-clip-persist
+	wmenu
+	wofi
+	wol
+	woob
+	worker-build
+	workerd
+	wpaperd
+	wpa_supplicant
+	wpebackend-fdo
+	wpebackend-fdo-docs
+	wpmeta
+	wrangler
+	write-good
+	wsdd
+	wt
+	wxsqlite3
+	wxsvg
+	x11-ssh-askpass
+	x86_energy_perf_policy
+	xandikos
+	xdebug
+	xde-menu
+	xdg-autostart
+	xdg-base-dir-env
+	xdg-dbus-proxy
+	xdg-desktop-portal-gtk
+	xdg-desktop-portal-hyprland
+	xdg-desktop-portal-shana
+	xdg-environment
+	xdgmenumaker
+	xdg-ninja
+	xdg-open-server
+	xdg-sanity
+	xdg-sound
+	xdgterm
+	xdg-terminal-exec
+	xdg-unused-data-git
+	xdg-user-dirs
+	xdg-user-dirs-gtk
+	xdg-utils
+	xdg-utils-cxx
+	xdotool
+	xdph-dmenu-sharepicker
+	xf86-input-evdev
+	xfmpc
+	xmldiff
+	xmlindent
+	xmlto
+	xmltoman
+	xmonad-contrib
+	xmonad-dbus
+	xmonk.lv2
+	xmppc
+	xmrig
+	xorg-iceauth
+	xorg-server
+	xorg-xinit
+	xorg-xvidtune
+	xosd
+	xpipe
+	xray
+	xr-hardware
+	xtables-addons-dkms
+	xt_wgobfs-dkms
+	yamlfix
+	yamlfmt
+	yaml-language-server
+	yamllint
+	yank
+	yara
+	yay
+	yaycache-hook
+	yay-debug
+	yayfzf
+	ydotool
+	yggdrasil
+	ynot-fossil
+	youtube-tui
+	yq
+	ytdl
+	yt-dlp-ejs
+	ytdl-sub
+	ytdownloader
+	ytfzf
+	yubico-pam
+	zabbix-agent
+	zabbix-frontend-php
+	zabbix-web-service
+	zam-plugins
+	zam-plugins-vst
+	zathura
+	zathura-cb
+	zathura-djvu
+	zathura-language-server
+	zathura-pdf-mupdf
+	zathura-ps
+	zdhpctl
+	zectl
+	zedenv
+	zend-debugger
+	zenmap
+	zephyr-sdk
+	zettli
+	zfsbootmenu
+	zfs-dkms
+	zfsnap
+	zig
+	zigbee2mqtt
+	ziggy
+	zita-ajbridge
+	zita-at1
+	zita-bls1
+	zizmor
+	zls
+	zmap
+	znapzend
+	zoiper-classic
+	zoom
+	zoom-citrix-plugin
+	zoom-l8-dkms
+	zoom-native
+	zotero
+	zotero-extension-ocr
+	zoxide
+	zram-generator
+	zsa-udev
+	zsync
+	zvm
 )
 for pkg in "${PKGS[@]}"; do
-	yay -Syu --noconfirm "$pkg"
+	yay -Sy --noconfirm "$pkg"
 done

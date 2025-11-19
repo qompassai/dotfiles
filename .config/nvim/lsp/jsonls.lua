@@ -11,15 +11,15 @@ vim.lsp.config['jsonls'] = {
   root_markers = { '.git' },
   settings = {
     json = {
-      document_highlight = { enabled = false },
+      document_highlight = { enabled = true },
       validate = { enable = true },
       schemas = {
         {
           description = "Biome configuration",
           fileMatch = {
-            ".biome.json",
-            "**/.biome.json",
-            "~/.config/biome/biome.json5",
+            ".biome.jsonc",
+            "**/.biome.jsonc",
+            "~/.config/biome/biome.jsonc",
           },
           url = "https://biomejs.dev/schemas/2.0.6/schema.json",
         },

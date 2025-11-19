@@ -154,7 +154,6 @@ return {
         search_include_patterns = {},
         stub_paths = {},
         supported_extensions = { "php", "phar" },
-        project_root = "%project_root%",
       },
       language_server_code_transform = {
         import_name = { report_non_existing_names = true }

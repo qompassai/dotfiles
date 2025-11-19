@@ -1,5 +1,5 @@
 -- /qompassai/Diver/lsp/bashls.lua
--- Qompass AI Bashls LSP Config
+-- Qompass AI Bash LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 vim.lsp.config['bashls'] = {

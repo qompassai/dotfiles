@@ -3,9 +3,9 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ----------------------------------------
 return {
-	cmd = { 'postgrestools', 'lsp-proxy' },
-	filetypes = {
-		'sql',
-	},
-	root_markers = { 'postgrestools.jsonc' },
+  cmd = { 'postgrestools', 'lsp-proxy' },
+  filetypes = {
+    'sql',
+  },
+  root_markers = { 'postgrestools.jsonc' },
 }
