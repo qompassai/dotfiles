@@ -4,26 +4,42 @@
 -- ----------------------------------------
 vim.lsp.config['ansiblels'] = {
   cmd = { 'ansible-language-server', '--stdio' },
+  filetypes = { 'yaml.ansible', 'ansible' },
   settings = {
     ansible = {
-      python = {
-        interpreterPath = 'python',
-      },
       ansible = {
-        path = 'ansible',
+        path = "ansible",
+        useFullyQualifiedCollectionNames = true,
+      },
+      ansibleLint = {
+        enabled = true,
+        path = "ansible-lint",
+        args = {},
       },
       executionEnvironment = {
-        enabled = true,
+        enabled = false,
+        containerEngine = "auto",
+        image = "",
+        pullPolicy = "missing",
+        volumeMounts = {},
+      },
+      python = {
+        activationScript = "",
+      },
+      completion = {
+        provideRedirectModules = true,
+        provideModuleOptions = true,
+        provideModuleParameters = true,
       },
       validation = {
         enabled = true,
-        lint = {
-          enabled = true,
-          path = 'ansible-lint',
-        },
+        lint = true,
+        schemas = {},
+      },
+      telemetry = {
+        enabled = false,
       },
     },
   },
-  filetypes = { 'yaml.ansible' },
   root_markers = { 'ansible.cfg', '.ansible-lint' },
 }

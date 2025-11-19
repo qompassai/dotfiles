@@ -8,7 +8,7 @@ vim.lsp.config['bashls'] = {
   settings = {
     bashIde = {
       globPattern = "**/*@(.sh|.inc|.bash|.command)",
-      maxNumberOfProblems = 100,
+      maxNumberOfProblems = 200,
       shellcheck = {
         enable = true,
         executablePath = "shellcheck",
@@ -21,7 +21,7 @@ vim.lsp.config['bashls'] = {
       },
       completion = {
         enabled = true,
-        includeDirs = {},
+        includeDirs = { "$XDG_CONFIG_HOME/bash-completion" },
       },
       diagnostics = {
         enabled = true,
