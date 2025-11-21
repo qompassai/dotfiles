@@ -4,7 +4,7 @@
 ##########################################
 actions=1               
 anchor=top-right
-background-color=#2e3440#
+background-color=#2e3440
 border-color=#88c0d0
 border-radius=15
 border-size=2
@@ -19,7 +19,7 @@ icon-location=left
 icon-path= 
 icons=0
 ignore-timeout=1
-include=
+#include=
 layer=overlay
 margin=10
 markup=1

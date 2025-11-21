@@ -3,7 +3,7 @@
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
 # References: https://github.com/Vladimir-csp/uwsm?tab=readme-ov-file#4-environments-and-shell-profile | https://github.com/Vladimir-csp/uwsm
-export AQ_DRM_DEVICES="/dev/dri/card0:/dev/dri/card1"
+export AQ_DRM_DEVICES="/dev/dri/by-path/pci-0000:00:02.0-card:/dev/dri/by-path/pci-0000:01:00.0-card"
 export AQ_FORCE_LINEAR_BLIT=0
 export AQ_MGPU_NO_EXPLICIT=1
 export AQ_NO_MODIFIERS=1
@@ -41,13 +41,12 @@ export SDL_VIDEODRIVER=wayland,x11
 export UE_WAYLAND_EGL_FORWARD=1
 export WEBKIT_FORCE_WAYLAND=1
 export WEBVIEW_FORCE_WAYLAND=1
-export WLR_DRM_DEVICES="/dev/dri/card0:/dev/dri/card1"
+#export WLR_DRM_DEVICES="/dev/dri/card0:/dev/dri/card1"
 export WLR_EGL_NO_X11=1
 export WLR_USE_LIBINPUT=1
 export WLR_X11_NO_ATOMS=1
 export WLR_RENDERER=gles2
 export WLR_RENDERER_ALLOW_SOFTWARE=1
 export XCURSOR_SIZE=32
-export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_SESSION_TYPE="wayland"
 export XWAYLAND_NO_GLAMOR=1
