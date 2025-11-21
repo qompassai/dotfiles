@@ -2,7 +2,7 @@
 -- Qompass AI Hydra YAML LSP Spec (hydra-lsp)
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
-vim.lsp.config['hydra-lsp'] = {
+vim.lsp.config['hydra'] = {
   cmd = 'hydra-lsp',
   filetypes = { 'yaml', 'yml', 'hydra' },
   codeActionProvider = {
@@ -55,9 +55,6 @@ vim.lsp.config['hydra-lsp'] = {
         enable = true,
       },
     },
-  },
-  flags = {
-    debounce_text_changes = 150,
   },
   single_file_support = true,
 }
