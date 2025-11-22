@@ -1,58 +1,58 @@
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-alias spn='sudo pacman -Syyu --noconfirm'
-alias psn='paru -Syyu --noconfirm'
-alias cmx='chmod +x'
-alias scrp='sudo chown -R $USER:$USER'
-alias nv='nvim'
-alias sn='sudo -E nvim'
-alias sv='sudo -E vim'
-alias g='git'
-alias ga='git add'
-alias gb='git branch'
-alias gc='git commit'
-alias gca='git commit --amend'
-alias gco='git checkout'
-alias gd='git diff'
-alias gdc='git diff --cached'
-alias gf='git fetch'
-alias gl='git log --oneline --graph --decorate'
-alias gm='git merge'
-alias gp='git push'
-alias gpum='git push -u origin main'
-alias gpl='git pull'
-alias gs='git status'
-alias go_linux_amd64    ='go_cross_simple linux amd64'
-alias go_linux_arm64    ='go_cross_simple linux arm64'
-alias go_linux_arm      ="go_cross_simple linux arm"
-alias go_windows_amd64  ="go_cross_simple windows amd64"
-alias go_windows_arm64  ="go_cross_simple windows arm64"
-alias go_darwin_amd64   ="go_cross_simple darwin amd64"
-alias go_darwin_arm64   ="go_cross_simple darwin arm64"
-alias go_freebsd_amd64  ="go_cross_simple freebsd amd64"
-alias go_linux_amd64_cgo="go_cross_zig linux amd64"
-alias go_linux_arm64_cgo="go_cross_zig linux arm64"
-alias go_windows_amd64_cgo="go_cross_zig windows amd64"
-alias go_darwin_amd64_cgo="go_cross_zig darwin amd64"
-alias go_darwin_arm64_cgo="go_cross_zig darwin arm64"
-alias luarocks='luarocks --lua-version=5.1'
-alias use_zig="use_compiler zig"
-alias use_clang="use_compiler clang"
-alias use_gcc="use_compiler gcc"
-alias go_cross_help="print_go_cross_help"
-alias ni='npm install'
-alias nid='npm install --save-dev'
-alias nig='npm install --global'
-alias nr='npm run'
-alias ns='npm start'
-alias nt='npm test'
-alias nv='node --version && npm --version'
-alias pi='pnpm install'
-alias pr='pnpm run'
-alias px='pnpm exec'
-alias ya='yarn add'
-alias yad='yarn add --dev'
-alias yag='yarn global add'
-alias yr='yarn run'
-alias ys='yarn start'
-alias yt='yarn test'
+abbr -a rm       'rm -Iv'
+abbr -a cp       'cp -iv'
+abbr -a mv       'mv -iv'
+abbr -a gpu      'watch -n 1 nvidia-smi'
+abbr -a ls       'ls --color=auto'
+abbr -a g        'git'
+abbr -a ga       'git add'
+abbr -a gb       'git branch'
+abbr -a gc       'git commit'
+abbr -a gca      'git commit --amend'
+abbr -a gco      'git checkout'
+abbr -a gd       'git diff'
+abbr -a gdc      'git diff --cached'
+abbr -a gf       'git fetch'
+abbr -a gl       'git log --oneline --graph --decorate'
+abbr -a gm       'git merge'
+abbr -a gp       'git push'
+abbr -a gpum     'git push -u origin main'
+abbr -a gpl      'git pull'
+abbr -a gs       'git status'
+abbr -a luarocks 'luarocks --lua-version=5.1'
+abbr -a ni       'npm install'
+abbr -a nid      'npm install --save-dev'
+abbr -a nig      'npm install --global'
+abbr -a nr       'npm run'
+abbr -a ns       'npm start'
+abbr -a nt       'npm test'
+abbr -a nv       'nvim'
+abbr -a pag      'pnpm add -g'
+abbr -a pr       'pnpm run'
+abbr -a px       'pnpm exec'
+abbr -a ya       'yarn add'
+abbr -a yad      'yarn add --dev'
+abbr -a yag      'yarn global add'
+abbr -a yr       'yarn run'
+abbr -a ys       'yarn start'
+abbr -a yt       'yarn test'
+function spn
+    sudo pacman -Syyu --noconfirm $argv
+end
+function psn
+    paru -Syyu --noconfirm $argv
+end
+function cmx
+    chmod +x $argv
+end
+function scrp
+    sudo chown -R $USER:$USER $argv
+end
+abbr -a sn 'sudo -E nvim'
+abbr -a sv 'sudo -E vim'
+abbr -a use_zig   'use_compiler zig'
+abbr -a use_clang 'use_compiler clang'
+abbr -a use_gcc   'use_compiler gcc'
+abbr -a go_cross_help 'print_go_cross_help'
+function grep
+    command grep --color=auto $argv
+end

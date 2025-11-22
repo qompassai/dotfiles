@@ -5,21 +5,21 @@
 {
   "answerclean": false,
   "aururl": "https://aur.archlinux.org",
-  "batchInstall": false,
+  "batchInstall": true,
   "buildDir": "$XDG_CACHE_HOME/yay",
-  "cleanAfter": false,
+  "cleanAfter": true,
   "cleanmenu": false,
   "combinedUpgrade": true,
   "devel": false,
   "diff": false,
-  "editor": "",
+  "editor": "nvim",
   "editorFlags": "",
   "gpgflags": "",
   "makepkg": "makepkg",
   "mflags": "",
   "noBatchInstall": false,
   "nocombinedUpgrade": false,
-  "noconfirm": false,
+  "noconfirm": true,
   "pacman": "pacman",
   "pacmanconf": "",
   "pgpfetch": true,
@@ -37,4 +37,3 @@
   "upgradeOverride": false,
   "useask": false
 }
-
