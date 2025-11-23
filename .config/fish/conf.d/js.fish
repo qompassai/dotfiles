@@ -1,5 +1,5 @@
 # /qompassai/dotfiles/.config/fish/conf.d/js.fish
-# Qompass AI Javascript (JS) Fish Config
+# Qompass AI Fish Javascript (JS) Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
 if not set -q XDG_DATA_HOME

@@ -1,13 +1,7 @@
-# go.fish
-# Qompass AI Go Fish Config
+# /qompassai/dotfiles/.config/fish/conf.d/go.fish
+# Qompass AI Fish Go Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
-# ----------------------------------------
-# Set path to Go installation (adjust if installed elsewhere)
+####################################################
 set -gx GOROOT /usr/lib/go
-
-# Set Go workspace (change this to your Go workspace directory)
-set -gx GOPATH $HOME/go
-
-# Add Go bin directories to PATH
+set -gx GOPATH $HOME/.go
 set -gx PATH $GOROOT/bin $GOPATH/bin $PATH
-

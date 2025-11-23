@@ -31,6 +31,7 @@ if status is-interactive
     abbr -a pip3 '/usr/bin/python3.13 -m pip'
     abbr -a nv nvim
     abbr -a sn 'sudo -E nvim'
+    abbr -a sy 'systemctl --user'
     abbr -a sv 'sudo -E vim'
     abbr -a hfd 'HF_TOKEN=(pass show hf) hfdownloader'
     abbr -a hfdown 'HF_TOKEN=(pass show hf) hf download'

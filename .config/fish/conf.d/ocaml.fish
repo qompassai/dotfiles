@@ -1,4 +1,4 @@
-# /qompassai/dotfiles/.config/fish//conf.d/ocaml.fish
+# /qompassai/dotfiles/.config/fish/conf.d/ocaml.fish
 # Qompass AI Fish Ocaml Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################

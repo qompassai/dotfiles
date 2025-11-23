@@ -1,5 +1,5 @@
 # /qompassai/dotfiles/.config/fish/conf.d/scala.fish
-# Qompass AI Scala Fish Config
+# Qompass AI Fish Scala Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
 set -gx METALS_JDK_PATH "/usr/lib/jvm/java-25-openjdk/bin" 

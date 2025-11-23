@@ -4,4 +4,3 @@
 ####################################################
 set -gx XDG_DATA_DIRS $HOME/.nix-profile/share $HOME/.local/share /usr/local/share /usr/share
 set -x NIX_INCLUDE_PATH $HOME/.nix-profile/include
-
