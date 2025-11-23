@@ -1,14 +1,10 @@
+--
 add_rules("mode.debug", "mode.release")
-
 target("phaedrus")
     set_kind("static")
 
---
 -- If you want to known more usage about xmake, please see https://xmake.io
 --
--- ## FAQ
---
--- You can enter the project directory firstly before building project.
 --
 --   $ cd projectdir
 --
@@ -26,19 +22,10 @@ target("phaedrus")
 --
 --   $ xmake f -o outputdir
 --   $ xmake
---
--- 4. How to run and debug target after building project?
---
 --   $ xmake run [targetname]
 --   $ xmake run -d [targetname]
---
--- 5. How to install target to the system directory or other output directory?
---
 --   $ xmake install
 --   $ xmake install -o installdir
---
--- 6. Add some frequently-used compilation flags in xmake.lua
---
 -- @code
 --    -- add debug and release modes
 --    add_rules("mode.debug", "mode.release")
