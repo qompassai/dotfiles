@@ -1,0 +1,23 @@
+# /qompassai/dotfiles/.config/pixi/config.toml
+# Qompass AI Pixi Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#####################################################
+default-channels = [
+  "https://conda.modular.com/max-nightly",
+  "https://conda.modular.com/max",
+  "https://repo.prefix.dev/modular-community",
+  "conda-forge"
+]
+pinning-strategy = "semver"
+[mirrors]
+"https://conda.anaconda.org/conda-forge" = ["https://prefix.dev/conda-forge"]
+[repodata-config]
+disable-bzip2 = false
+disable-jlap = false
+disable-sharded = false
+disable-zstd = false
+[shell]
+change-ps1 = true
+force-activate = true
+source-completion-scripts = false
+tls-no-verify = false

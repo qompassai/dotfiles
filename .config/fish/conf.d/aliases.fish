@@ -1,3 +1,7 @@
+# /qompassai/dotfiles/.config/fish/conf.d/aliases.fish
+# Qompass AI Fish Alias Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
 abbr -a rm       'rm -Iv'
 abbr -a cp       'cp -iv'
 abbr -a mv       'mv -iv'
