@@ -2,9 +2,9 @@
 # Qompass AI Texlive Profile
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
-selected_scheme scheme-full
 collection-basic 1
 collection-bibtexextra 1
+selected_scheme scheme-full
 collection-binextra 1
 collection-fontsextra 1
 collection-fontsrecommended 1
@@ -18,7 +18,7 @@ collection-publishers 1
 collection-xetex 1
 binary_x86_64-linux 1
 TEXDIR /home/phaedrus/.local/share/texlive/2025
-TEXMFCONFIG $XDG_CONFIG_HOME/texlive/texmf-config
+TEXMFCONFIG /home/phaedrus/.config/texlive/texmf-config
 TEXMFHOME /home/phaedrus/.local/share/texmf
 TEXMFVAR /home/phaedrus/.cache/texlive/texmf-var
 TEXMFLOCAL /home/phaedrus/.local/share/texlive/texmf-local
@@ -38,6 +38,4 @@ option_autobackup 0
 option_doc 1
 option_letter 0
 option_src 0
-option_papersize a4
-option_papersize letter
 option_w32_multi_user 0

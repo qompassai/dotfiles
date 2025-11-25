@@ -21,25 +21,50 @@
 [commit]
     verbose = true
 [core]
+    abbrev = auto
     bigFileThreshold = 50m
+    checkStat = default
     commitgraph = true
+    compression = 9
+    deltaBaseCacheLimit = 256m
     editor = nvim
+    eol = native
     excludesfile = ~/.gitignore
-    fsmonitor = true
+    filemode = false
+    filesRefLockTimeout = 100
+    fscache = true
+    fsmonitor = false
+    ignoreStat = false
+    maxTreeDepth = 2048
+    multiPackIndex = true
+    packedRefsTimeout = 1000
     packedGitLimit = 512m
-    packedGitWindowSize = 512m
+    packedGitWindowSize = 1g
     pager = delta
     preloadindex = true
+    quotePath = false
+    safecrlf = true
+    sparseCheckoutCone = true
+    splitIndex = true
+    trustctime = true
     untrackedCache = true
 [checkout]
     thresholdForParallelism = 1000
     workers = -1
+[credential]
+    helper = /usr/lib/git-core/git-credential-libsecret
+    interactive = true
+    protectProtocol = true
+    sanitizePrompt = true
+[delta]
+	cacheLimit = 1g
 [diff]
     algorithm = histogram
     mnemonicPrefix = true
     renames = true
 [fetch]
     fsckobjects = false
+    parallel = 12
     prune = true
     pruneTags = true
     writeCommitGraph = true
@@ -47,28 +72,56 @@
     auto = 8000
     pruneExpire = 2.weeks.ago
     aggressiveWindow = 250
+[grep]
+    column = true
+    extendedRegexp = true
+    fallbackToNoIndex = true
+    fullName = true
+    patternType = extended
+    threads = 0
+[gpg]
+    format = ssh
+    minTrustLevel = fully
 [help]
-    autocorrect = 20
+    autocorrect = 1
+    browser = firefox
+    format = web
+    htmlPath = https://git-scm.com/docs
+[http]
+    #proxyAuthMethod = digest
+    #proxySSLCertPasswordProtected = true
+    #sslverify = true
+    version = HTTP/1.1
+	sslCAInfo = /etc/ssl/certs/ca-certificates.crt
 [index]
     skipHash = true
     version = 4
 [init]
     defaultBranch = main
     #templateDir = ~/.git-templates
+[maintenance]
+    auto = true
+    autoDetach = true
+    strategy = geometric
+[man]
+    viewer = man
 [merge]
     conflictstyle = zdiff3
     tool = meld
 [pack]
+    deltaCacheSize = 128m
     packSizeLimit = 2g
     threads = 0
     windowMemory = 5g
-    deltaCacheSize = 128m
+[protocol "file"]
+	allow = always
 [pull]
     rebase = true
 [push]
     autoSetupRemote = true
-    default = current
+    default = upstream
     followTags = true
+    gpgSign = if-asked
 [receive]
     fsckobjects = false
 [rebase]
@@ -82,6 +135,3 @@
     sort = version:refname
 [transfer]
     fsckobjects = false
-[user]
-	email = Pass-Automated-Testing-Suite@zx2c4.com
-	name = Pass Automated Testing Suite

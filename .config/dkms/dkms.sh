@@ -47,6 +47,7 @@ PKGS=(acpi_call-dkms
 	snd-usb-audio-fasttrack-dkms
 	tcp-brutal-dkms
 	tyton-dkms-git
+	util-linux-libs-aes
 	virtualbox-host-dkms
 	vhba-module-dkms
 	vtunerc-dkms
