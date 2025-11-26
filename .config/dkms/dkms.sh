@@ -34,6 +34,7 @@ PKGS=(acpi_call-dkms
 	msi-psu-dkms
 	nvidia-mft
 	ovpn-dco-dkms
+	pat-dealloc-dkms
 	pfring-dkms
 	r8125-dkms
 	rapiddisk-dkms
@@ -41,6 +42,7 @@ PKGS=(acpi_call-dkms
 	rtw89-dkms-git
 	rtw89bt-dkms-git
 	scap-dkms
+	scst-dkms
 	smartcam-dkms
 	snd-hdspe-dkms
 	snd-pcsp-dkms

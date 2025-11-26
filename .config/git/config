@@ -2,6 +2,24 @@
 # Qompass AI Git Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
+# Reference: https://git-scm.com/docs/git-config
+[advice]
+    addEmptyPathspec = false
+    addIgnoredFile = false
+    detachedHead = false
+    pushAlreadyExists = false
+    pushFetchFirst = false
+    pushNeedsForce = false
+    pushNonFFCurrent = false
+    pushNonFFMatching = false
+    pushRefNeedsUpdate = false
+    pushUpdateRejected = false
+    nestedTag = false
+    statusAheadBehind = false
+    statusHints = false
+    statusUoption = false
+    submodulesNotUpdated = true
+    waitingForEditor = false
 [alias]
     br = branch
     ci = commit
@@ -11,17 +29,63 @@
     rebasei = rebase -i
     st = status
     fixup = commit --fixup
+[blame]
+    coloring = highlightRecent
+    date = iso
+
+    ignoreRevsFile = .git-blame-ignore-revs
+    markUnblamableLines = true
+    markIgnoredLines = true
+    showEmail = true
+    showRoot = true
 [branch]
+    autoSetupMerge = always
+    autoSetupRebase = remote
     sort = -committerdate
+    sortBy = committerdate
+[branch "main"]
+    merge = refs/heads/main
+    remote = origin
+    rebase = true
+[checkout]
+    defaultRemote = origin
+    guess = true
+    workers = 0
+    thresholdForParallelism = 200
+[clean]
+    requireForce = true
 [color]
     branch = auto
     diff = auto
     status = auto
     ui = auto
+[clone]
+    defaultRemoteName = origin
+    rejectShallow = false
+[color]
+    advice = auto
+[column]
+    ui = auto,column,dense
+    branch = auto
+    clean = auto
+    status = auto
+    tag = auto
 [commit]
+    cleanup = strip
     verbose = true
+    gpgsign = true
+    status = true
+    #template = ~/.config/git/commit-template.txt
+    verbose = true
+[commitGraph]
+    changedPaths = true
+    changedPathsVersion = 2
+    generationVersion = 2
+    maxNewFilters = 64
 [core]
     abbrev = auto
+    askPass = /usr/bin/pass-sshaskpass
+    autocrlf = input
     bigFileThreshold = 50m
     checkStat = default
     commitgraph = true
@@ -34,20 +98,26 @@
     filesRefLockTimeout = 100
     fscache = true
     fsmonitor = false
+    fsmonitorHookVersion = 2
+    ignoreCase = false
     ignoreStat = false
     maxTreeDepth = 2048
     multiPackIndex = true
     packedRefsTimeout = 1000
     packedGitLimit = 512m
     packedGitWindowSize = 1g
-    pager = delta
+    protectHFS = true
+    protectNTFS = true
+    pager = nvimpager
     preloadindex = true
     quotePath = false
     safecrlf = true
     sparseCheckoutCone = true
     splitIndex = true
+    symlinks = true
     trustctime = true
     untrackedCache = true
+    whitespace = blank-at-eol,space-before-tab,blank-at-eof,-cr-at-eol,tabwidth=4
 [checkout]
     thresholdForParallelism = 1000
     workers = -1
@@ -62,16 +132,25 @@
     algorithm = histogram
     mnemonicPrefix = true
     renames = true
+[diff "sops"]
+    textconv = "sops --decrypt"
 [fetch]
     fsckobjects = false
     parallel = 12
     prune = true
     pruneTags = true
+    recurseSubmodules = on-demand
     writeCommitGraph = true
+[filter "sops"]
+    clean = "sops --encrypt --input-type yaml --output-type yaml /dev/stdin"
+    smudge = "sops --decrypt /dev/stdin"
+    required = true
 [gc]
+    aggressiveWindow = 250
     auto = 8000
     pruneExpire = 2.weeks.ago
-    aggressiveWindow = 250
+    rerereResolved = 60
+    rerereUnresolved = 15
 [grep]
     column = true
     extendedRegexp = true
@@ -80,28 +159,40 @@
     patternType = extended
     threads = 0
 [gpg]
-    format = ssh
+    format = openpgp
     minTrustLevel = fully
+    program = gpg
+[gpg "ssh"]
+	defaultKeyCommand = ssh-add -L
+
 [help]
     autocorrect = 1
     browser = firefox
     format = web
     htmlPath = https://git-scm.com/docs
 [http]
-    #proxyAuthMethod = digest
-    #proxySSLCertPasswordProtected = true
-    #sslverify = true
+    proxyAuthMethod = digest
+    proxySSLCertPasswordProtected = true
+    sslCAInfo = /etc/ssl/certs/ca-certificates.crt
+    sslverify = true
     version = HTTP/1.1
-	sslCAInfo = /etc/ssl/certs/ca-certificates.crt
+
 [index]
+    recordOffset = true
     skipHash = true
     version = 4
 [init]
     defaultBranch = main
     #templateDir = ~/.git-templates
+[log]
+    date = relative
+    decorate = auto
 [maintenance]
     auto = true
     autoDetach = true
+    commitGraph = true
+    looseObjects = true
+    packRefs = true
     strategy = geometric
 [man]
     viewer = man
@@ -113,25 +204,63 @@
     packSizeLimit = 2g
     threads = 0
     windowMemory = 5g
+[protocol]
+    allow = user
+    version = 2
 [protocol "file"]
-	allow = always
+    allow = always
+[protocol "git"]
+    allow = always
+[protocol "http"]
+    allow = always
+[protocol "https"]
+    allow = always
+[protocol "ssh"]
+    allow = always
 [pull]
+    autostash = true
+    ff = only
     rebase = true
 [push]
     autoSetupRemote = true
     default = upstream
     followTags = true
-    gpgSign = if-asked
+    gpgSign = false
+    negotiate = true
+    useBitmaps = true
+    useForceIfIncludes = true
+[rebase]
+    abbreviateCommands = false
+    advertiseAtomic = true
+    autogc = true
+    autoSquash = true
+    autoStash = true
+    backend = merge
+    denyCurrentBranch = refuse
+    denyDeletes = true
+    denyDeleteCurrent = true
+    denyNonFastForwards = true
+    forkPoint = true
+    missingCommitsCheck = warn
+    rescheduleFailedExec = true
+    rebaseMerges = no-rebase-cousins
+    stat = true
+    updateRefs = true
 [receive]
     fsckobjects = false
-[rebase]
-    autosquash = true
-    autostash = true
-    updateRefs = true
+[repack]
+    writeBitmaps = true
 [rerere]
     autoupdate = true
     enabled = true
+[status]
+    submoduleSummary = true
+[submodule]
+    recurse = true  
 [tag]
     sort = version:refname
 [transfer]
+    bundleURI = true
     fsckobjects = false
+[user]
+	signingkey = 0xBA8D40BF292A6CD9
