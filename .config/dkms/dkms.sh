@@ -5,15 +5,19 @@
 # ----------------------------------------
 PKGS=(acpi_call-dkms
 	akvcam-dkms
+	boost174
 	blackmagic
 	broadcom-wl-dkms
 	chipsec-dkms-git
 	corefreq-dkms
 	cryptodev-linux-dkms
+	cuda-boost-bypass
+	dm-sflc-dkms
 	drbd-dkms
 	droidcam-dkms
-	dm-sflc-dkms
+	dstep
 	exanic-dkms
+	fortify-headers
 	gasket-dkms-git
 	haxm-dkms-git
 	hp_vendor-dkms

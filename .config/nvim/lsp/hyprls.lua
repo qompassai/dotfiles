@@ -2,6 +2,7 @@
 -- Qompass AI HyprLS LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
+-- go install github.com/hyprland-community/hyprls/cmd/hyprls@latest
 vim.lsp.config['hyprls'] = {
   cmd = { 'hyprls' },
   filetypes = { 'hyprlang', 'hypr' },

@@ -44,7 +44,7 @@
 	"sortby": "votes",
 	"sudobin": "sudo",
 	"sudoflags": "",
-	"sudoloop": true,
+	"sudoloop": false,
 	"timeupdate": true,
 	"useask": false,
 	"version": "12.5.2"
