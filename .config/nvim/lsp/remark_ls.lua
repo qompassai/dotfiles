@@ -1,7 +1,7 @@
 -- /qompassai/Diver/lsp/remark_ls.lua
--- Qompass AI - [Add description here]
+-- Qompass AI Remark LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
--- ----------------------------------------
+-- --------------------------------------------------
 vim.lsp.config['remark_ls'] = {
   cmd = { 'remark-language-server', '--stdio' },
   filetypes = { 'markdown', 'mdx' },
@@ -15,4 +15,23 @@ vim.lsp.config['remark_ls'] = {
     '.remarkrc.yaml',
     '.remarkignore',
   },
+  single_file_support = true,
+  settings = {
+    remark = {
+      plugins         = {
+        {
+          'remark-preset-lint-recommended',
+          {}
+        },
+        { 'remark-lint-no-dead-urls',
+          {
+            skipOffline = true
+          }
+        },
+      },
+      validate        = true,
+      run             = 'onType',
+      organizeImports = false,
+    },
+  }
 }

@@ -12,3 +12,4 @@ if command -q zoxide
     zoxide init fish | source
 end
 set fish_function_path $fish_function_path $XDG_DATA_HOME/omf/pkg/foreign-env/functions
+fish_add_path ~/.local/bin

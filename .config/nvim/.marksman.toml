@@ -1,14 +1,34 @@
 # /qompassai/dotfiles/.config/marksman/.marksman.toml
 # Qompass AI Marksman Config
+[core]
+root_path = "."
+include = ["**/*.md", "**/*.mdx"]
+exclude = [
+  ".git/**",
+  "node_modules/**",
+  "dist/**",
+  "build/**",
+  ".obsidian/**",
+  ".venv/**",
+]
+follow_links = true
+[index]
+build_on_save = true
+build_on_change = true
+  markdown_extensions = [
+  "wiki-links",
+  "front-matter",
+  "task-lists",
+  "strikethrough",
+  "tables",
+]
 [workspace]
 include = ["**/*.md", "**/*.markdown"]
 exclude = ["node_modules/**", "**/tmp/**"]
-
 [diagnostics]
 enabled = true
 ignored = ["frontmatter-missing"]
 level = "warning"
-
 [server]
 completion = true
 hover = true
