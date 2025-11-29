@@ -22,12 +22,10 @@ set -x XDG_LIB_HOME           $HOME/.local/lib
 set -x XDG_MUSIC_DIR          $HOME/.Music
 set -x XDG_PICTURES_DIR       $HOME/.Pictures
 set -x XDG_PUBLICSHARE_DIR    $HOME/.Public
+set -x  XDG_RUNTIME_DIR       /run/user/1000
 set -x XDG_SESSION_DESKTOP    Hyprland
 set -x XDG_SESSION_TYPE       wayland
 set -x XDG_STATE_HOME         $HOME/.local/state
 set -x XDG_TEMPLATES_DIR      $HOME/.Templates
 set -x XDG_UTILS_DEBUG_LEVEL  3
 set -x XDG_VIDEOS_DIR         $HOME/.Videos
-if not set -q XDG_RUNTIME_DIR
-    set -x XDG_RUNTIME_DIR "/run/user/(id -u)"
-end
