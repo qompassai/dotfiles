@@ -3,13 +3,13 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ----------------------------------------
 ---@type vim.lsp.Config
-vim.lsp.config['efm-langserver'] = {
+vim.lsp.config["efm-langserver"] = {
   default_config = {
-    cmd = { 'efm-langserver' },
+    cmd = { "efm-langserver" },
     filetypes = {
-      'cpp'
+      "cpp",
     },
-    root_markers = { '.git' },
+    root_markers = { ".git" },
     single_file_support = true,
   },
 }

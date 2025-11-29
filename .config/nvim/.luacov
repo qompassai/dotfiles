@@ -2,7 +2,6 @@
 -- Qompass AI Diver Luacov Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-
 return {
   statsfile = "luacov.stats.out",
   reportfile = "luacov.report.out",
@@ -50,6 +49,6 @@ return {
   includeuntestedfiles = false,
   savestepsize = 100,
   tick = false,
-  -- reporter = "html",
-  -- reportfile = "luacov.report.html",
+   reporter = "html",
+   reportfile = "luacov.report.html",
 }

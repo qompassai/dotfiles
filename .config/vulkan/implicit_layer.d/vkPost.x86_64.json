@@ -1,0 +1,21 @@
+{
+  "file_format_version" : "1.0.0",
+  "layer" : {
+    "name": "VK_LAYER_VKPOST_post_processing",
+    "type": "GLOBAL",
+    "library_path": "libvkpost.so",
+    "api_version": "1.3.223",
+    "implementation_version": "1",
+    "description": "a post processing layer",
+    "functions": {
+      "vkGetInstanceProcAddr": "vkPost_GetInstanceProcAddr",
+      "vkGetDeviceProcAddr":   "vkPost_GetDeviceProcAddr"
+    },
+    "enable_environment": {
+      "ENABLE_VKPOST": "1"
+    },
+    "disable_environment": {
+      "DISABLE_VKPOST": "1"
+    }
+  }
+}

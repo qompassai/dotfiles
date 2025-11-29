@@ -3,14 +3,14 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -----------------------------------------------------
 
-local util = require 'lspconfig.util'
+local util = require("lspconfig.util")
 return {
   default_config = {
-    cmd = { 'cmake-language-server' },
-    filetypes = { 'cmake' },
+    cmd = { "cmake-language-server" },
+    filetypes = { "cmake" },
     single_file_support = true,
     init_options = {
-      buildDirectory = 'build',
+      buildDirectory = "build",
     },
   },
 }

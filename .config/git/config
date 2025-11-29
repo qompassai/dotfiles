@@ -77,7 +77,6 @@
     maxNewFilters                 = 64
 [core]
     abbrev                        = auto
-    askPass                       = /usr/bin/pass-sshaskpass
     autocrlf                      = input
     bigFileThreshold              = 50m
     checkStat                     = default
@@ -112,8 +111,8 @@
     untrackedCache                = true
     whitespace                    = blank-at-eol,space-before-tab,blank-at-eof,-cr-at-eol,tabwidth=4
 [credential]
-    helper                        = /usr/lib/git-core/git-credential-libsecret
-    interactive                   = true
+	helper                        = !pass-git-helper $@
+    interactive                   = false
     protectProtocol               = true
     sanitizePrompt                = true
 [diff]
@@ -124,7 +123,7 @@
     context                       = 3
     dirstat                       = changes,noncumulative,3
     dstPrefix                     = b/
-#   external             =
+#   external                      =
     ignoreSubmodules              = untracked
     indentHeuristic               = true
     interHunkContext              = 0
@@ -288,6 +287,18 @@
     writeBitmapHashCache          = true
     writeBitmapLookupTable        = false
     writeReverseIndex             = true
+[protocol]
+    allow                         = user
+    version                       = 2
+[protocol "file"]
+    allow                         = always
+[protocol "https"]
+    allow                         = always
+[protocol "ssh"]
+allow                             = always
+[protocol "http"]
+allow                             = always
+
 [push]
     autoSetupRemote               = true
     default                       = simple

@@ -295,7 +295,8 @@ vim.lsp.config('*', {
   autostart = true,
   single_file_support = true,
   flags = {
-    debounce_text_changes = 150
+    debounce_text_changes = 150,
+    exit_timeout = 500,
   },
   workspace_required = false,
   capabilities = vim.tbl_deep_extend("force",
@@ -392,7 +393,7 @@ vim.diagnostic.config({
     [vim.diagnostic.severity.HINT] = 'DiagnosticHint',
   },
 })
-vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', "InsertLeave" }, {
   callback = function()
     vim.lsp.codelens.refresh()
   end,
