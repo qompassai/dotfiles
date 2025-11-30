@@ -2,8 +2,11 @@
 -- Qompass AI Code Spell LSP Spec (cspell-lsp)
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
-vim.lsp.config["cspell-lsp"] = {
-  cmd = { "cspell-lsp", "--stdio" },
+vim.lsp.config['cspell-lsp'] = {
+  cmd = {
+    "cspell-lsp",
+    "--stdio"
+  },
   filetypes = {
     "lua",
     "vim",

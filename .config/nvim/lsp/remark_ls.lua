@@ -3,8 +3,13 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 vim.lsp.config["remark_ls"] = {
-  cmd = { "remark-language-server", "--stdio" },
-  filetypes = { "markdown", "mdx" },
+  cmd = {
+    "remark-language-server", "--stdio"
+  },
+  filetypes = {
+    "markdown",
+    "mdx"
+  },
   root_markers = {
     ".remarkrc",
     ".remarkrc.json",
@@ -15,7 +20,6 @@ vim.lsp.config["remark_ls"] = {
     ".remarkrc.yaml",
     ".remarkignore",
   },
-  single_file_support = true,
   settings = {
     remark = {
       plugins = {
@@ -23,9 +27,12 @@ vim.lsp.config["remark_ls"] = {
           "remark-preset-lint-recommended",
           {},
         },
-        { "remark-lint-no-dead-urls", {
-          skipOffline = true,
-        } },
+        {
+          "remark-lint-no-dead-urls",
+          {
+            skipOffline = true,
+          }
+        },
       },
       validate = true,
       run = "onType",

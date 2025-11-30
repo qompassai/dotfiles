@@ -1,7 +1,5 @@
-# /qompassai/dotfiles/.config/fish/conf.d/python.fish
-# Qompass AI Fish Python Config
+# /qompassai/dotfiles/.config/fish/conf.d/perl.fish
+# Qompass AI Fish Perl Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
-if command -q pyenv
-    pyenv init - | source
-end
+#set -gx PYTEST_DISABLE_PLUGIN_AUTOLOAD 1

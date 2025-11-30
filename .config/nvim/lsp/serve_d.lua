@@ -2,17 +2,106 @@
 -- Qompass AI Serve-D LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ----------------------------------------
-vim.lsp.config["serve_d"] = {
-  cmd = { "serve-d" },
-  filetypes = { "d", "dml" },
-  root_dir = vim.fn.getcwd,
-  single_file_support = true,
-  init_options = {
-    workspaceFolders = {
-      vim.fn.getcwd(),
+vim.lsp.config['serve_d'] = {
+  default_config = {
+    cmd = {
+      'serve-d',
+      '--provide',
+      'http',
+      '--require',
+      'served:workspace-d',
     },
-    enableDmdCompletion = true,
-    enableDubLinting = true,
+    filetypes = {
+      'd',
+      'di',
+      'dpp',
+    },
+    root_markers = {
+      '.git',
+      'dub.json',
+      'dub.sdl',
+      'meson.build',
+      'package.json',
+    },
+    init_options = {
+    },
   },
-  settings = {},
+  codeActionProvider = {
+    codeActionKinds = {
+      '',
+      'quickfix',
+      'refactor',
+      'refactor.extract',
+      'refactor.rewrite',
+      'source',
+      'source.organizeImports',
+    },
+    resolveProvider = false,
+  },
+  colorProvider = false,
+  completionProvider = {
+    resolveProvider = true,
+    triggerCharacters = {
+      '.',
+      ':',
+      '(',
+      ',',
+      '"',
+      "'",
+      '/',
+      '>',
+    },
+  },
+  definitionProvider = true,
+  declarationProvider = true,
+  documentFormattingProvider = true,
+  documentHighlightProvider = true,
+  documentRangeFormattingProvider = true,
+  documentSymbolProvider = true,
+  hoverProvider = true,
+  implementationProvider = false,
+  referencesProvider = true,
+  renameProvider = true,
+  semanticTokensProvider = {
+    full = true,
+    legend = {
+      tokenModifiers = {
+        'declaration',
+        'definition',
+        'readonly',
+        'static',
+        'deprecated',
+        'documentation',
+      },
+      tokenTypes = {
+        'class',
+        'comment',
+        'enum',
+        'enumMember',
+        'event',
+        'function',
+        'interface',
+        'keyword',
+        'method',
+        'namespace',
+        'number',
+        'operator',
+        'parameter',
+        'property',
+        'string',
+        'struct',
+        'type',
+        'typeParameter',
+        'variable',
+      },
+    },
+    range = true,
+  },
+  signatureHelpProvider = {
+    triggerCharacters = {
+      '(',
+      ',',
+    },
+  },
+  workspaceSymbolProvider = true,
 }

@@ -6,7 +6,11 @@ vim.lsp.config["jq_ls"] = {
   cmd = { "jq-lsp" },
   filetypes = { "jq" },
   codeActionProvider = {
-    codeActionKinds = { "", "quickfix", "refactor" },
+    codeActionKinds = {
+      "",
+      "quickfix",
+      "refactor"
+    },
     resolveProvider = true,
   },
   colorProvider = false,
@@ -14,5 +18,4 @@ vim.lsp.config["jq_ls"] = {
   settings = {
     jq = {},
   },
-  single_file_support = true,
 }

@@ -1,12 +1,22 @@
 -- /qompassai/Diver/lsp/hydra_ls.lua
--- Qompass AI Hydra YAML LSP Spec (hydra-lsp)
+-- Qompass AI Hydra LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
 vim.lsp.config["hydra"] = {
-  cmd = "hydra-lsp",
-  filetypes = { "yaml", "yml", "hydra" },
+  cmd = {
+    'hydra-lsp'
+  },
+  filetypes = {
+    "yaml",
+    "yml",
+    "hydra"
+  },
   codeActionProvider = {
-    codeActionKinds = { "", "quickfix", "refactor" },
+    codeActionKinds = {
+      "",
+      "quickfix",
+      "refactor"
+    },
     resolveProvider = true,
   },
   colorProvider = false,
@@ -34,11 +44,19 @@ vim.lsp.config["hydra"] = {
     },
     range = true,
   },
-  root_markers = { ".git", ".hydra", "conf", "config" },
+  root_markers = {
+    ".git",
+    ".hydra",
+    "conf",
+    "config"
+  },
   init_options = {
     pythonPath = nil,
     hydra = {
-      searchPaths = { "conf", "configs" },
+      searchPaths = {
+        "conf",
+        "configs"
+      },
       mainModule = nil,
     },
   },
@@ -56,5 +74,4 @@ vim.lsp.config["hydra"] = {
       },
     },
   },
-  single_file_support = true,
 }
