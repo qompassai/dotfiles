@@ -2,9 +2,8 @@
 -- Qompass AI Diver Luacheck Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-
 return {
-	std = "lua5.1+luajit+pandoc",
+	std = 'lua5.1+luajit+pandoc',
 	read_globals = {
 		"vim",
 		cache = true

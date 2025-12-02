@@ -20,4 +20,3 @@ disable-zstd = false
 change-ps1 = true
 force-activate = true
 source-completion-scripts = false
-tls-no-verify = false
