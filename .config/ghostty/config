@@ -7,6 +7,7 @@
 alpha-blending = native
 async-backend = auto
 auto-update = check
+auto-update-channel = tip
 background = #000000
 background-blur = 0
 background-opacity = 0.25
@@ -22,6 +23,7 @@ config-file = keybinds.conf
 config-file = linux.conf
 config-file = mouse.conf
 copy-on-select = true
+freetype-load-flags = autohint
 grapheme-width-method = unicode
 image-storage-limit = 4294967295
 quick-terminal-animation-duration = 0.2
