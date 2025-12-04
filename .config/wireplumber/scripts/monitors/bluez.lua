@@ -1,35 +1,23 @@
 -- WirePlumber
 --
--- Copyright © 2021 Collabora Ltd.
---    @author George Kiagiadakis <george.kiagiadakis@collabora.com>
---
--- SPDX-License-Identifier: MIT
-
 COMBINE_OFFSET = 64
 LOOPBACK_SOURCE_ID = 128
 DEVICE_SOURCE_ID = 0
-
 cutils = require ("common-utils")
 log = Log.open_topic ("s-monitors")
-
 config = {}
 config.seat_monitoring = Core.test_feature ("monitor.bluez.seat-monitoring")
 config.properties = Conf.get_section_as_properties ("monitor.bluez.properties")
 config.rules = Conf.get_section_as_json ("monitor.bluez.rules", Json.Array {})
 
--- This is not a setting, it must always be enabled
 config.properties["api.bluez5.connection-info"] = true
 
--- Properties used for previously creating a SCO source node. key: SPA device id
 sco_source_node_properties = {}
-
-
 devices_om = ObjectManager {
   Interest {
-    type = "device",
+    type = 'device',
   }
 }
-
 nodes_om = ObjectManager {
   Interest {
     type = "node",
@@ -285,19 +273,12 @@ function createNode(parent, id, type, factory, properties)
     properties["priority.session"] = priority
   end
 
-  -- autoconnect if it's a stream
   if properties["api.bluez5.profile"] == "headset-audio-gateway" or
      properties["api.bluez5.profile"] == "bap-sink" or
      factory:find("a2dp.source") or factory:find("media.source") then
     properties["node.autoconnect"] = true
   end
-
-  -- apply properties from the rules in the configuration file
   properties = JsonUtils.match_rules_update_properties (config.rules, properties)
-
-  -- create the node; bluez requires "local" nodes, i.e. ones that run in
-  -- the same process as the spa device, for several reasons
-
   if properties["api.bluez5.set.leader"] then
     local combine = createSetNode(parent, id, type, factory, properties)
     parent:store_managed_object(id + COMBINE_OFFSET, combine)
@@ -349,7 +330,6 @@ function createDevice(parent, id, type, factory, properties)
     if not properties["device.icon-name"] then
       local icon = nil
       local icon_map = {
-        -- form factor -> icon
         ["microphone"] = "audio-input-microphone",
         ["webcam"] = "camera-web",
         ["handset"] = "phone",
@@ -367,14 +347,11 @@ function createDevice(parent, id, type, factory, properties)
       properties["device.icon-name"] = icon .. (b and ("-" .. b) or "")
     end
 
-    -- initial profile is to be set by policy-device-profile.lua, not spa-bluez5
     properties["bluez5.profile"] = "off"
     properties["spa.object.id"] = id
 
-    -- apply properties from the rules in the configuration file
     properties = JsonUtils.match_rules_update_properties (config.rules, properties)
 
-    -- create the device
     device = SpaDevice(factory, properties)
     if device then
       device:connect("create-object", createNode)
@@ -385,23 +362,18 @@ function createDevice(parent, id, type, factory, properties)
       return
     end
   end
-
   log:info(parent, string.format("%d, %s (%s): %s",
         id, properties["device.description"],
         properties["api.bluez5.address"], properties["api.bluez5.connection"]))
-
-  -- activate the device after the bluez profiles are connected
   if properties["api.bluez5.connection"] == "connected" then
     device:activate(Feature.SpaDevice.ENABLED | Feature.Proxy.BOUND)
   else
     device:deactivate(Features.ALL)
   end
 end
-
 function removeDevice(parent, id)
   sco_source_node_properties[id] = nil
 end
-
 function createMonitor()
   local monitor = SpaDevice("api.bluez5.enum.dbus", config.properties)
   if monitor then
@@ -413,10 +385,8 @@ function createMonitor()
     return nil
   end
   monitor:activate(Feature.SpaDevice.ENABLED)
-
   return monitor
 end
-
 function CreateDeviceLoopbackSource (dev_name, dec_desc, dev_id)
   local args = Json.Object {
     ["capture.props"] = Json.Object {
@@ -460,20 +430,14 @@ function checkProfiles (dev)
   local device_id = dev["bound-id"]
   local props = dev.properties
   local device_spa_id = tonumber(props["spa.object.id"])
-
-  -- Don't create loopback source device if autoswitch is disabled
   if not Settings.get_boolean ("bluetooth.autoswitch-to-headset-profile") then
     return
   end
-
-  -- Get the associated BT SpaDevice
   local internal_id = tostring (props["spa.object.id"])
   local spa_device = monitor:get_managed_object (internal_id)
   if spa_device == nil then
     return
   end
-
-  -- Ignore devices that don't support both A2DP sink and HSP/HFP profiles
   local has_a2dpsink_profile = false
   local has_headset_profile = false
   for p in dev:iterate_params("EnumProfile") do
@@ -487,8 +451,6 @@ function checkProfiles (dev)
   if not has_a2dpsink_profile or not has_headset_profile then
     return
   end
-
-  -- Create the loopback device if never created before
   local loopback = spa_device:get_managed_object (LOOPBACK_SOURCE_ID)
   if loopback == nil then
     local dev_name = props["api.bluez5.address"] or props["device.name"]

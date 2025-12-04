@@ -93,7 +93,7 @@
 
     gradlels
 
-    groovyls
+   * groovyls
 
     guilels
 
@@ -111,9 +111,9 @@
 
    * jinjalsp
 
-    jsonnetls
+  *  jsonnetls
 
-    julials
+ *   julials
 
    * just
 
@@ -125,37 +125,37 @@
 
    * mlirlspserver
 
-    mlirpdlllspserver
+  *  mlirpdlllspserver
 
    * muon
 
- *   nelualsp
+    nelualsp
 
   *  neocmake
 
   --  nextls deprecated
 
-    nickells
+  *  nickells
 
    * nomadlsp
 
-    nushell
+  *  nushell
 
-    omnisharp
+   * omnisharp
 
    * openscadlsp
 
-    pasls
+   * pasls
 
-    perlls
+   * perlls
 
-    perlnavigator
+   * perlnavigator
 
-    perlpls
+   * perlpls
 
     pico8ls
 
-    please
+  *  please
 
     pli
 
@@ -173,27 +173,27 @@
 
     rlanguageserver
 
-    regal
+   * regal
 
-    regols
+   * regols
 
     rls
 
-    robotcode
+   * robotcode
 
-    robotframeworkls
+   * robotframeworkls
 
-    rpmspec
+  *  rpmspec
 
     saltls
 
-    scry
+  --  scry --deprecated, became crystalline
 
-    sixtyfps
+   -- sixtyfps -- became slint
 
-    slangd
+   * slangd
 
-    slintlsp
+  *  slintlsp
 
     snakeskinls
 
@@ -213,11 +213,11 @@
 
     spectral
 
-    sqls
+   * sqls
 
-    sqlruff
+   * sqruff
 
-    standardrb
+   * standardrb
 
     starlarkrust
 
@@ -229,11 +229,11 @@
 
   *  stylelintlsp
 
-    svelte
+   * svelte
 
     svlantserver
 
-    tailwindcss
+   * tailwindcss
 
     tblgenlspserver
 
@@ -241,7 +241,7 @@
 
     templ
 
-    textlsp
+  *  textlsp
 
     tflint
 
@@ -249,7 +249,7 @@
 
     tombi
 
-    tspserver
+   * tspserver
 
     ttags
 
@@ -271,9 +271,9 @@
 
     vanalyzer
 
-    vacuum
+   * vacuum
 
-    vectorcodeserver
+  *  vectorcodeserver
 
     veridian
 
@@ -281,9 +281,9 @@
 
     vls
 
-    vimls
+  *  vimls
 
-    vtsls
+  #  vtsls
 
     vuels
 
@@ -291,4 +291,4 @@
 
     yls
 
-    zk
+   * zk
