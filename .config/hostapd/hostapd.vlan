@@ -1,0 +1,9 @@
+# /qompassai/dotfiles/.config/hostapd/hostapd.vlan
+# Qompass AI Hostapd Vlan Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#####################################################
+1	vlan1
+2	vlan2
+3	vlan3
+100	guest
+*	vlan#

@@ -1,0 +1,9 @@
+# /qompassai/dotfiles/.config/default/arch-efiboot
+# Qompass AI Default Arch-EfiBoot Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+BOOTDIR="/boot"
+CMDLINE_DIR="/boot"
+ESP="/boot"
+EFI_DIR="/boot/EFI/"
+SETNEXT=0

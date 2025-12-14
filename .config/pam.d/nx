@@ -1,0 +1,10 @@
+#%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/nx
+# Qompass AI Pam Daemon No Machine (NX) Daemon Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
+auth       sufficient    pam_fprintd.so
+auth       include       su
+account    include       su
+password   include       su
+session    include       su

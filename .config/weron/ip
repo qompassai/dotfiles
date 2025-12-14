@@ -1,0 +1,21 @@
+# /qompassai/dotfiles/.config/weron/ip
+# Qompass AI Weron IP Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+WERON_COMMUNITY="$(pass show weron/community)"
+WERON_DEV="$(pass show weron/dev)"
+WERON_FORCE_RELAY="$(pass show weron/force_delay)"
+username:credential@turn:global.turn.twilio.com:3478?transport=tcp) (default
+[stun:stun.l.google.com:19302])
+WERON_ICE="$(pass show weron/ice)"
+WERON_ID_CHANNEL="$(pass show weron/channel)"
+WERON_IPS="$(pass show weron/ips)"
+WERON_KEY="$(pass show weron/ipkey)"
+WERON_KICKS=
+WERON_MAX_RETRIES=5
+WERON_PARALLEL=
+WERON_PASSWORD="$(pass show weron/pass)"
+WERON_RADDR="$(pass show weron/raddr)"
+WERON_STATIC="$(pass show weron/static)"
+WERON_TIMEOUT=300
+WERON_VERBOSE=true

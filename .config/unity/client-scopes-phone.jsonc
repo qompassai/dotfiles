@@ -1,0 +1,11 @@
+// /qompassai/dotfiles/.config/client-scopes-phone.jsonc
+// Qompass AI Unit Client Scopes Phone Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+ "unity-scope-click": ["applications-click.scope", "applications-non-click.scope"],
+ "unity-scope-mediascanner": ["music-mediascanner.scope", "video-mediascanner.scope"],
+ "unity-scope-onlinemusic": ["music-onlinemusic.scope"],
+ "unity-scope-video-remote": ["video-remote.scope"],
+ "unity-scope-home": ["home.scope", "applications.scope", "books.scope", "boxes.scope", "calendar.scope", "code.scope", "files.scope", "graphics.scope", "help.scope", "info.scope", "more_suggestions.scope", "music.scope", "news.scope", "notes.scope", "photos.scope", "recipes.scope", "reference.scope", "searchin.scope", "video.scope", "weather.scope", "web.scope"]
+}

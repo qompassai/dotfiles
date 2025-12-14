@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/udev/rules.d/60-dotool.rules
+# Qompass AI UDev DoTool Rules Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+KERNEL=="uinput", GROUP="input", MODE="0660", OPTIONS+="static_node=uinput"

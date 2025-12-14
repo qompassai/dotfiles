@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+# /qompassai/dotfiles/.config/ufw/after.ini
+# Qompass AI UFW After Init Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#####################################################
+set -e
+case "$1" in
+start)
+    ;;
+stop)
+    ;;
+status)
+    ;;
+flush-all)
+    ;;
+*)
+    echo "'$1' not supported"
+    echo "Usage: after.init {start|stop|flush-all|status}"
+    ;;
+esac

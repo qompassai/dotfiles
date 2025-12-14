@@ -1,0 +1,6 @@
+# /qompassai/dotfiles/.config/drbl/client-extra-service.conf
+# Qompass AI Client Extra Service Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+# service_extra_added="webmin apmd"
+service_extra_added=""

@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/libibverbs.d/bnxt_re.driver
+# Qompass AI Libibverbs.d Broadcom NetXtreme-E RoCE Driver Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+driver bnxt_re

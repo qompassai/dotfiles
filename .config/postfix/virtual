@@ -1,0 +1,17 @@
+#        /etc/postfix/main.cf:
+#            virtual_alias_maps = hash:/etc/postfix/virtual
+# 
+#        /etc/postfix/virtual:
+#            virtual-alias.domain    anything (right-hand content does not matter)
+#            postmaster@virtual-alias.domain postmaster
+#            user1@virtual-alias.domain      address1
+#            user2@virtual-alias.domain      address2, address3
+#        virtual_alias_maps ($virtual_maps)
+#        virtual_alias_domains ($virtual_alias_maps)
+#        propagate_unmatched_extensions (canonical, virtual)
+#        inet_interfaces (all)
+#        mydestination  ($myhostname,  localhost.$mydomain,  local-
+#        host)
+#        myorigin ($myhostname)
+#        owner_request_special (yes)
+#        proxy_interfaces (empty)

@@ -1,0 +1,34 @@
+# /qompassai/dotfiles/.config/nvidia-container-toolkit/config.toml
+# Qompass AI Nvidia Container Toolkit Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+# References: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
+accept-nvidia-visible-devices-as-volume-mounts = false
+accept-nvidia-visible-devices-envvar-when-unprivileged = true
+disable-require = false
+supported-driver-capabilities = "compat32,compute,display,graphics,ngx,utility,video"
+swarm-resource = "DOCKER_RESOURCE_GPU"
+[nvidia-container-cli]
+debug = "${XDG_STATE_HOME}/nvidia-container-toolkit.log"
+environment = []
+ldconfig = "@/sbin/ldconfig"
+load-kmods = true
+no-cgroups = true
+path = "/usr/bin/nvidia-container-cli"
+[nvidia-container-runtime]
+debug = "${XDG_STATE_HOME}/nvidia-container-runtime.log"
+log-level = "info"
+mode = "auto"
+runtimes = ["docker-runc", "runc", "crun"]
+[nvidia-container-runtime.modes]
+[nvidia-container-runtime.modes.cdi]
+annotation-prefixes = ["cdi.k8s.io/"]
+default-kind = "nvidia.com/gpu"
+spec-dirs = ["${XDG_CONFIG_HOME}/cdi", "/etc/cdi", "/var/run/cdi"]
+[nvidia-container-runtime.modes.csv]
+mount-spec-path = "${XDG_CONFIG_HOME}/nvidia-container-toolkit/host-files-for-container.d"
+[nvidia-container-runtime-hook]
+path = "nvidia-container-runtime-hook"
+skip-mode-detection = false
+[nvidia-ctk]
+path = "nvidia-ctk"

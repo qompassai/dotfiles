@@ -1,0 +1,17 @@
+# /qompassai/dotfiles/.config/netctl/macvlan-static
+# Qompass AI NetCtl MacVLan-Static Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+Description='Qompass AI Virtual LAN with random MAC address on interface eth0'
+Interface=mac0
+Connection=macvlan
+BindsToInterfaces=eth0
+Mode="bridge"
+#MACAddress="12:34:56:78:9a:bc"
+IP=static
+Address="192.168.0.100/24"
+Gateway="192.168.0.1"
+DNS=("192.168.0.2")
+Hostname="$(pass show netctl/macvlanhost)"
+DNSDomain="$(pass show netctl/macvlandnsd)"
+DNSSearch="$(pass show netctl/macvlandnss)"

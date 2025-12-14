@@ -1,0 +1,12 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/ufw-printserver
+# Qompass AI UFW Application Daemon PrintServer Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+################################################################
+[IPP]
+title=Cups server (IPP)
+description=Cups server (IPP)
+ports=631
+[LPD]
+title=LPD server
+description=LPD server
+ports=515/tcp

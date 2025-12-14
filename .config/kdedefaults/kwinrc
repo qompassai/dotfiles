@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/kdedefaults/kwinrc
+# Qompass AI kdedefaults Plasma Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##############################################
+[org.kde.kdecoration2]
+NoPlugin=false
+library=org.kde.breeze
+theme=Breeze

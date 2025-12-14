@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.gnome.gitlab.somas.Apostrophe
+Exec=/usr/bin/apostrophe --gapplication-service

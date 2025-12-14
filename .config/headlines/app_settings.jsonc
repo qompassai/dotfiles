@@ -1,0 +1,20 @@
+// /qompassai/dotfiles/.config/headlines/app_settings.jsonc
+{
+	"autoplay_gifs" : true,
+	"blur_radius" : 48,
+	"crop_images" : null,
+	"flap_revealed" : false,
+	"full_comment_collapse" : null,
+	"hide_link_previews" : null,
+	"hide_nsfw" : false,
+	"hide_spoiler" : null,
+	"hide_text_previews" : null,
+	"num_comments_to_load" : null,
+	"num_posts_to_load" : 10,
+	"print_api_responses" : null,
+	"rounded_corners" : true,
+	"run_in_background" : true,
+	"use_blur_effect" : null,
+	"use_dark_theme" : true,
+	"use_libsecret" : true
+}

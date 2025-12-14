@@ -1,0 +1,11 @@
+// /qompassai/dotfiles/.config/drpcm/settings.jsonc
+// Qompass AI DRPCM Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+  "launchedpresence": false,
+  "language": "english",
+  "theme": "dark",
+  "quitonx": false,
+  "showtimestamp": true
+}

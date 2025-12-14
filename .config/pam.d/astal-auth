@@ -1,0 +1,6 @@
+#%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/astal-auth
+# Qompass AI Pam Astal-Auth Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
+auth include login

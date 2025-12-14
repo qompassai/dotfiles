@@ -1,0 +1,7 @@
+# /qompassai/dotfiles/.config/dnscrypt-proxy/allowed-ips.txt
+# Qompass AI DNSCrypt-Proxy Allowed Ips Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#############################################################
+#192.168.0.*
+#fe80:53:*
+#81.169.145.105

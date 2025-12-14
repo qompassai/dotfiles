@@ -1,0 +1,14 @@
+//qompassai/dotfiles/.config/opt/chrome/native-messaging-hosts/com.google.chrome.remote_assistance.jsonc
+// Qompass AI Chrome Native Messaging Hosts Remote Assistance Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+///////////////////////////////////////////////////////////////////////////////////////////////
+{
+  "name": "com.google.chrome.remote_assistance",
+  "description": "Remote Assistance Host for Chrome Remote Desktop",
+  "type": "stdio",
+  "path": "/opt/google/chrome-remote-desktop/remote-assistance-host",
+  "allowed_origins": [
+    "chrome-extension://inomeogfingihgjfjlpeplalcfajhgai/",
+    "chrome-extension://hpodccmdligbeohchckkeajbfohibipg/"
+  ]
+}

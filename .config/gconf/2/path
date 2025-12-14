@@ -1,0 +1,9 @@
+xml:readonly:/etc/gconf/gconf.xml.mandatory
+include /etc/gconf/2/local-mandatory.path
+include "$(USERCONFIGDIR)/gconf/path"
+include "$(HOME)/.gconf.path"
+xml:readwrite:$(DEFAULTUSERSOURCE)
+xml:readonly:/etc/gconf/gconf.xml.system
+include /etc/gconf/2/local-defaults.path
+xml:readonly:/etc/gconf/gconf.xml.defaults
+

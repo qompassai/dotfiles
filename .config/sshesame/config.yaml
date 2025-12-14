@@ -1,0 +1,45 @@
+# /qompassai/dotfiles/.config/sshesame/config.yaml
+# Qompass AI Sshesame Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+server:
+  listen_address: 127.0.0.1:2022
+  host_keys: null
+  tcpip_services:
+    25: SMTP
+    80: HTTP
+    110: POP3
+    587: SMTP
+    8080: HTTP
+logging:
+  file: null
+  json: false
+  timestamps: true
+  debug: false
+  metrics_address: null
+  split_host_port: false
+auth:
+  no_auth: false
+  max_tries: 0
+  password_auth:
+    enabled: true
+    accepted: true
+  public_key_auth:
+    enabled: true
+    accepted: false
+  keyboard_interactive_auth:
+    enabled: false
+    accepted: false
+    instruction: Answer these weird questions to log in!
+    questions:
+      - text: "User: " 
+        echo: true
+      - text: "Password: "
+        echo: false
+ssh_proto:
+  version: SSH-2.0-sshesame
+  banner: This is an SSH honeypot. Everything is logged and monitored.
+  rekey_threshold: 0
+  key_exchanges: null
+  ciphers: null
+  macs: null

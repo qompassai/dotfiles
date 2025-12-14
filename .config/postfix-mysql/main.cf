@@ -1,0 +1,23 @@
+# ~/.config/postfix/main.cf
+
+myhostname = mail.qompass.ai
+mydomain = qompass.ai
+myorigin = $mydomain
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+virtual_mailbox_domains = pgsql:$HOME/.config/postfix/pgsql-virtual-mailbox-domains.cf
+virtual_mailbox_maps = pgsql:$HOME/.config/postfix/pgsql-virtual-mailbox-maps.cf
+virtual_alias_maps = pgsql:$HOME/.config/postfix/pgsql-virtual-alias-maps.cf
+virtual_mailbox_domains = mysql:/home/phaedrus/.config/postfix/mysql-virtual-mailbox-domains.cf
+virtual_mailbox_maps = mysql:/home/phaedrus/.config/postfix/mysql-virtual-mailbox-maps.cf
+virtual_alias_maps = mysql:/home/phaedrus/.config/postfix/mysql-virtual-alias-maps.cf
+relayhost = [smtp.gmail.com]:587
+relayhost = [smtp.office365.com]:587
+sender_dependent_relayhost_maps = hash:$HOME/.config/postfix/relayhost_maps
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:$HOME/.config/postfix/sasl_passwd
+[smtp.gmail.com]:587      foamedmap@gmail.com:your-app-password
+[smtp.office365.com]:587  matthew.a.porter@wsu.edu@:your-app-password
+smtp_sasl_security_options = noanonymous
+smtp_use_tls = yes
+smtpd_tls_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1
+smtp_tls_protocols = !SSLv2, !SSLv3, !TLSv1, !TLSv1.1

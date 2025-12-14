@@ -1,0 +1,13 @@
+
+{
+  "includePaths": ["node_modules", "src/styles"],
+  "outputStyle": "compressed",
+  "sourceMap": true,
+  "sourceMapContents": true,
+  "precision": 10,
+  "indentType": "space",
+  "indentWidth": 2,
+  "linefeed": "lf",
+  "quietDeps": true
+}
+

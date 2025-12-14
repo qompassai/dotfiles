@@ -1,0 +1,28 @@
+// /qompassai/dotfiles/.config/webdis/webdis.prod.jsonc
+// Qompass AI Webdis Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+//////////////////////////////////////////////////////
+{
+	"redis_host":	"$(pass show webdis/host)",
+	"redis_port":	"$(pass show webdis/port)",
+	"redis_auth":	"$(pass show webdis/auth)",
+	"http_host":	"$(pass show webdis/httphost)",
+	"http_port":	"(pass show webdis/httpport)",
+	"threads":	4,
+	"daemonize":	true,
+	"database":	"$(pass show webdis/db)",
+	"acl": [
+		{
+			"disabled":	["DEBUG"]
+		},
+		{
+			"http_basic_auth":	"user:password",
+			"enabled":		["DEBUG"]
+		}
+	],
+	"hiredis": {
+		"keep_alive_sec": 15
+	},
+	"verbosity": 3,
+	"logfile": "/var/log/webdis.log"
+}

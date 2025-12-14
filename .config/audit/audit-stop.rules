@@ -1,0 +1,6 @@
+# /qompassai/dotfiles/.config/audit/audit-stop.rules
+# Qompass AI Audit Stop Rules Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+-e 0
+-D

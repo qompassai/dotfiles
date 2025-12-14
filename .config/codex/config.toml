@@ -1,0 +1,106 @@
+# qompassai/dotfiles/.config/codex/config.jsonc
+# Qompass AI Codex Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+# ###################################################
+# Reference: https://developers.openai.com/codex/local-config/
+
+approval_policy = "on-request"
+chatgpt_base_url = "https://chat.openai.com"
+experimental_instructions_file = "./AGENTS.md"
+experimental_use_exec_command_tool = false
+experimental_use_rmcp_client = true
+file_opener = "nvim"
+forced_chatgpt_workspace_id = ""
+forced_login_method = "api"
+hide_agent_reasoning = false
+history_max_bytes = 1048576
+history_persistence = "save-all"
+instructions = ""
+model = "gpt-4-codex"
+model_context_window = 8192
+model_max_output_tokens = 1024
+model_provider = "openai"
+
+[model_providers.openai]
+base_url = "https://api.openai.com/v1"
+env_key = "$(pass show openai/api)"
+http_headers = {  }
+name = "OpenAI"
+request_max_retries = 4
+stream_idle_timeout_ms = 300000
+stream_max_retries = 5
+wire_api = "chat"
+model_reasoning_effort = "high"
+model_reasoning_summary = "detailed"
+model_reasoning_summary_format = "experimental"
+model_supports_reasoning_summaries = true
+model_verbosity = "high"
+notify = []
+otel_environment = "dev"
+otel_exporter = "none"
+otel_log_user_prompt = false
+profile = "default"
+
+[profiles.dev]
+model = "gpt-4-codex"
+sandbox_mode = "workspace-write"
+
+[profiles.prod]
+model = "gpt-5-codex"
+sandbox_mode = "read-only"
+project_doc_fallback_filenames = ["README.md", "INSTRUCTIONS.md"]
+project_doc_max_bytes = 8192
+
+[sandbox_workspace_write]
+exclude_slash_tmp = true
+exclude_tmpdir_env_var = true
+network_access = true
+writable_roots = ["./"]
+
+[shell_environment_policy]
+exclude = []
+ignore_default_excludes = false
+include_only = []
+inherit = "core"
+set = {  }
+show_raw_agent_reasoning = true
+
+[tools]
+view_image = true
+web_search = true
+tui_notifications = true
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
+startup_timeout_sec = 15
+tool_timeout_sec = 60
+enabled_tools = ["codex", "codex-reply"]
+
+[mcp_servers.context7.env]
+CONTEXT7_API_KEY = ""
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@playwright/mcp"]
+startup_timeout_sec = 20
+tool_timeout_sec = 120
+
+[mcp_servers.figma_local]
+url = "http://localhost:8080/mcp"
+bearer_token_env_var = "$(pass show figma/token)"
+startup_timeout_sec = 20
+tool_timeout_sec = 60
+
+[mcp_servers.chrome_devtools]
+command = "npx"
+args = ["-y", "chrome-devtools-mcp"]
+startup_timeout_sec = 20
+tool_timeout_sec = 60
+
+[mcp_servers.custom_example]
+command = "python3"
+args = ["./q.py"]
+env = { "$QMCP" = "q" }
+startup_timeout_sec = 10
+tool_timeout_sec = 60

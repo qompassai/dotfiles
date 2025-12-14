@@ -1,0 +1,7 @@
+#%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/gtklock
+# Qompass AI Pam Daemon GTKLock Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
+auth sufficient pam_fprintd.so
+auth include    login

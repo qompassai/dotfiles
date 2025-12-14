@@ -1,0 +1,6 @@
+# /qompassai/dotfiles/.config/sysconfig/pmie_timers
+# Qompass AI SysConfig PM_IE Timers Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+PMIE_CHECK_PARAMS="-C"
+PMIE_DAILY_PARAMS="-X xz -x 3"

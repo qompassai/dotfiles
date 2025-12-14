@@ -1,0 +1,25 @@
+// /qompassai/dotfiles/.config/session/config.jsonc
+// Qompass AI Session Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+  "autoStart": false,
+  "backupEnabled": true,
+  "callMediaPermissions": true,
+  "key": "$(pass show session/key)",
+  "language": "en",
+  "logLevel": "info",
+  "mediaPermissions": true,
+  "notifications": true,
+  "opengroupPruning": true,
+  "startInTray": true
+   "startupActions": [],
+  "theme": "dark",
+  "updateChannel": "stable",
+  "windowGeometry": {
+    "height": 900,
+    "width": 1600,
+    "x": 100,
+    "y": 100
+  }
+}

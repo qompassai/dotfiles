@@ -1,0 +1,6 @@
+#%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/nxlimits
+# Qompass AI Pam Daemon NxLimits Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
+session   optional pam_limits.so

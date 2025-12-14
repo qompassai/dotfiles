@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/ufw-dnsserver
+# Qompass AI UFW Application Daemon DNS Server Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##############################################################
+[DNS]
+title=Internet Domain Name Server
+description=Internet Domain Name Server
+ports=53

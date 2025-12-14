@@ -1,0 +1,31 @@
+# /qompassai/dotfiles/.config/mutt-wizard/mailcap
+# Qompass AI Mutt-Wizard Switch Mailcap Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+############################################################
+application/json; jq . %s | nvimpager ; copiousoutput
+application/msword; catdoc %s | nvimpager ; copiousoutput ; nametemplate=%s.doc
+application/pdf; /usr/lib/mutt-wizard/openfile %s ;
+application/pdf; xdg-open %s
+application/pgp-encrypted; gpg -d '%s'; copiousoutput
+application/pgp-keys; gpg --import '%s'; copiousoutput
+application/vnd.openxmlformats-officedocument.wordprocessingml.document; docx2txt %s | nvimpager ; copiousoutput
+application/xml; bat --language=xml %s || cat %s | nvimpager ; copiousoutput
+application/x-tar; tar tvf %s | nvimpager ; copiousoutput
+application/zip; unzip -l %s | nvimpager ; copiousoutput
+audio/*; mpv %s ;
+image/*; imv %s
+image/*; /usr/lib/mutt-wizard/openfile %s ;
+image/gif; imv %s ; print=anytopnm %s | pnmtops | lpr ; nametemplate=%s.gif
+image/png; imv %s
+image/tiff; imv %s
+message/rfc822; nvimpager %s ; copiousoutput
+text/calendar; nvimpager %s
+text/csv; column -t -s, < %s | nvimpager
+text/html; /usr/lib/mutt-wizard/openfile %s ; nametemplate=%s.html
+text/html; lynx -assume_charset=%{charset} -display_charset=utf-8 -dump -width=1024 %s ; nametemplate=%s.html ; copiousoutput
+text/html; xdg-open %s
+text/markdown; $EDITOR %s ;
+text/plain; bat --paging=always %s || nvimpager %s ; copiousoutput
+text/spdx; bat --language=yaml %s || cat %s | nvimpager ; copiousoutput
+text/x-diff; nvim %s
+video/*; setsid mpv --quiet %s & ; copiousoutput

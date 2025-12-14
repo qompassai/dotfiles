@@ -1,0 +1,18 @@
+{
+  "version" : 2,
+  "versionFingerprints" : {
+    "0.2.0" : {
+      "sourceControl" : {
+        "sourceCode" : {
+          "contentType" : {
+            "sourceCode" : {
+
+            }
+          },
+          "fingerprint" : "b4f23e24b5a1bff301efc5e70871083ca029ff95",
+          "origin" : "https://github.com/JohnSundell/CollectionConcurrencyKit.git"
+        }
+      }
+    }
+  }
+}

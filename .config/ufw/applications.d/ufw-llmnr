@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/ufw-llmnr
+# Qompass AI UFW Application Daemon LLMNR Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##########################################################
+[LLMNR]
+title=Link-Local Multicast Name Resolution
+description=Link-Local Multicast Name Resolution allows hosts to perform name resolution on the same local link
+ports=5355

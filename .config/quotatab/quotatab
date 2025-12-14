@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/quotatab/quotatab
+# Qompass AI Quotatab Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+/dev/nvme1n1p2: Main Btrfs filesystem (/, /home, /var/log, /var/cache/pacman/pkg, /.snapshots)

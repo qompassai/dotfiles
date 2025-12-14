@@ -1,0 +1,24 @@
+# /qompassai/dotfiles/xl2tpd/xl2tpd.conf.client
+# Qompass AI X2l2tpd Client Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+
+[global]
+access control = no
+auth file = /etc/ppp/chap-secrets
+debug avp = no
+debug network = no
+debug packet = no
+debug state = no
+debug tunnel = no
+
+[lac <name>]
+lns = <host>
+redial = yes
+redial timeout = 5
+require chap = yes
+require authentication = no
+ppp debug = no
+pppoptfile = /etc/ppp/peers/<ppp-opts>
+require pap = no
+autodial = yes

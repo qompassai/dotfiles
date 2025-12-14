@@ -1,0 +1,9 @@
+
+
+#ACTION!="add", GOTO="mud_rules_end"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="232b", ATTR{idProduct}=="2725", MODE="0666", OWNER="root", GROUP="lp", ENV{libsane_matched}="yes"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="232b", ATTR{idProduct}=="2726", MODE="0666", OWNER="root", GROUP="lp", ENV{libsane_matched}="yes"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="232b", ATTR{idProduct}=="2751", MODE="0666", OWNER="root", GROUP="lp", ENV{libsane_matched}="yes"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="232b", ATTR{idProduct}=="2752", MODE="0666", OWNER="root", GROUP="lp", ENV{libsane_matched}="yes"
+#SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="232b", ATTR{idProduct}=="2760", MODE="0666", OWNER="root", GROUP="lp", ENV{libsane_matched}="yes"
+LABEL="mud_rules_end"

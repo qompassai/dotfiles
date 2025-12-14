@@ -1,0 +1,48 @@
+# /qompassai/dotfiles/.config/conda/condarc.d/packages.yml
+# Qompass AI Conda Packages Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+
+create_default_packages:
+  - catboost
+  - conda-build
+  - cudatoolkit-dev
+  - dask
+  - datasets
+  - fastai
+  - git
+  - huggingface_hub
+  - ipython
+  - jax
+  - jaxlib
+  - jupyter
+  - lightgbm
+  - matplotlib
+  - mlflow
+  - nccl
+  - notebook
+  - numpy
+  - onnxruntime
+  - optuna
+  - pandas
+  - pip
+  - pytorch-lightning
+  - ray
+  - scikit-learn
+  - setuptools
+  - tensorboard
+  - tensorflow
+  - tensorrt
+  - torch
+  - torchaudio
+  - torchvision
+  - transformers
+  - wandb
+  - wheel
+  - xgboost
+pkgs_dirs:
+  - ~/.conda/pkgs
+  - ~/.local/share/conda/pkgs
+  - ~/miniconda3/pkgs
+use_pip: true
+pip_interop_enabled: true

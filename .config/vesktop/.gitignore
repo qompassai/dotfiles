@@ -1,0 +1,5 @@
+# ~/.GH/Qompass/Dotfiles/.config/vesktop/.gitignore
+# -------------------------------------------------
+# Copyright (C) 2025 Qompass AI, All rights reserved
+
+/ExtensionCache/

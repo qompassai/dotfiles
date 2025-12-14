@@ -1,0 +1,10 @@
+/* 
+ * /qompasai/dotfiles/.config/nvidia/kernel.ptx
+ * Qompass AI NVIDIA PTX Config
+ * Copyright (C) 2025 Qompass AI, All rights reserved
+ */
+
+--opt-level 3
+--allow-expensive-optimizations true
+--maxrregcount 128
+--gpu-name sm_89

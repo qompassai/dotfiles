@@ -1,0 +1,11 @@
+# /qompassai/dotfiles/.config/netctl/bonding
+# Qompass AI NetCtl Bonding Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+Description="Qompass AI bonded interface"
+Interface=bond0
+Connection=bond
+BindsToInterfaces=(eth0 eth2)
+IP=static
+Address="10.0.0.1/8"
+Mode=balance-rr

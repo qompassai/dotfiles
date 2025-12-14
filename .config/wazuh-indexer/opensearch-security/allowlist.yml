@@ -1,0 +1,18 @@
+---
+# /qompassai/dotfiles/.config/wazuh-indexer/opensearch-security/action_groups.yml
+# Qompass AI Wazuh-Indexer OpenSearch Allow List Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##################################################################################
+_meta:
+  type: "allowlist"
+  config_version: 2
+config:
+  enabled: true
+  requests:
+    /_cluster/settings:
+      - GET
+      - PUT
+    /_cat/nodes:
+      - GET
+    /_cat/shards:
+      - GET

@@ -1,0 +1,9 @@
+# /qompassai/dotfiles/.config/omniverse/app-update.conf
+# Qompass AI Omniverse App-Update Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+provider: s3
+bucket: launcher-prod
+path: /installers/
+region: us-east-2
+updaterCacheDirName: omniverse-launcher-updater

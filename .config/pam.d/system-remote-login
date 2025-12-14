@@ -1,0 +1,10 @@
+#%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/system-remote-login
+# Qompass AI Pam Daemon System Remote Login Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
+auth      sufficient pam_fprintd.so
+auth      include    system-login
+account   include    system-login
+password  include    system-login
+session   include    system-login

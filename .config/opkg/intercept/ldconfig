@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+# /qompassai/dotfiles/.config/opkg/intercept/ldconfig
+# Qompass AI Opkg Intercept LDConfig Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+if [ ! -f $OPKG_INTERCEPT_DIR/ldconfig ]; then
+  echo "ldconfig" > $OPKG_INTERCEPT_DIR/ldconfig
+  chmod +x $OPKG_INTERCEPT_DIR/ldconfig
+fi

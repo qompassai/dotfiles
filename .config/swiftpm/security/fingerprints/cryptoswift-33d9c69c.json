@@ -1,0 +1,18 @@
+{
+  "version" : 2,
+  "versionFingerprints" : {
+    "1.9.0" : {
+      "sourceControl" : {
+        "sourceCode" : {
+          "contentType" : {
+            "sourceCode" : {
+
+            }
+          },
+          "fingerprint" : "e45a26384239e028ec87fbcc788f513b67e10d8f",
+          "origin" : "https://github.com/krzyzanowskim/CryptoSwift.git"
+        }
+      }
+    }
+  }
+}

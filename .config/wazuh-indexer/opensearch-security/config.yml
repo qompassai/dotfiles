@@ -1,0 +1,162 @@
+---
+# /qompassai/dotfiles/.config/wazuh-indexer/opensearch-security/config.yml
+# Qompass AI Wazuh-Indexer OpenSearch Security Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###########################################################################
+# References: https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html | https://en.wikipedia.org/wiki/X-Forwarded-For | https://tools.ietf.org/html/rfc7239 | https://tomcat.apache.org/tomcat-8.0-doc/config/valve.html#Remote_IP_Valve
+_meta:
+  type: "config"
+  config_version: 2
+config:
+  dynamic:
+    filtered_alias_mode: warn
+    do_not_fail_on_forbidden: false
+    kibana:
+    multitenancy_enabled: true
+    private_tenant_enabled: true
+    default_tenant: ""
+    server_username: kibanaserver
+    index: '.kibana'
+    http:
+      anonymous_auth_enabled: false
+      xff:
+        enabled: false
+        internalProxies: '192\.168\.0\.10|192\.168\.0\.11'
+        remoteIpHeader:  'x-forwarded-for'
+    authc:
+      kerberos_auth_domain:
+        http_enabled: false
+        transport_enabled: false
+        order: 6
+        http_authenticator:
+          type: kerberos
+          challenge: true
+          config:
+            krb_debug: false
+            strip_realm_from_principal: true
+        authentication_backend:
+          type: noop
+      basic_internal_auth_domain:
+        description: "Authenticate via HTTP Basic against internal users database"
+        http_enabled: true
+        transport_enabled: true
+        order: 4
+        http_authenticator:
+          type: basic
+          challenge: true
+        authentication_backend:
+          type: intern
+      proxy_auth_domain:
+        description: "Authenticate via proxy"
+        http_enabled: false
+        transport_enabled: false
+        order: 3
+        http_authenticator:
+          type: proxy
+          challenge: false
+          config:
+            user_header: "x-proxy-user"
+            roles_header: "x-proxy-roles"
+        authentication_backend:
+          type: noop
+      jwt_auth_domain:
+        description: "Authenticate via Json Web Token"
+        http_enabled: false
+        transport_enabled: false
+        order: 0
+        http_authenticator:
+          type: jwt
+          challenge: false
+          config:
+            signing_key: "base64 encoded HMAC key or public RSA/ECDSA pem key"
+            jwt_header: "Authorization"
+            jwt_url_parameter: null
+            jwt_clock_skew_tolerance_seconds: 30
+            roles_key: null
+            subject_key: null
+        authentication_backend:
+          type: noop
+      clientcert_auth_domain:
+        description: "Authenticate via SSL client certificates"
+        http_enabled: false
+        transport_enabled: false
+        order: 2
+        http_authenticator:
+          type: clientcert
+          config:
+            username_attribute: cn
+          challenge: false
+        authentication_backend:
+          type: noop
+      ldap:
+        description: "Authenticate via LDAP or Active Directory"
+        http_enabled: false
+        transport_enabled: false
+        order: 5
+        http_authenticator:
+          type: basic
+          challenge: false
+        authentication_backend:
+          type: ldap
+          config:
+            enable_ssl: true
+            enable_start_tls: true
+            enable_ssl_client_auth: true
+            verify_hostnames: true
+            hosts:
+            - localhost:8389
+            bind_dn: null
+            password: null
+            userbase: 'ou=people,dc=example,dc=com'
+            usersearch: '(sAMAccountName={0})'
+            username_attribute: null
+    authz:
+      roles_from_myldap:
+        description: "Authorize via LDAP or Active Directory"
+        http_enabled: false
+        transport_enabled: false
+        authorization_backend:
+          type: ldap
+          config:
+            enable_ssl: true
+            enable_start_tls: true
+            enable_ssl_client_auth: false
+            verify_hostnames: true
+            hosts:
+            - localhost:8389
+            bind_dn: null
+            password: null
+            rolebase: 'ou=groups,dc=example,dc=com'
+            rolesearch: '(member={0})'
+            userroleattribute: null
+            userrolename: disabled
+            #userrolename: memberOf
+            rolename: cn
+            resolve_nested_roles: true
+            userbase: 'ou=people,dc=example,dc=com'
+            usersearch: '(uid={0})'
+            #skip_users:
+            #  - 'cn=Michael Jackson,ou*people,o=TEST'
+            #  - '/\S*/'
+      roles_from_another_ldap:
+        description: "Authorize via another Active Directory"
+        http_enabled: false
+        transport_enabled: false
+        authorization_backend:
+          type: ldap
+      auth_failure_listeners:
+        ip_rate_limiting:
+          type: ip
+          allowed_tries: 10
+          time_window_seconds: 3600
+          block_expiry_seconds: 600
+          max_blocked_clients: 100000
+          max_tracked_clients: 100000
+        internal_authentication_backend_limiting:
+          type: username
+          authentication_backend: intern
+          allowed_tries: 10
+          time_window_seconds: 3600
+          block_expiry_seconds: 600
+          max_blocked_clients: 100000
+          max_tracked_clients: 100000

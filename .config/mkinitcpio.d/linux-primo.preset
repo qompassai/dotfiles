@@ -1,0 +1,10 @@
+# /qompassai/dotfiles/.config/mkinitcpio.d/linux-primo.preset
+# Qompass AI Mkinitcpio.d Linux Preset
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+ALL_config="/etc/mkinitcpio.conf"
+ALL_kver="/boot/vmlinuz-linux-primo"
+PRESETS=("default")
+default_config="/etc/mkinitcpio.conf"
+default_image="/boot/initramfs-linux-primo.img"
+#default_options=""

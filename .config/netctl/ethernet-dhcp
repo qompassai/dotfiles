@@ -1,0 +1,13 @@
+# /qompassai/dotfiles/.config/netctl/ethernet-dhcp
+# Qompass AI NetCtl Ethernet-DHCP Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+Description='Qompass AI basic dhcp ethernet connection'
+Interface=eth0
+Connection=ethernet
+IP=dhcp
+DHCPClient=dhcpcd
+DHCPReleaseOnStop=no
+IP6=dhcp
+DHCP6Client=dhclient
+IP6=stateless

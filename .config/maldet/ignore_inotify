@@ -1,0 +1,12 @@
+^/var/tmp/mysql.sock$
+^/tmp/mysql.sock$
+^/var/cache/buagent/md0.cache.data$
+^/var/tmp/#sql_.*\.MYD$
+^/tmp/#sql_.*\.MYD$
+^/var/tmp/clamav-.*
+^/tmp/clamav-.*
+^/var/lib/maldetect*
+^/usr/share/maldetect*
+^/dev/pts*
+^/dev/null
+^/tmp/.*scantemp.*

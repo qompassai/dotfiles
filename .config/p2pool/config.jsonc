@@ -1,0 +1,18 @@
+// /qompassai/dotfiles/.config/p2pool/config.jsonc
+// Qompass AI P2Pool Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+	"wallet": "48YUZsTn4MJ6JQDZDW4Stq1BRhqGuwrUrKpBMhgqWuZv99qXLYMRseCFjjEMQgGmmLDagv7MFL92iPcL6sZSxBXuQmonmvH",
+	"host": "::",
+	"port": 37889,
+	"monerod_host": "::1",
+	"monerod_port": 18089,
+	"data_dir": "/home/phaedrus/.local/share/p2pool",
+	"log_file": "/home/phaedrus/.local/state/p2pool/p2pool.log",
+	"workers": [],
+	"rpc_port": 37888,
+	"web_port": 8080,
+	"use_ipv6": true,
+	"debug": false
+}

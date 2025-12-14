@@ -1,0 +1,5 @@
+[D-BUS Service]
+Name=ddccontrol.DDCControl
+Exec=/usr/libexec/ddccontrol/ddccontrol_service
+User=root
+SystemdService=ddccontrol.service

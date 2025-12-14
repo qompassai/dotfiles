@@ -1,0 +1,70 @@
+// /qompassai/dotfiles/.config/docker/daemon.jsonc
+// Qompass AI Rootless Docker Daemon Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+// Reference:  https://docs.docker.com/engine/daemon/ | https://docs.docker.com/reference/cli/dockerd/
+{
+    "allow-direct-routing": false,
+    "authorization-plugins": [],
+    "bip": "",
+    "bip6": "",
+    "bridge": "",
+    "builder": {
+     "enabled": true,
+      "defaultKeepStorage": "10GB",
+      "policy": [
+        { "keepStorage": "10GB", "filter": ["unused-for=2200h"] },
+        { "keepStorage": "50GB", "filter": ["unused-for=3300h"] },
+        { "keepStorage": "100GB", "all": true }
+      ]
+    },
+    "cgroup-parent": "",
+    "containerd": "/run/user/1000/containerd/containerd.sock",
+    "containerd-namespace": "docker",
+    "containerd-plugins-namespace": "docker-plugins",
+    "data-root": "",
+    "debug": true,
+    "default-address-pools": [
+    {
+      "base": "172.30.0.0/16",
+      "size": 24
+    },
+    {
+      "base": "172.31.0.0/16",
+      "size": 24
+    }
+  ],
+    "default-cgroupns-mode": "private",
+    "default-gateway": "",
+    "default-gateway-v6": "",
+    "default-network-opts": {},
+    "default-runtime": "nvidia",
+    "default-shm-size": "64M",
+    "default-ulimits": {
+    "nofile": {
+      "Hard": 64000,
+      "Name": "nofile",
+      "Soft": 64000
+    }
+  },
+    "dns": [],
+    "dns-opts": [],
+    "dns-search": [],
+    "exec-opts": [],
+    "exec-root": "",
+    "experimental": true,
+    "features": {
+        "cdi": true,
+        "containerd-snapshotter": true
+  },
+    "fixed-cidr": "",
+    "fixed-cidr-v6": "fd00:dead:beef::/48",
+    "ipv6": true,
+    "group": "",
+    "host-gateway-ip": "",
+    "runtimes": {
+        "nvidia": {
+            "args": [],
+            "path": "nvidia-container-runtime"
+        }
+    }
+}

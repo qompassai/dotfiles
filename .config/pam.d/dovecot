@@ -1,0 +1,10 @@
+#%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/dovecot
+# Qompass AI Pam Daemon Dovecot Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
+auth       sufficient pam_fprintd.so
+auth       include    system-auth
+account    include    system-auth
+session    include    system-auth
+password   include    system-auth

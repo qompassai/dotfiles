@@ -1,0 +1,1 @@
+{"Name":"qbuild","Driver":"docker-container","Nodes":[{"Name":"qbuild0","Endpoint":"unix:///run/user/1000/docker.sock","Platforms":null,"DriverOpts":null,"Flags":["--allow-insecure-entitlement=network.host"],"Files":null}],"Dynamic":true}

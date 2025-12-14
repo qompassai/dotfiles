@@ -1,0 +1,10 @@
+# /qompassai/dotfiles/.config/vde2/libvdemgmt/openmachine.rc
+# Qompass AI VDE2 Libvde Management OpenMachine Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+TIMEOUT 1000
+1 IN '$ ' 100
+2 COPY
+3 EXIT 0
+
+100 EXIT -1

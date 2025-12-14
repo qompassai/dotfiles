@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+# /qompassai/dotfiles/.config/stap-exporter/AUTOSTART
+# Qompass AI Stap-Exporter AUTOSTART Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###############################################################
+exec stap -v --example $@ `basename $0 | sed -e s,autostart-,,`

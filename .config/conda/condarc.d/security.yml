@@ -1,0 +1,10 @@
+# /qompassai/dotfiles/.config/conda/condarc.d/security.yml
+# Qompass AI Conda Security Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+ssl_verify: true
+report_errors: true
+safety_checks: warn
+remote_connect_timeout_secs: 15.0
+remote_read_timeout_secs: 120.0
+remote_max_retries: 5

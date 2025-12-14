@@ -1,0 +1,7 @@
+# /qompassai/dotfiles/.config/hostapd/hostapd.deny
+# Qompass AI Hostapd Deny Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#####################################################
+00:20:30:40:50:60
+00:ab:cd:ef:12:34
+00:00:30:40:50:60

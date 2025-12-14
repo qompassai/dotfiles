@@ -1,0 +1,10 @@
+# vim: filetype=neomuttrc
+# /qompassai/dotfiles/.config/mutt-wizard/switch.muttrc
+# Qompass AI Mutt-Wizard Switch Mutt Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+############################################################
+unset hostname
+unmy_hdr Organization
+unmailboxes *
+unalternates *
+unset signature

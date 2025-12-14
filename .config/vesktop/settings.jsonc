@@ -1,0 +1,19 @@
+// /qompassai/dotfiles/.config/vesktop/settings.jsonc
+// Qompass AI Vesktop Settings Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+    "discordBranch": "ptb",
+    "minimizeToTray": true,
+    "arRPC": true,
+    "splashColor": "rgb(237, 238, 240)",
+    "spellCheckLanguages": [
+        "en-US",
+        "en"
+    ],
+    "hardwareVideoAcceleration": true,
+    "enableMenu": true,
+    "openLinksWithElectron": true,
+    "customTitleBar": false,
+    "staticTitle": true
+}

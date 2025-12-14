@@ -1,0 +1,12 @@
+--
+default_cfg = {
+    pid_file  = "/var/run/tarantool",  -- /var/run/tarantool/${INSTANCE}.pid
+    wal_dir   = "/var/lib/tarantool",  -- /var/lib/tarantool/${INSTANCE}/
+    memtx_dir = "/var/lib/tarantool",  -- /var/lib/tarantool/${INSTANCE}
+    vinyl_dir = "/var/lib/tarantool",  -- /var/lib/tarantool/${INSTANCE}
+    log       = "/var/log/tarantool",  -- /var/log/tarantool/${INSTANCE}.log
+    username  = "tarantool",
+    language  = "lua",
+}
+instance_dir = "/etc/tarantool/instances.available"
+-- vim: set ft=lua :

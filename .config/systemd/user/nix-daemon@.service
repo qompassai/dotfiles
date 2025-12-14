@@ -1,0 +1,20 @@
+[Unit]
+Description=User Nix Daemon (socket-activated) for %i
+After=basic.target
+[Service]
+Type=simple
+ExecStart=/usr/bin/nix daemon --stdio  --default-trust --log-format raw
+Environment=NIX_CONF_DIR=%h/.config/nix/daemon
+Environment=NIX_STORE_DIR=%h/.nix/store
+Environment=NIX_STATE_DIR=%h/.local/state/nix
+Environment=NIX_LOG_DIR=%h/.local/state/nix/log
+UnsetEnvironment=NIX_REMOTE
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.nix %h/.local/state/nix %h/.config/nix/daemon
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+LockPersonality=yes
+SystemCallArchitectures=native

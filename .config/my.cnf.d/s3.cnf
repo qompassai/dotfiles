@@ -1,0 +1,27 @@
+# /qompassai/dotfiles/.config/my.cnf.d/s3.cnf
+# Qompass AI My.Cnf.d S3 Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+# References: https://mariadb.com/kb/en/s3-storage-engine/
+[mariadbd]
+plugin-maturity = alpha
+[mariadb]
+plugin-load-add = ha_s3
+s3-bucket = "$(pass show my.cnf.d/s3bucket)"
+s3-access-key = "$(pass show my.cnf.d/s3akey)"
+s3-secret-key = "$(pass show my.cnf.d/s3skey)"
+s3-region = us-west-2
+s3-host-name = s3.amazonaws.com
+s3-protocol-version = Amazon
+s3-credentials-file = "$(pass show my.cnf.d/s3credfile)"
+s3-threads = 8
+s3-chunk-size = 64M
+s3-buffer-size = 32M
+s3-max-retries = 5
+s3-connect-timeout = 60
+s3-request-timeout = 300
+s3-use-ssl = ON
+s3-ssl-ca = "$(pass show my.cnf.d/s3sslfile)"
+s3-storage-class = STANDARD
+s3-multipart-upload = ON
+s3-debug = 1

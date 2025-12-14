@@ -1,0 +1,6 @@
+{
+    "require": {
+        "vimeo/psalm": "^6.10",
+        "squizlabs/php_codesniffer": "*"
+    }
+}

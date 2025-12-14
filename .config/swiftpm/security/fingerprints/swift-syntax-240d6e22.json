@@ -1,0 +1,18 @@
+{
+  "version" : 2,
+  "versionFingerprints" : {
+    "603.0.0-prerelease-2025-09-15" : {
+      "sourceControl" : {
+        "sourceCode" : {
+          "contentType" : {
+            "sourceCode" : {
+
+            }
+          },
+          "fingerprint" : "6673b05995983461eef015c4768f1483c245db22",
+          "origin" : "https://github.com/swiftlang/swift-syntax.git"
+        }
+      }
+    }
+  }
+}

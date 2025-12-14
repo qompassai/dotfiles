@@ -1,0 +1,12 @@
+# /qompassai/dofiles/.config/mkinitcpio-systemd-tool/config/fstab
+# Qompass AI Mkinitcpio Systemd Tool Initrd-util-usb-hcd Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+# References: https://github.com/random-archer/mkinitcpio-systemd-tool | https://github.com/random-archer/mkinitcpio-systemd-tool/wiki/Root-vs-Fstab | https://github.com/random-archer/mkinitcpio-systemd-tool/wiki/System-Recovery | https://www.freedesktop.org/software/systemd/man/systemd.mount.html | https://wiki.archlinux.org/index.php/Fstab |  https://www.freedesktop.org/software/systemd/man/systemd-fstab-generator.html | https://github.com/systemd/systemd/blob/master/src/fstab-generator/fstab-generator.c
+
+# * file location in initramfs: /etc/fstab
+# * file location in real-root: /etc/mkinitcpio-systemd-tool/config/fstab
+
+#  <block-device>       <mount-point>    <fs-type>    <mount-options>                   <dump>  <fsck>
+#  /dev/mapper/root      /sysroot         auto         x-systemd.device-timeout=9999h     0       1
+#  /dev/mapper/swap      none             swap         x-systemd.device-timeout=9999h     0       0

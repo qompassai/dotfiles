@@ -1,0 +1,23 @@
+# /qompassai/dotfiles/.config/securetty/securetty
+# Qompass AI SecureTTY Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+console
+hvc0
+tty1
+tty2
+tty3
+tty4
+tty5
+tty6
+ttyS0
+tty7
+tty8
+tty9
+tty10
+tty11
+tty12
+ttyUSB0
+ttyUSB1
+xvc0
+:0

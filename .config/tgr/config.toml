@@ -1,0 +1,16 @@
+# /qompassai/dotfiles/.config/tgr/config.toml
+# Qompass AI TGR Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+cache_dir = "/home/phaedrus/.cache/tgr"
+default_keyserver = "hkp://keys.openpgp.org"
+keyservers = ["hkp://keys.openpgp.org", "hkp://pgp.mit.edu"]
+log_file = "/home/phaedrus/.config/tgr/tgr.log"
+max_retries = 5
+nullglob = false
+proxy = ""
+refresh_interval = 3600
+timeout = 30
+tor_socks_port = 9050
+use_tor = true
+verbose = true

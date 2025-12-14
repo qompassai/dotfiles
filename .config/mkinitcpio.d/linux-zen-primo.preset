@@ -1,0 +1,11 @@
+# /qompassai/dotfiles/.config/mkinitcpio.d/linux-zen-primo.preset
+# Qompass AI Mkinitcpio.d Zen Preset
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+
+ALL_config="/etc/mkinitcpio.conf"
+ALL_kver="/boot/vmlinuz-linux-zen-primo"
+PRESETS=("default")
+default_config="/etc/mkinitcpio.conf"
+default_image="/boot/initramfs-linux-zen-primo.img"
+#default_options=""

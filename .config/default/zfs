@@ -1,0 +1,27 @@
+# shellcheck disable=SC2154
+# /qompassai/dotfiles/.config/default/zfs
+# Qompass AI Default ZFS Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+# shellcheck disable=SC2034
+ZFS_LOAD_KEY='yes'
+ZFS_UNLOAD_KEY='no'
+ZFS_MOUNT='yes'
+ZFS_UNMOUNT='yes'
+ZFS_SHARE='yes'
+ZFS_UNSHARE='yes'
+ZPOOL_IMPORT_ALL_VISIBLE='no'
+#ZPOOL_IMPORT_PATH="/dev/disk/by-vdev:/dev/disk/by-id"
+#ZFS_POOL_EXCEPTIONS="test2"
+VERBOSE_MOUNT='no'
+DO_OVERLAY_MOUNTS='yes'
+ZPOOL_IMPORT_OPTS=""
+# The default is "/etc/zfs/zpool.cache".
+#ZPOOL_CACHE="/etc/zfs/zpool.cache"
+#ZPOOL_IMPORT_OPTS="-c /etc/zfs/zpool.cache"
+#ZPOOL_CACHE=""
+MOUNT_EXTRA_OPTIONS=""
+ZFS_DKMS_ENABLE_DEBUG='yes'
+ZFS_DKMS_ENABLE_DEBUGINFO='yes'
+ZFS_DKMS_DISABLE_STRIP='no'
+#ZED_ARGS="-M"

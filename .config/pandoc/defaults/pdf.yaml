@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/defaults/pdf.yaml
+# Qompass AI Pandoc Default PDF Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+from: markdown
+to: pdf
+pdf-engine: lualatex
+template: eisvogel

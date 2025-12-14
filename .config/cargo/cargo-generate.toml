@@ -1,0 +1,14 @@
+# /qompassai/rust/cargo/cargo-generate.toml
+# Qompass AI Cargo-generate Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+# ###################################################
+[template]
+name = "Qompass AI Cargo Template"
+description = "A template for Qompass AI Rust projects."
+
+[placeholders]
+project-name = { type = "string", prompt = "Qompass AI ", default = "" }
+authors = { type = "string", prompt = "Author(s)", default = "Matt A. Porter <map@qompass.ai>" }
+edition = { type = "string", prompt = "Rust edition", default = "2024" }
+version = { type = "string", prompt = "Version", default = "0.1.0" }
+license = { type = "string", prompt = "License", default = "AGPL-3.0 AND Q-CDA-1.0" }

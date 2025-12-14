@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- /qompassai/dotfiles./config/gtk-engines/redmond95.xml -->
+<!-- Qompass Redmond 95 GTK Engine Config -->
+<!-- Copyright (C) 2025 Qompass AI, All rights reserved -->
+<engine schema_version="0.1" module_name="redmond95" long_name="Redmond">
+  <metainfo>
+    <version>2.21.0</version>
+    <website>http://www.gnome.org</website>
+    <author>
+      <name>Owen Taylor</name>
+      <email>otaylor@redhat.com</email>
+    </author>
+    <author>
+      <name>Andrew Johnson</name>
+      <email>ajgenius@ajgenius.us</email>
+    </author>
+  </metainfo>
+</engine>

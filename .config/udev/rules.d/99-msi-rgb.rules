@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/udev/rules.d/99-msi-rgb.rules
+# Qompass AI UDev MSI RGB Rules Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#####################################################
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1038", ATTRS{idProduct}=="1122", MODE="0666"

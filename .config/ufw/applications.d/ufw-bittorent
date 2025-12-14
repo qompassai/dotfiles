@@ -1,0 +1,23 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/ufw-bittorent
+# Qompass AI UFW Applications Daemon BitTorrent Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##############################################################
+[Transmission]
+title=Transmission
+description=Transmission BitTorrent client
+ports=51413
+
+[Deluge]
+title=Deluge
+description=Deluge BitTorrent client
+ports=6881:6891/tcp
+
+[KTorrent]
+title=KTorrent
+description=KTorrent BitTorrent client
+ports=6881/tcp|4444/udp
+
+[qBittorrent]
+title=qBittorrent
+description=qBittorrent BitTorrent client
+ports=6881/tcp

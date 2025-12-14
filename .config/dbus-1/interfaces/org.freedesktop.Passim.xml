@@ -1,0 +1,135 @@
+<!DOCTYPE node PUBLIC
+"-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/" xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd">
+  <interface name='org.freedesktop.Passim'>
+    <doc:doc>
+      <doc:description>
+        <doc:para>
+          The interface used for interacting with Passim.
+        </doc:para>
+      </doc:description>
+    </doc:doc>
+    <property name='DaemonVersion' type='s' access='read'>
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            The daemon version.
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+    </property>
+    <property name='Uri' type='s' access='read'>
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            The daemon web URI.
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+    </property>
+    <property name='Name' type='s' access='read'>
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            The daemon auto-generated name, e.g. "Passim-0801".
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+    </property>
+    <property name='Status' type='u' access='read'>
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            The daemon current status.
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+    </property>
+    <property name='DownloadSaving' type='t' access='read'>
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            The total number of bytes saved by using this project.
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+    </property>
+    <property name='CarbonSaving' type='d' access='read'>
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            The carbon saving in kg CO₂e by using this project.
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+    </property>
+    <method name='GetItems'>
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            Gets the hashes of index.
+            NOTE: This can only be called by any user.
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+      <arg type='aa{sv}' name='items' direction='out'>
+        <doc:doc>
+          <doc:summary>
+            <doc:para>An array of vardict.</doc:para>
+          </doc:summary>
+        </doc:doc>
+      </arg>
+    </method>
+    <method name='Publish'>
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            Adds a file to the index.
+            NOTE: This can only be called by the root user.
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+      <arg type='h' name='handle' direction='in'>
+        <doc:doc>
+          <doc:summary>
+            <doc:para>The file descriptor to read.</doc:para>
+          </doc:summary>
+        </doc:doc>
+      </arg>
+      <arg type='a{sv}' name='attrs' direction='in'>
+        <doc:doc>
+          <doc:summary>
+            <doc:para>The attributes in a dictionary.</doc:para>
+          </doc:summary>
+        </doc:doc>
+      </arg>
+    </method>
+    <method name='Unpublish'>
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            Unpublish a file from the index.
+            NOTE: This can only be called by the root user.
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+      <arg type='s' name='hash' direction='in'>
+        <doc:doc>
+          <doc:summary>
+            <doc:para>The hash of the file to unpublish.</doc:para>
+          </doc:summary>
+        </doc:doc>
+      </arg>
+    </method>
+    <signal name='Changed'>
+      <doc:doc>
+        <doc:description>
+          <doc:para>
+            Some value on the interface has changed.
+          </doc:para>
+        </doc:description>
+      </doc:doc>
+    </signal>
+  </interface>
+</node>

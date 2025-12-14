@@ -1,0 +1,13 @@
+# /qompassai/dotfiles/.config/sstp/sstp.options
+# Qompass AI SSTP Options Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+remotename      "$(pass show sstp/remotename)"
+linkname        "$(pass show sstp/linkname)"
+ipparam         "$(pass show sstp/ipparam)"
+name            "$(pass show sstp/name)"
+password        "$(pass show sstp/pass)"
+plugin          sstp-pppd-plugin.so
+sstp-sock       /run/sstpc/sstpc-uds-sock
+noauth
+usepeerdns

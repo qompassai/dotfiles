@@ -1,0 +1,17 @@
+# /qompassai/dotfiles/.config/tcppc/tcppc.toml
+# Qompass AI TCPPC Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#####################################################
+
+[tcppc]
+host = "0.0.0.0"
+port = 12345
+timeout = 60
+tcpFileFmt = "/var/log/tcppc/tcppc-%Y%m%d.jsonl"
+rotInt = 60
+rotOffset = 0
+logFile = ""
+timezone = "Local"
+maxFdNum = 8192
+x509Cert = ""
+x509Key = ""

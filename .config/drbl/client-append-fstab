@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/drbl/client-append-fstab.conf
+# Qompass AI Client Append Fstab Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+/dev/hda1 /work1      ext3    defaults        1 2

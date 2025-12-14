@@ -1,0 +1,11 @@
+[StreamInputs]
+inputDevice=alsa_input.platform-snd_aloop.0.pro-input-0
+
+[StreamOutputs]
+outputDevice=alsa_output.pci-0000_01_00.1.pro-output-3
+visiblePage=pluginsPage
+
+[Window]
+height=604
+visiblePipeWirePage=modulesPage
+width=1323

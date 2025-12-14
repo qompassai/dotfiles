@@ -1,0 +1,170 @@
+ 
+log:
+  level: info
+  format: json
+serve:
+  public:
+    port: 4444
+    host: localhost
+    cors:
+      enabled: true
+      allowed_origins:
+        - https://example.com
+        - https://*.example.com
+      allowed_methods:
+        - POST
+        - GET
+        - PUT
+        - PATCH
+        - DELETE
+      allowed_headers:
+        - Authorization
+        - Content-Type
+      exposed_headers:
+        - Content-Type
+      allow_credentials: true
+      max_age: 10
+      debug: true
+    request_log:
+      disable_for_health: false
+  admin:
+    port: 4445
+    host:
+    cors:
+      enabled: true
+      allowed_origins:
+        -
+        -
+      allowed_methods:
+        - POST
+        - GET
+        - PUT
+        - PATCH
+        - DELETE
+      allowed_headers:
+        - Authorization
+        - Content-Type
+      exposed_headers:
+        - Content-Type
+      allow_credentials: true
+      max_age: 10
+      debug: true
+    request_log:
+      disable_for_health: false
+  tls:
+    key:
+      path:
+      base64:
+    cert:
+      path:
+      base64:
+
+    # For more information head over to: https://www.ory.sh/docs/hydra/production#tls-termination
+    allow_termination_from:
+      - 127.0.0.1/32
+  cookies:
+    same_site_mode: Lax
+
+    # defined in https://web.dev/samesite-cookie-recipes/ which essentially stores a second cookie
+    same_site_legacy_workaround: false
+
+# https://www.ory.sh/docs/hydra/dependencies-environment#sql
+# dsn: dsn=postgres://user:password@host:123/database
+# dsn: mysql://user:password@tcp(host:123)/database
+# dsn: cockroach://user:password@host:123/database
+dsn: memory
+# dsn: postgres://user:password@host:123/database
+# dsn: mysql://user:password@tcp(host:123)/database
+hsm:
+  enabled: false
+  library: /path/to/hsm-vendor/library.so
+  pin: token-pin-code
+  slot: 0
+  token_label: hydra
+  key_set_prefix: app1.
+webfinger:
+  jwks:
+    broadcast_keys:
+      -
+  oidc_discovery:
+    client_registration_url: https://my-service.com/clients
+    supported_claims:
+      - email
+      - username
+    supported_scope:
+      - email
+      - whatever
+      - read.photos
+    userinfo_url: https://example.org/my-custom-userinfo-endpoint
+oidc:
+  # -> https://www.ory.sh/docs/hydra/advanced#subject-identifier-algorithms
+  subject_identifiers:
+    supported_types:
+      - pairwise
+      - public
+    pairwise:
+      salt: some-random-salt
+  dynamic_client_registration:
+    enabled: false
+    default_scope:
+      - openid
+      - offline
+      - offline_access
+
+urls:
+  self:
+    issuer: https://localhost:4444/
+    public: https://localhost:4444/
+
+  login: https://my-login.app/login
+  consent: https://my-consent.app/consent
+  logout: https://my-logout.app/logout
+  error: https://my-error.app/error
+  post_logout_redirect: https://my-example.app/logout-successful
+
+strategies:
+  scope: DEPRECATED_HIERARCHICAL_SCOPE_STRATEGY
+  # -> https://www.ory.sh/docs/hydra/advanced#json-web-tokens
+   access_token: jwt
+
+ttl:
+  login_consent_request: 1h
+  access_token: 1h
+  refresh_token: 720h
+  id_token: 1h
+  auth_code: 10m
+
+oauth2:
+  expose_internal_errors: true
+  hashers:
+    bcrypt:
+      cost: 10
+  pkce:
+    enforced: false
+    enforced_for_public_clients: false
+  session:
+    encrypt_at_rest: true
+
+# -> https://www.ory.sh/docs/hydra/advanced#rotation-of-hmac-token-signing-and-database-and-cookie-encryption-keys
+secrets:
+  system:
+    -
+    -
+    -
+  cookie:
+    -
+    -
+    -
+# on profiling, head over to: https://blog.golang.org/profiling-go-programs
+profiling: cpu
+# profiling: mem
+
+tracing:
+  provider: jaeger
+  service_name: Ory Hydra
+  providers:
+    jaeger:
+      local_agent_address: 127.0.0.1:6831
+      sampling:
+        trace_id_ratio: 1.0
+        server_url: http://localhost:5778/sampling

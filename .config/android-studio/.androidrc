@@ -1,0 +1,3 @@
+export ANDROID_NDK_ROOT=/opt/android-ndk
+export STUDIO_JAVA_HOME=/usr/lib/jvm/android-studio
+

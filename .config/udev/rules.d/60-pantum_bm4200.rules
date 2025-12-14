@@ -1,0 +1,12 @@
+# /qompassai/dotfiles/.config/udev/rules.d/60-pantum_bm4200.rules
+# Qompass AI UDev Pantum BM4200 Rules Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+################################################################
+#ACTION!="add", GOTO="mud_rules_end"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="232b", ATTR{idProduct}=="0f75", MODE="0666", OWNER="root", GROUP="lp", ENV{libsane_matched}="yes"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="232b", ATTR{idProduct}=="0f76", MODE="0666", OWNER="root", GROUP="lp", ENV{libsane_matched}="yes"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="232b", ATTR{idProduct}=="0f77", MODE="0666", OWNER="root", GROUP="lp", ENV{libsane_matched}="yes"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="232b", ATTR{idProduct}=="0f78", MODE="0666", OWNER="root", GROUP="lp", ENV{libsane_matched}="yes"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="232b", ATTR{idProduct}=="0f79", MODE="0666", OWNER="root", GROUP="lp", ENV{libsane_matched}="yes"
+SUBSYSTEM=="usb", ENV{DEVTYPE}=="usb_device", ATTR{idVendor}=="232b", ATTR{idProduct}=="0f7a", MODE="0666", OWNER="root", GROUP="lp", ENV{libsane_matched}="yes"
+LABEL="mud_rules_end"

@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/libibverbs.d/mlx4.driver
+# Qompass AI Libibverbs.d Mellanox ConnectX-3 InfiniBand Driver Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+driver mlx4

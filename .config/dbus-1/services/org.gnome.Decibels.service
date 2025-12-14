@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.gnome.Decibels
+Exec=/usr/bin/org.gnome.Decibels --gapplication-service

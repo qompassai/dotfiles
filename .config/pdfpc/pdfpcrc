@@ -1,0 +1,78 @@
+# /qompassai/dotfiles/.config/pdfpc/pdfpcrc
+# Qompass AI PDFPC Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+bind Next               next
+bind Return             next
+bind Right              next
+bind space              next
+bind Down               next
+bind Prior              prev
+bind Left               prev
+bind Up                 prev
+bind BackSpace          prev
+bind S+Next             nextOverlay
+bind S+Prior            prevOverlay
+bind S+Down             lastOverlay
+bind S+Up               firstOverlay
+bind S+Right            next10
+bind S+Left             prev10
+bind S+n                nextForced
+bind S+p                prevForced
+bind Home               gotoFirst
+bind End                gotoLast
+bind g                  goto
+bind m                  saveBookmark
+bind S+m                loadBookmark
+bind S+BackSpace        histBack
+bind S+space            histFwd
+bind S+End              nextUnseen
+bind S+Home             prevSeen
+bind C+z                undo
+bind C+y                redo
+bind Tab                overview
+bind t                  toggleToolbox
+bind C+q                quit
+bind C+r                reload
+bind w                  windowed
+bind b                  blank
+bind f                  freeze
+bind h                  hide
+bind Escape             exitState
+bind s                  start
+bind p                  pause
+bind C+t                resetTimer
+bind S+t                cycleTimerMode
+bind C+n                note
+bind C+o                overlay
+bind C+e                endSlide
+bind C+h                toggleHidden
+bind 1                  switchMode normal
+bind KP_1               switchMode normal
+bind 2                  switchMode pointer
+bind KP_2               switchMode pointer
+bind 3                  switchMode pen
+bind KP_3               switchMode pen
+bind 4                  switchMode eraser
+bind KP_4               switchMode eraser
+bind 5                  switchMode spotlight
+bind KP_5               switchMode spotlight
+bind plus               increaseSize
+bind equal              increaseSize
+bind KP_Add             increaseSize
+bind minus              decreaseSize
+bind KP_Subtract        decreaseSize
+bind z                  zoom
+bind A                  toggleMaxCurrent
+bind C                  customize
+bind c                  clearDrawing
+bind d                  toggleDrawings
+#bind S+1              setPenColor red|orange|yellow|green|blue|violet|black|white
+bind S+x                executeScript
+bind Q                  showQRcode
+bind question           showHelp
+mouse 1                 next
+mouse S+1               next10
+mouse 2                 overview
+mouse 3                 prev
+mouse S+3               prev10

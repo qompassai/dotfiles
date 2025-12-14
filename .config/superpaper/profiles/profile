@@ -1,0 +1,11 @@
+# /qompassai/dotfiles/.config/superpaper/profiles/profile
+# Qompass AI Profile Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+name=default
+spanmode=single
+slideshow=true
+delay=120
+sortmode=shuffle
+hotkey=control+super+shift+h
+display1paths=/home;/

@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ShadowBlip/InputPlumber/main/rootfs/usr/share/inputplumber/schema/capability_map_v1.json
+# Schema version number
+version: 1
+
+# The type of configuration schema
+kind: CapabilityMap
+
+# Name for the device event map
+name: Anbernic Type 1
+
+# Unique identifier of the capability mapping
+id: anb1
+
+# List of mapped events that are activated by a specific set of activation keys.
+mapping:
+  - name: Home (Short Press)
+    source_events:
+      - keyboard: KeyG
+      - keyboard: KeyLeftMeta
+    target_event:
+      gamepad:
+        button: Guide
+# Workaround to enable Guide chording.
+  - name: Home (Long Press)
+    source_events:
+      - keyboard: KeyEsc
+    target_event:
+      gamepad:
+        button: Guide
+  - name: Keyboard
+    source_events:
+      - keyboard: KeyO
+      - keyboard: KeyLeftCtrl
+      - keyboard: KeyLeftMeta
+    target_event:
+      gamepad:
+        button: Keyboard
+# Windows short press seems to break things currently, so disabled for now.
+#  - name: Windows (Short Press)
+#    source_events:
+#      - keyboard: KeyLeftMeta
+#    target_event:
+#      gamepad:
+#        button: QuickAccess
+  - name: Windows (Long Press)
+    source_events:
+      - keyboard: KeyEsc
+      - keyboard: KeyLeftShift
+      - keyboard: KeyLeftCtrl
+    target_event:
+      gamepad:
+        button: QuickAccess
+
+# List of events to filter from the source devices
+filtered_events: []

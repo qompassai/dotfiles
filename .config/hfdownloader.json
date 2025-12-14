@@ -1,0 +1,15 @@
+{
+  "num_connections": 16,
+  "requires_auth": false,
+  "auth_token": "",
+  "model_name": "",
+  "dataset_name": "",
+  "branch": "main",
+  "storage": "./",
+  "one_folder_per_filter": false,
+  "skip_sha": false,
+  "max_retries": 3,
+  "retry_interval": 5,
+  "just_download": false,
+  "silent_mode": false
+}

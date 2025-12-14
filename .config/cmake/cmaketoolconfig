@@ -1,0 +1,7 @@
+# cmaketoolconfig
+# Qompass AI CMakeTool Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+[settings]
+auto_reload = true
+theme = "dark"

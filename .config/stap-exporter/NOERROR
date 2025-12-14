@@ -1,0 +1,5 @@
+#!usr/bin/env sh
+# /qompassai/dotfiles/.config/stap-exporter/NOERROR
+# Qompass AI Stap-Exporter NOERROR Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+exec stap -v --suppress-handler-errors --example $@ `basename $0 | sed -e s,autostart-,,`

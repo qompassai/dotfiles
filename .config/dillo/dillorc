@@ -1,0 +1,141 @@
+#geometry=780x580
+load_images=NO
+# ignore_image_formats="webp svg"
+#ignore_image_formats=""
+#load_background_images=NO
+#load_stylesheets=YES
+#parse_embedded_css=YES
+buffered_drawing=2
+#save_dir=/tmp
+#scroll_step=100
+#scroll_page_overlap=50
+#scrollbar_on_left=NO
+#scrollbar_page_mode=NO
+# link_action="Debug variables:echo url=$url origin=$origin"
+# link_action="Open in MPV:mpv $url"
+# link_action="Open in Firefox:firefox $url"
+# "fc-list : family | cut -d ',' -f 2 | sort").
+#font_serif="DejaVu Serif"
+#font_sans_serif="DejaVu Sans"
+#font_cursive="DejaVu Sans"
+#font_fantasy="DejaVu Sans"
+#font_monospace="DejaVu Sans Mono"
+# "xlsfonts -fn *-iso10646-1 | grep -v -e -0-0 | cut -d - -f 3 | sort | uniq").
+# font_serif="times"
+# font_sans_serif="helvetica"
+# font_cursive="helvetica"
+# font_fantasy="helvetica"
+# font_monospace="courier"
+# font_factor=1.5
+#font_factor=1.0
+#font_max_size=100
+#font_min_size=6
+#show_tooltip=YES
+#limit_text_width=NO
+#adjust_min_width=YES
+#adjust_table_min_width=YES
+# zoom_factor=1.5
+#zoom_factor=1.0
+#penalty_hyphen = 1
+#penalty_hyphen_2 = 8
+#penalty_em_dash_right = 1
+#penalty_em_dash_right_2 = 8
+#penalty_em_dash_left = 8
+#stretchability_factor=1
+# start_page="about:blank"
+# start_page="https://dillo-browser.github.io/"
+# start_page="file:/home/jcid/custom_page.html"
+#start_page="about:splash"
+# home="file:/home/jcid/HomePage/Home.html"
+#home="https://dillo-browser.github.io/"
+# new_tab_page="dpi:/bm/"
+# new_tab_page="https://example.com/"
+#new_tab_page="about:blank"
+# Format: search_url="[prefix ][<label> ]<url>"
+search_url="dd DuckDuckGo (https) https://duckduckgo.com/lite/?kp=-1&kd=-1&q=%s"
+search_url="Wikipedia http://www.wikipedia.org/w/index.php?search=%s&go=Go"
+search_url="Free Dictionary http://www.thefreedictionary.com/%s"
+search_url="Startpage (https) https://www.startpage.com/do/search?query=%s"
+search_url="Google https://www.google.com/search?ie=UTF-8&oe=UTF-8&gbv=1&q=%s"
+# http_language="de"
+# http_language="pt-BR"
+# http_language="en-US,en;q=0.5"
+# http_max_conns=6
+#http_persistent_conns=YES
+#http_strict_transport_security=YES
+#http_force_https=NO
+# http_proxy="http://localhost:8080/"
+#(by default, no proxy is used)
+# http_proxyuser="joe"
+# no_proxy = ".hola.com .mynet.cl .hi.de"
+#no_proxy="localhost 127.0.0.1"
+# none  : Don't send any Referer header at all.
+# host  : Send the requested URI's hostname.
+# path  : Send the requested URI's host and path.
+#http_referer=host
+# http_user_agent="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0"
+# http_user_agent="Wget/1.13.4 (linux-gnu)"
+#The default is "Dillo/"+current_version_number
+# bg_color=gray
+# bg_color=0xd6d6c0
+#bg_color=0xdcd1ba
+#allow_white_bg=YES
+#white_bg_replacement=0xe0e0a3
+#contrast_visited_color=YES
+#theme=none
+# theme=gtk+
+# theme=plastic
+# ui_fg_color, ui_main_bg_color, ui_text_bg_color, and ui_selection_color
+ui_fg_color=black
+ui_main_bg_color=#c6c6c6
+ui_text_bg_color=#bfdabf
+ui_selection_color=#191970
+ui_button_highlight_color=#a9a9a9
+ui_tab_active_bg_color=#87aca7
+ui_tab_active_fg_color=black
+ui_tab_bg_color=#b7beb7
+#ui_fg_color=#100404
+#ui_main_bg_color=#c2a47b
+#ui_text_bg_color=#cdc9a5
+#ui_selection_color=#763024
+#ui_tab_active_bg_color=#af4b3f
+#ui_tab_active_fg_color=white
+#ui_tab_bg_color=#d2b48c
+#ui_fg_color=#100404
+#ui_main_bg_color=#c8d394
+#ui_text_bg_color=#bdd8b6
+#ui_selection_color=#7c5f42
+#ui_button_highlight_color=#adad70
+#ui_tab_active_bg_color=#b5b679
+#ui_tab_active_fg_color=#b60907
+#ui_tab_bg_color=#cac682
+# panel_size=tiny
+# panel_size=small
+#panel_size=medium
+#small_icons=NO
+#show_back=YES
+#show_forw=YES
+#show_home=YES
+#show_reload=YES
+#show_save=YES
+#show_stop=YES
+#show_bookmarks=YES
+#show_tools=YES
+#show_filemenu=YES
+#show_clear_url=YES
+#show_url=YES
+#show_search=YES
+#show_help=YES
+#show_progress_box=YES
+#show_ui_tooltip=YES
+#fullwindow_start=NO
+#enterpress_forces_submit=NO
+#middle_click_opens_new_tab=YES
+#right_click_closes_tab=YES
+#scroll_switches_tabs=YES
+#scroll_switches_tabs_reverse=NO
+#middle_click_drags_page=YES
+#focus_new_tab=NO
+#show_quit_dialog=NO
+show_msg=YES
+#show_extra_warnings=NO

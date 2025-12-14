@@ -1,0 +1,46 @@
+-- /qompassai/dofiles/.config/dnsdist/dnsdist.conf-dist
+-- Qompass AI Dnsdist Config
+-- Copyright (C) 2025 Qompass AI, All rights reserved
+--------------------------------------------------------
+setACL({'192.0.2.0/28', '2001:DB8:1::/56'})
+https://dnsdist.org/guides/console.html
+controlSocket("127.0.0.1:5900")
+setKey("please generate a fresh private key with makeKey()")
+https://dnsdist.org/guides/webserver.html
+webserver("127.0.0.1:8083", "set a random password here")
+https://dnsdist.org/guides/carbon.html
+carbonServer("37.252.122.50", 'unique-name')
+addLocal("127.0.0.1:5200")
+addDNSCryptBind("127.0.0.1:8443", "2.provider.name", "DNSCryptResolver.cert", "DNSCryptResolver.key")
+addTLSLocal("127.0.0.1:9443", {"server.crt"}, {"server.key"}, { provider="openssl" })
+addDOHLocal("127.0.0.1:443", {"server.crt"}, {"server.key"})
+https://dnsdist.org/guides/downstreams.html
+https://dnsdist.org/guides/serverpools.html
+https://dnsdist.org/guides/serverselection.html
+newServer("192.0.2.1")
+newServer({address="192.0.2.1:5300", pool="abuse"})
+setRingBuffersSize(1000000, 100)
+setMaxTCPClientThreads(20)
+addAction(SuffixMatchNodeRule({"abuse.example.org.", "xxx."}), PoolAction("abuse"))
+addAction(QNameRule("drop-me.example.org."), DropAction())
+addAction(NetmaskGroupRule("192.0.2.0/24"), PoolAction("abuse"))
+addAction(OrRule({OpcodeRule(DNSOpcode.Notify), OpcodeRule(DNSOpcode.Update), QTypeRule(DNSQType.AXFR), QTypeRule(DNSQType.IXFR)}), RCodeAction(DNSRCode.REFUSED))
+local dbr = dynBlockRulesGroup()
+dbr:setQueryRate(30, 10, "Exceeded query rate", 60)
+dbr:setRCodeRate(DNSRCode.NXDOMAIN, 20, 10, "Exceeded NXD rate", 60)
+dbr:setRCodeRate(DNSRCode.SERVFAIL, 20, 10, "Exceeded ServFail rate", 60)
+dbr:setQTypeRate(DNSQType.ANY, 5, 10, "Exceeded ANY rate", 60)
+dbr:setResponseByteRate(10000, 10, "Exceeded resp BW rate", 60)
+function maintenance()
+dbr:apply()
+end
+https://dnsdist.org/reference/protobuf.html
+rl = newRemoteLogger('127.0.0.1:4242')
+addAction(AllRule(), RemoteLogAction(rl))
+addResponseAction(AllRule(), RemoteLogResponseAction(rl))
+fstr = newFrameStreamUnixLogger(/path/to/unix/socket)
+fstr = newFrameStreamTcpLogger('192.0.2.1:4242')
+addAction(AllRule(), DnstapLogAction(fstr))
+addResponseAction(AllRule(), DnstapLogResponseAction(fstr))
+pc = newPacketCache(100000)
+getPool(""):setCache(pc)

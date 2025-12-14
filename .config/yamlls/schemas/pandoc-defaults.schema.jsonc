@@ -1,0 +1,39 @@
+// pandoc-defaults.schema.json
+// Qompass AI Yamlls Pandoc Schema
+// Copyright (C) 2025 Qompass AI, All rights reserved
+// ----------------------------------------
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Pandoc Defaults File",
+    "type": "object",
+    "properties": {
+        "from": {
+            "type": "string"
+        },
+        "to": {
+            "type": "string"
+        },
+        "pdf-engine": {
+            "type": "string"
+        },
+        "template": {
+            "type": "string"
+        },
+        "metadata": {
+            "type": "object"
+        },
+        "resource-path": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "variables": {
+            "type": "object"
+        },
+        "output-file": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": true
+}

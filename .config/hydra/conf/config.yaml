@@ -1,0 +1,19 @@
+# --------------------------------
+# Copyright (C) 2025 Qompass AI, All rights reserved
+defaults:
+  - db: mysql
+  - optimizer: adam
+  - hydra/launcher: basic
+  - _self_
+app:
+  name: "rose"
+  version: "1.0.0"
+  debug: false
+training:
+  epochs: 100
+  batch_size: 32
+  learning_rate: 0.001
+model:
+  name: "resnet50"
+  num_classes: 10
+  pretrained: true

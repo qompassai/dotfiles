@@ -1,0 +1,18 @@
+# /qompassai/dotfiles/.config/inwx_update_dynds.toml
+# Qompass AI INWX Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+ipv6_enabled = true
+ipv4_commands = [
+   ["curl", "-4", "--fail", "-s", "-S", "http://ipv4.xnet.space"],
+   ["curl", "-4", "--fail", "-s", "-S", "http://v4.ident.me"],
+]
+ipv6_commands = [
+    ["curl", "-6", "--fail", "-s", "-S", "http://ipv6.xnet.space"],
+    ["curl", "-6", "--fail", "-s", "-S", "http://v6.ident.me"],
+]
+sleep_interval = 10
+retry_after = 180
+[[account]]
+username = "$(pass show inwx/u)"
+password = "$(pass show inwx/p)"

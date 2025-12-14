@@ -1,0 +1,10 @@
+# /qompassai/dotfiles/.config/urlview/system.urlview
+# Qompass AI System Urlview Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+macro index \cb |urlview\n
+macro pager \cb |urlview\n	
+REGEXP (((http|https|ftp|gopher)|mailto)[.:][^ >"\t]*|www\.[-a-z0-9.]+)[^ .,;\t>">\):]
+COMMAND xdg-open %s
+#COMMAND lynx %s
+COMMAND url_handler.sh

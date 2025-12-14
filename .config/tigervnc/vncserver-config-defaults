@@ -1,0 +1,17 @@
+# /qompassai/dotfiles/.config/tigervnc/vncserver.users
+# Qompass AI Tiger VNC Default Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+session=custom
+securitytypes=vncauth,tlsvnc
+geometry=2560x1440
+depth=24
+alwaysshared
+localhost
+preferredencoding=h264
+jpegquality=9
+compression=9
+maxrects=2048
+listen=127.0.0.1
+tlspriority=SECURE128
+tlscertsdir=/etc/tigervnc/certs

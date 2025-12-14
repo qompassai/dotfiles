@@ -1,0 +1,29 @@
+# ~/.config/systemd/user/polkit-agent.service
+[Unit]
+Description=Polkit authentication agent (Hyprland)
+Documentation=man:polkit(8)
+PartOf=graphical-session.target
+After=graphical-session.target dbus.service
+Wants=dbus.service
+ConditionEnvironment=WAYLAND_DISPLAY
+
+[Service]
+Type=simple
+ExecStart=/usr/lib/hyprpolkitagent/hyprpolkitagent
+Restart=on-failure
+
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=read-only
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+RestrictAddressFamilies=AF_UNIX
+LockPersonality=yes
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+
+[Install]
+WantedBy=graphical-session.target
+# WantedBy=hyprland-session.target
+

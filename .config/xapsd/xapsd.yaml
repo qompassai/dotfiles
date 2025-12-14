@@ -1,0 +1,18 @@
+# /qompassai/dotfiles/.config/xapsd/xapsd.yaml
+# Qompass AI Xapsd Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+loglevel: info
+databaseFile: /var/lib/xapsd/database.json
+listenAddr: '[::1]'
+port: 11619
+
+tlsCertfile:
+tlsKeyfile:
+tlsListenAddr:
+tlsPort: 11620
+checkInterval: 20
+delay: 30
+
+appleId: apple@apple.com
+appleIdHashedPassword: thehash

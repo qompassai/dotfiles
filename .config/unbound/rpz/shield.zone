@@ -1,0 +1,22 @@
+; ~/qompassai/dotfiles/.config/unbound/rpz/shield.zone
+; Copyright (C) 2025 Qompass AI, All rights reserved
+; --------------------------------------------------
+
+$TTL 300
+@ IN SOA localhost. admin.localhost. (
+    2025052701
+    3600
+    1800
+    604800
+    300
+)
+
+*.telemetry.microsoft.com CNAME .
+*.analytics.google.com CNAME .
+*.tracking.facebook.com CNAME .
+
+*.openai-scraper.com A 127.0.0.1
+*.anthropic-bot.com A 127.0.0.1
+
+*.malicious-pytorch.org CNAME .
+*.fake-tensorflow.com CNAME .

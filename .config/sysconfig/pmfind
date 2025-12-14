@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/sysconfig/pmfind
+# Qompass AI SysConfig PM Find Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+PMFIND_CHECK_PARAMS="-C"

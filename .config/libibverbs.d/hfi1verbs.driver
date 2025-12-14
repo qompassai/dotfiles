@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/libibverbs.d/hfi1verbs.driver
+# Qompass AI Libibverbs.d Intel Omni-Path HFI Driver Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+driver hfi1verbs

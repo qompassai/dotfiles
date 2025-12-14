@@ -1,0 +1,14 @@
+# /qompassai/dotfiles/.config/ppp/options.pptp
+# Qompass AI PPTP Options Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+######################################################
+lock
+noauth
+refuse-pap
+refuse-eap
+refuse-chap
+refuse-mschap
+nobsdcomp
+nodeflate
+require-mppe-128
+mppe required,stateless

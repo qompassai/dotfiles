@@ -1,0 +1,7 @@
+# /qompassai/dotfiles/.config/kdedefaults/ksplashrc
+# Qompass AI kdedefaults KSplash Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+[KSplash]
+Engine=KSplashQML
+Theme=org.kde.breeze.desktop

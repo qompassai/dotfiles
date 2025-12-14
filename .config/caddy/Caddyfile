@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/caddy/Caddyfile
+# Qompass AI Caddy Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+import {$XDG_CONFIG_HOME}/caddy/conf.d/*

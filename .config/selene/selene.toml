@@ -1,0 +1,38 @@
+# /qompassai/dotfiles/.config/selene/.selene.toml
+# Qompass AI Selene Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################### 
+
+[rules]
+"almost_swapped" = "warn"
+"divide_by_zero" = "deny"
+"duplicate_keys" = "deny"
+"empty_if" = "warn"
+"empty_loop" = "warn"
+"unbalanced_assignments" = "deny"
+"undefined_variable" = "deny"
+"unused_variable" = "warn"
+"shadowing" = "warn"
+"mixed_table" = "allow"
+"high_cyclomatic_complexity" = "warn"
+"multiple_statements" = "warn"
+"parenthese_conditions" = "warn"
+"ifs_same_cond" = "warn"
+"if_same_then_else" = "warn"
+
+[globals.vim]
+type = "any"
+writable = "full"
+
+[globals.require]
+type = "function"
+
+[globals.P]
+type = "function"
+
+[globals._G]
+type = "table"
+writable = "full"
+
+std = "luajit"
+name = "neovim"

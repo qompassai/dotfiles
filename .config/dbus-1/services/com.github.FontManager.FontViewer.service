@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=com.github.FontManager.FontViewer
+Exec=/usr/lib/font-manager/font-viewer --gapplication-service

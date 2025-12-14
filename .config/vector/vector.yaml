@@ -1,0 +1,29 @@
+# /qompassai/dotfiles/.config/vector/vector.yaml
+# Qompass AI Vector Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+
+data_dir: "/var/lib/vector"
+sources:
+  dummy_logs:
+    type: "demo_logs"
+    format: "syslog"
+    interval: 1
+transforms:
+  parse_logs:
+    type: "remap"
+    inputs: ["dummy_logs"]
+    source: |
+      . = parse_syslog!(string!(.message))
+sinks:
+  print:
+    type: "console"
+    inputs: ["parse_logs"]
+    encoding:
+      codec: "json"
+      json:
+        pretty: true
+
+api:
+   enabled: true
+   address: "127.0.0.1:8686"

@@ -1,0 +1,26 @@
+// 50-limit-free-buffer-pool-in-wayland-compositors.jsonc
+// Qompass AI NVIDIA Wayland Buffer Pool Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////////
+{
+    "rules": [
+        {
+            "pattern": {
+                "feature": "procname",
+                "matches": "niri"
+            },
+            "profile": "Limit free buffer pool on Wayland compositors"
+        }
+    ],
+    "profiles": [
+        {
+            "name": "Limit free buffer pool on Wayland compositors",
+            "settings": [
+                {
+                    "key": "GLVidHeapReuseRatio",
+                    "value": 0
+                }
+            ]
+        }
+    ]
+}

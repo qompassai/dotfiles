@@ -1,0 +1,12 @@
+# /qompassai/dotfiles/.config/berg-cli/berg.toml
+base_url = "codeberg.org"
+protocol = "https"
+fancy_tables = true
+no_color = false
+editor = "nvim"
+max_width = 80
+show_spinner = true
+username = "phaedrusflow" 
+default_org = "qompassai"
+token = "$(pass show berg/token)"
+default_branch = "main"
