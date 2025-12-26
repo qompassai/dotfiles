@@ -1,0 +1,309 @@
+// /qompassai/dotfiles/.config/vulkan/lunarg-vkconfig/vkconfig.jsonc
+// Qompass AI Vulkan Virtio x86_64 ICD Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+////////////////////////////////////////////////////////////////////
+{
+    "configurations": {
+        "last_path_export": "${VULKAN_SDK}",
+        "last_path_import": "${VULKAN_SDK}",
+        "removed": {
+        }
+    },
+    "executables": {
+        "active_executable": "${VULKAN_BIN}/vkcube",
+        "clear_on_launch": true,
+        "last_path_executable": "${VULKAN_SDK}",
+        "list": {
+            "${VULKAN_BIN}/vkcube": {
+                "active_option": "Simple Launch",
+                "configuration": "Validation",
+                "enabled": true,
+                "options": [
+                    {
+                        "arguments": [
+                            "--suppress_popups"
+                        ],
+                        "environment_variables": [
+                        ],
+                        "label": "Simple Launch",
+                        "log_file": "${VULKAN_HOME}/vkcube.txt",
+                        "working_folder": "${VULKAN_BIN}"
+                    },
+                    {
+                        "arguments": [
+                            "--suppress_popups",
+                            "--validate"
+                        ],
+                        "environment_variables": [
+                        ],
+                        "label": "API Validated Launch",
+                        "log_file": "${VULKAN_HOME}/vkcube.txt",
+                        "working_folder": "${VULKAN_BIN}"
+                    },
+                    {
+                        "arguments": [
+                            "--suppress_popups"
+                        ],
+                        "environment_variables": [
+                            "VK_LOADER_LAYERS_ENABLE=*validation"
+                        ],
+                        "label": "Env Validated Launch",
+                        "log_file": "${VULKAN_HOME}/vkcube.txt",
+                        "working_folder": "${VULKAN_BIN}"
+                    }
+                ]
+            },
+            "${VULKAN_BIN}/vkcubepp": {
+                "active_option": "Simple Launch",
+                "configuration": "Validation",
+                "enabled": true,
+                "options": [
+                    {
+                        "arguments": [
+                            "--suppress_popups"
+                        ],
+                        "environment_variables": [
+                        ],
+                        "label": "Simple Launch",
+                        "log_file": "${VULKAN_HOME}/vkcubepp.txt",
+                        "working_folder": "${VULKAN_BIN}"
+                    },
+                    {
+                        "arguments": [
+                            "--suppress_popups",
+                            "--validate"
+                        ],
+                        "environment_variables": [
+                        ],
+                        "label": "API Validated Launch",
+                        "log_file": "${VULKAN_HOME}/vkcubepp.txt",
+                        "working_folder": "${VULKAN_BIN}"
+                    },
+                    {
+                        "arguments": [
+                            "--suppress_popups"
+                        ],
+                        "environment_variables": [
+                            "VK_LOADER_LAYERS_ENABLE=*validation"
+                        ],
+                        "label": "Env Validated Launch",
+                        "log_file": "${VULKAN_HOME}/vkcubepp.txt",
+                        "working_folder": "${VULKAN_BIN}"
+                    }
+                ]
+            },
+            "${VULKAN_BIN}/vulkaninfo": {
+                "active_option": "Vulkan Info stdout summary",
+                "configuration": "Validation",
+                "enabled": true,
+                "options": [
+                    {
+                        "arguments": [
+                            "--summary"
+                        ],
+                        "environment_variables": [
+                        ],
+                        "label": "Vulkan Info stdout summary",
+                        "log_file": "${VULKAN_HOME}/vulkaninfo.txt",
+                        "working_folder": "${VULKAN_HOME}"
+                    },
+                    {
+                        "arguments": [
+                            "--json=0",
+                            "--show-promoted-structs"
+                        ],
+                        "environment_variables": [
+                        ],
+                        "label": "GPU 0 Vulkan Profile JSON export",
+                        "log_file": "${VULKAN_HOME}/vulkaninfo.txt",
+                        "working_folder": "${VULKAN_HOME}"
+                    }
+                ]
+            }
+        }
+    },
+    "file_format_version": "3.1.0",
+    "interface": {
+        "APPLICATIONS": {
+        },
+        "CONFIGURATIONS": {
+            "advanced": true,
+            "executable_scope": "ANY",
+            "selected_global_configuration": "Validation"
+        },
+        "LAYERS": {
+        },
+        "PREFERENCES": {
+            "VULKAN_DOWNLOAD": "{VULKAN_SDK}Releases",
+            "VULKAN_HOME": "/home/phaedrus/VulkanSDK",
+            "last_vkconfig_version": "3.1.0",
+            "latest_sdk_version": "0.0.0",
+            "use_layer_dev_mode": false,
+            "use_notify_releases": true,
+            "use_system_tray": false
+        },
+        "active_tab": "CONFIGURATIONS",
+        "has_crashed": true,
+        "hide_message_boxes": [
+        ]
+    },
+    "layers": {
+        "found": {
+            "${VULKAN_HOME}/implicit_layer.d/renderdoc_capture.32.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-06T19:31:00",
+                "validated": false
+            },
+            "{VULKAN_HOME}/implicit_layer.d/renderdoc_capture.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-06T19:57:47",
+                "validated": false
+            },
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_INTEL_nullhw.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-04-16T18:26:06",
+                "validated": false
+            },
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_MESA_overlay.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-04-16T18:26:06",
+                "validated": false
+            },
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_MESA_screenshot.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-04-16T18:26:06",
+                "validated": false
+            },
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_MESA_vram_report_limit.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-04-16T18:26:06",
+                "validated": false
+            },
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_api_dump.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-20T19:49:27",
+                "validated": false
+            },
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_khronos_shader_object.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-29T23:13:58",
+                "validated": false
+            },
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_khronos_synchronization2.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-29T23:13:58",
+                "validated": false
+            },
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_khronos_timeline_semaphore.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-29T23:13:58",
+                "validated": false
+            },
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_khronos_validation.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-20T19:48:57",
+                "validated": false
+            },
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_monitor.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-20T19:49:27",
+                "validated": false
+            },
+            "{VULKAN_HOME}/explicit_layer.d/VkLayer_screenshot.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-20T19:49:27",
+                "validated": false
+            },
+            "{VULKAN_HOME}/explicit_layer.d/alvr_x86_64.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-29T15:09:15",
+                "validated": false
+            },
+            "/usr/share/vulkan/implicit_layer.d/MangoHud.x86.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-05T09:18:54",
+                "validated": false
+            },
+            "/usr/share/vulkan/implicit_layer.d/MangoHud.x86_64.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-05T09:10:23",
+                "validated": false
+            },
+            "{VULKAN_HOME}/implicit_layer.d/VkLayer_DXVK_NVAPI_reflex.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-04-08T11:02:48",
+                "validated": false
+            },
+            "{VULKAN_HOME}/implicit_layer.d/VkLayer_FROG_gamescope_wsi.x86_64.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-04-06T05:33:04",
+                "validated": false
+            },
+            "{VULKAN_HOME}/implicit_layer.d/VkLayer_MESA_device_select.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-04-16T18:26:06",
+                "validated": false
+            },
+            "{VULKAN_HOME}/implicit_layer.d/VkLayer_hdr_wsi.x86_64.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-04-02T20:57:23",
+                "validated": false
+            },
+            "{VULKAN_HOME}/implicit_layer.d/latencyflex.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-29T12:12:52",
+                "validated": false
+            },
+            "{VULKAN_HOME}/implicit_layer.d/libstrangle_vk.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-26T17:37:25",
+                "validated": false
+            },
+            "{VULKAN_HOME}/implicit_layer.d/nvidia_layers.jsonc": {
+                "disabled": true,
+                "last_modified": "2025-03-29T12:05:43",
+                "validated": false
+            },
+            "{VULKAN_HOME}/implicit_layer.d/obs_vkcapture_32.jsonc": {
+                "disabled": false,
+                "last_modified": "2025-03-29T14:12:54",
+                "validated": false
+            },
+            "{VULKAN_HOME}/implicit_layer.d/obs_vkcapture_64.json": {
+                "disabled": false,
+                "last_modified": "2025-03-29T14:12:54",
+                "validated": false
+            },
+            "{VULKAN_HOME}/implicit_layer.d/vkBasalt.json": {
+                "disabled": false,
+                "last_modified": "2025-03-29T16:43:24",
+                "validated": false
+            },
+            "/usr/share/vulkan/implicit_layer.d/vkBasalt.x86.json": {
+                "disabled": false,
+                "last_modified": "2025-03-29T22:27:30",
+                "validated": false
+            },
+            "/usr/share/vulkan/implicit_layer.d/vkdevicechooser.json": {
+                "disabled": false,
+                "last_modified": "2025-03-23T15:35:29",
+                "validated": false
+            }
+        },
+        "last_layers_path": "/home/phaedrus/VulkanSDK",
+        "paths": {
+            "${VULKAN_SDK}/local/etc/vulkan/explicit_layer.d": true,
+            "${VULKAN_SDK}/local/etc/vulkan/implicit_layer.d": true,
+            "${VULKAN_SDK}/local/share/vulkan/explicit_layer.d": true,
+            "${VULKAN_SDK}/local/share/vulkan/implicit_layer.d": true,
+            "${VULKAN_SDK}/share/vulkan/explicit_layer.d": true,
+            "${VULKAN_SDK}/share/vulkan/implicit_layer.d": true,
+            ".local/share/vulkan/explicit_layer.d": true,
+            ".local/share/vulkan/implicit_layer.d": true,
+            "/etc/vulkan/explicit_layer.d": true,
+            "/etc/vulkan/implicit_layer.d": true,
+            "/usr/share/vulkan/explicit_layer.d": true
+        },
+        "validate_manifests": false
+    }
+}

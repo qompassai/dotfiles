@@ -2,12 +2,13 @@
 -- Qompass AI DPrint LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ----------------------------------------
-vim.lsp.config['dprint_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'dprint',
         'lsp',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'javascript',
         'javascriptreact',
         'typescript',

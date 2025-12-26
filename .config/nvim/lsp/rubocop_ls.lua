@@ -2,27 +2,19 @@
 -- Qompass AI Ruby RuboCop LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
-vim.lsp.config['rubocop_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'bundle',
         'exec',
         'rubocop',
         '--lsp',
     },
-    filetypes = { 'ruby' },
-    codeActionProvider = {
-        codeActionKinds = { '', 'quickfix', 'refactor', 'source.fixAll' },
-        resolveProvider = true,
+    filetypes = { ---@type string[]
+        'ruby',
     },
-    colorProvider = false,
-    semanticTokensProvider = nil,
-    init_options = {
-        safeAutocorrect = true,
-        lintMode = true,
-        layoutMode = true,
+    root_markers = { ---@type string[]
+        'Gemfile',
+        '.git',
     },
-    settings = {
-        rubocop = {},
-    },
-    single_file_support = true,
 }

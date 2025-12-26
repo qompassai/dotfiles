@@ -3,11 +3,12 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -----------------------------------------------------
 --Reference: https://github.com/g-plane/wasm-language-tools
-vim.lsp.config['wasmlangtoo_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'wat_server',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'wat',
     },
     settings = {

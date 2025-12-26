@@ -3,15 +3,16 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
 --Reference: https://github.com/mathworks/MATLAB-language-server
-vim.lsp.config['matlab_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'matlab-language-server',
         '--stdio',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'matlab',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         'git',
     },
     settings = {

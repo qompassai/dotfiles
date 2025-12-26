@@ -2,7 +2,6 @@
 -- Qompass AI F# LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
--- Reference: https://github.com/faldor20/fsharp-language-server
 vim.api.nvim_create_autocmd({
     'BufNewFile',
     'BufRead',
@@ -16,8 +15,8 @@ vim.api.nvim_create_autocmd({
         vim.bo[args.buf].filetype = 'fsharp'
     end,
 })
-
-vim.lsp.config['fsharp_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'dotnet',
         'FSharpLanguageServer.dll',

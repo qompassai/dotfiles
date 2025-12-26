@@ -4,15 +4,16 @@
 -- ---------------------------------------------------
 -- Reference: https://github.com/grafana/jsonnet-language-server
 --  go install github.com/grafana/jsonnet-language-server@latest
-vim.lsp.config['jsonnet_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'jsonnet-language-server',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'jsonnet',
         'libsonnet',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         'jsonnetfile.json',
         '.git',
     },

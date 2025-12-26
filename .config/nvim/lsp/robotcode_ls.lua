@@ -2,20 +2,21 @@
 -- Qompass AI RobotCode LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-vim.lsp.config['robotcode_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'robotcode',
         'language-server',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'robot',
         'resource',
     },
-    root_markers = {
-        'robot.toml',
-        'pyproject.toml',
-        'Pipfile',
+    root_markers = { ---@type string[]
         '.git',
+        'Pipfile',
+        'pyproject.toml',
+        'robot.toml',
     },
     get_language_id = function(_, _)
         return 'robotframework'

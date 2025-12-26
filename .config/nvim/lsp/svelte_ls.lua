@@ -4,22 +4,34 @@
 -- --------------------------------------------------
 -- Reference: https://github.com/sveltejs/language-tools/tree/master/packages/language-server
 -- pnpm add -g svelte-language-server
-vim.lsp.config['svelte_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'svelteserver',
         '--stdio',
     },
     filetypes = {
         'svelte',
     },
+    root_dir = function(bufnr, on_dir)
+        local fname = vim.api.nvim_buf_get_name(bufnr)
+        if vim.uv.fs_stat(fname) ~= nil then
+            local root_markers =
+                { 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'bun.lock', 'deno.lock' }
+            root_markers = vim.fn.has('nvim-0.11.3') == 1 and { root_markers, { '.git' } }
+                or vim.list_extend(root_markers, { '.git' })
+            local project_root = vim.fs(bufnr, root_markers) or vim.fn.getcwd()
+            on_dir(project_root)
+        end
+    end,
     root_markers = {
         'bun.lock',
         'bun.lockb',
         'deno.lock',
         '.git',
         'package-lock.json',
-        'yarn.lock',
         'pnpm-lock.yaml',
+        'yarn.lock',
     },
     initializationOptions = {
         configuration = {
@@ -153,7 +165,7 @@ vim.lsp.config['svelte_ls'] = {
             css = {},
         },
     },
-    on_attach = function(client, bufnr)
+    on_attach = function(Client, bufnr)
         local group = vim.api.nvim_create_augroup('lspconfig.svelte', {
             clear = false,
         })
@@ -165,13 +177,13 @@ vim.lsp.config['svelte_ls'] = {
             group = group,
             callback = function(ctx)
                 ---@diagnostic disable-next-line: param-type-mismatch
-                client:notify('$/onDidChangeTsOrJsFile', {
+                Client:notify('$/onDidChangeTsOrJsFile', {
                     uri = ctx.match,
                 })
             end,
         })
         vim.api.nvim_buf_create_user_command(bufnr, 'LspMigrateToSvelte5', function()
-            client:exec_cmd({
+            Client:exec_cmd({
                 title = 'Migrate Component to Svelte 5 Syntax',
                 command = 'migrate_to_svelte_5',
                 arguments = { vim.uri_from_bufnr(bufnr) },

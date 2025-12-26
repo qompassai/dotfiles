@@ -6,13 +6,14 @@
 -- git clone https://github.com/muon-build/muon.git && cd muon && ./bootstrap.sh build \
 --&& build/muon-bootstrap setup build && build/muon-bootstrap -C build samu \
 -- && build/muon-bootstrap -C build test && sudo build/muon-bootstrap -C build install
-vim.lsp.config['muon_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'muon',
         'analyze',
         'lsp',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'meson',
     },
     root_dir = function(bufnr, on_dir)
@@ -31,7 +32,7 @@ vim.lsp.config['muon_ls'] = {
                 end
                 on_dir(nil)
             else
-                vim.notify(('[muon] cmd failed with code %d: %s\n%s'):format(output.code, cmd, output.stderr))
+                vim.echo(('[muon] cmd failed with code %d: %s\n%s'):format(output.code, cmd, output.stderr))
             end
         end)
     end,

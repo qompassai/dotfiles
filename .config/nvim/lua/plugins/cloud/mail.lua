@@ -2,9 +2,11 @@
 -- Qompass AI Diver Mail Plugin Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
+---@meta
+---@module 'plugins.cloud.mail'
 return {
     'martineausimon/nvim-mail-merge',
-    ft = {'markdown'}, -- optional
+    ft = { 'markdown' }, -- optional
     config = function()
         require('nvmm').setup({
             mappings = {
@@ -12,12 +14,12 @@ return {
                 config = '<leader>c',
                 preview = '<leader>p',
                 send_text = '<leader>st',
-                send_html = '<leader>sh'
+                send_html = '<leader>sh',
             },
             options = {
                 mail_client = {
                     text = 'neomutt', -- or "mailx"
-                    html = 'neomutt'
+                    html = 'neomutt',
                 },
                 auto_break_md = true,
                 neomutt_config = '$HOME/.neomuttrc',
@@ -26,11 +28,14 @@ return {
                 log_file = './nvmm.log',
                 date_format = '%Y-%m-%d',
                 pandoc_metadatas = { -- syntax with [['metadata']] is important
-                    [['title= ']], [['margin-top=0']], [['margin-left=0']],
-                    [['margin-right=0']], [['margin-bottom=0']],
-                    [['mainfont: sans-serif']]
-                }
-            }
+                    [['title= ']],
+                    [['margin-top=0']],
+                    [['margin-left=0']],
+                    [['margin-right=0']],
+                    [['margin-bottom=0']],
+                    [['mainfont: sans-serif']],
+                },
+            },
         })
-    end
+    end,
 }

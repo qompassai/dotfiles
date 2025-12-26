@@ -3,28 +3,29 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 -- Reference: https://scalameta.org/metals/docs/editors/user-configuration
-vim.lsp.config['metals_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'metals',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'scala',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         'build.sbt',
         'build.sc',
         'build.gradle',
         'pom.xml',
     },
     init_options = {
-        statusBarProvider = 'show-message',
-        isHttpEnabled = true,
+        statusBarProvider = 'show-message', ---@type string
+        isHttpEnabled = true, ---@type boolean
         compilerOptions = {
-            snippetAutoIndent = false,
+            snippetAutoIndent = false, ---@type boolean
         },
     },
     settings = {
-        metals = {
+        metals = { ---@type string[]
             javaHome = '/usr/lib/jvm/default',
             sbtScript = '/usr/bin/sbt',
             gradleScript = '/usr/bin/gradle',
@@ -35,12 +36,12 @@ vim.lsp.config['metals_ls'] = {
             excludedPackages = {
                 'akka.actor.typed.javadsl',
             },
-            bloopSbtAlreadyInstalled = false,
-            bloopVersion = '2.0.17',
-            bloopJvmProperties = {
+            bloopSbtAlreadyInstalled = false, ---@type boolean
+            bloopVersion = '2.0.17', ---@type string
+            bloopJvmProperties = { ---@type string[]
                 '-Xmx4G',
             },
-            superMethodLensesEnabled = true,
+            superMethodLensesEnabled = true, ---@type boolean
             ['inlayHints.inferredTypes.enable'] = true,
             ['inlayHints.namedParameters.enable'] = true,
             ['inlayHints.byNameParameters.enable'] = true,
@@ -68,7 +69,7 @@ vim.lsp.config['metals_ls'] = {
             --mcpClient = 'claude',
         },
     },
-    capabilities = {
+    capabilities = { ---@type boolean[]
         workspace = {
             configuration = true,
         },

@@ -1,10 +1,10 @@
--- /qompassai/Diver/lsp/lsp-ai.lua
--- Qompass AI Qompass LSP-AI Config
+-- /qompassai/Diver/lsp/ai_ls.lua
+-- Qompass AI Qompass AI LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
 -- References: https://github.com/SilasMarvin/lsp-ai/wiki/Configuration
 -- cargo install lsp-ai -F llama_cpp -F cuda
-vim.lsp.config['ai_ls'] = {
+return {
     cmd = {
         'lsp-ai',
     },

@@ -3,8 +3,9 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 --References: composer global require vimeo/psalm
-vim.lsp.config['psalm_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'psalm',
         '--language-server',
     },

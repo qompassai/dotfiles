@@ -2,21 +2,21 @@
 -- Qompass AI Cairo LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
--- cargo install --git https://github.com/software-mansion/scarb scarb
-vim.lsp.config['cairo_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'scarb',
         'cairo-language-server',
         '/C',
         '--node-ipc',
     },
-    init_options = {
+    init_options = { ---@type string[]
         hostInfo = 'neovim',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'cairo',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         'Scarb.toml',
         'cairo_project.toml',
         '.git',

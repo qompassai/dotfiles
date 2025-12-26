@@ -1,23 +1,14 @@
 -- /qompassai/Diver/lsp/svls.lua
--- Qompass AI SVLS SystemVerilog LSP Spec (svls)
+-- Qompass AI SVLS SystemVerilog LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
-vim.lsp.config['sv_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'svls',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
+        'verilog',
         'systemverilog',
-    },
-    codeActionProvider = {
-        codeActionKinds = { '', 'quickfix', 'refactor' },
-        resolveProvider = true,
-    },
-    colorProvider = false,
-    semanticTokensProvider = nil,
-    settings = {
-        svls = {
-            enable_linter = true,
-        },
     },
 }

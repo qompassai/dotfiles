@@ -2,27 +2,25 @@
 -- Qompass AI VSCode Css LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ----------------------------------------------------------------
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-vim.lsp.config['css_ls'] = {
-    capabilities = capabilities,
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'vscode-css-language-server',
         '--stdio',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'css',
         'scss',
         'less',
     },
-    init_options = {
+    init_options = { ---@type table
         provideFormatter = true,
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.git',
         'package.json',
     },
-    settings = {
+    settings = { ---@type table
         css = {
             validate = true,
         },
@@ -32,7 +30,7 @@ vim.lsp.config['css_ls'] = {
         less = {
             validate = true,
         },
-        cssVariables = {
+        cssVariables = { ---@type string[]
             lookupFiles = {
                 '**/*.css',
                 '**/*.scss',
@@ -42,4 +40,3 @@ vim.lsp.config['css_ls'] = {
         },
     },
 }
-capabilities.textDocument.completion.completionItem.snippetSupport = true

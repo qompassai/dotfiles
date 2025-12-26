@@ -2,16 +2,17 @@
 -- Qompass AI Docker LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
--- pnpm add -g dockerfile-language-server-nodejs
-vim.lsp.config['docker_ls'] = {
-    cmd = {
+-- pnpm add -g dockerfile-language-server-nodejs@latest
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'docker-langserver',
         '--stdio',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'dockerfile',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         'Dockerfile',
         'docker-compose.yaml',
         'docker-compose.yml',

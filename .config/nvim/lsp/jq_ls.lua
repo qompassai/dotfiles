@@ -3,16 +3,17 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
 -- Reference:  https://github.com/wader/jq-lsp
--- go install github.com/wader/jq-lsp@master
+-- go install github.com/wader/jq-lsp@latest
 vim.cmd([[au BufRead,BufNewFile *.jq setfiletype jq]])
-vim.lsp.config['jq_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'jq-lsp',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'jq',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.git',
     },
 }

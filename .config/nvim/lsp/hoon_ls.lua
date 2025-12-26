@@ -2,8 +2,9 @@
 -- Qompass AI Hoon LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-vim.lsp.config['hoon_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'hoon-language-server',
         '-p',
         '8080',
@@ -14,10 +15,10 @@ vim.lsp.config['hoon_ls'] = {
         '-d',
         '0',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'hoon',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.git',
     },
 }

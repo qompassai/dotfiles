@@ -8,9 +8,11 @@ vim.filetype.add({
         ['.*.bazelrc'] = 'bazelrc',
     },
 })
-vim.lsp.config['bazelrc_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'bazelrc-lsp',
+        'lsp',
     },
     filetypes = {
         'bazelrc',

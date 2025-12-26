@@ -4,7 +4,8 @@
 -- ---------------------------------------------------
 -- Reference:  https://github.com/kitagry/regols | https://www.openpolicyagent.org/docs
 -- go install github.com/kitagry/regols@latest
-vim.lsp.config['rego_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'regols',
     },

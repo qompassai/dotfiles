@@ -2,12 +2,15 @@
 -- Qompass AI BitBake LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------
-vim.lsp.config['bitbake_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'bitbake-language-server',
     },
     filetypes = {
         'bitbake',
     },
-    root_markers = { '.git' },
+    root_markers = {
+        '.git',
+    },
 }

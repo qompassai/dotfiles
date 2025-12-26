@@ -2,17 +2,18 @@
 -- Qompass AI Spectral LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
-vim.lsp.config['spectral_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'spectral-language-server',
         '--stdio',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'yaml',
         'json',
         'yml',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.spectral.yaml',
         '.spectral.yml',
         '.spectral.json',

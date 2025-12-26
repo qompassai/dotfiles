@@ -28,7 +28,8 @@ vim.treesitter.language.register('hcl', 'atlas-schema-redshift')
 vim.treesitter.language.register('hcl', 'atlas-test')
 vim.treesitter.language.register('hcl', 'atlas-plan')
 vim.treesitter.language.register('hcl', 'atlas-rule')
-vim.lsp.config['atlas_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'atlas',
         'tool',

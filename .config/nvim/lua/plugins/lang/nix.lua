@@ -2,6 +2,8 @@
 -- Qompass AI Diver Nix Plugin Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
+---@meta
+---@module 'plugins.lang.nix'
 local nix_cfg = require('config.lang.nix')
 
 return {

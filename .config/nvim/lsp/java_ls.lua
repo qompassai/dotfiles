@@ -2,35 +2,21 @@
 -- Qompass AI Java Language Server Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
-vim.lsp.config['java_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'java-language-server',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'java',
     },
-    codeActionProvider = {
-        codeActionKinds = {
-            '',
-            'quickfix',
-            'refactor.extract',
-            'refactor.rewrite',
-        },
-        resolveProvider = true,
+    root_markers = { ---@type string[]
+        'build.gradle',
+        'build.gradle.kts',
+        '.git',
+        'pom.xml',
     },
-    colorProvider = false,
-    semanticTokensProvider = nil,
-    settings = {
-        java = {
-            completion = {
-                enabled = true,
-            },
-            diagnostics = {
-                enabled = true,
-            },
-            formatting = {
-                enabled = true,
-            },
-        },
+    settings = { ---@type string[]
+        ...,
     },
 }

@@ -4,7 +4,8 @@
 -- ----------------------------------------
 -- Reference:  -- https://ast-grep.github.io/reference/languages.html
 -- pnpm add -g @ast-grep/cli
-vim.lsp.config['astgrep_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'ast-grep',
         'lsp',

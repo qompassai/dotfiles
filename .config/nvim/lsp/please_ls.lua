@@ -4,16 +4,17 @@
 -- ---------------------------------------------------
 --Reference: https://github.com/thought-machine/please
 --curl -s https://get.please.build | bash
-vim.lsp.config['please_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'plz',
         'tool',
         'lps',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'bzl',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.plzconfig',
     },
 }

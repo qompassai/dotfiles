@@ -1,10 +1,10 @@
 -- /qompassai/Diver/lsp/esbonio.lua
 -- Qompass AI Diver Esbonio LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
--- ----------------------------------------
-
-vim.lsp.config['esbonio_ls'] = {
-    cmd = {
+-- --------------------------------------------------
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'esbonio',
     },
     settings = {
@@ -20,7 +20,7 @@ vim.lsp.config['esbonio_ls'] = {
                 srcDir = 'docs',
                 buildDir = 'build',
                 doctreeDir = 'build/.doctrees',
-                pythonPath = nil,
+                pythonPath = {},
             },
             docutils = {
                 enabled = true,
@@ -37,7 +37,7 @@ vim.lsp.config['esbonio_ls'] = {
             },
         },
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'rst',
         'rest',
         'restructuredtext',

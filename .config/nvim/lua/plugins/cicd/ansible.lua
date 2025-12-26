@@ -6,10 +6,9 @@ return {
   'pearofducks/ansible-vim',
   ft = {
     'ansible',
-    'yaml.ansible'
+    'yaml.ansible',
   },
   dependencies = {
-    'b0o/schemastore.nvim',
   },
   config = function(_, opts)
     require('config.cicd.ansible').ansible_cfg(opts)

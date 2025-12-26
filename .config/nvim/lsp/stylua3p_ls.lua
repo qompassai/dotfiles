@@ -3,14 +3,15 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 --Reference: https://github.com/antonk52/lua-3p-language-servers
-vim.lsp.config['stylua3p_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'stylua-3p-language-server',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'lua',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.stylua.toml',
         'stylua.toml',
     },

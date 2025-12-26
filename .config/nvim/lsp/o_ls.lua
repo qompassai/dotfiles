@@ -3,14 +3,15 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
 --Reference: https://github.com/DanielGavin/ols
-vim.lsp.config['o_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'ols',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'odin',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.git',
         'ols.json',
         'ols.jsonc',

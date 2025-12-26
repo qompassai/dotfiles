@@ -5,13 +5,13 @@
 return {
   std = 'max',
   globals = {
+    'assert',
     'vim',
     'use',
     'describe',
     'it',
     'before_each',
     'after_each',
-    'assert',
     'spy',
     'mock',
     'require',

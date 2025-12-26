@@ -3,9 +3,10 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -----------------------------------------------------
 --Reference: https://github.com/microsoft/typespec
--- pnpm add -g @typespec/compiler
-vim.lsp.config['tsp_ls'] = {
-    cmd = {
+-- pnpm add -g @typespec/compiler@latest
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'tsp-server',
         '--stdio',
     },

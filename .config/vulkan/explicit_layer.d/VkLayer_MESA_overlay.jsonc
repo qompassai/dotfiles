@@ -1,0 +1,15 @@
+// /qompassai/dotfiles/.config/vulkan/explicit_layer.d/VKLayer_MESA_overlay.jsonc
+// Qompass AI Vulkan Explicit Layer Mesa Overlay Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+////////////////////////////////////////////////////////////////////
+{
+    "file_format_version" : "1.0.0",
+    "layer" : {
+        "name": "VK_LAYER_MESA_overlay",
+        "type": "GLOBAL",
+        "library_path": "libVkLayer_MESA_overlay.so",
+        "api_version": "1.4.303",
+        "implementation_version": "1",
+        "description": "Mesa Overlay layer"
+    }
+}

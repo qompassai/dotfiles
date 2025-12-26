@@ -2,25 +2,26 @@
 -- Qompass AI Stylua LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
-vim.lsp.config['stylua_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'stylua',
         '--lsp',
         '--search-parent-directories',
         '--sort-requires',
         '--respect-ignores',
-        '--syntax=LuaJit',
+        '--syntax=LuaJIT',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'lua',
         'luau',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.editorconfig',
         '.stylua.toml',
         'stylua.toml',
     },
-    on_attach = function(client, bufnr)
+    on_attach = function(client, bufnr) ---@diagnostic disable-line: unused-local
         client.server_capabilities.documentFormattingProvider = true
         client.server_capabilities.documentRangeFormattingProvider = true
         client.server_capabilities.completionProvider = nil

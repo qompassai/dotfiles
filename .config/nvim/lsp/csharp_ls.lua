@@ -2,9 +2,8 @@
 -- Qompass AI Diver Csharp LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -----------------------------------------------------
--- Reference: https://github.com/razzmatazz/csharp-language-server
--- dotnet tool install --global csharp-ls
-vim.lsp.config['csharp_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'csharp-ls',
     },

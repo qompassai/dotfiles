@@ -3,14 +3,15 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ----------------------------------------
 -- Reference: https://github.com/genericptr/pascal-language-server
-vim.lsp.config['pas_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'pasls',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'pascal',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '*.lpi',
         '*.lpk',
         '.git',

@@ -2,7 +2,8 @@
 -- Qompass AI BluePrint Compiler LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
-vim.lsp.config['blueprint_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'blueprint-compiler',
         'lsp',

@@ -4,48 +4,49 @@
 -- --------------------------------------------------
 --https://microsoft.github.io/language-server-protocol/implementors/servers/
 vim.lsp.enable({
-  'a_ls',
   'ada_ls',
-  'agda_ls',
-  'ai_ls',
-  'aiken_ls',
+  --'agda_ls',
+  --'ai_ls',
+  --'aiken_ls',
   'air_ls',
+  --'alloy_ls',
   'angular_ls',
-  'ansible_ls',
-  'antlers_ls',
-  'apex_ls',
-  'arduino_ls',
+  --'ansible_ls',
+  --'antlers_ls',
+  --'apex_ls',
+  --'arduino_ls',
   'asm_ls',
-  'astgrep_ls',
-  'astro_ls',
-  'atlas_ls',
-  'atopile_ls',
+  --'astgrep_ls',
+  --'astro_ls',
+  --'atlas_ls',
+  --'atopile_ls',
   --'autohotkey_ls',
   'autotoo_ls',
   'awk_ls',
   'azurepipelines_ls',
   'bacon_ls',
-  'basedpy_ls',
+  --'basedpy_ls',
   'bash_ls',
-  --'basics_ls',
-  'bazelrc_ls',
-  'beancount_ls',
-  'bicep_ls',
-  --'biome',
+  --'basics_ls', --updated last year
+  --'bazelrc_ls',
+  --'beancount_ls',
+  --'bicep_ls',
+  --'biome_ls',
   'bitbake_ls',
   'blueprint_ls',
   'bq_ls',
+  'brioche_ls',
   'bsc_ls',
   'buck2_ls',
   --'buddy_ls', --not-using
   --'buf',
   'buf_ls',
-  'bzl_ls',
+  --'bzl_ls', deprecated
   'c3_ls',
   'cairo_ls',
   'cc_ls',
   'cds_ls',
-  'checkmake_ls',
+  --'checkmake_ls',
   --'circom_ls', --last git in 2023
   'clangd_ls',
   'clarinet_ls',
@@ -53,38 +54,42 @@ vim.lsp.enable({
   'cmake_ls',
   'cobol_ls',
   --'codebook_ls',
-  'coffeesense_ls',
+  --'coffeesense_ls', -- two years since last git
   --'contextive_ls',
   --'copilot_ls.lua',
   --'coq_ls',
   'crystalline_ls',
   'csharp_ls',
-  --'cspell_ls',
+  --'cspell_ls', ---lsp/linter
   --'css_ls', --last update 1 year ago
-  --'deno_ls',
-  --'devsense_ls',
+  --'cucumber_ls' --testing
+  --'dagger_ls' -- deprecated
+  --'deno_ls', ---lsp/linter
   --'diagnostic_ls', -2years since last commit
   'dj_ls',
+  --'djt_ls',
   'docker_ls',
   'dockercompose_ls',
   'dolmen_ls',
   'dot_ls',
   'dotenvlint_ls',
   --'dprint_ls',
+  --'dspinyin_ls' --deprecated
   'dts_ls',
-  --'editorcc_ls',
-  --'efm_ls',
+  --'editorcc_ls', ---lsp/linter
+  --'efm_ls', --last release Nov 2024
   'elixir_ls',
   'elm_ls',
   'elp_ls',
   'ember_ls',
   --'emmet_ls',
-  --'emmylua_ls',
+  -- 'emmylua_ls',
+  --'erg_ls', --not using
   'esbonio_ls',
   --'eslint_ls', --using biome instead, last updated 1 year ago.
   'expert_ls',
   'facility_ls',
-  'fennel_ls',
+  --'fennel_ls',
   'fish_ls',
   'flow_ls',
   'flux_ls',
@@ -93,12 +98,12 @@ vim.lsp.enable({
   'fsautocomplete_ls',
   --'fsharp_ls', --no longer maintained
   'fstar_ls',
-  'gdscript_ls',
-  'gdshader_ls',
+  --'gdscript_ls',
+  --'gdshader_ls',
   'ghactions_ls',
   --'ghcide_ls',
   --'ghdl_ls', --last activity one year ago.
-  --'ginko_ls',
+  --'ginko_ls', last touched 1 year ago
   'gitlabci_ls',
   'glasgow_ls',
   'gleam_ls',
@@ -117,10 +122,10 @@ vim.lsp.enable({
   --'hdlcheck_ls',
   'helm_ls',
   'herb_ls',
+  --'hie_ls', --deprecated
   --'hlasm',
   'hoon_ls',
-  'html_ls',
-  'htmlhint_ls',
+  --'html_ls',
   'htmx_ls',
   --'hydra_ls',
   'hypr_ls',
@@ -134,20 +139,19 @@ vim.lsp.enable({
   'julia_ls',
   'just_ls',
   'kotlin_ls',
-  'kubescape_ls',
   'laravel_ls',
   'lean_ls',
   'lemminx',
   --'lexical_ls', deprecated
   --'ltex_ls',
-  'ltex_plus_ls',
+  'ltexplus_ls',
   'lua_ls',
-  --'luau_ls',
+  'luau_ls',
   'lwc_ls',
   'm68k_ls',
   'makelint_ls',
   'markojs_ls',
-  'marksman_ls',
+  --'marksman_ls',
   'matlab_ls',
   'mdxana_ls',
   --'meson_ls', deprecated
@@ -158,12 +162,12 @@ vim.lsp.enable({
   'mlirpdll_ls',
   'mm0_ls',
   --'moveana_ls', --deprecated
-  'msbuildptoo_ls',
+  --'msbuildptoo_ls',
   'muon_ls',
   'mutt_ls',
   --'nelua_ls',
   'neocmake_ls',
-  'nextflow_ls',
+  --'nextflow_ls',
   'next_ls',
   'nginx_ls',
   'nginxcf_ls',
@@ -179,7 +183,7 @@ vim.lsp.enable({
   'omnisharp_ls',
   'opencl_ls',
   'openscad_ls',
-  'oxlint_ls',
+  'oxlint_ls', ---lsp/linter
   --'pas_ls',
   'pb_ls',
   'perl_ls',
@@ -195,18 +199,19 @@ vim.lsp.enable({
   'prisma_ls',
   --'prosemd_ls',
   'proto_ls',
-  --'psalm_ls',
+  --'psalm_ls', ---lsp/linter
   'pug_ls',
   'puppetes_ls',
   'puppet_ls',
   --'py_ls',
   --'pylyzer_ls',
-  'pyrefly_ls',
-  --'pyright_ls',
+  --'pyre', -- deprecated for pyrefly
+  'pyrefly_ls', ---lsp/linter
   'qml_ls',
   'quicklintjs_ls',
   --'r_ls',
-  'regal_ls',
+  --'reason_ls', --deprecated for rescript_ls/ocaml_ls
+  'regal_ls', --linter/lsp
   'rego_ls',
   'remark_ls',
   'rescript_ls',
@@ -215,7 +220,7 @@ vim.lsp.enable({
   'robotframework_ls',
   'roslyn_ls',
   'rpmspec_ls',
-  'rubocop_ls',
+  'rubocop_ls', ---lsp/linter
   'ruby_ls',
   'ruff_ls',
   'rune_ls',
@@ -227,7 +232,7 @@ vim.lsp.enable({
   --'selene3p_ls',
   'served_ls',
   --'sixtyfps_ls', --replaced with slint
-  'slangd_ls',
+  'slangd_ls', ---lsp/linter
   'slint_ls',
   --smarty_ls, --3 years old
   'smithy_ls',
@@ -240,8 +245,8 @@ vim.lsp.enable({
   'somesass_ls',
   'sorbet_ls',
   --'sourcekit_ls',
-  --'spectral_ls',
-  'spyglass_ls',
+  --'spectral_ls', --last update was 1-3 years ago
+  --'spyglass_ls', deprecated
   --'sqlls' --2 years old
   'sq_ls',
   'sqruff_ls',
@@ -251,7 +256,7 @@ vim.lsp.enable({
   'statix_ls',
   'steep_ls',
   'stimulus_ls',
-  'stylelint_ls',
+  --'stylelint_ls', last release 1 year ago
   --'stylua_ls',
   --'stylua3p_ls',
   'superhtml_ls',
@@ -266,12 +271,12 @@ vim.lsp.enable({
   --'teal_ls',
   'templ_ls',
   'termux_ls',
-  'terraform_ls',
+  --'terraform_ls', --last release in 2021
   'texlab_ls',
   --'text_ls',
   'tflint_ls',
   'tofu_ls',
-  'tombi_ls',
+  'tombi_ls', ---lsp/linter
   --'tsgo_ls',
   'ts_ls',
   'tsquery_ls',

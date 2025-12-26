@@ -27,7 +27,7 @@
     "makepkgbin": "makepkg",
     "makepkgconf": "$XDG_CONFIG_HOME/pacman/makepkg.conf",
     "maxconcurrentdownloads": 10,
-    "mflags": "",
+    "mflags": "-Csi",
     "pacmanbin": "pacman",
     "pacmanconf": "$XDG_CONFIG_HOME/pacman/pacman.conf",
     "pgpfetch": true,

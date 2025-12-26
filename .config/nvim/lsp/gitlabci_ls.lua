@@ -4,19 +4,20 @@
 -- ----------------------------------------
 --Reference: https://github.com/alesbrelih/gitlab-ci-ls
 -- cargo install gitlab-ci-ls
-vim.lsp.config['gitlabci_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'gitlab-ci-ls',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'yaml.gitlab',
     },
     init_options = {
-        cache_path = (vim.env.XDG_CACHE_HOME or (vim.env.HOME .. '/.cache')) .. '/gitlab-ci-ls',
-        log_path = ((vim.env.XDG_CACHE_HOME or (vim.env.HOME .. '/.cache')) .. '/gitlab-ci-ls')
+        cache_path = (vim.env.XDG_CACHE_HOME or (vim.env.HOME .. '/.cache')) .. '/gitlab-ci-ls', ---@type string
+        log_path = ((vim.env.XDG_CACHE_HOME or (vim.env.HOME .. '/.cache')) .. '/gitlab-ci-ls') ---@type string
             .. '/log/gitlab-ci-ls.log',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.git',
         '.gitlab-ci.yml',
         '.gitlab-ci.yaml',

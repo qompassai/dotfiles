@@ -8,9 +8,11 @@ vim.filetype.add({
         bean = 'beancount',
     },
 })
-vim.lsp.config['beancount_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'beancount-language-server',
+        '--stdio',
     },
     filetypes = {
         'beancount',

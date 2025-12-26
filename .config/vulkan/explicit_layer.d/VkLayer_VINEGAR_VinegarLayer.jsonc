@@ -1,0 +1,19 @@
+// /qompassai/dotfiles/.config/vulkan/explicit_layer.d/VKLayer_VINEGAR_VinegarLayer.jsonc
+// Qompass AI Vulkan Explicit Vinegar Layer Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+////////////////////////////////////////////////////////////////////
+{
+  "file_format_version" : "1.0.0",
+  "layer" : {
+    "name": "VK_LAYER_VINEGAR_VinegarLayer",
+    "type": "GLOBAL",
+    "library_path": "libVkLayer_VINEGAR_VinegarLayer.so",
+    "api_version": "1.0.0",
+    "implementation_version": "1",
+    "description": "Vinegar layer",
+    "functions": {
+      "vkGetInstanceProcAddr": "VinegarLayer_GetInstanceProcAddr",
+      "vkGetDeviceProcAddr": "VinegarLayer_GetDeviceProcAddr"
+    }
+  }
+}

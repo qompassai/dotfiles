@@ -1,9 +1,9 @@
 -- /qompassai/Diver/lsp/deno.lua
--- Deno Language Server LSP Config
+-- Qompass AI Diver Deno LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
--- Reference: https://docs.deno.com/runtime/reference/lsp_integration/
-vim.lsp.config['deno_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'deno',
         'lsp',
@@ -27,7 +27,7 @@ vim.lsp.config['deno_ls'] = {
             certificateStores = {},
             tlsCertificate = '',
             unsafelyIgnoreCertificateErrors = false,
-            internalDebug = false,
+            internalDebug = true,
             codeLens = {
                 implementations = true,
                 references = true,
@@ -35,9 +35,9 @@ vim.lsp.config['deno_ls'] = {
                 test = true,
             },
             suggest = {
+                autoImports = true,
                 names = true,
                 paths = true,
-                autoImports = true,
                 completeFunctionCalls = true,
                 imports = {
                     autoDiscover = true,

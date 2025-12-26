@@ -3,8 +3,8 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
 --Reference:  https://github.com/ansible/vscode-ansible
--- pnpm add -g @ansible/ansible-language-server
-vim.lsp.config['ansible_ls'] = {
+-- pnpm add -g @ansible/ansible-language-server@latest
+return {
     cmd = {
         'ansible-language-server',
         '--stdio',

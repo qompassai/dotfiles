@@ -3,7 +3,8 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ----------------------------------------
 -- pnpm add -g vscode-langservers-extracted
-vim.lsp.config['html_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'vscode-html-language-server',
         '--stdio',
@@ -17,7 +18,6 @@ vim.lsp.config['html_ls'] = {
         'package.json',
         'package.json5',
     },
-    single_file_support = true,
     settings = {},
     init_options = {
         provideFormatter = true,

@@ -1,0 +1,12 @@
+[Unit]
+Description=RustDesk headless service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/rustdesk --service
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

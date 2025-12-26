@@ -2,12 +2,13 @@
 -- Qompass AI ESLint LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
-vim.lsp.config['eslint_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'vscode-eslint-language-server',
         '--stdio',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'javascript',
         'javascriptreact',
         'javascript.jsx',
@@ -19,7 +20,7 @@ vim.lsp.config['eslint_ls'] = {
         'astro',
         'htmlangular',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         'package-lock.json',
         'yarn.lock',
         'pnpm-lock.yaml',
@@ -29,8 +30,7 @@ vim.lsp.config['eslint_ls'] = {
     },
     settings = {
         validate = 'on',
-        ---@diagnostic disable-next-line: assign-type-mismatch
-        packageManager = 'pnpm',
+        packageManager = 'pnpm', ---@type string
         useESLintClass = true,
         experimental = {
             useFlatConfig = true,
@@ -75,11 +75,11 @@ vim.lsp.config['eslint_ls'] = {
             return 4
         end,
         ['eslint/probeFailed'] = function()
-            vim.notify('[lspconfig] ESLint probe failed.', vim.log.levels.WARN)
+            vim.echo('[lspconfig] ESLint probe failed.', vim.log.levels.WARN)
             return {}
         end,
         ['eslint/noLibrary'] = function()
-            vim.notify('[lspconfig] Unable to find ESLint library.', vim.log.levels.WARN)
+            vim.echo('[lspconfig] Unable to find ESLint library.', vim.log.levels.WARN)
             return {}
         end,
     },

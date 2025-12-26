@@ -2,7 +2,8 @@
 -- Qompass AI Remark LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-vim.lsp.config['remark_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'remark-language-server',
         '--stdio',
@@ -42,5 +43,15 @@ vim.lsp.config['remark_ls'] = {
     },
     on_attach = function(client, bufnr)
         client.server_capabilities.documentFormattingProvider = true
+        vim.api.nvim_buf_create_user_command(bufnr, 'RemarkFormat', function()
+            vim.lsp.buf.format({
+                bufnr = bufnr,
+                filter = function(c)
+                    return c.id == client.id
+                end,
+            })
+        end, {
+            desc = 'Format Markdown via remark-language-server',
+        })
     end,
 }

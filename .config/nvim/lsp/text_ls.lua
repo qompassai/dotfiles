@@ -2,9 +2,8 @@
 -- Qompass AI Text LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
---Reference: https://github.com/hangyav/textLSP
---pip install textLSP | pip install git+https://github.com/PrithivirajDamodaran/Gramformer.git
-vim.lsp.config['text_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'textlsp',
     },
@@ -81,7 +80,7 @@ vim.lsp.config['text_ls'] = {
                 openai = {
                     enabled = false,
                     api_key = '<MY_API_KEY>',
-                    -- url = '<CUSTOM_URL>'  -- optional to use an OpenAI-compatible server
+                    -- url = '<CUSTOM_URL>'
                     check_text = {
                         on_open = false,
                         on_save = false,

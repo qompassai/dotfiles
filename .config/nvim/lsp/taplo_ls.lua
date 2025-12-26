@@ -2,15 +2,16 @@
 -- Qompass AI Taplo LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-vim.lsp.config['taplo_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'taplo',
         'lsp',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'toml',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.taplo.toml',
         'taplo.toml',
         '.git',

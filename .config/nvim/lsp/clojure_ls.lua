@@ -4,7 +4,8 @@
 -- ----------------------------------------
 -- References: https://github.com/clojure-lsp/clojure-lsp
 -- nix run github:clojure-lsp/clojure-lsp
-vim.lsp.config['clojure_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'clojure-lsp',
     },
@@ -13,9 +14,9 @@ vim.lsp.config['clojure_ls'] = {
         'edn',
     },
     root_markers = {
+        'build.boot',
         'project.clj',
         'deps.edn',
-        'build.boot',
         'shadow-cljs.edn',
         '.git',
         'bb.edn',

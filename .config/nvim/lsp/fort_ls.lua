@@ -4,9 +4,9 @@
 -- ----------------------------------------------------
 -- Reference:  https://fortls.fortran-lang.org/index.html
 -- pip install fortls
-
-vim.lsp.config['fort_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'fortls',
         '--notify_init',
         '--incremental_sync',
@@ -42,12 +42,12 @@ vim.lsp.config['fort_ls'] = {
         'preprocessor',
         '/usr/local/include',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'fortran',
         'fortran_fixed',
         'fortran_free',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.fortlsrc',
         '.fortls.json',
         '.fortls',

@@ -1,21 +1,22 @@
 -- /qompassai/Diver/lsp/z_ls.lua
 -- Qompass AI ZLS LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
--- ----------------------------------------
-vim.lsp.config['z_ls'] = {
+-- --------------------------------------------------
+---@type vim.lsp.Config
+return {
     cmd = {
         'zls',
         '--config-path',
         os.getenv('HOME') .. '/.config/zls/zls.jsonc',
         '--enable-stderr-logs',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'zig',
         'zon',
         'ziggy',
         'zine',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         'build.zig',
         'build.zig.zon',
         '.git',

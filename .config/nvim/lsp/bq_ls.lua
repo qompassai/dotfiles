@@ -2,7 +2,8 @@
 -- Qompass AI Big Query (BQ) LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-vim.lsp.config['bq_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'bqls',
     },

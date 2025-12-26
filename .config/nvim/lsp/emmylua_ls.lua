@@ -2,25 +2,28 @@
 -- Qompass AI Emmyluals Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-for _, client in ipairs(vim.lsp.get_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
-    if client.name == 'emmylua_ls' then
-        return
-    end
-end
-vim.lsp.config['emmylua_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'emmylua_ls',
+        '--communication',
+        'stdio',
+        '--log-level',
+        'debug',
+        '--log-path',
+        '/home/phaedrus/.local/share/emmylua_ls/logs',
+        '--editor',
+        'neovim',
     },
     filetypes = {
         'lua',
         'luau',
     },
     root_markers = {
-        '.emmylua.json',
+        '.luarc.json',
         '.emmyrc.json',
-        '.luarc.json',
-        '.luarc.json',
         '.luacheckrc',
+        '.git',
     },
     settings = {
         Emmylua = {
@@ -47,7 +50,12 @@ vim.lsp.config['emmylua_ls'] = {
                     'lowercase-global',
                     'unused-local',
                 },
-                enable = true,
+                enable = false,
+                enables = {
+                    'deprecated',
+                    --'unused',
+                    -- 'unused-local',
+                },
                 globals = {
                     'jit',
                     'require',
@@ -55,7 +63,11 @@ vim.lsp.config['emmylua_ls'] = {
                     'vim',
                 },
                 severity = {
-                    ['deprecated'] = 'Error',
+                    ['deprecated'] = 'error',
+                    --['missing-return']   = 'warning',
+                    -- ['undefined-field']  = 'error',
+                    -- ['undefined-global'] = 'warning',
+                    ['unused'] = 'hint',
                 },
                 unusedLocalExclude = {
                     '_*',
@@ -94,21 +106,24 @@ vim.lsp.config['emmylua_ls'] = {
             references = {
                 enable = true,
                 fuzzySearch = true,
-                shortStringSearch = false,
+                shortStringSearch = true,
             },
             reformat = {
-                externalTool = nil,
+                externalTool = {
+                    program = 'stylua',
+                    args = { '-s', '-' },
+                    stdin = true,
+                },
                 externalToolRangeFormat = nil,
                 useDiff = false,
             },
             runtime = {
-                version = 'LuaJIT',
+                frameworkVersions = {},
                 requireLikeFunction = {
                     'import',
                     'load',
                     'dofile',
                 },
-                frameworkVersions = {},
                 extensions = {
                     '.lua',
                     '.luau',
@@ -128,6 +143,7 @@ vim.lsp.config['emmylua_ls'] = {
                 special = {
                     errorf = 'error',
                 },
+                version = 'LuaJIT',
             },
             semanticTokens = {
                 enable = true,
@@ -136,43 +152,38 @@ vim.lsp.config['emmylua_ls'] = {
                 detailSignatureHelper = true,
             },
             strict = {
-                requirePath = false,
-                typeCall = false,
                 arrayIndex = true,
-                metaOverrideFileDefine = true,
                 docBaseConstMatchBaseType = true,
+                metaOverrideFileDefine = true,
+                requirePath = true,
+                typeCall = true,
             },
             telemetry = {
                 enable = false,
             },
             workspace = {
+                checkThirdParty = false,
                 ignoreDir = {
                     'build',
                     'node_modules',
                     'dist',
+                    '.git',
                 },
                 ignoreGlobs = {},
                 library = {
-                    vim.api.nvim_get_runtime_file('', true),
                     vim.env.VIMRUNTIME,
-                    '${3rd}/busted/library',
-                    '${3rd}/luv/library',
-                    '${3rd}/luassert/library',
-                    '${3rd}/lazy.nvim/library',
-                    '${3rd}/neodev.nvim/types/nightly',
-                    '${3rd}/blink.cmp/library',
-                    vim.fn.expand('$HOME') .. '/.config/nvim/lua/',
+                    vim.fn.stdpath('config') .. '/lua',
                 },
-                workspaceRoots = {},
+                workspaceRoots = {
+                    vim.fn.stdpath('config') .. '/lua',
+                },
                 encoding = 'utf-8',
                 moduleMap = {},
-                preloadFileSize = 10000,
-                reindexDuration = 5000,
-                enableReindex = false,
+                preloadFileSize = 50000,
+                reindexDuration = 50000,
+                enableReindex = true,
             },
         },
     },
-    on_attach = function(client, bufnr)
-        client.server_capabilities.documentFormattingProvider = false
-    end,
+    workspace_required = false,
 }

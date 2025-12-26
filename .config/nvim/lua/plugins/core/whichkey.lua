@@ -2,7 +2,8 @@
 -- Qompass AI Diver Whichkey Plugin Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
-
+---@meta
+---@module 'plugins.core.whichkey'
 return {
     'folke/which-key.nvim',
     event = 'VeryLazy',

@@ -3,8 +3,9 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 -- Reference:  https://github.com/typed-ember/glint | https://typed-ember.gitbook.io/glint/
-vim.lsp.config['glint_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'glint-language-server',
     },
     init_options = {
@@ -20,7 +21,7 @@ vim.lsp.config['glint_ls'] = {
         'javascript',
         'javascript.glimmer',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.glintrc.yml',
         '.glintrc',
         '.glintrc.json',
@@ -28,5 +29,5 @@ vim.lsp.config['glint_ls'] = {
         'glint.config.js',
         'package.json',
     },
-    workspace_required = true,
+    workspace_required = true, ---@type boolean
 }

@@ -11,7 +11,8 @@ vim.filetype.add({
         j2 = 'jinja',
     },
 })
-vim.lsp.config['jinja_ls'] = {
+---@type vim.lsp.Config
+return {
     name = 'jinja_lsp',
     cmd = {
         'jinja-lsp',

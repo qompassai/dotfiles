@@ -3,16 +3,17 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
 -- Reference:  https://pg-language-server.com
-vim.lsp.config['postgrestoo_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'postgrestools',
         'lsp-proxy',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'sql',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         'postgrestools.jsonc',
     },
-    workspace_required = true,
+    workspace_required = true, ---@type boolean
 }

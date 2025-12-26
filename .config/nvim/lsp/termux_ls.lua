@@ -2,7 +2,8 @@
 -- Qompass AI Termux Language Server LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-vim.lsp.config['termux_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'termux-language-server',
     },

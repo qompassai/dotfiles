@@ -2,7 +2,8 @@
 -- Qompass AI Lemminx XML LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-vim.lsp.config['lemminx_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'lemminx',
     },
@@ -64,7 +65,9 @@ vim.lsp.config['lemminx_ls'] = {
         settings = {
             xml = {
                 catalogs = {},
-                trace = { server = 'verbose' },
+                trace = {
+                    server = 'verbose',
+                },
             },
         },
     },

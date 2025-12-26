@@ -2,6 +2,8 @@
 -- Qompass AI Diver Flash Plugin Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
+---@meta
+---@module 'plugins.core.flash'
 return {
     'folke/flash.nvim',
     config = function()

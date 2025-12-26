@@ -2,7 +2,8 @@
 -- Qompass AI Crystalline LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-vim.lsp.config['crystalline_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'crystalline',
     },

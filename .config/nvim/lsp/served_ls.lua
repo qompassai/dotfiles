@@ -2,7 +2,8 @@
 -- Qompass AI Serve-D LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ----------------------------------------
-vim.lsp.config['served_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'serve-d',
         '--provide',

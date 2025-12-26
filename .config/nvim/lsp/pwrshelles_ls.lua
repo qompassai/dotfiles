@@ -2,8 +2,9 @@
 -- Qompass AI PowerShell LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
-vim.lsp.config['pwrshelles_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'pwsh',
         '-NoLogo',
         '-NoProfile',
@@ -17,7 +18,7 @@ vim.lsp.config['pwrshelles_ls'] = {
             '-HostProfileId 0',
             '-SessionDetailsPath session.json',
         }, ' '),
-        filetypes = {
+        filetypes = { ---@type string[]
             'ps1',
             'psm1',
             'psd1',
@@ -34,7 +35,7 @@ vim.lsp.config['pwrshelles_ls'] = {
                 },
                 scriptAnalysis = {
                     enable = true,
-                    settingsPath = (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. '/.config'))
+                    settingsPath = (vim.env.XDG_CONFIG_HOME or (vim.env.HOME .. '/.config')) ---@type string[]
                         .. '/powershell/ScriptAnalyzerSettings.psd1',
                 },
                 editor = {

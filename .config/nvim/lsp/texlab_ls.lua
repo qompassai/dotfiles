@@ -2,14 +2,16 @@
 -- Qompass AI Texlab LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
-vim.lsp.config['texlab_ls'] = {
+return ---@type vim.lsp.Config
+{
     cmd = {
         'texlab',
+        'run',
     },
     filetypes = {
-        'tex',
-        'plaintex',
         'bib',
+        'plaintex',
+        'tex',
     },
     root_markers = {
         '.git',
@@ -23,38 +25,114 @@ vim.lsp.config['texlab_ls'] = {
         texlab = {
             rootDirectory = nil,
             build = {
-                executable = 'latexmk',
                 args = {
-                    '-pdf',
-                    '-interaction=nonstopmode',
+                    '-lualatex',
                     '-synctex=1',
+                    '-interaction=nonstopmode',
+                    '-pdf',
                     '%f',
                 },
+                auxDirectory = '.',
+                executable = 'latexmk',
+                forwardSearchAfter = true,
+                logDirectory = '.',
                 onSave = false,
-                forwardSearchAfter = false,
+                pdfDirectory = '.',
+                useFileList = true,
             },
             forwardSearch = {
-                executable = nil,
-                args = {},
+                executable = 'zathura',
+                args = {
+                    '--synctex-forward',
+                    '%l:1:%f',
+                    '%p',
+                },
             },
             chktex = {
+                additionalArgs = {
+                    '-l',
+                    vim.fn.expand('~/.config/chktex/chktexrc'),
+                    '-v2',
+                },
                 onOpenAndSave = true,
-                onEdit = false,
+                onEdit = true,
             },
-            diagnosticsDelay = 300,
+            diagnostics = {
+                allowedPatterns = {
+                    'Undefined control sequence',
+                    'LaTeX Error',
+                },
+                diagnosticsDelay = 300,
+                experimental = {
+                    citationCommands = true,
+                    enumEnvironments = true,
+                    followPackageLinks = true,
+                    labelDefinitionCommands = true,
+                    labelDefinitionPrefixes = {
+                        'fig:',
+                        'tab:',
+                        'eq:',
+                        'sec:',
+                    },
+                    labelReferenceCommands = true,
+                    labelReferencePrefixes = {
+                        'fig:',
+                        'tab:',
+                        'eq:',
+                        'sec:',
+                    },
+                    labelReferenceRangeCommands = true,
+                    mathEnvironments = true,
+                    verbatimEnvironments = true,
+                },
+                hover = {
+                    symbols = 'image',
+                },
+                ignoredPatterns = {
+                    'Wrong length of dash may have been used',
+                    'Command terminated with space',
+                    'You should put a space in front of parenthesis',
+                    'Overfull \\\\hbox',
+                    'Package hyperref Warning',
+                    'Package rerunfilecheck Warning',
+                },
+            },
+            inlayHints = {
+                labelDefinitions = true,
+                labelReferences = true,
+                maxLength = nil, ---@type integer | nil
+            },
             latexFormatter = 'latexindent',
             latexindent = {
                 ['local'] = nil,
-                modifyLineBreaks = false,
+                modifyLineBreaks = true,
+                replacement = {},
             },
             bibtexFormatter = 'texlab',
             formatterLineLength = 80,
+        },
+        symbols = {
+            -- allowedPatterns = {},
+            -- ignoredPatterns = {},
+            customEnvironments = {
+                {
+                    name = 'problem',
+                    displayName = 'Problem',
+                },
+                {
+                    name = 'solution',
+                    displayName = 'Solution',
+                },
+            },
+        },
+        completion = {
+            matcher = 'fuzzy-ignore-case',
         },
     },
     on_attach = function(client, bufnr)
         local function buf_build()
             local win = vim.api.nvim_get_current_win()
-            local params = vim.lsp.util.make_position_params(win, client.offset_encoding)
+            local params = vim.lsp.util.make_position_params(win, client.offset_encoding) ---@diagnostic disable: param-type-mismatch
             client:request('textDocument/build', params, function(err, result)
                 if err then
                     error(tostring(err))
@@ -65,7 +143,7 @@ vim.lsp.config['texlab_ls'] = {
                     [2] = 'Failure',
                     [3] = 'Cancelled',
                 }
-                vim.notify('Build ' .. status[result.status], vim.log.levels.INFO)
+                vim.echo('Build ' .. status[result.status], vim.log.levels.INFO)
             end, bufnr)
         end
         local function buf_search()
@@ -81,7 +159,7 @@ vim.lsp.config['texlab_ls'] = {
                     [2] = 'Failure',
                     [3] = 'Unconfigured',
                 }
-                vim.notify('Search ' .. status[result.status], vim.log.levels.INFO)
+                vim.echo('Search ' .. status[result.status], vim.log.levels.INFO)
             end, bufnr)
         end
         local function buf_cancel_build()
@@ -100,9 +178,9 @@ vim.lsp.config['texlab_ls'] = {
                 bufnr = 0,
             }, function(err, result)
                 if err then
-                    return vim.notify(err.code .. ': ' .. err.message, vim.log.levels.ERROR)
+                    return vim.echo(err.code .. ': ' .. err.message, vim.log.levels.ERROR)
                 end
-                vim.notify('The dependency graph has been generated:\n' .. result, vim.log.levels.INFO)
+                vim.echo('The dependency graph has been generated:\n' .. result, vim.log.levels.INFO)
             end)
         end
         local function command_factory(kind)
@@ -114,14 +192,18 @@ vim.lsp.config['texlab_ls'] = {
                 return client:exec_cmd({
                     title = ('clean_%s'):format(kind),
                     command = cmd_tbl[kind],
-                    arguments = { { uri = vim.uri_from_bufnr(bufnr) } },
+                    arguments = {
+                        {
+                            uri = vim.uri_from_bufnr(bufnr), ---@type string
+                        },
+                    },
                 }, {
                     bufnr = bufnr,
                 }, function(err, _)
                     if err then
-                        vim.notify(('Failed to clean %s files: %s'):format(kind, err.message), vim.log.levels.ERROR)
+                        vim.echo(('Failed to clean %s files: %s'):format(kind, err.message), vim.log.levels.ERROR)
                     else
-                        vim.notify(('Command %s executed successfully'):format(kind), vim.log.levels.INFO)
+                        vim.echo(('Command %s executed successfully'):format(kind), vim.log.levels.INFO)
                     end
                 end)
             end
@@ -131,12 +213,14 @@ vim.lsp.config['texlab_ls'] = {
             client:exec_cmd({
                 title = 'find',
                 command = 'texlab.findEnvironments',
-                arguments = { vim.lsp.util.make_position_params(win, client.offset_encoding) },
+                arguments = {
+                    vim.lsp.util.make_position_params(win, client.offset_encoding),
+                },
             }, {
                 bufnr = bufnr,
             }, function(err, result)
                 if err then
-                    return vim.notify(err.code .. ': ' .. err.message, vim.log.levels.ERROR)
+                    return vim.echo(err.code .. ': ' .. err.message, vim.log.levels.ERROR)
                 end
                 local env_names = {}
                 local max_length = 1
@@ -144,7 +228,7 @@ vim.lsp.config['texlab_ls'] = {
                     table.insert(env_names, env.name.text)
                     max_length = math.max(max_length, string.len(env.name.text))
                 end
-                for i, name in ipairs(env_names) do
+                for i, name in ipairs(env_names) do ---@type table
                     env_names[i] = string.rep(' ', i - 1) .. name
                 end
                 vim.lsp.util.open_floating_preview(env_names, '', {
@@ -161,7 +245,7 @@ vim.lsp.config['texlab_ls'] = {
                 prompt = 'New environment name: ',
             }, function(input)
                 if not input or input == '' then
-                    return vim.notify('No environment name provided', vim.log.levels.WARN)
+                    return vim.echo('No environment name provided', vim.log.levels.WARN)
                 end
                 local pos = vim.api.nvim_win_get_cursor(0)
                 return client:exec_cmd({
@@ -235,14 +319,3 @@ vim.lsp.config['texlab_ls'] = {
         end
     end,
 }
-vim.api.nvim_create_autocmd('BufWritePre', {
-    pattern = { '*.tex', '*.bib' },
-    callback = function(args)
-        vim.lsp.buf.format({
-            bufnr = args.buf,
-            filter = function(client)
-                return client.name == 'texlab'
-            end,
-        })
-    end,
-})

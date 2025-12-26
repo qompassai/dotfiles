@@ -1,0 +1,12 @@
+// /qompassai/dotfiles/.config/vulkan/icd.d/intel_icd.i686.jsonc
+// Qompass AI Vulkan Intel i686 Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+    "ICD": {
+        "api_version": "1.4.325",
+        "library_arch": "32",
+        "library_path": "/usr/lib32/libvulkan_intel.so"
+    },
+    "file_format_version": "1.0.1"
+}

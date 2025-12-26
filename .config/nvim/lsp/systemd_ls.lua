@@ -2,11 +2,15 @@
 -- Qompass AI Systemd Language Server LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
-vim.lsp.config['systemd_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'systemd-language-server',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'systemd',
+    },
+    root_markers = { ---@type string[]
+        '.git',
     },
 }

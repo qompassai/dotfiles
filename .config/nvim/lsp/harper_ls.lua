@@ -3,38 +3,39 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 -- https://github.com/automattic/harper
-vim.lsp.config['harper_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'harper-ls',
         '--stdio',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'asciidoc',
         'c',
+        'clojure',
+        'cmake',
         'cpp',
         'cs',
+        'dart',
         'gitcommit',
         'go',
+        'haskell',
         'html',
         'java',
         'javascript',
         'lua',
         'markdown',
         'nix',
+        'php',
         'python',
         'ruby',
         'rust',
+        'sh',
         'swift',
         'toml',
         'typescript',
         'typescriptreact',
-        'haskell',
-        'cmake',
         'typst',
-        'php',
-        'dart',
-        'clojure',
-        'sh',
     },
     root_markers = {
         '.git',

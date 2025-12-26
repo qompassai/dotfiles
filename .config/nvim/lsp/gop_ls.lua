@@ -2,7 +2,8 @@
 -- Qompass AI Gopls LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-vim.lsp.config['gop_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'gopls',
     },

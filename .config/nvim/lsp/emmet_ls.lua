@@ -3,13 +3,14 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 -- Reference: --- https://github.com/olrtg/emmet-language-server
--- pnpm add -g g @olrtg/emmet-language-server
-vim.lsp.config['emmet_ls'] = {
-    cmd = {
+-- pnpm add -g g @olrtg/emmet-language-server@latest
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'emmet-language-server',
         '--stdio',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'astro',
         'css',
         'eruby',
@@ -26,7 +27,7 @@ vim.lsp.config['emmet_ls'] = {
         'typescriptreact',
         'vue',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.git',
     },
 }

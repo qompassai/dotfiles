@@ -2,18 +2,17 @@
 -- Qompass AI Go Plugin Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ----------------------------------------
-local go_cfg = require('config.lang.go')
+---@meta
 return {
     {
         'ray-x/go.nvim',
-        ft = {
+        ft = { --[[@as string[] ]]
             'go',
             'gomod',
         },
-        config = function(_, opts)
-            go_cfg = require(go_cfg)(opts)
+        config = function() ---@type fun()
         end,
-        dependencies = {
+        dependencies = { --[[@as string[] ]]
             'ray-x/guihua.lua',
             'ray-x/navigator.lua',
         },

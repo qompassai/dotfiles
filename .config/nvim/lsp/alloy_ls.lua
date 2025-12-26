@@ -2,13 +2,16 @@
 -- Qompass AI Alloy LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ----------------------------------------
-vim.filetype.add({
-    pattern = {
-        ['.*/*.als'] = 'alloy',
+return ---@type vim.lsp.Config
+{
+    cmd = {
+        'alloy',
+        'lsp',
     },
-})
-vim.lsp.config['alloy_ls'] = {
-    cmd = { 'alloy', 'lsp' },
-    filetypes = { 'alloy' },
-    root_markers = { '.git' },
+    filetypes = {
+        'alloy',
+    },
+    root_markers = {
+        '.git',
+    },
 }

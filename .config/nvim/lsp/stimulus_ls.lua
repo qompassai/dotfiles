@@ -3,19 +3,19 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ----------------------------------------
 --Reference: https://www.npmjs.com/package/stimulus-language-server
---pnpm add -g stimulus-language-server
-vim.lsp.config['stimulus_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'stimulus-language-server',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'blade',
         'eruby',
         'html',
         'php',
         'ruby',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         'Gemfile',
         '.git',
     },

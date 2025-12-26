@@ -9,14 +9,17 @@ vim.filetype.add({
         ['openapi.*%.json'] = 'json.openapi',
     },
 })
-vim.lsp.config['vacuum_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'vacuum',
         'language-server',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'yaml.openapi',
         'json.openapi',
     },
-    root_markers = { '.git' },
+    root_markers = { ---@type string[]
+        '.git',
+    },
 }

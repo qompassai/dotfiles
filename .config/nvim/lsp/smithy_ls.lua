@@ -2,8 +2,9 @@
 -- Qompass AI Smithy LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
-vim.lsp.config['smithy_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'coursier',
         'launch',
         'software.amazon.smithy:smithy-language-server:0.7.0',
@@ -12,10 +13,10 @@ vim.lsp.config['smithy_ls'] = {
         '--',
         '0',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'smithy',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         'smithy-build.json',
         'build.gradle',
         'build.gradle.kts',

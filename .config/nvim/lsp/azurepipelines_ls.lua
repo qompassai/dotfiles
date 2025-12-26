@@ -2,7 +2,8 @@
 -- Qompass AI Azure Pipelines LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-vim.lsp.config['azurepipelines_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'pnpm',
         'exec',
@@ -11,7 +12,6 @@ vim.lsp.config['azurepipelines_ls'] = {
     },
     filetypes = {
         'yaml',
-        'yml',
     },
     root_markers = {
         'azure-pipelines.yml',

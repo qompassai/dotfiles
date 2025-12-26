@@ -2,22 +2,23 @@
 -- Qompass AI Some Sass LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
--- pnpm add -g some-sass-language-server
-vim.lsp.config['somesass_ls'] = {
-    cmd = {
+-- pnpm add -g some-sass-language-server@latest
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'some-sass-language-server',
         '--stdio',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'scss',
         'sass',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.git',
         '.package.json',
         '.package.jsonc',
     },
-    settings = {
+    settings = { ---@type boolean[]
         somesass = {
             suggestAllFromOpenDocument = true,
         },

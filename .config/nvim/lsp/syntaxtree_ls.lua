@@ -3,16 +3,16 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
 -- Reference:  https://ruby-syntax-tree.github.io/syntax_tree/
--- gem install syntax_tree
-vim.lsp.config['syntaxtree_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'stree',
         'lsp',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'ruby',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         'Gemfile',
         '.git',
         '.streerc',

@@ -3,16 +3,16 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 --Reference: https://github.com/nwolverson/purescript-language-server
---pnpm add -g purescript-language-server
-vim.lsp.config['purescript_ls'] = {
-    cmd = {
+--pnpm add -g purescript-language-server@latest
+return {
+    cmd = { ---@type string[]
         'purescript-language-server',
         '--stdio',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'purescript',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         'bower.json',
         'flake.nix',
         'psc-package.json',

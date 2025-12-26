@@ -2,7 +2,8 @@
 -- Qompass AI CMake LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-vim.lsp.config['cmake_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'cmake-language-server',
     },
@@ -19,5 +20,4 @@ vim.lsp.config['cmake_ls'] = {
     init_options = {
         buildDirectory = 'build',
     },
-    settings = {},
 }

@@ -4,7 +4,8 @@
 -- ----------------------------------------
 -- https://github.com/SpyglassMC/Spyglass/tree/main/packages/language-server
 --pnpm add -g  @spyglassmc/language-server
-vim.lsp.config['spyglass_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'spyglassmc-language-server',
         '--stdio',

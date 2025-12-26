@@ -5,15 +5,15 @@ Copyright (C) 2025 Qompass AI, All rights reserved
 ---------------------------------------------------------------
 References: https://phpactor.readthedocs.io/en/master/reference/configuration.html
 ]]
-vim.lsp.config['phpactor_ls'] = {
+return {
     cmd = {
         'phpactor',
         'language-server',
     },
     filetypes = {
+        'blade',
         'php',
         'phps',
-        'blade',
     },
     root_markers = {
         'composer.json',
@@ -72,8 +72,8 @@ vim.lsp.config['phpactor_ls'] = {
                 limit = nil,
             },
             completion_worse = {
-                debug = false,
-                experimantal = false,
+                debug = true,
+                experimantal = true,
                 name_completion_priority = 'proximity',
                 snippets = true,
                 completor = {
@@ -126,7 +126,9 @@ vim.lsp.config['phpactor_ls'] = {
                     scf_class = {
                         enabled = true,
                     },
-                    subscript = { enabled = true },
+                    subscript = {
+                        enabled = true,
+                    },
                     type = { enabled = true },
                     use = { enabled = true },
                     worse_parameter = { enabled = true },

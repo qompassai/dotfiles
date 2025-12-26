@@ -2,8 +2,18 @@
 -- Qompass AI Antlers LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
--- pnpm add -g antlers-language-server
-vim.lsp.config['antlers_ls'] = {
+-- pnpm add -g antlers-language-server@latest
+vim.filetype.add({
+    extension = {
+        antlers = 'antlers',
+    },
+    pattern = {
+        ['.*%.antlers%.html'] = 'html.antlers',
+        ['.*%.html%.antlers'] = 'html.antlers',
+    },
+})
+return ---@type vim.lsp.Config
+{
     cmd = {
         'antlersls',
         '--stdio',

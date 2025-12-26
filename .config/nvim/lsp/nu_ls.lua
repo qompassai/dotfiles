@@ -3,15 +3,19 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 --Reference: https://github.com/nushell/nushell
-vim.lsp.config['nu_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'nu',
         '--lsp',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'nu',
     },
-    root_markers = {
+    root_dir = function(bufnr, on_dir)
+        on_dir(vim.fs(bufnr, { '.git' }) or vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr)))
+    end,
+    root_markers = { ---@type string[]
         '.git',
     },
 }

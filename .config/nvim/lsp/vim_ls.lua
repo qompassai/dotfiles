@@ -3,15 +3,18 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ----------------------------------------
 --Reference:  https://github.com/iamcco/vim-language-server
-vim.lsp.config['vim_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'vim-language-server',
         '--stdio',
     },
     filetypes = {
         'vim',
     },
-    root_markers = { '.git' },
+    root_markers = {
+        '.git',
+    },
     init_options = {
         isNeovim = true,
         iskeyword = '@,48-57,_,192-255,-#',

@@ -3,8 +3,10 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 vim.cmd([[ autocmd BufNewFile,BufRead *.bicep set filetype=bicep ]])
-vim.lsp.config['bicep_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
+        'dotnet',
         'bicep-langserver',
     },
     filetypes = {

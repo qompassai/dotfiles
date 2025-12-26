@@ -2,17 +2,18 @@
 -- Qompass AI Solang LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
-vim.lsp.config['solang_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'solang',
         'language-server',
         '--target',
         'evm',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'solidity',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.git',
     },
 }

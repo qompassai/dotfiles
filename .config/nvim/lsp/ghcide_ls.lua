@@ -4,7 +4,8 @@
 -- ----------------------------------------
 -- Deprecated
 -- Reference: https://github.com/digital-asset/ghcide
-vim.lsp.config['ghcide_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'ghcide',
         '--lsp',
@@ -15,9 +16,9 @@ vim.lsp.config['ghcide_ls'] = {
     },
     root_markers = {
         'BUILD.bazel',
-        'stack.yaml',
-        'hie-bios',
         'cabal.config',
+        'hie-bios',
         'package.yaml',
+        'stack.yaml',
     },
 }

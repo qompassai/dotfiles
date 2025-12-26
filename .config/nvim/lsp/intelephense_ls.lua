@@ -3,23 +3,29 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 -- Reference: https://intelephense.com |  https://github.com/bmewburn/intelephense-docs/blob/master/installation.md#initialisation-options
--- pnpm add -g intelephense
-vim.lsp.config['intelephense_ls'] = {
-    cmd = {
+-- pnpm add -g intelephense@latest
+return {
+    cmd = { ---@type string[]
         'intelephense',
         '--stdio',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'php',
     },
-    root_markers = {
+    init_options = {
+        storagePath = {},
+        globalStoragePath = {},
+        licenceKey = {},
+        clearCache = {},
+    },
+    root_markers = { ---@type string[]
         '.git',
         'composer.json',
     },
     settings = {
         intelephense = {
             files = {
-                maxSize = 1000000,
+                maxSize = 1000000, ---@type integer
             },
         },
     },

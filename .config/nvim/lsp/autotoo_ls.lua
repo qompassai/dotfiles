@@ -2,7 +2,8 @@
 -- Qompass AI AutoTools LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -----------------------------------------------------
-vim.lsp.config['autotoo_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'autotools-language-server',
     },

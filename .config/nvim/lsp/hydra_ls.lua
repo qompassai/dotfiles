@@ -2,17 +2,15 @@
 -- Qompass AI Hydra LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
---Reference: https://github.com/Retsediv/hydra-lsp
---pip install hyrda-lsp
-vim.lsp.config['hydra_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'hydra-lsp',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'yaml',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.git',
     },
 }
-on_attach = on_attach

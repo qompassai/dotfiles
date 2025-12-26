@@ -2,7 +2,7 @@
 -- Qompass AI Rescript LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ----------------------------------------
-vim.lsp.config['rescript_ls'] = {
+return {
     cmd = {
         'rescript-language-server',
         '--stdio',

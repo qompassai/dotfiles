@@ -4,5 +4,7 @@
 -- --------------------------------------------------
 return {
     'ThePrimeagen/harpoon',
-    config = function() require('config.nav.harpoon').setup() end
+    config = function()
+        require('config.nav.harpoon').setup()
+    end,
 }

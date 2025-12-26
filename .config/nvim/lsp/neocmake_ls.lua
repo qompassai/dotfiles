@@ -2,14 +2,13 @@
 -- Qompass AI Neocmake LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
--- Reference:  https://github.com/neocmakelsp/neocmakelsp
--- cargo install neocmake
-vim.lsp.config['neocmake_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'neocmakelsp',
-        '--stdio',
+        'stdio',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'cmake',
     },
     init_options = {
@@ -21,7 +20,7 @@ vim.lsp.config['neocmake_ls'] = {
         },
         scan_cmake_in_package = true,
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.neocmake.toml',
         'CMakeLists.txt',
         'CMakeCache.txt',
@@ -29,6 +28,3 @@ vim.lsp.config['neocmake_ls'] = {
         '.git',
     },
 }
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities = capabilities

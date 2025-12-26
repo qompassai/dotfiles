@@ -2,14 +2,16 @@
 -- Qompass AI SuperHTML LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -----------------------------------------------------
-vim.lsp.config['superhtml_ls'] = {
+return ---@type vim.lsp.Config
+{
     cmd = {
         'superhtml',
         'lsp',
     },
     filetypes = {
-        'superhtml',
+        'htm',
         'html',
+        'shtml',
     },
     root_markers = {
         '.git',

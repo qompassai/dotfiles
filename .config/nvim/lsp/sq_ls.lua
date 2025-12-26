@@ -3,18 +3,19 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 --go install github.com/sqls-server/sqls@latest
-vim.lsp.config['sq_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'sql-language-server',
         'up',
         '--method',
         'stdio',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'sql',
         'mysql',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         '.sqllsrc.json',
     },
     settings = {

@@ -3,7 +3,8 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -----------------------------------------------------
 --Reference:  https://github.com/Beaglefoot/awk-language-server/
-vim.lsp.config['awk_ls'] = {
+---@type vim.lsp.Config
+return {
     cmd = {
         'awk-language-server',
     },

@@ -3,13 +3,14 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
 -- pnpm add -g  @typescript/native-preview@latest
-vim.lsp.config['tsgo_ls'] = {
-    cmd = {
+---@type vim.lsp.Config
+return {
+    cmd = { ---@type string[]
         'tsgo',
         '--lsp',
         '--stdio',
     },
-    filetypes = {
+    filetypes = { ---@type string[]
         'javascript',
         'javascript.jsx',
         'javascriptreact',
@@ -17,12 +18,14 @@ vim.lsp.config['tsgo_ls'] = {
         'typescriptreact',
         'typescript.tsx',
     },
-    root_markers = {
+    root_markers = { ---@type string[]
         'bun.lockb',
         'bun.lock',
         '.git',
         'package.json',
+        'package.jsonc',
         'package-lock.json',
+        'package-lock.jsonc',
         'pnpm-lock.yaml',
         'yarn.lock',
     },
