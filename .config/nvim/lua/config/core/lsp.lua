@@ -245,17 +245,16 @@ vim.lsp.config( ---@type vim.lsp.Config
     workspace_required = false,
   }
 )
-vim.api.nvim_create_autocmd('User',
-  {
-    pattern = 'LspSemanticTokens',
-    callback = function(args)
-      if not args.data or not args.data.client_id or not args.data.token then
-        return
-      end
-      local token = args.data.token
-      vim.lsp.semantic_tokens.highlight_token(token, args.buf, args.data.client_id, 'MyMutableVariableHighlight')
-    end,
-  })
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'LspSemanticTokens',
+  callback = function(args)
+    if not args.data or not args.data.client_id or not args.data.token then
+      return
+    end
+    local token = args.data.token
+    vim.lsp.semantic_tokens.highlight_token(token, args.buf, args.data.client_id, 'MyMutableVariableHighlight')
+  end,
+})
 vim.api.nvim_create_autocmd('LspDetach', {
   callback = function(args)
     if not args.data or not args.data.client_id then
@@ -278,71 +277,87 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
   end,
 })
-vim.api.nvim_create_autocmd('LspAttach', {
-  callback = function(args)
-    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-    local bufnr = args.buf
-    if client.server_capabilities.completionProvider then
-      vim.lsp.completion.enable(true, client.id, bufnr, {
-        autotrigger = true,
-        convert = function(item)
-          return { abbr = item.label:gsub('%b()', '') }
-        end,
-      })
-    end
-    if client.server_capabilities.completionProvider then
-      vim.lsp.completion.enable(true, client.id, bufnr, {
-        autotrigger = true,
-        convert = function(item)
-          return { abbr = item.label:gsub('%b()', '') }
-        end,
-      })
-    end
-    if client.server_capabilities.inlineCompletionProvider then
-      vim.lsp.inline_completion.enable(true, {
-        bufnr = bufnr,
-        client_id = client.id,
-        autotrigger = true,
-      })
-    end
-    if client.server_capabilities.documentHighlightProvider then
-      vim.api.nvim_create_autocmd({
-        'CursorHold',
-        'CursorHoldI',
-      }, {
-        buffer = bufnr,
-        callback = vim.lsp.buf.document_highlight,
-      })
-      vim.api.nvim_create_autocmd({
-        'CursorMoved',
-        'CursorMovedI',
-        'BufLeave',
-      }, {
-        buffer = bufnr,
-        callback = vim.lsp.buf.clear_references,
-      })
-    end
-    if client.server_capabilities.semanticTokensProvider then
-      vim.lsp.semantic_tokens.enable(true,
-        {
+vim.api.nvim_create_autocmd('LspAttach',
+  {
+    callback = function(args)
+      local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+      local bufnr = args.buf
+      if client.server_capabilities.completionProvider then
+        vim.lsp.completion.enable(true, client.id, bufnr, {
+          autotrigger = true,
+          convert = function(item)
+            return { abbr = item.label:gsub('%b()', '') }
+          end,
+        })
+      end
+      if client.server_capabilities.completionProvider then
+        vim.lsp.completion.enable(true, client.id, bufnr, {
+          autotrigger = true,
+          convert = function(item)
+            return { abbr = item.label:gsub('%b()', '') }
+          end,
+        })
+      end
+      if client.server_capabilities.inlineCompletionProvider then
+        vim.lsp.inline_completion.enable(true, {
+          bufnr = bufnr,
+          client_id = client.id,
+          autotrigger = true,
+        })
+      end
+      if client.server_capabilities.documentHighlightProvider then
+        vim.api.nvim_create_autocmd({
+            'CursorHold',
+            'CursorHoldI',
+          },
+          {
+            buffer = bufnr,
+            callback = vim.lsp.buf.document_highlight,
+          })
+        vim.api.nvim_create_autocmd({
+          'CursorMoved',
+          'CursorMovedI',
+          'BufLeave',
+        }, {
+          buffer = bufnr,
+          callback = vim.lsp.buf.clear_references,
+        })
+      end
+      if client.server_capabilities.semanticTokensProvider then
+        vim.lsp.semantic_tokens.enable(true, {
           bufnr = bufnr,
         })
-    end
-    vim.keymap.set('n', '<Leader>lc', vim.lsp.buf.document_color,
-      {
+      end
+      vim.keymap.set('n', '<Leader>lc', vim.lsp.buf.document_color, {
         buffer = bufnr,
         desc = 'LSP document color',
       })
-    vim.keymap.set('n', '<Leader>lf', function()
-      vim.lsp.buf.format({
-        async = true,
+      vim.keymap.set('n', '<Leader>lf', function()
+        vim.lsp.buf.format({
+          async = true,
+        })
+      end, {
+        buffer = bufnr,
+        desc = 'LSP format',
       })
-    end, {
-      buffer = bufnr,
-      desc = 'LSP format',
-    })
-  end,
-})
+    end,
+  })
+vim.api.nvim_create_autocmd('LspAttach',
+  {
+    group = vim.api.nvim_create_augroup('lsp_inlay_hints',
+      { clear = true }),
+    callback = function(event)
+      local id = event.data and event.data.client_id
+      if not id then
+        return
+      end
+      local client = vim.lsp.get_client_by_id(id)
+      if not client or not client:supports_method('textDocument/inlayHint') then
+        return
+      end
+      vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+    end,
+  })
 vim.lsp.handlers['textDocument/publishDiagnostics'] = function(err, result, ctx, _)
   local client = vim.lsp.get_client_by_id(ctx.client_id)
   if not client then

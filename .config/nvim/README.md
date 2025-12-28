@@ -42,7 +42,6 @@
 ```lua
 ~/.config/nvim
 ################
-.
 ├── after
 ├── ansi
 │   ├── apple.sh
@@ -54,6 +53,7 @@
 ├── docs
 │   ├── _build
 │   ├── conf.py
+│   ├── howto.tex
 │   ├── index.rst
 │   ├── make.bat
 │   ├── Makefile
@@ -61,14 +61,29 @@
 │   ├── _static
 │   └── _templates
 ├── dsdt.dat
+├── fixers
+│   ├── alejandra.lua
+│   ├── blackd.lua
+│   ├── cookstyle.lua
+│   ├── css-beautify.lua
+│   ├── cssbeautify.lua
+│   ├── gofumpt.lua
+│   ├── goimports.lua
+│   ├── htmlbeautify.lua
+│   ├── phpcsfixer.lua
+│   ├── shellharden.lua
+│   └── sql-formatter.lua
 ├── flake.lock
 ├── flake.nix
 ├── ftdetect
-│   ├── cypher.vim
-│   ├── ghostty.lua
-│   ├── ghostty.vim
+│   ├── alloy.lua
+│   ├── cypher.lua
+│   ├── filetype.lua
 │   ├── git.lua
-│   └── git.vim
+│   ├── handlebar.lua
+│   ├── schelp.lua
+│   ├── supercollider.lua
+│   └── tsx.lua
 ├── ftplugin
 │   ├── gleam.lua
 │   └── markdown.lua
@@ -80,22 +95,45 @@
 ├── linters
 │   ├── actionlint.lua
 │   ├── alex.lua
+│   ├── ameba.lua
 │   ├── ansible_lint.lua
+│   ├── apkbuild-lint.lua
+│   ├── bandit.lua
+│   ├── bashate.lua
+│   ├── bashlint.lua
 │   ├── bash.lua
+│   ├── bibclean.lua
+│   ├── buildifier.lua
 │   ├── clangtidy.lua
+│   ├── clj-kondo.lua
+│   ├── cmake-lint.lua
+│   ├── cookstyle.lua
+│   ├── cypher-lint.lua
+│   ├── cython-lint.lua
 │   ├── deadnix.lua
 │   ├── desktopval.lua
 │   ├── eslint_d.lua
 │   ├── fish.lua
+│   ├── golangcilint.lua
 │   ├── htmlhint.lua
 │   ├── init.lua
 │   ├── joker.lua
 │   ├── lint-openapi.lua
+│   ├── llvm-mc.lua
 │   ├── luacheck.lua
 │   ├── luac.lua
+│   ├── naga.lua
 │   ├── nvcc.lua
+│   ├── revive.lua
+│   ├── scarb.lua
+│   ├── secfixes-check.lua
+│   ├── shellcheck.lua
 │   ├── sphinx-lint.lua
+│   ├── statix.lua
+│   ├── tflint.lua
+│   ├── vulture.lua
 │   ├── writegood.lua
+│   ├── yara.lua
 │   └── zlint.lua
 ├── lsp
 │   ├── ada_ls.lua
@@ -223,7 +261,7 @@
 │   ├── lean_ls.lua
 │   ├── lemminx_ls.lua
 │   ├── ltex_ls.lua
-│   ├── ltex_plus.lua
+│   ├── ltexplus_ls.lua
 │   ├── lua_ls.lua
 │   ├── luau_ls.lua
 │   ├── lwc_ls.lua
@@ -279,7 +317,6 @@
 │   ├── purescript_ls.lua
 │   ├── pwrshelles_ls.lua
 │   ├── pyrefly_ls.lua
-│   ├── pyright_ls.lua
 │   ├── qml_ls.lua
 │   ├── quicklintjs_ls.lua
 │   ├── README.md
@@ -377,7 +414,6 @@
 │   ├── config
 │   │   ├── cicd
 │   │   │   ├── ansible.lua
-│   │   │   ├── build.lua
 │   │   │   ├── json.lua
 │   │   │   ├── shell.lua
 │   │   │   └── sops.lua
@@ -386,12 +422,15 @@
 │   │   │   └── sshfs.lua
 │   │   ├── core
 │   │   │   ├── autocmds.lua
+│   │   │   ├── fixer.lua
 │   │   │   ├── flash.lua
 │   │   │   ├── init.lua
 │   │   │   ├── lint.lua
 │   │   │   ├── lsp.lua
 │   │   │   ├── neotest.lua
+│   │   │   ├── parser.lua
 │   │   │   ├── plenary.lua
+│   │   │   ├── schema.lua
 │   │   │   ├── tree.lua
 │   │   │   ├── trouble.lua
 │   │   │   └── whichkey.lua
@@ -410,13 +449,17 @@
 │   │   │   ├── go.lua
 │   │   │   ├── js.lua
 │   │   │   ├── julia.lua
+│   │   │   ├── latex.lua
 │   │   │   ├── lua.lua
 │   │   │   ├── mojo.lua
 │   │   │   ├── nix.lua
 │   │   │   ├── php.lua
+│   │   │   ├── python.lua
+│   │   │   ├── ruby.lua
 │   │   │   ├── rust.lua
 │   │   │   ├── scala.lua
-│   │   │   └── ts.lua
+│   │   │   ├── ts.lua
+│   │   │   └── zig.lua
 │   │   ├── lazy.lua
 │   │   ├── nav
 │   │   │   ├── fzf.lua
@@ -488,7 +531,6 @@
 │   │   ├── lang
 │   │   │   ├── go.lua
 │   │   │   ├── lua.lua
-│   │   │   ├── nix.lua
 │   │   │   └── ts.lua
 │   │   ├── nav
 │   │   │   ├── fzf.lua
@@ -515,9 +557,12 @@
 │   │   │   └── options.lua
 │   │   ├── core
 │   │   │   ├── autocmds.lua
+│   │   │   ├── fixer.lua
 │   │   │   ├── lint.lua
 │   │   │   ├── lsp.lua
 │   │   │   ├── plenary.lua
+│   │   │   ├── quickfix.lua
+│   │   │   ├── schema.lua
 │   │   │   └── vim.lua
 │   │   ├── edu
 │   │   ├── init.lua
@@ -529,9 +574,6 @@
 │   │   │   ├── nix.lua
 │   │   │   ├── ts.lua
 │   │   │   └── zig.lua
-│   │   ├── mappings
-│   │   ├── nav
-│   │   │   └── neotree.lua
 │   │   └── ui
 │   │       ├── html.lua
 │   │       ├── line.lua
@@ -563,6 +605,7 @@
 ├── scripts
 │   ├── cargo.sh
 │   ├── find_and_edit.sh
+│   ├── generate
 │   ├── installers
 │   │   ├── go-tools.sh
 │   │   └── tmux.sh
@@ -573,12 +616,11 @@
 │   └── lua.json5
 ├── spell
 │   └── en.utf-8.add
-├── texput.log
 ├── undo
 ├── vim.toml
 └── vim.yml
 
-51 directories, 484 files
+50 directories, 528 files
 ```
 
 <details>

@@ -34,7 +34,7 @@ return {
       'asciidoc',
     },
     cmd = {
-      'LivePreview'
+      'LivePreview',
     },
     dependencies = {
       'ibhagwan/fzf-lua',
@@ -58,7 +58,7 @@ return {
     'MeanderingProgrammer/render-markdown.nvim',
     ft = {
       'markdown',
-      'mdx'
+      'mdx',
     },
     dependencies = {
       'nvim-tree/nvim-web-devicons',

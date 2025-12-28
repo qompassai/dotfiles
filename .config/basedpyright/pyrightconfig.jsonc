@@ -7,20 +7,21 @@
 	"pythonVersion": "3.13",
 	"typeCheckingMode": "strict",
 	"pythonPlatform": "Linux",
-	"venvPath": "'$HOME'/.pyenv/versions",
-	"venv": "3.13.5",
+	"venvPath": "usr/bin/python3.13",
+	//"venv": "3.13.5",
 	"stubPath": "",
 	"analysis": {
 		"inlayHints": {
 			"variableTypes": true,
 			"callArgumentNames": true,
 			"functionReturnTypes": true,
-			"genericTypes": false
+			"genericTypes": true
 		},
 		"diagnosticMode": "workspace",
 		"useLibraryCodeForTypes": true,
 		"autoSearchPaths": true,
-		"reportMissingImports": "error",
+		"reportMissingImports": "none",
+		"reportMissingModuleSource": "none",
 		"reportMissingTypeStubs": true,
 		"reportUnusedImport": true,
 		"reportUnusedVariable": true,

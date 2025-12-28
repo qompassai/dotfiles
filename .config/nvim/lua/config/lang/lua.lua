@@ -7,32 +7,67 @@
 local U = require('utils.lang.lua')
 local M = {}
 function M.lua_autocmds()
-  vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'lua',
-    callback = function()
-      vim.opt_local.shiftwidth = 2
-      vim.opt_local.tabstop = 2
-      vim.opt_local.softtabstop = 2
-      vim.opt_local.expandtab = true
-    end,
-  })
+  vim.api.nvim_create_autocmd('FileType',
+    {
+      pattern = 'lua',
+      callback = function()
+        vim.opt_local.shiftwidth = 2
+        vim.opt_local.tabstop = 2
+        vim.opt_local.softtabstop = 2
+        vim.opt_local.expandtab = true
+      end,
+    })
 end
 
+vim.api.nvim_create_user_command('LuaRangeAction', function()
+  local bufnr = 0
+  local diagnostics = vim.diagnostic.get(bufnr)
+  local start_pos = vim.api.nvim_buf_get_mark(bufnr, '<')
+  local end_pos = vim.api.nvim_buf_get_mark(bufnr, '>')
+  vim.lsp.buf.code_action({
+    context = {
+      diagnostics = diagnostics,
+      only = {
+        'quickfix',
+        'refactor.extract',
+      },
+    },
+    range = {
+      start = { start_pos[1], start_pos[2] },
+      ['end'] = { end_pos[1], end_pos[2] },
+    },
+    filter = function(_, client_id)
+      local client = vim.lsp.get_client_by_id(client_id)
+      return client ~= nil and client.name == 'lua_ls'
+    end,
+    apply = false,
+  })
+end, { range = true })
 function M.lua_cmp()
   if vim.g.use_blink_cmp then
     return {
       sources = {
         {
-          name = 'lsp'
+          name = 'lsp',
         },
         {
-          name = 'luasnip'
+          name = 'luasnip',
         },
-        { name = 'buffer' },
-        { name = 'nvim_lua', via = 'compat' },
-        { name = 'lazydev' },
+        {
+          name = 'buffer',
+        },
+        {
+          name = 'nvim_lua',
+          via = 'compat',
+        },
+        {
+          name = 'lazydev',
+        },
       },
-      performance = { async = true, throttle = 50 },
+      performance = {
+        async = true,
+        throttle = 50,
+      },
       appearance = {
         kind_icons = require('lazyvim.config').icons.kinds,
         nerd_font_variant = 'mono',
@@ -40,8 +75,16 @@ function M.lua_cmp()
       },
       completion = {
         accept = { auto_brackets = true },
-        menu = { draw = { treesitter = { 'lsp' } } },
-        documentation = { auto_show = true },
+        menu = {
+          draw = {
+            treesitter = {
+              'lsp',
+            },
+          },
+        },
+        documentation = {
+          auto_show = true,
+        },
       },
     }
   else
@@ -60,12 +103,22 @@ function M.lua_cmp()
         ['<CR>'] = require('cmp').mapping.confirm({ select = true }),
       }),
       sources = {
-        { name = 'nvim_lua' },
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-        { name = 'buffer' },
+        {
+          name = 'nvim_lua',
+        },
+        {
+          name = 'nvim_lsp',
+        },
+        {
+          name = 'luasnip',
+        },
+        {
+          name = 'buffer',
+        },
       },
-      experimental = { ghost_text = true },
+      experimental = {
+        ghost_text = true,
+      },
     }
   end
 end
@@ -73,8 +126,12 @@ end
 function M.lua_lazydev(opts)
   opts = opts or {}
   return {
-    runtime = opts.runtime or vim.env.VIMRUNTIME,
-    library = U.lua_library({ { path = U.lua_home() } }),
+    runtime = opts.runtime or vim.env.VIMRUNTIME, ---@type string
+    library = U.lua_library({ ---@type string
+      {
+        path = U.lua_home(),
+      }, ---@type string
+    }),
     integrations = {
       lspconfig = opts.integrations and opts.integrations.lspconfig ~= false,
       cmp = opts.integrations and opts.integrations.cmp ~= false,
@@ -90,7 +147,7 @@ function M.lua_luarocks(opts)
   opts = opts or {}
   local config = {
     build = true,
-    rocks_path = vim.fn.expand('$HOME/.local/share/nvim/lazy/luarocks.nvim/.rocks'),
+    rocks_path = vim.fn.expand('$XDG_DATA_HOME/nvim/lazy/luarocks.nvim/.rocks'),
     rocks = {
       'bit32',
       'busted',
@@ -137,7 +194,7 @@ function M.lua_luarocks(opts)
       'typecheck',
     },
   }
-  local rocks_dir = vim.fn.expand('$HOME/.local/share/nvim/lazy/luarocks.nvim/.rocks')
+  local rocks_dir = vim.fn.expand('$XDG_DATA_HOME/nvim/lazy/luarocks.nvim/.rocks')
   if vim.fn.isdirectory(rocks_dir) == 1 then
     config.build = false
   end
@@ -149,8 +206,8 @@ function M.lua_snap(opts)
   local config = {
     mappings = {
       ['<CR>'] = 'submit',
-      ['<C-x>'] = 'cut'
-    }
+      ['<C-x>'] = 'cut',
+    },
   }
   return vim.tbl_deep_extend('force', config, opts)
 end
@@ -160,16 +217,24 @@ function M.lua_test(opts)
   return {
     adapters = {
       require('neotest-plenary')({
-        test_file_patterns = { '.*_test%.lua$', '.*_spec%.lua$' },
+        test_file_patterns = {
+          '.*_test%.lua$',
+          '.*_spec%.lua$',
+        },
         min_init = 'tests/init.lua',
       }),
     },
     strategies = {
       integrated = {
-        args = { '--lua', vim.fn.expand('~/.local/bin/lua5.1') },
+        args = {
+          '--lua',
+          vim.fn.expand('~/.local/bin/lua5.1'),
+        },
       },
     },
-    output_panel = { open = 'botright split | resize 15' },
+    output_panel = {
+      open = 'botright split | resize 15',
+    },
     discovery = {
       enabled = true,
       filter_dir = function(name)
@@ -179,6 +244,16 @@ function M.lua_test(opts)
   }
 end
 
+vim.api.nvim_create_autocmd('LspAttach',
+  {
+    callback = function(args)
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      if client and client.name == 'lua_ls' then
+        vim.bo[args.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+      end
+    end,
+  })
+
 function M.lua_cfg(opts)
   local ver, bin = U.lua_version()
   vim.env.LUA_VERSION = ver
@@ -187,7 +262,6 @@ function M.lua_cfg(opts)
     autocmds = M.lua_autocmds,
     cmp = M.lua_cmp,
     lazydev = M.lua_lazydev(opts or {}),
-    lsp = M.lua_lsp(opts or {}),
     luarocks = M.lua_luarocks(opts.luarocks or {}),
     snap = M.lua_snap(opts or {}),
     test = M.lua_test(opts or {}),

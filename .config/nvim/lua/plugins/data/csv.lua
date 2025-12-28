@@ -15,7 +15,7 @@ return {
   },
   config = true,
   opts = {
-    delim = ','
+    delim = ',',
   },
   cmd = {
     'RainbowDelim',

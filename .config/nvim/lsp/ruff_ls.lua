@@ -2,8 +2,8 @@
 -- Qompass AI Diver Ruff LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- -------------------------------------------------
----@type vim.lsp.Config
-return {
+return ---@type vim.lsp.Config
+{
   cmd = {
     'ruff',
     'server',
@@ -48,21 +48,21 @@ return {
         '**/tests/**',
       },
       lineLength = 100,
-      fixAll = true, ---@type boolean
-      organizeImports = true, ---@type boolean
-      showSyntaxErrors = true, ---@type boolean
+      fixAll = true,
+      organizeImports = true,
+      showSyntaxErrors = true,
       logLevel = 'info',
       codeAction = {
         disableRuleComment = {
-          enable = false, ---@type boolean
+          enable = true,
         },
         fixViolation = {
-          enable = true, ---@type boolean
+          enable = true,
         },
       },
       lint = {
-        enable = true, ---@type boolean
-        preview = true, ---@type boolean
+        enable = true,
+        preview = true,
         select = {
           'E',
           'F',

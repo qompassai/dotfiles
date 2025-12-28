@@ -2,15 +2,15 @@
 -- Qompass AI Hydra LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
----@type vim.lsp.Config
-return {
-    cmd = { ---@type string[]
+return ---@type vim.lsp.Config
+{
+    cmd = {
         'hydra-lsp',
     },
-    filetypes = { ---@type string[]
+    filetypes = {
         'yaml',
     },
-    root_markers = { ---@type string[]
+    root_markers = {
         '.git',
     },
 }

@@ -13,9 +13,7 @@ return {
     dependencies = {
         'nvim-lua/plenary.nvim',
         'MunifTanjim/nui.nvim',
-        'nvimtools/none-ls.nvim',
         'mgierada/lazydocker.nvim',
-        'b0o/schemastore.nvim',
     },
     cmd = {
         'ContainerList',
@@ -33,14 +31,6 @@ return {
         'ImagePrune',
     },
     config = function()
-        extra_schemas = {
-            {
-                fileMatch = {
-                    'docker-compose*.yml',
-                    'docker-compose*.yaml',
-                },
-                url = 'https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json',
-            },
-        }
+        extra_schemas = {}
     end,
 }

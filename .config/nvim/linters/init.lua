@@ -14,8 +14,8 @@ M.linters_by_ft = {
     'apkbuild-lint',
     'secfixes-check',
   },
-  --astro = { },
-  --awk = 'gawk',
+  --astro = {},
+  --awk = {},
   bash = {
     'bashlint',
     'shellcheck',
@@ -23,13 +23,12 @@ M.linters_by_ft = {
   bazel = 'buildifier',
   bibtex = 'bibclean',
   -- c = {
-  --   'ccls',
   -- },
   cairo = 'scarb',
   chef = 'cookstyle', ---foodcritic deprecated
-  --clojure = {
-  --  'cjl-kondo',
-  -- },
+  clojure = {
+    'cjl-kondo',
+  },
   cmake = {
     'cmake-lint',
   },
@@ -46,7 +45,7 @@ M.linters_by_ft = {
     'nvcc',
   },
   -- cypher = 'cypher-lint',
-  -- cython = 'cython',
+  cython = 'cython-lint',
   -- dart = 'dart-analyze',
   -- dhall = 'dhall-lint',
   desktop = 'desktop-validate-file',
@@ -73,7 +72,7 @@ M.linters_by_ft = {
   --'glslang',
   --'glslls',
   --},
-  go = {},
+  --go = {},
   --graphql = 'gqlint',
   --groovy = 'npm_groovy_lint',
   --[[
@@ -94,9 +93,9 @@ M.linters_by_ft = {
   -- },
   http = {},
   -- inko = 'inko',
-  java = {
-    'checkstyle',
-  },
+  --java = {
+  --  'checkstyle',
+  --},
   javascript = {},
   javascriptreact = {},
   jinja = {
@@ -180,7 +179,6 @@ M.linters_by_ft = {
   },
   sass = {
     'sass-lint',
-    'stylelint',
   },
   scss = {},
   --[[

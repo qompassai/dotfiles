@@ -9,7 +9,7 @@ return {
     'folke/lazydev.nvim',
     ft = {
       'lua',
-      'luau'
+      'luau',
     },
     dependencies = {
       'folke/neodev.nvim',
@@ -28,5 +28,5 @@ return {
         lua_conf = require('config.lang.lua').lua_luarocks(opts)
       end,
     },
-  }
+  },
 }

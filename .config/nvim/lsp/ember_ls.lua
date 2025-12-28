@@ -6,18 +6,18 @@
 -- pnpm add -g @ember-tooling/ember-language-server@latest
 ---@type vim.lsp.Config
 return {
-    cmd = { ---@type string[]
+    cmd = {
         'ember-language-server',
         '--stdio',
     },
-    filetypes = { ---@type string[]
+    filetypes = {
         'handlebars',
         'javascript',
         'typescript',
         'typescript.glimmer',
         'javascript.glimmer',
     },
-    root_markers = { ---@type string[]
+    root_markers = {
         'ember-cli-build.js',
         '.git',
     },
