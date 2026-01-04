@@ -2,6 +2,7 @@
 -- Qompass AI Diver Native LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -----------------------------------------------------
+local M = {}
 --local function on_list(options) ---@param options table
 --  vim.fn.setqflist({}, ' ', options)
 --  vim.cmd.cfirst()
@@ -397,3 +398,5 @@ for _, item in ipairs(qf) do
   end
 end
 vim.fn.setqflist(filtered, 'r')
+
+return M

@@ -5,33 +5,38 @@
 ####################################################
 set -euo pipefail
 pnpm add -g \
+  @abaplint/cli@latest \
+  @abaplint/transpiler-cli@latest \
+  @abaplint/transpiler@latest \
+  @abaplint/runtime@latest
   @angular/language-server@latest \
-  awk-language-server@latest \
+  @awk-language-server@latest \
+  @azure-pipelines-language-server@latest \
+  @css-variables-language-server@latest \
+  @cssmodules-language-server@latest \
   @cucumber/language-server@latest \
+  @custom-elements-languageserver@latest \
+  git+https://github.com/salesforce-misc/bazelrc-lsp.git \
   @herb-tools/language-server@latest \
   @imc-trading/svlangserver@latest \
+  @lean-language-server@latest \
+  @microsoft/compose-language-service@latest \
   @neo4j-cypher/language-server@latest \
+  @oxlint@latest \
   @rescript/language-server@latest \
   @sap/cds-lsp@latest \
-  azure-pipelines-language-server@latest \
-  css-variables-language-server@latest \
-  cssmodules-language-server@latest \
-  custom-elements-languageserver@latest \
-  lean-language-server@latest \
-  git+https://github.com/salesforce-misc/bazelrc-lsp.git \
-  @microsoft/compose-language-service@latest \
-  oxlint@latest \
-  solc@latest \
-  solidity-ls@latest \
-  stimulus-language-server@latest \
-  stylelint-lsp@latest \
-  svelte-language-server@latest \
+  @solc@latest \
+  @solidity-ls@latest \
+  @stimulus-language-server@latest \
+  @stylelint-lsp@latest \
+  @svelte-language-server@latest \
   @tailwindcss/language-server@latest \
-  typescript-language-server@latest \
+  @typescript-language-server@latest \
   typescript@latest \
   @typespec/compiler@latest \
   @urbit/hoon-language-server@latest \
-  vim-language-server@latest \
-  vscode-langservers-extracted@latest \
+  @vim-language-server@latest \
+  @vlabo/cspell-lsp@latest \
+  @vscode-langservers-extracted@latest \
   @vue/language-server@latest \
-  yaml-language-server@latest
+  @yaml-language-server@latest

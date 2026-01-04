@@ -5,23 +5,19 @@
 --Reference: https://github.com/ocaml/ocaml-lsp
 --opam install ocaml-lsp-server
 local function switch_impl_intf(bufnr, client)
-    local method_name = 'ocamllsp/switchImplIntf'
     ---@diagnostic disable-next-line:param-type-mismatch
-    if not client or not client:supports_method(method_name) then
-        return vim.echo(('method %s is not supported by any servers active on the current buffer'):format(method_name))
+    if not client or not client:supports_method('ocamllsp/switchImplIntf') then
+        return vim.echo(
+            ('method %s is not supported by any servers active on the current buffer'):format('ocamllsp/switchImplIntf')
+        )
     end
-    local uri = vim.lsp.util.make_given_range_params(
-        nil, ---@type string
-        nil,
-        bufnr,
-        client.offset_encoding
-    ).textDocument.uri
+    local uri = vim.lsp.util.make_given_range_params(nil, nil, bufnr, client.offset_encoding).textDocument.uri
     if not uri then
         return vim.echo('could not get URI for current buffer')
     end
     local params = { uri }
     ---@diagnostic disable-next-line:param-type-mismatch
-    client:request(method_name, params, function(err, result)
+    client:request('ocamllsp/switchImplIntf', params, function(err, result)
         if err then
             error(tostring(err))
         end
@@ -63,25 +59,28 @@ local get_language_id = function(bufnr, ftype)
         return language_id_of[ftype]
     end
 end
----@type vim.lsp.Config
-return {
-    cmd = { ---@type string[]
+
+return ---@type vim.lsp.Config
+{
+    cmd = {
         'ocamllsp',
     },
-    filetypes = { ---@type string[]
+    filetypes = {
         'ocaml',
         'ocamlinterface',
         'ocamllex',
         'reason',
     },
-    root_markers = { ---@type string[]
+    root_markers = {
         'dune-project',
         'dune-workspace',
+        'esy.json',
+        'esy.jsonc',
         '.git',
         '*.opam',
         'opam',
-        'esy.json',
         'package.json',
+        'package.jsonc',
     },
     get_language_id = get_language_id,
     on_attach = function(client, bufnr)

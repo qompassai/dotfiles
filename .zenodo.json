@@ -5,7 +5,11 @@
   "language": "eng",
   "upload_type": "software",
   "access_right": "open",
+<<<<<<< HEAD
   "version": "v2025-12-05-6-gd1e66f8a-dirty",
+=======
+  "version": "530a6bc",
+>>>>>>> 8eb1666 (Update 2025-12-28)
   "publication_date": "2025-12-28",
   "creators": [
     {

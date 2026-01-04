@@ -25,7 +25,7 @@ M.linters_by_ft = {
   -- c = {
   -- },
   cairo = 'scarb',
-  chef = 'cookstyle', ---foodcritic deprecated
+  chef = 'cookstyle',   ---foodcritic deprecated
   clojure = {
     'cjl-kondo',
   },

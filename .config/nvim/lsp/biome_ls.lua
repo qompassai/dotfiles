@@ -2,8 +2,8 @@
 -- Qompass AI Biome LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -----------------------------------------------------
----@type vim.lsp.Config
-return {
+return ---@type vim.lsp.Config
+{
     cmd = {
         'biome',
         'lsp-proxy',
@@ -36,14 +36,21 @@ return {
     workspace_required = true,
     before_init = function(_, config)
         local bufnr = vim.api.nvim_get_current_buf()
-        if vim.fs(bufnr, {
+        local fname = vim.api.nvim_buf_get_name(bufnr)
+        if fname == '' then
+            return
+        end
+        local deno_root = vim.fs.root(fname, {
             'deno.json',
             'deno.jsonc',
             'deno.lock',
-        }) then
+        })
+        if deno_root then
             return
         end
-        local project_root = vim.fs(bufnr, {
+        local project_root = vim.fs.root(fname, {
+            'biome.json',
+            'biome.jsonc',
             'package-lock.json',
             'yarn.lock',
             'pnpm-lock.yaml',
@@ -53,7 +60,10 @@ return {
         }) or vim.fn.getcwd()
         local local_cmd = project_root .. '/node_modules/.bin/biome'
         if vim.fn.executable(local_cmd) == 1 then
-            config.cmd = { local_cmd, 'lsp-proxy' }
+            config.cmd = {
+                local_cmd,
+                'lsp-proxy',
+            }
         end
     end,
 }

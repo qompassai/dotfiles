@@ -11,7 +11,7 @@ return {
     filetypes = { ---@type string[]
         'nix',
     },
-    root_markers = { ---@type string[]
+    root_markers = {
         'default.nix',
         'flake.nix',
         '.git',
@@ -19,21 +19,25 @@ return {
     settings = {
         ['nil'] = {
             formatting = {
-                command = { ---@type string[]
+                command = {
                     'alejandra',
                 },
             },
             diagnostics = {
-                enabled = true, ---@type boolean
+                enabled = true,
                 ignored = {},
                 excludedFiles = {},
             },
             nix = {
-                flake = { ---@type boolean[]
+                autoArchive = true,
+                autoEvalInputs = true,
+                binary = 'nix',
+                flake = {
                     autoArchive = true,
                     autoEvalInputs = true,
                 },
-                testSetting = 42, ---@type integer
+                maxMemoryMB = 2560,
+                nixpkgsInputName = 'nixpkgs',
             },
         },
     },

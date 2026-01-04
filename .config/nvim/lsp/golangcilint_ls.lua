@@ -6,7 +6,7 @@
 -- go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 ---@type vim.lsp.Config
 return {
-    cmd = { ---@type string[]
+    cmd = {
         'golangci-lint-langserver',
     },
     filetypes = {
@@ -17,10 +17,27 @@ return {
         command = {
             'golangci-lint',
             'run',
-            '--output.json.path=stdout',
+            '--output.json.path',
+            'stdout',
             '--show-stats=false',
+            '--issues-exit-code=1',
         },
     },
+    on_attach = function(client, bufnr)
+        client.server_capabilities.hoverProvider = false
+        client.server_capabilities.definitionProvider = false
+        client.server_capabilities.declarationProvider = false
+        client.server_capabilities.typeDefinitionProvider = false
+        client.server_capabilities.referencesProvider = false
+        client.server_capabilities.renameProvider = false
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+        client.server_capabilities.codeActionProvider = false
+        client.server_capabilities.signatureHelpProvider = nil
+        vim.keymap.set('n', '<leader>lg', function()
+            vim.diagnostic.setloclist({ bufnr = bufnr })
+        end, { buffer = bufnr, desc = 'GolangCI diagnostics' })
+    end,
     root_markers = {
         '.golangci.yml',
         '.golangci.yaml',
@@ -35,7 +52,12 @@ return {
         if vim.fn.executable('go') == 1 and vim.fn.executable('golangci-lint') == 1 then
             local exe = vim.fn.exepath('golangci-lint')
             if exe ~= '' then
-                local result = vim.system({ 'go', 'version', '-m', exe }):wait()
+                local result = vim.system({
+                    'go',
+                    'version',
+                    '-m',
+                    exe,
+                }):wait()
                 if result.code == 0 and result.stdout then
                     v1 = string.match(result.stdout, '\tmod\tgithub.com/golangci/golangci%-lint\t') ~= nil
                     v2 = string.match(result.stdout, '\tmod\tgithub.com/golangci/golangci%-lint/v2\t') ~= nil

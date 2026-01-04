@@ -9,28 +9,32 @@ return ---@type vim.lint.Config
   stdin = false,
   append_fname = true,
   args = {
-    '--output-format',
-    'json',
+    '--output-format', 'json',
     '--warn-used-underscore',
     '--fail',
   },
   stream = 'stdout',
   ignore_exitcode = true,
-  parser = function(output, bufnr)
+  ---@param bufnr integer
+  ---@return vim.lint.Diagnostic[]
+  parser = function(output, bufnr) ---@param output string
     if output == '' then
       return {}
     end
-    local ok, decoded = pcall(vim.json.decode, output)
-    if not ok or not decoded then
+    local ok, decoded_raw = pcall(vim.json.decode, output)
+    if not ok or not decoded_raw then
       return {}
     end
+    local decoded = decoded_raw ---@type vim.lint.Config.ReportItem[]
     local diagnostics = {}
     for _, item in ipairs(decoded) do
       if not item.path or not item.line or not item.column then
         goto continue
       end
       local bufname = vim.api.nvim_buf_get_name(bufnr)
-      if vim.fs.basename(item.path) ~= vim.fs.basename(bufname) and item.path ~= bufname then
+      if vim.fs.basename(item.path) ~= vim.fs.basename(bufname)
+          and item.path ~= bufname
+      then
         goto continue
       end
       local lnum = (item.line or 1) - 1

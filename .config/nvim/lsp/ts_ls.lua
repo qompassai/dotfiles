@@ -2,11 +2,11 @@
 -- Qompass AI Typescript LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -----------------------------------------------------
-
 return ---@type vim.lsp.Config
 {
     cmd = {
         'typescript-language-server',
+        '--stdio',
     },
     filetypes = {
         'javascript',
@@ -17,29 +17,11 @@ return ---@type vim.lsp.Config
         'typescriptreact',
     },
     init_options = {
+        completionDisableFilterText = false,
+        disableAutomaticTypingAcquisition = false,
         hostInfo = 'neovim',
-    },
-    preferences = {
-        allowTextChangesInNewFiles = true,
-        disableSuggestions = false,
-        includeAutomaticOptionalChainCompletions = true,
-        includeCompletionsForModuleExports = true,
-        includeCompletionsForImportStatements = true,
-        includeCompletionsWithClassMemberSnippets = true,
-        includeCompletionsWithInsertText = true,
-        includeCompletionsWithSnippetText = true,
-        includeInlayParameterNameHints = 'all',
-        includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-        includeInlayFunctionParameterTypeHints = true,
-        includeInlayVariableTypeHints = true,
-        includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-        includeInlayEnumMemberValueHints = true,
-        includeInlayFunctionLikeReturnTypeHints = true,
-        includeInlayPropertyDeclarationTypeHints = true,
-        quotePreference = 'single',
-    },
-    tsserver = {
-        log = 'verbose',
+        locale = 'en',
+        maxTsServerMemory = 0,
     },
     root_markers = {
         '.git',
@@ -48,32 +30,223 @@ return ---@type vim.lsp.Config
         'tsconfig.json',
     },
     settings = {
-        disable_member_code_lens = true,
-        separate_diagnostic_server = true,
-        publish_diagnostic_on = 'insert_leave',
-        expose_as_code_action = {},
-        tsserver_path = nil,
-        tsserver_plugins = {},
-        tsserver_max_memory = 'auto',
-        tsserver_format_options = {},
-        tsserver_file_preferences = {},
-        tsserver_locale = 'en',
-        complete_function_calls = true,
-        include_completions_with_insert_text = true,
-        code_lens = 'off',
-        jsx_close_tag = {
-            enable = true,
-            filetypes = {
-                'javascriptreact',
-                'typescriptreact',
+        completions = {
+            completeFunctionCalls = true,
+        },
+        diagnostics = {
+            ignoredCodes = {},
+        },
+        implicitProjectConfiguration = {
+            checkJs = true,
+            experimentalDecorators = true,
+            module = 'esnext',
+            strictFunctionTypes = true,
+            strictNullChecks = true,
+            target = 'ES2020',
+        },
+        javascript = {
+            format = {
+                baseIndentSize = 0,
+                convertTabsToSpaces = true,
+                indentSize = 2,
+                indentStyle = 'Smart',
+                insertSpaceAfterCommaDelimiter = true,
+                insertSpaceAfterConstructor = false,
+                insertSpaceAfterFunctionKeywordForAnonymousFunctions = true,
+                insertSpaceAfterKeywordsInControlFlowStatements = true,
+                insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = false,
+                insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces = false,
+                insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = true,
+                insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets = false,
+                insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis = false,
+                insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces = false,
+                insertSpaceAfterSemicolonInForStatements = true,
+                insertSpaceAfterTypeAssertion = false,
+                insertSpaceBeforeAndAfterBinaryOperators = true,
+                insertSpaceBeforeFunctionParenthesis = false,
+                insertSpaceBeforeTypeAnnotation = false,
+                newLineCharacter = '\n',
+                placeOpenBraceOnNewLineForControlBlocks = false,
+                placeOpenBraceOnNewLineForFunctions = false,
+                semicolons = 'insert',
+                tabSize = 2,
+                trimTrailingWhitespace = true,
+            },
+            implementationsCodeLens = {
+                enabled = true,
+            },
+            inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = 'none',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = false,
+                includeInlayVariableTypeHints = false,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+            },
+            preferences = {
+                allowIncompleteCompletions = true,
+                allowRenameOfImportPath = true,
+                allowTextChangesInNewFiles = true,
+                autoImportFileExcludePatterns = {},
+                autoImportSpecifierExcludeRegexes = {},
+                disableSuggestions = false,
+                displayPartsForJSDoc = true,
+                excludeLibrarySymbolsInNavTo = true,
+                generateReturnInDocTemplate = true,
+                importModuleSpecifierEnding = 'auto',
+                importModuleSpecifierPreference = 'shortest',
+                includeAutomaticOptionalChainCompletions = true,
+                includeCompletionsForImportStatements = true,
+                includeCompletionsForModuleExports = true,
+                includeCompletionsWithClassMemberSnippets = true,
+                includeCompletionsWithInsertText = true,
+                includeCompletionsWithObjectLiteralMethodSnippets = true,
+                includeCompletionsWithSnippetText = true,
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+                includePackageJsonAutoImports = 'auto',
+                interactiveInlayHints = true,
+                jsxAttributeCompletionStyle = 'auto',
+                lazyConfiguredProjectsFromExternalProject = false,
+                maximumHoverLength = 500,
+                organizeImportsAccentCollation = true,
+                organizeImportsCaseFirst = false,
+                organizeImportsCollation = 'ordinal',
+                organizeImportsIgnoreCase = 'auto',
+                organizeImportsLocale = 'en',
+                organizeImportsNumericCollation = false,
+                organizeImportsTypeOrder = 'last',
+                preferTypeOnlyAutoImports = false,
+                providePrefixAndSuffixTextForRename = true,
+                provideRefactorNotApplicableReason = true,
+                quotePreference = 'single',
+                useLabelDetailsInCompletionEntries = true,
+            },
+            referencesCodeLens = {
+                enabled = true,
+                showOnAllFunctions = true,
+            },
+        },
+        typescript = {
+            codeLens = 'on',
+            format = {
+                baseIndentSize = 0,
+                convertTabsToSpaces = true,
+                indentSize = 2,
+                indentStyle = 'Smart',
+                insertSpaceAfterCommaDelimiter = true,
+                insertSpaceAfterConstructor = false,
+                insertSpaceAfterFunctionKeywordForAnonymousFunctions = true,
+                insertSpaceAfterKeywordsInControlFlowStatements = true,
+                insertSpaceAfterOpeningAndBeforeClosingEmptyBraces = false,
+                insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces = false,
+                insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces = true,
+                insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets = false,
+                insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis = false,
+                insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces = false,
+                insertSpaceAfterSemicolonInForStatements = true,
+                insertSpaceAfterTypeAssertion = false,
+                insertSpaceBeforeAndAfterBinaryOperators = true,
+                insertSpaceBeforeFunctionParenthesis = false,
+                insertSpaceBeforeTypeAnnotation = false,
+                newLineCharacter = '\n',
+                placeOpenBraceOnNewLineForControlBlocks = false,
+                placeOpenBraceOnNewLineForFunctions = false,
+                semicolons = 'insert',
+                tabSize = 2,
+                trimTrailingWhitespace = true,
+            },
+            implementationsCodeLens = {
+                enabled = true,
+            },
+            inlayHints = {
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+            },
+            jsxCloseTag = {
+                enable = true,
+                filetypes = {
+                    'javascriptreact',
+                    'typescriptreact',
+                },
+            },
+            preferences = {
+                allowIncompleteCompletions = true,
+                allowRenameOfImportPath = true,
+                allowTextChangesInNewFiles = true,
+                autoImportFileExcludePatterns = {},
+                autoImportSpecifierExcludeRegexes = {},
+                disableSuggestions = false,
+                displayPartsForJSDoc = true,
+                excludeLibrarySymbolsInNavTo = true,
+                generateReturnInDocTemplate = true,
+                importModuleSpecifierEnding = 'auto',
+                importModuleSpecifierPreference = 'shortest',
+                includeAutomaticOptionalChainCompletions = true,
+                includeCompletionsForImportStatements = true,
+                includeCompletionsForModuleExports = true,
+                includeCompletionsWithClassMemberSnippets = true,
+                includeCompletionsWithInsertText = true,
+                includeCompletionsWithObjectLiteralMethodSnippets = true,
+                includeCompletionsWithSnippetText = true,
+                includeInlayEnumMemberValueHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+                includePackageJsonAutoImports = 'auto',
+                interactiveInlayHints = true,
+                jsxAttributeCompletionStyle = 'auto',
+                lazyConfiguredProjectsFromExternalProject = false,
+                maximumHoverLength = 500,
+                organizeImportsAccentCollation = true,
+                organizeImportsCaseFirst = false,
+                organizeImportsCollation = 'ordinal',
+                organizeImportsIgnoreCase = 'auto',
+                organizeImportsLocale = 'en',
+                organizeImportsNumericCollation = false,
+                organizeImportsTypeOrder = 'last',
+                preferTypeOnlyAutoImports = false,
+                providePrefixAndSuffixTextForRename = true,
+                provideRefactorNotApplicableReason = true,
+                quotePreference = 'single',
+                useLabelDetailsInCompletionEntries = true,
+            },
+            referencesCodeLens = {
+                enabled = true,
+                showOnAllFunctions = true,
+            },
+            supportsMoveToFileCodeAction = true,
+            tsserver = {
+                fallbackPath = {},
+                logDirectory = {},
+                logVerbosity = 'verbose',
+                path = nil,
+                trace = 'messages',
+                useSyntaxServer = 'auto',
             },
         },
     },
     handlers = {
-        ---@param result { textDocument: lsp.TextDocumentIdentifier, position: lsp.Position }
-        ---@return nil|string[]
-        ['_typescript.rename'] = function(_, result, ctx) ---@param ctx lsp.HandlerContext
-            local Client = assert(vim.lsp.get_client_by_id(ctx.client_id)) ---@type vim.lsp.Client
+        ['_typescript.rename'] = function(_, result, ctx)
+            local Client = assert(vim.lsp.get_client_by_id(ctx.client_id))
             vim.lsp.util.show_document({
                 uri = result.textDocument.uri,
                 range = {
@@ -86,12 +259,10 @@ return ---@type vim.lsp.Config
         end,
     },
     commands = {
-        ---@param command lsp.Command
-        ---@return nil
-        ['editor.action.showReferences'] = function(command, ctx) ---@param ctx { client_id: integer, bufnr: integer }
-            local Client = assert(vim.lsp.get_client_by_id(ctx.client_id)) ---@type vim.lsp.Client
+        ['editor.action.showReferences'] = function(command, ctx)
+            local Client = assert(vim.lsp.get_client_by_id(ctx.client_id))
             local file_uri, position, references = unpack(command.arguments)
-            local quickfix_items = vim.lsp.util.locations_to_items(references --[[@as any]], Client.offset_encoding) ---@type string[]
+            local quickfix_items = vim.lsp.util.locations_to_items(references --[[@as any]], Client.offset_encoding)
             vim.fn.setqflist({}, ' ', {
                 title = command.title,
                 items = quickfix_items,
@@ -112,7 +283,7 @@ return ---@type vim.lsp.Config
     },
     on_attach = function(Client, bufnr)
         vim.api.nvim_buf_create_user_command(bufnr, 'LspTypescriptSourceAction', function()
-            local source_actions = vim.tbl_filter(function(action) ---@type string[]
+            local source_actions = vim.tbl_filter(function(action)
                 return vim.startswith(action, 'source.')
             end, Client.server_capabilities.codeActionProvider.codeActionKinds)
             vim.lsp.buf.code_action({
@@ -124,7 +295,7 @@ return ---@type vim.lsp.Config
         end, {})
         vim.api.nvim_buf_create_user_command(bufnr, 'LspTypescriptGoToSourceDefinition', function()
             local win = vim.api.nvim_get_current_win()
-            local params = vim.lsp.util.make_position_params(win, Client.offset_encoding) ---@type lsp.TextDocumentPositionParams
+            local params = vim.lsp.util.make_position_params(win, Client.offset_encoding)
             Client:exec_cmd({
                 command = '_typescript.goToSourceDefinition',
                 title = 'Go to source definition',

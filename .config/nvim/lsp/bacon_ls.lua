@@ -2,7 +2,8 @@
 -- Qompass AI Bacon LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
-return {
+return ---@type vim.lsp.Config
+{
     cmd = {
         'bacon-ls',
     },

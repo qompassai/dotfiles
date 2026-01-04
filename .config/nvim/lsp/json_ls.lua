@@ -47,89 +47,98 @@ return ---@type vim.lsp.Config
             },
             schemas = {
                 {
-                    {
-                        description = 'Angular configuration file',
-                        fileMatch = {
-                            'angular.json',
-                            'angular.jsonc',
-                        },
-                        url = 'https://raw.githubusercontent.com/angular/angular-cli/master/packages/angular/cli/lib/config/workspace-schema.json',
+                    description = 'Angular configuration file',
+                    fileMatch = {
+                        'angular.json',
+                        'angular.jsonc',
                     },
-                    {
-                        description = 'Angular CLI configuration file',
-                        fileMatch = {
-                            '.angular-cli.json',
-                            'angular-cli.json',
-                        },
-                        url = 'https://raw.githubusercontent.com/angular/angular-cli/v10.1.6/packages/angular/cli/lib/config/schema.json',
+                    url = 'https://raw.githubusercontent.com/angular/angular-cli/master/packages/angular/cli/lib/config/workspace-schema.json',
+                },
+                {
+                    description = 'Angular CLI configuration file',
+                    fileMatch = {
+                        '.angular-cli.json',
+                        'angular-cli.json',
                     },
-                    {
-                        description = 'asm-lsp configuration',
-                        fileMatch = {
-                            '.asm-lsp.toml',
-                            'asm-lsp.toml',
-                        },
-                        url = 'https://raw.githubusercontent.com/bergercookie/asm-lsp/master/asm-lsp_config_schema.json',
+                    url = 'https://raw.githubusercontent.com/angular/angular-cli/v10.1.6/packages/angular/cli/lib/config/schema.json',
+                },
+                {
+                    description = 'asm-lsp configuration',
+                    fileMatch = {
+                        '.asm-lsp.toml',
+                        'asm-lsp.toml',
                     },
-                    {
-                        description = 'AssemblyScript config (asconfig.json)',
-                        fileMatch = { 'asconfig.json' },
-                        url = 'https://www.schemastore.org/asconfig-schema.json',
+                    url = 'https://raw.githubusercontent.com/bergercookie/asm-lsp/master/asm-lsp_config_schema.json',
+                },
+                {
+                    description = 'AssemblyScript config (asconfig.json)',
+                    fileMatch = { 'asconfig.json' },
+                    url = 'https://www.schemastore.org/asconfig-schema.json',
+                },
+                {
+                    description = 'ast-grep project config',
+                    fileMatch = { 'sgconfig.yml', 'sgconfig.yaml' },
+                    url = 'https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/project.json',
+                },
+                {
+                    description = 'ast-grep rule config',
+                    fileMatch = {
+                        '**/.astgrep/rules/**/*.yaml',
+                        '**/.astgrep/rules/**/*.yml',
+                        '**/.ast-grep/rules/**/*.yaml',
+                        '**/.ast-grep/rules/**/*.yml',
+                        '**/ast-grep/rules/**/*.yaml',
+                        '**/ast-grep/rules/**/*.yml',
+                        '**/astgrep/rules/**/*.yaml',
+                        '**/astgrep/rules/**/*.yml',
                     },
-                    {
-                        description = 'ast-grep project config',
-                        fileMatch = { 'sgconfig.yml', 'sgconfig.yaml' },
-                        url = 'https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/project.json',
+                    url = 'https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json',
+                },
+                {
+                    description = 'Air (R formatter and language server)',
+                    fileMatch = { 'air.toml', '.air.toml' },
+                    url = 'https://github.com/posit-dev/air/releases/latest/download/air.schema.json',
+                },
+                {
+                    description = 'Azure Pipelines YAML pipelines definition',
+                    fileMatch = {
+                        'azure-pipelines.yml',
+                        'azure-pipelines.yaml',
                     },
-                    {
-                        description = 'ast-grep rule config',
-                        fileMatch = {
-                            '**/.astgrep/rules/**/*.yaml',
-                            '**/.astgrep/rules/**/*.yml',
-                            '**/.ast-grep/rules/**/*.yaml',
-                            '**/.ast-grep/rules/**/*.yml',
-                            '**/ast-grep/rules/**/*.yaml',
-                            '**/ast-grep/rules/**/*.yml',
-                            '**/astgrep/rules/**/*.yaml',
-                            '**/astgrep/rules/**/*.yml',
-                        },
-                        url = 'https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json',
+                    url = 'https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json',
+                },
+                {
+                    description = 'Unity 3D assembly definition file',
+                    fileMatch = {
+                        '*.asmdef',
                     },
-                    {
-                        description = 'Air (R formatter and language server)',
-                        fileMatch = { 'air.toml', '.air.toml' },
-                        url = 'https://github.com/posit-dev/air/releases/latest/download/air.schema.json',
+                    url = 'https://www.schemastore.org/asmdef.json',
+                },
+                {
+                    description = 'Babel configuration file',
+                    fileMatch = {
+                        '.babelrc',
+                        '.babelrc.json',
+                        'babel.config.json',
                     },
-                    {
-                        description = 'Azure Pipelines YAML pipelines definition',
-                        fileMatch = { 'azure-pipelines.yml', 'azure-pipelines.yaml' },
-                        url = 'https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json',
+                    url = 'https://www.schemastore.org/babelrc.json',
+                },
+                {
+                    description = 'Bacon',
+                    filmatch = {
+                        'bacon.toml',
+                        '**/bacon/prefs.toml',
                     },
-                    {
-                        description = 'Unity 3D assembly definition file',
-                        fileMatch = { '*.asmdef' },
-                        url = 'https://www.schemastore.org/asmdef.json',
+                    url = 'https://dystroy.org/bacon/.bacon.schema.json',
+                },
+                {
+                    description = 'BigQuery table',
+                    fileMatch = {
+                        '*.bigquery.json',
                     },
-                    {
-                        description = 'Babel configuration file',
-                        fileMatch = { '.babelrc', '.babelrc.json', 'babel.config.json' },
-                        url = 'https://www.schemastore.org/babelrc.json',
-                    },
-                    {
-                        description = 'Bacon',
-                        filmatch = {
-                            'bacon.toml',
-                            '**/bacon/prefs.toml',
-                        },
-                        url = 'https://dystroy.org/bacon/.bacon.schema.json',
-                    },
-                    {
-                        description = 'BigQuery table',
-                        fileMatch = {
-                            '*.bigquery.json',
-                        },
-                        url = 'https://www.schemastore.org/bigquery-table.json',
-                    },
+                    url = 'https://www.schemastore.org/bigquery-table.json',
+                },
+                {
                     description = 'Biome',
                     fileMatch = {
                         '.biome.jsonc',
@@ -147,22 +156,31 @@ return ---@type vim.lsp.Config
                 },
                 {
                     description = 'Bower package description file',
-                    fileMatch = { 'bower.json', '.bower.json' },
+                    fileMatch = {
+                        'bower.json',
+                        '.bower.json',
+                    },
                     url = 'https://www.schemastore.org/bower.json',
                 },
                 {
                     description = 'Bower configuration file',
-                    fileMatch = { '.bowerrc' },
+                    fileMatch = {
+                        '.bowerrc',
+                    },
                     url = 'https://www.schemastore.org/bowerrc.json',
                 },
                 {
                     description = 'browsh configuration',
-                    fileMatch = { '**/browsh/config.toml' },
+                    fileMatch = {
+                        '**/browsh/config.toml',
+                    },
                     url = 'https://raw.githubusercontent.com/browsh-org/browsh/master/webext/assets/browsh-schema.json',
                 },
                 {
                     description = 'bun.lock file',
-                    fileMatch = { 'bun.lock' },
+                    fileMatch = {
+                        'bun.lock',
+                    },
                     url = 'https://www.schemastore.org/bun-lock.json',
                 },
                 {
@@ -181,12 +199,17 @@ return ---@type vim.lsp.Config
                 },
                 {
                     description = 'Bleep (Scala build tool)',
-                    fileMatch = { 'bleep.yaml', 'bleep.yml' },
+                    fileMatch = {
+                        'bleep.yaml',
+                        'bleep.yml',
+                    },
                     url = 'https://raw.githubusercontent.com/oyvindberg/bleep/master/schema.json',
                 },
                 {
                     description = 'Cargo',
-                    fileMatch = { 'Cargo.toml.json' },
+                    fileMatch = {
+                        'Cargo.toml.json',
+                    },
                     url = 'https://json.schemastore.org/cargo.json',
                 },
                 {
@@ -199,12 +222,16 @@ return ---@type vim.lsp.Config
                 },
                 {
                     description = 'Chrome extension localization file',
-                    fileMatch = { '**/_locales/*/messages.json' },
+                    fileMatch = {
+                        '**/_locales/*/messages.json',
+                    },
                     url = 'https://www.schemastore.org/chrome-extension-locales-messages.json',
                 },
                 {
                     description = 'CircleCI config files',
-                    fileMatch = { '**/.circleci/config.yml' },
+                    fileMatch = {
+                        '**/.circleci/config.yml',
+                    },
                     url = 'https://www.schemastore.org/circleciconfig.json',
                 },
                 {
@@ -219,22 +246,33 @@ return ---@type vim.lsp.Config
                 },
                 {
                     description = 'clang-tidy configuration',
-                    fileMatch = { '.clang-tidy', 'clang-tidy.yml', 'clang-tidy.yaml' },
+                    fileMatch = {
+                        '.clang-tidy',
+                        'clang-tidy.yml',
+                        'clang-tidy.yaml',
+                    },
                     url = 'https://www.schemastore.org/clang-tidy.json',
                 },
                 {
                     description = 'Claude Code Settings',
-                    fileMatch = { '**/.claude/settings.json' },
+                    fileMatch = {
+                        '**/.claude/settings.json',
+                    },
                     url = 'https://www.schemastore.org/claude-code-settings.json',
                 },
                 {
                     description = 'CMake Presets',
-                    fileMatch = { 'CMakePresets.json', 'CMakeUserPresets.json' },
+                    fileMatch = {
+                        'CMakePresets.json',
+                        'CMakeUserPresets.json',
+                    },
                     url = 'https://raw.githubusercontent.com/Kitware/CMake/master/Help/manual/presets/schema.json',
                 },
                 {
                     description = 'CoffeeLint configuration file',
-                    fileMatch = { 'coffeelint.json' },
+                    fileMatch = {
+                        'coffeelint.json',
+                    },
                     url = 'https://www.schemastore.org/coffeelint.json',
                 },
                 {
@@ -289,7 +327,9 @@ return ---@type vim.lsp.Config
                 },
                 {
                     description = 'Cypress.io test runner configuration file',
-                    fileMatch = { 'cypress.json' },
+                    fileMatch = {
+                        'cypress.json',
+                    },
                     url = 'https://on.cypress.io/cypress.schema.json',
                 },
                 {
@@ -298,7 +338,9 @@ return ---@type vim.lsp.Config
                 },
                 {
                     description = 'Dart test configuration',
-                    fileMatch = { 'dart_test.yaml' },
+                    fileMatch = {
+                        'dart_test.yaml',
+                    },
                     url = 'https://www.schemastore.org/dart-test.json',
                 },
                 {
@@ -467,7 +509,9 @@ return ---@type vim.lsp.Config
                 },
                 {
                     description = 'Drupal Permissions',
-                    fileMatch = { '*.permissions.yml' },
+                    fileMatch = {
+                        '*.permissions.yml',
+                    },
                     url = 'https://www.schemastore.org/drupal-permissions.json',
                 },
                 {
@@ -561,7 +605,9 @@ return ---@type vim.lsp.Config
                 },
                 {
                     description = 'Helm Chart.lock',
-                    fileMatch = { 'Chart.lock' },
+                    fileMatch = {
+                        'Chart.lock',
+                    },
                     url = 'https://www.schemastore.org/chart-lock.json',
                 },
                 {
@@ -608,12 +654,66 @@ return ---@type vim.lsp.Config
                     url = 'https://json.schemastore.org/pyproject.json',
                 },
                 {
+                    name = '.remarkrc',
+                    description = 'A remark configuration file',
+                    fileMatch = {
+                        '.remarkrc',
+                        '.remarkrc.json',
+                        '.remarkrc.jsonc',
+                        '.remarkrc.yaml',
+                        '.remarkrc.yml',
+                    },
+                    url = 'https://www.schemastore.org/remarkrc.json',
+                },
+                {
+                    name = 'Replit config',
+                    description = 'replit.com, a cloud IDE and code runner',
+                    fileMatch = {
+                        'replit.toml',
+                    },
+                    url = 'https://www.schemastore.org/replit.json',
+                },
+                {
+                    name = 'Rubocop',
+                    description = 'A Ruby code style checker (linter) and formatter',
+                    fileMatch = {
+                        '*.rubocop.yml',
+                    },
+                    url = 'https://www.rubyschema.org/rubocop.json',
+                },
+                {
+                    name = 'Ruff',
+                    description = 'Ruff, a fast Python linter',
+                    fileMatch = {
+                        'ruff.toml',
+                        '.ruff.toml',
+                    },
+                    url = 'https://www.schemastore.org/ruff.json',
+                },
+                {
+                    name = 'Rust Project',
+                    description = 'non-Cargo based Rust projects',
+                    fileMatch = {
+                        'rust-project.json',
+                        'rust-project.jsonc',
+                    },
+                    url = 'https://www.schemastore.org/rust-project.json',
+                },
+                {
                     description = 'tsconfig',
                     fileMatch = {
                         'tsconfig.json',
                         'tsconfig.*.json',
                     },
                     url = 'https://json.schemastore.org/tsconfig.json',
+                },
+                {
+                    name = 'uv',
+                    description = 'uv, a fast Python package installer',
+                    fileMatch = {
+                        'uv.toml',
+                    },
+                    url = 'https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/uv.json',
                 },
                 {
                     description = 'vcpkg manifest file',
@@ -638,7 +738,9 @@ return ---@type vim.lsp.Config
                 },
                 {
                     description = 'VSCode Code Snippets',
-                    fileMatch = { '*.code-snippets' },
+                    fileMatch = {
+                        '*.code-snippets',
+                    },
                     url = 'https://raw.githubusercontent.com/Yash-Singh1/vscode-snippets-json-schema/main/schema.json',
                 },
                 {

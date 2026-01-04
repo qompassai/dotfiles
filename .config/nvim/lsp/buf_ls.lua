@@ -2,13 +2,12 @@
 -- Qompass AI Buf LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
----@type vim.lsp.Config
-return {
+return ---@type vim.lsp.Config
+{
     cmd = {
         'buf',
         'lsp',
         'serve',
-        '--timeout=0',
         '--log-format=text',
     },
     filetypes = {

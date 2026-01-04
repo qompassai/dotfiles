@@ -45,7 +45,7 @@ return ---@type vim.lint.Config
             if rule and rule ~= '' then
               message = string.format('[%s] %s', rule, msg)
             end
-            table.insert(diagnostics, { ---@type vim.Diagnostic
+            table.insert(diagnostics, { ---@type vim.lint.Diagnostic[]
               lnum = lnum,
               end_lnum = lnum,
               col = col,

@@ -32,3 +32,5 @@ if type -q luarocks
         end
     end
 end
+set -x LUA_PATH "$XDG_DATA_HOME/luarocks/share/lua/5.1/?.lua;$XDG_DATA_HOME/luarocks/share/lua/5.1/?/init.lua;$LUA_PATH"
+set -x LUA_CPATH "$XDG_DATA_HOME/luarocks/lib/lua/5.1/?.so;$LUA_CPATH"

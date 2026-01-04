@@ -12,7 +12,7 @@ require('lualine').setup({
     theme = 'auto',
     component_separators = {
       left = '',
-      right = ''
+      right = '',
     },
     section_separators = { left = '', right = '' },
     disabled_filetypes = {
@@ -71,7 +71,11 @@ require('lualine').setup({
       },
       {
         'diagnostics',
-        sources = { 'nvim_lsp', 'nvim_diagnostic', 'nvim_workspace_diagnostic' },
+        sources = {
+          'nvim_lsp',
+          'nvim_diagnostic',
+          'nvim_workspace_diagnostic'
+        },
         sections = { 'error', 'warn', 'info', 'hint' },
         diagnostics_color = {
           error = { fg = '#e06c75' },

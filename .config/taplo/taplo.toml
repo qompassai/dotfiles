@@ -2,6 +2,8 @@
 # Qompass AI Taplo Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 # ###################################################
+# Reference: https://taplo.tamasfe.dev/configuration/file.html
+[[rule]]
 include = [
   "**/*.toml",
   "~/.config/**/*.toml",
@@ -9,3 +11,22 @@ include = [
   "/usr/share/xdg/**/*.toml",
   "/root/.config/**/*.toml"
 ]
+[formatting]
+align_entries = false
+align_comments = true
+allowed_blank_lines = 2
+array_trailing_comma = true
+array_auto_expand = true
+array_auto_collapse = true
+column_width = 80
+compact_arrays = true
+compact_entries = false
+compact_inline_tables = false
+crlf = false
+inline_table_expand = true
+indent_tables = false
+indent_entries = false
+indent_string = "  "
+reorder_keys = false
+reorder_arrays = false
+trailing_newline = false

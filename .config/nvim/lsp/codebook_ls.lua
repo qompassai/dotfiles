@@ -1,14 +1,14 @@
 -- /qompassai/Diver/lsp/codebook.lua
 -- Qompass AI Codebook LSP Spec
--- Code-aware spell checker for code
+-- Copyright (C) 2025 Qompass AI, All rights reserved
 ------------------------------------------------------
----@type vim.lsp.Config
-return {
-    cmd = { ---@type string[]
+return ---@type vim.lsp.Config
+{
+    cmd = {
         'codebook-lsp',
         'serve',
     },
-    filetypes = { ---@type string[]
+    filetypes = {
         'c',
         'css',
         'gitcommit',
@@ -18,10 +18,10 @@ return {
         'java',
         'javascript',
         'javascriptreact',
-        'lua',
-        'markdown',
+        --'lua',
+        --'markdown',
         'php',
-        'python',
+        --'python',
         'ruby',
         'rust',
         'toml',
@@ -30,7 +30,13 @@ return {
         'typescriptreact',
         'zig',
     },
-    root_markers = { ---@type string[]
+    init_options = {
+        checkWhileTyping = true,
+        diagnosticSeverity = 'information',
+        globalConfigPath = '$XDG_CONFIG_HOME/codebook/codebook.toml',
+        logLevel = 'info',
+    },
+    root_markers = {
         '.git',
         'codebook.toml',
         '.codebook.toml',
