@@ -4,19 +4,17 @@
 -- ----------------------------------------
 return ---@type vim.lsp.Config
 {
-  cmd = {
-    'sysl',
-    'lsp'
-  },
-  filetypes = {
-    'sysl'
-  },
-  root_markers = {
-    '.git',
-    'sysl.yaml',
-    'sysl.yml',
-
-  },
-  settings = {
-  },
+    cmd = {
+        'sysl',
+        'lsp',
+    },
+    filetypes = {
+        'sysl',
+    },
+    root_markers = {
+        '.git',
+        'sysl.yaml',
+        'sysl.yml',
+    },
+    settings = {},
 }

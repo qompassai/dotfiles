@@ -4,13 +4,13 @@
 -- ----------------------------------------
 return ---@type vim.lsp.Config
 {
-  cmd = {
-    'lelwel-ls'
-  },
-  filetypes = {
-    'llw'
-  },
-  root_markers = {
-    '.git'
-  },
+    cmd = {
+        'lelwel-ls',
+    },
+    filetypes = {
+        'llw',
+    },
+    root_markers = {
+        '.git',
+    },
 }
