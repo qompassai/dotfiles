@@ -60,8 +60,8 @@ git submodule update --init --recursive && stack install
   </summary>
   <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
     <ul>
-      <li><code>
-        <a href="https://github.com/qompassai/Diver/blob/main/lsp/ai_ls.lua">ai_ls</a></code>
+      <li>
+        <a href="https://github.com/qompassai/Diver/blob/main/lsp/ai_ls.lua">ai_ls</a>
       </li>
             <p>
       <a href="https://github.com/SilasMarvin/lsp-ai">AI LSP Reference</a>
@@ -840,9 +840,13 @@ crystal build ./src/crystalline.cr  -o ./bin/crystalline --release --no-debug --
  <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
 
 ```sh
-export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}" && mkdir -p "$XDG_DATA_HOME/cobol-lsp"
-git clone https://github.com/eclipse-che4z/che-che4z-lsp-for-cobol.git --recursive
-cd che-che4z-lsp-for-cobol && ./BUILD.sh && cp clients/cobol-lsp-vscode-extension/jar/server.jar "$XDG_DATA_HOME/cobol-lsp/server.jar" && mkdir -p "$HOME/.local/bin" \
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}" && \
+mkdir -p "$XDG_DATA_HOME/cobol-lsp" && \
+git clone https://github.com/eclipse-che4z/che-che4z-lsp-for-cobol.git --recursive && \
+cd che-che4z-lsp-for-cobol && \
+./BUILD.sh && \
+cp clients/cobol-lsp-vscode-extension/jar/server.jar "$XDG_DATA_HOME/cobol-lsp/server.jar" && \
+mkdir -p "$HOME/.local/bin" && \
 cat > "$HOME/.local/bin/cobol-language-support" <<'EOF'
 #!/usr/bin/env bash
 XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
@@ -922,12 +926,12 @@ pnpm add -g @tailwindcss/language-server@latest
           <a href="https://github.com/qompassai/diver/blob/main/lsp/csharp_ls.lua">csharp_ls</a>
       </li>
            <p>
-      <a href="https://github.com/tailwindlabs/tailwindcss-intellisense">C# LSP Reference</a>
+      <a href="https://github.com/razzmatazz/csharp-language-server">C# LSP Reference</a>
     </p>
  <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
 
 ```sh
-pnpm add -g @tailwindcss/language-server@latest
+dotnet tool install --global csharp-ls
 ```
 
 </div>
@@ -937,7 +941,7 @@ pnpm add -g @tailwindcss/language-server@latest
 <details>
   <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
     <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
-      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/composition/composition.svg"
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/codebook/codebook.svg"
            alt="composition" width="60" height="60" title="Composition" />
     </div>
     <strong>Composition</strong>
@@ -945,12 +949,84 @@ pnpm add -g @tailwindcss/language-server@latest
   <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
     <ul>
       <li>
+          <a href="https://github.com/qompassai/diver/blob/main/lsp/codebook_ls.lua">codebook_ls</a>
+      </li>
+       <p>
+      <a href="https://github.com/blopker/codebook">CodeBook LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+cargo install --git https://github.com/blopker/codebook codebook-lsp
+```
+
+</div>
+      <li>
           <a href="https://github.com/qompassai/diver/blob/main/lsp/harper_ls.lua">harper_ls</a>
       </li>
+          <p>
+      <a href="https://writewithharper.com/docs/about">Harper LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+cargo install --git https://github.com/automattic/harper harper-ls
+```
+
+</div>
          <li>
           <a href="https://github.com/qompassai/diver/blob/main/lsp/prosemd_ls.lua">prosemd_ls</a>
       </li>
+             <p>
+      <a href="https://github.com/kitten/prosemd-lsp">ProseMD LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+cargo install --git https://github.com/kitten/prosemd-lsp
+```
+
+</div>
+     <li>
+          <a href="https://github.com/qompassai/diver/blob/main/lsp/typos_ls.lua">typos_ls</a>
+      </li>
+             <p>
+      <a href="https://github.com/kitten/prosemd-lsp">Typos LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+cargo install --git https://github.com/kitten/prosemd-lsp
+```
+
+</div>
     </ul>
+  </blockquote>
+</details>
+<details>
+ <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
+    <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/dlang/dlang.svg"
+           alt="d" width="60" height="60" title="D" />
+    </div>
+    <strong>OpenTofu</strong>
+  </summary>
+  <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <ul>
+      <li>
+        <a href="https://github.com/qompassai/diver/blob/main/lsp/tofu_ls.lua">tofu_ls</a>
+      </li>
+         </ul>
+        <p>
+      <a href="https://github.com/opentofu/tofu-ls">OpenTofu LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+go install github.com/opentofu/tofu-ls@latest
+```
+
+</div>
   </blockquote>
 </details>
 <details>
@@ -1410,6 +1486,154 @@ go install github.com/hyprland-community/hyprls/cmd/hyprls@latest
   </blockquote>
 </details>
 <details>
+ <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
+    <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/idris2/idris2.svg"
+           alt="idris2" width="60" height="60" title="Idris2" />
+    </div>
+    <strong>Idris2</strong>
+  </summary>
+  <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <ul>
+      <li>
+        <a href="https://github.com/qompassai/diver/blob/main/lsp/idris2_ls.lua">idris2_ls</a>
+      </li>
+         </ul>
+        <p>
+      <a href="https://github.com/idris-community/idris2-lsp">Idris2 LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+set -euo pipefail
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export IDRIS2_PREFIX="${IDRIS2_PREFIX:-$XDG_DATA_HOME/idris2}"
+REPO_DIR="${REPO_DIR:-$HOME/.GH/idris2-lsp-src}"
+mkdir -p "$IDRIS2_PREFIX" "$REPO_DIR"
+if [ ! -d "$REPO_DIR/.git" ]; then
+  git clone https://github.com/idris-community/idris2-lsp.git "$REPO_DIR"
+else
+  git -C "$REPO_DIR" pull --ff-only
+fi
+cd "$REPO_DIR"
+git config protocol.https.allow always
+git submodule update --init Idris2
+cd Idris2
+export SCHEME=chez
+export IDRIS2_VERSION=0.8.0
+make all \
+  PREFIX="$IDRIS2_PREFIX" IDRIS2_PREFIX="$IDRIS2_PREFIX"
+make install \
+  PREFIX="$IDRIS2_PREFIX" IDRIS2_PREFIX="$IDRIS2_PREFIX"
+make install-with-src-libs \
+  PREFIX="$IDRIS2_PREFIX" IDRIS2_PREFIX="$IDRIS2_PREFIX"
+make install-with-src-api  \
+  PREFIX="$IDRIS2_PREFIX" IDRIS2_PREFIX="$IDRIS2_PREFIX"
+cd "$REPO_DIR"
+case ":$PATH:" in
+  *":$IDRIS2_PREFIX/bin:"*) ;;
+  *) export PATH="$IDRIS2_PREFIX/bin:$PATH" ;;
+esac
+git submodule update --init LSP-lib
+cd LSP-lib
+idris2 --install-with-src
+cd "$REPO_DIR"
+make install PREFIX="$IDRIS2_PREFIX" IDRIS2_PREFIX="$IDRIS2_PREFIX"
+echo "idris2 & idris2-lsp installed to $IDRIS2_PREFIX/bin"
+echo "Add this to your shell config (e.g. ~/.bashrc, ~/.zshrc):"
+echo "    export XDG_DATA_HOME=\"\${XDG_DATA_HOME:-\$HOME/.local/share}\""
+echo "    export IDRIS2_PREFIX=\"\${IDRIS2_PREFIX:-\$XDG_DATA_HOME/idris2}\""
+echo "    export PATH=\"\$IDRIS2_PREFIX/bin:\$PATH\""
+```
+
+</div>
+  </blockquote>
+</details>
+<details>
+ <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
+    <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/ink/ink.svg"
+           alt="ink!" width="60" height="60" title="Ink!" />
+    </div>
+    <strong>Ink!</strong>
+  </summary>
+  <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <ul>
+      <li>
+        <a href="https://github.com/qompassai/diver/blob/main/lsp/ink_ls.lua">ink_ls</a>
+      </li>
+         </ul>
+        <p>
+      <a href="https://github.com/ink-analyzer/ink-analyzer/tree/master/crates/lsp-server
+">Ink! LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+cargo install --git https://github.com/ink-analyzer/ink-analyzer.git
+```
+
+</div>
+  </blockquote>
+</details>
+<details>
+ <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
+    <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/isabelle/isabelle.svg"
+           alt="isabelle" width="60" height="60" title="Isabelle" />
+    </div>
+    <strong>Isabelle</strong>
+  </summary>
+  <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <ul>
+      <li>
+        <a href="https://github.com/qompassai/diver/blob/main/lsp/isabelle_ls.lua">isabelle_ls</a>
+      </li>
+         </ul>
+        <p>
+      <a href="https://github.com/ThreeFx/isabelle-lsp">Isabelle LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+go install github.com/ThreeFx/isabelle-lsp@latest
+```
+
+</div>
+  </blockquote>
+</details>
+<details>
+ <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
+    <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/janet/janet.svg"
+           alt="janet" width="60" height="60" title="Janet" />
+    </div>
+    <strong>Janet</strong>
+  </summary>
+  <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <ul>
+      <li>
+        <a href="https://github.com/qompassai/diver/blob/main/lsp/janet_ls.lua">janet_ls</a>
+      </li>
+         </ul>
+        <p>
+      <a href="https://github.com/CFiggers/janet-lsp">Janet LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+# Having janet and jpm already installed
+git clone https://github.com/CFiggers/janet-lsp --recursive \
+cd janet-lsp \
+sudo jpm deps \
+sudo jpm build \
+sudo jpm install
+```
+
+</div>
+  </blockquote>
+</details>
+<details>
   <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
     <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
       <img src="https://skillicons.dev/icons?i=java" alt="java" width="60" height="60" title="Java" />
@@ -1486,6 +1710,32 @@ pnpm add -D -E quick-lint-js@latest
 
 ```sh
 pnpm add -D -E @marko/language-server@latest
+```
+
+</div>
+  </blockquote>
+</details>
+<details>
+ <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
+    <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/jimmer/jimmer.svg"
+           alt="jimmer" width="60" height="60" title="Jimmer" />
+    </div>
+    <strong>Jimmer DTO</strong>
+  </summary>
+  <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <ul>
+      <li>
+        <a href="https://github.com/qompassai/diver/blob/main/lsp/jimmerdto_ls.lua">jimmerdto_ls</a>
+      </li>
+         </ul>
+        <p>
+      <a href="https://github.com/Enaium/jimmer-dto-lsp">Jimmer DTO Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+:TODO
 ```
 
 </div>
@@ -1631,7 +1881,7 @@ cargo install jinja --git https://github.com/uros-5/jinja-lsp jinja-lsp
       <li>
         <a href="https://github.com/qompassai/diver/blob/main/lsp/mlir_ls.lua">mlir_ls</a>
       </li>
-                                <p>
+      <p>
       <a href="https://mlir.llvm.org/docs/Tools/MLIRLSP/#mlir-lsp-language-server--mlir-lsp-server=
 ">MLIR LSP Reference</a>
     </p>
@@ -1657,6 +1907,32 @@ ninja install
         <a href="https://github.com/qompassai/diver/blob/main/lsp/tblgen_ls.lua">tblgen_ls</a>
       </li>
     </ul>
+  </blockquote>
+</details>
+<details>
+  <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
+    <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/logic/logic.svg"
+           alt="logic" width="60" height="60" title="Logic" />
+    </div>
+    <strong>Logic</strong>
+  </summary>
+  <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <ul>
+      <li><code>
+        <a href="https://github.com/qompassai/diver/blob/main/lsp/dolmen_ls.lua">dolmen_ls</a></code>
+      </li>
+      <p>
+      <a href="https://github.com/Gbury/dolmen/blob/master/doc/lsp.md">Dolmen LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+opam pin add https://github.com/Gbury/dolmen.git
+```
+
+</div>
+  </ul>
   </blockquote>
 </details>
 <details>
@@ -1800,9 +2076,41 @@ make install
       <li>
         <a href="https://github.com/qompassai/diver/blob/main/lsp/mdxana_ls.lua">mdxana_ls</a>
       </li>
+        <p>
+      <a href="https://github.com/mdx-js/mdx-analyzer">Mdx Analyzer LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+pnpm add -g @mdx-js/typescript-plugin@latest
+
+```
+
+   </div>
       <li>
         <a href="https://github.com/qompassai/diver/blob/main/lsp/remark_ls.lua">remark_ls</a>
       </li>
+          <p>
+      <a href="https://github.com/remarkjs/remark-language-server">Remark LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+pnpm add -g remark-language-server@latest
+
+```
+
+   </div>
+      <p>
+      <a href="https://github.com/rvben/rumdl">Rumdl LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+cargo install --git https://github.com/rvben/rumdl
+```
+
+   </div>
          </ul>
   </blockquote>
 </details>
@@ -1822,6 +2130,98 @@ make install
             </code>
       </li>
     </ul>
+  </blockquote>
+</details>
+<details>
+ <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
+    <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/mojo/mojo.svg"
+           alt="mojo" width="60" height="60" title="Mojo" />
+    </div>
+    <strong>Mojo</strong>
+  </summary>
+  <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <ul>
+      <li>
+        <a href="https://github.com/qompassai/diver/blob/main/lsp/mojo_ls.lua">mojo_ls</a>
+      </li>
+         </ul>
+        <p>
+      <a href="https://github.com/modular/modular">Mojo Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+set -euo pipefail
+: "${XDG_CONFIG_HOME:=$HOME/.config}"
+: "${XDG_DATA_HOME:=$HOME/.local/share}"
+: "${XDG_CACHE_HOME:=$HOME/.cache}"
+: "${XDG_STATE_HOME:=$HOME/.local/state}"
+export XDG_CONFIG_HOME XDG_DATA_HOME XDG_CACHE_HOME XDG_STATE_HOME
+install_pixi() {
+  if command -v pixi >/dev/null 2>&1; then
+    echo "pixi already installed at: $(command -v pixi)"
+    return
+  fi
+  if ! command -v cargo >/dev/null 2>&1; then
+    echo "Error: cargo not found in PATH. Please install Rust/cargo first." >&2
+    exit 1
+  fi
+  cargo install pixi
+}
+configure_pixi() {
+  local pixi_config_dir="$XDG_CONFIG_HOME/pixi"
+  local pixi_config_file="$pixi_config_dir/config.toml"
+
+  mkdir -p "$pixi_config_dir"
+
+  if [ ! -f "$pixi_config_file" ]; then
+    cat > "$pixi_config_file" <<'EOF'
+# Reference: https://prefix-dev.github.io/pixi/
+default-channels = ["conda-forge"]
+change-ps1 = true
+tls-no-verify = false
+
+[pypi-config]
+index-url = "https://pypi.org/simple"
+extra-index-urls = []
+keyring-provider = "subprocess"
+EOF
+    echo "Created pixi config: $pixi_config_file"
+  else
+    echo "pixi config already exists: $pixi_config_file"
+  fi
+  local pixi_manifest_dir="$XDG_CONFIG_HOME/pixi/manifests"
+  mkdir -p "$pixi_manifest_dir"
+}
+link_mojo_tools() {
+  local mojo_env_dir="$XDG_DATA_HOME/mojo/.pixi/envs/default"
+  local mojo_bin_dir="$mojo_env_dir/bin"
+  local user_bin_dir="$HOME/.local/bin"
+  mkdir -p "$user_bin_dir"
+  if [ ! -x "$mojo_bin_dir/mojo-lsp-server" ]; then
+    echo "Warning: $mojo_bin_dir/mojo-lsp-server not found or not executable." >&2
+  else
+    ln -sf "$mojo_bin_dir/mojo-lsp-server" "$user_bin_dir/mojo-lsp-server"
+    echo "Linked mojo-lsp-server -> $user_bin_dir/mojo-lsp-server"
+  fi
+  if [ ! -x "$mojo_bin_dir/mojo-lldb-dap" ]; then
+    echo "Warning: $mojo_bin_dir/mojo-lldb-dap not found or not executable." >&2
+  else
+    ln -sf "$mojo_bin_dir/mojo-lldb-dap" "$user_bin_dir/mojo-lldb-dap"
+    echo "Linked mojo-lldb-dap -> $user_bin_dir/mojo-lldb-dap"
+  fi
+}
+main() {
+  install_pixi
+  configure_pixi
+  link_mojo_tools
+}
+
+main "$@"
+```
+
+</div>
   </blockquote>
 </details>
 <details>
@@ -1930,6 +2330,33 @@ make install
   </blockquote>
 </details>
 <details>
+ <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
+    <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/racket/nobl9.svg"
+           alt="racket" width="60" height="60" title="Racket" />
+    </div>
+    <strong>Nobl9</strong>
+  </summary>
+  <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <ul>
+      <li><code>
+        <a href="https://github.com/qompassai/diver/blob/main/lsp/nobl9_ls.lua">nobl9_ls</a></code>
+      </li>
+    </ul>
+        <p>
+      <a href="https://github.com/jeapostrophe/racket-langserver">Nobl9 LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+raco pkg install racket-langserver
+
+```
+
+   </div>
+  </blockquote>
+</details>
+<details>
   <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
     <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
       <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/ocaml/ocaml.svg"
@@ -1989,7 +2416,7 @@ mv odinfmt ~/.local/bin
         <a href="https://github.com/qompassai/diver/blob/main/lsp/foam_ls.lua">foam_ls</a>
       </li>
                          <p>
-      <a href="https://github.com/FoamScience/foam-language-server">Buf LSP Reference</a>
+      <a href="https://github.com/FoamScience/foam-language-server">Foam LSP Reference</a>
     </p>
  <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
 
@@ -2367,6 +2794,60 @@ pnpm add -g @rescript/language-server@latest
 <details>
  <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
     <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/racket/racket.svg"
+           alt="racket" width="60" height="60" title="Racket" />
+    </div>
+    <strong>Racket</strong>
+  </summary>
+  <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <ul>
+      <li><code>
+        <a href="https://github.com/qompassai/diver/blob/main/lsp/racket_ls.lua">racket_ls</a></code>
+      </li>
+    </ul>
+        <p>
+      <a href="https://github.com/jeapostrophe/racket-langserver">Racket LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+raco pkg install racket-langserver
+
+```
+
+   </div>
+  </blockquote>
+</details>
+<details>
+ <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
+    <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/rascal/rascal.svg"
+           alt="rascal" width="60" height="60" title="Rascal" />
+    </div>
+    <strong>Rascal</strong>
+  </summary>
+  <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <ul>
+      <li><code>
+        <a href="https://github.com/qompassai/diver/blob/main/lsp/rascal_ls.lua">rascal_ls</a></code>
+      </li>
+    </ul>
+        <p>
+      <a href="https://github.com/usethesource/rascal-language-servers">Rascal LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+pnpm add -g @usethesource/rascal-vscode-dsl-lsp-server
+
+```
+
+   </div>
+  </blockquote>
+</details>
+<details>
+ <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
+    <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
       <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/robot/robot.svg"
            alt="robot" width="60" height="60" title="Robot" />
     </div>
@@ -2480,7 +2961,6 @@ gem install ruby-lsp
 
 ```sh
 gem install sorbet sorbet-runtime
-
 ```
 
    </div>
@@ -2494,7 +2974,6 @@ gem install sorbet sorbet-runtime
 
 ```sh
 gem install steep
-
 ```
 
    </div>
@@ -2508,7 +2987,6 @@ gem install steep
 
 ```sh
 gem install standard
-
 ```
 
    </div>
@@ -2516,13 +2994,12 @@ gem install standard
         <a href="https://github.com/qompassai/diver/blob/main/lsp/stimulus_ls.lua">stimulus_ls</a>
       </li>
                     <p>
-      <a href="https://dystroy.org/bacon/">Bacon LSP Reference</a>
+      <a href="https://github.com/marcoroth/stimulus-lsp">Stimulus LSP Reference</a>
     </p>
  <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
 
 ```sh
 pnpm add -g stimulus-language-server@latest
-
 ```
 
    </div>
@@ -2531,13 +3008,12 @@ pnpm add -g stimulus-language-server@latest
       </li>
     </ul>
                   <p>
-      <a href="https://dystroy.org/bacon/">Bacon LSP Reference</a>
+      <a href="https://github.com/ruby/typeprof">TypeProf LSP Reference</a>
     </p>
  <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
 
 ```sh
-cargo install --git https://github.com/Canop/bacon --features "clipboard sound"
-
+gem install typeprof
 ```
 
    </div>
@@ -2563,7 +3039,6 @@ cargo install --git https://github.com/Canop/bacon --features "clipboard sound"
 
 ```sh
 cargo install --git https://github.com/Canop/bacon --features "clipboard sound"
-
 ```
 
    </div>
@@ -2826,7 +3301,7 @@ pnpm add -g solidity-ls@latest
       <li><code>
         <a href="https://github.com/qompassai/diver/blob/main/lsp/solang_ls.lua">solang_ls</a></code>
         <p>
-      <a href=" https://github.com/sqls-server/sqls">Solang LSP Reference</a>
+      <a href="https://solang.readthedocs.io/en/latest/installing.html">Solang LSP Reference</a>
     </p>
  <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
 
@@ -2840,6 +3315,32 @@ cargo install solang
         <a href="https://github.com/qompassai/diver/blob/main/lsp/solidnomic_ls.lua">solidnomic_ls</a></code>
       </li>
     </ul>
+  </blockquote>
+</details>
+<details>
+ <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
+    <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/sparql/sparql.svg"
+           alt="sparql" width="60" height="60" title="SparQL" />
+    </div>
+    <strong>SparQL</strong>
+  </summary>
+  <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <ul>
+      <li>
+        <a href="https://github.com/qompassai/diver/blob/main/lsp/qlue_ls.lua">qlue_ls</a>
+      </li>
+         </ul>
+        <p>
+      <a href="https://github.com/IoannisNezis/Qlue-ls">Qlue LSP Reference</a>
+    </p>
+ <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
+
+```sh
+cargo install --git https://github.com/IoannisNezis/Qlue-ls
+```
+
+</div>
   </blockquote>
 </details>
 <details>
@@ -3345,7 +3846,8 @@ cargo install --git https://github.com/wgsl-analyzer/wgsl-analyzer wgsl-analyzer
 
 ```sh
 ```
-
+git clone https://github.com/eclipse-lemminx/lemminx.git --recursive \
+cd lemminx && ./mvnw clean verify
 </div>
   </blockquote>
 </details>

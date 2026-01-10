@@ -99,7 +99,7 @@ vim.lsp.enable({
     'clarinet_ls',
     'clojure_ls',
     'cmake_ls',
-   -- 'cobol_ls',
+    'cobol_ls',
     'codebook_ls', ---:TODO validate
     'codeql_ls', ---:TODO ---@source https://github.com/github/codeql
     --'contextive_ls',  ---:TODO add glossary then validate
@@ -162,7 +162,7 @@ vim.lsp.enable({
     --'groovymoon_ls'       ---:TODO ---@source https://github.com/GroovyLanguageServer/groovy-language-server
     --'guile_ls',           ---:TODO
     'h_ls', ---:TODO validate ---@source https://haskell-language-server.readthedocs.io/en/latest/index.html
-    'harper_ls',
+    --'harper_ls',
     --'haxe_ls', ---:TODO validate
     'helm_ls',
     'herb_ls',
@@ -179,11 +179,11 @@ vim.lsp.enable({
     'intelephense_ls',
     --'intellisense_ls'     ---:TODO ---@source https://github.com/tailwindlabs/tailwindcss-intellisense
     --'isabelle_ls',        ---:TODO ---@source https://www.cl.cam.ac.uk/research/hvg/Isabelle/
-    --'janet_ls',           ---:TODO install janet-lsp, jpm, validate ---@source https://github.com/janet-lang/jpm https://github.com/CFiggers/janet-lsp
+    'janet_ls', ---:TODO install janet-lsp, jpm, validate ---@source
     'java_ls',
     'jdt_ls',
     'jedi_ls', ---:TODO validate ---@source https://github.com/pappasam/jedi-language-server
-    --'jimmerdto_ls',       ---:TODO ---@source https://github.com/Enaium/jimmer-dto-lsp
+    'jimmerdto_ls',       ---:TODO validate ---@source https://github.com/Enaium/jimmer-dto-lsp
     'jinja_ls', ---:TODO
     'jq_ls',
     'json_ls',
@@ -266,10 +266,10 @@ vim.lsp.enable({
     'pwrshelles_ls',
     'pyrefly_ls',
     'qml_ls',
-    'qlue_ls', ---:TODO validate https://github.com/IoannisNezis/Qlue-ls
+    'qlue_ls', ---:TODO validate
     'racket_ls', ---:TODO
     --'raku_ls'             ---:TODO ---@source https://github.com/bscan/RakuNavigator
-    --'rascal_ls'           ---:TODO https://github.com/usethesource/rascal-language-servers
+    --'rascal_ls'           ---:TODO validate
     --'rech_ls'             ---:TODO https://github.com/RechInformatica/rech-editor-cobol/tree/master/src/lsp
     'regal_ls', ---:TODO validate ---linter/lsp
     'rego_ls', ---:TODO validate
@@ -282,19 +282,16 @@ vim.lsp.enable({
     'rpmspec_ls',
     'rubocop_ls',
     'ruby_ls', ---:TODO validate
-    --'rumdl_ls',           ---:TODO validate ---@source  https://github.com/rvben/rumdl
+    --'rumdl_ls', ---:TODO validate
     'ruff_ls',
     'rune_ls',
     'rustana_ls',
-    'salt_ls', ---:TODO validate ---@source https://github.com/dcermak/salt-lsp
     --'selene_ls',          ---:TODO
     --'selene3p_ls',        ---:TODO
-    'served_ls', ---:TODO ---@source https://github.com/Pure-D/serve-d
     'slangd_ls', ---lsp/linter
     'shopifytheme_ls', ---:TODO validate
     'slint_ls',
     'smithy_ls',
-    'snakeskin_ls',
     'solang_ls',
     'solargraph_ls',
     'solc_ls',
@@ -310,7 +307,7 @@ vim.lsp.enable({
     'starp_ls',
     'statix_ls',
     'steep_ls',
-    'stimulus_ls',
+    'stimulus_ls', ---:TODO validate/come back to
     'stylable_ls', ---:TODO https://github.com/wix/stylable/tree/master/packages/language-service
     'stylua_ls',
     --'stylua3p_ls',
@@ -346,7 +343,7 @@ vim.lsp.enable({
     'twiggy_ls',
     'ty_ls',
     'typeprof_ls',
-    --'typos_ls',
+    --'typos_ls', ---:TODO validate
     'typst_ls', ---TODO: validate ---@source https://github.com/nvarner/typst-lsp
     'uiua_ls', ---:TODO validate  ---@source https://github.com/uiua-lang/uiua/
     'unison_ls', ---:TODO validate ---@source https://github.com/unisonweb/unison/blob/trunk/docs/language-server.markdown
@@ -388,7 +385,7 @@ vim.lsp.enable({
 --'bsl_ls', ---notusing, sec ---@source https://github.com/1c-syntax/bsl-language-server
 --'buddy_ls', --not-using, sec ---@source  https://github.com/buddy-compiler/buddy-mlir#buddy-lsp-server
 --'bzl_ls', deprecated
- -- 'camel_ls',---outdated ---@source https://github.com/camel-tooling/camel-language-server
+-- 'camel_ls',---outdated ---@source https://github.com/camel-tooling/camel-language-server
 --'ceylon_ls' ---deprecated ---@source https://github.com/jvasileff/vscode-ceylon
 --'circom_ls', ---outdated
 --'cl_ls' ---outdated ---@source https://github.com/cxxxr/cl-lsp
@@ -438,11 +435,15 @@ vim.lsp.enable({
 --'rel_ls' ---deprecated ---@source https://github.com/sscit/rel
 --'robotstxt_ls' ---outdated ---@source https://github.com/BeardedFish/vscode-robots-dot-txt-support
 ---'rnix_ls',| no longer maintained
+-- 'salt_ls', ---:TODO deprecated/outdated ---@source https://github.com/dcermak/salt-lsp
 ---  --'scry_ls', --deprecated for crystalline
 --scheme_ls --not using https://gitlab.com/Serenata/Serenata
+-- 'served_ls', ---outdated ---@source https://github.com/Pure-D/serve-d
+
 --'shader_ls' ---outdated https://github.com/shader-ls/shader-language-server
 ---'sixtyfps_ls', ---deprecated replaced with slint
 ---smarty_ls ---outdated
+---    'snakeskin_ls', ---outdated https://www.npmjs.com/package/@snakeskin/cli
 ----'sourcegraph_ls', ---deprecated for ts_ls ---@source https://github.com/sourcegraph/javascript-typescript-langserver
 ---'sourcegraphgo_ls' ---deprecated for gopls ---@source https://github.com/sourcegraph/go-langserver
 --'sourcer_ls', ---deprecated ---@source https://github.com/erlang/sourcer

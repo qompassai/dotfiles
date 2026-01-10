@@ -1,14 +1,15 @@
--- /qompassai/Diver/lsp/pact_ls.lua
--- Qompass AI Diver Pact LSP Spec
--- Copyright (C) 2025 Qompass AI, All rights reserved
+-- /qompassai/Diver/lsp/ink_ls.lua
+-- Qompass AI Ink LSP Spec
+-- Copyright (C) 2026 Qompass AI, All rights reserved
 -- ----------------------------------------
 return ---@type vim.lsp.Config
 {
     cmd = {
-        'pact-lsp',
+        'ink-lsp-server',
     },
     filetypes = {
-        'pact',
+        'rust',
+        'ink',
     },
     root_markers = {
         '.git',

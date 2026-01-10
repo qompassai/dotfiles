@@ -287,15 +287,15 @@
     writeBitmapHashCache          = true
     writeBitmapLookupTable        = false
     writeReverseIndex             = true
-#[protocol]
-#    allow                         = user
-#    version                       = 2
+[protocol]
+    allow                         = user
+    version                       = 2
 #[protocol "file"]
 #    allow                         = always
 #[protocol "https"]
 #    allow                         = always
-#[protocol "ssh"]
-#allow                             = always
+[protocol "ssh"]
+allow                             = always
 #[protocol "http"]
 #allow                             = always
 
@@ -303,7 +303,7 @@
     autoSetupRemote               = true
     default                       = simple
     followTags                    = true
-    gpgSign                       = if-asked
+    #gpgSign                       = if-asked
     negotiate                     = true
     recurseSubmodules             = on-demand
     useBitmaps                    = true
@@ -354,3 +354,5 @@
 [transfer]
     bundleURI                     = true
     fsckobjects                   = false
+[protocol "https"]
+	allow = always
