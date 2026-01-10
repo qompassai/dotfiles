@@ -2332,7 +2332,7 @@ main "$@"
 <details>
  <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
     <div class="icon-row" style="display: flex; align-items: center; gap: 6px;">
-      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/racket/nobl9.svg"
+      <img src="https://raw.githubusercontent.com/qompassai/svg/refs/heads/main/assets/icons/nobl9/nobl9.svg"
            alt="racket" width="60" height="60" title="Racket" />
     </div>
     <strong>Nobl9</strong>
@@ -2344,12 +2344,12 @@ main "$@"
       </li>
     </ul>
         <p>
-      <a href="https://github.com/jeapostrophe/racket-langserver">Nobl9 LSP Reference</a>
+      <a href="https://github.com/nobl9/nobl9-language-server">Nobl9 LSP Reference</a>
     </p>
  <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
 
 ```sh
-raco pkg install racket-langserver
+go install github.com/nobl9/nobl9-language-server/cmd/nobl9-language-server@latest
 
 ```
 
