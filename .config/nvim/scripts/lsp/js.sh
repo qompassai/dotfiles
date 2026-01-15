@@ -8,7 +8,8 @@ pnpm add -g \
   @abaplint/cli@latest \
   @abaplint/transpiler-cli@latest \
   @abaplint/transpiler@latest \
-  @abaplint/runtime@latest
+  @abaplint/runtime@latest \
+  @actions/languageserver@latest \
   @angular/language-server@latest \
   @awk-language-server@latest \
   @azure-pipelines-language-server@latest \
@@ -16,6 +17,9 @@ pnpm add -g \
   @cssmodules-language-server@latest \
   @cucumber/language-server@latest \
   @custom-elements-languageserver@latest \
+  dockerfile-language-server-nodejs@latest \
+  dot-language-server@latest \
+  gh-actions-language-server@latest \
   git+https://github.com/salesforce-misc/bazelrc-lsp.git \
   @herb-tools/language-server@latest \
   @imc-trading/svlangserver@latest \

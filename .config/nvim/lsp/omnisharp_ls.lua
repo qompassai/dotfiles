@@ -2,9 +2,13 @@
 -- Qompass AI OmniSharp Roslyn LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
--- Reference:  https://github.com/omnisharp/omnisharp-roslyn
----@type vim.lsp.Config
-return {
+return ---@type vim.lsp.Config
+{
+    capabilities = {
+        workspace = {
+            workspaceFolders = false,
+        },
+    },
     cmd = {
         'omnisharp',
         '-z',
@@ -15,16 +19,11 @@ return {
         'utf-8',
         '--languageserver',
     },
-    filetypes = { ---@type string[]
+    filetypes = {
         'cs',
         'vb',
     },
     init_options = {},
-    capabilities = {
-        workspace = {
-            workspaceFolders = false, ---@type boolean
-        },
-    },
     root_markers = { ---@type string[]
         '*.sln',
         '*.csproj',

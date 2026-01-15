@@ -1,0 +1,4 @@
+-- /qompassai/Diver/lua/types/ui/line.lua
+-- Qompass AI Lualine Types
+-- Copyright (C) 2025 Qompass AI, All rights reserved
+-- ----------------------------------------

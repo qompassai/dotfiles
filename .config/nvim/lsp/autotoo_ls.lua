@@ -1,9 +1,9 @@
 -- /qompassai/Diver/lsp/autotools.lua
--- Qompass AI AutoTools LSP Config
+-- Qompass AI Diver AutoTools LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -----------------------------------------------------
----@type vim.lsp.Config
-return {
+return ---@type vim.lsp.Config
+{
     cmd = {
         'autotools-language-server',
     },
@@ -17,5 +17,13 @@ return {
         'Makefile',
         'Makefile.am',
         '*.mk',
+    },
+    settings = {
+      make = {
+        command = {
+          'make-language-server'
+        },
+        filetypes = 'make'
+      }
     },
 }

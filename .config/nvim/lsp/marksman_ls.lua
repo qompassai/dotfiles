@@ -1,25 +1,16 @@
 -- /qompassai/Diver/lsp/marksman_ls.lua
--- Qompass AI Marksman LSP Config
+-- Qompass AI Diver Marksman LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -----------------------------------------------------
---Reference:  https://github.com/artempyanykh/marksman
---https://github.com/artempyanykh/marksman/blob/main/docs/install.md
-
 return ---@type vim.lsp.Config
 {
-    cmd = { ---@type string[]
+    cmd = {
         'marksman',
         'server',
     },
-    filetypes = { ---@type string[]
+    filetypes = {
         'markdown',
         'markdown.mdx',
-    },
-    root_markers = { ---@type string[]
-        '.marksman.toml',
-        '.git',
-        '.hg',
-        '.svn',
     },
     on_attach = function(client, bufnr)
         client.server_capabilities.documentFormattingProvider = false
@@ -33,4 +24,65 @@ return ---@type vim.lsp.Config
             vim.lsp.buf.rename()
         end, {})
     end,
+    root_markers = {
+        '.marksman.toml',
+        '.git',
+        '.hg',
+        '.svn',
+    },
+    settings = {
+        marksman = {
+            core = {
+                exclude = {
+                    'build/**',
+                    'dist/**',
+                    '.git/**',
+                    'node_modules/**',
+                    '.obsidian/**',
+                    '.venv/**',
+                },
+                follow_links = true,
+                include = {
+                    '**/*.md',
+                    '**/*.mdx',
+                },
+                markdown_extensions = {
+                    'definition-lists',
+                    'footnotes',
+                    'wiki-links',
+                    'front-matter',
+                    'task-lists',
+                    'strikethrough',
+                    'tables',
+                },
+                root_path = '.',
+            },
+            diagnostics = {
+                enabled = true,
+                ignored = {
+                    'frontmatter-missing',
+                },
+                level = 'information',
+            },
+            index = {
+                build_on_change = true,
+                build_on_save = true,
+            },
+            server = {
+                completion = true,
+                hover = true,
+                reference = true,
+            },
+            workspace = {
+                include = {
+                    '**/*.md',
+                    '**/*.markdown',
+                },
+                exclude = {
+                    'node_modules/**',
+                    '**/tmp/**',
+                },
+            },
+        },
+    },
 }

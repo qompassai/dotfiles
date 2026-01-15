@@ -1,0 +1,17 @@
+-- /qompassai/Diver/lua/types/ui/html.lua
+-- Qompass AI Diver HTML Config Types
+-- Copyright (C) 2025 Qompass AI, All rights reserved
+------------------------------------------------------
+---@meta
+---@module 'types.ui.html'
+---@class HtmlPreviewConfig
+---@field port                                  integer
+---@field browser_cmd                           string
+---@field auto_start                            boolean
+---@field refresh_delay                         integer
+---@field allowed_file_types                    string[]
+---@class HtmlSetupConfig
+---@field treesitter                            any
+---@field lint                                  any
+---@field emmet                                 any
+---@field preview                               fun(opts?: HtmlPreviewConfig): nil

@@ -21,7 +21,7 @@ require('config.init').config({
 vim.bo.expandtab = true
 vim.bo.modifiable = true ---@type boolean
 vim.cmd('set completeopt+=noselect')
-vim.g.deprecation_warnings = false
+vim.g.deprecation_warnings = true
 vim.g.editorconfig = true
 vim.g.git_command_ssh = 1
 vim.g.loaded_illuminate = true

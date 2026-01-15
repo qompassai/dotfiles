@@ -4,55 +4,8 @@
 -- --------------------------------------------------
 ---@source https://microsoft.github.io/language-server-protocol/implementors/servers/
 ---@source https://langserver.org/
-vim.filetype.add({
-    extension = {
-        bri = 'brioche',
-        brioche = 'brioche',
-        cairo = 'cairo',
-        clar = 'clar',
-        clarity = 'clarity',
-        comp = 'glsl',
-        cr = 'crystal',
-        cypher = 'cypher',
-        frag = 'glsl',
-        geom = 'glsl',
-        hbs = 'html.handlebars',
-        handlebars = 'html.handlebars',
-        rst = 'rst',
-        schelp = 'scdoc',
-        tesc = 'glsl',
-        tese = 'glsl',
-        tsx = 'typescript.tsx',
-        ['yaml.ansible'] = 'yaml.ansible',
-        ['yml.ansible'] = 'yaml.ansible',
-    },
-    filename = {
-        ['ansible.cfg'] = 'ansible',
-        ['project.bri'] = 'brioche',
-        brioche = 'brioche',
-        Cairo = 'cairo',
-        Crystal = 'crystal',
-    },
-    pattern = {
-        ['.*%.als'] = 'alloy',
-        ['.*%.ansible%.ya?ml'] = 'yaml.ansible',
-        ['.*%.cairo'] = 'cairo',
-        ['.*%.clar'] = 'clar',
-        ['.*%.clarity'] = 'clarity',
-        ['.*%.crystal'] = 'crystal',
-        ['.*/gitconfig.*'] = 'gitconfig',
-        ['.*/gitignore.*'] = 'gitignore',
-        ['.*/gitcommit.*'] = 'gitcommit',
-        ['.*/templates/.*%.yaml'] = 'helm',
-        ['.*/templates/.*%.yml'] = 'helm',
-        ['.*/templates/.*%.tpl'] = 'helm',
-        ['.*/values.*%.ya?ml'] = 'yaml.helm-values',
-        ['.*%.gts'] = 'typescript.glimmer',
-        ['.*%.gjs'] = 'javascript.glimmer',
-    },
-})
 vim.lsp.enable({
-    'abaplint_ls', ---:TODO: ---validate ---@source https://github.com/abaplint/abaplint | https://www.npmjs.com/org/abaplint
+    --'abaplint_ls', ---:TODO: ---validate ---@source https://github.com/abaplint/abaplint | https://www.npmjs.com/org/abaplint
     'abl_ls', ---:TODO validate ---@source https://github.com/vscode-abl/vscode-abl
     'ada_ls',
     'agda_ls',
@@ -93,7 +46,6 @@ vim.lsp.enable({
     'cc_ls',
     'cds_ls',
     'chpl_ls', ---:TODO validate ---@source https://github.com/chapel-lang/chapel/tree/main/tools/chpl-language-server
-    'checkmake_ls',
     --'cir_ls',             ---:TODO
     'clangd_ls',
     'clarinet_ls',
@@ -110,13 +62,14 @@ vim.lsp.enable({
     'cucumber_ls', ---:TODO Validate
     'dafny_ls', ---:TODO validate
     --'delphi_ls'           ---:TODO ---@source https://docwiki.embarcadero.com/RADStudio/Florence/en/Code_Insight_Reference
-    'debputy_ls', ---:TODO validate ---@source https://salsa.debian.org/debian/debputy
+   -- 'debputy_ls', ---:TODO validate ---@source https://salsa.debian.org/debian/debputy
     --'denizen_ls',          ---:TODO ---@source https://github.com/DenizenScript/DenizenVSCode
     'deno_ls', ---lsp/linter
     'dj_ls', ---:TODO
     'djt_ls', ---:TODO
     'docker_ls', ---:TODO
     'dockercompose_ls', ---:TODO
+    'dockerx_ls',
     'dolmen_ls', ---:TODO validate
     'dot_ls', ---:TODO
     'dprint_ls', ---:TODO validate and finish config
@@ -144,7 +97,7 @@ vim.lsp.enable({
     'gauge_ls', ---:TODO validate ---@source https://github.com/getgauge/gauge/
     'gdscript_ls',
     'gdshader_ls',
-    'ghactions_ls',
+    --'ghactions_ls',
     'ghcide_ls',
     'gitlabci_ls', ---:TODO validate
     --'gitlabduo_ls', ---:TODO
@@ -172,7 +125,7 @@ vim.lsp.enable({
     'hoon_ls',
     'html_ls',
     'htmx_ls',
-    'hydra_ls',
+    --'hydra_ls',
     'hypr_ls',
     'idris2_ls', ---:TODO validate ---@source https://github.com/idris-community/idris2-lsp
     'ink_ls', ---:TODO validate ---@source https://github.com/ink-analyzer/ink-analyzer/tree/master/crates/lsp-server
@@ -206,11 +159,11 @@ vim.lsp.enable({
     'luau_ls',
     'lwc_ls',
     'm68k_ls',
-    'markdownoxide_ls',
+    --'markdownoxide_ls',
     'markojs_ls',
     'marksman_ls',
     'matlab_ls',
-    'mdxana_ls',
+    --'mdxana_ls',
     'metals_ls',
     'millet_ls',
     'mint_ls',
@@ -230,8 +183,8 @@ vim.lsp.enable({
     'nickel_ls',
     'nil_ls',
     'nixd_ls',
-    'nobl9_ls', ---:TODO validate  https://github.com/nobl9/nobl9-language-server
-    'nomad_ls',
+    --'nobl9_ls', ---:TODO validate
+
     'ntt_ls',
     'nu_ls',
     --'nx_ls',
@@ -244,7 +197,7 @@ vim.lsp.enable({
     'pas_ls', ---:TODO validate ---@source https://github.com/genericptr/pascal-language-server
     'pb_ls', ---:TODO validate ---@source https://git.sr.ht/~rrc/pbls
     'perl_ls',
-    'perlnav_ls', ---:TODO validate ---@source https://github.com/bscan/PerlNavigator
+    'perlnav_ls', ---:TODO validate
     'perlp_ls',
     'pest_ls', ---:TODO validate https://github.com/pest-parser/pest-ide-tools
     'phan_ls',
@@ -258,7 +211,7 @@ vim.lsp.enable({
     'postgres_ls',
     'prisma_ls',
     'prolog_ls', ---:TODO validate
-    'prosemd_ls',
+    --'prosemd_ls',
     'proto_ls',
     'psalm_ls', ---lsp/linter
     'pug_ls',
@@ -273,7 +226,7 @@ vim.lsp.enable({
     --'rech_ls'             ---:TODO https://github.com/RechInformatica/rech-editor-cobol/tree/master/src/lsp
     'regal_ls', ---:TODO validate ---linter/lsp
     'rego_ls', ---:TODO validate
-    'remark_ls',
+    --'remark_ls',
     'rescript_ls',
     'robotcode_ls',
     'robotframework_ls',
@@ -419,6 +372,7 @@ vim.lsp.enable({
 ---'meson_ls', deprecated' ---@source https://github.com/JCWasmx86/mesonlsp
 --'moveana_ls', ---deprecated ---@source https://github.com/move-language/move/tree/main/language/move-analyzer
 --'nelua_ls', ---outdated  ---@source https://github.com/codehz/nelua-lsp
+--'nomad_ls', ---outdated 7 years as of 2026 ---@source https://github.com/juliosueiras/nomad-lsp
 --'oraide_ls' ---deprecated ---@source https://github.com/penev92/Oraide.LanguageServer
 --'orbacle_ls' ---outdated ---@source https://github.com/swistak35/orbacle
 ---'pact_ls', ---outdated ---@source https://github.com/kadena-io/pact-lsp

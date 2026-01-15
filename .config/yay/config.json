@@ -1,8 +1,5 @@
 {
     "answerclean": "None",
-    "answerdiff": "None",
-    "answeredit": "None",
-    "answerupgrade": "None",
     "aururl": "https://aur.archlinux.org",
     "aurrpcurl": "https://aur.archlinux.org/rpc?",
     "batchinstall": true,

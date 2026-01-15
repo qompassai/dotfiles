@@ -14,3 +14,6 @@ end
 set fish_function_path $fish_function_path $XDG_DATA_HOME/omf/pkg/foreign-env/functions
 fish_add_path ~/.local/bin
 fish_add_path /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin
+
+# added by lua quickstart
+set -gx PATH '/home/phaedrus/.local/share/lua/bin' $PATH

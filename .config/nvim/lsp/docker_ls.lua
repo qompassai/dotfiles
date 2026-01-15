@@ -2,8 +2,6 @@
 -- Qompass AI Docker LSP Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
--- pnpm add -g dockerfile-language-server-nodejs@latest
-
 return ---@type vim.lsp.Config
 {
     cmd = {
@@ -14,15 +12,15 @@ return ---@type vim.lsp.Config
         'dockerfile',
     },
     root_markers = {
-        'Dockerfile',
-        'docker-compose.yaml',
-        'docker-compose.yml',
         'compose.yaml',
         'compose.yml',
         'docker-bake.json',
         'docker-bake.hcl',
-        'docker-bake.override.json',
         'docker-bake.override.hcl',
+        'docker-bake.override.json',
+        'docker-compose.yaml',
+        'docker-compose.yml',
+        'Dockerfile',
     },
     settings = {
         docker = {
