@@ -9,3 +9,4 @@
 [submodule ".config/vulkan"]
 	path = .config/vulkan
 	url = git@github.com:qompassai/Vulkan.git
+	branch = main
