@@ -6,3 +6,6 @@
 	path = .config/nvim
 	url = git@github.com:qompassai/Diver.git
 	branch = main
+[submodule ".config/vulkan"]
+	path = .config/vulkan
+	url = git@github.com:qompassai/Vulkan.git
