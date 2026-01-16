@@ -3,6 +3,16 @@
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ## ##################################################
 [core]
+exclude = [
+  "build/**",
+  "dist/**",
+  ".git/**",
+  "node_modules/**",
+  ".obsidian/**",
+  ".venv/**",
+]
+follow_links = true
+include = ["**/*.md", "**/*.mdx"]
 markdown_extensions = [
   "definition-lists",
   "footnotes",
@@ -13,32 +23,18 @@ markdown_extensions = [
   "tables",
 ]
 root_path = "."
-include = ["**/*.md", "**/*.mdx"]
-exclude = [
-  "dist/**",
-  ".git/**",
-  "node_modules/**",
-  "build/**",
-  ".obsidian/**",
-  ".venv/**",
-]
-follow_links = true
-
-[index]
-build_on_save = true
-build_on_change = true
-
-[workspace]
-include = ["**/*.md", "**/*.markdown"]
-exclude = ["node_modules/**", "**/tmp/**"]
-
 [diagnostics]
 enabled = true
 ignored = ["frontmatter-missing"]
 level = "information"
-
+[index]
+build_on_change = true
+build_on_save = true
 [server]
 completion = true
 hover = true
 references = true
 symbol_search = true
+[workspace]
+include = ["**/*.md", "**/*.markdown"]
+exclude = ["node_modules/**", "**/tmp/**"]
