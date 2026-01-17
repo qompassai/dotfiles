@@ -65,10 +65,6 @@
       "rev": "572f5660cf05f8cd8834e096d7b4c921ba18e175",
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
-    "gitlab.vim": {
-      "rev": "6039e4d034bdfac4a459874ca9e8a6276f131148",
-      "src": "https://gitlab.com/gitlab-org/editor-extensions/gitlab.vim.git"
-    },
     "lazydev.nvim": {
       "rev": "5231c62aa83c2f8dc8e7ba957aa77098cda1257d",
       "src": "https://github.com/folke/lazydev.nvim"

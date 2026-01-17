@@ -7,7 +7,7 @@
 # From:       https://archlinux.org/mirrors/status/json/
 # Retrieved:  2025-08-21 19:37:39 UTC
 # Last Check: 2025-08-21 19:01:35 UTC
-Server = https://mirror.omarchy.org/$repo/os/$arch
+
 Server = https://losangeles.mirror.pkgbuild.com/$repo/os/$arch
 Server = https://america.mirror.pkgbuild.com/$repo/os/$arch
 Server = https://nz.arch.niranjan.co/$repo/os/$arch
@@ -28,3 +28,5 @@ Server = https://mirror.ubrco.de/archlinux/$repo/os/$arch
 Server = https://mirrors.urbanwave.co.za/archlinux/$repo/os/$arch
 Server = https://mirror.lcarilla.de/archlinux/$repo/os/$arch
 Server = https://mirror.franscorack.com/archlinux/$repo/os/$arch
+Server = https://stable-mirror.omarchy.org/$repo/os/$arch
+Server = https://mirror.omarchy.org/$repo/os/$arch

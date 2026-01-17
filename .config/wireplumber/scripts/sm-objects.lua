@@ -1,13 +1,4 @@
 -- WirePlumber
---
--- Copyright © 2023 Collabora Ltd.
---    @author George Kiagiadakis <george.kiagiadakis@collabora.com>
---
--- SPDX-License-Identifier: MIT
---
--- The script exposes a metadata object named "sm-objects" that clients can
--- use to load objects into the WirePlumber daemon process. The objects are
--- loaded as soon as the metadata is set and are destroyed when the metadata
 -- is cleared.
 --
 -- To load an object, a client needs to set a metadata entry with:
@@ -56,10 +47,7 @@ function handle_metadata_changed (m, subject, key, type, value)
     on_demand_objects = {}
     return
   end
-
   local object_id = key .. "@" .. tostring(subject)
-
-  -- destroy existing object instance, if needed
   if on_demand_objects[object_id] then
     Log.debug("destroy on-demand object: " .. object_id)
     on_demand_objects[object_id] = nil
