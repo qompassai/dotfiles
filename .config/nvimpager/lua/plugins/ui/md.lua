@@ -19,7 +19,6 @@ return {
     filetypes = 'markdown',
     dependencies = {
       'vhyrro/luarocks.nvim',
-      'nvim-treesitter/nvim-treesitter',
     },
     config = function(_, opts)
       require('config.ui.md').md_image(opts)

@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/bash/config
+# Qompass AI Bash Config
+# Copyright (C) 2026 Qompass AI, All rights reserved
+# ----------------------------------------
+eval "$(fzf --bash)"

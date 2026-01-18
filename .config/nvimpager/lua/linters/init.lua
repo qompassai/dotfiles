@@ -134,7 +134,7 @@ M.linters_by_ft = {
     -- 'mado',
     -- },
     mail = {
-        'alex',
+        --'alex',
         'proselint',
     },
     matlab = 'mlint',

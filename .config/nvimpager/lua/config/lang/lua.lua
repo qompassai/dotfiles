@@ -22,14 +22,12 @@ local function lua_library(entries)
   table.insert(lib, vim.env.VIMRUNTIME)
   table.insert(lib, vim.fn.stdpath('config') .. '/lua')
   table.insert(lib, vim.fn.stdpath('data') .. '/lazy')
-
   return lib
 end
 
 local function lua_version()
   local ver = _VERSION or 'Lua'
-  local bin = vim.fn.exepath('lua') ~= '' and vim.fn.exepath('lua')
-    or vim.fn.expand('~/.local/bin/lua')
+  local bin = vim.fn.exepath('lua') ~= '' and vim.fn.exepath('lua') or vim.fn.expand('~/.local/bin/lua')
   return ver, bin
 end
 
@@ -45,13 +43,6 @@ function M.lua_autocmds()
   })
 end
 
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
-  pattern = { '*/.config/wireplumber/main.lua.d/*.lua' },
-  callback = function()
-    vim.bo.filetype = 'lua'
-  end,
-})
-
 vim.api.nvim_create_user_command('LuaRangeAction', function()
   local bufnr = 0
   local diagnostics = vim.diagnostic.get(bufnr)
@@ -60,7 +51,10 @@ vim.api.nvim_create_user_command('LuaRangeAction', function()
   vim.lsp.buf.code_action({
     context = {
       diagnostics = diagnostics,
-      only = { 'quickfix', 'refactor.extract' },
+      only = {
+        'quickfix',
+        'refactor.extract',
+      },
     },
     range = {
       start = { start_pos[1], start_pos[2] },
@@ -77,11 +71,22 @@ function M.lua_cmp()
   if vim.g.use_blink_cmp then
     return {
       sources = {
-        { name = 'lsp' },
-        { name = 'luasnip' },
-        { name = 'buffer' },
-        { name = 'nvim_lua', via = 'compat' },
-        { name = 'lazydev' },
+        {
+          name = 'lsp',
+        },
+        {
+          name = 'luasnip',
+        },
+        {
+          name = 'buffer',
+        },
+        {
+          name = 'nvim_lua',
+          via = 'compat',
+        },
+        {
+          name = 'lazydev',
+        },
       },
       performance = {
         async = true,
@@ -93,10 +98,14 @@ function M.lua_cmp()
         use_nvim_cmp_as_default = false,
       },
       completion = {
-        accept = { auto_brackets = true },
+        accept = {
+          auto_brackets = true,
+        },
         menu = {
           draw = {
-            treesitter = { 'lsp' },
+            treesitter = {
+              'lsp',
+            },
           },
         },
         documentation = {
@@ -120,7 +129,9 @@ function M.lua_cmp()
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
       }),
       sources = {
-        { name = 'nvim_lua' },
+        {
+          name = 'nvim_lua',
+        },
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'buffer' },
@@ -131,6 +142,7 @@ function M.lua_cmp()
     }
   end
 end
+
 function M.lua_lazydev(opts)
   opts = opts or {}
   return {
@@ -139,9 +151,9 @@ function M.lua_lazydev(opts)
       lua_home(),
     }),
     integrations = {
-      lspconfig = not (opts.integrations and opts.integrations.lspconfig == false),
       cmp = not (opts.integrations and opts.integrations.cmp == false),
       coq = not (opts.integrations and opts.integrations.coq == false),
+      lspconfig = not (opts.integrations and opts.integrations.lspconfig == false),
     },
     enabled = opts.enabled or function()
       return vim.g.lazydev_enabled ~= false
@@ -206,6 +218,7 @@ function M.lua_luarocks(opts)
   end
   return vim.tbl_deep_extend('force', config, opts)
 end
+
 function M.lua_snap(opts)
   opts = opts or {}
   local config = {
@@ -216,6 +229,7 @@ function M.lua_snap(opts)
   }
   return vim.tbl_deep_extend('force', config, opts)
 end
+
 function M.lua_test(opts)
   opts = opts or {}
   return {
@@ -247,6 +261,7 @@ function M.lua_test(opts)
     },
   }
 end
+
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)

@@ -5,7 +5,7 @@
 ---@source https://microsoft.github.io/language-server-protocol/implementors/servers/
 ---@source https://langserver.org/
 vim.lsp.enable({
-    'abaplint_ls', ---:TODO: ---validate ---@source https://github.com/abaplint/abaplint | https://www.npmjs.com/org/abaplint
+    --'abaplint_ls', ---:TODO: ---validate ---@source https://github.com/abaplint/abaplint | https://www.npmjs.com/org/abaplint
     'abl_ls', ---:TODO validate ---@source https://github.com/vscode-abl/vscode-abl
     'ada_ls',
     'agda_ls',
@@ -46,14 +46,13 @@ vim.lsp.enable({
     'cc_ls',
     'cds_ls',
     'chpl_ls', ---:TODO validate ---@source https://github.com/chapel-lang/chapel/tree/main/tools/chpl-language-server
-    'checkmake_ls',
     --'cir_ls',             ---:TODO
     'clangd_ls',
     'clarinet_ls',
     'clojure_ls',
     'cmake_ls',
     'cobol_ls',
-    'codebook_ls', ---:TODO validate
+    --'codebook_ls', ---:TODO validate
     'codeql_ls', ---:TODO ---@source https://github.com/github/codeql
     --'contextive_ls',  ---:TODO add glossary then validate
     'copilot_ls.lua', ---:TODO validate
@@ -70,6 +69,7 @@ vim.lsp.enable({
     'djt_ls', ---:TODO
     'docker_ls', ---:TODO
     'dockercompose_ls', ---:TODO
+    'dockerx_ls',
     'dolmen_ls', ---:TODO validate
     'dot_ls', ---:TODO
     'dprint_ls', ---:TODO validate and finish config
@@ -159,11 +159,11 @@ vim.lsp.enable({
     'luau_ls',
     'lwc_ls',
     'm68k_ls',
-    'markdownoxide_ls',
+    --'markdownoxide_ls',
     'markojs_ls',
     'marksman_ls',
     'matlab_ls',
-    'mdxana_ls',
+    --'mdxana_ls',
     'metals_ls',
     'millet_ls',
     'mint_ls',
@@ -184,7 +184,7 @@ vim.lsp.enable({
     'nil_ls',
     'nixd_ls',
     --'nobl9_ls', ---:TODO validate
-    'nomad_ls',
+
     'ntt_ls',
     'nu_ls',
     --'nx_ls',
@@ -211,7 +211,7 @@ vim.lsp.enable({
     'postgres_ls',
     'prisma_ls',
     'prolog_ls', ---:TODO validate
-    'prosemd_ls',
+    --'prosemd_ls',
     'proto_ls',
     'psalm_ls', ---lsp/linter
     'pug_ls',
@@ -226,7 +226,7 @@ vim.lsp.enable({
     --'rech_ls'             ---:TODO https://github.com/RechInformatica/rech-editor-cobol/tree/master/src/lsp
     'regal_ls', ---:TODO validate ---linter/lsp
     'rego_ls', ---:TODO validate
-    'remark_ls',
+    --'remark_ls',
     'rescript_ls',
     'robotcode_ls',
     'robotframework_ls',
@@ -372,6 +372,7 @@ vim.lsp.enable({
 ---'meson_ls', deprecated' ---@source https://github.com/JCWasmx86/mesonlsp
 --'moveana_ls', ---deprecated ---@source https://github.com/move-language/move/tree/main/language/move-analyzer
 --'nelua_ls', ---outdated  ---@source https://github.com/codehz/nelua-lsp
+--'nomad_ls', ---outdated 7 years as of 2026 ---@source https://github.com/juliosueiras/nomad-lsp
 --'oraide_ls' ---deprecated ---@source https://github.com/penev92/Oraide.LanguageServer
 --'orbacle_ls' ---outdated ---@source https://github.com/swistak35/orbacle
 ---'pact_ls', ---outdated ---@source https://github.com/kadena-io/pact-lsp

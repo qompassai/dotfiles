@@ -4,11 +4,9 @@
 -----------------------------------------------------
 ---@meta
 ---@module 'config.lang.scala'
-local U = require('utils.lang.scala')
 local M = {}
 
 function M.scala_cfg()
-    U.scala_dap()
 end
 
 return M

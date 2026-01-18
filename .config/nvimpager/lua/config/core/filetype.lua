@@ -1,7 +1,7 @@
--- ~/qompassai/Diver/filetype.lua
--- Qompass AI FileType Config
+-- ~/qompassai/Diver/lua/config/core/filetype.lua
+-- Qompass AI Diver FileType Config
 -- Copyright (C) 2025 Qompass AI, All rights reserved
--- ----------------------------------------
+-- ---------------------------------------------------
 vim.filetype.add({
     extension = {
         bri = 'brioche',
@@ -55,5 +55,7 @@ vim.filetype.add({
         ['.*/templates/.*%.yml'] = 'helm',
         ['.*/templates/.*%.tpl'] = 'helm',
         ['.*/values.*%.ya?ml'] = 'yaml.helm-values',
+        ['.*/%.github[%w/]+workflows[%w/]+.*%.ya?ml'] = 'yaml.github',
+        ['%.gitlab%-ci%.ya?ml'] = 'yaml.gitlab',
     },
 })

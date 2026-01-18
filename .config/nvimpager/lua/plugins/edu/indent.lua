@@ -17,9 +17,7 @@ return {
             },
         },
         dependencies = {
-            'nvim-treesitter/nvim-treesitter',
             'nvim-tree/nvim-web-devicons',
-            'folke/which-key.nvim',
         },
         config = function(_, opts)
             require('ibl').setup(opts)

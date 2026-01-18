@@ -3,7 +3,7 @@
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
 --Reference: https://github.com/igor-prusov/dts-lsp
--- cargo install dts-lsp
+-- cargo install --git https://github.com/igor-prusov/dts-lsp
 ---@type vim.lsp.Config
 return {
     cmd = {
@@ -17,5 +17,16 @@ return {
     root_markers = {
         '.git',
     },
-    settings = {},
+    settings = {
+        devicetree = {
+            defaultBindingType = 'Zephyr',
+            defaultZephyrBindings = {
+                os.getenv('HOME') .. '/.local/share/zephyrproject/zephyr/dts/bindings',
+            },
+            defaultIncludePaths = {
+                os.getenv('HOME') .. '/.local/share/zephyrproject/zephyr/dts',
+                os.getenv('HOME') .. '/.local/share/zephyrproject/zephyr/include',
+            },
+        },
+    },
 }

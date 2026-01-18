@@ -4,11 +4,16 @@
 -- --------------------------------------------------
 ---@meta
 ---@module 'mappings.genmap'
-
 local M = {}
-
 function M.setup_genmap()
     local map = vim.keymap.set
+    map('n', '<leader>U', function()
+        vim.pack.update(nil, { force = true })
+    end, {
+        desc = 'Force update vim.pack plugins',
+        noremap = true,
+        silent = true,
+    })
     vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(ev)
             local bufnr = ev.buf
@@ -17,7 +22,6 @@ function M.setup_genmap()
                 silent = true,
                 buffer = bufnr,
             }
-
             -- Move to the beginning of the line while in insert mode
             map(
                 'i',
@@ -27,7 +31,6 @@ function M.setup_genmap()
                     desc = 'Move to the beginning of the line',
                 })
             )
-
             -- Move to the end of the line while in insert mode
             map(
                 'i',
@@ -47,17 +50,33 @@ function M.setup_genmap()
                     desc = 'Move left by one character',
                 })
             )
-
             -- Move right by one character while in insert mode
-            map('i', '<C-l>', '<Right>', vim.tbl_extend('force', opts, { desc = 'Move right by one character' }))
-
+            map(
+                'i',
+                '<C-l>',
+                '<Right>',
+                vim.tbl_extend('force', opts, {
+                    desc = 'Move right by one character',
+                })
+            )
             -- Move down by one line while in insert mode
-            map('i', '<C-j>', '<Down>', vim.tbl_extend('force', opts, { desc = 'Move down by one line' }))
-
+            map(
+                'i',
+                '<C-j>',
+                '<Down>',
+                vim.tbl_extend('force', opts, {
+                    desc = 'Move down by one line',
+                })
+            )
             -- Move up by one line while in insert mode
-            map('i', '<C-k>', '<Up>', vim.tbl_extend('force', opts, { desc = 'Move up by one line' }))
-
-            ----------------- Normal Mode Mappings -----------------------
+            map(
+                'i',
+                '<C-k>',
+                '<Up>',
+                vim.tbl_extend('force', opts, {
+                    desc = 'Move up by one line',
+                })
+            )
 
             -- Clear search highlights by pressing Escape in normal mode
             map(
@@ -68,7 +87,6 @@ function M.setup_genmap()
                     desc = 'Clear search highlights',
                 })
             )
-
             -- Switch to the window on the left in normal mode
             map(
                 'n',

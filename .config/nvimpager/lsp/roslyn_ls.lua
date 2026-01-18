@@ -71,7 +71,6 @@ local function roslyn_handlers() ---@return table<string, fun(err?: lsp.Response
 end
 return ---@type vim.lsp.Config
 {
-    name = 'roslyn_ls',
     offset_encoding = 'utf-8',
     cmd = {
         'Microsoft.CodeAnalysis.LanguageServer',
@@ -118,6 +117,55 @@ return ---@type vim.lsp.Config
             ---@diagnostic enable: undefined-field
         end,
     },
+    ---@param client vim.lsp.Client
+    on_attach = function(client, bufnr) ---@param bufnr integer
+        if vim.api.nvim_get_autocmds({ buffer = bufnr, group = group })[1] then
+            return
+        end
+        vim.api.nvim_create_autocmd({
+            'BufWritePost',
+            'InsertLeave',
+        }, {
+            group = group,
+            buffer = bufnr,
+            callback = function()
+                refresh_diagnostics(client)
+            end,
+            desc = 'roslyn_ls: refresh diagnostics',
+        })
+    end,
+    on_init = {
+        function(client)
+            for entry, type in vim.fs(client.config.root_dir, '.git') do
+                if type == 'file' and (vim.endswith(entry, '.sln') or vim.endswith(entry, '.slnx')) then
+                    on_init_sln(client, vim.fs.joinpath(client.config.root_dir, entry))
+                    return
+                end
+            end
+            for entry, type in vim.fs(client.config.root_dir, 'git') do
+                if type == 'file' and vim.endswith(entry, '.csproj') then
+                    on_init_project(client, { vim.fs.joinpath(client.config.root_dir, entry) })
+                end
+            end
+        end,
+    },
+    ---@param bufnr integer
+    root_dir = function(bufnr, cb) ---@param cb fun(root: string)
+        local bufname = vim.api.nvim_buf_get_name(bufnr)
+        if not bufname:match('^' .. vim.fs.joinpath('/tmp/MetadataAsSource/')) then
+            local root_dir = vim.fs(bufnr, function(fname, _) ---@type string
+                return fname:match('%.sln[x]?$') ~= nil
+            end)
+            if not root_dir then
+                root_dir = vim.fs(bufnr, function(fname, _) ---@type string
+                    return fname:match('%.csproj$') ~= nil
+                end)
+            end
+            if root_dir then
+                cb(root_dir)
+            end
+        end
+    end,
     settings = { ---@type table<string, table>
         ['csharp|background_analysis'] = {
             dotnet_analyzer_diagnostics_scope = 'fullSolution',
@@ -149,53 +197,4 @@ return ---@type vim.lsp.Config
             dotnet_enable_references_code_lens = true,
         },
     },
-    ---@param bufnr integer
-    root_dir = function(bufnr, cb) ---@param cb fun(root: string)
-        local bufname = vim.api.nvim_buf_get_name(bufnr)
-        if not bufname:match('^' .. vim.fs.joinpath('/tmp/MetadataAsSource/')) then
-            local root_dir = vim.fs(bufnr, function(fname, _) ---@type string
-                return fname:match('%.sln[x]?$') ~= nil
-            end)
-            if not root_dir then
-                root_dir = vim.fs(bufnr, function(fname, _) ---@type string
-                    return fname:match('%.csproj$') ~= nil
-                end)
-            end
-            if root_dir then
-                cb(root_dir)
-            end
-        end
-    end,
-    on_init = {
-        function(client)
-            for entry, type in vim.fs(client.config.root_dir, '.git') do
-                if type == 'file' and (vim.endswith(entry, '.sln') or vim.endswith(entry, '.slnx')) then
-                    on_init_sln(client, vim.fs.joinpath(client.config.root_dir, entry))
-                    return
-                end
-            end
-            for entry, type in vim.fs(client.config.root_dir, 'git') do
-                if type == 'file' and vim.endswith(entry, '.csproj') then
-                    on_init_project(client, { vim.fs.joinpath(client.config.root_dir, entry) })
-                end
-            end
-        end,
-    },
-    ---@param client vim.lsp.Client
-    on_attach = function(client, bufnr) ---@param bufnr integer
-        if vim.api.nvim_get_autocmds({ buffer = bufnr, group = group })[1] then
-            return
-        end
-        vim.api.nvim_create_autocmd({
-            'BufWritePost',
-            'InsertLeave',
-        }, {
-            group = group,
-            buffer = bufnr,
-            callback = function()
-                refresh_diagnostics(client)
-            end,
-            desc = 'roslyn_ls: refresh diagnostics',
-        })
-    end,
 }

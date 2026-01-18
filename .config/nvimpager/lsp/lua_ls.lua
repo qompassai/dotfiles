@@ -17,11 +17,14 @@ return ---@type vim.lsp.Config
         'luacheckrc',
         '.luacheckrc',
         '.luarc.json',
+        'luarc.json',
         '.luarc.jsonc',
+        'luarc.jsonc',
         '.luarc.json5',
         'selene.toml',
         'selene.yml',
         '.stylua.toml',
+        'stylua.toml',
     },
     settings = {
         Lua = {
@@ -55,12 +58,33 @@ return ---@type vim.lsp.Config
                 enable = true,
                 globals = {
                     'assert',
+                    'AsyncEventHook', ---wp
                     'client',
                     'Client',
+                    'Conf', ---wp
+                    'Constraint',
+                    'Core',
                     'describe',
+                    'EventInterest', ---wp
+                    'Features', ---wp
+                    'group', ---wp
+                    'ImplMetadata', ---wp
+                    'Interest', ---wp
                     'it',
                     'jit',
+                    'Json', ---wp
+                    'JsonUtils', ---wp
+                    'LocalModule', ---wp
+                    'Log', ---wp
+                    'ObjectManager', ---wp
+                    'Plugin', ---wp
+                    'Pod', ---wp
+                    'ProcUtils', ---wp
                     'require',
+                    'Script', ---wp
+                    'Settings', ---wp
+                    'SimpleEventHook', ---wp
+                    'State', ---wp
                     'use',
                     'vim',
                 },
@@ -128,7 +152,7 @@ return ---@type vim.lsp.Config
                     align_chain_expr = 'none',
                     align_continuous_assign_statement = true,
                     align_continuous_inline_comment = true,
-                    align_continuous_line_space = 2, ---@type integer
+                    align_continuous_line_space = 2,
                     align_continuous_rect_table_field = true,
                     align_continuous_similar_call_args = false,
                     align_function_params = true,
@@ -144,7 +168,7 @@ return ---@type vim.lsp.Config
                     end_statement_with_semicolon = 'keep',
                     ignore_space_after_colon = false,
                     ignore_spaces_inside_function_call = false,
-                    indent_size = 4,
+                    indent_size = 2,
                     indent_style = 'space',
                     insert_final_newline = false,
                     keep_indents_on_empty_lines = false,
@@ -163,7 +187,7 @@ return ---@type vim.lsp.Config
                     never_indent_comment_on_if_branch = false,
                     quote_style = 'single',
                     remove_call_expression_list_finish_comma = false,
-                    space_after_comma = false,
+                    space_after_comma = true,
                     space_after_comma_in_for_statement = false,
                     space_after_comment_dash = false,
                     space_around_assign_operator = false,
@@ -182,7 +206,7 @@ return ---@type vim.lsp.Config
                     space_inside_function_param_list_parentheses = false,
                     space_inside_square_brackets = false,
                     table_separator_style = 'none',
-                    tab_width = 4,
+                    tab_width = 2,
                     trailing_table_separator = 'keep',
                 },
             },
@@ -191,8 +215,8 @@ return ---@type vim.lsp.Config
                 await = true,
                 enable = true,
                 semicolon = 'All',
-                setType = true, ---@type boolean
-                paramName = 'All', ---@type string
+                setType = true,
+                paramName = 'All',
                 paramType = true,
             },
             hover = {
@@ -210,7 +234,7 @@ return ---@type vim.lsp.Config
             },
             misc = {},
             runtime = {
-                fileEncoding = 'utf8', ---@type string
+                fileEncoding = 'utf8',
                 meta = '${version} ${language} ${encoding}',
                 nonstandardSymbol = {
                     '//',

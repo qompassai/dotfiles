@@ -4,39 +4,82 @@
 ------------------------------------------------------
 ---@meta
 vim.opt.packpath = vim.opt.runtimepath:get() ---@type string[]
+vim.api.nvim_create_user_command('PackUpdate', function()
+    vim.api.nvim_echo({
+        {
+            'Updating plugins…',
+            'None',
+        },
+    }, false, {})
+    vim.pack.update()
+    vim.api.nvim_echo({
+        {
+            'Plugins updated!',
+            'None',
+        },
+    }, false, {})
+end, {
+    desc = 'Update all vim.pack plugins',
+})
 vim.pack.add({
     {
         event = {
             'BufEnter',
         },
+        branch = 'main',
+        hook = function()
+            require('config.cicd.sops').sops()
+        end,
         src = 'https://github.com/trixnz/sops.nvim',
+        update = true,
+        version = nil,
     },
     {
+        branch = 'main',
+        hook = function()
+            local lua_cfg = require('config.lang.lua')
+            local opts = lua_cfg.lua_luarocks({})
+            --require('luarocks-nvim').setup(opts)
+            require('luarocks').setup(opts)
+        end,
         src = 'https://github.com/vhyrro/luarocks.nvim',
+        update = true,
         version = nil,
     },
     {
         branch = 'main',
         src = 'https://github.com/Saghen/blink.cmp',
+        update = true,
         version = vim.version.range('1.*'),
     },
     {
+        branch = 'main',
+        hook = function()
+            require('config.core.tree').treesitter({})
+        end,
         src = 'https://github.com/nvim-treesitter/nvim-treesitter',
+        update = true,
+        version = nil,
     },
     {
-        src = 'https://github.com/nathom/filetype.nvim',
-    },
-    {
+        branch = 'master',
         src = 'https://github.com/L3MON4D3/LuaSnip',
+        version = vim.version.range('2.*'),
     },
     {
+        branch = 'main',
         src = 'https://github.com/rafamadriz/friendly-snippets',
+        update = true,
+        version = nil,
     },
     {
+        branch = 'main',
         src = 'https://github.com/hrsh7th/cmp-nvim-lua',
+        update = true,
+        version = nil,
     },
     {
-        brance = 'main',
+        branch = 'main',
         src = 'https://github.com/hrsh7th/cmp-buffer',
         version = nil,
     },
@@ -48,68 +91,49 @@ vim.pack.add({
     {
         branch = 'master',
         src = 'https://github.com/Kaiser-Yang/blink-cmp-dictionary',
+        update = true,
         version = vim.version.range('2.*'),
     },
     {
         branch = 'main',
         src = 'https://github.com/Saghen/blink.compat',
+        update = true,
         version = vim.version.range('2.*'),
     },
     {
-        name = 'flash.nvim',
-        src = 'https://github.com/folke/flash.nvim',
+        branch = 'main',
         hook = function()
             require('config.core.flash').flash_cfg()
         end,
+        src = 'https://github.com/folke/flash.nvim',
+        update = true,
+        version = vim.version.range('2.*'),
     },
-    --[[
-  {
-    cond = function()
-      return vim.env.GITLAB_TOKEN ~= nil and vim.env.GITLAB_TOKEN ~= ''
-    end,
-    event = {
-      'BufReadPre',
-      'BufNewFile'
-    },
-    filetypes = {
-      'go',
-      'javascript',
-      'python',
-      'ruby'
-    },
-    src = 'https://gitlab.com/gitlab-org/editor-extensions/gitlab.vim.git',
-    opts = {
-      statusline = {
-        enabled = true,
-      },
-    },
-  },
-  --]]
+
     {
         branch = 'main',
         hook = function()
             require('mini.ai').setup()
         end,
-        name = 'mini.ai',
         opts = {
-            n_lines = 500,
             custom_textobjects = {},
+            n_lines = 500,
             search_method = 'cover_or_next',
         },
         src = 'https://github.com/echasnovski/mini.nvim',
-        version = 'v0.17.0',
+        update = true,
+        version = vim.version.range('0.*'),
     },
     {
-        name = 'trouble.nvim',
-        src = 'https://github.com/folke/trouble.nvim',
         cmd = {
             'TroubleToggle',
             'Trouble',
         },
-        opts = require('config.core.trouble')(),
         hook = function(spec)
             require('trouble').setup(spec.opts)
         end,
+        opts = require('config.core.trouble')(),
+        src = 'https://github.com/folke/trouble.nvim',
     },
 })
 return {

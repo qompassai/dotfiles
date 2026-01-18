@@ -27,13 +27,10 @@ vim.pack.add({ ---@type vim.pack.Spec[]
     hook = function()
       require('config.core.plenary')
     end,
-    name = 'plenary.nvim',
     src = 'https://github.com/nvim-lua/plenary.nvim',
-    version = 'main',
   },
   {
     branch = 'main',
-    name = 'coq.nvim',
     src = 'https://github.com/ms-jpq/coq_nvim',
     version = 'dev',
     dependencies = {
@@ -55,7 +52,6 @@ vim.pack.add({ ---@type vim.pack.Spec[]
     config = function() end,
   },
   {
-    name = 'trouble.nvim',
     src = 'https://github.com/folke/trouble.nvim',
     cmd = {
       'TroubleToggle',
@@ -83,8 +79,10 @@ vim.pack.add({ ---@type vim.pack.Spec[]
     end,
   },
   {
+    branch = 'main',
     name = 'neo-tree.nvim',
     src = 'https://github.com/nvim-neo-tree/neo-tree.nvim',
+       version = vim.version.range('3.*'),
   },
   {
     build = ':TSUpdate',

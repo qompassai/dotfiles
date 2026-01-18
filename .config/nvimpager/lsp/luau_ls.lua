@@ -1,17 +1,18 @@
 -- /qompassai/Diver/lsp/luau_ls.lua
--- Qompass AI Luau LSP Spec
+-- Qompass AI Diver Luau LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- --------------------------------------------------
----@type vim.lsp.Config
-return {
-    cmd = { ---@type string[]
+return ---@type vim.lsp.Config
+{
+    cmd = {
         'luau-lsp',
         'lsp',
     },
-    filetypes = { ---@type string[]
+    filetypes = {
         'luau',
     },
-    root_markers = { ---@type string[]
+    root_markers = {
         '.git',
     },
+    settings = {},
 }

@@ -1,27 +1,24 @@
--- /qompassai/Dive/lsp/slangd.lua
--- Qompass AI Slangd LSP Spec
+-- /qompassai/Diver/lsp/slangd.lua
+-- Qompass AI Diver Slangd LSP Spec
 -- Copyright (C) 2025 Qompass AI, All rights reserved
 -- ---------------------------------------------------
 --Reference: https://github.com/shader-slang/slang
----@type vim.lsp.Config
-return {
-    cmd = { ---@type string[]
+return ---@type vim.lsp.Config
+{
+    cmd = {
         'slangd',
     },
-    filetypes = { ---@type string[]
+    filetypes = {
         'hlsl',
         'shaderslang',
     },
-    root_markers = { ---@type string[]
-        '.git',
-    },
     init_options = {
         slang = {
-            predefinedMacros = {}, ---@type string[]
-            additionalSearchPaths = {}, ---@type string[]
-            searchInAllWorkspaceDirectories = true, ---@type boolean
+            additionalSearchPaths = {},
+            predefinedMacros = {},
+            searchInAllWorkspaceDirectories = true,
             completion = {
-                commitCharacters = 'memberOnly', ---@type string
+                commitCharacters = 'memberOnly',
             },
             format = {
                 clangFormatLocation = 'clang-format',
@@ -34,4 +31,8 @@ return {
             parameterNames = true,
         },
     },
+    root_markers = {
+        '.git',
+    },
+    settings = {},
 }
