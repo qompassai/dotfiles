@@ -1,0 +1,29 @@
+# /qompassai/dotfiles/.config/hatch/config.toml
+# Qompass AI Hatch Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+mode = "local"
+project = ""
+shell = "fish"
+[dirs]
+project = []
+python = "isolated"
+data = "$XDG_DATA_HOME/hatch"
+cache = "$XDG_CACHE_HOME/hatch"
+[dirs.env]
+[projects]
+[publish.index]
+repo = "main"
+[template]
+[template.plugins.default]
+tests = false
+ci = false
+src-layout = true
+[terminal.styles]
+info = "bold"
+success = "bold cyan"
+error = "bold red"
+warning = "bold yellow"
+waiting = "bold magenta"
+debug = "bold"
+spinner = "simpleDotsScrolling"

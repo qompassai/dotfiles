@@ -1,0 +1,15 @@
+# /qompassai/dotfiles/.config/markdown/.remarkrc
+# Qompass AI Remarkrc
+# Copyright (C) 2025 Qompass AI, All rights reserved
+# ----------------------------------------
+{
+  "settings": {
+    "bullet": "*"
+  },
+  "plugins": [
+    "remark-preset-lint-consistent",
+    "remark-preset-lint-recommended",
+    ["remark-toc", { "heading": "contents" }]
+  ]
+}
+

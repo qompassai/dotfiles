@@ -1,0 +1,15 @@
+#%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/mock
+# Qompass AI Pam Daemon Mock Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
+auth		sufficient	pam_rootok.so
+auth		sufficient	pam_succeed_if.so user ingroup mock use_uid quiet
+auth		sufficient	pam_wheel.so trust use_uid
+auth		required	pam_wheel.so use_uid
+auth		include		system-auth
+account		sufficient	pam_succeed_if.so user ingroup mock use_uid quiet
+account		include		system-auth
+password	include		system-auth
+session		include		system-auth
+session		optional	pam_xauth.so

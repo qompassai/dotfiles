@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/tigervnc/vncserver.users
+# Qompass AI Tiger VNC Server User Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+:1=phaedrus

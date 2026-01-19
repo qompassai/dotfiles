@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/soju/config
+# Qompass AI Soju Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+db sqlite3 /var/lib/soju/main.db
+message-store fs /var/lib/soju/logs/
+listen ircs://
+listen unix+admin://

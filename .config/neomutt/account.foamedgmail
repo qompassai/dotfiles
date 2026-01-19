@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/neomutt/account.foamedgmail
+# Qompass AI Neomutt Gmail Account Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################### 
+set folder = "~/.local/share/mail/gmail/foamedgmail"

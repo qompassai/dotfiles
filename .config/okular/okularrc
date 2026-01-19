@@ -1,0 +1,9 @@
+# /qompassai/dotfiles/.config/okular/okularrc
+# Qompass AI Okular Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+[Desktop Entry]
+FullScreen=false
+[General]
+LockSidebar=true
+ShowSidebar=true

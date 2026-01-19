@@ -1,0 +1,10 @@
+# /qompassai/dotfiles/.config/gufetch/config.yaml
+# /Qompass AI GuFetch Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+token:
+  gitlab: "phaedrusflow"
+defualt:
+  githubUsername: "phaedrusflow"
+  gitlabID: ""
+  site: ""

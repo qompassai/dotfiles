@@ -1,0 +1,6 @@
+# /qompassai/dotfiles/.config/wazuh-dashboard/node.options
+# Qompass AI Wazuh-DashBoard Node Options Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##########################################################
+--max-old-space-size=4096
+--unhandled-rejections=warn

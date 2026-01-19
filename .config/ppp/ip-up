@@ -1,0 +1,11 @@
+#!/bin/sh
+# /qompassai/dotfiles/.config/ppp/ip-up
+# Qompass AI PPP IP-Up
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+for ipup in /etc/ppp/ip-up.d/*.sh; do
+  if [ -x $ipup ]; then
+    # Parameters: interface-name tty-device speed local-IP-address remote-IP-address ipparam
+    $ipup "$@"
+  fi
+done

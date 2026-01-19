@@ -1,0 +1,13 @@
+#%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/schroot
+# Qompass AI Pam Daemon Schroot Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
+auth       	required   pam_wheel.so
+auth      	sufficient pam_wheel.so trust
+# auth       	required   pam_wheel.so deny group=noschroot
+auth       	sufficient pam_rootok.so
+# account    	requisite  pam_time.so
+account 	required   pam_unix.so
+session 	required   pam_unix.so
+# session    	required   pam_limits.so

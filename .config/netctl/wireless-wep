@@ -1,0 +1,15 @@
+# /qompassai/dotfiles/.config/netctl/wireless-wep
+# Qompass AI NetCtl Wireless-WEP Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+Description='Qompass AI simple WEP encrypted wireless connection'
+Interface=wlan0
+Connection=wireless
+Security=wep
+IP=dhcp
+ESSID='MyNetwork'
+Key=\"1234567890abcdef
+#Key='WirelessKey'
+#Hidden=yes
+#AdHoc=yes
+#Priority=10

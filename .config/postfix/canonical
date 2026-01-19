@@ -1,0 +1,13 @@
+# /qompassai/dotfiles/.config/postfix/canonical
+
+canonical_maps
+recipient_canonical_maps
+sender_canonical_maps (empty)
+propagate_unmatched_extensions
+inet_interfaces
+        local_header_rewrite_clients (permit_inet_interfaces)
+        proxy_interfaces (empty)
+        masquerade_domains (empty)
+        masquerade_exceptions (empty)
+        myorigin ($myhostname)
+        owner_request_special (yes)

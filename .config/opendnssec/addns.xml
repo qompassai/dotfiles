@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ /qompassai/dotfiles/.config/opendnssec/addns.xml
+ Qompass AI OpenDNSSEC ADDns Config
+ Copyright (C) 2025 Qompass AI, All rights reserved
+-->
+<Adapter>
+ 	<DNS>
+		<TSIG>
+			<Name>secret.example.com</Name>
+			<!-- http://www.iana.org/assignments/tsig-algorithm-names -->
+			<Algorithm>hmac-sha256</Algorithm>
+			<Secret>"$(pass show opendnssec/addnssec)"</Secret>
+		</TSIG>
+
+		<Inbound>
+			<RequestTransfer>
+				<Remote>
+					<Address>1.2.3.4</Address>
+				</Remote>
+				<Remote>
+					<Address>dead:beef::1</Address>
+					<Port>5353</Port>
+					<Key>secret.example.com</Key>
+				</Remote>
+			</RequestTransfer>
+
+			<AllowNotify>
+				<Peer>
+					<Prefix>1.2.3.4</Prefix>
+				</Peer>
+			</AllowNotify>
+		</Inbound>
+
+		<Outbound>
+			<ProvideTransfer>
+				<Peer>
+					<Prefix>1.2.3.5</Prefix>
+					<Key>secret.example.com</Key>
+				</Peer>
+			</ProvideTransfer>
+			<Notify>
+				<Remote>
+					<Address>1.2.3.5</Address>
+				</Remote>
+			</Notify>
+		</Outbound>
+	</DNS>
+</Adapter>

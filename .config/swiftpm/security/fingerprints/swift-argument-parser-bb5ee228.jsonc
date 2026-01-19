@@ -1,0 +1,35 @@
+// /qompassai/dotfiles/.config/swiftpm/security/fingerprints
+// Qompass AI Swiftpm Security Fingerprint Swift Argument Parser Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+  "version" : 2,
+  "versionFingerprints" : {
+    "1.5.0" : {
+      "sourceControl" : {
+        "sourceCode" : {
+          "contentType" : {
+            "sourceCode" : {
+
+            }
+          },
+          "fingerprint" : "$(pass show swiftpm/argparsfp)",
+          "origin" : "https://github.com/apple/swift-argument-parser.git"
+        }
+      }
+    },
+    "1.5.1" : {
+      "sourceControl" : {
+        "sourceCode" : {
+          "contentType" : {
+            "sourceCode" : {
+
+            }
+          },
+          "fingerprint" : "$(pass show swiftpm/argpars151fp)",
+          "origin" : "https://github.com/apple/swift-argument-parser.git"
+        }
+      }
+    }
+  }
+}

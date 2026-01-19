@@ -1,0 +1,46 @@
+# /qompassai/dotfiles./config/wireshark/recent
+# Qompass AI Wireshark Recent Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+capture.auto_scroll: true
+gui.additional_toolbar_show:
+gui.allow_hover_selection: true
+gui.byte_view_show: true
+gui.conversation_tabs:  "TCP", "IPv6"
+gui.conversation_tabs_columns:
+gui.toolbar_main_show: true
+gui.filter_toolbar_show: true
+gui.wireless_toolbar_show: true
+gui.packet_list_show: true
+gui.tree_view_show: true
+gui.packet_diagram_show: true
+gui.statusbar_show: true
+gui.packet_list_colorize: true
+gui.time_format: RELATIVE
+gui.time_precision: NSEC
+gui.seconds_format: HOUR_MIN_SEC
+gui.bytes_view: HEX
+gui.bytes_encoding: FROM_PACKET
+gui.packet_diagram_field_values: true
+gui.follow_show: YAML
+gui.follow_delta: ALL
+gui.show_bytes_decode: BASE64
+gui.show_bytes_show: UTF-8
+gui.geometry_main_upper_pane: 192
+gui.geometry_main_lower_pane: 468
+gui.geometry_main_master_split: 000000ff0000000100000002000000c0000000c000ffffffff010000000200
+gui.geometry_main_extra_split: 000000ff0000000100000002000001d4000001d400ffffffff010000000100
+gui.geom.Lua Console.splitter: 000000ff0000000100000002000000c0000000c001ffffffff010000000200
+column.width:
+        %m, -1,
+        %t, -1,
+        %s, -1,
+        %d, -1,
+        %p, -1,
+        %L, -1,
+        %i, -1
+gui.endpoint_tabs: "TCP", "IPv6"
+gui.endpoint_tabs_columns: 
+gui.rlc_pdus_from_mac_frames: true
+gui.interface_toolbar_show: 
+gui.zoom_level: 0

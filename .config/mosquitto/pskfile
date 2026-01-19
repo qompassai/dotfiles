@@ -1,0 +1,6 @@
+# /qompassai/dotfiles/.config/mosquitto/pskfile
+# Qompass AI Mosquitto PSK Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+client01:1a2b3c4d5e6f7890
+device42:deadbeefcafebabe

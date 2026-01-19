@@ -1,0 +1,12 @@
+# /qompassai/dotfiles/.config/netconfig/netconfig
+# Qompass AI NetConfig Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#####################################################
+# Reference: https://docs.oracle.com/cd/E36784_01/html/E36882/netconfig-4.html
+local      tpi_cots_ord  -     loopback  -      -       -
+rawip      tpi_raw       -     inet      -      -       -
+udp        tpi_clts      v     inet     udp     -       -
+udp6       tpi_clts      v     inet6    udp     -       -
+tcp        tpi_cots_ord  v     inet     tcp     -       -
+tcp6       tpi_cots_ord  v     inet6    tcp     -       -
+unix       tpi_cots_ord  -     loopback  -      -       -

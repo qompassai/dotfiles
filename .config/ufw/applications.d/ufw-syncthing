@@ -1,0 +1,13 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/ufw-syncthing
+# Qompass AI UFW Application Daemon SyncThing Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###############################################################
+[syncthing]
+title=Syncthing
+description=Syncthing file synchronisation
+ports=22000|21027/udp
+
+[syncthing-gui]
+title=Syncthing-GUI
+description=Syncthing web gui
+ports=8384/tcp

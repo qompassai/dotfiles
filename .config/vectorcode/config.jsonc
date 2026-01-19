@@ -1,0 +1,32 @@
+// /qompassai/Dotfiles/.config/vectorcode/config.jsonc
+// Qompass AI VectorCode Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+//////////////////////////////////////////////////////
+{
+    "chunk_filters": {
+ "*": ["^[^a-zA-Z0-9]+$"]
+    },
+    "chunk_size": 2500,
+    "db_log_path": "$XDG_DATA_HOME/vectorcode/",
+    "db_path": "$XDG_DATA_HOME/vectorcode/chromadb/",
+    "db_url": "http://127.0.0.1:8000",
+    "db_settings": null,
+    "embedding_function": "SentenceTransformerEmbeddingFunction",
+    "embedding_params": {
+    "backend": "torch",
+    "device": "cuda"
+    },
+    "encoding": "utf8",
+    "filetype_map": {
+    "php": ["^phtml$"]
+  },
+    "hnsw": {
+    "hnsw:M": 64
+    },
+    "overlap_ratio": 0.2,
+    "query_multiplier": -1,
+    "reranker": "NaiveReranker",
+    "reranker_params": {
+        "model_name_or_path": "cross-encoder/ms-marco-MiniLM-L-6-v2"
+    }
+}

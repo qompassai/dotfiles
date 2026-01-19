@@ -1,0 +1,17 @@
+// /qompassai/scala/.config/coursier/config.jsonc
+// Qompass AI Coursier Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+///////////////////////////////////////////////////// 
+
+{
+	"repositories": [
+		"central",
+		"https://oss.sonatype.org/content/repositories/releases"
+	],
+	"cache": {
+		"location": "${HOME}/.cache/coursier"
+	},
+	"jvm": {
+		"options": ["-Xmx2G", "-Dfile.encoding=UTF-8"]
+	}
+}

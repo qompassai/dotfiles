@@ -1,0 +1,6 @@
+# /qompassai/dotfiles/.config/vde2/libvdemgmt/closemachine.rc
+# Qompass AI VDE2 Libvde Management CloseMachine Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+1 SEND 'logout\n'
+2 EXIT 0

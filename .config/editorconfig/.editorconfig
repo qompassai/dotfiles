@@ -1,0 +1,75 @@
+# /qompassai/dotfiles/.config/editorconfig/.editorconfig
+# Qompass AI Editorconfig
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = tab
+indent_size = 4
+insert_final_newline = false
+max_line_length = 150
+tab_width = 4
+trim_trailing_whitespace = true
+
+[*.{cpp,h,cc,cs,go,ts,js,jsx,tsx,java,verse,versetest}]
+file_header_template =\
+// Copyright (C) 2025 Qompass AI, All Rights Reserved.
+
+[*.{py,sh,lua,yaml,yml}]
+file_header_template =\
+# Copyright (C) 2025 Qompass AI, All Rights Reserved.
+
+[*.{xml,csproj,projitems,shproj,config,nuspec,resx,natvis}]
+file_header_template =\
+<!--
+  Copyright (C) 2025 Qompass AI, All Rights Reserved.
+-->
+
+[{Makefile,*.mk}]
+file_header_template =\
+# Copyright (C) 2025 Qompass AI, All Rights Reserved.
+
+[*.go]
+indent_size = 4
+tab_width = 4
+
+[*.{js,jsx,ts,tsx}]
+indent_size = 2
+
+[*.lua]
+indent_size = 2
+
+[*.py]
+indent_size = 4
+max_line_length = 88
+
+[*.{mojo,🔥}]
+indent_size = 4
+
+[{Makefile,**/Makefile,*.mk,runtime/doc/*.txt}]
+indent_style = tab
+indent_size = 8
+
+[*.rs]
+indent_size = 4
+file_header_template =\
+// Copyright (C) 2025 Qompass AI, All Rights Reserved.
+
+[*.scala]
+indent_size = 2
+
+[Vagrantfile]
+indent_size = 2
+
+[test]
+indent_size = 4
+
+[*.yaml]
+indent_style = space
+indent_size = 2
+
+[*.zig]
+indent_size = 4

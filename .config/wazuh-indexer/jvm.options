@@ -1,0 +1,34 @@
+# /qompassai/dotfiles/.config/wazuh-indexer/jvm.options
+# Qompass AI Wazuh-Indexer JVM Options Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+-Xms4g
+-Xmx4g
+8-10:-XX:+UseConcMarkSweepGC
+8-10:-XX:CMSInitiatingOccupancyFraction=75
+8-10:-XX:+UseCMSInitiatingOccupancyOnly
+10:-XX:-UseConcMarkSweepGC
+10:-XX:-UseCMSInitiatingOccupancyOnly
+11-:-XX:+UseG1GC
+11-:-XX:G1ReservePercent=25
+11-:-XX:InitiatingHeapOccupancyPercent=30
+-Djava.io.tmpdir=${OPENSEARCH_TMPDIR}
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=/var/lib/wazuh-indexer
+-XX:ErrorFile=/var/log/wazuh-indexer/hs_err_pid%p.log
+8:-XX:+PrintGCDetails
+8:-XX:+PrintGCDateStamps
+8:-XX:+PrintTenuringDistribution
+8:-XX:+PrintGCApplicationStoppedTime
+8:-Xloggc:/var/log/wazuh-indexer/gc.log
+8:-XX:+UseGCLogFileRotation
+8:-XX:NumberOfGCLogFiles=32
+8:-XX:GCLogFileSize=64m
+9-:-Xlog:gc*,gc+age=trace,safepoint:file=/var/log/wazuh-indexer/gc.log:utctime,pid,tags:filecount=32,filesize=64m
+18-:-Djava.security.manager=allow
+20-:--add-modules=jdk.incubator.vector
+-Djava.util.concurrent.ForkJoinPool.common.threadFactory=org.opensearch.secure_sm.SecuredForkJoinWorkerThreadFactory
+-Dclk.tck=100
+-Djdk.attach.allowAttachSelf=true
+-Djava.security.policy=file:///etc/wazuh-indexer/opensearch-performance-analyzer/opensearch_security.policy
+--add-opens=jdk.attach/sun.tools.attach=ALL-UNNAMED

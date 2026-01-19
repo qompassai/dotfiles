@@ -1,0 +1,22 @@
+// /qompassai/dotfiles/.config/swiftpm/security/fingerprints
+// Qompass AI Swiftpm Security Fingerprint Swxmlhash Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+  "version" : 2,
+  "versionFingerprints" : {
+    "7.0.2" : {
+      "sourceControl" : {
+        "sourceCode" : {
+          "contentType" : {
+            "sourceCode" : {
+
+            }
+          },
+          "fingerprint" : "$(pass show swiftpm/swxmlhashfp)",
+          "origin" : "https://github.com/drmohundro/SWXMLHash.git"
+        }
+      }
+    }
+  }
+}

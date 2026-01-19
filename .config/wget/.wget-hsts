@@ -1,0 +1,19 @@
+# /qompassai/dotfiles/.config/wget/.wget-hsts
+# Qompass AI WGet Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#####################################################
+# <hostname>	<port>	<incl. subdomains>	<created>	<max-age>
+www.cpan.org	0	1	1746459998	31536000
+www.kernel.org	0	0	1743283957	31557600
+www.pcgamingwiki.com	0	1	1742760473	15552000
+api.mason-registry.dev	0	0	1746477666	63072000
+raw.githubusercontent.com	0	0	1745095634	31536000
+codeload.github.com	0	0	1745969641	31536000
+pypi.org	0	1	1746477666	31536000
+sourceforge.net	0	1	1743284061	31536000
+curl.se	0	0	1744837867	31536000
+open-vsx.org	0	1	1743631774	31536000
+store.steampowered.com	0	0	1743100393	10368000
+people.freebsd.org	0	1	1745969607	31536000
+github.com	0	1	1746477657	31536000
+www.protondb.com	0	0	1743100394	31536000

@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/default/anacron
+# Qompass AI Default Anacron Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+ANACRON_RUN_ON_BATTERY_POWER=no

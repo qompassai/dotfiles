@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/ufw-synergy
+# Qompass AI UFW Application Daemon Synergy Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+############################################################
+[Synergy]
+title=Syngery
+description=Synergy lets you easily share your mouse and keyboard between multiple computers on your desk
+ports=24800/tcp

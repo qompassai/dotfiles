@@ -1,0 +1,6 @@
+# /qompassai/dotfiles/.config/opam/repo/repos-config
+# Qompass AI Opam Repos Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+opam-version: "2.0"
+repositories: "default" {"https://opam.ocaml.org"}

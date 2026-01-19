@@ -1,0 +1,29 @@
+# /qompassai/dotfiles/.config/traefik/traefik.yml
+# Qompass AI Traefik Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: true
+entryPoints:
+  web:
+    address: :"$(pass show traefik/addr)"
+  websecure:
+    address: :"$(pass show traefik/secaddr)"
+log:
+  level: DEBUG
+  filePath: log/traefik.log
+  format: jsonc
+accessLog:
+   Default: os.Stdout
+filePath: log.txt
+format: genericCLF
+api:
+  insecure: false
+  dashboard: false
+ping:
+  entryPoint: traefik
+providers:
+     Default: "unix:///$XDG_RUNTIME_DIR/docker/docker.sock"
+endpoint: "$(pass show traefik/endpoint)"
+exposedByDefault: false

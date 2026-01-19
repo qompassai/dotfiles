@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- /qompassai/dotfiles./config/gtk-engines/glide.xml -->
+<!-- Qompass AI Glide GTK Engine Config -->
+<!-- Copyright (C) 2025 Qompass AI, All rights reserved -->
+<engine schema_version="0.1" module_name="glide" long_name="Glide">
+  <metainfo>
+    <version>2.21.0</version>
+    <website>http://www.gnome.org</website>
+    <author>
+      <name>Andrew Johnson</name>
+      <email>acjgenius@earthlin.net</email>
+    </author>
+  </metainfo>
+</engine>

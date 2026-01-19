@@ -1,0 +1,27 @@
+# /qompassai/dotfiles/.config/nbd-server/config
+# Qompass AI Nbd-Server Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+[generic]
+        user = nbd
+        group = nbd
+        listenaddr = 0.0.0.0
+        port = 10809
+        pidfile = /var/run/nbd-server.pid
+
+[export1]
+        exportname = /export/nbd/export1-file
+        authfile = /export/nbd/export1-authfile
+        timeout = 30
+        filesize = 10000000
+        readonly = false
+        multifile = false
+        copyonwrite = false
+        prerun = dd if=/dev/zero of=%s bs=1k count=500
+        postrun = rm -f %s
+        hostname = 192.168.1.100
+        logfile = /var/log/nbd-export1.log
+
+[otherexport]
+        exportname = /export/nbd/experiment
+        authsupport = true

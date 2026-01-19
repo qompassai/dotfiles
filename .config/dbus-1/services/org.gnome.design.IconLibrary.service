@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.gnome.design.IconLibrary
+Exec=/usr/bin/icon-library --gapplication-service

@@ -1,0 +1,19 @@
+# /qompassai/dotfiles/.config/synapse/log_config.yaml
+# Qompass AI Synapse Log Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#######################################################################
+# https://github.com/matrix-org/synapse/blob/master/docs/workers.md | https://matrix-org.github.io/synapse/v1.40/workers.html
+worker_app: synapse.app.worker
+worker_name: worker1
+worker_replication_host: '127.0.0.1'
+worker_replication_http_port: 9093
+worker_listeners:
+ - type: https
+   bind_address: '127.0.0.1'
+   port: 8083
+   x_forwarded: true
+   resources:
+     - names:
+       - client
+       - federation
+worker_log_config: $XDG_CONFIG_HOME/synapse/log_config.yaml

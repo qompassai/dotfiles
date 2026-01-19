@@ -1,0 +1,97 @@
+# /qompassai/dotfiles/.config/postfix/main.cf.proto
+# Qompass AI Postfix Main Proto Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+compatibility_level = 3.10
+soft_bounce = yes
+queue_directory = /var/spool/postfix
+command_directory = /usr/sbin
+daemon_directory = /usr/libexec/postfix
+data_directory = /var/lib/postfix
+mail_owner = postfix
+#default_privs = nobody
+#myhostname = host.domain.tld
+#myhostname = virtual.domain.tld
+#mydomain = domain.tld
+#myorigin = $myhostname
+#myorigin = $mydomain
+inet_interfaces = all
+inet_interfaces = $myhostname
+inet_interfaces = $myhostname, localhost
+#proxy_interfaces =
+#proxy_interfaces = 1.2.3.4
+mydestination = $myhostname, localhost.$mydomain, localhost
+#mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain
+#mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain,
+#	mail.$mydomain, www.$mydomain, ftp.$mydomain
+local_recipient_maps = unix:passwd.byname $alias_maps
+local_recipient_maps = proxy:unix:passwd.byname $alias_maps
+#local_recipient_maps =
+unknown_local_recipient_reject_code = 550
+mynetworks_style = class
+mynetworks_style = subnet
+mynetworks_style = host
+#mynetworks = 168.100.3.0/28, 127.0.0.0/8
+#mynetworks = $config_directory/mynetworks
+#mynetworks = hash:/etc/postfix/network_table
+#relay_domains = 
+relayhost = $mydomain
+relayhost = [gateway.my.domain]
+relayhost = [mailserver.isp.tld]
+relayhost = uucphost
+relayhost = [an.ip.add.ress]
+#relay_recipient_maps = hash:/etc/postfix/relay_recipients
+in_flow_delay = 1s
+#alias_maps = dbm:/etc/aliases
+#alias_maps = hash:/etc/aliases
+#alias_maps = hash:/etc/aliases, nis:mail.aliases
+#alias_maps = netinfo:/aliases
+alias_maps = lmdb:/etc/postfix/aliases
+#alias_database = dbm:/etc/aliases
+#alias_database = dbm:/etc/mail/aliases
+#alias_database = hash:/etc/aliases
+#alias_database = hash:/etc/aliases, hash:/opt/majordomo/aliases
+alias_database = $alias_maps
+#recipient_delimiter = +
+#home_mailbox = Mailbox
+#home_mailbox = Maildir/
+#mail_spool_directory = /var/mail
+#mail_spool_directory = /var/spool/mail
+#mailbox_command = /some/where/procmail
+#mailbox_command = /some/where/procmail -a "$EXTENSION"
+mailbox_transport = lmtp:unix:/var/imap/socket/lmtp
+mailbox_transport = cyrus
+fallback_transport = lmtp:unix:/file/name
+fallback_transport = cyrus
+#luser_relay = $user@other.host
+#luser_relay = $local@other.host
+#luser_relay = admin+$local
+#header_checks = regexp:/etc/postfix/header_checks
+fast_flush_domains = $relay_domains
+#smtpd_banner = $myhostname ESMTP $mail_name
+#smtpd_banner = $myhostname ESMTP $mail_name ($mail_version)
+#local_destination_concurrency_limit = 2
+#default_destination_concurrency_limit = 20
+debug_peer_level = 2
+#debug_peer_list = 127.0.0.1
+#debug_peer_list = some.domain
+debugger_command =
+	 PATH=/bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
+	 ddd $daemon_directory/$process_name $process_id & sleep 5
+ debugger_command =
+	PATH=/bin:/usr/bin:/usr/local/bin; export PATH; (echo cont;
+	echo where) | gdb $daemon_directory/$process_name $process_id 2>&1
+	>$config_directory/$process_name.$process_id.log & sleep 5
+ debugger_command =
+	PATH=/bin:/usr/bin:/sbin:/usr/sbin; export PATH; screen
+	-dmS $process_name gdb $daemon_directory/$process_name
+	$process_id & sleep 1
+sendmail_path =
+newaliases_path =
+mailq_path =
+setgid_group =
+html_directory =
+manpage_directory =
+sample_directory =
+readme_directory =
+inet_protocols = ipv4

@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/libibverbs.d/siw.driver
+# Qompass AI Libibverbs.d Software iWARP (SIW) Driver Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+driver siw

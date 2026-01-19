@@ -1,0 +1,18 @@
+{
+  "version" : 2,
+  "versionFingerprints" : {
+    "0.7.3" : {
+      "sourceControl" : {
+        "sourceCode" : {
+          "contentType" : {
+            "sourceCode" : {
+
+            }
+          },
+          "fingerprint" : "7d9a5ce307528578dfa777d505496bd5f544ad94",
+          "origin" : "https://github.com/swiftlang/swift-markdown.git"
+        }
+      }
+    }
+  }
+}

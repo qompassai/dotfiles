@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/qompassai/dotfiles/.config/opt/furmark/conf.xml
+# Qompass AI Furmark Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+-->
+<glslhacker_config 
+		enable_window_offsets="0"
+		window_offset_x="-1"
+		window_offset_y="-1"
+		lts="0"
+/>

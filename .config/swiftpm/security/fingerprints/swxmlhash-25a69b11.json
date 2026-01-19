@@ -1,0 +1,18 @@
+{
+  "version" : 2,
+  "versionFingerprints" : {
+    "7.0.2" : {
+      "sourceControl" : {
+        "sourceCode" : {
+          "contentType" : {
+            "sourceCode" : {
+
+            }
+          },
+          "fingerprint" : "a853604c9e9a83ad9954c7e3d2a565273982471f",
+          "origin" : "https://github.com/drmohundro/SWXMLHash.git"
+        }
+      }
+    }
+  }
+}

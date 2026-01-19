@@ -1,0 +1,10 @@
+# /qompassai/dotfiles/.config/wazuh-indexer/opensearch-security/nodes_dn.yml
+# Qompass AI Wazuh-Indexer OpenSearch Security Nodes DN Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+##################################################################################
+_meta:
+  type: "nodesdn"
+  config_version: 2
+cluster1:
+   nodes_dn:
+       - CN=*.example.com

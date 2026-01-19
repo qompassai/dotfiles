@@ -1,0 +1,13 @@
+# /qompassai/dotfiles/.config/netctl/wireless-wpa
+# Qompass AI NetCtl Wireless-WPA Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+Description='Qompass AI simple WPA encrypted wireless connection'
+Interface=wlan0
+Connection=wireless
+Security=wpa
+IP=dhcp
+ESSID='$(pass show netctl/wwpaessid)'
+Key='$(pass show netctl/wwpakey)'
+#Hidden=yes
+#Priority=10

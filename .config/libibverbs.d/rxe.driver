@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/libibverbs.d/rxe.driver
+# Qompass AI Libibverbs.d QLogic QL4xxx RoCE Driver Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+driver rxe

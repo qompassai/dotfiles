@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/ufw-tailscale
+# Qompass AI UFW Application Daemon TailScale Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###############################################################
+[tailscale]
+title=Tailscale
+description=Tailscale is a a mesh VPN that makes it easy to connect your devices, wherever they are
+ports=3478,41641/udp

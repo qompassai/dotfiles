@@ -1,0 +1,5 @@
+PACKAGES=english:babel,latin1:inputenc,\
+T1:fontenc,amsmath,graphicx,color
+DOC_CLASS=article
+DOC_OPTIONS=a4paper,10pt
+GV=1

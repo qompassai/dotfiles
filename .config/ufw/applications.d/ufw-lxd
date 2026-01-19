@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/ufw-lxd
+# Qompass AI UFW Application Daemon LXD Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+[LXD]
+title=LXD
+description=LXD is a next generation system container manager
+ports=8443/tcp

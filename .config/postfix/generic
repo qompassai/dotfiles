@@ -1,0 +1,10 @@
+# /qompassai/dotfiles/.config/postfix/generic
+# Qompass AI Postfix Generic Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#####################################################
+phaedrus@localhost          matt@aflabs.io
+phaedrus                   matt@aflabs.io
+otherlocal@localhost        foamedmap@gmail.com
+anotherlocal@localhost      matt.a.porter26@gmail.com
+@localhost                  map@qompass.ai
+@yourhostname               map@qompass.ai

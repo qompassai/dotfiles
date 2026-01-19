@@ -1,0 +1,8 @@
+# /qompassai/dofiles/.config/mkinitcpio-systemd-tool/config/crypttab
+# Qompass AI Mkinitcpio Systemd Tool Crypttab Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+
+# <mapper-name>   <block-device>       <password/keyfile>   <crypto-options>
+#  root           UUID={{UUID_ROOT}}       none                luks
+#  swap           UUID={{UUID_SWAP}}       none                luks

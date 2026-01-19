@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/drbl/client-ip-hostname.conf
+# Qompass AI DRBL Client IP Host Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+# 192.168.1.1 tux
+# 192.168.51.1 forge
+# 192.168.51.2 Tiger
+# 192.168.1.10 Lion

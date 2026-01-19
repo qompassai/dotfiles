@@ -1,0 +1,49 @@
+# /qompassai/dotfiles/.config/msmtp/config
+# Qompass AI MSMTP Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+defaults
+auth           on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile        ~/.msmtp.log
+
+account aflabs
+from matt@aflabs.io
+user matt@aflabs.io
+host smtp.aflabs.io
+port 587
+tls_starttls on
+passwordeval "pass aflabs/smtp"
+
+account gmail-foamedmap
+from foamedmap@gmail.com
+user foamedmap@gmail.com
+host smtp.gmail.com
+port 587
+tls_starttls on
+passwordeval "pass gmail/foamedmap"
+
+account gmail-map26
+from matt.a.porter26@gmail.com
+user matt.a.porter26@gmail.com
+host smtp.gmail.com
+port 587
+tls_starttls on
+passwordeval "pass gmail/map26"
+
+account qompass
+from        map@qompass.ai
+user        map@qompass.ai
+host        smtp.qompass.ai
+passwordeval "pass qompass/smtp"
+tls_starttls on
+
+account wsu
+from matthew.a.porter@wsu.edu
+user matthew.a.porter@wsu.edu
+host        smtp.office365.com
+port 587
+tls_starttls on
+passwordeval "pass wsu/smtp"
+account default : qompass

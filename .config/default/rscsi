@@ -1,0 +1,10 @@
+# /qompassai/dotfiles/.config/default/rscsi
+# Qompass AI Default Rscsi Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+DEBUG=/tmp/RSCSI
+USER=rscsi
+#ACCESS=rscsi	sparky	-1	-1	-1	-1
+#ACCESS=rscsi	sparky	0	-1	6	-1
+#ACCESS=rscsi	sparky	1	-1	3	-1
+#ACCESS=rscsi	sparky	1	-1	4	-1

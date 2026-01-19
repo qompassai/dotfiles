@@ -1,0 +1,7 @@
+// /qompassai/dotfiles/.config/niri/config_binds.kdl
+// Qompass AI Niri Binds Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////
+// References: https://github.com/Vortriz/awesome-niri | https://github.com/YaLTeR/niri
+binds {
+}

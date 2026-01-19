@@ -1,0 +1,17 @@
+# /qompassai/dotfiles/.config/notmuch/default/config
+# Qompass AI Notmuch Default Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#######################################################
+[database]
+path=$XDG_DATA_HOME/mail
+[user]
+name=Matt A. Porter
+primary_email=map@qompass.ai
+other_email=matt@aflabs.io;foamedmap@gmail.com;matt.a.porter26@gmail.com;matthew.a.porter@wsu.edu;
+[new]
+tags=inbox;unread
+ignore=.git;.notmuch;tmp;*.lock
+[search]
+exclude_tags=deleted;spam
+[maildir]
+synchronize_flags=true

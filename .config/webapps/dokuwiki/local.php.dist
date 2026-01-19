@@ -1,0 +1,11 @@
+<?php
+/*
+* /qompassai/dotfiles/.config/webapps/dokuwiki/local.php.dist
+* Qompass AI DokuWiki Local Config
+* Copyright (C) 2025 Qompass AI, All rights reserved
+ ****************************************************
+ */
+$conf['title']       = 'My Wiki';
+//$conf['useacl']      = 1;
+//$conf['superuser']   = '$(pass show dokuwiki/su)';
+?>

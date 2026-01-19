@@ -1,0 +1,12 @@
+# /qompassai/dotfiles/.config/netctl/tuntap
+# Qompass AI NetCtl Tuntap Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+Description='Tuntap connection'
+Interface=tun0
+Connection=tuntap
+Mode='tun'
+User='nobody'
+Group='nobody'
+#IP=static
+#Address='10.10.1.2/16'

@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<!--
+ /qompassai/dotfiles/.config/weasis/lib/weasis-Weasis-MimeINfo.xml
+ Qompass AI Weasis MimeInfo Config
+ Copyright (C) 2025 Qompass AI, All rights reserved
+-->
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+  <mime-type type="application/dicom">
+    <comment>DICOM medical imaging data</comment>
+    <glob pattern="*.dcm"></glob>
+  </mime-type>
+</mime-info>

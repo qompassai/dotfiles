@@ -1,0 +1,21 @@
+# /qompassai/dotfiles/.config/metasploit/database.yml
+# Qompass AI Metasploit Database Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+# References: http://r-7.co/MSF-DEV#set-up-postgresql
+development: &pgsql
+  adapter: postgresql
+  database: metasploit_framework_development
+  username: metasploit_framework_development
+  password: "$(pass show metasploit/pass)"
+  host: localhost
+  port: 5432
+  pool: 200
+  timeout: 5
+production: &production
+  <<: *pgsql
+test:
+  <<: *pgsql
+  database: metasploit_framework_test
+  username: metasploit_framework_test
+  password: "$(pass show metasploit_test/pass)"

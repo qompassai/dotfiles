@@ -1,0 +1,9 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/mosh
+# Qompass AI UFW Application Daemon Mosh Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+server:
+[mosh]
+title=Mosh (mobile shell)
+description=Mobile shell that supports roaming and intelligent local echo
+ports=60000:61000/udp

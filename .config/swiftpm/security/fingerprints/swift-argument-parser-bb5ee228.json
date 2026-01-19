@@ -1,0 +1,18 @@
+{
+  "version" : 2,
+  "versionFingerprints" : {
+    "1.6.2" : {
+      "sourceControl" : {
+        "sourceCode" : {
+          "contentType" : {
+            "sourceCode" : {
+
+            }
+          },
+          "fingerprint" : "cdd0ef3755280949551dc26dee5de9ddeda89f54",
+          "origin" : "https://github.com/apple/swift-argument-parser.git"
+        }
+      }
+    }
+  }
+}

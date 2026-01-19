@@ -1,0 +1,13 @@
+# neovim.yaml
+# Qompass AI - [Add description here]
+# Copyright (C) 2025 Qompass AI, All rights reserved
+# ----------------------------------------
+--- # Neovim std extension for Selene
+
+base: lua51
+
+globals:
+  vim:
+    any: true
+    property: full-write
+

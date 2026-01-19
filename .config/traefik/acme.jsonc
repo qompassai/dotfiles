@@ -1,0 +1,38 @@
+// /qompassai/dotfiles/.config/traefik/acme.jsonc
+// Qompass AI Traefik Acme Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+  "letsencrypt": {
+    "Account": {
+      "Email": "$(pass show traefik/email)",
+      "Registration": {
+        "body": {
+          "status": "valid",
+          "contact": [
+            "$(pass show traefik/contact)"
+          ],
+          "orders": "$(pass show traefik/orders)"
+        },
+        "uri": "$(pass show traefik/uri)"
+      },
+      "PrivateKey": "$(pass show traefik/pk)",
+      "KeyType": "$(pass show traefik/kt)"
+    },
+    "Certificates": [
+      {
+        "domain": {
+          "main": "qompass.ai",
+          "sans": [
+            "www.qompass.ai",
+            "admin.qompass.ai"
+          ]
+        },
+        "certificate": "$(pass show traefik/cert)",
+        "key": "$(pass show traefik/certk)",
+        "Store": "default"
+      },
+      }
+    ]
+  }
+}

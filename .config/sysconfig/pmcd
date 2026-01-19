@@ -1,0 +1,11 @@
+# /qompassai/dotfiles/.config/sysconfig/pmcd
+# Qompass AI SysConfig PMCD Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+PMCD_LOCAL=1
+PMCD_MAXPENDING=5
+PMCD_ROOT_AGENT=1
+PMCD_ROOT_AGENT=1 
+PMCD_RESTART_AGENTS=1
+PMCD_WAIT_TIMEOUT=60
+PCP_NSS_INIT_MODE=readonly

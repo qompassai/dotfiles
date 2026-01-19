@@ -1,0 +1,15 @@
+# /qompassai/dotfiles/.config/sigma/ecs-azure-ad_auditlogs.yml
+# Qompass AI Github Sigma Azure AD Audit Logs Elastic Search Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+title: Azure AD Audit Logs Elasticsearch ecs mapping
+order: 20
+backends:
+  - es-qs
+  - es-rule
+fieldmappings:
+  category: azure.auditlogs.properties.category
+  activityDisplayName: event.action
+  loggedByservice: auditlogs.properties.logged_by_service
+  result: event.outcome
+  initiatedBy.user.userPrincipalName: azure.auditlogs.properties.initiated_by.user.userPrincipalName

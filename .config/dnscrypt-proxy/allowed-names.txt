@@ -1,0 +1,15 @@
+# /qompassai/dotfiles/.config/dnscrypt-proxy/allowed-names.txt
+# Qompass AI DNSCrypt-Proxy Allowed Names Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#############################################################
+## ads.*
+## *.example.com
+## example.com
+## =example.com
+## *sex*
+## ads[0-9]*
+## ads*.example*
+tracker.debian.org
+googleadservices.com
+# *.youtube.*  @time-to-play
+# facebook.com @play

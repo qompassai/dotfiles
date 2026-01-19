@@ -1,0 +1,177 @@
+# define modules runtime quarantine configuration
+#$env:MODULES_RUN_QUARANTINE = 'ENVVARNAME'
+
+
+if ($IsWindows) {
+   # define Modules-specific environment variables
+   $env:MODULESHOME = (Split-Path -Parent -Path (Split-Path -Parent -Path $MyInvocation.MyCommand.Definition)) | Resolve-Path
+   $env:MODULES_CMD = Join-Path -Path $env:MODULESHOME -ChildPath 'libexec/modulecmd.tcl'
+
+   # common module command (handles call to modulecmd.tcl, execution of
+   # generated commands and exit codes)
+   function global:_envmodule_common {
+      param([Parameter(ValueFromRemainingArguments)] [string[]] $allargs)
+      $global:_mlstatus = $true
+      $cmd_is_query = "$allargs" -match '(is-loaded|is-avail|is-used|is-saved)'
+
+      # setup quarantine if defined
+      $_mlre_set = ''
+      $_mlre_reset = ''
+      if ($env:MODULES_RUN_QUARANTINE) {
+         foreach ($_mlv in $env:MODULES_RUN_QUARANTINE -split ' ') {
+            if ($_mlv -match '^[A-Za-z_][A-Za-z0-9_]*$') {
+               $_mlv_value = [System.Environment]::GetEnvironmentVariable($_mlv)
+               if ($_mlv_value) {
+                  $_mlre_set += "`$env:__MODULES_QUAR_${_mlv}='$_mlv_value';"
+                  $_mlre_reset = "Remove-Item -Path env:__MODULES_QUAR_${_mlv};" + $_mlre_reset
+               }
+               $_mlrv = "MODULES_RUNENV_$_mlv"
+               $_mlrv_value = [System.Environment]::GetEnvironmentVariable($_mlrv)
+               $_mlre_set += "`$env:$_mlv='$_mlrv_value';"
+               $_mlre_reset = "`$env:$_mlv=`"`$env:__MODULES_QUAR_${_mlv}`";" + $_mlre_reset
+            }
+         }
+         if ($_mlre_set -ne '') {
+            $_mlre_set += "`$env:__MODULES_QUARANTINE_SET=1"
+            $_mlre_reset += "Remove-Item -Path env:__MODULES_QUARANTINE_SET"
+         }
+      }
+
+      if ($_mlre_set -ne '') {
+         Invoke-Expression "$_mlre_set"
+         Remove-Variable "_mlre_set"
+      }
+
+      $output = & tclsh "$env:MODULES_CMD" pwsh $allargs 2>&1
+
+      if ($_mlre_reset -ne '') {
+         Invoke-Expression "$_mlre_reset"
+         Remove-Variable "_mlre_reset"
+      }
+
+      $outmsg = ($output | ? {$_.gettype().Name -ne "ErrorRecord"}) -join "`n"
+      $errmsg = ($output | ? {$_.gettype().Name -eq "ErrorRecord"}) -join "`n"
+      $errmsg = $errmsg.replace(
+         "System.Management.Automation.RemoteException", ""
+      )
+      if ($outmsg) {
+         Invoke-Expression $outmsg
+      }
+      if (($_mlstatus -eq $false) -and (!$cmd_is_query)) {
+         $global:LastExitCode = 1
+      } else {
+         $global:LastExitCode = 0
+      }
+
+      $mlredir = $true
+      if ($null -ne $env:MODULES_REDIRECT_OUTPUT) {
+         if ($env:MODULES_REDIRECT_OUTPUT -eq '0') {
+            $mlredir = $false
+         }
+      }
+      if ("$allargs" -match '--no-redirect') {
+         $mlredir = $false
+      } elseif ("$allargs" -match '--redirect') {
+         $mlredir = $true
+      }
+
+      if ($errmsg) {
+         if ($_mlstatus -eq $false) {
+            $global:LastExitCode = 1
+         } else {
+            if ($mlredir) {
+               [Console]::WriteLine($errmsg)
+            } else {
+               [Console]::Error.WriteLine($errmsg)
+            }
+            $errmsg = $null
+         }
+      }
+
+      if ((($_mlstatus -ne $true) -and ($_mlstatus -ne $false)) -or ($cmd_is_query)) {
+         return $errmsg,$_mlstatus
+      }
+      return $errmsg,$null
+   }
+
+   # main module command (envmodule because module is already a pwsh keyword)
+   function global:envmodule {
+      param([Parameter(ValueFromRemainingArguments)] [string[]] $allargs)
+      $errmsg,$retmsg = & _envmodule_common $allargs
+      if ("$errmsg" -ne "") {
+         $PSCmdlet.ThrowTerminatingError(
+            [System.Management.Automation.ErrorRecord]::new(
+               ([System.Exception]"$errmsg"),
+               'error while running modulecmd.tcl via envmodule',
+               [System.Management.Automation.ErrorCategory]::FromStdErr,
+               $null
+         ))
+      }
+      if ("$retmsg" -ne "") {
+         return $retmsg
+      }
+   }
+
+   # ml shortcut for module command
+   function global:ml {
+      param([Parameter(ValueFromRemainingArguments)] [string[]] $allargs)
+      $mlargs = @('ml')
+      if ($allargs.Length) {
+         $mlargs += $allargs
+      }
+      $errmsg,$retmsg = _envmodule_common $mlargs
+      if ("$errmsg" -ne "") {
+         $PSCmdlet.ThrowTerminatingError(
+            [System.Management.Automation.ErrorRecord]::new(
+               ([System.Exception]"$errmsg"),
+               'error while running modulecmd.tcl via ml',
+               [System.Management.Automation.ErrorCategory]::FromStdErr,
+               $null
+         ))
+      }
+      if ("$retmsg" -ne "") {
+         return $retmsg
+      }
+   }
+
+   # enable a default modulepath directory
+   & envmodule use "$env:MODULESHOME/modulefiles"
+} else {
+   $_mlre_set = ''
+   $_mlre_reset = ''
+
+   # setup quarantine if defined
+   if ($env:MODULES_RUN_QUARANTINE) {
+      foreach ($_mlv in $env:MODULES_RUN_QUARANTINE -split ' ') {
+         if ($_mlv -match '^[A-Za-z_][A-Za-z0-9_]*$') {
+            $_mlv_value = [System.Environment]::GetEnvironmentVariable($_mlv)
+            if ($_mlv_value) {
+               $_mlre_set += "`$env:__MODULES_QUAR_${_mlv}='$_mlv_value';"
+               $_mlre_reset = "Remove-Item -Path env:__MODULES_QUAR_${_mlv};" + $_mlre_reset
+            }
+            $_mlrv = "MODULES_RUNENV_$_mlv"
+            $_mlrv_value = [System.Environment]::GetEnvironmentVariable($_mlrv)
+            $_mlre_set += "`$env:$_mlv='$_mlrv_value';"
+            $_mlre_reset = "`$env:$_mlv=`"`$env:__MODULES_QUAR_${_mlv}`";" + $_mlre_reset
+         }
+      }
+      if ($_mlre_set -ne '') {
+         $_mlre_set += "`$env:__MODULES_QUARANTINE_SET=1"
+         $_mlre_reset += "Remove-Item -Path env:__MODULES_QUARANTINE_SET"
+      }
+   }
+
+   if ($_mlre_set -ne '') {
+      Invoke-Expression "$_mlre_set"
+      Remove-Variable "_mlre_set"
+   }
+
+   # define module command and surrounding initial environment (default value
+   # for MODULESHOME, MODULEPATH, LOADEDMODULES and parse of init config files)
+   (& "/usr/bin/tclsh" "/usr/lib/env-modules/modulecmd.tcl" pwsh autoinit) -join "`n" | Invoke-Expression
+
+   if ($_mlre_reset -ne '') {
+      Invoke-Expression "$_mlre_reset"
+      Remove-Variable "_mlre_reset"
+   }
+}

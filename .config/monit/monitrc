@@ -1,0 +1,54 @@
+# /qompassai/dotfiles/.config/monit/monitrc
+# Qompass AI Monit Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+set daemon  30            
+set log syslog
+set pidfile /var/run/monit.pid
+set idfile /var/.monit.id
+set statefile /var/.monit.state
+ set limits {
+     programOutput:     512 B,
+     sendExpectBuffer:  256 B,
+     fileContentBuffer: 512 B,
+     httpContentBuffer: 1 MB,
+     networkTimeout:    5 seconds
+     programTimeout:    300 seconds
+     stopTimeout:       30 seconds
+     startTimeout:      30 seconds
+     restartTimeout:    30 seconds
+     execTimeout:       0 seconds
+ }
+ set ssl {
+     verify     : enable,
+     selfsigned : reject 
+ }
+set mailserver mail.bar.baz, 
+                backup.bar.baz port 10025, 
+                localhost
+set eventqueue
+     basedir /var/monit
+     slots 100 
+ set mmonit
+     http://monit:monit@192.168.1.10:8080/collector
+ statement is missing::
+ --8<--
+ set mail-format {
+   from:    Monit <monit@$HOST>
+   subject: monit alert --  $EVENT $SERVICE
+   message: $EVENT Service $SERVICE
+                 Date:        $DATE
+                 Action:      $ACTION
+                 Host:        $HOST
+                 Description: $DESCRIPTION
+
+            Your faithful employee,
+            Monit
+ }
+ --8<--
+    allow localhost
+    allow admin:monit
+    with ssl {
+        pemfile: /etc/ssl/certs/monit.pem
+    }
+  include /etc/monit.d/*

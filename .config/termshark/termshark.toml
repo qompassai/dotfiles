@@ -1,0 +1,19 @@
+# /qompassai/dotfiles/.config/termshark/termshark.conf
+# Qompass AI TermShark Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+[main]
+auto-scroll = true
+color-scheme = "dark"
+color-tsharks = ['/usr/bin/tshark']
+default-interface = "eth0"
+default-pcap = "/path/to/capture.pcap"
+display-columns = ["No.", "Time", "Source", "Destination", "Protocol", "Length", "Info"]
+last-used-tshark = '/usr/bin/tshark'
+max-history = 200
+profiles-dir = "$XDG_CONFIG_HOME/termshark/profiles"
+recent-files = [""]
+search-results-highlighting = true
+startup-display-filter = "http or dns"
+theme = "dark"
+validated-tsharks = ['/usr/bin/tshark']

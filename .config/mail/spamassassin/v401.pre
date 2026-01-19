@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/mail/spamassassin/v401.pre
+# Qompass AI SpamAssassin v401 Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+loadplugin Mail::SpamAssassin::Plugin::AuthRes

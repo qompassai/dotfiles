@@ -1,0 +1,19 @@
+// /qompassai/dotfiles/.config/containers/policy.jsonc
+// Qompass AI Containers Policy Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+// Reference: https://docs.podman.io/en/latest/_static/api.html
+{
+    "default": [
+        {
+            "type": "insecureAcceptAnything"
+        }
+    ],
+    "transports":
+        {
+            "docker-daemon":
+                {
+                    "": [{"type":"insecureAcceptAnything"}]
+                }
+        }
+}

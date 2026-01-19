@@ -1,0 +1,16 @@
+noblacklist /var/lib/pacman
+noblacklist /var/cache/pacman
+noblacklist ${HOME}/.cache/paru
+noblacklist ${HOME}/.config/paru
+whitelist /var/lib/pacman
+whitelist /var/cache/pacman
+whitelist ${HOME}/.cache/paru
+whitelist ${HOME}/.config/paru
+include /etc/firejail/default.profile
+noblacklist ${PATH}/sudo
+noblacklist /etc/sudoers
+noblacklist /etc/sudoers.d
+whitelist /var/lib/pacman
+whitelist /var/cache/pacman
+whitelist /usr/bin/sudo
+ignore noroot

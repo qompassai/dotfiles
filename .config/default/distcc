@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/default/distcc
+# Qompass AI Default DistCC Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+STARTDISTCC=true

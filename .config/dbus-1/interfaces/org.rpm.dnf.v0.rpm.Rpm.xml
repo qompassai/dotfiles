@@ -1,0 +1,470 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+
+<!--
+Copyright Contributors to the libdnf project.
+
+This file is part of libdnf: https://github.com/rpm-software-management/libdnf/
+
+Libdnf is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 2.1 of the License, or
+(at your option) any later version.
+
+Libdnf is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with libdnf.  If not, see <https://www.gnu.org/licenses/>.
+-->
+
+<node>
+<!-- org.rpm.dnf.v0.rpm.Rpm:
+   @short_description: Interface to RPM packages
+-->
+<interface name="org.rpm.dnf.v0.rpm.Rpm">
+    <!--
+        list:
+        @options: an array of key/value pairs
+        @packages: array of returned packages with requested attributes
+
+        Get list of packages that match to given filters.
+        Since the method returns packages directly in the D-Bus method reply
+        message, which has a limited size, there is a possibility that the
+        requested package set size would exceed this limit. If you request a
+        large number of packages and/or a great number of package attributes,
+        please consider using the list_fd() method.
+
+        Following options and filters are supported:
+
+            - package_attrs: list of strings
+                list of package attributes that are returned. Supported attributes are name, epoch, version, release, arch, repo_id, from_repo_id, is_installed, install_size, download_size, buildtime, sourcerpm, summary, url, license, description, files, changelogs, provides, requires, requires_pre, conflicts, obsoletes, recommends, suggests, enhances, supplements, evr, nevra, full_nevra, reason, vendor, group.
+            - with_nevra: bool (default true)
+                match patterns against available packages NEVRAs
+            - with_provides: bool (default true)
+                match patterns against available packages provides
+            - with_filenames: bool (default true)
+                match patterns against names of the files in available packages
+            - with_binaries: bool (default true)
+                match patterns against names of the binaries in `/usr/(s)bin` in available packages
+            - with_src: bool (default true)
+                include source rpms into the results
+            - icase: bool (default true)
+                ignore case while matching patterns
+
+            - patterns: list of strings
+                any package matching to any of patterns is returned
+            - scope: string (default "all")
+                limit packages to one of "all", "installed", "available", "upgrades", "upgradable"
+            - arch: list of strings
+                limit the resulting set only to packages of given architectures
+            - repo: list of strings
+                limit the resulting set only to packages from given repositories
+            - latest-limit: int
+                limit the resulting set to only <limit> of latest packages for every name and architecture
+            - whatprovides: list of strings
+                limit the resulting set only to packages that provide any of given capabilities
+            - whatdepends: list of strings
+                limit the resulting set only to packages that require, enhance, recommend, suggest or supplement any of given capabilities
+            - whatrequires: list of strings
+                limit the resulting set only to packages that require any of given capabilities
+            - whatrecommends: list of strings
+                limit the resulting set only to packages that recommend any of given capabilities
+            - whatenhances: list of strings
+                limit the resulting set only to packages that enhance any of given capabilities
+            - whatsuggests: list of strings
+                limit the resulting set only to packages that suggest any of given capabilities
+            - whatsupplements: list of strings
+                limit the resulting set only to packages that supplement any of given capabilities
+            - whatobsoletes: list of strings
+                limit the resulting set only to packages that obsolete any of given capabilities
+            - whatconflicts: list of strings
+                limit the resulting set only to packages that conflict with any of given capabilities
+
+
+        Unknown options are ignored.
+    -->
+    <method name="list">
+        <arg name="options" type="a{sv}" direction="in"/>
+        <arg name="packages" type="aa{sv}" direction="out"/>
+    </method>
+
+    <!--
+        list_fd:
+        @options: an array of key/value pairs
+        @file_descriptor: File descriptor opened for writing used to transfer data
+        @transfer_id: Identifier of this transfer. Used for signaling the end of transfer.
+
+        Retrieve a list of packages that match the provided filters.
+        Packages are transmitted as a stream of JSON objects, with each JSON object representing one package as a dictionary. This stream is then written into the given file_descriptor.
+        Unlike the list() method, this approach does not encounter issues with large output data.
+        The server has a 30-second timeout during which it waits for the client to read data from the pipe if the pipe is full.
+
+        The same options as in list() method are supported.
+    -->
+    <method name="list_fd">
+        <arg name="options" type="a{sv}" direction="in"/>
+        <arg name="file_descriptor" type="h" direction="in"/>
+        <arg name="transfer_id" type="s" direction="out"/>
+    </method>
+
+    <!--
+        install:
+        @pkg_specs: an array of package specifications to be installed on the system
+        @options: an array of key/value pairs to modify install behavior
+
+        Mark packages specified by @pkg_specs for installation.
+
+        Following @options are supported:
+
+            - repo_ids: list of strings
+                Identifiers of the repos from which the packages could be installed.
+            - skip_broken: boolean, default false
+                Whether solver can skip packages with broken dependencies to resolve transaction
+            - skip_unavailable: boolean, default false
+                Whether nonexisting packages can be skipped.
+
+        Unknown options are ignored.
+    -->
+    <method name="install">
+        <arg name="pkg_specs" type="as" direction="in" />
+        <arg name="options" type="a{sv}" direction="in" />
+    </method>
+
+    <!--
+        upgrade:
+        @pkg_specs: an array of package specifications to be upgraded on the system
+        @options: an array of key/value pairs to modify upgrade behavior
+
+        Mark packages specified by @pkg_specs for upgrade.
+
+        Following @options are supported:
+
+            - repo_ids: list of strings
+                Identifiers of the repos from which the packages could be upgraded.
+
+        Unknown options are ignored.
+    -->
+    <method name="upgrade">
+        <arg name="pkg_specs" type="as" direction="in" />
+        <arg name="options" type="a{sv}" direction="in" />
+    </method>
+
+    <!--
+        remove:
+        @pkg_specs: an array of package specifications to be removed on the system
+        @options: an array of key/value pairs to modify remove behavior
+
+        Mark packages specified by @pkg_specs for removal.
+
+        Unknown options are ignored.
+    -->
+    <method name="remove">
+        <arg name="pkg_specs" type="as" direction="in" />
+        <arg name="options" type="a{sv}" direction="in" />
+    </method>
+
+    <!--
+        distro_sync:
+        @pkg_specs: array of package specifications to synchronize to the latest available versions
+        @options: an array of key/value pairs to modify distro_sync behavior
+
+        Following @options are supported:
+
+        Unknown options are ignored.
+    -->
+    <method name="distro_sync">
+        <arg name="pkg_specs" type="as" direction="in" />
+        <arg name="options" type="a{sv}" direction="in" />
+    </method>
+
+    <!--
+        downgrade:
+        @pkg_specs: an array of package specifications to be downgraded on the system
+        @options: an array of key/value pairs to modify downgrade behavior
+
+        Mark packages specified by @pkg_specs for downgrade.
+
+        Following @options are supported:
+
+        Unknown options are ignored.
+    -->
+    <method name="downgrade">
+        <arg name="pkg_specs" type="as" direction="in" />
+        <arg name="options" type="a{sv}" direction="in" />
+    </method>
+
+    <!--
+        reinstall:
+        @pkg_specs: an array of package specifications to be reinstalled on the system
+        @options: an array of key/value pairs to modify reinstall behavior
+
+        Mark packages specified by @pkg_specs for reinstall.
+
+        Following @options are supported:
+
+        Unknown options are ignored.
+    -->
+    <method name="reinstall">
+        <arg name="pkg_specs" type="as" direction="in" />
+        <arg name="options" type="a{sv}" direction="in" />
+    </method>
+
+    <!--
+        system_upgrade:
+        @options: an array of key/value pairs to modify system_upgrade behavior
+
+        Prepare a transaction for upgrade to the new distribution release. The prepared transaction should be executed during reboot (see `offline` option of the `do_transaction` method of the `Goal` interface).
+        The method relies on the `releasever` option being correctly set to the new distribution release during the `open_session()` call.
+
+        Following @options are supported:
+
+            - mode: string (one of "distrosync", "upgrade", default is "distrosync")
+                By default the system_upgrade behaves like `dnf distro-sync`, always installing packages from the new release, even if they are older than the currently installed version. If set to "upgrade", packages from the new release are not installed if they are older than what is currently installed (behave like `dnf upgrade`).
+            - interactive: boolean, default true
+                Set to "true", when the operation is done by a user, thus user interaction like password prompts can be done.
+
+        Unknown options are ignored.
+    -->
+    <method name="system_upgrade">
+        <arg name="options" type="a{sv}" direction="in" />
+    </method>
+
+    <!--
+        transaction_elem_progress:
+        @session_object_path: object path of the dnf5daemon session
+        @nevra: full NEVRA of the package
+        @processed: amount already processed
+        @total: total to process
+
+        Overall progress in transaction item processing. Called right before an item is processed.
+    -->
+    <signal name="transaction_elem_progress">
+        <arg name="session_object_path" type="o" />
+        <arg name="nevra" type="s" />
+        <arg name="processed" type="t" />
+        <arg name="total" type="t" />
+    </signal>
+
+    <!--
+        transaction_before_begin:
+        @session_object_path: object path of the dnf5daemon session
+        @total: number of elements in the rpm transaction
+
+        Send right before the rpm transaction is run.
+    -->
+    <signal name="transaction_before_begin">
+        <arg name="session_object_path" type="o" />
+        <arg name="total" type="t" />
+    </signal>
+
+    <!--
+        transaction_after_complete:
+        @session_object_path: object path of the dnf5daemon session
+        @success: true if the rpm transaction was completed successfully
+
+        Send right after the rpm transaction run finished.
+    -->
+    <signal name="transaction_after_complete">
+        <arg name="session_object_path" type="o" />
+        <arg name="success" type="b" />
+    </signal>
+
+    <!--
+        transaction_action_start:
+        @session_object_path: object path of the dnf5daemon session
+        @nevra: full NEVRA of the package
+        @action: one of the dnfdaemon::RpmTransactionItem::Actions enum
+        @total: total to process
+
+        Processing (installation or removal) of the package has started.
+    -->
+    <signal name="transaction_action_start">
+        <arg name="session_object_path" type="o" />
+        <arg name="nevra" type="s" />
+        <arg name="action" type="u" />
+        <arg name="total" type="t" />
+    </signal>
+
+    <!--
+        transaction_action_progress:
+        @session_object_path: object path of the dnf5daemon session
+        @nevra: full NEVRA of the package
+        @processed: amount already processed
+        @total: total to process
+
+        Progress in processing of the package.
+    -->
+    <signal name="transaction_action_progress">
+        <arg name="session_object_path" type="o" />
+        <arg name="nevra" type="s" />
+        <arg name="processed" type="t" />
+        <arg name="total" type="t" />
+    </signal>
+
+    <!--
+        transaction_action_stop:
+        @session_object_path: object path of the dnf5daemon session
+        @nevra: full NEVRA of the package
+        @total: total processed
+
+        Processing of the package has finished.
+    -->
+    <signal name="transaction_action_stop">
+        <arg name="session_object_path" type="o" />
+        <arg name="nevra" type="s" />
+        <arg name="total" type="t" />
+    </signal>
+
+    <!--
+        transaction_script_start:
+        @session_object_path: object path of the dnf5daemon session
+        @nevra: full NEVRA of the package script belongs to
+        @scriptlet_type: scriptlet type that started (pre, post,...)
+
+        The scriptlet has started.
+    -->
+    <signal name="transaction_script_start">
+        <arg name="session_object_path" type="o" />
+        <arg name="nevra" type="s" />
+        <arg name="scriptlet_type" type="u" />
+    </signal>
+
+    <!--
+        transaction_script_stop:
+        @session_object_path: object path of the dnf5daemon session
+        @nevra: full NEVRA of the package script belongs to
+        @scriptlet_type: scriptlet type that started (pre, post,...)
+        @return_code: return value of the script
+
+        The scriptlet has successfully finished.
+    -->
+    <signal name="transaction_script_stop">
+        <arg name="session_object_path" type="o" />
+        <arg name="nevra" type="s" />
+        <arg name="scriptlet_type" type="u" />
+        <arg name="return_code" type="t" />
+    </signal>
+
+    <!--
+        transaction_script_error:
+        @session_object_path: object path of the dnf5daemon session
+        @nevra: full NEVRA of the package script belongs to
+        @scriptlet_type: scriptlet type that started (pre, post,...)
+        @return_code: return value of the script
+
+        The scriptlet has finished with an error.
+    -->
+    <signal name="transaction_script_error">
+        <arg name="session_object_path" type="o" />
+        <arg name="nevra" type="s" />
+        <arg name="scriptlet_type" type="u" />
+        <arg name="return_code" type="t" />
+    </signal>
+
+    <!--
+        transaction_verify_start:
+        @session_object_path: object path of the dnf5daemon session
+        @total: total to process
+
+        Package files verification has started.
+    -->
+    <signal name="transaction_verify_start">
+        <arg name="session_object_path" type="o" />
+        <arg name="total" type="t" />
+    </signal>
+
+    <!--
+        transaction_verify_progress:
+        @session_object_path: object path of the dnf5daemon session
+        @processed: amount already processed
+        @total: total to process
+
+        Progress in processing of the package.
+    -->
+    <signal name="transaction_verify_progress">
+        <arg name="session_object_path" type="o" />
+        <arg name="processed" type="t" />
+        <arg name="total" type="t" />
+    </signal>
+
+    <!--
+        transaction_verify_stop:
+        @session_object_path: object path of the dnf5daemon session
+        @total: total to process
+
+        Package files verification has finished.
+    -->
+    <signal name="transaction_verify_stop">
+        <arg name="session_object_path" type="o" />
+        <arg name="total" type="t" />
+    </signal>
+
+    <!--
+        transaction_transaction_start:
+        @session_object_path: object path of the dnf5daemon session
+        @total: total to process
+
+        Preparation of transaction packages has started.
+    -->
+    <signal name="transaction_transaction_start">
+        <arg name="session_object_path" type="o" />
+        <arg name="total" type="t" />
+    </signal>
+
+    <!--
+        transaction_transaction_progress:
+        @session_object_path: object path of the dnf5daemon session
+        @processed: amount already processed
+        @total: total to process
+
+        Progress in preparation of transaction packages.
+    -->
+    <signal name="transaction_transaction_progress">
+        <arg name="session_object_path" type="o" />
+        <arg name="processed" type="t" />
+        <arg name="total" type="t" />
+    </signal>
+
+    <!--
+        transaction_transaction_stop:
+        @session_object_path: object path of the dnf5daemon session
+        @total: total to process
+
+        Preparation of transaction packages has finished.
+    -->
+    <signal name="transaction_transaction_stop">
+        <arg name="session_object_path" type="o" />
+        <arg name="total" type="t" />
+    </signal>
+
+    <!--
+        transaction_unpack_error:
+        @session_object_path: object path of the dnf5daemon session
+        @nevra: full NEVRA of the package
+
+        Error while unpacking the package.
+    -->
+    <signal name="transaction_unpack_error">
+        <arg name="session_object_path" type="o" />
+        <arg name="nevra" type="s" />
+    </signal>
+
+    <!--
+        write_to_fd_finished:
+        @success: true if the transfer finished successfully
+        @transfer_id: id of the finished transfer
+        @error_msg: error message if the transfer was not successful.
+
+        Notify the user that writing to the file descriptor with given transfer_id has finished and the descriptor has been closed.
+    -->
+    <signal name="write_to_fd_finished">
+        <arg name="success" type="b" />
+        <arg name="transfer_id" type="s" />
+        <arg name="error_msg" type="s" />
+    </signal>
+</interface>
+
+</node>

@@ -1,0 +1,209 @@
+# shellcheck shell=bash
+#
+# Bash commandline completion
+#
+_module_comgen_words_and_files() {
+    local k=0
+    local setnospace=1
+    # do not append space to word completed if it is a directory (ends with /)
+    for val in $(compgen -W "$1" -- "$2"); do
+        if [ $setnospace -eq 1 ] && [ "${val: -1:1}" = '/' ]; then
+            # Bash >=4.0 is required for compopt
+            type compopt &>/dev/null && compopt -o nospace
+            setnospace=0
+        fi
+        COMPREPLY[k++]="$val"
+    done
+}
+
+_module_avail() {
+    local cur="${1:-}"
+    # skip avail call if word currently being completed is an option keyword
+    if [ -z "$cur" ] || [ "${cur:0:1}" != '-' ]; then
+        module avail --color=never -s -t -S --no-indepth -o 'alias:indesym' "$cur" 2>&1
+    fi
+}
+
+_module_spider() {
+    local cur="${1:-}"
+    # skip spider call if word currently being completed is an option keyword
+    if [ -z "$cur" ] || [ "${cur:0:1}" != '-' ]; then
+        module spider --color=never -s -t -S --no-indepth -o 'alias:indesym' "$cur" 2>&1
+    fi
+}
+
+_module_savelist() {
+    module savelist --color=never -s -t 2>&1 | sed '
+        /No named collection\.$/d;
+        /Named collection list$/d;
+        /:$/d;'
+}
+
+_module_stashlist() {
+    module stashlist --color=never -s -t 2>&1 | sed '
+        /No stash collection\.$/d;
+        /Stash collection list$/d;
+        /:$/d;'
+}
+
+_module_not_yet_loaded() {
+    _module_avail "${1:-}" | sort | sed -E "\%^(${LOADEDMODULES//:/|})$%d"
+}
+
+_module_long_arg_list() {
+    local cur="$1" i
+
+    if [[ ${COMP_WORDS[COMP_CWORD-2]} == sw* ]]
+    then
+        _module_comgen_words_and_files "$(_module_not_yet_loaded "$cur")" "$cur"
+        return
+    fi
+    for ((i = COMP_CWORD - 1; i > 0; i--))
+        do case ${COMP_WORDS[$i]} in
+        add|load)
+            _module_comgen_words_and_files "$(_module_not_yet_loaded "$cur")" "$cur"
+            break;;
+        rm|del|remove|unload|switch|swap)
+            COMPREPLY=( $(IFS=: compgen -W "${LOADEDMODULES}" -- "$cur") )
+            break;;
+        esac
+    done
+}
+
+_module() {
+    local cur="$2" prev="$3"
+
+    COMPREPLY=()
+
+    case "$prev" in
+    add|add-any|load|load-any|try-add|try-load)
+                    _module_comgen_words_and_files "--auto --no-auto --force -f --icase -i --tag --tag= $(_module_not_yet_loaded "$cur")" "$cur";;
+    avail)          _module_comgen_words_and_files "-a -C -d -i -j -L -l -o -S -t --all --contains --default --icase --json --latest --long --output --output= --starts-with --terse --indepth --no-indepth $(_module_avail "$cur")" "$cur";;
+    spider)         _module_comgen_words_and_files "-a -C -d -i -j -L -l -o -S -t --all --contains --default --icase --json --latest --long --output --output= --starts-with --terse --indepth --no-indepth $(_module_spider "$cur")" "$cur";;
+    edit)           _module_comgen_words_and_files "$(_module_avail "$cur")" "$cur";;
+    aliases)  COMPREPLY=( $(compgen -W "-a --all" -- "$cur") );;
+    list|savelist)  COMPREPLY=( $(compgen -W "-a -j -l -o -t --all --json --long --output --output= --terse" -- "$cur") );;
+    stashlist)  COMPREPLY=( $(compgen -W "-j -l -t --json --long --terse" -- "$cur") );;
+    stashpop|stashshow|stashrm)
+                    COMPREPLY=( $(compgen -W "$(_module_stashlist)" -- "$cur") );;
+    clear)  COMPREPLY=( $(compgen -W "--force -f" -- "$cur") );;
+    restore|save|saveshow|describe|saverm|disable|is-saved)
+                    COMPREPLY=( $(compgen -W "$(_module_savelist)" -- "$cur") );;
+    rm|del|remove|unload)
+                    COMPREPLY=( $(compgen -W "--auto --no-auto --force -f --icase -i ${LOADEDMODULES//:/ }" -- "$cur") );;
+    switch|swap)    COMPREPLY=( $(compgen -W "--auto --no-auto --force -f --icase -i --tag --tag= ${LOADEDMODULES//:/ }" -- "$cur") );;
+    unuse|is-used)  COMPREPLY=( $(IFS=: compgen -W "${MODULEPATH}" -- "$cur") );;
+    use|-a|--append|cachebuild)   ;;               # let readline handle the completion
+    display|help|show|test|path|paths|is-loaded|info-loaded)
+                    _module_comgen_words_and_files "-i --icase $(_module_avail "$cur")" "$cur";;
+    is-avail)
+                    _module_comgen_words_and_files "-a -i --all --icase $(_module_avail "$cur")" "$cur";;
+    lint)
+                    _module_comgen_words_and_files "-a -i --all --icase $(_module_avail "$cur")" "$cur";;
+    mod-to-sh)
+                    _module_comgen_words_and_files "--auto --no-auto --force -f --icase -i $(_module_not_yet_loaded "$cur")" "$cur";;
+    whatis)
+                    _module_comgen_words_and_files "-a -i -j --all --icase --json $(_module_avail "$cur")" "$cur";;
+    apropos|keyword|search)
+                    COMPREPLY=( $(compgen -W "-a -j --all --json" -- "$cur") );;
+    config|--reset) COMPREPLY=( $(compgen -W "--dump-state --reset abort_on_error advanced_version_spec auto_handling avail_indepth avail_output avail_terse_output cache_buffer_bytes cache_expiry_secs collection_pin_version collection_pin_tag collection_target color colors conflict_unload contact editor extended_default extra_siteconfig hide_auto_loaded home icase ignore_cache ignore_user_rc implicit_default implicit_requirement list_output list_terse_output locked_configs logged_events logger mcookie_check mcookie_version_check ml nearly_forbidden_days pager protected_envvars quarantine_support rcfile redirect_output require_via reset_target_state run_quarantine search_match set_shell_startup shells_with_ksh_fpath silent_shell_debug source_cache spider_indepth spider_output spider_terse_output sticky_purge tag_abbrev tag_color_name tcl_linter term_background term_width unique_name_loaded unload_match_order variant_shortcut verbosity wa_277" -- "$cur") );;
+    -h|--help|-V|--version|--dumpname|purge|refresh|reload|sh-to-mod|source|state|reset|stash|stashclear|cacheclear|update)
+                    ;;
+    append-path|prepend-path)
+                    COMPREPLY=( $(compgen -W "-d --delim --duplicates" -- "$cur") );;
+    remove-path)
+                    COMPREPLY=( $(compgen -W "-d --delim --index" -- "$cur") );;
+    initadd|initclear|initlist|initprepend|initrm)
+                    ;;
+    *)  if test "$COMP_CWORD" -gt 2
+        then
+            _module_long_arg_list "$cur"
+        else
+            case "$cur" in
+            # The mappings below are optional abbreviations for convenience
+            ls)     COMPREPLY=( "list" );;      # map ls -> list
+            sw*)    COMPREPLY=( "switch" );;
+
+            -*)     COMPREPLY=( $(compgen -W "-D -h -s -T -v -V -w --debug --dumpname --help --silent --trace --verbose --version --paginate --no-pager --color --color= --width --width= --ignore-cache --ignore-user-rc" -- "$cur") );;
+            *)      COMPREPLY=( $(compgen -W "-D -h -s -T -v -V -w --debug --dumpname --help --silent --trace --verbose --version --paginate --no-pager --color --color= --width --width= --ignore-cache --ignore-user-rc add add-any apropos aliases avail append-path cachebuild cacheclear clear config del describe disable display edit help initadd initclear initlist initprepend initrm is-loaded is-saved is-used is-avail info-loaded keyword lint list load load-any mod-to-sh path paths purge prepend-path refresh reload reset restore rm remove remove-path save savelist saveshow saverm search show sh-to-mod source spider stash stashclear stashlist stashpop stashrm stashshow state swap switch test try-add try-load unload unuse update use whatis" -- "$cur") );;
+            esac
+        fi;;
+    esac
+}
+
+# define completion for ml command if command exists
+if type -t ml >/dev/null; then
+    _ml() {
+        local cur="$2" prev="$3"
+
+        COMPREPLY=()
+
+        case "$prev" in
+        add|add-any|load|load-any|try-add|try-load)
+                        _module_comgen_words_and_files "--auto --no-auto --force -f --icase -i --tag --tag= $(_module_not_yet_loaded "$cur")" "$cur";;
+        avail)          _module_comgen_words_and_files "-a -C -d -i -j -L -l -o -S -t --all --contains --default --icase --json --latest --long --output --output= --starts-with --terse --indepth --no-indepth $(_module_avail "$cur")" "$cur";;
+        spider)         _module_comgen_words_and_files "-a -C -d -i -j -L -l -o -S -t --all --contains --default --icase --json --latest --long --output --output= --starts-with --terse --indepth --no-indepth $(_module_spider "$cur")" "$cur";;
+        edit)           _module_comgen_words_and_files "$(_module_avail "$cur")" "$cur";;
+        aliases)  COMPREPLY=( $(compgen -W "-a --all" -- "$cur") );;
+        list|savelist)  COMPREPLY=( $(compgen -W "-a -j -l -o -t --all --json --long --output --output= --terse" -- "$cur") );;
+        stashlist)  COMPREPLY=( $(compgen -W "-j -l -t --json --long --terse" -- "$cur") );;
+        stashpop|stashshow|stashrm)
+                    COMPREPLY=( $(compgen -W "$(_module_stashlist)" -- "$cur") );;
+        clear)  COMPREPLY=( $(compgen -W "--force -f" -- "$cur") );;
+        restore|save|saveshow|describe|saverm|disable|is-saved)
+                        COMPREPLY=( $(compgen -W "$(_module_savelist)" -- "$cur") );;
+        rm|del|remove|unload)
+                        COMPREPLY=( $(compgen -W "--auto --no-auto --force -f --icase -i ${LOADEDMODULES//:/ }" -- "$cur") );;
+        switch|swap)    COMPREPLY=( $(compgen -W "--auto --no-auto --force -f --icase -i --tag --tag= ${LOADEDMODULES//:/ }" -- "$cur") );;
+        unuse|is-used)  COMPREPLY=( $(IFS=: compgen -W "${MODULEPATH}" -- "$cur") );;
+        use|-a|--append|cachebuild)   ;;               # let readline handle the completion
+        display|help|show|test|path|paths|is-loaded|info-loaded)
+                        _module_comgen_words_and_files "-i --icase $(_module_avail "$cur")" "$cur";;
+        is-avail)
+                        _module_comgen_words_and_files "-a -i --all --icase $(_module_avail "$cur")" "$cur";;
+        lint)
+                        _module_comgen_words_and_files "-a -i --all --icase $(_module_avail "$cur")" "$cur";;
+        mod-to-sh)
+                        _module_comgen_words_and_files "--auto --no-auto --force -f --icase -i $(_module_not_yet_loaded "$cur")" "$cur";;
+        whatis)
+                        _module_comgen_words_and_files "-a -i -j --all --icase --json $(_module_avail "$cur")" "$cur";;
+        apropos|keyword|search)
+                        COMPREPLY=( $(compgen -W "-a -j --all --json" -- "$cur") );;
+        config|--reset) COMPREPLY=( $(compgen -W "--dump-state --reset abort_on_error advanced_version_spec auto_handling avail_indepth avail_output avail_terse_output cache_buffer_bytes cache_expiry_secs collection_pin_version collection_pin_tag collection_target color colors conflict_unload contact editor extended_default extra_siteconfig hide_auto_loaded home icase ignore_cache ignore_user_rc implicit_default implicit_requirement list_output list_terse_output locked_configs logged_events logger mcookie_check mcookie_version_check ml nearly_forbidden_days pager protected_envvars quarantine_support rcfile redirect_output require_via reset_target_state run_quarantine search_match set_shell_startup shells_with_ksh_fpath silent_shell_debug source_cache spider_indepth spider_output spider_terse_output sticky_purge tag_abbrev tag_color_name tcl_linter term_background term_width unique_name_loaded unload_match_order variant_shortcut verbosity wa_277" -- "$cur") );;
+        -h|--help|-V|--version|--dumpname|purge|refresh|reload|sh-to-mod|source|state|reset|stash|stashclear|cacheclear|update)
+                        ;;
+        append-path|prepend-path)
+                        COMPREPLY=( $(compgen -W "-d --delim --duplicates" -- "$cur") );;
+        remove-path)
+                        COMPREPLY=( $(compgen -W "-d --delim --index" -- "$cur") );;
+        initadd|initclear|initlist|initprepend|initrm)
+                        ;;
+        *)  if test "$COMP_CWORD" -gt 2
+            then
+                _module_long_arg_list "$cur"
+            else
+                case "$cur" in
+                # The mappings below are optional abbreviations for convenience
+                ls)     COMPREPLY=( "list" );;      # map ls -> list
+                sw*)    COMPREPLY=( "switch" );;
+
+                -*)     COMPREPLY=( $(compgen -W "-D -h -s -T -v -V -w --debug --dumpname --help --silent --trace --verbose --version --paginate --no-pager --color --color= --width --width= --ignore-cache --ignore-user-rc" -- "$cur") )
+                        loaded_modules=""
+                        for i in ${LOADEDMODULES//:/ }; do
+                            loaded_modules+="-${i} "
+                        done
+                        COMPREPLY=( "${COMPREPLY[@]}" $(compgen -W "--auto --no-auto --force -f --icase -i --tag --tag= $loaded_modules" -- "$cur") );;
+                *)       _module_comgen_words_and_files "--auto --no-auto --force -f --icase -i --tag --tag= $(_module_not_yet_loaded "$cur")" "$cur"
+                        COMPREPLY=( "${COMPREPLY[@]}" $(compgen -W "-D -h -s -T -v -V -w --debug --dumpname --help --silent --trace --verbose --version --paginate --no-pager --color --color= --width --width= --ignore-cache --ignore-user-rc add add-any apropos aliases avail append-path cachebuild cacheclear clear config del describe disable display edit help initadd initclear initlist initprepend initrm is-loaded is-saved is-used is-avail info-loaded keyword lint list load load-any mod-to-sh path paths purge prepend-path refresh reload reset restore rm remove remove-path save savelist saveshow saverm search show sh-to-mod source spider stash stashclear stashlist stashpop stashrm stashshow state swap switch test try-add try-load unload unuse update use whatis" -- "$cur") )
+                        loaded_modules=""
+                        for i in ${LOADEDMODULES//:/ }; do
+                            loaded_modules+="-${i} "
+                        done
+                        COMPREPLY=( "${COMPREPLY[@]}" $(compgen -W "--auto --no-auto --force -f --icase -i --tag --tag= $loaded_modules" -- "$cur") );;
+                esac
+            fi;;
+        esac
+    }
+    complete -o default -F _ml ml
+fi
+complete -o default -F _module module

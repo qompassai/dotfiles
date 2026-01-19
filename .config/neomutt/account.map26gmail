@@ -1,0 +1,13 @@
+# /qompassai/dotfiles/.config/neomutt/account.map26gmail
+# Qompass AI Neomutt Gmail Account Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+set envelope_from = yes
+set folder = "~/.local/share/mail/map26gmail"
+set from = "matt.a.porter26@gmail.com"
+set postponed = "+[Gmail]/Drafts"
+set realname = "Matt A. Porter"
+set record = "+[Gmail]/Sent Mail"
+set sendmail = "/usr/bin/msmtp -a gmail-map26"
+set trash="+Trash"
+set use_from = yes

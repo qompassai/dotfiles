@@ -1,0 +1,25 @@
+# report_contact youremailaddress@domain.tld
+# rewrite_header Subject *****SPAM*****
+report_safe 1
+# trusted_networks 212.17.35.
+# lock_method flock
+required_score 5.0
+use_bayes 1
+bayes_auto_learn 1
+bayes_ignore_header X-Bogosity
+bayes_ignore_header X-Spam-Flag
+bayes_ignore_header X-Spam-Status
+normalize_charset 1
+Textual body scan limit    (default: 50000)
+body_part_scan_size 50000
+rawbody_part_scan_size 500000
+ifplugin Mail::SpamAssassin::Plugin::Shortcircuit
+shortcircuit USER_IN_WELCOMELIST       on
+shortcircuit USER_IN_DEF_WELCOMELIST   on
+shortcircuit USER_IN_ALL_SPAM_TO     on
+shortcircuit USER_IN_BLOCKLIST       on
+shortcircuit USER_IN_BLOCKLIST_TO    on
+shortcircuit ALL_TRUSTED             on
+shortcircuit BAYES_99                spam
+shortcircuit BAYES_00                ham
+endif # Mail::SpamAssassin::Plugin::Shortcircuit

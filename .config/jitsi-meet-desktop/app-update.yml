@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/jitsi-meet-desktop/app-update.yml
+# Qompass AI Jitsi-Meet Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
+owner: jitsi
+repo: jitsi-meet-electron
+provider: github
+updaterCacheDirName: jitsi-meet-electron-updater

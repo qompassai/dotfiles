@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/libibverbs.d/cxgb4.driver
+# Qompass AI Libibverbs.d Chelsio T4 iWARP Driver Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+driver cxgb4

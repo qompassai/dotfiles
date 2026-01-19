@@ -1,0 +1,15 @@
+# /qompassai/dotfiles/.config/weron/signaler
+# Qompass AI Weron Signaler Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+DATABASE_URL="$(pass show weron/db)"
+REDIS_URL="$(pass show weron/redisurl)"
+API_PASSWORD="$(pass show weron/api_pass)"
+API_USERNAME="$(pass show weron/app_user)"
+WERON_CLEANUP="$(pass show weron/cleanup)"
+WERON_EPHEMERAL_COMMUNITIES="$(pass show weron/ecommunity)"
+WERON_HEARTBEAT="$(pass show weron/heartbeat)"
+WERON_LADDR="$(pass show weron/laddr)"
+OIDC_CLIENT_ID="$(pass show weron/oidc_cid)"
+OIDC_ISSUER="$(pass show weron/oicd_issuer)"
+WERON_VERBOSE=true

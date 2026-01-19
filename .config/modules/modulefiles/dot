@@ -1,0 +1,8 @@
+#%Module
+
+module-help {    dot - adds the current working directory to your path.}
+module-help {}
+
+module-whatis {adds `.' to your PATH environment variable}
+
+append-path PATH .

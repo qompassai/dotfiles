@@ -1,0 +1,6 @@
+// /qompassai/dotfiles/.config/kde/kded6rc
+// Qompass AI KDE KDE6 Daemon Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////
+[PlasmaBrowserIntegration]
+shownCount=1

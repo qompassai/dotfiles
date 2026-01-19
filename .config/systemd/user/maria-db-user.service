@@ -1,0 +1,11 @@
+[Unit]
+Description=Rootless MariaDB Server
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/mysqld --defaults-file=/home/phaedrus/.mariadb.cnf
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+

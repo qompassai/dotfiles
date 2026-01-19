@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/wazuh-indexer/opensearch-performance-analyzer/rca_idle_cluster_manager.conf
+# Qompass AI Wazuh-Indexer OpenSearch Performance Analyzer RCA Idle Cluster Manager Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################################################################
+Program=PerformanceAnalyzerPlugin

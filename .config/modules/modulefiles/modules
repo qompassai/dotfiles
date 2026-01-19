@@ -1,0 +1,15 @@
+#%Module
+
+module-help {    modules - loads the modules software & application environment}
+module-help {    This adds /* to several of the environment variables.}
+module-help {    Version 5.6.0}
+module-help {}
+
+module-whatis {loads the modules environment}
+
+setenv MODULESHOME 
+prepend-path PATH {/usr/bin}
+prepend-path MANPATH {/usr/share/man}
+
+# enable module versioning modulepath
+#module use {/versions}

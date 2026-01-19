@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/default/atop
+# Qompass AI Default Atop Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+#LOGOPTS=""
+LOGINTERVAL=600
+LOGGENERATIONS=28
+LOGPATH="/var/log/atop"

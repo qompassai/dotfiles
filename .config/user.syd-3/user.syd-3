@@ -1,0 +1,16 @@
+# /qompassai/dotfiles/.config/user.syd-3/user.syd-3
+# Qompass AI User.Syd-3 Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+allow/net/connect+/run/dbus/system_bus_socket
+allow/net/connect+/var/run/dbus/system_bus_socket
+allow/net/connect+/run/systemd/userdb/io.systemd.DynamicUser
+allow/net/connect+/run/user/[0-9]*/bus
+allow/net/connect+/run/systemd/journal/dev-log
+allow/net/bind+/run/screen/S-*/***
+allow/net/connect+/run/screen/S-*/***
+allow/net/bind+/tmp/screens/S-*/***
+allow/net/connect+/tmp/screens/S-*/***
+allow/net/bind+/tmp/tmux-[0-9]*/***
+allow/net/connect+loopback!9050
+lock:on

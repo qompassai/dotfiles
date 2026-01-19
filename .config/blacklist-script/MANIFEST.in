@@ -1,0 +1,7 @@
+recursive-include f2b/action.d/ *.conf
+recursive-include f2b/filter.d/ *.conf
+recursive-include f2b/jail.d/ *.conf
+recursive-include image/ *.svg
+include Makefile
+include LICENSE
+include CHANGELOG.txt

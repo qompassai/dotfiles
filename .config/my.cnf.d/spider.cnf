@@ -1,0 +1,7 @@
+# /qompassai/dotfiles/.config/my.cnf.d/spider.cnf
+# Qompass AI My.Cnf.d Spider Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+# References: https://mariadb.com/kb/en/spider/
+[mariadb]
+plugin-load-add = ha_spider

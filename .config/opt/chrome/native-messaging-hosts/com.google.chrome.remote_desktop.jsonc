@@ -1,0 +1,14 @@
+//qompassai/dotfiles/.config/opt/chrome/native-messaging-hosts/com.google.chrome.remote_desktop.jsonc
+// Qompass AI Chrome Native Messaging Hosts Remote Desktop Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+///////////////////////////////////////////////////////////////////////////////////////////////
+{
+  "name": "com.google.chrome.remote_desktop",
+  "description": "Chrome Remote Desktop Host",
+  "type": "stdio",
+  "path": "/opt/google/chrome-remote-desktop/native-messaging-host",
+  "allowed_origins": [
+    "chrome-extension://inomeogfingihgjfjlpeplalcfajhgai/",
+    "chrome-extension://hpodccmdligbeohchckkeajbfohibipg/"
+  ]
+}

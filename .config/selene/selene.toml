@@ -1,0 +1,26 @@
+# /qompassai/dotfiles/.config/selene/selene.toml
+# Qompass AI Selene Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################### 
+std = "luajit"
+[config]
+empty_if = { comments_count = true }
+unused_variable = { ignore_pattern = "result|ok|^_" }
+shadowing = { ignore_pattern = "result|ok|^_" }
+global_usage = { ignore_pattern = "^__" }
+[rules]
+almost_swapped = "warn"
+divide_by_zero = "deny"
+duplicate_keys = "deny"
+empty_if = "warn"
+empty_loop = "warn"
+high_cyclomatic_complexity = "warn"
+ifs_same_cond = "warn"
+if_same_then_else = "warn"
+mixed_table = "allow"
+multiple_statements = "warn"
+parenthese_conditions = "warn"
+shadowing = "warn"
+unbalanced_assignments = "deny"
+undefined_variable = "deny"
+unused_variable = "warn"

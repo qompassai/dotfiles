@@ -1,0 +1,7 @@
+# /qompassai/dotfiles/.config/udev/rules.d/12-input.rules
+# Qompass AI UDev Input Rules Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#################################################
+SUBSYSTEM=="input", MODE="0666" GROUP="plugdev"
+SUBSYSTEM=="misc", MODE="0666" GROUP="plugdev"
+SUBSYSTEM=="tty", MODE="0666" GROUP="plugdev"

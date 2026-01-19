@@ -1,0 +1,19 @@
+# /qompassai/dotfiles/.config/jgit/config
+# Qompass AI JGit Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#####################################################
+[filesystem "Arch Linux|17.0.14|/dev/nvme1n1p2"]
+	timestampResolution = 4189 nanoseconds
+	minRacyThreshold = 0 nanoseconds
+[filesystem "Arch Linux|11.0.29|/dev/mapper/root"]
+	timestampResolution = 4000 nanoseconds
+	minRacyThreshold = 0 nanoseconds
+[filesystem "Arch Linux|17.0.17|/dev/mapper/root"]
+	timestampResolution = 24105 nanoseconds
+	minRacyThreshold = 0 nanoseconds
+[filesystem "Arch Linux|21.0.9|/dev/mapper/root"]
+	timestampResolution = 4439 nanoseconds
+	minRacyThreshold = 0 nanoseconds
+[filesystem "Arch Linux|21.0.9|tmpfs"]
+	timestampResolution = 4115 nanoseconds
+	minRacyThreshold = 0 nanoseconds

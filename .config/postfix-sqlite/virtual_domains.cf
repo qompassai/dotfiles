@@ -1,0 +1,6 @@
+# /qompassai/dotfiles/.config/postfix-sqlite/virtual_domains.cf
+# Qompass AI  SQLite Virtual Domains Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+############################################################## 
+dbpath = /home/phaedrus/.local/share/mail/sqlite
+query = SELECT 1 FROM virtual_domains WHERE name='%s'

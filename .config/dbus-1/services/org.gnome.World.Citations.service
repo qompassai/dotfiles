@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.gnome.World.Citations
+Exec=/usr/bin/citations --gapplication-service

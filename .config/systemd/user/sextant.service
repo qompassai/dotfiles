@@ -1,0 +1,23 @@
+[Unit]
+Description=Qompass AI Tor Service - %i
+Documentation=https://github.com/qompassai/sextant
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/tor -f %h/.config/sextant/torrc-%i
+Restart=always
+ProtectSystem=full
+PrivateTmp=true
+NoNewPrivileges=true
+WorkingDirectory=%h/.config/sextant
+RuntimeDirectory=tor-%i
+# Remove empty CapabilityBoundingSet or specify needed caps
+# CapabilityBoundingSet=CAP_NET_BIND_SERVICE CAP_SETUID CAP_SETGID
+ProtectHome=read-only
+ProtectKernelModules=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+
+[Install]
+WantedBy=default.target
+

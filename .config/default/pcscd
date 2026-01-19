@@ -1,0 +1,10 @@
+# /qompassai/dotfiles/.config/default/pcscd
+# Qompass AI Default PCSCD Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+PCSCD_ARGS=""
+PCSCLITE_CSOCK_NAME="$XDG_RUNTIME_DIR/pcscd/pcscd.comm"
+#PCSCLITE_HP_DROPDIR="/usr/lib/pcsc/drivers/"
+PCSCLITE_FILTER_IGNORE_READER_NAMES="Contactless"
+PCSCLITE_FILTER_EXTEND_READER_NAMES=" $HOSTNAME"
+PCSCLITE_NO_BLOCKING=1

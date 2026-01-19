@@ -1,0 +1,16 @@
+# /qompassai/dotfiles/.config/mail/spamassassin/310.pre
+# Qompass AI SpamAssassin v310 Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+loadplugin Mail::SpamAssassin::Plugin::DCC
+loadplugin Mail::SpamAssassin::Plugin::Pyzor
+loadplugin Mail::SpamAssassin::Plugin::Razor2
+loadplugin Mail::SpamAssassin::Plugin::SpamCop
+#loadplugin Mail::SpamAssassin::Plugin::AntiVirus
+loadplugin Mail::SpamAssassin::Plugin::AWL
+loadplugin Mail::SpamAssassin::Plugin::AutoLearnThreshold
+loadplugin Mail::SpamAssassin::Plugin::TextCat
+loadplugin Mail::SpamAssassin::Plugin::AccessDB
+loadplugin Mail::SpamAssassin::Plugin::WelcomeListSubject
+loadplugin Mail::SpamAssassin::Plugin::MIMEHeader
+loadplugin Mail::SpamAssassin::Plugin::ReplaceTags

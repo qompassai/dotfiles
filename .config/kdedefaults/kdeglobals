@@ -1,0 +1,10 @@
+// /qompassai/dotfiles/.config/kdedefaults/kdeglobals
+// Qompass AI kdedefaults kdeglobals Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////
+[General]
+ColorScheme=BreezeLight
+[Icons]
+Theme=breeze
+[KDE]
+widgetStyle=Breeze

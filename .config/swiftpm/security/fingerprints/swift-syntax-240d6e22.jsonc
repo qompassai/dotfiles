@@ -1,0 +1,22 @@
+// /qompassai/dotfiles/.config/swiftpm/security/fingerprints
+// Qompass AI Swiftpm Security Fingerprint Swift Syntax Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+  "version" : 2,
+  "versionFingerprints" : {
+    "601.0.0" : {
+      "sourceControl" : {
+        "sourceCode" : {
+          "contentType" : {
+            "sourceCode" : {
+
+            }
+          },
+          "fingerprint" : "$(pass show swiftpm/syntaxfp)",
+          "origin" : "https://github.com/swiftlang/swift-syntax.git"
+        }
+      }
+    }
+  }
+}

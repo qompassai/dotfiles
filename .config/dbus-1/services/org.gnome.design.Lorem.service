@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.gnome.design.Lorem
+Exec=/usr/bin/lorem --gapplication-service

@@ -1,0 +1,6 @@
+# /qompassai/dotfiles/.config/sysconfig/pmproxy
+# Qompass AI SysConfig PM Proxy Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+PMPROXY_LOCAL=1
+PMPROXY_MAXPENDING=5

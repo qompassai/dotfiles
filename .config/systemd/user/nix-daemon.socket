@@ -1,0 +1,11 @@
+[Unit]
+Description=User Nix Daemon Socket
+[Socket]
+ListenStream=%t/nix/daemon-socket/socket
+DirectoryMode=0700
+SocketMode=0600
+Accept=true
+Service=nix-daemon@.service
+RemoveOnStop=yes
+[Install]
+WantedBy=sockets.target

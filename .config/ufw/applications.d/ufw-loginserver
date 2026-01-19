@@ -1,0 +1,18 @@
+# /qompassai/dotfiles/.config/ufw/applications.d/ufw-loginserver
+# Qompass AI UFW Application Daemon Login Server Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+################################################################
+[Telnet]
+title=Telnet server (insecure)
+description=Telnet server (insecure)
+ports=23/tcp
+
+[SSH]
+title=SSH server
+description=SSH server
+ports=22/tcp
+
+[VNC]
+title=VNC server
+description=VNC server
+ports=5900/tcp

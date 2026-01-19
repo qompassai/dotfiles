@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/libibverbs.d/mana.driver
+# Qompass AI Libibverbs.d Microsoft Azure Network Adapter Driver Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+driver mana

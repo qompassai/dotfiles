@@ -1,0 +1,31 @@
+'Log files:
+/home/phaedrus/.npm/_logs/2025-08-03T18_35_39_239Z-debug-0.log
+
+# npm resolution error report
+
+While resolving: undefined@undefined
+Found: astro@5.12.8
+node_modules/astro
+  peer astro@"^4.0.0-beta || ^5.0.0-beta || ^3.3.0" from astro-expressive-code@0.41.3
+  node_modules/astro-expressive-code
+    astro-expressive-code@"^0.41.1" from @astrojs/starlight@0.35.2
+    node_modules/@astrojs/starlight
+  peer astro@"^5.0.0" from @astrojs/mdx@4.3.3
+  node_modules/@astrojs/mdx
+    @astrojs/mdx@"^4.2.3" from @astrojs/starlight@0.35.2
+    node_modules/@astrojs/starlight
+  peer astro@"^5.5.0" from @astrojs/starlight@0.35.2
+  node_modules/@astrojs/starlight
+
+Could not resolve dependency:
+dev @astrojs/deno@"*" from the root project
+
+Conflicting peer dependency: astro@3.6.5
+node_modules/astro
+  peer astro@"^3.1.4" from @astrojs/deno@5.0.1
+  node_modules/@astrojs/deno
+    dev @astrojs/deno@"*" from the root project
+
+Fix the upstream dependency conflict, or retry
+this command with --force or --legacy-peer-deps
+to accept an incorrect (and potentially broken) dependency resolution.

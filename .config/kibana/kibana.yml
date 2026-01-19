@@ -1,0 +1,55 @@
+# /qompassai/dotfiles/.config/kibana/kibana.yml
+# Qompass AI Kibana Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+server.port: 5601
+server.host: "localhost"
+server.basePath: ""
+server.rewriteBasePath: false
+server.publicBaseUrl: ""
+server.maxPayload: 1048576
+server.name: "$(pass show kibana/host)"
+server.ssl.enabled: true
+server.ssl.certificate: "$(pass show kibana/crt)"
+server.ssl.key: "$(pass show kibana/k)"
+elasticsearch.hosts: ["http://localhost:9200"]
+elasticsearch.username: "kibana_system"
+elasticsearch.password: "$(pass show kibana/p)"
+elasticsearch.serviceAccountToken: "$(pass show kibana/token)"
+elasticsearch.pingTimeout: 1500
+elasticsearch.requestTimeout: 30000
+elasticsearch.maxSockets: 1024
+elasticsearch.compression: true
+elasticsearch.requestHeadersWhitelist: [ authorization ]
+elasticsearch.customHeaders: {}
+elasticsearch.shardTimeout: 30000
+elasticsearch.ssl.certificate: "$(pass show kibana/crt)"
+elasticsearch.ssl.key: "$(pass show kibana/sslk)"
+elasticsearch.ssl.certificateAuthorities: [ "$(pass show kibana/ca)" ]
+elasticsearch.ssl.verificationMode: full
+logging.root.level: debug
+logging.appenders.default:
+  type: rolling-file
+  fileName: /var/logs/kibana.log
+  policy:
+    type: size-limit
+    size: 256mb
+  strategy:
+    type: numeric
+    max: 10
+  layout:
+    type: jsonc
+logging.loggers:
+  - name: metrics.ops
+    level: debug
+logging.browser.root:
+  level: debug
+path.data: data
+pid.file: /run/kibana/kibana.pid
+ops.interval: 5000
+i18n.locale: "en"
+migrations.batchSize: 1000
+migrations.maxBatchSizeBytes: 100mb
+migrations.retryAttempts: 15
+unifiedSearch.autocomplete.valueSuggestions.timeout: 1000
+unifiedSearch.autocomplete.valueSuggestions.terminateAfter: 100000

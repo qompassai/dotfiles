@@ -1,0 +1,13 @@
+# /qompassai/dotfiles/.config/nyx/nyxrc
+# Qompass AI Nyx Configc
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+color_interface true
+confirm_quit = true
+data_directory ~/.nyx
+graph_stat resources
+graph_interval each second
+show_accounting true
+show_bits true
+show_graph true
+show_torrc true

@@ -1,0 +1,114 @@
+17:30:12.156: Platform: Wayland
+17:30:12.156: CPU Name: 13th Gen Intel(R) Core(TM) i7-13620H
+17:30:12.156: CPU Speed: 3700.000MHz
+17:30:12.156: Physical Cores: 10, Logical Cores: 16
+17:30:12.156: Physical Memory: 64002MB Total, 25802MB Free
+17:30:12.157: Kernel Version: Linux 6.17.1-zen1
+17:30:12.157: Distribution: NixOS "25.11"
+17:30:12.157: Desktop Environment: Hyprland (Hyprland)
+17:30:12.157: Session Type: wayland
+17:30:12.161: Current Date/Time: 2025-10-13, 05:30:12 PM
+17:30:12.161: Browser Hardware Acceleration: true
+17:30:12.161: Qt Version: 6.9.2 (runtime), 6.9.2 (compiled)
+17:30:12.161: Portable mode: false
+17:30:12.210: OBS 32.0.1 (linux)
+17:30:12.210: ---------------------------------
+17:30:12.211: ---------------------------------
+17:30:12.211: audio settings reset:
+17:30:12.211: 	samples per sec: 48000
+17:30:12.211: 	speakers:        2
+17:30:12.211: 	max buffering:   960 milliseconds
+17:30:12.211: 	buffering type:  dynamically increasing
+17:30:12.212: ---------------------------------
+17:30:12.212: Initializing OpenGL...
+17:30:12.212: Using EGL/Wayland
+17:30:12.298: Initialized EGL 1.5
+17:30:12.406: Loading up OpenGL on adapter NVIDIA Corporation NVIDIA GeForce RTX 4070 Laptop GPU/PCIe/SSE2
+17:30:12.408: OpenGL loaded successfully, version 3.3.0 NVIDIA 580.95.05, shading language 3.30 NVIDIA via Cg compiler
+17:30:12.443: ---------------------------------
+17:30:12.443: video settings reset:
+17:30:12.443: 	base resolution:   1920x1080
+17:30:12.443: 	output resolution: 1280x720
+17:30:12.443: 	downscale filter:  Bicubic
+17:30:12.443: 	fps:               30/1
+17:30:12.443: 	format:            NV12
+17:30:12.443: 	YUV mode:          Rec. 709/Partial
+17:30:12.443: NV12 texture support enabled
+17:30:12.443: P010 texture support not available
+17:30:12.444: Audio monitoring device:
+17:30:12.444: 	name: Default
+17:30:12.444: 	id: default
+17:30:12.529: ---------------------------------
+17:30:12.533: Failed to load 'en-US' text for module: 'decklink-captions.so'
+17:30:12.535: Failed to load 'en-US' text for module: 'decklink-output-ui.so'
+17:30:12.538: A DeckLink iterator could not be created.  The DeckLink drivers may not be installed
+17:30:12.538: Failed to initialize module 'decklink.so'
+17:30:12.742: [pipewire] No capture sources available
+17:30:12.753: v4l2loopback not installed, virtual camera not registered
+17:30:12.756: [obs-browser]: Version 2.26.2
+17:30:12.756: [obs-browser]: CEF Version 138.0.7204.97 (runtime), 138.0.17+gac9b751+chromium-138.0.7204.97 (compiled)
+17:30:12.757: [obs-browser]: Blacklisted driver detected, disabling browser source hardware acceleration.
+17:30:12.764: VAAPI: Failed to initialize display in vaapi_device_h264_supported
+17:30:12.764: VAAPI: Failed to initialize display in vaapi_device_h264_supported
+17:30:12.769: FFmpeg VAAPI H264 encoding not supported
+17:30:12.770: VAAPI: Failed to initialize display in vaapi_device_av1_supported
+17:30:12.770: VAAPI: Failed to initialize display in vaapi_device_av1_supported
+17:30:12.776: FFmpeg VAAPI AV1 encoding not supported
+17:30:12.777: VAAPI: Failed to initialize display in vaapi_device_hevc_supported
+17:30:12.777: VAAPI: Failed to initialize display in vaapi_device_hevc_supported
+17:30:12.783: FFmpeg VAAPI HEVC encoding not supported
+17:30:12.804: [NVENC] Test process failed: nvenc_lib
+17:30:12.804: NVENC not supported
+17:30:12.804: Failed to initialize module 'obs-nvenc.so'
+17:30:12.872: [obs-websocket] [obs_module_load] you can haz websockets (Version: 5.6.3 | RPC Version: 1)
+17:30:12.872: [obs-websocket] [obs_module_load] Qt version (compile-time): 6.9.2 | Qt version (run-time): 6.9.2
+17:30:12.872: [obs-websocket] [obs_module_load] Linked ASIO Version: 102400
+17:30:12.889: [obs-websocket] [obs_module_load] Module loaded.
+17:30:12.905: [vlc-video]: VLC 3.0.21 Vetinari found, VLC video source enabled
+17:30:12.905: ---------------------------------
+17:30:12.905:   Loaded Modules:
+17:30:12.907:     vlc-video.so
+17:30:12.907:     text-freetype2.so
+17:30:12.907:     rtmp-services.so
+17:30:12.907:     obs-x264.so
+17:30:12.907:     obs-websocket.so
+17:30:12.907:     obs-webrtc.so
+17:30:12.907:     obs-vst.so
+17:30:12.907:     obs-transitions.so
+17:30:12.907:     obs-qsv11.so
+17:30:12.907:     obs-outputs.so
+17:30:12.907:     obs-libfdk.so
+17:30:12.907:     obs-filters.so
+17:30:12.907:     obs-ffmpeg.so
+17:30:12.907:     obs-browser.so
+17:30:12.908:     linux-v4l2.so
+17:30:12.908:     linux-pulseaudio.so
+17:30:12.908:     linux-pipewire.so
+17:30:12.908:     linux-jack.so
+17:30:12.908:     linux-capture.so
+17:30:12.908:     linux-alsa.so
+17:30:12.908:     image-source.so
+17:30:12.908:     frontend-tools.so
+17:30:12.908:     decklink-output-ui.so
+17:30:12.908:     decklink-captions.so
+17:30:12.908: ---------------------------------
+17:30:12.908: ---------------------------------
+17:30:12.908: Available Encoders:
+17:30:12.908:   Video Encoders:
+17:30:12.908: 	- ffmpeg_svt_av1 (SVT-AV1)
+17:30:12.908: 	- ffmpeg_aom_av1 (AOM AV1)
+17:30:12.908: 	- obs_x264 (x264)
+17:30:12.908:   Audio Encoders:
+17:30:12.908: 	- ffmpeg_aac (FFmpeg AAC)
+17:30:12.908: 	- ffmpeg_opus (FFmpeg Opus)
+17:30:12.908: 	- ffmpeg_pcm_s16le (FFmpeg PCM (16-bit))
+17:30:12.908: 	- ffmpeg_pcm_s24le (FFmpeg PCM (24-bit))
+17:30:12.908: 	- ffmpeg_pcm_f32le (FFmpeg PCM (32-bit float))
+17:30:12.908: 	- ffmpeg_alac (FFmpeg ALAC (24-bit))
+17:30:12.908: 	- ffmpeg_flac (FFmpeg FLAC (16-bit))
+17:30:12.908: 	- libfdk_aac (libfdk AAC)
+17:30:12.908: ==== Startup complete ===============================================
+17:30:12.917: Switched to Preview/Program mode
+17:30:12.917: ------------------------------------------------
+17:30:13.005: All scene data cleared
+17:30:13.005: ------------------------------------------------

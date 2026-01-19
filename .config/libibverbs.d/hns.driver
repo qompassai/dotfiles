@@ -1,0 +1,5 @@
+# /qompassai/dotfiles/.config/libibverbs.d/hsn.driver
+# Qompass AI Libibverbs.d HiSilicon Hip06 SoC Driver Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+#########################################################
+driver hns

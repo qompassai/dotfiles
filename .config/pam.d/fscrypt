@@ -1,0 +1,6 @@
+#%PAM-1.0
+# /qompassai/dotfiles/.config/pam.d/fscrypt
+# Qompass AI Pam Daemon FSCrypt Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+###################################################
+auth		required	pam_unix.so
