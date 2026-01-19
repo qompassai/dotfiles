@@ -1,8 +1,0 @@
-XF86Audio{RaiseVolume,LowerVolume,Mute}
-	/usr/share/steamos-compositor-plus/bin/audio_{volup,voldown,mute}.sh
-
-XF86MonBrightness{Up,Down}
-	/usr/share/steamos-compositor-plus/bin/brightness_{up,down}.sh
-
-super + p
-	/usr/share/steamos-compositor-plus/bin/screen_toggle.sh

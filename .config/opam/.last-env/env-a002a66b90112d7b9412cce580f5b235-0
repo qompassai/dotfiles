@@ -1,7 +1,0 @@
-OPAM_SWITCH_PREFIX	=	/home/phaedrus/.opam/default	:	target	Prefix\ of\ the\ current\ opam\ switch
-CAML_LD_LIBRARY_PATH	=	/home/phaedrus/.opam/default/lib/stublibs	:	target	Updated\ by\ package\ ocaml-base-compiler
-CAML_LD_LIBRARY_PATH	=	/home/phaedrus/.opam/default/lib/ocaml/stublibs:/home/phaedrus/.opam/default/lib/ocaml	:	target	Updated\ by\ package\ ocaml
-CAML_LD_LIBRARY_PATH	+=	/home/phaedrus/.opam/default/lib/stublibs	:	target	Updated\ by\ package\ ocaml
-OCAML_TOPLEVEL_PATH	=	/home/phaedrus/.opam/default/lib/toplevel	Updated\ by\ package\ ocaml
-MANPATH	=:	/home/phaedrus/.opam/default/man	:	host	Current\ opam\ switch\ man\ dir
-PATH	+=	/home/phaedrus/.opam/default/bin	:	target	Binary\ dir\ for\ opam\ switch\ default

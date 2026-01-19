@@ -1,9 +1,0 @@
-# /qompassai/dotfiles/.config/rules.d/51-usbblaster.rules
-# Qompass AI UDev 51-USBBlaster Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-##########################################################
-ATTRS{idVendor}=="09fb", ATTRS{idProduct}=="6001", MODE="660", TAG+="uaccess"
-ATTRS{idVendor}=="09fb", ATTRS{idProduct}=="6002", MODE="660", TAG+="uaccess"
-ATTRS{idVendor}=="09fb", ATTRS{idProduct}=="6003", MODE="660", TAG+="uaccess"
-ATTRS{idVendor}=="09fb", ATTRS{idProduct}=="6010", MODE="660", TAG+="uaccess"
-ATTRS{idVendor}=="09fb", ATTRS{idProduct}=="6810", MODE="660", TAG+="uaccess"

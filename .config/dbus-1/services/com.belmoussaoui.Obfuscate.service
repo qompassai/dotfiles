@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=com.belmoussaoui.Obfuscate
-Exec=/usr/bin/obfuscate --gapplication-service

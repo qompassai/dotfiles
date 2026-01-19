@@ -1,9 +1,0 @@
-# /qompassai/dotfiles/.config/sysconfig/pmlogger
-# Qompass AI SysConfig PM Logger Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-PMLOGGER_CHECK_SKIP_LOGCONF=yes
-PMLOGGER_CHECK_SKIP_JANITOR=yes
-PMLOGGER_INTERVAL=60
-PMLOGGER_LOCAL=1
-PMLOGGER_MAXPENDING=5

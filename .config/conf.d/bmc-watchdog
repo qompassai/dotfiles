@@ -1,5 +1,0 @@
-# /qompassai/dotfiles/.config/conf.d/bmc-watchdog
-# Qompass AI BMC-Watchdog Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#####################################################
-OPTIONS="-d -u 4 -p 0 -a 1 -F -P -L -S -O -i 900 -e 60"

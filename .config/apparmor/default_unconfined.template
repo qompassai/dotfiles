@@ -1,6 +1,0 @@
-abi <abi/4.0>,
-include <tunables/global>
-profile {name} {path} flags=(unconfined) {{
-  {rule},
-  include if exists <local/{name}>
-}}

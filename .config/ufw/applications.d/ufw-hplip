@@ -1,8 +1,0 @@
-# /qompassai/dotfiles/.config/ufw/applications.d/ufw-hplip
-# Qompass AI UFW Application Daemon HPLip Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-##########################################################
-[HPLIP]
-title=HPLIP
-description=HP Printers
-ports=161:162/tcp|9100/tcp|5353/udp|427/udp|137/udp

@@ -1,9 +1,0 @@
-# /qompassai/dotfiles/.config/pam.d/partimaged
-# Qompass AI Pam Daemon Partimaged Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-###################################################
-auth 	required	pam_unix.so
-auth	required	pam.warn.so
-auth 	required	pam_listfile.so \
-	onerr=fail item=user sense=allow \
-	file=/etc/partimaged/partimagedusers

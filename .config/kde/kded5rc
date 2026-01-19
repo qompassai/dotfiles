@@ -1,6 +1,0 @@
-// /qompassai/dotfiles/.config/kde/kded5rc
-// Qompass AI KDE Kde5 Daemon Config
-// Copyright (C) 2025 Qompass AI, All rights reserved
-/////////////////////////////////////////
-[Module-device_automounter]
-autoload=false

@@ -1,5 +1,0 @@
-# /qompassai/dotfiles/.config/sgml/openjade.cat
-# Qompass AI Standard Generalized Markup Language (SGML)Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-##############################################################
-CATALOG $XDG_CONFIG_HOME/sgml/openjade-1.3.2.cat

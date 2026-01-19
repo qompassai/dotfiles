@@ -1,5 +1,0 @@
-# /qompassai/dotfiles/.config/udev/rules.d/90-mgetty.rules
-# Qompass AI UDev MGetty Rules Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#################################################
-KERNEL=="ttyS[0-9]*", NAME="tts/%n", SYMLINK+="%k", GROUP="uucp", MODE="0666"

@@ -1,7 +1,0 @@
-{
-    find_program = {
-        nim = "/usr/bin/nim",
-        dmd = "/usr/bin/dmd",
-        gcc = "/usr/bin/gcc"
-    }
-}

@@ -1,5 +1,0 @@
-// /qompassai/dotfiles/.config/vagran/embedded/manifest.jsonc
-// Qompass AI Vagrant Embedded Manifest Config
-// Copyright (C) 2025 Qompass AI, All rights reserved
-////////////////////////////////////////
-{ "vagrant_version": "2.4.8" }

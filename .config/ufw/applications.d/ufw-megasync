@@ -1,8 +1,0 @@
-# /qompassai/dotfiles/.config/ufw/applications.d/ufw-megasync
-# Qompass AI UFW Application Daemon MegaSync Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#############################################################
-[Megasync]
-title=Megasync
-description=Sync your files to your Mega account
-ports=6342/tcp|6342/udp

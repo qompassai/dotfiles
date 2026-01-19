@@ -1,9 +1,0 @@
-# /qompassai/dotfiles/.config/nim/build_config.txt
-# Qompass AI Nim Build Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-nim_comment="key-value pairs for windows/posix bootstrapping build scripts"
-nim_csourcesDir=csources_v2
-nim_csourcesUrl=https://github.com/nim-lang/csources_v2.git
-nim_csourcesBranch=master
-nim_csourcesHash=86742fb02c6606ab01a532a0085784effb2e753e

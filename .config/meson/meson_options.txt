@@ -1,6 +1,0 @@
-# mesonoptions.txt
-# Qompass AI - [Add description here]
-# Copyright (C) 2025 Qompass AI, All rights reserved
-# ----------------------------------------
-option('enable_llvm', type: 'boolean', value: false, description: 'Enable LLVM subproject')
-

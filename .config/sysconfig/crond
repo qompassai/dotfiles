@@ -1,5 +1,0 @@
-# /qompassai/dotfiles/.config/sysconfig/crond
-# Qompass AI SysConfig CROND Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#################################################
-CRONDARGS=

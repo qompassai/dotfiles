@@ -1,6 +1,0 @@
-# /qompassai/dotfiles/.config/.list
-# Qompass AI SSH List
-# Copyright (C) 2025 Qompass AI, All rights reserved
-# ----------------------------------------
-$HOME/.ssh/id_ed25519
-$HOME/.ssh/aur_ed25519

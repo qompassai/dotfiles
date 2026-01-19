@@ -1,6 +1,0 @@
-# /qompassai/dotfiles/.config/sysconfig/pmlogger_timers
-# Qompass AI SysConfig PM Logger Timers Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-PMLOGGER_CHECK_PARAMS="-C"
-PMLOGGER_DAILY_PARAMS="-E"

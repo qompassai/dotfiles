@@ -1,7 +1,0 @@
-# /qompassai/dotfiles/.config/mercurial/hgrc
-# Qompass AI Mercurial Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#####################################################
-
-[web]
-cacerts = /etc/ssl/certs/ca-certificates.crt

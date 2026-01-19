@@ -1,8 +1,0 @@
-# /qompassai/dotfiles/.config/default/gpsd
-# Qompass AI Default Gpsd Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-DEVICES=""
-GPSD_OPTIONS=""
-START_DAEMON="true"
-USBAUTO="true"

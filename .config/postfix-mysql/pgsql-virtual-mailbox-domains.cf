@@ -1,6 +1,0 @@
-user = virtualmail
-password = yourpassword
-hosts = 127.0.0.1
-dbname = virtualmail
-query = SELECT 1 FROM virtual_domains WHERE name='%s'
-

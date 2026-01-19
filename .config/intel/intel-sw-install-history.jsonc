@@ -1,5 +1,0 @@
-// /qompassai/dotfiles/.config/intel/intel-sw-install-history.jsonc
-// Qompass AI Intel SW Install History Config
-// Copyright (C) 2025 Qompass AI, All rights reserved
-///////////////////////////////////////////////////////////////////
-{"install":[{"timeStamp":1743293304,"rfc3339":"2025-03-29 17:08:24-0700","installDir":"/home/phaedrus/.cache/paru/clone/intel-opencl-sdk/pkg/intel-opencl-sdk/opt/intel/system_studio_2020"}]}

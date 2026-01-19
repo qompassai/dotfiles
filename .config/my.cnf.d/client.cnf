@@ -1,6 +1,0 @@
-# /qompassai/dotfiles/.config/my.cnf.d/client.cnf
-# Qompass AI My.Cnf.d Client Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#################################################
-[client]
-[client-mariadb]

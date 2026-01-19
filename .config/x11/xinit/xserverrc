@@ -1,6 +1,0 @@
-#!/bin/sh
-# /qompassai/dotfiles/.config/x11/xinit/xserverrc
-# Qompass AI X11 Xinit Xserver Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-exec /usr/bin/X -nolisten tcp "$@"

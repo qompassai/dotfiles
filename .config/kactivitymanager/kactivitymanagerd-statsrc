@@ -1,9 +1,0 @@
-// /qompassai/dotfiles/.config/kactivitymanager/kactivitymanagerd-statsrc
-// Qompass AI KActivityManager Daemon Stats Config
-// Copyright (C) 2025 Qompass AI, All rights reserved
-/////////////////////////////////////////
-[Favorites-org.kde.plasma.kickoff.favorites.instance-3-0cea2b4f-5b0c-4ad2-8d5f-ea85b1848706]
-ordering=preferred://browser,org.kde.kontact.desktop,systemsettings.desktop,org.kde.dolphin.desktop,org.kde.discover.desktop
-
-[Favorites-org.kde.plasma.kickoff.favorites.instance-3-global]
-ordering=preferred://browser,org.kde.kontact.desktop,systemsettings.desktop,org.kde.dolphin.desktop,org.kde.discover.desktop

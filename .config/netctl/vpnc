@@ -1,8 +1,0 @@
-# /qompassai/dotfiles/.config/netctl/vpnc
-# Qompass AI NetCtl VPNC Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#################################################
-Connection=vpnc
-Interface=vpnc
-VpncConfig="/etc/vpnc/default.conf"
-VpncFlags=""

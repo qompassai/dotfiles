@@ -1,5 +1,0 @@
-# /qompassai/dotfiles/.config/pkcs11/modules/opensc.module
-# Qompass AI PKCS11 OpenSC Module Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-##########################################################
-module: opensc-pkcs11.so

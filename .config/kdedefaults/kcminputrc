@@ -1,6 +1,0 @@
-# /qompassai/dotfiles/.config/kdedefaults/kcminputrc
-# Qompass AI kdedefaults KCM Inputrc Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-###############################################
-[Mouse]
-cursorTheme=breeze_cursors

@@ -1,7 +1,0 @@
-// /qompassai/dotfiles/.config/webapps/dokuwiki/manifest.jsonc
-// Qompass AI Dokuwiki Manifest Config
-// Copyright (C) 2025 Qompass AI, All rights reserved
-//////////////////////////////////////////////////////////////
-{
-    "display": "standalone"
-}

@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=com.rafaelmardojai.SharePreview
-Exec=/usr/bin/share-preview --gapplication-service

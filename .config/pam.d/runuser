@@ -1,7 +1,0 @@
-%PAM-1.0
-# /qompassai/dotfiles/.config/pam.d/runuser
-# Qompass AI Pam Daemon Runuser Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-###################################################
-auth    sufficient      pam_rootok.so
-session include         system-login

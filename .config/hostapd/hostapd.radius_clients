@@ -1,7 +1,0 @@
-# /qompassai/dotfiles/.config/hostapd/hostapd.radius_clients_user
-# Qompass AI Hostapd Radius Clients Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#####################################################
-10.1.2.3	"$(pass show hostapd/radiusp0"
-192.168.1.0/24 "$(pass show hostapd/radiusp1)")
-0.0.0.0/0	radius

@@ -1,6 +1,0 @@
-# /qompassai/dotfiles/.config/postfix-sqlitevirtual_aliases.cf
-# Qompass AI Postfix Sqlite3 Virtual aliases
-# Copyright (C) 2025 Qompass AI, All rights reserved
-############################################################## 
-dbpath = /home/phaedrus/.local/share/mail/sqlite
-query = SELECT destination FROM virtual_aliases WHERE source='%s'

@@ -1,5 +1,0 @@
-# /qompassai/dotfiles/.config/libibverbs.d/ipathverbs.driver
-# Qompass AI Libibverbs.d Intel Ethernet Connection RDMA Driver Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#########################################################
-driver irdma

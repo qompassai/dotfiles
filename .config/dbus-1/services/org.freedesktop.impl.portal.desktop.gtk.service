@@ -1,4 +1,0 @@
-[D-BUS Service]
-Name=org.freedesktop.impl.portal.desktop.gtk
-Exec=/usr/lib/xdg-desktop-portal-gtk
-SystemdService=xdg-desktop-portal-gtk.service

@@ -1,8 +1,0 @@
-# /qompassai/dotfiles/.config/mosquitto/aclfile
-# Qompass AI Mosquitto ACL Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#################################################
-topic read $SYS/#
-user $USER
-topic foo/bar
-pattern write $SYS/broker/connection/%c/state

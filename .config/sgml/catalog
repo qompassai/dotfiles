@@ -1,8 +1,0 @@
-# /qompassai/dotfiles/.config/sgml/catalog
-# Qompass AI Standard Generalized Markup Language (SGML) Catalog
-# Copyright (C) 2025 Qompass AI, All rights reserved
-##############################################################
-CATALOG $XDG_CONFIG_HOME/sgml/sgml-ent.cat
-CATALOG $XDG_CONFIG_HOME/sgml/sgml-docbook.cat
-CATALOG $XDG_CONFIG_HOME/sgml/openjade-1.3.2.cat
-CATALOG $XDG_CONFIG_HOME/sgml/openjade.cat

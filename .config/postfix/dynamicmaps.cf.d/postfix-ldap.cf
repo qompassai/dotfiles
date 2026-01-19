@@ -1,1 +1,0 @@
-ldap	postfix-ldap.so	dict_ldap_open

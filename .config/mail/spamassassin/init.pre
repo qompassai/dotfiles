@@ -1,9 +1,0 @@
-# /qompassai/dotfiles/.config/mail/spamassassin/init.pre
-# Qompass AI SpamAssassin Init Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-########################################################
-
-enable_compat welcomelist_blocklist
-loadplugin Mail::SpamAssassin::Plugin::RelayCountry
-loadplugin Mail::SpamAssassin::Plugin::URIDNSBL
-loadplugin Mail::SpamAssassin::Plugin::SPF

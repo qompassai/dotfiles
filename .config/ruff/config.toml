@@ -1,1 +1,0 @@
-[lint]\nselect = ["E", "F", "W"] # Example: style, errors, warnings

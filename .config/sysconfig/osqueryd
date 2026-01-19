@@ -1,8 +1,0 @@
-# /qompassai/dotfiles/.config/sysconfig/osqueryd
-# Qompass AI SysConfig OSQuery Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#################################################
-CONFIG_FILE="$XDG_CONFIG_HOME/osquery/osquery.conf"
-FLAG_FILE="$XDG_CONFIG_HOME/osquery/osquery.flags"
-LOCAL_PIDFILE="/var/osquery/osqueryd.pidfile"
-PIDFILE="/var/run/osqueryd.pidfile"

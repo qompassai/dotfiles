@@ -1,1 +1,0 @@
-/usr/libexec/rc/rc/sh/functions.sh

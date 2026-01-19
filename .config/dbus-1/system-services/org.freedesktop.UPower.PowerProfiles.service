@@ -1,5 +1,0 @@
-[D-BUS Service]
-Name=org.freedesktop.UPower.PowerProfiles
-Exec=/bin/false
-User=root
-SystemdService=tuned-ppd.service

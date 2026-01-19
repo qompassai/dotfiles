@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=org.mobian_project.CallAudio
-Exec=/usr/bin/callaudiod

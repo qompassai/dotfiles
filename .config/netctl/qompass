@@ -1,6 +1,0 @@
-Description='A basic DHCP Ethernet connection with IPv6'
-Interface=enp45s0
-Connection=ethernet
-IP=dhcp
-IP6=stateless
-

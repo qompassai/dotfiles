@@ -1,4 +1,0 @@
-[D-BUS Service]
-Name=org.freedesktop.Tracker3.Miner.Files.Control
-Exec=/usr/lib/localsearch-control-3
-SystemdService=localsearch-control-3.service

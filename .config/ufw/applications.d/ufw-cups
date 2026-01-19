@@ -1,8 +1,0 @@
-# /qompassai/dotfiles/.config/ufw/applications.d/ufw-cups
-# Qompass AI UFW Application Daemon CUPS Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#########################################################
-[CUPS]
-title=CUPS
-description=CUPS printer server
-ports=631/tcp

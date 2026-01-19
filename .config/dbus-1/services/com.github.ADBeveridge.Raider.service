@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=com.github.ADBeveridge.Raider
-Exec=/usr/bin/raider --gapplication-service

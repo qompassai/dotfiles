@@ -1,9 +1,0 @@
-# /qompassai/dotfiles/.config/mimir/mimir.yaml
-# Qompass AI Mimir Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#################################################### 
-
----
-
-activity_tracker:
-  filepath: ""

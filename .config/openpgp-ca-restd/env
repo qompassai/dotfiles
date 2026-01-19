@@ -1,7 +1,0 @@
-# /qompassai/dotfiles/.config/openpgp-ca-restd/env
-# Qompass AI OpenPGP-CA-Restd Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#################################################
-ROCKET_ADDRESS=0.0.0.0
-ROCKET_PORT=8000
-DATABASE=/var/lib/openpgp-ca-restd/database.oca

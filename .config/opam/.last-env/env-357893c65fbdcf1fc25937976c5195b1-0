@@ -1,3 +1,0 @@
-OPAM_SWITCH_PREFIX	=	/home/phaedrus/.opam/squirrel-prover-git	:	target	Prefix\ of\ the\ current\ opam\ switch
-MANPATH	=:	/home/phaedrus/.opam/squirrel-prover-git/man	:	host	Current\ opam\ switch\ man\ dir
-PATH	+=	/home/phaedrus/.opam/squirrel-prover-git/bin	:	target	Binary\ dir\ for\ opam\ switch\ squirrel-prover-git

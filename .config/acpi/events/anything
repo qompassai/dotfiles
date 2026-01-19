@@ -1,6 +1,0 @@
-# /qompassai/dotfiles/.config/acpi/events/anything
-# Qompass AI ACPI Events Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-event=.*
-action=/home/phaedrus/.config/acpi/handler.sh %e

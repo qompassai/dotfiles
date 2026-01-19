@@ -1,5 +1,0 @@
-# /qompassai/dotfiles/.config.postfix/dynamicmaps.cf
-# Qompass AI Postfix Dynamic Maps Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-# dict-type	so-name (pathname)	dict-function	mkmap-function

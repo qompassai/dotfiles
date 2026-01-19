@@ -1,7 +1,0 @@
-# /qompassai/dotfiles/.config/containers/registries.d/default.yaml
-# Qompass AI Container Registries.d Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#####################################################
-default-docker:
-  lookaside: file:///$XDG_DATA_HOME/containers/sigstore
-  lookaside-staging: file:///$XDG_DATA_HOME/containers/sigstore

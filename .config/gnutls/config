@@ -1,6 +1,0 @@
-# /qompassai/dotfiles/.config/gnutls/config
-# Qompass AI Gnutls Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-[global]
-ktls = true

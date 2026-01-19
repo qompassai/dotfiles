@@ -1,7 +1,0 @@
-# /qompassai/dotfiles/.config/wofi/config
-# Qompass AI Wofi Config 
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-key_up=Control_L-p
-key_down=Control_L-n
-term=ghostty

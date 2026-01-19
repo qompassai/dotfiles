@@ -1,3 +1,0 @@
-#!/bin/sh
-CUDA_BIN=$( cd "$( dirname "$0" )" && pwd )
-PATH=$PATH:$CUDA_BIN LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$CUDA_BIN/../lib:$CUDA_BIN/../lib64:$CUDA_BIN/../extras/CUPTI/lib64:$CUDA_BIN/../targets/x86_64-linux/lib UBUNTU_MENUPROXY=0 LIBOVERLAY_SCROLLBAR=0 $CUDA_BIN/../libnvvp/nvvp $@

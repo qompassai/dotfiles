@@ -1,5 +1,0 @@
-# /qompassai/dotfiles/.config/udev/rules.d/50-uinput.rules
-# Qompass AI UDev U-Input Rules Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-##########################################################
-KERNEL=="uinput", TAG+="uaccess""

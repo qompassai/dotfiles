@@ -1,7 +1,0 @@
-{
-    cmdlines = {
-        "xmake update",
-        "xmake install luaejdb",
-        "xmake service"
-    }
-}

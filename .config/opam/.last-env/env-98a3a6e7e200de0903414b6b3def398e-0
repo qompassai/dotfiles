@@ -1,7 +1,0 @@
-OPAM_SWITCH_PREFIX	=	/home/phaedrus/.opam/squirrel-prover-git	:	target	Prefix\ of\ the\ current\ opam\ switch
-OCAMLTOP_INCLUDE_PATH	+=	/home/phaedrus/.opam/squirrel-prover-git/lib/toplevel	:	target	Updated\ by\ package\ ocaml
-CAML_LD_LIBRARY_PATH	=	/usr/lib/ocaml/stublibs:/usr/lib/ocaml	:	target	Updated\ by\ package\ ocaml
-CAML_LD_LIBRARY_PATH	+=	/home/phaedrus/.opam/squirrel-prover-git/lib/stublibs	:	target	Updated\ by\ package\ ocaml
-OCAML_TOPLEVEL_PATH	=	/home/phaedrus/.opam/squirrel-prover-git/lib/toplevel	Updated\ by\ package\ ocaml
-MANPATH	=:	/home/phaedrus/.opam/squirrel-prover-git/man	:	host	Current\ opam\ switch\ man\ dir
-PATH	+=	/home/phaedrus/.opam/squirrel-prover-git/bin	:	target	Binary\ dir\ for\ opam\ switch\ squirrel-prover-git

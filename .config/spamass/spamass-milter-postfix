@@ -1,6 +1,0 @@
-# /qompassai/dotfiles/.config/spamass/spamass-milter-postfix
-# Qompass AI Spam Assassin Milter PostFix Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#################################################
-SOCKET="/var/spool/postfix/spamass/spamass.sock"
-SOCKET_OPTIONS="-g postfix"

@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=org.kde.kssld6
-Exec=/usr/lib/kf6/kiod6

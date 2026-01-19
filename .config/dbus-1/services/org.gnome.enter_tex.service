@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=org.gnome.enter_tex
-Exec=/usr/bin/enter-tex --gapplication-service

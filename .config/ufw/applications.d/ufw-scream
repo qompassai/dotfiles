@@ -1,8 +1,0 @@
-# /qompassai/dotfiles/.config/ufw/applications.d/ufw-scream
-# Qompass AI UFW Application Daemon Scream Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-##########################################################
-[scream]
-title=Scream
-description=Scream is a Virtual network sound card for Microsoft Windows
-ports=4010

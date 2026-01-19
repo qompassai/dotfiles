@@ -1,7 +1,0 @@
-#%Module
-
-module-help {    null - does absolutely nothing. It is simply meant as a place}
-module-help {    holder in your dot file initialization.}
-module-help {}
-
-module-whatis {does absolutely nothing}

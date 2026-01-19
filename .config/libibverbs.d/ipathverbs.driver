@@ -1,5 +1,0 @@
-# /qompassai/dotfiles/.config/libibverbs.d/ipathverbs.driver            
-# Qompass AI Libibverbs.d QLogic InfiniPath HCA Driver Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#########################################################
-driver ipathverbs

@@ -1,8 +1,0 @@
-# /qompassai/dotfiles/.config/sigma/elk.yml
-# Qompass AI Sigma Elk Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-title: ELK default indices logstash-* and filebeat-*
-defaultindex:
-    - logstash-*
-    - filebeat-*

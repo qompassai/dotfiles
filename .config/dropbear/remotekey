@@ -1,8 +1,0 @@
-# /qompassai/dotfiles/.config/dropbear/remotekey
-# Qompass AI Dropbear Remote Key Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-
-KEY_IP=
-KEY_USER=keys
-KEY_FILE="$(pass show dropbear/kf)"

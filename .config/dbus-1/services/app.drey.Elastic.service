@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=app.drey.Elastic
-Exec=/usr/bin/app.drey.Elastic --gapplication-service

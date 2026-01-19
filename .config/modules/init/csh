@@ -1,3 +1,0 @@
-# define module command and surrounding initial environment (default value
-# for MODULESHOME, MODULEPATH, LOADEDMODULES and parse of init config files)
-eval "`/usr/bin/tclsh '/usr/lib/env-modules/modulecmd.tcl' csh autoinit`"

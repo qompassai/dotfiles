@@ -1,1 +1,0 @@
-root=PARTUUID=714c9eee-4984-4113-bfbd-ffb9b74f3e3e rw rootflags=subvol=@ quiet splash zswap.enabled=0 nvidia_drm.modeset=1 nvidia.NVreg_EnableGpuFirmware=0 ibt=off

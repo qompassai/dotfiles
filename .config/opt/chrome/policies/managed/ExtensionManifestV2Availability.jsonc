@@ -1,7 +1,0 @@
-//qompassai/dotfiles/.config/opt/chrome/policies/managed/ExtensionManifestV2Availability.jsonc
-// Qompass AI Chrome Extension ManivestV2 Policy Config
-//Copyright (C) 2025 Qompass AI, All rights reserved
-////////////////////////////////////////////////////////////////////////////////////////////////
-{
-  "ExtensionManifestV2Availability": 2
-}

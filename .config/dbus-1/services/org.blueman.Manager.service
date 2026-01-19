@@ -1,4 +1,0 @@
-[D-BUS Service]
-Name=org.blueman.Manager
-Exec=/usr/bin/blueman-manager
-SystemdService=blueman-manager.service

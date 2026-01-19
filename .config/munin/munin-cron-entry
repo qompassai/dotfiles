@@ -1,5 +1,0 @@
-# /qompassai/dotfiles/.config/munin/munin-cron-entry
-# Qompass AI Munin Cron Entry Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#################################################
-*/5 * * * *     test -x /usr/bin/munin-cron && /usr/bin/munin-cron

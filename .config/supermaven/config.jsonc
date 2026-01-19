@@ -1,8 +1,0 @@
-// /qompassai/dotfiles/.config/supermaven/config.jsonc
-// Qompass AI SuperMaven Config
-// Copyright (C) 2025 Qompass AI, All rights reserved
-/////////////////////////////////////////
-{
-  "link_id": "$(pass show supermaven/link_id)",
-  "machine_id": "$(pass show supermaven/machine_id)"
-}

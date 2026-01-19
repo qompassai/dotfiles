@@ -1,5 +1,0 @@
-# Main conda configuration file
-# Individual settings are modularized in condarc.d/ directory
-
-# This file serves as the primary configuration entry point
-# All specific configurations are in ~/.config/conda/condarc.d/

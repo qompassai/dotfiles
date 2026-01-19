@@ -1,3 +1,0 @@
-OPAM_SWITCH_PREFIX	=	/home/phaedrus/.opam/default	:	target	Prefix\ of\ the\ current\ opam\ switch
-MANPATH	=:	/home/phaedrus/.opam/default/man	:	host	Current\ opam\ switch\ man\ dir
-PATH	+=	/home/phaedrus/.opam/default/bin	:	target	Binary\ dir\ for\ opam\ switch\ default

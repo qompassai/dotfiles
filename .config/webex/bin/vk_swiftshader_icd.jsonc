@@ -1,5 +1,0 @@
-# /qompassai/dotfiles/.config/webex/bin/vk_swiftshader_icd.jsonc
-# Qompass AI Webex Bin VK SwiftShader Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#################################################
-{"file_format_version": "1.0.0", "ICD": {"library_path": "./libvk_swiftshader.so", "api_version": "1.0.5"}}

@@ -1,9 +1,0 @@
-# /qompassai/dotfiles/.config/diffuser/diffuserrc
-# Qompass AI Diffuser Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-
-option log_print_output False
-option log_print_stack False
-option use_flatpak False
-import /usr/share/diffuse/syntax/*.syntax

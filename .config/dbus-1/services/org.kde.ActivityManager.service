@@ -1,4 +1,0 @@
-[D-BUS Service]
-Name=org.kde.ActivityManager
-Exec=/usr/lib/kactivitymanagerd
-SystemdService=plasma-kactivitymanagerd.service

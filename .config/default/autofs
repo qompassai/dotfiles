@@ -1,6 +1,0 @@
-# /qompassai/dotfiles/.config/default/autofs
-# Qompass AI Default AutoFS Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-USE_MISC_DEVICE="yes"
-#OPTIONS=""

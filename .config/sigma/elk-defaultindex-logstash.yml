@@ -1,7 +1,0 @@
-# /qompassai/dotfiles/.config/sigma/elk-defaultindex-logstash.yml
-# Qompass AI Sigma Elk Default Index Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-#############################################################
-title: ELK default indices logstash-*
-defaultindex:
-    - logstash-*

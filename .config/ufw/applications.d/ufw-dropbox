@@ -1,8 +1,0 @@
-# /qompassai/dotfiles/.config/ufw/applications.d/ufw-dropbox
-# Qompass AI UFW Application Daemon DropBox Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-##############################################################
-[Dropbox]
-title=Dropbox LAN Sync
-description=Dropbox is a free service that lets you bring your photos, docs, and videos anywhere and share them easily
-ports=17500/tcp|17500/udp

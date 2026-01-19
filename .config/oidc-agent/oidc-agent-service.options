@@ -1,9 +1,0 @@
-# /qompassai/dotfiles/.config/oidc-agent/oidc-agent-service.options
-# Qompass AI OIDC-Agent Service Options Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
-OIDC_AGENT="${OIDC_AGENT:-oidc-agent}"
-START_AGENT_WITH_XSESSION="${START_AGENT_WITH_XSESSION:-False}"
-OIDC_AGENT_RESTART_WITH_SAME_OPTS="${OIDC_AGENT_RESTART_WITH_SAME_OPTS:-False}"
-OIDC_AGENT_OPTS="${OIDC_AGENT_OPTS:-}"
-OIDC_AGENT_OPTS="--restart-on-update ${OIDC_AGENT_OPTS}"

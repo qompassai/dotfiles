@@ -1,3 +1,0 @@
-$shlib_directory/postfix-pgsql.so:f:root:-:755
-$readme_directory/PGSQL_README:f:root:-:644
-$manpage_directory/man5/pgsql_table.5:f:root:-:644

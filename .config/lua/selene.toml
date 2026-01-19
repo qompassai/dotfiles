@@ -1,9 +1,0 @@
-[config]
-unused_variable = { ignore_pattern = "^" }
-shadowing = { ignore_pattern = "^" }
-
-[lints]
-unused_variable = "warn"
-shadowing = "warn"
-mixed_table = "warn"
-incorrect_standard_library_use = "deny"

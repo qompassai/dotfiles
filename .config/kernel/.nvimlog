@@ -1,4 +1,0 @@
-WRN 2025-10-05T12:52:58.306 ?.299      server_start:193: Failed to start server: permission denied: /run/user/0/
-WRN 2025-10-05T12:52:58.439 ?.299      server_start:193: Failed to start server: permission denied: /run/user/0/
-WRN 2025-10-05T12:55:43.274 ?.6265     server_start:193: Failed to start server: permission denied: /run/user/0/
-WRN 2025-10-05T12:55:43.320 ?.6265     server_start:193: Failed to start server: permission denied: /run/user/0/

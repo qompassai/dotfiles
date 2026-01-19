@@ -1,1 +1,0 @@
-ZIPROXY_ARGS="-c /etc/ziproxy/ziproxy.conf"

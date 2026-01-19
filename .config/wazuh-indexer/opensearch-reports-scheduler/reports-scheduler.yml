@@ -1,9 +1,0 @@
----
-# /qompassai/dotfiles/.config/wazuh-indexer/opensearch-reports-scheduler/reports-scheduler.yml
-# Qompass AI Wazuh-Indexer OpenSearch Reports Scheduler Config
-# Copyright (C) 2025 Qompass AI, All rights reserved
-##################################################################################
-opensearch.reports:
-  general:
-    operationTimeoutMs: 60000
-    defaultItemsQueryCount: 100
