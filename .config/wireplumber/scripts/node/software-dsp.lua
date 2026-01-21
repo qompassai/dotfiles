@@ -1,14 +1,23 @@
-log = Log.open_topic('s-node')
-config = {}
-config.rules = Conf.get_section_as_json('node.software-dsp.rules', Json.Array({}))
-clients_om = ObjectManager({ -- TODO: port from Obj Manager to Hooks
-    Interest({
-        type = 'client',
-    }),
-})
-filter_nodes = {}
-hidden_nodes = {}
-SimpleEventHook({
+-- /qompassai/dotfiles/.config/wireplumber/scripts/node/software-dsp.lua
+-- Qompass AI WirePlumber Node Software- Digital Signal Processing(DSP) Script
+-- Copyright (C) 2026 Qompass AI, All rights reserved
+------------------------------------------------------------------------
+log = Log.open_topic('s-node') ---@type WPLog
+config = { ---@type WPDSPConfig
+    rules = Conf.get_section_as_json('node.filter-graph.rules', Json.Array({})), ---@type WPJsonObject
+}
+filter_nodes = {} ---@type WPFilterNodes
+hidden_nodes = {} ---@type WPHiddenNodes
+---Apply hidden-node permissions to a client.
+---@param client WPClient
+local function apply_hidden_nodes_to_client(client)
+    for id, _ in pairs(hidden_nodes) do
+        if not client.properties['wireplumber.daemon'] then
+            client:update_permissions({ [id] = '-' })
+        end
+    end
+end
+SimpleEventHook({ --- create DSP/filter nodes on node-added
     name = 'node/dsp/create-dsp-node',
     interests = {
         EventInterest({
@@ -20,41 +29,47 @@ SimpleEventHook({
         }),
     },
     execute = function(event)
-        local node = event:get_subject()
+        local node = event:get_subject() 
         JsonUtils.match_rules(config.rules, node.properties, function(action, value)
-            if action == 'create-filter' then
-                local props = value:parse(1)
-                log:debug('DSP rule found for ' .. node.properties['node.name'])
-                if props['filter-graph'] then
-                    log:debug('Loading filter graph for ' .. node.properties['node.name'])
-                    filter_nodes[node.id] = LocalModule('libpipewire-module-filter-chain', props['filter-graph'], {})
-                elseif props['filter-path'] then
-                    log:debug('Loading filter graph for ' .. node.properties['node.name'] .. ' from disk')
-                    local conf = Conf(props['filter-path'], {
-                        ['as-section'] = 'node.software-dsp.graph',
-                        ['no-fragments'] = true,
-                    })
-                    local err = conf:open()
-                    if not err then
-                        local args = conf:get_section_as_json('node.software-dsp.graph'):to_string()
-                        filter_nodes[node.id] = LocalModule('libpipewire-module-filter-chain', args, {})
-                    else
-                        log:warning('Unable to load filter graph for ' .. node.properties['node.name'])
-                    end
+            if action ~= 'create-filter' then
+                return
+            end
+            local props = value:parse() ---@type table<string, any>
+            log:debug('DSP rule found for ' .. node.properties['node.name'])
+            if props['filter-graph'] then
+                log:debug('Loading filter graph for ' .. node.properties['node.name'])
+                filter_nodes[node.id] = LocalModule('libpipewire-module-filter-chain', props['filter-graph'], {})
+            elseif props['filter-path'] then
+                log:debug('Loading filter graph for ' .. node.properties['node.name'] .. ' from disk')
+                local conf = Conf(props['filter-path'], {
+                    ['as-section'] = 'node.software-dsp.graph',
+                    ['no-fragments'] = true,
+                })
+                local err = conf:open()
+                if not err then
+                    local args = conf:get_section_as_json('node.software-dsp.graph'):to_string()
+                    filter_nodes[node.id] = LocalModule('libpipewire-module-filter-chain', args, {})
+                else
+                    log:warning('Unable to load filter graph for ' .. node.properties['node.name'])
                 end
-                if props['hide-parent'] then
-                    log:debug('Setting permissions to \'-\' on ' .. node.properties['node.name'] .. ' for open clients')
-                    for client in clients_om:iterate({ type = 'client' }) do
-                        if not client['properties']['wireplumber.daemon'] then
-                            client:update_permissions({ [node['bound-id']] = '-' })
-                        end
-                    end
-                    hidden_nodes[node['bound-id']] = node.id
-                end
+            end
+            if props['hide-parent'] then
+                log:debug('Setting permissions to \'-\' on ' .. node.properties['node.name'] .. ' for open clients')
+                local client_om = ObjectManager({ --- use a client object-manager dedicated to hook
+                    Interest({ type = 'client' }),
+                })
+                client_om:connect('object-added', function(om, client)
+                    log:debug('client-added via ObjectManager: ', om) ---@cast client WPClient
+                    apply_hidden_nodes_to_client(client)
+                end)
+                client_om:activate()
+                hidden_nodes[node['bound-id']] = node.id
             end
         end)
     end,
 }):register()
+
+---Create DSP/filter nodes when matching nodes are added.
 SimpleEventHook({
     name = 'node/dsp/free-dsp-node',
     interests = {
@@ -75,16 +90,19 @@ SimpleEventHook({
         end
     end,
 }):register()
-clients_om:connect(
-    'object-added',
-    function(_om, client) ---changed from clients_om:connect('object-added', function(om, client)
-        for id, _ in pairs(hidden_nodes) do
-            if not client['properties']['wireplumber.daemon'] then
-                client:update_permissions({
-                    [id] = '-',
-                })
-            end
-        end
-    end
-)
-clients_om:activate()
+SimpleEventHook({ -- track client-added using a hook instead of a global ObjectManager
+    name = 'client/apply-hidden-nodes',
+    interests = {
+        EventInterest({
+            Constraint({
+                'event.type',
+                '=',
+                'client-added',
+            }),
+        }),
+    },
+    execute = function(event)
+        local client = event:get_subject() ---@cast client WPClient
+        apply_hidden_nodes_to_client(client)
+    end,
+}):register()

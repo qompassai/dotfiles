@@ -1,13 +1,20 @@
-agutils = require('audio-group-utils')
+-- /qompassai/dotfiles/.config/wireplumber/scripts/node/state-stream.lua
+-- Qompass AI WirePlumber Node Audio-Group Script
+-- Copyright (C) 2026 Qompass AI, All rights reserved
+------------------------------------------------------------------------
+log = Log.open_topic('s-node') ---@type WPLog
+agutils = require('audio-group-utils') ---@type WPAudioGroupUtils
 PW_AUDIO_NAMESPACE = 'pw-audio-namespace'
 node_directions = {}
 group_loopback_modules = {}
 group_loopback_modules['input'] = {}
 group_loopback_modules['output'] = {}
+---Determine node input OR output audio stream.
 ---@param id integer
 ---@param props WPProperties
 ---@return '"input"'|'"output"'|nil
 function GetNodeDirection(id, props)
+    log:trace('computing direction for node ', id)
     if string.find(props['media.class'], 'Stream/Input/Audio') then
         return 'input'
     elseif string.find(props['media.class'], 'Stream/Output/Audio') then
@@ -21,7 +28,7 @@ end
 function GetNodeAudioGroup(pid) ---@param pid number
     local group = nil
     local target_object = nil
-    local curr_pid = pid --- We group a processes by PW_AUDIO_NAMESPACE.<pid> ancestor
+    local curr_pid = pid --- Group processes by PW_AUDIO_NAMESPACE.<pid> ancestor
     while curr_pid ~= 0 do ---@cast curr_pid integer
         local pid_info = ProcUtils.get_proc_info(curr_pid)
         local arg0 = pid_info:get_arg(0)
@@ -37,7 +44,7 @@ function GetNodeAudioGroup(pid) ---@param pid number
         then
             for i = 0, pid_info:get_n_args() - 1, 1 do --- Check if the PW_AUDIO_NAMESPACE has a defined target
                 local argn = pid_info:get_arg(i)
-                if argn == '--' then --- Ignore any args after '--'
+                if argn == '--' then                   --- Ignore any args after '--'
                     break
                 end
                 if (argn == '--target-object') or (argn == '-t') then --- Get target node id value if any
@@ -45,8 +52,7 @@ function GetNodeAudioGroup(pid) ---@param pid number
                     break
                 end
             end
-
-            group = PW_AUDIO_NAMESPACE .. '.' .. tostring(curr_pid) --- We name the audio group as PW_AUDIO_NAMESPACE.<pid>
+            group = PW_AUDIO_NAMESPACE .. '.' .. tostring(curr_pid) ---Audio group named PW_AUDIO_NAMESPACE.<pid>
             break
         end
         curr_pid = pid_info:get_parent_pid()
@@ -54,19 +60,24 @@ function GetNodeAudioGroup(pid) ---@param pid number
     return group, target_object
 end
 
+---Create a loopback module for an audio group stream.
 ---@param props WPProperties
 ---@param group string
 ---@param target_object string|nil
 ---@param direction '"input"'|'"output"'
 ---@return WPLocalModule
 function CreateStreamLoopback(props, group, target_object, direction)
-    local is_input = direction == 'input' and true or false
+    local is_input = direction == 'input'
     local stream_props = {} -- Set stream properties
     stream_props['node.name'] = 'stream.audio_group:' .. group
     stream_props['node.description'] = 'Stream Audio Group for ' .. group
     stream_props['media.class'] = is_input and 'Stream/Input/Audio' or 'Stream/Output/Audio'
     stream_props['node.passive'] = true
     stream_props['session.audio-group'] = group
+    stream_props['node.nick'] = props
+    ['node.nick']                                  --- propagate a few properties from the original node, so props is used
+    stream_props['application.name'] = props['application.name']
+
     if target_object ~= nil then
         stream_props['target.object'] = tostring(target_object)
     end
@@ -75,11 +86,11 @@ function CreateStreamLoopback(props, group, target_object, direction)
     device_props['node.description'] = 'Device Audio Group for ' .. group
     device_props['media.class'] = is_input and 'Audio/Source' or 'Audio/Sink'
     device_props['session.audio-group'] = group
-    local args = Json.Object({ --- Set loopback module args
+    local args = Json.Object({
         ['capture.props'] = Json.Object(is_input and stream_props or device_props),
         ['playback.props'] = Json.Object(is_input and device_props or stream_props),
     })
-    return LocalModule('libpipewire-module-loopback', args:get_data(), {}) --- Create module
+    return LocalModule('libpipewire-module-loopback', args:get_data(), {})
 end
 
 SimpleEventHook({
@@ -134,7 +145,7 @@ SimpleEventHook({
             Log.info(node, 'Cannot get process ID, not grouping audio stream ' .. stream_name)
             return
         end
-        local direction = GetNodeDirection(bound_id, stream_props) --- Get direction and add it to the table
+        local direction = GetNodeDirection(bound_id, stream_props)
         if direction == nil then
             Log.info(node, 'Cannot get direction, not grouping audio stream ' .. stream_name)
             return
@@ -150,10 +161,10 @@ SimpleEventHook({
         if m == nil then
             Log.info(
                 'Creating '
-                    .. direction
-                    .. ' loopback for audio group '
-                    .. group
-                    .. (target_object and (' with target object ' .. tostring(target_object)) or '')
+                .. direction
+                .. ' loopback for audio group '
+                .. group
+                .. (target_object and (' with target object ' .. tostring(target_object)) or '')
             )
             m = CreateStreamLoopback(stream_props, group, target_object, direction)
             group_loopback_modules[direction][group] = m
@@ -194,7 +205,7 @@ SimpleEventHook({
         if direction == nil then
             return
         end
-        node_directions[id] = nil
+        node_directions[id] = direction
         local group = agutils.get_audio_group(node) --- Get node group from table and remove it
         if group == nil then
             return

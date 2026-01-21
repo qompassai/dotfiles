@@ -1,15 +1,19 @@
-cutils = require('common-utils')
-log = Log.open_topic('s-node')
-config = {}
-config.rules = Conf.get_section_as_json('stream.rules', Json.Array({}))
+-- /qompassai/dotfiles/.config/wireplumber/scripts/node/state-stream.lua
+-- Qompass AI WirePlumber Node State-Stream Script
+-- Copyright (C) 2026 Qompass AI, All rights reserved
+------------------------------------------------------------------------
+cutils = require('common-utils') ---@type WPUtils
+log = Log.open_topic('s-node') ---@type WPLog
+config = { ---@type WPDSPConfig
+    rules = Conf.get_section_as_json('node.filter-graph.rules', Json.Array({})), ---@type WPJsonObject
+}
 state = nil --- the state storage
 state_table = nil
 rs_metadata = nil --- Support for the "System Sounds" volume control in pavucontrol
 restore_stream_hook = SimpleEventHook({ --- hook to restore stream properties & target
     name = 'node/restore-stream',
     interests = {
-        -- match stream nodes
-        EventInterest({
+        EventInterest({ --- match stream nodes
             Constraint({
                 'event.type',
                 '=',
@@ -56,8 +60,8 @@ restore_stream_hook = SimpleEventHook({ --- hook to restore stream properties & 
         }),
     },
     execute = function(event)
-        local node = event:get_subject()
-        local stream_props = node.properties ---@cast node WPNode
+        local node = event:get_subject() ---@cast node WPNode
+        local stream_props = node.properties ---@type WPProperties
         stream_props = JsonUtils.match_rules_update_properties(config.rules, stream_props)
         local key = formKey(stream_props)
         if not key then
@@ -85,7 +89,6 @@ restore_stream_hook = SimpleEventHook({ --- hook to restore stream properties & 
                 table.insert(props.channelMap, 1, 'Spa:Enum:AudioChannel')
                 props.channelMap = Pod.Array(props.channelMap)
             end
-
             if props.volume or (props.mute ~= nil) or props.channelVolumes or props.channelMap then
                 log:info(node, 'restore values from ' .. key)
                 local param = Pod.Object(props)
@@ -93,14 +96,10 @@ restore_stream_hook = SimpleEventHook({ --- hook to restore stream properties & 
                 node:set_param('Props', param)
             end
         end
-        -- restore the node's link target on metadata
-        if Settings.get_boolean('node.stream.restore-target') and stream_props['state.restore-target'] ~= 'false' then
+        if Settings.get_boolean('node.stream.restore-target') and stream_props['state.restore-target'] ~= 'false' then --- restore the node's link target on metadata
             if stored_values.target then
-                -- check first if there is a defined target in the node's properties
-                -- and skip restoring if this is the case (#335)
-                local target_in_props = stream_props['target.object'] or stream_props['node.target']
-
-                if not target_in_props then
+                local target_in_props = stream_props['target.object'] or stream_props['node.target'] -- check first if there is a defined target in the node's properties
+                if not target_in_props then -- and skip restoring if this is the case (#335)
                     local source = event:get_source()
                     local nodes_om = source:call('get-object-manager', 'node')
                     local metadata_om = source:call('get-object-manager', 'metadata')
@@ -140,12 +139,10 @@ restore_stream_hook = SimpleEventHook({ --- hook to restore stream properties & 
         end
     end,
 })
-
 store_stream_props_hook = SimpleEventHook({ -- store stream properties on the state file
     name = 'node/store-stream-props',
     interests = {
-        -- match stream nodes
-        EventInterest({
+        EventInterest({ --- match stream nodes
             Constraint({
                 'event.type',
                 '=',
@@ -156,10 +153,13 @@ store_stream_props_hook = SimpleEventHook({ -- store stream properties on the st
                 '=',
                 'Props',
             }),
-            Constraint({ 'media.class', 'matches', 'Stream/*' }),
+            Constraint({
+                'media.class',
+                'matches',
+                'Stream/*',
+            }),
         }),
-        -- and device nodes that are not associated with any routes
-        EventInterest({
+        EventInterest({ --- and device nodes that are not associated with any routes
             Constraint({
                 'event.type',
                 '=',
@@ -204,8 +204,8 @@ store_stream_props_hook = SimpleEventHook({ -- store stream properties on the st
         }),
     },
     execute = function(event)
-        local node = event:get_subject()
-        local stream_props = node.properties
+        local node = event:get_subject() ---@cast node WPNode
+        local stream_props = node.properties ---@type WPProperties
         stream_props = JsonUtils.match_rules_update_properties(config.rules, stream_props)
         if Settings.get_boolean('node.stream.restore-props') and stream_props['state.restore-props'] ~= 'false' then
             local key = formKey(stream_props)
@@ -244,7 +244,6 @@ store_stream_props_hook = SimpleEventHook({ -- store stream properties on the st
         end
     end,
 })
-
 store_stream_target_hook = SimpleEventHook({ --- save "target.node"/"target.object" on metadata changes
     name = 'node/store-stream-target-metadata-changed',
     interests = {
@@ -339,10 +338,8 @@ function populateMetadata(metadata) ---@param metadata any
         p.channelMap = nil
         p.channelVolumes = nil
         p.target = nil
-        -- pipewire-pulse expects the key to be
-        -- "restore.stream.Output/Audio.media.role:Notification"
-        key = string.gsub(key, ':', '.', 1)
-        metadata:set(0, 'restore.stream.' .. key, 'Spa:String:JSON', Json.Object(p):to_string())
+        key = string.gsub(key, ':', '.', 1) -- pipewire-pulse expects the key to be
+        metadata:set(0, 'restore.stream.' .. key, 'Spa:String:JSON', Json.Object(p):to_string()) --- "restore.stream.Output/Audio.media.role:Notification"
     end
 end
 
@@ -386,9 +383,9 @@ route_settings_metadata_changed_hook = SimpleEventHook({ --- track route-setting
             return
         end
         local vparsed = json:parse()
-
-        local key = string.sub(key, string.len('restore.stream.') + 1) -- we store the key as "Output/Audio:media.role:Notification"
+        key = string.sub(key, string.len('restore.stream.') + 1)
         key = string.gsub(key, '%.', ':', 1)
+        log:debug('route-settings update for subject ', subject_id, ', key ', key)
         local stored_values = getStoredStreamProps(key) or {}
         if vparsed.volume ~= nil then
             stored_values.volume = vparsed.volume
@@ -410,12 +407,15 @@ route_settings_metadata_changed_hook = SimpleEventHook({ --- track route-setting
 function buildDefaultChannelVolumes(node) ---@cast node WPNode
     local node_props = node.properties
     local direction = cutils.mediaClassToDirection(node_props['media.class'] or '')
-    local def_vol = 1.0
+    local def_vol = 1.0 ---@type number
     local channels = 2
     local res = {}
     local str = node.properties['state.default-volume']
     if str ~= nil then
-        def_vol = tonumber(str)
+        local n = tonumber(str)
+        if n ~= nil then
+            def_vol = n
+        end
     elseif direction == 'input' then
         def_vol = Settings.get_float('node.stream.default-capture-volume')
     elseif direction == 'output' then
@@ -445,7 +445,6 @@ function getStoredStreamProps(key) ---@param key string
     if not json or not json:is_object() then
         return nil
     end
-
     return json:parse()
 end
 

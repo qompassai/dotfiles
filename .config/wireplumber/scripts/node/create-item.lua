@@ -1,13 +1,17 @@
-cutils = require('common-utils')
-log = Log.open_topic('s-node')
+-- /qompassai/dotfiles/.config/wireplumber/scripts/node/create-item.lua
+-- Qompass AI WirePlumber Node Create-Item Script
+-- Copyright (C) 2026 Qompass AI, All rights reserved
+------------------------------------------------------------------------
+cutils = require('common-utils') ---@type WPUtils
+log = Log.open_topic('s-node') ---@type WPLog
 items = {}
----@param node WPNode
+---Configure properties for a node used to create a session item.
 ---@return WPProperties
-function configProperties(node)
+function configProperties(node) ---@param node WPNode
     local properties = node.properties
     local media_class = properties['media.class'] or ''
     local factory_name = properties['factory.name'] or ''
-    if not properties['media.type'] then --- ensure a media.type is set
+    if not properties['media.type'] then
         for _, i in ipairs({
             'Audio',
             'Video',
@@ -29,11 +33,11 @@ function configProperties(node)
     properties['item.features.mono'] = (factory_name == 'api.alsa.pcm.sink' or factory_name == 'api.bluez5.a2dp.sink')
         and Settings.get_boolean('node.features.audio.mono')
     properties['node.id'] = node['bound-id']
-
-    local default_role = Settings.get('node.stream.default-media-role') --- set the default media.role, if configured
-    if default_role then --- avoid Settings.get_string(), as it will parse the default "null" value
-        default_role = default_role:parse() --- as a string instead of returning nil
-        properties['media.role'] = properties['media.role'] or default_role
+    local default_role = Settings.get('node.stream.default-media-role')
+    if default_role ~= nil then
+        ---@cast default_role WPJsonObject
+        local role_str = default_role:parse() ---@type string
+        properties['media.role'] = properties['media.role'] or role_str
     end
     return properties
 end
@@ -90,7 +94,7 @@ AsyncEventHook({
         start = {
             next = 'register',
             execute = function(event, transition)
-                local node = event:get_subject()
+                local node = event:get_subject() ---@cast node WPNode
                 local id = node.id
                 local item
                 local item_type
@@ -101,10 +105,8 @@ AsyncEventHook({
                     item_type = 'si-node'
                 end
                 log:info(node, 'creating item for node -> ' .. item_type)
-
                 item = SessionItem(item_type) --- create item
                 items[id] = item
-
                 if not item:configure(configProperties(node)) then --- configure item
                     transition:return_error('failed to configure item for node ' .. tostring(id))
                     return
@@ -120,8 +122,9 @@ AsyncEventHook({
         },
         register = {
             next = 'none',
-            execute = function(event, transition)
-                local node = event:get_subject()
+            ---@param event WPEvent
+            execute = function(event, transition) ---@param transition WPAsyncTransition
+                local node = event:get_subject() ---@cast node WPNode
                 local bound_id = node['bound-id']
                 local item = items[node.id]
                 log:info(item, 'activated item for node ' .. tostring(bound_id))
@@ -179,8 +182,8 @@ SimpleEventHook({
             }),
         }),
     },
-    execute = function(event)
-        local node = event:get_subject()
+    execute = function(event) ---@param event WPEvent
+        local node = event:get_subject() ---@cast node WPNode
         local id = node.id
         if items[id] then
             items[id]:remove()
@@ -188,9 +191,9 @@ SimpleEventHook({
         end
     end,
 }):register()
----@return nil
-function reconfigureAudioAdapters() --- Re-configure all existing audio adapter session items when audio features change.
-    local ids = {}
+--- Re-configure all existing audio adapter session items when audio features change.
+function reconfigureAudioAdapters() ---@return nil
+    local ids = {} ---@type integer[]
     for id, item in pairs(items) do --- Get the Id of all session items that are audio adapters
         local si_props = item.properties
         if si_props['item.factory.name'] == 'si-audio-adapter' then
@@ -199,13 +202,11 @@ function reconfigureAudioAdapters() --- Re-configure all existing audio adapter 
     end
     for _, id in pairs(ids) do --- Re-configure all audio adapters
         local item = items[id]
-        local node = item:get_associated_proxy('node')
+        local node = item:get_associated_proxy('node') ---@cast node WPNode
         log:info(item, 'Started re-configuring audio adapter')
-        -- Remove the session item so that it is unlinked
-        items[id] = nil
+        items[id] = nil --- Remove the session item so that it is unlinked
         item:remove()
-        -- Configure the session item
-        if not item:configure(configProperties(node)) then
+        if not item:configure(configProperties(node)) then --- Configure the session item
             log:warning(item, 'Could not re-configure audio adapter')
             goto skip_item
         end
@@ -221,7 +222,6 @@ function reconfigureAudioAdapters() --- Re-configure all existing audio adapter 
         ::skip_item::
     end
 end
-
 Settings.subscribe('node.features.audio.*', function()
     reconfigureAudioAdapters()
 end)
