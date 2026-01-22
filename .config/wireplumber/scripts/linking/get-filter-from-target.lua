@@ -2,7 +2,7 @@
 -- Qompass AI WirePlumber Get-Filter-From-Target Linking Script
 -- Copyright (C) 2026 Qompass AI, All rights reserved
 ------------------------------------------------------------------------
-lutils = require('linking-utils')
+lutils = require('linking-utils') ---@type WPUtils
 cutils = require('common-utils')
 futils = require('filter-utils')
 log = Log.open_topic('s-linking')

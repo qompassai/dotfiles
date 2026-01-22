@@ -1,31 +1,32 @@
--- WirePlumber
---
--- Copyright © 2024 Collabora Ltd.
---    @author Ashok Sidipotu <ashok.sidipotu@collabora.com>
---
--- SPDX-License-Identifier: MIT
-
+-- /qompassai/dotfiles/.config/wireplumber/scripts/linking/rescan-media-role-links.lua
+-- Qompass AI WirePlumber Rescan-Media-Role-Links Linking Script
+-- Copyright (C) 2026 Qompass AI, All rights reserved
+--------------------------------------------------------------------------------------
 lutils = require("linking-utils")
 cutils = require("common-utils")
 log = Log.open_topic("s-linking")
-
-function restoreVolume (om, link)
+---@param om WPObjectManager
+function restoreVolume(om, link) ---@param link WPSessionItem
   setVolume(om, link, 1.0)
 end
 
-function duckVolume (om, link)
+---@param om WPObjectManager
+function duckVolume(om, link) ---@param link WPSessionItem
   setVolume(om, link, Settings.get_float("linking.role-based.duck-level"))
 end
 
-function setVolume (om, link, level)
+---@param om WPObjectManager
+---@param link WPSessionItem
+---@param level number
+function setVolume(om, link, level)
   local lprops = link.properties
   local media_role_si_id = nil
-  local dir = lprops ["item.node.direction"]
+  local dir = lprops["item.node.direction"]
 
   if dir == "output" then
-    media_role_si_id = lprops ["out.item.id"]
+    media_role_si_id = lprops["out.item.id"]
   else
-    media_role_si_id = lprops ["in.item.id"]
+    media_role_si_id = lprops["in.item.id"]
   end
 
   local media_role_lnkbl = om:lookup {
@@ -40,7 +41,7 @@ function setVolume (om, link, level)
   local media_role_other_lnkbl = om:lookup {
     type = "SiLinkable",
     Constraint { "item.factory.name", "c", "si-audio-adapter", "si-node" },
-    Constraint { "node.link-group", "=", media_role_lnkbl.properties ["node.link-group"] },
+    Constraint { "node.link-group", "=", media_role_lnkbl.properties["node.link-group"] },
     Constraint { "id", "!", media_role_lnkbl.id, type = "gobject" },
   }
 
@@ -48,8 +49,8 @@ function setVolume (om, link, level)
     local n = media_role_other_lnkbl:get_associated_proxy("node")
     if n then
       log:info(string.format(".. %s volume of media role node \"%s(%d)\" to %f",
-        level < 1.0 and "duck" or "restore", n.properties ["node.name"],
-        n ["bound-id"], level))
+        level < 1.0 and "duck" or "restore", n.properties["node.name"],
+        n["bound-id"], level))
 
       local props = {
         "Spa:Pod:Object:Param:Props",
@@ -63,7 +64,9 @@ function setVolume (om, link, level)
   end
 end
 
-function getSuspendPlaybackFromMetadata (om)
+---@param om WPObjectManager
+---@return boolean suspend
+function getSuspendPlaybackFromMetadata(om)
   local suspend = false
   local metadata = om:lookup {
     type = "metadata",
@@ -90,7 +93,8 @@ AsyncEventHook {
     EventInterest {
       -- on default metadata suspend.playback changed
       Constraint { "event.type", "=", "metadata-changed" },
-      Constraint { "metadata.name", "=", "default" },
+      Constraint {
+        "metadata.name", "=", "default" },
       Constraint { "event.subject.key", "=", "suspend.playback" },
     }
   },
@@ -104,15 +108,15 @@ AsyncEventHook {
         local metadata_om = source:call("get-object-manager", "metadata")
         local suspend = getSuspendPlaybackFromMetadata(metadata_om)
         local pending_activations = 0
-        local mc = si_props ["target.media.class"]
+        local mc = si_props["target.media.class"]
         local pmrl_active = nil
         pmrl = lutils.getPriorityMediaRoleLink(mc)
 
         log:debug("Rescanning media role links...")
 
-        local function onMediaRoleLinkActivated (l, e)
-          local si_id = tonumber(l.properties ["main.item.id"])
-          local target_id = tonumber(l.properties ["target.item.id"])
+        local function onMediaRoleLinkActivated(l, e)
+          local si_id = tonumber(l.properties["main.item.id"])
+          local target_id = tonumber(l.properties["target.item.id"])
           local si_flags = lutils:get_flags(si_id)
 
           if e then

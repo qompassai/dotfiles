@@ -1,12 +1,12 @@
 -- /qompassai/dotfiles/.config/wireplumber/scripts/linking/rescan.lua
--- Qompass AI WirePlumber Re-Scanning Linking Script
+-- Qompass AI WirePlumber Rescan Linking Script
 -- Copyright (C) 2026 Qompass AI, All rights reserved
 ------------------------------------------------------------------------
 lutils = require('linking-utils') ---@type WPUtils
 cutils = require('common-utils') ---@type WPUtils
-futils = require('filter-utils')
+futils = require('filter-utils') ---@type WPUtils
 log = Log.open_topic('s-linking') ---@type WPLog
-handles = {} ---@type table
+handles = {}
 handles.rescan_enabled = true
 handles.timeout_source = nil
 --- Check whether a linkable item should be handled based on filter settings.
@@ -15,14 +15,16 @@ handles.timeout_source = nil
 ---@param handle_nonstreams boolean
 ---@return boolean
 function checkFilter(si, om, handle_nonstreams)
-    if false then
+    -- always handle filters if handle_nonstreams is true, even if it is disabled
+    if handle_nonstreams then
         log:debug('checkFilter om=' .. tostring(om))
-    end
-    if handle_nonstreams then -- always handle filters if handle_nonstreams is true, even if it is disabled
         return true
     end
     local node = si:get_associated_proxy('node') -- always return true if this is not a filter
-    local link_group = node.properties['node.link-group']
+    if not node then
+        return true
+    end
+    local link_group = node:get_property('node.link-group')
     if link_group == nil then
         return true
     end
@@ -30,7 +32,7 @@ function checkFilter(si, om, handle_nonstreams)
     if not futils.is_filter_smart(direction, link_group) then -- always handle filters that are not smart
         return true
     end
-    return not futils.is_filter_disabled(direction, link_group) --- dont handle smart filters that are disabled
+    return not futils.is_filter_disabled(direction, link_group) -- dont handle smart filters that are disabled
 end
 
 --- Check if a session item is linkable and return its properties if so.
@@ -40,32 +42,32 @@ end
 ---@return boolean valid
 ---@return WPProperties|nil si_props
 function checkLinkable(si, om, handle_nonstreams)
-    local si_props = si.properties
-    if not si_props or (si_props['item.node.type'] ~= 'stream' and not handle_nonstreams) then -- For the rest of them, only handle stream session items
-        return false, si_props
+    -- For the rest of them, only handle stream session items
+    if si:get_property('item.node.type') ~= 'stream' and not handle_nonstreams then
+        return false
     end
-    if not checkFilter(si, om, handle_nonstreams or false) then
-        return false, si_props
+    if not checkFilter(si, om, handle_nonstreams) then -- check filters
+        return false
     end
-    return true, si_props
+    return true
 end
 
---- Remove links and flags associated with a linkable session item.
 ---@param si WPSessionItem|WPObject
-function unhandleLinkable(si, om) ---@param om WPSessionItemManager
-    local si_id = si.id
-    local valid, si_props = checkLinkable(si, om, true)
-    if not valid then
+function unhandleLinkable(si, om) ---@param om  WPSessionItemManager
+    if not checkLinkable(si, om, true) then
         return
     end
-    log:debug(si, 'unhandleLinkable props node.name=' .. tostring(si_props and si_props['node.name']))
-    log:info(si, string.format('unhandling item %d', si_id))
-    -- iterate over all the links in the graph and
-    -- remove any links associated with this item
-    for silink in om:iterate({ type = 'SiLink' }) do
-        local out_id = tonumber(silink.properties['out.item.id'])
-        local in_id = tonumber(silink.properties['in.item.id'])
 
+    local si_id = si.id
+    log:info(si, string.format('unhandling item %d', si_id))
+    for silink in            -- iterate over all the links in the graph and
+    om:iterate({
+        type = 'SiLink',     -- remove any links associated with this item
+    })
+    do
+        local silink_props = silink.properties
+        local out_id = silink_props:get_int('out.item.id')
+        local in_id = silink_props:get_int('in.item.id')
         if out_id == si_id or in_id == si_id then
             local in_flags = lutils:get_flags(in_id)
             local out_flags = lutils:get_flags(out_id)
@@ -75,8 +77,7 @@ function unhandleLinkable(si, om) ---@param om WPSessionItemManager
             elseif in_id == si_id and out_flags.peer_id == in_id then
                 out_flags.peer_id = nil
             end
-
-            if cutils.parseBool(silink.properties['is.role.policy.link']) then
+            if silink_props:get_boolean('is.role.policy.link') then
                 lutils.clearPriorityMediaRoleLink(silink)
             end
 
@@ -84,7 +85,6 @@ function unhandleLinkable(si, om) ---@param om WPSessionItemManager
             log:info(silink, '... link removed')
         end
     end
-
     lutils:clear_flags(si_id)
 end
 
@@ -107,33 +107,84 @@ SimpleEventHook({
     execute = function(event)
         local si = event:get_subject()
         local source = event:get_source()
-        if not source then
-            return
-        end
         local om = source:call('get-object-manager', 'session-item')
+
         unhandleLinkable(si, om)
     end,
 }):register()
---- Scan all linkable session items and schedule linking where needed.
----@param source WPObject
+
+-- Handle newly added linkable immediately without waiting for full rescan
+-- Only for simple cases where we know it won't affect other parts of the graph
+SimpleEventHook({
+    name = 'linking/linkable-added-immediate',
+    before = 'linking/rescan-trigger',
+    interests = {
+        EventInterest({
+            Constraint({
+                'event.type',
+                '=',
+                'session-item-added',
+            }),
+            Constraint({
+                'event.session-item.interface',
+                '=',
+                'linkable',
+            }),
+        }),
+    },
+    execute = function(event)
+        local si = event:get_subject()
+        local source = event:get_source()
+        local om = source:call('get-object-manager', 'session-item')
+        if not checkLinkable(si, om, false) then
+            return
+        end
+
+        local node = si:get_associated_proxy('node') -- Don't handle immediately if this is a smart filter that could affect other nodes
+        local link_group = node:get_property('node.link-group')
+        if link_group then
+            local direction = cutils.getTargetDirection(si.properties)
+            if futils.is_filter_smart(direction, link_group) then
+                -- Smart filters need full rescan to handle cascading effects
+                return
+            end
+        end
+
+        local autoconnect = si:get_property('node.autoconnect') -- Only handle if autoconnect is enabled
+
+        if autoconnect ~= 'true' then
+            return
+        end
+
+        -- Check if this is a simple stream (most common case)
+        -- Don't handle device nodes or special nodes that might become default targets
+        if si:get_property('item.node.type') ~= 'stream' then
+            return
+        end
+        source:call('push-event', 'select-target', si, nil) -- Push select-target event immediately for simple stream case
+    end,
+}):register()
 ---@return nil
-function handleLinkables(source)
+function handleLinkables(source) ---@param source WPObject
     local om = source:call('get-object-manager', 'session-item')
-    for si in
-    om:iterate({
-        type = 'SiLinkable',
-    })
-    do
-        local valid, si_props = checkLinkable(si, om)
-        if not valid then
+
+    for si in om:iterate({ type = 'SiLinkable' }) do
+        if not checkLinkable(si, om) then
             goto skip_linkable
         end
-        local autoconnect = cutils.parseBool(si_props['node.autoconnect']) -- check if we need to link this node at all
+
+        -- Get properties
+        local si_props = si.properties
+
+        -- check if we need to link this node at all
+        local autoconnect = si_props:get_boolean('node.autoconnect')
         if not autoconnect then
             log:debug(si, tostring(si_props['node.name']) .. ' does not need to be autoconnected')
             goto skip_linkable
         end
-        source:call('push-event', 'select-target', si, nil) -- push event to find target and link
+
+        -- push event to find target and link
+        source:call('push-event', 'select-target', si, nil)
 
         ::skip_linkable::
     end
@@ -154,7 +205,9 @@ SimpleEventHook({
         local source = event:get_source()
         local om = source:call('get-object-manager', 'session-item')
         log:info('rescanning...')
-        for si in -- always unlink all filters that are smart and disabled
+
+        -- always unlink all filters that are smart and disabled
+        for si in
         om:iterate({
             type = 'SiLinkable',
             Constraint({
@@ -164,15 +217,13 @@ SimpleEventHook({
         })
         do
             local node = si:get_associated_proxy('node')
-            if not node then
-                return
-            end
-            local link_group = node.properties['node.link-group']
+            local link_group = node:get_property('node.link-group')
             local direction = cutils.getTargetDirection(si.properties)
             if futils.is_filter_smart(direction, link_group) and futils.is_filter_disabled(direction, link_group) then
                 unhandleLinkable(si, om)
             end
         end
+
         handleLinkables(source)
     end,
 }):register()
@@ -180,8 +231,8 @@ SimpleEventHook({
 SimpleEventHook({
     name = 'linking/rescan-trigger',
     interests = {
-        -- on linkable added or removed, where linkable is adapter or plain node
-        EventInterest({
+
+        EventInterest({ -- on linkable added or removed, where linkable is adapter or plain node
             Constraint({
                 'event.type',
                 'c',
@@ -282,13 +333,20 @@ SimpleEventHook({
     before = 'linking/rescan-trigger',
     interests = {
         EventInterest({
-            Constraint({ 'event.type', '=', 'session-item-removed' }),
-            Constraint({ 'device.api', '=', 'bluez5' }),
+            Constraint({
+                'event.type',
+                '=',
+                'session-item-removed',
+            }),
+            Constraint({
+                'device.api',
+                '=',
+                'bluez5',
+            }),
         }),
     },
     execute = function(event)
         local si = event:get_subject()
-        local si_props = si.properties
         local source = event:get_source()
 
         -- clear timeout source, if any
@@ -297,18 +355,17 @@ SimpleEventHook({
             handles.timeout_source = nil
         end
 
-        -- disable rescan
-        handles.rescan_enabled = false
-        handles.timeout_source = Core.timeout_add(2000, function() --- re-enable rescan after 2 seconds
+        handles.rescan_enabled = false -- disable rescan
+
+        -- re-enable rescan after 2 seconds
+        handles.timeout_source = Core.timeout_add(2000, function()
             handles.timeout_source = nil
             handles.rescan_enabled = true
             source:call('schedule-rescan', 'linking')
         end)
     end,
 }):register()
---- Enable or disable rescan trigger when target metadata changes.
----@param enable boolean
----@return nil
+
 function handleMoveSetting(enable)
     if (not handles.move_hook) and (enable == true) then
         handles.move_hook = SimpleEventHook({
