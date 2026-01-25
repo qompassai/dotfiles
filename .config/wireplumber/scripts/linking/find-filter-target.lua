@@ -2,26 +2,25 @@
 -- Qompass AI WirePlumber Find-Filtered-Target Linking Script
 -- Copyright (C) 2026 Qompass AI, All rights reserved
 ------------------------------------------------------------------------
-lutils = require('linking-utils')
+lutils = require('linking-utils') ---@type WPUtils
 cutils = require('common-utils')
 futils = require('filter-utils')
 log = Log.open_topic('s-linking')
+---@param si WPSessionItem
+---@param om WPObjectManager
+---@return WPSessionItem|nil
+---@return boolean
 function findFilterTarget(si, om)
-    local node = si:get_associated_proxy('node')
+    local node = si:get_associated_proxy('node') ---@type WPNode|WPObject|nil
     local link_group = node.properties['node.link-group']
     local target_id = -1
-    -- return nil if session item is not a filter node
     if link_group == nil then
         return nil, false
     end
-
-    -- return nil if filter is not smart
     local direction = cutils.getTargetDirection(si.properties)
     if not futils.is_filter_smart(direction, link_group) then
         return nil, false
     end
-
-    -- get the filter target
     return futils.get_filter_target(direction, link_group), true
 end
 
@@ -62,8 +61,8 @@ SimpleEventHook({
         target, is_smart_filter = findFilterTarget(si, om)
         local can_passthrough, passthrough_compatible
         if target then
-            passthrough_compatible, can_passthrough = lutils.checkPassthroughCompatibility(si, target)
-            if lutils.canLink(si_props, target) and passthrough_compatible then
+            passthrough_compatible, can_passthrough = lutils:checkPassthroughCompatibility(si, target)
+            if lutils:canLink(si_props, target) and passthrough_compatible then
                 target_picked = true
             end
         end

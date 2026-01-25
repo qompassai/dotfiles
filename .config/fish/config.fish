@@ -8,12 +8,10 @@ end
 for file in $XDG_CONFIG_HOME/fish/conf.d/*.fish
     source $file
 end
-if command -q zoxide
+if command -v zoxide >/dev/null 2>&1
     zoxide init fish | source
 end
 set fish_function_path $fish_function_path $XDG_DATA_HOME/omf/pkg/foreign-env/functions
 fish_add_path ~/.local/bin
 fish_add_path /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin
-
-# added by lua quickstart
-set -gx PATH '/home/phaedrus/.local/share/lua/bin' $PATH
+fish_add_path $HOME/.local/share/lua/bin

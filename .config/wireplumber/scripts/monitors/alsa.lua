@@ -10,9 +10,9 @@ config = {}
 config.reserve_device = Core.test_feature('monitor.alsa.reserve-device')
 config.properties = Conf.get_section_as_properties('monitor.alsa.properties')
 config.rules = Conf.get_section_as_json('monitor.alsa.rules', Json.Array({}))
-device_names_table = nil --- unique device/node name tables
-node_names_table = nil
-id_name_table = nil -- SPA ids to node names: name = id_name_table[device_id][node_id]
+device_names_table = {} ---@type table<string, boolean>
+node_names_table = {} ---@type table<string, boolean>
+id_name_table = {} ---@type table<number, table<number, string>>
 ---@return string|nil
 function nonempty(str) ---@param str string
     return str ~= '' and str or nil
@@ -28,7 +28,7 @@ function applyDefaultDeviceProperties(properties) ---@param properties WPPropert
 end
 
 ---@param properties WPProperties
----@return WPNode|nil  --- underlying ALSA node or nil if disabled
+---@return WPNode|nil
 function createSplitPCMHWNode(dev_props, properties) ---@param dev_props WPProperties
     local skip_keys = {
         'api.alsa.split.position',
@@ -181,9 +181,9 @@ end)
 function createNode(parent, id, obj_type, factory, properties)
     local dev_props = parent.properties
     local parent_id = tonumber(dev_props['spa.object.id'])
-    properties['device.id'] = parent['bound-id'] --- set the device id and spa factory name; REQUIRED, do not change
+    properties['device.id'] = parent['bound-id']    --- set the device id and spa factory name; REQUIRED, do not change
     properties['factory.name'] = factory
-    properties['node.pause-on-idle'] = false --- set the default pause-on-idle setting
+    properties['node.pause-on-idle'] = false        --- set the default pause-on-idle setting
     if dev_props['api.alsa.use-acp'] ~= 'true' then --- try to negotiate the max amount of channels
         properties['audio.channels'] = properties['audio.channels'] or '64'
     end
@@ -193,7 +193,7 @@ function createNode(parent, id, obj_type, factory, properties)
     local stream = properties['api.alsa.pcm.stream'] or 'unknown'
     local profile = properties['device.profile.name'] or (stream .. '.' .. dev .. '.' .. subdev)
     local profile_desc = properties['device.profile.description']
-    if not properties['priority.driver'] then --- set priority
+    if not properties['priority.driver'] then
         local priority = (dev == '0') and 1000 or 744
         if stream == 'capture' then
             priority = priority + 1000
@@ -415,7 +415,8 @@ function prepareDevice(parent, id, obj_type, factory, properties)
         )
     )
     local name = 'alsa_card.' --- ensure the device has an appropriate name
-        .. (properties['device.name'] or properties['device.bus-id'] or properties['device.bus-path'] or tostring(id)):gsub(
+        .. (properties['device.name'] or properties['device.bus-id'] or properties['device.bus-path'] or tostring(id))
+        :gsub(
             '([^%w_%-%.])',
             '_'
         )
@@ -467,7 +468,6 @@ function prepareDevice(parent, id, obj_type, factory, properties)
         local icon = icon_map[f] or ((c == 'modem') and 'modem') or 'audio-card'
         properties['device.icon-name'] = icon .. '-analog' .. (b and ('-' .. b) or '')
     end
-
     applyDefaultDeviceProperties(properties)
     properties = JsonUtils.match_rules_update_properties(config.rules, properties)
     if cutils.parseBool(properties['device.disabled']) then
@@ -521,25 +521,22 @@ function createMonitor()
         log:notice('PipeWire\'s ALSA SPA plugin is missing or broken. ' .. 'Sound cards will not be supported')
         return nil
     end
-    m:connect('create-object', prepareDevice) --- handle create-object to prepare device
-    m:connect(
-        'object-removed',
-        function(parent, id) --- handle object-removed to destroy device reservations and recycle device name
-            removeDevice(parent, id)
-            local device = parent:get_managed_object(id)
-            if not device then
-                return
-            end
-
-            if rd_plugin then
-                local rd_name = device.properties['api.dbus.ReserveDevice1']
-                if rd_name then
-                    rd_plugin:call('destroy-reservation', rd_name)
-                end
-            end
-            device_names_table[device.properties['device.name']] = nil
+    m:connect('create-object', prepareDevice)
+    m:connect('object-removed', function(parent, id)
+        removeDevice(parent, id)
+        local device = parent:get_managed_object(id)
+        if not device then
+            return
         end
-    )
+
+        if rd_plugin then
+            local rd_name = device.properties['api.dbus.ReserveDevice1']
+            if rd_name then
+                rd_plugin:call('destroy-reservation', rd_name)
+            end
+        end
+        device_names_table[device.properties['device.name']] = nil
+    end)
     device_names_table = {} --- reset the name tables to make sure names are recycled
     node_names_table = {}
     id_name_table = {}
@@ -548,15 +545,13 @@ function createMonitor()
     return m
 end
 
-if config.reserve_device then --- if the reserve-device plugin is enabled at execution it connected, o/w d-bus connection failed and continued w/o
+if config.reserve_device then
     rd_plugin = Plugin.find('reserve-device')
 end
 if rd_plugin and rd_plugin:call('get-dbus')['state'] ~= 'connected' then
     log:notice('reserve-device plugin is not connected to D-Bus, ' .. 'disabling device reservation')
     rd_plugin = nil
 end
--- handle rd_plugin state changes to destroy and re-create the ALSA monitor in
--- case D-Bus service is restarted
 if rd_plugin then
     local dbus = rd_plugin:call('get-dbus')
     dbus:connect('notify::state', function(b, pspec)

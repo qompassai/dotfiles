@@ -34,7 +34,6 @@ SimpleEventHook({
         if source then
             log:info(source, 'select-target from source')
         end
-        -- bypass the hook if the target is already picked up
         if target then
             return
         end
@@ -51,24 +50,24 @@ SimpleEventHook({
         )
 
         for item in
-        om:iterate({
-            type = 'SiLinkable',
-            Constraint({
-                'item.node.type',
-                '=',
-                'device',
-            }),
-            Constraint({
-                'item.node.direction',
-                '=',
-                target_direction,
-            }),
-            Constraint({
-                'media.type',
-                '=',
-                si_props['media.type'],
-            }),
-        })
+            om:iterate({
+                type = 'SiLinkable',
+                Constraint({
+                    'item.node.type',
+                    '=',
+                    'device',
+                }),
+                Constraint({
+                    'item.node.direction',
+                    '=',
+                    target_direction,
+                }),
+                Constraint({
+                    'media.type',
+                    '=',
+                    si_props['media.type'],
+                }),
+            })
         do
             ---@cast item WPSessionItem
             local candidate = item ---@type WPSessionItem

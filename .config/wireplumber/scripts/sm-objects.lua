@@ -1,28 +1,40 @@
+-- /qompassai/dotfiles/.config/wireplumber/scripts/sm-objects.lua
+-- Qompass AI WirePlumber SM-Objects Script
+-- Copyright (C) 2026 Qompass AI, All rights reserved
+------------------------------------------------------------------------
 on_demand_objects = {}
 object_constructors = {
     ['pw-module'] = LocalModule,
     ['metadata'] = function(name, args)
+        ---@type WPMetadata
         local m = ImplMetadata(name, args)
-        m:activate(Features.ALL, function(m, e)
+        m:activate(Features.ALL, function(mm, e)
             if e then
                 Log.warning('failed to activate on-demand metadata `' .. name .. '`: ' .. tostring(e))
+            else
+                local _ = mm
             end
         end)
         return m
     end,
 }
+---@param m WPMetadata
+---@param subject integer
+---@param key string|nil
+---@param type string|nil
+---@param value string|nil
 function handle_metadata_changed(m, subject, key, type, value)
-    -- destroy all objects when metadata is cleared
+    local _ = m
+    local _type = type
     if not key then
         on_demand_objects = {}
         return
     end
     local object_id = key .. '@' .. tostring(subject)
-    if on_demand_objects[object_id] then -- destroy existing object instance, if needed
+    if on_demand_objects[object_id] then
         Log.debug('destroy on-demand object: ' .. object_id)
         on_demand_objects[object_id] = nil
     end
-
     if value then
         local json = Json.Raw(value)
         if not json:is_object() then
@@ -48,6 +60,7 @@ function handle_metadata_changed(m, subject, key, type, value)
         on_demand_objects[object_id] = constructor(obj.name, obj.args)
     end
 end
+
 objects_metadata = ImplMetadata('sm-objects')
 objects_metadata:activate(Features.ALL, function(m, e)
     if e then

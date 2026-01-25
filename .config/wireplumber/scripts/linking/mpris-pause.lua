@@ -6,13 +6,13 @@ cutils = require('common-utils') ---@type WPUtils
 lutils = require('linking-utils') ---@type WPUtils
 log = Log.open_topic('s-linking.mpris') ---@type WPLog
 mpris = Plugin.find('mpris')
-RESCAN_DELAY_MSEC = 1000
+RESCAN_DELAY_MSEC = 1000 ---@type integer
 function initializeState()
     -- Delaying rescan while pausing players
-    pending_ops = 0
+    pending_ops = 0 ---@type integer
     need_rescan = false
     -- Links between nodes: links_in [in_node_id] = { out_node_id, ... }
-    links_in = {}
+    links_in = {} ---@type table<integer, table<integer, boolean>>
     links_initialized = false
     -- Link nodes: link_nodes [link.id] = { in_node_id, out_node_id }
     link_nodes = {}
@@ -20,16 +20,12 @@ function initializeState()
     script_active = false
 end
 
--- Get nodes that are (indirectly) linked to `si` by link group
--- or links with input direction. Returns table { [node_id] = node, ... }
-function getLinkedNodes(start_id)
+---@return table<integer, WPNode|WPObject>
+function getLinkedNodes(start_id) ---@param start_id integer
     local node_om = cutils.get_object_manager('node')
     local groups = {}
     local link_groups = {}
-
     log:trace(string.format('start %d', start_id))
-
-    -- construct groups based on node.link-group
     for node in node_om:iterate() do
         local id = node['bound-id']
 
@@ -93,7 +89,10 @@ end
 -- * event_priority(node-removed, session-item-removed) >  event_priority(link-removed)
 --   then ensures we first handle item removal, then update links
 
-function updateLink(in_id, out_id, remove)
+---@param out_id integer
+---@param remove boolean
+---@return nil
+function updateLink(in_id, out_id, remove) ---@param in_id integer
     if links_in[in_id] == nil then
         links_in[in_id] = {}
     end
@@ -104,6 +103,8 @@ function updateLink(in_id, out_id, remove)
     end
 end
 
+---@param links_om WPObjectManager
+---@return nil
 function updateLinks(links_om)
     log:debug('update links')
     for link in links_om:iterate() do
@@ -123,7 +124,6 @@ function initializeLinks(source)
         -- postpone to later
         return
     end
-
     local links_om = source:call('get-object-manager', 'link')
     updateLinks(links_om)
     links_initialized = true
@@ -133,16 +133,19 @@ link_hook = SimpleEventHook({
     name = 'linking/mpris-pause@track-links',
     interests = {
         EventInterest({
-            Constraint({ 'event.type', 'c', 'link-added', 'link-removed' }),
+            Constraint({
+                'event.type',
+                'c',
+                'link-added',
+                'link-removed',
+            }),
         }),
     },
     execute = function(event)
         local link = event:get_subject()
         local eprops = event:get_properties()
         local source = event:get_source()
-
         initializeLinks(source)
-
         local in_id
         local out_id
         local remove = false
@@ -169,7 +172,6 @@ link_hook = SimpleEventHook({
     end,
 })
 
--- Pause media applications associated with the streams linked to a sink to be removed
 pause_hook = SimpleEventHook({
     name = 'linking/mpris-pause',
     before = 'linking/linkable-removed',
@@ -287,10 +289,8 @@ pause_hook = SimpleEventHook({
                     if pending_ops > 0 then
                         pending_ops = pending_ops - 1
                     end
-                    log:debug(string.format('pause completed, res = %d, %d remaining', op['result'], pending_ops))
+                    log:debug(nil, string.format('pause completed, res = %d, %d remaining', op['result'], pending_ops))
                     if pending_ops == 0 and need_rescan then
-                        -- Some players respond to DBus before actually pausing output,
-                        -- so add also a small delay
                         Core.timeout_add(RESCAN_DELAY_MSEC, function()
                             log:debug('continue rescan')
                             source:call('push-event', 'rescan-for-linking', nil, nil)
@@ -302,13 +302,16 @@ pause_hook = SimpleEventHook({
     end,
 })
 
--- Do not perform rescans while we are pausing media players
 rescan_hook = SimpleEventHook({
     name = 'linking/mpris-pause-disable-rescan',
     before = 'linking/rescan',
     interests = {
         EventInterest({
-            Constraint({ 'event.type', '=', 'rescan-for-linking' }),
+            Constraint({
+                'event.type',
+                '=',
+                'rescan-for-linking',
+            }),
         }),
     },
     execute = function(event)
@@ -321,12 +324,10 @@ rescan_hook = SimpleEventHook({
         end
     end,
 })
-
+---@return nil
 function updateEnabled()
     local enable = Settings.get_boolean('linking.pause-playback')
-
     log:debug(string.format('enabled: %s', tostring(enable)))
-
     if enable and not script_active then
         local source = Plugin.find('standard-event-source')
         initializeState()

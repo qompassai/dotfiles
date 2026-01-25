@@ -4,7 +4,7 @@
 ----------------------------------------------------------------------------
 lutils = require('linking-utils') ---@type WPUtils
 cutils = require('common-utils') ---@type WPUtils
-log = Log.open_topic('s-linking') ---@type WPLog
+log = Log.open_topic('s-linking')
 AsyncEventHook({
     name = 'linking/link-target',
     after = 'linking/prepare-link',
@@ -90,8 +90,8 @@ AsyncEventHook({
                     ['policy.role-based.priority'] = target_props['policy.role-based.priority'], ---@type WPPropValue
                     ['policy.role-based.action.same-priority'] = target_props['policy.role-based.action.same-priority'], ---@type WPPropValue
                     ['policy.role-based.action.lower-priority'] = target_props['policy.role-based.action.lower-priority'], ---@type WPPropValue
-                    ['is.role.policy.link'] = is_role_policy_link, ---@type boolean
-                    ['main.item.id'] = si.id, ---@type integer
+                    ['is.role.policy.link'] = is_role_policy_link,
+                    ['main.item.id'] = si.id,
                     ['target.item.id'] = target.id, ---@type integer
                 } ---@type WPProperties
                 if not si_link:configure(link_props) then

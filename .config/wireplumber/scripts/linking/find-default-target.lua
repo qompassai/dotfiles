@@ -32,7 +32,12 @@ SimpleEventHook({
         end
         local candidates = om:lookup({
             type = 'SiLinkable',
-            Constraint({ 'media.class', 'c', 'Audio/Sink', 'Audio/Source' }),
+            Constraint({
+                'media.class',
+                'c',
+                'Audio/Sink',
+                'Audio/Source',
+            }),
         })
 
         if candidates then
@@ -51,8 +56,8 @@ SimpleEventHook({
         local passthrough_compatible ---@type boolean
 
         if target then
-            passthrough_compatible, can_passthrough = lutils.checkPassthroughCompatibility(si, target)
-            if lutils.canLink(si_props, target) and passthrough_compatible then
+            passthrough_compatible, can_passthrough = lutils:checkPassthroughCompatibility(si, target)
+            if lutils:canLink(si_props, target) and passthrough_compatible then
                 target_picked = true
             end
         end

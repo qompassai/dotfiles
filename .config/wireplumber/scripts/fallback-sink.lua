@@ -1,13 +1,30 @@
+-- /qompassai/dotfiles/.config/wireplumber/scripts/fallback-sink.lua
+-- Qompass AI WirePlumber FallBack-Sink Script
+-- Copyright (C) 2026 Qompass AI, All rights reserved
+------------------------------------------------------------------------
 sink_ids = {}
 fallback_node = nil
 node_om = ObjectManager({
     Interest({
         type = 'node',
-        Constraint({ 'media.class', 'matches', 'Audio/Sink', type = 'pw-global' }),
-        -- Do not consider virtual items created by WirePlumber
-        Constraint({ 'wireplumber.is-virtual', '!', true, type = 'pw' }),
-        -- or the fallback sink itself
-        Constraint({ 'wireplumber.is-fallback', '!', true, type = 'pw' }),
+        Constraint({
+            'media.class',
+            'matches',
+            'Audio/Sink',
+            type = 'pw-global',
+        }),
+        Constraint({
+            'wireplumber.is-virtual',
+            '!',
+            true,
+            type = 'pw',
+        }),
+        Constraint({
+            'wireplumber.is-fallback',
+            '!',
+            true,
+            type = 'pw',
+        }),
     }),
 })
 function createFallbackSink()
@@ -30,7 +47,8 @@ function createFallbackSink()
     fallback_node = LocalNode('adapter', properties)
     fallback_node:activate(Feature.Proxy.BOUND)
 end
-
+--- Check currently known sinks and create/remove the fallback sink accordingly.
+--- @return nil
 function checkSinks()
     local sink_ids_items = 0
     for _ in pairs(sink_ids) do
@@ -45,14 +63,16 @@ function checkSinks()
         createFallbackSink()
     end
 end
-
+--- Schedule a delayed check of sinks, debounced by a timeout.
+--- @return nil
 function checkSinksAfterTimeout()
     if timeout_source then
         timeout_source:destroy()
     end
     timeout_source = Core.timeout_add(1000, function()
-        checkSinks()
-        timeout_source = nil
+        checkSinks()         --- @return boolean
+        timeout_source = nil --- @type WPGSource|nil
+        return false
     end)
 end
 
