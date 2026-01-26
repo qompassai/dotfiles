@@ -1,6 +1,6 @@
-# java.conf
+# starknet.conf
 # Qompass AI - [ ]
 # Copyright (C) 2026 Qompass AI, All rights reserved
 # ----------------------------------------
-JIMMER_PREFIX="${JIMMER_PREFIX:-${XDG_DATA_HOME}/jimmer-dto-lsp}"
-PATH="$JIMMER_PREFIX/bin:$PATH"
+complete -o default -F _snforge snforge
+complete -o default -F _sncast sncast
