@@ -1,0 +1,12 @@
+#
+# /qompassai/dotfiles/.config/bash/bashrc
+# Qompass AI Bash Bashrc
+# Copyright (C) 2026 Qompass AI, All rights reserved
+# ----------------------------------------
+# shellcheck disable=SC1090,SC1091
+if [ -d "$XDG_CONFIG_HOME/bash" ]; then
+    for file in "$XDG_CONFIG_HOME"/bash/conf.d/*.sh "$XDG_CONFIG_HOME"/bash/*.sh; do
+        [ -r "${file}" ] && . "${file}"
+    done
+fi
+export PATH

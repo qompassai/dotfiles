@@ -1,0 +1,6 @@
+# /qompassai/dotfiles/.config/pacman/unattended-arch-upgrade.ignore
+# Qompass AI Unattended-Arch-Upgrade Ignore Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+#IgnorePkg=linux-lts
+#IgnorePkg=linux

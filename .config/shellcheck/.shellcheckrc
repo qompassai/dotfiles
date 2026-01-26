@@ -1,0 +1,11 @@
+# /qompassai/dotfiles/.config/shellcheck/.shellcheckrc
+# Qompass AI ShellCheck Config
+# Copyright (C) 2026 Qompass AI, All rights reserved
+# ----------------------------------------
+# Reference: https://man.archlinux.org/man/extra/shellcheck/shellcheck.1.en | https://www.shellcheck.net/wiki/
+disable=SC1090, SC3001,SC3002,SC3003,SC3004,SC3005,SC3006,SC3007,SC3008,SC3009,SC3010,SC3011,SC3012,SC3013,SC3014,SC3015,SC3016,SC3017,SC3018,SC3019,SC3020,SC3021,SC3022,SC3023,SC3024,SC3025,SC3026,SC3028,SC3029,SC3030,SC3031,SC3032,SC3033,SC3034,SC3035,SC3036,SC3037,SC3038,SC3039,SC3040,SC3041,SC3042,SC3043,SC3044,SC3045,SC3046,SC3047,SC3048,SC3049,SC3050,SC3051,SC3052,SC3053,SC3054,SC3055,SC3056,SC3057,SC3059,SC3060,SC3061,SC3062,SC3063,SC3064,SC3065,SC3066,SC3067
+enable=deprecate-which
+enable=require-double-brackets
+extended-analysis=true
+external-sources=true
+shell=bash

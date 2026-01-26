@@ -1,7 +1,8 @@
 # /qompassai/rust/cargo/config.toml
 # Qompass AI Cargo Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
-####################################################
+## ##################################################
+# Reference: https://doc.rust-lang.org/cargo/reference/config.html
 [alias]
 b = "build"
 c = "check"
@@ -15,40 +16,57 @@ zigrun-aarch64 = "zigbuild run --target aarch64-unknown-linux-gnu"
 
 [build]
 build-dir = "target"
+# dep-info-basedir = ""
 jobs = 4
-incremental = true
+incremental = false
 rustc = "rustc"
 rustc-wrapper = "sccache"
 rustdoc = "rustdoc"
 rustflags = ["-C", "target-cpu=native"]
-target = "triple"
 target-dir = "target"
 
 [cache]
-auto-clean-frequency = "1 day" 
+auto-clean-frequency = "1 day"
 
 [cargo-new]
 vcs = "git"
 
+[doc]
+browser = "chromium"
+
 [env]
+CARGO_INCREMENTAL = "0"
 SCCACHE_DIR = "/home/phaedrus/.cache/sccache"
 SCCACHE_IDLE_TIMEOUT = "1200"
-CARGO_INCREMENTAL = "0"
 ZIG_GLOBAL_CACHE_DIR = "/home/phaedrus/.cache/zig"
 
 [future-incompat-report]
-frequency = 'always'
+frequency = "always"
 
 [http]
 debug = false
+low-speed-limit = 10
+multiplexing = true
 timeout = 60
-ssl-version = "tlsv1.3"
 ssl-version.max = "tlsv1.3"
+ssl-version.min = "tlsv1.2"
+
+[install]
+root = "/home/phaedrus/.local"
 
 [net]
 retry = 3
 git-fetch-with-cli = true
 offline = false
+
+[registry]
+default = "crates-io"
+global-credential-providers = [
+  "cargo:token",
+  "cargo:libsecret",
+  "cargo:macos-keychain",
+  "cargo:wincred"
+]
 
 [registries.crates-io]
 protocol = "sparse"
@@ -57,43 +75,60 @@ protocol = "sparse"
 incompatible-rust-versions = "allow"
 
 [target.aarch64-apple-darwin]
-linker = "zig cc -target aarch64-macos-gnu"
-runner = "…"
-rustflags = ["…", "…"]
+linker = "clang"
+runner = "true"
+rustflags = [
+  "-Clink-arg=--target=aarch64-apple-darwin",
+]
 
 [target.x86_64-unknown-linux-gnu]
-linker = "zig cc -target x86_64-linux-gnu"
-runner = "…"
-rustflags = ["…", "…"]
+linker = "clang"
+runner = "env"
+rustflags = [
+  "-Ctarget-cpu=native",
+  "-Clink-arg=-fuse-ld=lld",
+]
 
 [target.aarch64-unknown-linux-gnu]
-linker = "zig cc -target aarch64-linux-gnu"
-runner = "…"
-rustflags = ["-C", "link-arg=-target=aarch64-linux-gnu"]
+linker = "clang"
+runner = "env"
+rustflags = [
+  "-Clink-arg=--target=aarch64-unknown-linux-gnu",
+]
 
 [target.x86_64-apple-darwin]
-linker = "zig cc -target x86_64-macos-gnu"
-runner = "…"
-rustflags = ["…", "…"]
+linker = "clang"
+runner = "true"
+rustflags = [
+  "-Clink-arg=--target=x86_64-apple-darwin",
+]
 
 [target.nvptx64-nvidia-cuda]
 linker = "ptx-linker"
-runner = "…"
-rustflags = ["…", "…"]
+runner = "env"
+rustflags = [
+  "-Ctarget-cpu=sm_89",
+]
 
 [target.x86_64-unknown-linux-musl]
-linker = "zig cc -target x86_64-linux-musl"
+linker = "clang"
+rustflags = [
+  "-Clink-arg=--target=x86_64-unknown-linux-musl",
+  "-Ctarget-feature=-crt-static",
+]
 
 [target.x86_64-pc-windows-gnu]
-linker = "zig cc -target x86_64-windows-gnu"
-runner = "…"
-rustflags = ["…", "…"]
+linker = "clang"
+runner = "wine64"
+rustflags = [
+  "-Clink-arg=--target=x86_64-windows-gnu",
+]
 
 [term]
-color = 'auto'
+color = "auto"
 hyperlinks = true
 progress.term-integration = true
-progress.when = 'auto'
+progress.when = "auto"
 progress.width = 80
 unicode = true
 verbose = true

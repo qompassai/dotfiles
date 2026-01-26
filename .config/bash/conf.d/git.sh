@@ -2,7 +2,7 @@
 # /qompassai/dotfiles/.config/bash/conf.d/git.sh
 # Qompass AI Bash Git Config
 # Copyright (C) 2026 Qompass AI, All rights reserved
-# ----------------------------------------
+# --------------------------------------------------
 GIT_AUTHOR_EMAIL="$(pass show git/author_email)"
 GIT_AUTHOR_NAME="$(pass show git/author)"
 GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
