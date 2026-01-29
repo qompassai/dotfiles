@@ -5,10 +5,10 @@
 cutils = require('common-utils') ---@type WPUtils
 log = Log.open_topic('s-node') ---@type WPLog
 items = {}
----Configure properties for a node used to create a session item.
 ---@return WPProperties
 function configProperties(node) ---@param node WPNode
-    local properties = node.properties
+    local properties = node.properties or {} ---@type WPProperties
+    node.properties = properties
     local media_class = properties['media.class'] or ''
     local factory_name = properties['factory.name'] or ''
     if not properties['media.type'] then
@@ -95,7 +95,11 @@ AsyncEventHook({
             next = 'register',
             execute = function(event, transition)
                 local node = event:get_subject() ---@cast node WPNode
-                local id = node.id
+                local id = node.id ---@type integer?
+                if id == nil then
+                    transition:return_error('node has no id')
+                    return
+                end
                 local item
                 local item_type
                 local media_class = node.properties['media.class']
@@ -105,9 +109,10 @@ AsyncEventHook({
                     item_type = 'si-node'
                 end
                 log:info(node, 'creating item for node -> ' .. item_type)
-                item = SessionItem(item_type) --- create item
+                item = SessionItem(item_type)
                 items[id] = item
-                if not item:configure(configProperties(node)) then --- configure item
+                local props = configProperties(node) ---@type WPProperties
+                if not item:configure(props) then
                     transition:return_error('failed to configure item for node ' .. tostring(id))
                     return
                 end
@@ -184,33 +189,36 @@ SimpleEventHook({
     },
     execute = function(event) ---@param event WPEvent
         local node = event:get_subject() ---@cast node WPNode
-        local id = node.id
-        if items[id] then
-            items[id]:remove()
+        local id = node.id ---@type integer?
+        if not id then
+            return
+        end
+        local item = items[id]
+        if item then
+            item:remove()
             items[id] = nil
         end
     end,
 }):register()
---- Re-configure all existing audio adapter session items when audio features change.
 function reconfigureAudioAdapters() ---@return nil
     local ids = {} ---@type integer[]
-    for id, item in pairs(items) do --- Get the Id of all session items that are audio adapters
+    for id, item in pairs(items) do
         local si_props = item.properties
         if si_props['item.factory.name'] == 'si-audio-adapter' then
             table.insert(ids, id)
         end
     end
-    for _, id in pairs(ids) do --- Re-configure all audio adapters
+    for _, id in pairs(ids) do
         local item = items[id]
         local node = item:get_associated_proxy('node') ---@cast node WPNode
         log:info(item, 'Started re-configuring audio adapter')
-        items[id] = nil --- Remove the session item so that it is unlinked
+        items[id] = nil
         item:remove()
-        if not item:configure(configProperties(node)) then --- Configure the session item
+        if not item:configure(configProperties(node)) then
             log:warning(item, 'Could not re-configure audio adapter')
             goto skip_item
         end
-        items[id] = item --- Activate the session item so that it is linked again
+        items[id] = item
         item:activate(Features.ALL, function(si, e)
             if e then
                 log:warning(si, 'Could not re-activate audio adapter')
@@ -222,6 +230,7 @@ function reconfigureAudioAdapters() ---@return nil
         ::skip_item::
     end
 end
+
 Settings.subscribe('node.features.audio.*', function()
     reconfigureAudioAdapters()
 end)

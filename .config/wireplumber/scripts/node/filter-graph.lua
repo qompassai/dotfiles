@@ -3,11 +3,9 @@
 -- Copyright (C) 2026 Qompass AI, All rights reserved
 ------------------------------------------------------------------------
 log = Log.open_topic('s-node') ---@type WPLog
---- Load filter-graph rules from WP config
 config = { ---@type WPDSPConfig
     rules = Conf.get_section_as_json('node.filter-graph.rules', Json.Array({})), ---@type WPJsonObject
 }
----Apply filter-graph parameters to a node.
 ---@param graph_params any[]
 ---@return nil
 function setNodeFilterGraphParams(node, graph_params) ---@param node WPNode
@@ -19,7 +17,6 @@ function setNodeFilterGraphParams(node, graph_params) ---@param node WPNode
     node:set_params('Props', pod)
 end
 
----Event hook sets audioconvert filter-graph params when matching nodes are created
 SimpleEventHook({
     name = 'node/create-filter-graph',
     interests = {
