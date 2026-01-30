@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# disk
+# Qompass AI - [ ]
+# Copyright (C) 2026 Qompass AI, All rights reserved
+# ----------------------------------------
+DISKS=("/" "/home")
+ICONS=("󰣇 " " ")
+DISKS_FILE="/tmp/dwmblocks_disk_info"
+[ -f "$DISKS_FILE" ] || echo "0 0" > "$DISKS_FILE"
+read -r INDEX FORMAT < "$DISKS_FILE"
+CURRENT_DISK="${DISKS[$INDEX]}"
+ICON="${ICONS[$INDEX]}"
+PERCENT=$(df -h "$CURRENT_DISK" | awk 'NR==2 {print $5}')
+SPACE=$(df -h "$CURRENT_DISK" | awk 'NR==2 {print $4}')
+[ "$FORMAT" -eq 0 ] && INFO="$PERCENT" || INFO="$SPACE"
+case $BLOCK_BUTTON in
+	1) notify-send -t 60000 "$(dysk --color no -c free+mp+use+size)" ;;
+	3) echo "$INDEX $(((FORMAT + 1) % 2))" > "$DISKS_FILE" ;;
+	4) echo "$(((INDEX + 1) % ${#DISKS[@]})) $FORMAT" > "$DISKS_FILE" ;;
+	5) echo "$(((INDEX - 1) % ${#DISKS[@]})) $FORMAT" > "$DISKS_FILE" ;;
+	6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+esac
+echo "$ICON$INFO"

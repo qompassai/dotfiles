@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# editrec
+# Qompass AI - [ ]
+# Copyright (C) 2026 Qompass AI, All rights reserved
+# ----------------------------------------
+ffmpeg -i IMG*.MOV -vf "crop=iw*0.7:ih*0.93:x=iw*0.03:y=ih*0.05,hflip" -an cam.MOV
+ffmpeg -i video*.mkv -vf "drawbox=x=1377:y=803:w=493:h=370:color=gray@1.0:t=fill" box.mkv
+ffmpeg -i box.mkv -i cam.MOV -filter_complex "[0:v]format=yuv420p;[1:v]format=yuv420p;[1:v]scale=484:361[ovrl];[0:v][ovrl]overlay=x=1382:y=808" applied.mkv
+ffmpeg -i applied.mkv -i audio*.wav -map 0 -map 1:a -c:v copy -shortest final.mkv
+rm cam.MOV box.mkv applied.mkv
+notify-send "Video edit finished"

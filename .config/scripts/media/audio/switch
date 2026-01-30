@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# /qompassai/dotfiles/.config/scripts/switch
+# Qompass AI Audio Switch Script
+# Copyright (C) 2026 Qompass AI, All rights reserved
+# --------------------------------------------------
+options=$(pactl -f json list sinks | jq -r '.[] | .description')
+selection=$(echo "$options" | dmenu -i -l 5 -c -p "Output:")
+sink_name=$(pactl -f json list sinks | jq -r --arg sink_pretty_name "$selection" '.[] | select(.description == $sink_pretty_name) | .name')
+if [ -n "$sink_name" ]; then
+    pactl set-default-sink "$sink_name" && notify-send "Audio switched to: $selection"
+else
+    notify-send "Audio switch failed"
+fi
