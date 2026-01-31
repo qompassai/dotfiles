@@ -1,0 +1,571 @@
+{
+    "lua_version": "jit",
+    "target_cpu": "x86_64",
+    "lua_modules_dir": "share/lua/luajit",
+    "home": "/home/phaedrus",
+    "namespace": "user",
+    "prefer_binary": false,
+    "local_by_default": true,
+    "static_lib_extension": "a",
+    "deploy_bin_dir": "/home/phaedrus/.local/share/lua/luajit/bin",
+    "external_deps_subdirs": {
+        "include": "include",
+        "lib": "lib",
+        "bin": "bin"
+    },
+    "external_deps_dirs": [
+        "/home/phaedrus/.local",
+        "/usr/local",
+        "/usr"
+    ],
+    "processor": "x86_64",
+    "cache": {
+        "luajit_version_checked": true
+    },
+    "local_cache": "/home/phaedrus/.cache/luarocks",
+    "lua_modules_path": "share/lua/jit",
+    "lock_manifests": true,
+    "cache_timeout": 60,
+    "upload": {
+        "api_version": "1",
+        "tool_version": "1.0.0",
+        "server": "https://luarocks.org"
+    },
+    "verbose": true,
+    "user_agent": "LuaRocks/3.12.1 x86_64",
+    "runtime_external_deps_subdirs": {
+        "include": "include",
+        "lib": [
+            "lib64",
+            "lib"
+        ],
+        "bin": "bin"
+    },
+    "program_version": "3.12.1",
+    "git_use_https": false,
+    "rocks_servers": [
+        "https://luarocks.org"
+    ],
+    "ssldefault": "https",
+    "runtime_external_deps_patterns": {
+        "include": [
+            "?.h"
+        ],
+        "lib": [
+            "lib?.so",
+            "lib?.so.*"
+        ],
+        "bin": [
+            "?"
+        ]
+    },
+    "deps_mode": "all",
+    "arch": "x86_64",
+    "link_lua_explicitly": false,
+    "disabled_servers": [],
+    "build_from_rockspec": false,
+    "cache_fail_timeout": 86400,
+    "wrapper_suffix": "",
+    "accept_unknown_fields": false,
+    "lua_found": false,
+    "lua_interpreter": "/home/phaedrus/.local/share/lua/luajit/bin/luajit",
+    "config_files": {
+        "nearest": "/home/phaedrus/.config/luarocks/luarocks-5.1.lua",
+        "user": {
+            "found": true,
+            "file": "/home/phaedrus/.config/luarocks/luarocks-5.1.lua"
+        },
+        "system": {
+            "found": false,
+            "file": "/home/phaedrus/.local/lua5.1/etc/luarocks/config-5.1.lua"
+        }
+    },
+    "cache_dir": "/home/phaedrus/.cache/luarocks",
+    "export_path_separator": ":",
+    "git_server": "git@github.com:",
+    "deploy_lib_dir": "/home/phaedrus/.local/share/lua/luajit/lib/lua/jit",
+    "home_tree": "/home/phaedrus/.luarocks",
+    "check_certificate": true,
+    "fs_use_modules": true,
+    "no_manifest": false,
+    "lua_extension": "lua",
+    "sysconfdir": "/home/phaedrus/.local/lua5.1/etc/luarocks",
+    "server_protocol": "https",
+    "rocks_trees": [
+        {
+            "name": "user",
+            "root": "/home/phaedrus/.local/share/lua/luajit"
+        }
+    ],
+    "check_certificates": false,
+    "nodeps": false,
+    "download_method": "curl",
+    "variables": {
+        "LS": "ls",
+        "CC": "sccache clang",
+        "SSCM": "sscm",
+        "LUA_LIBDIR_FILE": "liblua.so",
+        "UNZIP": "unzip -n",
+        "MKTEMP": "mktemp",
+        "MAKE": "make",
+        "WGET": "wget",
+        "RSYNC": "rsync",
+        "HG": "hg",
+        "SCP": "scp",
+        "CURL": "curl",
+        "RMDIR": "rmdir",
+        "RSYNCFLAGS": "--exclude=.git -Oavz",
+        "LIB_EXTENSION": "so",
+        "ZIP": "zip",
+        "LUA_LIBDIR": "/usr/lib",
+        "OPENSSL": "openssl",
+        "RANLIB": "llvm-ranlib",
+        "SCRIPTS_DIR": "/home/phaedrus/.local/share/lua/luajit/bin",
+        "RM": "rm",
+        "ROCKS_TREE": "/home/phaedrus/.local/share/lua/luajit/lib/luarocks/rocks-5.1",
+        "MKDIR": "mkdir",
+        "LIBFLAG": "-shared",
+        "CXXFLAGS": "-O3 -fPIC -Wall -Wextra -stdlib=libc++ -I/home/phaedrus/.local/share/lua/luajit/include/luajit-2.1",
+        "TAR": "tar",
+        "OBJDIR": "obj",
+        "ICACLS": "icacls",
+        "GPG": "gpg",
+        "CHMOD": "chmod",
+        "LDFLAGS": "-L/home/phaedrus/.local/share/lua/luajit/lib -lluajit-5.1",
+        "PWD": "pwd",
+        "CXX": "sccache clang++",
+        "LUA_BINDIR": "/usr/bin",
+        "LUA_DIR": "/usr",
+        "WGETNOCERTFLAG": "--no-check-certificate",
+        "LD": "sccache clang",
+        "CP": "cp",
+        "CMAKE": "cmake",
+        "MD5SUM": "md5sum",
+        "LN": "ln",
+        "FIND": "find",
+        "SVN": "svn",
+        "TOUCH": "touch",
+        "AR": "llvm-ar",
+        "SEVENZ": "7z",
+        "CURLNOCERTFLAG": "-k",
+        "MD5": "md5",
+        "OBJ_EXTENSION": "o",
+        "BUNZIP2": "bunzip2",
+        "TEST": "test",
+        "GUNZIP": "gunzip",
+        "CVS": "cvs",
+        "GIT": "git",
+        "CFLAGS": "-O3 -fPIC -Wall -Wextra -I/home/phaedrus/.local/share/lua/luajit/include/luajit-2.1"
+    },
+    "lib_modules_dir": "lib/lua/luajit",
+    "platform": "unix",
+    "connection_timeout": 30,
+    "lib_modules_path": "lib/lua/jit",
+    "external_lib_extension": "so",
+    "gcc_rpath": true,
+    "rocks_dir": "/home/phaedrus/.local/share/lua/luajit/lib/luarocks/rocks-5.1",
+    "external_deps_patterns": {
+        "include": [
+            "?.h",
+            "?/*.h"
+        ],
+        "lib": [
+            "lib?.a",
+            "lib?.so",
+            "lib?.so.*",
+            "?.a",
+            "?.so"
+        ],
+        "bin": [
+            "?"
+        ]
+    },
+    "hooks_enabled": true,
+    "obj_extension": "o",
+    "rocks_subdir": "lib/luarocks/rocks-5.1",
+    "encrypted_peer": true,
+    "web_browser": "xdg-open",
+    "deploy_lua_dir": "/home/phaedrus/.local/share/lua/luajit/share/lua/jit",
+    "lib_extension": "so",
+    "cmake_generator": "Unix Makefiles"
+}
+    "lua_version": "jit",
+"target_cpu": "x86_64",
+"lua_modules_dir": "share/lua/luajit",
+"home": "/home/phaedrus",
+"namespace": "user",
+"prefer_binary": false,
+"local_by_default": true,
+"static_lib_extension": "a",
+"deploy_bin_dir": "/home/phaedrus/.local/share/lua/luajit/bin",
+"external_deps_subdirs": {
+    "include": "include",
+    "lib": "lib",
+    "bin": "bin"
+},
+"external_deps_dirs": [
+    "/home/phaedrus/.local",
+    "/usr/local",
+    "/usr"
+],
+"processor": "x86_64",
+"cache": {
+    "luajit_version_checked": true
+},
+"local_cache": "/home/phaedrus/.cache/luarocks",
+"lua_modules_path": "share/lua/jit",
+"lock_manifests": true,
+"cache_timeout": 60,
+"upload": {
+    "api_version": "1",
+    "tool_version": "1.0.0",
+    "server": "https://luarocks.org"
+},
+"verbose": true,
+"user_agent": "LuaRocks/3.12.1 x86_64",
+"runtime_external_deps_subdirs": {
+    "include": "include",
+    "lib": [
+        "lib64",
+        "lib"
+    ],
+    "bin": "bin"
+},
+"program_version": "3.12.1",
+"git_use_https": false,
+"rocks_servers": [
+    "https://luarocks.org"
+],
+"ssldefault": "https",
+"runtime_external_deps_patterns": {
+    "include": [
+        "?.h"
+    ],
+    "lib": [
+        "lib?.so",
+        "lib?.so.*"
+    ],
+    "bin": [
+        "?"
+    ]
+},
+"deps_mode": "all",
+"arch": "x86_64",
+"link_lua_explicitly": false,
+"disabled_servers": [],
+"build_from_rockspec": false,
+"cache_fail_timeout": 86400,
+"wrapper_suffix": "",
+"accept_unknown_fields": false,
+"lua_found": false,
+"lua_interpreter": "/home/phaedrus/.local/share/lua/luajit/bin/luajit",
+"config_files": {
+    "nearest": "/home/phaedrus/.config/luarocks/luarocks-5.1.lua",
+    "user": {
+        "found": true,
+        "file": "/home/phaedrus/.config/luarocks/luarocks-5.1.lua"
+    },
+    "system": {
+        "found": false,
+        "file": "/home/phaedrus/.local/lua5.1/etc/luarocks/config-5.1.lua"
+    }
+},
+"cache_dir": "/home/phaedrus/.cache/luarocks",
+"export_path_separator": ":",
+"git_server": "git@github.com:",
+"deploy_lib_dir": "/home/phaedrus/.local/share/lua/luajit/lib/lua/jit",
+"home_tree": "/home/phaedrus/.luarocks",
+"check_certificate": true,
+"fs_use_modules": true,
+"no_manifest": false,
+"lua_extension": "lua",
+"sysconfdir": "/home/phaedrus/.local/lua5.1/etc/luarocks",
+"server_protocol": "https",
+"rocks_trees": [
+    {
+        "name": "user",
+        "root": "/home/phaedrus/.local/share/lua/luajit"
+    }
+],
+"check_certificates": false,
+"nodeps": false,
+"download_method": "curl",
+"variables": {
+    "LS": "ls",
+    "CC": "sccache clang",
+    "SSCM": "sscm",
+    "LUA_LIBDIR_FILE": "liblua.so",
+    "UNZIP": "unzip -n",
+    "MKTEMP": "mktemp",
+    "MAKE": "make",
+    "WGET": "wget",
+    "RSYNC": "rsync",
+    "HG": "hg",
+    "SCP": "scp",
+    "CURL": "curl",
+    "RMDIR": "rmdir",
+    "RSYNCFLAGS": "--exclude=.git -Oavz",
+    "LIB_EXTENSION": "so",
+    "ZIP": "zip",
+    "LUA_LIBDIR": "/usr/lib",
+    "OPENSSL": "openssl",
+    "RANLIB": "llvm-ranlib",
+    "SCRIPTS_DIR": "/home/phaedrus/.local/share/lua/luajit/bin",
+    "RM": "rm",
+    "ROCKS_TREE": "/home/phaedrus/.local/share/lua/luajit/lib/luarocks/rocks-5.1",
+    "MKDIR": "mkdir",
+    "LIBFLAG": "-shared",
+    "CXXFLAGS": "-O3 -fPIC -Wall -Wextra -stdlib=libc++ -I/home/phaedrus/.local/share/lua/luajit/include/luajit-2.1",
+    "TAR": "tar",
+    "OBJDIR": "obj",
+    "ICACLS": "icacls",
+    "GPG": "gpg",
+    "CHMOD": "chmod",
+    "LDFLAGS": "-L/home/phaedrus/.local/share/lua/luajit/lib -lluajit-5.1",
+    "PWD": "pwd",
+    "CXX": "sccache clang++",
+    "LUA_BINDIR": "/usr/bin",
+    "LUA_DIR": "/usr",
+    "WGETNOCERTFLAG": "--no-check-certificate",
+    "LD": "sccache clang",
+    "CP": "cp",
+    "CMAKE": "cmake",
+    "MD5SUM": "md5sum",
+    "LN": "ln",
+    "FIND": "find",
+    "SVN": "svn",
+    "TOUCH": "touch",
+    "AR": "llvm-ar",
+    "SEVENZ": "7z",
+    "CURLNOCERTFLAG": "-k",
+    "MD5": "md5",
+    "OBJ_EXTENSION": "o",
+    "BUNZIP2": "bunzip2",
+    "TEST": "test",
+    "GUNZIP": "gunzip",
+    "CVS": "cvs",
+    "GIT": "git",
+    "CFLAGS": "-O3 -fPIC -Wall -Wextra -I/home/phaedrus/.local/share/lua/luajit/include/luajit-2.1"
+},
+"lib_modules_dir": "lib/lua/luajit",
+"platform": "unix",
+"connection_timeout": 30,
+"lib_modules_path": "lib/lua/jit",
+"external_lib_extension": "so",
+"gcc_rpath": true,
+"rocks_dir": "/home/phaedrus/.local/share/lua/luajit/lib/luarocks/rocks-5.1",
+"external_deps_patterns": {
+    "include": [
+        "?.h",
+        "?/*.h"
+    ],
+    "lib": [
+        "lib?.a",
+        "lib?.so",
+        "lib?.so.*",
+        "?.a",
+        "?.so"
+    ],
+    "bin": [
+        "?"
+    ]
+},
+"hooks_enabled": true,
+"obj_extension": "o",
+"rocks_subdir": "lib/luarocks/rocks-5.1",
+"encrypted_peer": true,
+"web_browser": "xdg-open",
+"deploy_lua_dir": "/home/phaedrus/.local/share/lua/luajit/share/lua/jit",
+"lib_extension": "so",
+"cmake_generator": "Unix Makefiles"
+}
+    "lua_version": "jit",
+"target_cpu": "x86_64",
+"lua_modules_dir": "share/lua/luajit",
+"home": "/home/phaedrus",
+"namespace": "user",
+"prefer_binary": false,
+"local_by_default": true,
+"static_lib_extension": "a",
+"deploy_bin_dir": "/home/phaedrus/.local/share/lua/luajit/bin",
+"external_deps_subdirs": {
+"include": "include",
+"lib": "lib",
+"bin": "bin"
+},
+"external_deps_dirs": [
+"/home/phaedrus/.local",
+"/usr/local",
+"/usr"
+],
+"processor": "x86_64",
+"cache": {
+"luajit_version_checked": true
+},
+"local_cache": "/home/phaedrus/.cache/luarocks",
+"lua_modules_path": "share/lua/jit",
+"lock_manifests": true,
+"cache_timeout": 60,
+"upload": {
+"api_version": "1",
+"tool_version": "1.0.0",
+"server": "https://luarocks.org"
+},
+"verbose": true,
+"user_agent": "LuaRocks/3.12.1 x86_64",
+"runtime_external_deps_subdirs": {
+"include": "include",
+"lib": [
+    "lib64",
+    "lib"
+],
+"bin": "bin"
+},
+"program_version": "3.12.1",
+"git_use_https": false,
+"rocks_servers": [
+"https://luarocks.org"
+],
+"ssldefault": "https",
+"runtime_external_deps_patterns": {
+"include": [
+    "?.h"
+],
+"lib": [
+    "lib?.so",
+    "lib?.so.*"
+],
+"bin": [
+    "?"
+]
+},
+"deps_mode": "all",
+"arch": "x86_64",
+"link_lua_explicitly": false,
+"disabled_servers": [],
+"build_from_rockspec": false,
+"cache_fail_timeout": 86400,
+"wrapper_suffix": "",
+"accept_unknown_fields": false,
+"lua_found": false,
+"lua_interpreter": "/home/phaedrus/.local/share/lua/luajit/bin/luajit",
+"config_files": {
+"nearest": "/home/phaedrus/.config/luarocks/luarocks-5.1.lua",
+"user": {
+    "found": true,
+    "file": "/home/phaedrus/.config/luarocks/luarocks-5.1.lua"
+},
+"system": {
+    "found": false,
+    "file": "/home/phaedrus/.local/lua5.1/etc/luarocks/config-5.1.lua"
+}
+},
+"cache_dir": "/home/phaedrus/.cache/luarocks",
+"export_path_separator": ":",
+"git_server": "git@github.com:",
+"deploy_lib_dir": "/home/phaedrus/.local/share/lua/luajit/lib/lua/jit",
+"home_tree": "/home/phaedrus/.luarocks",
+"check_certificate": true,
+"fs_use_modules": true,
+"no_manifest": false,
+"lua_extension": "lua",
+"sysconfdir": "/home/phaedrus/.local/lua5.1/etc/luarocks",
+"server_protocol": "https",
+"rocks_trees": [
+{
+    "name": "user",
+    "root": "/home/phaedrus/.local/share/lua/luajit"
+}
+],
+"check_certificates": false,
+"nodeps": false,
+"download_method": "curl",
+"variables": {
+"LS": "ls",
+"CC": "sccache clang",
+"SSCM": "sscm",
+"LUA_LIBDIR_FILE": "liblua.so",
+"UNZIP": "unzip -n",
+"MKTEMP": "mktemp",
+"MAKE": "make",
+"WGET": "wget",
+"RSYNC": "rsync",
+"HG": "hg",
+"SCP": "scp",
+"CURL": "curl",
+"RMDIR": "rmdir",
+"RSYNCFLAGS": "--exclude=.git -Oavz",
+"LIB_EXTENSION": "so",
+"ZIP": "zip",
+"LUA_LIBDIR": "/usr/lib",
+"OPENSSL": "openssl",
+"RANLIB": "llvm-ranlib",
+"SCRIPTS_DIR": "/home/phaedrus/.local/share/lua/luajit/bin",
+"RM": "rm",
+"ROCKS_TREE": "/home/phaedrus/.local/share/lua/luajit/lib/luarocks/rocks-5.1",
+"MKDIR": "mkdir",
+"LIBFLAG": "-shared",
+"CXXFLAGS": "-O3 -fPIC -Wall -Wextra -stdlib=libc++ -I/home/phaedrus/.local/share/lua/luajit/include/luajit-2.1",
+"TAR": "tar",
+"OBJDIR": "obj",
+"ICACLS": "icacls",
+"GPG": "gpg",
+"CHMOD": "chmod",
+"LDFLAGS": "-L/home/phaedrus/.local/share/lua/luajit/lib -lluajit-5.1",
+"PWD": "pwd",
+"CXX": "sccache clang++",
+"LUA_BINDIR": "/usr/bin",
+"LUA_DIR": "/usr",
+"WGETNOCERTFLAG": "--no-check-certificate",
+"LD": "sccache clang",
+"CP": "cp",
+"CMAKE": "cmake",
+"MD5SUM": "md5sum",
+"LN": "ln",
+"FIND": "find",
+"SVN": "svn",
+"TOUCH": "touch",
+"AR": "llvm-ar",
+"SEVENZ": "7z",
+"CURLNOCERTFLAG": "-k",
+"MD5": "md5",
+"OBJ_EXTENSION": "o",
+"BUNZIP2": "bunzip2",
+"TEST": "test",
+"GUNZIP": "gunzip",
+"CVS": "cvs",
+"GIT": "git",
+"CFLAGS": "-O3 -fPIC -Wall -Wextra -I/home/phaedrus/.local/share/lua/luajit/include/luajit-2.1"
+},
+"lib_modules_dir": "lib/lua/luajit",
+"platform": "unix",
+"connection_timeout": 30,
+"lib_modules_path": "lib/lua/jit",
+"external_lib_extension": "so",
+"gcc_rpath": true,
+"rocks_dir": "/home/phaedrus/.local/share/lua/luajit/lib/luarocks/rocks-5.1",
+"external_deps_patterns": {
+"include": [
+    "?.h",
+    "?/*.h"
+],
+"lib": [
+    "lib?.a",
+    "lib?.so",
+    "lib?.so.*",
+    "?.a",
+    "?.so"
+],
+"bin": [
+    "?"
+]
+},
+"hooks_enabled": true,
+"obj_extension": "o",
+"rocks_subdir": "lib/luarocks/rocks-5.1",
+"encrypted_peer": true,
+"web_browser": "xdg-open",
+"deploy_lua_dir": "/home/phaedrus/.local/share/lua/luajit/share/lua/jit",
+"lib_extension": "so",
+"cmake_generator": "Unix Makefiles"
+}
