@@ -22,12 +22,14 @@ cmake_generator = 'Ninja'
 config_files = {
     nearest = '/home/phaedrus/.config/luarocks/luarocks-5.1.lua',
     system = {
-        found = false,
         file = '/home/phaedrus/.config/luarocks/luarocks-5.1.lua',
+        found = false,
+        root = '/home/phaedrus/.local/share/lua/luajit',
     },
     user = {
-        found = true,
         file = '/home/phaedrus/.config/luarocks/luarocks-5.1.lua',
+        found = true,
+        root = '/home/phaedrus/.local/share/lua/luajit',
     },
 }
 connection_timeout = 30
