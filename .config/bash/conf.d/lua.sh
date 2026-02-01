@@ -25,3 +25,4 @@ ${lua51_lib}/?.so;\
 export PATH="/usr/bin:$HOME/.local/share/lua/luajit/bin:$PATH"
 #eval "$(luarocks path)"
 unset luajit_root luajit_lua luajit_lib lua51_root lua51_lua lua51_lib
+export VIMRUNTIME="${XDG_DATA_HOME}/share/nvim/runtime"

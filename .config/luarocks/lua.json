@@ -188,7 +188,7 @@
     "deploy_lua_dir": "/home/phaedrus/.local/share/lua/luajit/share/lua/jit",
     "lib_extension": "so",
     "cmake_generator": "Unix Makefiles"
-}
+},
     "lua_version": "jit",
 "target_cpu": "x86_64",
 "lua_modules_dir": "share/lua/luajit",

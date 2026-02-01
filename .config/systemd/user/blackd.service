@@ -1,0 +1,13 @@
+[Unit]
+Description=Black Code Formatter Daemon
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/blackd --bind-host 127.0.0.1 --bind-port 45485
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=default.target
+

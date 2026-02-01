@@ -1,0 +1,12 @@
+[Trigger]
+Type = Path
+Operation = Install
+Operation = Upgrade
+Target = usr/bin/*
+Target = usr/lib/*
+
+[Action]
+Description = Creating GDB indices...
+When = PostTransaction
+Exec = /usr/bin/find /usr/bin /usr/lib -type f -executable -exec /usr/bin/gdb-add-index {} + 2>/dev/null
+

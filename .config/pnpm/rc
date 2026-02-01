@@ -1,3 +1,5 @@
+#/qompassai/dotfiles/.config/pnpm/rc
+# Qompass AI PNPM Config
 auto-install-peers=true
 cache-dir=/home/phaedrus/.cache/pnpm
 cafile=null

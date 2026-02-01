@@ -1,3 +1,4 @@
+#!/usr/bin/env fish
 # /qompassai/dotfiles/.config/fish/conf.d/java.fish
 # Qompass AI Fish Java Config
 # Copyright (C) 2025 Qompass AI, All rights reserved

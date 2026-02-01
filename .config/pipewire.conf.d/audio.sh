@@ -1,5 +1,6 @@
-# audio.sh
-# Qompass AI - [Add description here]
+#!/usr/bin/env bash
+# /qompassai/dotfiles/.config/pipewire.conf.d/audio.sh
+# Qompass AI Pipewire Audio Script
 # Copyright (C) 2025 Qompass AI, All rights reserved
 # ----------------------------------------
 PKGS=(ir.lv2
@@ -13,7 +14,7 @@ PKGS=(ir.lv2
 	rt-tests
 	schedtool
 	trx
-	)
+)
 for pkg in "${PKGS[@]}"; do
-        yay -Sy "$pkg"
+	yay -Sy "$pkg"
 done

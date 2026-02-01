@@ -1,0 +1,133 @@
+# mise.toml
+# Qompass AI Mise Config
+# Copyright (C) 2026 Qompass AI, All rights reserved
+# ----------------------------------------
+[env]
+APP_ENV = "development"
+DATABASE_URL = "postgres://user:pass@localhost:5432/mydb"
+DJANGO_SETTINGS_MODULE = "myproject.settings"
+EDITOR = "nvim"
+LOG_LEVEL = "debug"
+NINJA_PAGINATION_CLASS = "ninja.pagination.LimitOffsetPagination"
+NINJA_PAGINATION_PER_PAGE = "20"
+NINJA_MAX_PER_PAGE_SIZE = "100"
+NINJA_PAGINATION_MAX_LIMIT = "1000"
+NINJA_DEFAULT_THROTTLE_RATES = '{"anon": "100/hour", "user": "1000/hour"}'
+NINJA_FIX_REQUEST_FILES_METHODS = "true"
+NINJA_NUM_PROXIES = "0"
+NODE_ENV = "development"
+OPENAI_API_KEY = "{{env.OPENAI_API_KEY}}"
+REDIS_URL = "redis://localhost:6379/0"
+SENTRY_DSN = "{{env.SENTRY_DSN}}"
+
+[hooks]
+
+[plugins]
+bun = "https://github.com/jdx/mise-bun.git"
+deno = "https://github.com/jdx/mise-deno.git"
+go = "https://github.com/jdx/mise-go.git"
+node = "https://github.com/jdx/mise-node.git"
+python = "https://github.com/jdx/mise-python.git"
+ruby = "https://github.com/jdx/mise-ruby.git"
+rust = "https://github.com/jdx/mise-rust.git"
+"asdf:elixir" = "https://github.com/my-org/mise-elixir.git"
+"asdf:node" = "https://github.com/asdf-vm/asdf-nodejs.git"
+"vfox:awscli" = "https://github.com/jdx/vfox-awscli"
+"vfox:terraform" = "https://github.com/jdx/vfox-terraform"
+"vfox-backend:myplugin" = "https://github.com/jdx/vfox-npm"
+node-lts = "https://github.com/jdx/mise-node.git#DEADBEEF"
+
+[settings]
+# See full list: https://mise.jdx.dev/configuration/settings.html
+activate_aggressive = false  # https://mise.jdx.dev/configuration/settings.html#activate_aggressive
+all_compile = false
+always_keep_download = false
+always_keep_install = false
+auto_install = false
+auto_install_disable_tools = []
+cache_prune_age = "30d"
+ceiling_paths = []
+default_tool_versions_filename = ".tool-versions"
+env = []
+env_file = ".env"
+experimental = true
+global_config_file = "~/.config/mise/mise.toml"
+global_config_root = "~"
+jobs = 4
+log_level = "info"  # "trace" | "debug" | "info" | "warn" | "error"
+not_found_auto_install = true
+os = "linux"
+paranoid = false
+plugin_autoupdate_last_check_duration = "1w"
+task_output = "prefix"
+trusted_config_paths = []
+verbose = false
+
+[settings.age]
+
+[settings.aqua]
+
+[settings.pipx]
+registry_url = "https://pypi.org/pypi/{}/json"  # "https://pypi.org/simple/{}/"
+uvx = true
+
+[settings.python]
+compile = true
+# default_packages_file = ""
+patch_url = "https://example.com/patches"  # Optional
+patches_directory = "$XDG_CONFIG_HOME/patches"  # Optional
+precompiled_arch = "unknown-linux-gnu"
+precompiled_flavor = "install_only_stripped"  # https://gregoryszorc.com/docs/python-build-standalone/main/running.html
+precompiled_os = "x86_64_v3"  # "x86_64_v3" | "x86_64" | "aarch64"
+pyenv_repo = "https://github.com/pyenv/pyenv.git"
+uv_venv_auto = false
+uv_venv_create_args = []  # Optional: ["--python", "3.12", "--seed"]
+venv_create_args = ["--system-site-packages", "--copies"]
+venv_stdlib = false
+
+[settings.ruby]
+apply_patches = "/path/to/patch1.patch"
+compile = false
+# Requires experimental = true
+default_packages_file = "~/.default-gems"  # Path to default gems file
+github_attestations = true  # Optional: Verify authenticity of precompiled binaries
+# Requires experimental = true
+precompiled_arch = "x86_64"  # Optional: Override architecture identifier
+precompiled_os = "linux"
+precompiled_url = "jdx/ruby"
+# Or use custom URL:
+# precompiled_url = "https://my-mirror.example.com/ruby-{version}.{platform}.tar.gz"
+ruby_build_opts = "--with-openssl-dir=/usr"
+ruby_build_repo = "https://github.com/rbenv/ruby-build.git"
+ruby_install = false
+ruby_install_opts = "--no-install-deps"
+ruby_install_repo = "https://github.com/postmodern/ruby-install.git"
+verbose_install = true
+
+[settings.status]
+missing_tools = "if_other_versions_installed"
+show_env = false
+show_tools = false
+
+[tasks]
+[tasks.build]
+run = "pnpm build"
+
+[tasks.test]
+run = "pytest"
+
+[tasks.dev]
+run = "npm run dev"
+
+[tools]
+bun = "1.1"
+deno = "latest"
+docker = "latest"
+node = { version = "22", postinstall = "corepack enable" }
+pnpm = "9"
+python = "3.12"
+ruby = "3.3"
+rust = "nightly"
+terraform = "1.9"
+yarn = "1.22"
+zig = "0.13"

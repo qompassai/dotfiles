@@ -1,12 +1,7 @@
 <!-- yay.md -->
-
-<!-- Qompass AI - [ ] -->
-
+<!-- Qompass AI Yay Docs -->
 <!-- Copyright (C) 2026 Qompass AI, All rights reserved -->
-
 <!-- ---------------------------------------- -->
-
-# yay config.json options
 
 | Key                    | Type        | Options / allowed values                                                                                                                                                                                                 |
 |------------------------|------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -54,5 +49,5 @@
 | sudoflags              | String     | Any extra sudo flags, split on whitespace; e.g. `-E` to preserve environment. Set via `--sudoflags <flags> --save`.                                                                                                     |
 | sudoloop               | Boolean    | `true` or `false`. `true` ≈ `--sudoloop --save`: keeps sudo credentials refreshed in the background.                                                                                                                    |
 | timeupdate             | Boolean    | `true` or `false`. `true` ≈ `--timeupdate --save`: checks AUR pages for changes during sysupgrade and updates timestamps.                                                                                                |
-| useask                 | Boolean    | `true` or `false`. `true` ≈ `--useask --save`: uses pacman’s `--ask` mechanism to resolve conflicts automatically.                                                                                                      |
-| version                | String     | Yay version string, e.g. `12.5.7`. Managed by yay itself; not normally edited manually.                                                                                                                                  |
+| useask                 | Boolean    | `true` or `false`. `true` ≈ `--useask --save`: uses pacman’s `--ask` to resolve conflicts automatically.                                                                                                      |
+| version                | String     | Yay version, `12.5.7`. only set if you git gud                                                                                                                                  |
