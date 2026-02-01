@@ -1,4 +1,5 @@
-# /qompassai/dotfiles/.config/fish/conf.d/ssl.fish
+#!/usr/bin/env fish
+# /qompassai/dotfiles/.config/fish/conf.d/71_ssl.fish
 # Qompass AI Fish SSL Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################

@@ -4,4 +4,5 @@
 ####################################################
 set -gx GOROOT /usr/lib/go
 set -gx GOPATH $HOME/.go
-set -gx PATH $GOROOT/bin $GOPATH/bin $PATH
+fish_add_path --prepend $GOROOT/bin
+fish_add_path --prepend $GOPATH/bin
