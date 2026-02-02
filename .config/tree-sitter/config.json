@@ -1,11 +1,8 @@
 {
   "parser-directories": [
-    "/home/phaedrus/github",
-    "/home/phaedrus/src",
-    "/home/phaedrus/source",
-    "/home/phaedrus/projects",
-    "/home/phaedrus/dev",
-    "/home/phaedrus/git"
+    "~/.local/share/nvim/lazy/nvim-treesitter",
+    "~/.local/share/nvim/runtime",
+    "~/.local/share/nvim/site/pack/core/opt/nvim-treesitter"
   ],
   "theme": {
     "attribute": {

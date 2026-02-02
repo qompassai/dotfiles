@@ -8227,12 +8227,12 @@ allocator: memory allocator selection, default is 0.
 
 === virtio-gpu ===
 virglhack: (int)
-modeset:Disable/Enable modesetting (int)
+modeset:disable/enable modesetting (int)
 
 === virtio_mem ===
-unplug_online:Try to unplug online memory (bool)
-force_bbm:Force Big Block Mode. Default is 0 (auto-selection) (bool)
-bbm_block_size:Big Block size in bytes. Default is 0 (auto-detection). (ulong)
+unplug_online:try to unplug online memory (bool)
+force_bbm:force big block mode. default is 0 (auto-selection) (bool)
+bbm_block_size:big block size in bytes. default is 0 (auto-detection). (ulong)
 
 === virtio_net ===
 napi_weight: (int)
@@ -8241,12 +8241,12 @@ gso: (bool)
 napi_tx: (bool)
 
 === virtio_snd ===
-pcm_buffer_ms:PCM substream buffer time in milliseconds (uint)
-pcm_periods_min:Minimum number of PCM periods (uint)
-pcm_periods_max:Maximum number of PCM periods (uint)
-pcm_period_ms_min:Minimum PCM period time in milliseconds (uint)
-pcm_period_ms_max:Maximum PCM period time in milliseconds (uint)
-msg_timeout_ms:Message completion timeout in milliseconds (uint)
+pcm_buffer_ms:pcm substream buffer time in milliseconds (uint)
+pcm_periods_min:minimum number of pcm periods (uint)
+pcm_periods_max:maximum number of pcm periods (uint)
+pcm_period_ms_min:minimum pcm period time in milliseconds (uint)
+pcm_period_ms_max:maximum pcm period time in milliseconds (uint)
+msg_timeout_ms:message completion timeout in milliseconds (uint)
 
 === visl ===
 visl_debug: activates debug info (uint)

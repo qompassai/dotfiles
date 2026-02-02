@@ -1,3 +1,4 @@
+#!/usr/bin/env fish
 # /qompassai/dotfiles/.config/fish/config.fish
 # Qompass AI Fish Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
