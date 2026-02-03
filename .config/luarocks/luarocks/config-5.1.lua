@@ -1,5 +1,5 @@
 -- LuaRocks configuration
-local home = os_getenv('HOME')
+
 rocks_trees = {
    { name = "user", root = home .. "/.luarocks" };
    { name = "system", root = "/home/phaedrus/.local/share/lua/luajit" };
