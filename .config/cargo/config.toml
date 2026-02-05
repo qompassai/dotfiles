@@ -59,6 +59,9 @@ retry = 3
 git-fetch-with-cli = true
 offline = false
 
+[patch.crates-io]
+whisper-rs-sys = { git = "https://codeberg.org/tazz4843/whisper-rs", branch = "master" }
+
 [registry]
 default = "crates-io"
 global-credential-providers = [

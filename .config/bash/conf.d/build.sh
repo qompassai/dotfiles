@@ -12,3 +12,4 @@ export NINJA_PAGINATION_PER_PAGE="100"
 export NINJA_MAX_PER_PAGE_SIZE="200"
 export NINJA_PAGINATION_MAX_LIMIT="1000"
 export DJANGO_SETTINGS_MODULE="django.conf.global_settings"
+#vim: set filetype=sh:

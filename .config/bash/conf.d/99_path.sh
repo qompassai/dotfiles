@@ -6,3 +6,5 @@
 PATH="${PATH//:$HOME\/.local\/bin/}"
 PATH="${PATH#$HOME/.local/bin:}"
 export PATH="$HOME/.local/bin:$PATH"
+export MANPATH="$HOME/.local/share/man:/usr/share/man:/usr/local/share/man:$HOME/.opam/default/man"
+export INFOPATH="$HOME/.local/share/info:/usr/share/info:/usr/local/share/info"
