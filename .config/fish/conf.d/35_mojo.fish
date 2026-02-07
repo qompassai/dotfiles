@@ -2,7 +2,7 @@
 # Qompass AI Fish Mojo Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
-pixi completion --shell fish | source
+#pixi completion --shell fish | source
 set -gx MOJO_HOME "$XDG_DATA_HOME/mojo/.pixi/envs/default"
 set -gx CPATH "$MOJO_HOME/include:$CPATH"
 set -gx C_INCLUDE_PATH "$MOJO_HOME/include:$C_INCLUDE_PATH"
@@ -12,3 +12,9 @@ set -gx MANPATH "$MOJO_HOME/man:$MOJO_HOME/share/man:$MANPATH"
 set -gx MOJO_STDLIB_PATH "$MOJO_HOME/lib/mojo"
 set -gx PKG_CONFIG_PATH "$MOJO_HOME/lib/pkgconfig:$PKG_CONFIG_PATH"
 fish_add_path "$MOJO_HOME/bin"
+function pixi_activate
+    set -l manifest_path $argv[1]
+    test -z "$manifest_path"; and set manifest_path "."
+    pixi shell-hook --manifest-path "$manifest_path" | source
+end
+
