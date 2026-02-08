@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = linux-zen
+
+[Action]
+Description = Preventing -primo suffix in boot files...
+When = PreTransaction
+Exec = /usr/bin/bash -c 'pacman -Qo /etc/mkinitcpio.d/linux-zen.preset 2>/dev/null && echo "/etc/mkinitcpio.d/linux-zen.preset" >> /tmp/pacman-preserve.txt'
+

@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Upgrade
+Operation = Install
+Type = Package
+Target = *
+
+[Action]
+Description = Update pacman-ps data (package update & install)
+When = PostTransaction
+Exec = /bin/bash -c '/usr/bin/pacman-ps-record.sh && /usr/bin/pacman-ps-optimize-db.sh'
+NeedsTargets

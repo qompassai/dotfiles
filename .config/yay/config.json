@@ -10,7 +10,7 @@
     "combinedupgrade": true,
     "completionrefreshtime": 10,
     "debug": false,
-    "devel": true,
+    "devel": false,
     "diffmenu": false,
     "doubleconfirm": false,
     "editmenu": false,

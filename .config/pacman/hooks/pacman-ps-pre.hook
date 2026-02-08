@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Update pacman-ps data (package removal & upgrade)
+When = PreTransaction
+Exec = /usr/bin/pacman-ps-record.sh
+NeedsTargets

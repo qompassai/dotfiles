@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+rm -rf ${XDG_CONFIG_HOME:-~/.config}/{discord,vesktop/sessionData}/{Cache,GPUCache}/* ${XDG_CACHE_HOME:-~/.cache}/chromium/*/{Cache,GPUCache}/* 2>/dev/null
+
