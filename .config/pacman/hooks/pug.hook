@@ -1,0 +1,13 @@
+[Trigger]
+Operation = Install
+Operation = Remove
+Operation = Upgrade
+Type = Package
+Target = *
+
+[Action]
+Description = Updating package list gists...
+When = PostTransaction
+Exec = /usr/bin/bash -c 'XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}" "$XDG_CONFIG_HOME/pacman/scripts/pug.sh" update'
+Depends = gist
+

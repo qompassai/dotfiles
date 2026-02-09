@@ -10,5 +10,3 @@ Description = Rebuilding DKMS modules for linux-zen...
 When = PostTransaction
 Exec = /home/phaedrus/.config/pacman/scripts/dkms.sh
 Depends = dkms
-NeedsTargets
-
