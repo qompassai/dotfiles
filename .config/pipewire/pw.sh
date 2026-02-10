@@ -1,39 +1,34 @@
 #!/usr/bin/env bash
-# pw.s
-# Qompass AI
+# /qompassai/dotfiles/.config/pipewire/pw.sh
+# Qompass AI Pipewire Setup Script
 # Copyright (C) 2026 Qompass AI, All rights reserved
-# Optimized for low-latency, high-quality audio in video conferencing
 # ========================================================================
 set -e
 CONF_DIR="$HOME/.config/pipewire/pipewire.conf.d"
 mkdir -p "$CONF_DIR"
 cat > "$CONF_DIR/10-properties.conf" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/10-properties.conf
-# Core PipeWire System Properties (Alphabetically Ordered)
-# Optimized for: Low-latency video conferencing with high-quality audio
 # ==========================================================================
 context.properties = {
-    clock.power-of-two-quantum                   = true
-    core.daemon                                  = true
-    core.name                                    = pipewire-0
-    cpu.zero.denormals                           = true
-    context.data-loop.library.name.system        = support/libspa-support
+    clock.power-of-two-quantum                                  = true
+    core.daemon                                                 = true
+    core.name                                                   = pipewire-0
+    cpu.zero.denormals                                          = true
+    context.data-loop.library.name.system                       = support/libspa-support
     context.num-data-loops                       = 1
     library.name.system                          = support/libspa-support
     link.max-buffers                             = 64
     log.level                                    = 5
-    # log.patterns                               = [ "*:E" "*:W" ]  # Pattern-based logging
-    mem.allow-mlock                              = true   # Allow memory locking (prevent page faults)
-    mem.mlock-all                                = false  # Don't lock all memory (use selective locking)
-    mem.warn-mlock                               = false  # Don't warn about mlock
-    # rlimit.nofile                              = -1     # Max open files (-1=unlimited)
+    # log.patterns                               = [ "*:E" "*:W" ]
+    mem.allow-mlock                              = true
+    mem.mlock-all                                = false
+    mem.warn-mlock                               = false
+    # rlimit.nofile                              = -1
     support.dbus                                 = true
 }
 EOF
 cat > "$CONF_DIR/20-clock.conf" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/20-clock.conf
-# Audio Clock and DSP Configuration (Alphabetically Ordered)
-# Optimized for: 48kHz VoIP with low latency (128 samples = 2.7ms)
 # ==========================================================================
 context.properties = {
     default.clock.allowed-rates                  = [ 44100 48000 88200 96000 ]
@@ -57,7 +52,6 @@ context.properties = {
 EOF
 cat > "$CONF_DIR/30-rules.conf" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/30-rules.conf
-# Dynamic Property Rules Based on Runtime Conditions
 # ==========================================================================
 context.properties.rules = [
     {   matches = [ { cpu.vm.name = !null } ]
@@ -79,7 +73,6 @@ context.properties.rules = [
 EOF
 cat > "$CONF_DIR/40-spa-libs.conf" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/40-spa-libs.conf
-# SPA (Simple Plugin API) Library Mappings (Alphabetically Ordered)
 # ==========================================================================
 context.spa-libs = {
     api.alsa.*                                   = alsa/libspa-alsa
@@ -140,59 +133,41 @@ context.modules = [
     { name = libpipewire-module-client-device
         condition = [ { module.client-device = !false } ]
     }
-    
-    ## Desktop Integration
-    { name = libpipewire-module-portal                   # XDG portal support (screensharing)
+    { name = libpipewire-module-portal
         flags     = [ ifexists nofail ]
         condition = [ { module.portal = !false } ]
     }
-    
-    ## Access Control
     { name = libpipewire-module-access 
         args = {
-            # access.allowed                   = [ "flatpak" ]   # Whitelist apps
-            # access.rejected                  = [ "snapd" ]     # Blacklist apps
-            # access.legacy                    = true            # Legacy mode
+            # access.allowed                   = [ "flatpak" ]
+            # access.rejected                  = [ "snapd" ]
+            # access.legacy                    = true
         }
         condition = [ { module.access = !false } ]
     }
-    
-    ## Audio Processing
-    { name = libpipewire-module-adapter                  # Format/rate conversion adapter
+    { name = libpipewire-module-adapter
         condition = [ { module.adapter = !false } ]
     }
     
     ## Graph Management
-    { name = libpipewire-module-link-factory             # Create links between nodes
+    { name = libpipewire-module-link-factory
         args = {
-            # allow.link.passive               = false          # Allow passive links
+            # allow.link.passive               = false
         }
         condition = [ { module.link-factory = !false } ]
     }
-    
-    ## Session Management
     { name = libpipewire-module-session-manager          # Session manager support (WirePlumber)
         condition = [ { module.session-manager = !false } ]
     }
 ]
 EOF
-
-# =============================================================================
-# 6. Audio Enhancement Modules - Echo Cancel, Filters
-# =============================================================================
 cat > "$CONF_DIR/55-modules-audio.conf" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/55-modules-audio.conf
-# Audio Enhancement Modules for Video Conferencing
 # ==========================================================================
-
 context.modules = [
-    ## Echo Cancellation (WebRTC AEC for Video Chat)
     { name = libpipewire-module-echo-cancel
         args = {
-            ## AEC Library Selection
-            library.name                         = aec/libspa-aec-webrtc  # WebRTC echo canceller
-            
-            ## AEC Arguments (WebRTC-specific)
+            library.name                         = aec/libspa-aec-webrtc
             aec.args = {
                 # webrtc.extended_filter         = true   # Extended filter mode
                 # webrtc.intelligibility_enhancer= true   # Speech intelligibility
@@ -201,8 +176,6 @@ context.modules = [
                 # webrtc.experimental_agc        = true   # Experimental AGC
                 # webrtc.delay_agnostic          = true   # Delay-agnostic mode
             }
-            
-            ## Node Names
             capture.props = {
                 node.name                        = "Echo-Cancel-Capture"
                 node.passive                     = true
@@ -227,10 +200,8 @@ context.modules = [
             }
         }
         flags     = [ ifexists nofail ]
-        condition = [ { module.echo-cancel = true } ]  # Set to !false to enable by default
+        condition = [ { module.echo-cancel = !false } ]
     }
-    
-    ## Filter Chain (for advanced audio processing)
     # { name = libpipewire-module-filter-chain
     #     args = {
     #         node.name                        = "Audio-Filters"
@@ -252,17 +223,10 @@ context.modules = [
     # }
 ]
 EOF
-
-# =============================================================================
-# 7. Optional Modules - X11, JACK, Loopback
-# =============================================================================
 cat > "$CONF_DIR/60-modules-optional.conf" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/60-modules-optional.conf
-# Optional PipeWire Modules
 # ==========================================================================
-
 context.modules = [
-    ## X11 Bell Integration
     { name = libpipewire-module-x11-bell
         args = {
             sample.name                          = "bell-window-system"
@@ -273,28 +237,19 @@ context.modules = [
         flags     = [ ifexists nofail ]
         condition = [ { module.x11.bell = !false } ]
     }
-    
-    ## JACK DBus Detection (Auto-connect to JACK if running)
     { name = libpipewire-module-jackdbus-detect
         args = {
-            ## JACK Connection Settings
             jack.client-name                     = PipeWire
-            jack.connect                         = true    # Auto-connect to JACK
+            jack.connect                         = true
             jack.library                         = libjack.so.0
-            # jack.server                        = null    # Default JACK server
-            
-            ## Tunnel Mode
+            # jack.server                        = null
             tunnel.mode                          = duplex  # source|sink|duplex
-            
-            ## Source Properties (JACK → PipeWire)
             source.props = {
                 audio.channels                   = 2
                 audio.position                   = [ FL FR ]
                 # midi.ports                     = 1
                 # node.name                      = "JACK-Source"
             }
-            
-            ## Sink Properties (PipeWire → JACK)
             sink.props = {
                 audio.channels                   = 2
                 audio.position                   = [ FL FR ]
@@ -305,8 +260,6 @@ context.modules = [
         flags     = [ ifexists nofail ]
         condition = [ { module.jackdbus-detect = !false } ]
     }
-    
-    ## Loopback Module (for audio routing)
     # { name = libpipewire-module-loopback
     #     args = {
     #         node.description                 = "Audio Loopback"
@@ -330,7 +283,6 @@ context.modules = [
 EOF
 cat > "$CONF_DIR/70-objects.conf" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/70-objects.conf
-# PipeWire Objects (Drivers, Virtual Devices)
 # ==========================================================================
 context.objects = [
     { factory = spa-node-factory
@@ -384,8 +336,6 @@ EOF
 
 cat > "$CONF_DIR/80-multicore.conf.disabled" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/80-multicore.conf
-# Multi-Core CPU Optimization (Rename to .conf to enable)
-# System: 16 cores detected - Distributes audio processing across cores
 # ==========================================================================
 context.properties = {
     context.num-data-loops                       = 4 
@@ -393,47 +343,41 @@ context.properties = {
 context.data-loops = [
     {   loop.class                               = [ data.rt audio.rt ]
         loop.rt-prio                             = 88
-        thread.affinity                          = [ 0 1 ]  # Cores 0-1
+        thread.affinity                          = [ 0 1 ]
         thread.name                              = data-loop.0
     }
     {   loop.class                               = [ data.rt audio.rt ]
         loop.rt-prio                             = 88
-        thread.affinity                          = [ 2 3 ]  # Cores 2-3
+        thread.affinity                          = [ 2 3 ]
         thread.name                              = data-loop.1
     }
     {   loop.class                               = [ data.rt audio.rt ]
         loop.rt-prio                             = 88
-        thread.affinity                          = [ 4 5 ]  # Cores 4-5
+        thread.affinity                          = [ 4 5 ]
         thread.name                              = data-loop.2
     }
     {   loop.class                               = [ data.rt audio.rt ]
         loop.rt-prio                             = 88
-        thread.affinity                          = [ 6 7 ]  # Cores 6-7
+        thread.affinity                          = [ 6 7 ]
         thread.name                              = data-loop.3
     }
 ]
 EOF
 cat > "$CONF_DIR/90-low-latency.conf.disabled" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/90-low-latency.conf
-# Ultra-Low Latency Mode (Rename to .conf to enable)
-# WARNING: May cause audio dropouts on slower systems
-# Quantum 64 @ 48kHz = 1.3ms latency
 # ==========================================================================
 context.properties = {
     default.clock.max-quantum                    = 1024
     default.clock.min-quantum                    = 64
-    default.clock.quantum                        = 64     # 1.3ms latency @ 48kHz
+    default.clock.quantum                        = 64
 }
 EOF
 cat > "$CONF_DIR/95-battery-saver.conf.disabled" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/95-battery-saver.conf
-# Battery Saver Mode (Rename to .conf to enable)
-# Higher latency for reduced CPU usage and better battery life
 # ==========================================================================
 context.properties = {
-    default.clock.quantum                        = 2048   # Higher latency, lower CPU
-    resample.quality                             = 2      # Lower quality resampling
-    ## Disable expensive features
+    default.clock.quantum                        = 2048
+    resample.quality                             = 2
     # module.echo-cancel                         = false
     # module.filter-chain                        = false
 }
@@ -452,23 +396,12 @@ ls -1 "$CONF_DIR/" | while read file; do
 done
 
 echo ""
-echo "🎯 Optimization Profile: Video Conferencing / Low Latency"
-echo "   • Sample Rate: 48000 Hz (VoIP standard)"
-echo "   • Quantum: 128 samples (2.7ms latency)"
-echo "   • Realtime Priority: 95"
-echo "   • Memory Locking: Enabled"
-echo "   • Echo Cancellation: Available (enable in 55-modules-audio.conf)"
-echo ""
 echo "🔧 Optional Features (rename .disabled to .conf to enable):"
 echo "   • 80-multicore.conf.disabled     - Multi-core CPU optimization"
 echo "   • 90-low-latency.conf.disabled   - Ultra-low latency (64 samples)"
 echo "   • 95-battery-saver.conf.disabled - Battery/power saving mode"
-echo ""
-echo "📝 To enable echo cancellation for video chat:"
-echo "   Edit: $CONF_DIR/55-modules-audio.conf"
-echo "   Change: module.echo-cancel = true → module.echo-cancel = !false"
-echo ""
-echo "🔄 Apply changes:"
-echo "   systemctl --user restart pipewire pipewire-pulse wireplumber"
-echo ""
-echo "✨ Done!"
+
+systemctl --user restart pipewire pipewire-pulse wireplumber
+sleep 2
+pw-cli info 0 | grep -i properties
+echo "PipeWire setup complete!"
