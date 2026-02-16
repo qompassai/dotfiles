@@ -1,8 +1,7 @@
-# Make sure local service pacredir is running!
-
-# Add pacredir as a cache server. This makes pacman request package files.
+## /qompassai/dotfiles/.config/pacredir
+# Qompass AI PacRedir Config
+# Copyright (C) 2026 Qompass AI, All rights reserved
+####################################################
+# Reference: https://github.com/eworm-de/pacredir
 CacheServer = http://127.0.0.1:7077/
-
-# Uncomment this to add pacredir as a regular server as well. This makes
-# pacman request database files from pacredir.
 #Server = http://127.0.0.1:7077/

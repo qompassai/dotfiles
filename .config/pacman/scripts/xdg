@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
+echo "==> Updating system-level XDG databases..."
+if command -v update-mime-database &>/dev/null; then
+    [ -d "$XDG_DATA_HOME/mime" ] && update-mime-database "$XDG_DATA_HOME/mime" 2>/dev/null || true
+    update-mime-database /usr/share/mime 2>/dev/null || true
+    update-mime-database /usr/local/share/mime 2>/dev/null || true
+fi
+if command -v update-desktop-database &>/dev/null; then
+    [ -d "$XDG_DATA_HOME/applications" ] && update-desktop-database -q "$XDG_DATA_HOME/applications" 2>/dev/null || true
+    update-desktop-database -q /usr/share/applications 2>/dev/null || true
+    update-desktop-database -q /usr/local/share/applications 2>/dev/null || true
+fi
+if command -v gtk-update-icon-cache &>/dev/null; then
+    for icon_dir in $XDG_DATA_HOME/icons/* /usr/share/icons/* /usr/local/share/icons/*; do
+        [ -d "$icon_dir" ] && gtk-update-icon-cache -q -t -f "$icon_dir" 2>/dev/null || true
+    done
+fi
+if command -v glib-compile-schemas &>/dev/null; then
+    [ -d "$XDG_DATA_HOME/glib-2.0/schemas" ] && glib-compile-schemas "$XDG_DATA_HOME/glib-2.0/schemas" 2>/dev/null || true
+    glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
+    glib-compile-schemas /usr/local/share/glib-2.0/schemas 2>/dev/null || true
+fi
+if command -v gdk-pixbuf-query-loaders &>/dev/null; then
+    gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true
+fi
+if command -v xdg_menu &>/dev/null; then
+    mkdir -p /var/cache/xdg-menu
+    xdg_menu --format readable > /var/cache/xdg-menu/menu.cache 2>/dev/null || true
+fi
+if command -v gio-querymodules &>/dev/null; then
+    gio-querymodules /usr/lib/gio/modules 2>/dev/null || true
+    gio-querymodules /usr/lib64/gio/modules 2>/dev/null || true
+fi
+while IFS=: read -r username _ uid _ _ homedir _; do
+    if [ "$uid" -ge 1000 ] && [ "$uid" -lt 65534 ] && [ -d "$homedir" ]; then
+        USER_XDG_DATA_HOME="${homedir}/.local/share"
+        USER_XDG_CONFIG_HOME="${homedir}/.config"
+        USER_XDG_CACHE_HOME="${homedir}/.cache"
+        if [ -d "${USER_XDG_DATA_HOME}/mime" ]; then
+            sudo -u "$username" update-mime-database "${USER_XDG_DATA_HOME}/mime" 2>/dev/null || true
+        fi
+        if [ -d "${USER_XDG_DATA_HOME}/applications" ]; then
+            sudo -u "$username" update-desktop-database -q "${USER_XDG_DATA_HOME}/applications" 2>/dev/null || true
+        fi
+        if [ -d "${USER_XDG_DATA_HOME}/icons" ]; then
+            for icon_dir in "${USER_XDG_DATA_HOME}/icons"/*; do
+                [ -d "$icon_dir" ] && sudo -u "$username" gtk-update-icon-cache -q -t -f "$icon_dir" 2>/dev/null || true
+            done
+        fi
+        if [ -d "${USER_XDG_DATA_HOME}/glib-2.0/schemas" ]; then
+            sudo -u "$username" glib-compile-schemas "${USER_XDG_DATA_HOME}/glib-2.0/schemas" 2>/dev/null || true
+        fi
+        if command -v kbuildsycoca6 &>/dev/null; then
+            sudo -u "$username" XDG_RUNTIME_DIR="/run/user/${uid}" \
+                kbuildsycoca6 --noincremental 2>/dev/null || true
+        elif command -v kbuildsycoca5 &>/dev/null; then
+            sudo -u "$username" XDG_RUNTIME_DIR="/run/user/${uid}" \
+                kbuildsycoca5 --noincremental 2>/dev/null || true
+        fi
+        [ -d "${USER_XDG_CACHE_HOME}/xdg-desktop-portal" ] && rm -rf "${USER_XDG_CACHE_HOME}/xdg-desktop-portal" 2>/dev/null || true
+        if [ -d "/run/user/${uid}" ]; then
+            if systemctl --user -M "${username}@" is-active xdg-desktop-portal.service &>/dev/null; then
+                sudo -u "$username" XDG_RUNTIME_DIR="/run/user/${uid}" \
+                    systemctl --user restart xdg-desktop-portal.service 2>/dev/null || true
+            fi
+            if systemctl --user -M "${username}@" is-active xdg-desktop-portal-hyprland.service &>/dev/null; then
+                sudo -u "$username" XDG_RUNTIME_DIR="/run/user/${uid}" \
+                    systemctl --user restart xdg-desktop-portal-hyprland.service 2>/dev/null || true
+            fi
+        fi
+    fi
+done < /etc/passwd

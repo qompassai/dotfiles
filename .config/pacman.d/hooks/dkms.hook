@@ -1,0 +1,12 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *-dkms
+
+[Action]
+Description = Rebuilding DKMS modules for linux-zen...
+When = PostTransaction
+Exec = /home/phaedrus/.config/pacman/scripts/dkms.sh
+Depends = dkms

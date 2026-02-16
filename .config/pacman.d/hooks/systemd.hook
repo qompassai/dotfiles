@@ -1,0 +1,12 @@
+# /etc/pacman.d/hooks/systemd.hook
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Path
+Target = usr/lib/systemd/system/*
+
+[Action]
+Description = Notify about new systemd units
+When = PostTransaction
+Exec = /bin/sh -c "${XDG_CONFIG_HOME:-$HOME/.config}/pacman/scripts/systemd.sh"
+Depends = systemd

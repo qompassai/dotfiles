@@ -1,0 +1,13 @@
+// /qompassai/dotfiles/.config/polkit-1/rules.d/packagekit-restricts.rules
+// Qompass AI Polkit PackageKit Restrict Rules Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+//////////////////////////////////////////////////////////////////////////
+polkit.addRule(function(action, subject) {
+    if (/^org\.freedesktop\.packagekit\./.test(action.id)) {
+        if (subject.isInGroup("wheel") || subject.isInGroup("wheel")) {
+            return polkit.Result.YES;
+        } else {
+            return polkit.Result.AUTH_ADMIN_KEEP;
+        }
+    }
+});

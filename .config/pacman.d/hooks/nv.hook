@@ -1,0 +1,11 @@
+# /etc/pacman.d/hooks/nvidia-patch.hook
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Path
+Target = usr/src/nvidia-[45]*/nvidia/nv-kernel.o_binary
+
+[Action]
+Description = Patching NVIDIA driver restrictions
+When = PostTransaction
+Exec = /usr/local/bin/nvidia-patch-wrapper

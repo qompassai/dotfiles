@@ -1,0 +1,38 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = xdg-desktop-portal*
+Target = xdg-utils*
+Target = handlr-regex
+Target = mimeo
+Target = archlinux-xdg-menu
+Target = glib2
+Target = gdk-pixbuf2
+Target = gtk3
+Target = gtk4
+Target = shared-mime-info
+Target = desktop-file-utils
+Target = kservice
+Target = kservice5
+
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = File
+Target = $XDG_DATA_HOME/applications/*.desktop
+Target = usr/share/applications/*.desktop
+Target = usr/local/share/applications/*.desktop
+Target = $XDG_DATA_HOME/glib-2.0/schemas/*
+Target = usr/share/glib-2.0/schemas/*
+Target = usr/share/mime/packages/*
+Target = usr/share/icons/*/icon-theme.cache
+Target = usr/lib/gio/modules/*
+
+[Action]
+Description = Updating XDG databases and restarting services...
+When = PostTransaction
+Exec = $XDG_CONFIG_HOME/pacman/scripts/xdg
+NeedsTargets

@@ -1,50 +1,56 @@
 {
+    "name": "zsh",
     "files": [
         {
-            "help": "Set this in your zshrc:\n\n```bash\nzstyle ':completion:*' cache-path \"$XDG_CACHE_HOME\"/zsh/zcompcache\n```\n\nYou must manually create the _$XDG_CACHE_HOME/zsh_ directory if it doesn't exist yet.\n",
+            "path": "$HOME/.zcompcache",
             "movable": true,
-            "path": "$HOME/.zcompcache"
+            "help": "Set this in your zshrc:\n\n```bash\nzstyle ':completion:*' cache-path \"$XDG_CACHE_HOME\"/zsh/zcompcache\n```\n\nYou must manually create the _$XDG_CACHE_HOME/zsh_ directory if it doesn't exist yet.\n"
         },
         {
-            "help": "Set this in your zshrc:\n\n```bash\ncompinit -d \"$XDG_CACHE_HOME\"/zsh/zcompdump-\"$ZSH_VERSION\"\n```\n\nYou must manually create the _$XDG_CACHE_HOME/zsh_ directory if it doesn't exist yet.\n",
+            "path": "$HOME/.zcompdump*",
             "movable": true,
-            "path": "$HOME/.zcompdump*"
+            "help": "Set this in your zshrc:\n\n```bash\ncompinit -d \"$XDG_CACHE_HOME\"/zsh/zcompdump-\"$ZSH_VERSION\"\n```\n\nYou must manually create the _$XDG_CACHE_HOME/zsh_ directory if it doesn't exist yet.\n"
         },
         {
-            "help": "Set this in your zshrc:\n\n```bash\nexport HISTFILE=\"$XDG_STATE_HOME\"/zsh/history\n```\n\nYou must manually create the _$XDG_STATE_HOME/zsh_ directory if it doesn't exist yet.\n",
+            "path": "$HOME/.zhistory",
             "movable": true,
-            "path": "$HOME/.zhistory"
+            "help": "Set this in your zshrc:\n\n```bash\nexport HISTFILE=\"$XDG_STATE_HOME\"/zsh/history\n```\n\nYou must manually create the _$XDG_STATE_HOME/zsh_ directory if it doesn't exist yet.\n"
         },
         {
-            "help": "Set this in your zshrc:\n\n```bash\nexport HISTFILE=\"$XDG_STATE_HOME\"/zsh/history\n```\n\nYou must manually create the _$XDG_STATE_HOME/zsh_ directory if it doesn't exist yet.\n",
+            "path": "$HOME/.histfile",
             "movable": true,
-            "path": "$HOME/.histfile"
+            "help": "Set this in your zshrc:\n\n```bash\nexport HISTFILE=\"$XDG_STATE_HOME\"/zsh/history\n```\n\nYou must manually create the _$XDG_STATE_HOME/zsh_ directory if it doesn't exist yet.\n"
         },
         {
-            "help": "Set this in your zshrc:\n\n```bash\nexport HISTFILE=\"$XDG_STATE_HOME\"/zsh/history\n```\n\nYou must manually create the _$XDG_STATE_HOME/zsh_ directory if it doesn't exist yet.\n",
+            "path": "$HOME/.zsh_history",
             "movable": true,
-            "path": "$HOME/.zsh_history"
+            "help": "Set this in your zshrc:\n\n```bash\nexport HISTFILE=\"$XDG_STATE_HOME\"/zsh/history\n```\n\nYou must manually create the _$XDG_STATE_HOME/zsh_ directory if it doesn't exist yet.\n"
         },
         {
-            "help": "Move the file to _\"$HOME\"/.config/zsh/.zlogin_ and export the following environment variable:\n\n```bash\nexport ZDOTDIR=\"$HOME\"/.config/zsh\n```\nYou can do this in _/etc/zshenv_ (Or _/etc/zsh/zshenv_, on some distros).\n",
+            "path": "$HOME/.zlogin",
             "movable": true,
-            "path": "$HOME/.zlogin"
+            "help": "Move the file to _\"$XDG_CONFIG_HOME\"/zsh/.zlogin_ and export the following environment variable:\n\n```bash\nexport ZDOTDIR=\"$XDG_CONFIG_HOME\"/zsh\n```\n\nYou can do this in _/etc/zshenv_ (or _/etc/zsh/zshenv_ on some distros).\n"
         },
         {
-            "help": "Move the file to _\"$HOME\"/.config/zsh/.zprofile_ and export the following environment variable:\n\n```bash\nexport ZDOTDIR=\"$HOME\"/.config/zsh\n```\nYou can do this in _/etc/zshenv_ (Or _/etc/zsh/zshenv_, on some distros).\n",
+            "path": "$HOME/.zlogout",
             "movable": true,
-            "path": "$HOME/.zprofile"
+            "help": "Move the file to _\"$XDG_CONFIG_HOME\"/zsh/.zlogout_ and export the following environment variable:\n\n```bash\nexport ZDOTDIR=\"$XDG_CONFIG_HOME\"/zsh\n```\n\nYou can do this in _/etc/zshenv_ (or _/etc/zsh/zshenv_ on some distros).\n"
         },
         {
-            "help": "Move the file to _\"$HOME\"/.config/zsh/.zshenv_ and export the following environment variable:\n\n```bash\nexport ZDOTDIR=\"$HOME\"/.config/zsh\n```\nYou can do this in _/etc/zshenv_ (Or _/etc/zsh/zshenv_, on some distros).\n",
+            "path": "$HOME/.zprofile",
             "movable": true,
-            "path": "$HOME/.zshenv"
+            "help": "Move the file to _\"$XDG_CONFIG_HOME\"/zsh/.zprofile_ and export the following environment variable:\n\n```bash\nexport ZDOTDIR=\"$XDG_CONFIG_HOME\"/zsh\n```\n\nYou can do this in _/etc/zshenv_ (or _/etc/zsh/zshenv_ on some distros).\n"
         },
         {
-            "help": "Move the file to _\"$HOME\"/.config/zsh/.zshrc_ and export the following environment variable:\n\n```bash\nexport ZDOTDIR=\"$HOME\"/.config/zsh\n```\nYou can do this in _/etc/zshenv_ (Or _/etc/zsh/zshenv_, on some distros).\n",
+            "path": "$HOME/.zshenv",
             "movable": true,
-            "path": "$HOME/.zshrc"
+            "help": "Move the file to _\"$XDG_CONFIG_HOME\"/zsh/.zshenv_ and export the following environment variable:\n\n```bash\nexport ZDOTDIR=\"$XDG_CONFIG_HOME\"/zsh\n```\n\nYou can do this in _/etc/zshenv_ (or _/etc/zsh/zshenv_ on some distros).\n"
+        },
+        {
+            "path": "$HOME/.zshrc",
+            "movable": true,
+            "help": "Move the file to _\"$XDG_CONFIG_HOME\"/zsh/.zshrc_ and export the following environment variable:\n\n```bash\nexport ZDOTDIR=\"$XDG_CONFIG_HOME\"/zsh\n```\n\nYou can do this in _/etc/zshenv_ (or _/etc/zsh/zshenv_ on some distros).\n"
         }
-    ],
-    "name": "zsh"
+    ]
 }
+

@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = *
+
+[Action]
+Description = Checking for security vulnerabilities...
+Depends = arch-audit
+When = PostTransaction
+Exec = /usr/bin/bash -c "result=$(/usr/bin/arch-audit -u -q); [ -n \"$result\" ] && echo \"$result\" || true"

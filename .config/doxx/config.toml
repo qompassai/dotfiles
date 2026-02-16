@@ -1,0 +1,59 @@
+# /qompassai/dotfiles/.config/doxx/config.toml
+# Qompass AI Doxx Configuration
+# Copyright (C) 2026 Qompass AI, All rights reserved
+# ------------------------------------------------
+# Reference: https://github.com/bgreenwell/doxx
+[advanced]
+debug_mode = false
+log_level = "info"
+
+[clipboard]
+enabled = true
+include_formatting = true
+max_copy_length = 10000
+
+[color]
+depth = "auto"
+
+[display]
+color = true
+force_ui = false
+outline = false
+terminal_width = 120
+
+[document]
+preserve_tables = true
+render_equations = true
+show_comments = true
+show_track_changes = true
+
+[export]
+ansi_color_depth = "auto"
+ansi_terminal_width = 80
+default_format = "markdown"
+preserve_formatting = true
+
+[images]
+enabled = true
+extract_dir = "$HOME/.Pictures/doxx"
+height = 24
+scale = 1.0
+width = 80
+
+[navigation]
+case_sensitive = false
+search_highlight = true
+search_term = ""
+start_page = 1
+
+[performance]
+cache_images = true
+lazy_load = true
+max_cache_size_mb = 100
+preload_pages = 3
+
+[ui]
+show_line_numbers = true
+show_page_numbers = true
+tab_width = 4
+word_wrap = true

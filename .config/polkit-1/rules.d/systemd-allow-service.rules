@@ -1,0 +1,12 @@
+// /qompassai/dotfiles/.config/polkit-1/rules.d/systemd-allow-service.rules
+// Qompass AI Polkit Systemd Allow Services Rules Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+//////////////////////////////////////////////////////////////////////////
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.systemd1.manage-units" &&
+        action.lookup("unit") == "hybrid.service" &&
+        subject.isInGroup("wheel"))
+    {
+        return polkit.Result.YES;
+    }
+})

@@ -1,0 +1,10 @@
+[Unit]
+Description=Update user XDG caches
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c '\
+  update-desktop-database -q ~/.local/share/applications 2>/dev/null || true; \
+  update-mime-database ~/.local/share/mime 2>/dev/null || true; \
+  systemctl --user restart xdg-desktop-portal.service 2>/dev/null || true'
+

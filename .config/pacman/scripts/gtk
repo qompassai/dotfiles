@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+while read -r f; do
+  if [[ -e ${f}index.theme ]]; then
+    gtk-update-icon-cache -q "$f"
+  elif [[ -d $f ]]; then
+    rm -f "${f}icon-theme.cache"
+    rmdir --ignore-fail-on-non-empty "$f"
+  fi
+done
+while IFS=: read -r username _ uid _ _ homedir _; do
+  [[ $uid -lt 1000 ]] && continue
+  [[ ! -d "$homedir" ]] && continue
+  xdg_data_home="${homedir}/.local/share"
+  if [[ -f "${homedir}/.config/environment.d/00_xdg.conf" ]]; then
+    custom_data=$(grep "^XDG_DATA_HOME=" "${homedir}/.config/environment.d/00_xdg.conf" | cut -d'=' -f2 | tr -d '"' | sed "s|\$HOME|${homedir}|g")
+    [[ -n "$custom_data" ]] && xdg_data_home="$custom_data"
+  fi
+  icons_dir="${xdg_data_home}/icons"
+  [[ ! -d "$icons_dir" ]] && continue
+  for theme_dir in "$icons_dir"/*; do
+    [[ ! -d "$theme_dir" ]] && continue
+    if [[ -e "${theme_dir}/index.theme" ]]; then
+      echo "Updating user icon cache: ${theme_dir}" >&2
+      sudo -u "$username" gtk-update-icon-cache -q "$theme_dir" 2>/dev/null || \
+        gtk4-update-icon-cache -q "$theme_dir" 2>/dev/null || true
+    fi
+  done
+done < /etc/passwd
+

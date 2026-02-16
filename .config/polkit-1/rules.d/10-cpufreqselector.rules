@@ -1,0 +1,9 @@
+// /qompassai/dotfiles/.config/polkit-1/rules.d/10-cpufreqselector.rules
+// Qompass AI Hyprland Aquamarine Graphics Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+////////////////////////////////////////////////////////////////////////
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.gnome.cpufreqselector" && subject.isInGroup("power")) {
+        return polkit.Result.YES;
+    }
+});

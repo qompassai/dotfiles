@@ -1,0 +1,11 @@
+[Unit]
+Description=Watch user XDG directories for changes
+
+[Path]
+PathModified=%h/.local/share/applications
+PathModified=%h/.local/share/mime/packages
+PathModified=%h/.local/share/icons
+
+[Install]
+WantedBy=default.target
+

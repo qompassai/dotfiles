@@ -1,0 +1,11 @@
+// /qompassai/dotfiles/.config/polkit-1/rules.d/50-fingerprint.rules
+// Qompass AI Polkit Fingerprint Rules Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+////////////////////////////////////////////////////////////////
+polkit.addRule(function (action, subject) {
+    if ((action.id == "net.reactivated.fprint.device.enroll" ||
+         action.id == "net.reactivated.fprint.device.verify") &&
+        subject.isInGroup("wheel")) {
+        return polkit.Result.YES;
+    }
+});

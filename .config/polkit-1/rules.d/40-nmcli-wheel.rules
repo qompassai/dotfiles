@@ -1,3 +1,7 @@
+// /qompassai/dotfiles/.config/polkit-1/rules.d/40-nmcli-wheel.rules
+// Qompass AI Polkit NetworkManager CLI Wheel Rules Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+////////////////////////////////////////////////////////////////
 polkit.addRule(function(action, subject) {
   const okUser = subject.isInGroup("wheel") && subject.isLocal() && subject.active;
   if (!okUser) return;

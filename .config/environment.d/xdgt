@@ -1,0 +1,351 @@
+#!/usr/bin/env bash
+# validate-xdg-config.sh
+# Qompass AI XDG Configuration Validator
+# Copyright (C) 2026 Qompass AI, All rights reserved
+# -------------------------------------------------------
+set -euo pipefail
+DEBUG="${DEBUG:-0}"
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+NC='\033[0m'
+
+# Counters
+ERRORS=0
+WARNINGS=0
+PASSED=0
+
+# Helper functions
+error() {
+    echo -e "${RED}✗ ERROR${NC}: $1"
+    ((ERRORS++))
+}
+
+warn() {
+    echo -e "${YELLOW}⚠ WARNING${NC}: $1"
+    ((WARNINGS++))
+}
+
+pass() {
+    echo -e "${GREEN}✓ PASS${NC}: $1"
+    ((PASSED++))
+}
+
+info() {
+    echo -e "${BLUE}ℹ INFO${NC}: $1"
+}
+
+debug() {
+    if [[ "$DEBUG" == "1" ]]; then
+        echo -e "${MAGENTA}DEBUG${NC}: $1" >&2
+    fi
+}
+
+# Get variable from config file
+get_var() {
+    local var_name="$1"
+    debug "Entering get_var for: $var_name"
+    
+    local value=""
+    
+    # Use timeout to prevent hanging
+    if command -v timeout >/dev/null 2>&1; then
+        value=$(timeout 2 grep -E "^${var_name}=" "$CONFIG_FILE" 2>/dev/null | head -1 | cut -d'=' -f2- | tr -d '"' || echo "")
+    else
+        value=$(grep -E "^${var_name}=" "$CONFIG_FILE" 2>/dev/null | head -1 | cut -d'=' -f2- | tr -d '"' || echo "")
+    fi
+    
+    debug "Raw value for $var_name: '$value'"
+    
+    # Expand $HOME if present
+    value="${value//\$HOME/$HOME}"
+    
+    debug "Final value for $var_name: '$value'"
+    echo "$value"
+}
+
+# Check if directory exists
+check_dir() {
+    local var_name="$1"
+    local var_value="$2"
+    local required="${3:-false}"
+    
+    debug "Checking directory: $var_name='$var_value' (required=$required)"
+    
+    if [[ -z "$var_value" ]]; then
+        if [[ "$required" == "true" ]]; then
+            error "$var_name not set (required)"
+        else
+            warn "$var_name not set"
+        fi
+        return 1
+    fi
+    
+    if [[ -d "$var_value" ]]; then
+        pass "$var_name is set and exists: $var_value"
+        return 0
+    else
+        if [[ "$required" == "true" ]]; then
+            error "$var_name is set but doesn't exist: $var_value"
+        else
+            warn "$var_name is set but doesn't exist: $var_value"
+        fi
+        return 1
+    fi
+}
+
+# Determine config file to validate
+debug "Determining config file..."
+if [[ -n "${1:-}" ]]; then
+    CONFIG_FILE="$1"
+    debug "Using argument: $CONFIG_FILE"
+elif [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/environment.d/00_xdg.conf" ]]; then
+    CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/environment.d/00_xdg.conf"
+    debug "Using 00_xdg.conf: $CONFIG_FILE"
+elif [[ -f "${XDG_CONFIG_HOME:-$HOME/.config}/environment.d/xdg.conf" ]]; then
+    CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/environment.d/xdg.conf"
+    debug "Using xdg.conf: $CONFIG_FILE"
+else
+    CONFIG_FILE=$(find "${XDG_CONFIG_HOME:-$HOME/.config}/environment.d" -maxdepth 1 -name "*.conf" 2>/dev/null | sort | head -1)
+    debug "Using first found: $CONFIG_FILE"
+fi
+
+if [[ ! -f "$CONFIG_FILE" ]]; then
+    error "Config file not found: $CONFIG_FILE"
+    echo ""
+    echo "Usage: $0 [config-file]"
+    echo "  DEBUG=1 $0  # Enable debug output"
+    exit 1
+fi
+
+info "Validating: $CONFIG_FILE"
+[[ "$DEBUG" == "1" ]] && info "Debug mode enabled"
+echo ""
+
+# ============================================================
+echo "=== Standard XDG Base Directory Variables ==="
+# ============================================================
+
+debug "Starting XDG_CONFIG_HOME check"
+XDG_CONFIG_HOME_VAL=$(get_var "XDG_CONFIG_HOME")
+debug "Returned from get_var XDG_CONFIG_HOME"
+if [[ -z "$XDG_CONFIG_HOME_VAL" ]]; then
+    warn "XDG_CONFIG_HOME not set in config (using default: ~/.config)"
+    XDG_CONFIG_HOME_VAL="${HOME}/.config"
+fi
+check_dir "XDG_CONFIG_HOME" "$XDG_CONFIG_HOME_VAL" "true"
+
+debug "Starting XDG_CACHE_HOME check"
+XDG_CACHE_HOME_VAL=$(get_var "XDG_CACHE_HOME")
+debug "Returned from get_var XDG_CACHE_HOME"
+if [[ -n "$XDG_CACHE_HOME_VAL" ]]; then
+    check_dir "XDG_CACHE_HOME" "$XDG_CACHE_HOME_VAL"
+else
+    info "XDG_CACHE_HOME not set (default: ~/.cache)"
+fi
+
+debug "Starting XDG_DATA_HOME check"
+XDG_DATA_HOME_VAL=$(get_var "XDG_DATA_HOME")
+debug "Returned from get_var XDG_DATA_HOME"
+if [[ -n "$XDG_DATA_HOME_VAL" ]]; then
+    check_dir "XDG_DATA_HOME" "$XDG_DATA_HOME_VAL" "true"
+else
+    warn "XDG_DATA_HOME not set (default: ~/.local/share)"
+fi
+
+debug "Starting XDG_STATE_HOME check"
+XDG_STATE_HOME_VAL=$(get_var "XDG_STATE_HOME")
+debug "Returned from get_var XDG_STATE_HOME"
+if [[ -n "$XDG_STATE_HOME_VAL" ]]; then
+    check_dir "XDG_STATE_HOME" "$XDG_STATE_HOME_VAL"
+else
+    info "XDG_STATE_HOME not set (default: ~/.local/state)"
+fi
+
+debug "Starting XDG_RUNTIME_DIR check"
+XDG_RUNTIME_DIR_VAL=$(get_var "XDG_RUNTIME_DIR")
+debug "Returned from get_var XDG_RUNTIME_DIR"
+if [[ -n "$XDG_RUNTIME_DIR_VAL" ]]; then
+    if check_dir "XDG_RUNTIME_DIR" "$XDG_RUNTIME_DIR_VAL" "true"; then
+        PERMS=$(stat -c "%a" "$XDG_RUNTIME_DIR_VAL" 2>/dev/null || echo "000")
+        if [[ "$PERMS" == "700" ]]; then
+            pass "XDG_RUNTIME_DIR has correct permissions (700)"
+        else
+            warn "XDG_RUNTIME_DIR permissions are $PERMS (should be 700)"
+        fi
+    fi
+else
+    warn "XDG_RUNTIME_DIR not in config"
+fi
+
+# ============================================================
+echo ""
+echo "=== XDG Data/Config Directories (Search Paths) ==="
+# ============================================================
+
+debug "Starting XDG_DATA_DIRS check"
+XDG_DATA_DIRS_VAL=$(get_var "XDG_DATA_DIRS")
+debug "Returned from get_var XDG_DATA_DIRS"
+if [[ -n "$XDG_DATA_DIRS_VAL" ]]; then
+    pass "XDG_DATA_DIRS is set"
+    IFS=':' read -ra DIRS <<< "$XDG_DATA_DIRS_VAL"
+    for dir in "${DIRS[@]}"; do
+        dir="${dir//\$HOME/$HOME}"
+        if [[ -d "$dir" ]]; then
+            info "  ✓ $dir exists"
+        else
+            info "  ✗ $dir does not exist"
+        fi
+    done
+else
+    warn "XDG_DATA_DIRS not set (default: /usr/local/share:/usr/share)"
+fi
+
+debug "Starting XDG_CONFIG_DIRS check"
+XDG_CONFIG_DIRS_VAL=$(get_var "XDG_CONFIG_DIRS")
+debug "Returned from get_var XDG_CONFIG_DIRS"
+if [[ -n "$XDG_CONFIG_DIRS_VAL" ]]; then
+    pass "XDG_CONFIG_DIRS is set"
+    IFS=':' read -ra DIRS <<< "$XDG_CONFIG_DIRS_VAL"
+    for dir in "${DIRS[@]}"; do
+        dir="${dir//\$HOME/$HOME}"
+        if [[ -d "$dir" ]]; then
+            info "  ✓ $dir exists"
+        else
+            info "  ✗ $dir does not exist"
+        fi
+    done
+else
+    info "XDG_CONFIG_DIRS not set (default: /etc/xdg)"
+fi
+
+# ============================================================
+echo ""
+echo "=== User Directories (XDG User Dirs) ==="
+# ============================================================
+
+USER_DIRS=(
+    "XDG_DESKTOP_DIR"
+    "XDG_DOCUMENTS_DIR"
+    "XDG_DOWNLOAD_DIR"
+    "XDG_MUSIC_DIR"
+    "XDG_PICTURES_DIR"
+    "XDG_PUBLICSHARE_DIR"
+    "XDG_TEMPLATES_DIR"
+    "XDG_VIDEOS_DIR"
+)
+
+for var in "${USER_DIRS[@]}"; do
+    debug "Checking $var"
+    var_value=$(get_var "$var")
+    
+    if [[ -z "$var_value" ]]; then
+        info "$var not set"
+        continue
+    fi
+    
+    dirname=$(basename "$var_value")
+    if [[ "$dirname" == .* ]]; then
+        error "$var uses dotfile directory: $var_value (should be ${dirname#.})"
+    elif [[ -d "$var_value" ]]; then
+        pass "$var exists: $var_value"
+    else
+        warn "$var set but doesn't exist: $var_value"
+    fi
+done
+
+# ============================================================
+echo ""
+echo "=== Non-Standard Variables ==="
+# ============================================================
+
+debug "Checking non-standard variables"
+XDG_BIN_HOME_VAL=$(get_var "XDG_BIN_HOME")
+if [[ -n "$XDG_BIN_HOME_VAL" ]]; then
+    warn "XDG_BIN_HOME is not part of XDG spec"
+fi
+
+XDG_LIB_HOME_VAL=$(get_var "XDG_LIB_HOME")
+if [[ -n "$XDG_LIB_HOME_VAL" ]]; then
+    warn "XDG_LIB_HOME is not part of XDG spec"
+fi
+
+XDG_DESKTOP_PORTAL_DIR_VAL=$(get_var "XDG_DESKTOP_PORTAL_DIR")
+if [[ -n "$XDG_DESKTOP_PORTAL_DIR_VAL" ]]; then
+    info "XDG_DESKTOP_PORTAL_DIR is set"
+fi
+
+# ============================================================
+echo ""
+echo "=== Session Variables ==="
+# ============================================================
+
+debug "Checking session variables"
+XDG_SESSION_TYPE_VAL=$(get_var "XDG_SESSION_TYPE")
+if [[ -n "$XDG_SESSION_TYPE_VAL" ]]; then
+    pass "XDG_SESSION_TYPE: $XDG_SESSION_TYPE_VAL"
+    if [[ "$XDG_SESSION_TYPE_VAL" != "wayland" ]] && [[ "$XDG_SESSION_TYPE_VAL" != "x11" ]]; then
+        warn "XDG_SESSION_TYPE should be 'wayland' or 'x11'"
+    fi
+else
+    info "XDG_SESSION_TYPE not set"
+fi
+
+XDG_CURRENT_DESKTOP_VAL=$(get_var "XDG_CURRENT_DESKTOP")
+if [[ -n "$XDG_CURRENT_DESKTOP_VAL" ]]; then
+    pass "XDG_CURRENT_DESKTOP: $XDG_CURRENT_DESKTOP_VAL"
+else
+    info "XDG_CURRENT_DESKTOP not set"
+fi
+
+XDG_SESSION_DESKTOP_VAL=$(get_var "XDG_SESSION_DESKTOP")
+if [[ -n "$XDG_SESSION_DESKTOP_VAL" ]]; then
+    pass "XDG_SESSION_DESKTOP: $XDG_SESSION_DESKTOP_VAL"
+else
+    info "XDG_SESSION_DESKTOP not set"
+fi
+
+XDG_CURRENT_SESSION_VAL=$(get_var "XDG_CURRENT_SESSION")
+if [[ -n "$XDG_CURRENT_SESSION_VAL" ]]; then
+    info "XDG_CURRENT_SESSION: $XDG_CURRENT_SESSION_VAL"
+fi
+
+# ============================================================
+echo ""
+echo "=== Environment.d Syntax Check ==="
+# ============================================================
+
+debug "Checking syntax issues"
+if grep -E '^\s*[^#].*\$HOME' "$CONFIG_FILE" >/dev/null 2>&1; then
+    warn "Config uses \$HOME which may not expand in environment.d"
+fi
+
+if grep -E '^\s*[^#].*\$PATH' "$CONFIG_FILE" >/dev/null 2>&1; then
+    warn "Config uses \$PATH which won't work in environment.d"
+fi
+
+# ============================================================
+echo ""
+echo "=== Summary ==="
+# ============================================================
+
+echo -e "${GREEN}Passed${NC}:   $PASSED"
+echo -e "${YELLOW}Warnings${NC}: $WARNINGS"
+echo -e "${RED}Errors${NC}:   $ERRORS"
+
+if [[ $ERRORS -gt 0 ]]; then
+    echo ""
+    error "Configuration has $ERRORS error(s)"
+    exit 1
+elif [[ $WARNINGS -gt 0 ]]; then
+    echo ""
+    warn "Configuration has $WARNINGS warning(s)"
+    exit 0
+else
+    echo ""
+    pass "Configuration looks good!"
+    exit 0
+fi
+

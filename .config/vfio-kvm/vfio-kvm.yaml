@@ -5,8 +5,8 @@
 
 #   - KEY_LEFTCTRL
 #   - KEY_PAUSE
-# manage_cpu: true
-# manage_hugepages: true
+manage_cpu: true
+manage_hugepages: true
 # host:
 #   hotkey:
 #     - KEY_LEFTCTRL

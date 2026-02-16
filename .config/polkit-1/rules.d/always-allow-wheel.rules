@@ -1,0 +1,11 @@
+// /qompassai/dotfiles/.config/polkit-1/rules.d/allow-mount-internal.rules
+// Qompass AI Polkit Always-Allow-Wheel Rules Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+//////////////////////////////////////////////////////////////////////////
+polkit.addRule(function(action, subject) {
+    if (/^org\.freedesktop\.udisks\./.test(action.id)
+        && subject.isInGroup("wheel"))
+    {
+        return polkit.Result.YES;
+    }
+});

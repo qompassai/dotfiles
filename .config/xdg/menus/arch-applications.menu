@@ -49,7 +49,7 @@
       <And>
         <Category>Development</Category>
       </And>
-      <Filename>emacs.desktop</Filename>
+      <Filename>nvim.desktop</Filename>
     </Include>
   </Menu>
 

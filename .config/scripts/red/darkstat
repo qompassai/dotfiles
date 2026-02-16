@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+CONFIG="$XDG_CONFIG_HOME/darkstat/darkstat.conf"
+[ -z "$XDG_CONFIG_HOME" ] && CONFIG="$HOME/.config/darkstat/darkstat.conf"
+if [ -f "$CONFIG" ]; then
+    source "$CONFIG"
+else
+    echo "Config not found: $CONFIG"
+    exit 1
+fi
+mkdir -p "$XDG_DATA_HOME/darkstat"
+exec /usr/bin/darkstat \
+    -i "${DARKSTAT_IFACE}" \
+    --port "${DARKSTAT_PORT:-8666}" \
+    --bind-address "${DARKSTAT_BIND:-127.0.0.1}" \
+    --chroot "$XDG_DATA_HOME/darkstat" \
+    --pidfile "$XDG_DATA_HOME/darkstat/darkstat.pid" \
+    ${DARKSTAT_ARGS}

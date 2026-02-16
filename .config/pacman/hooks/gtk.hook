@@ -1,0 +1,12 @@
+[Trigger]
+Type = Path
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Target = $XDG_DATA_HOME/icons/*/
+Target = !$XDG_DATA_HOME/icons/*/?*
+
+[Action]
+Description = Updating icon theme caches...
+When = PostTransaction
+Exec = $XDG_CONFIG_HOME/pacman/scripts/gtk

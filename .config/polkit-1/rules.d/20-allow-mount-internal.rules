@@ -1,0 +1,12 @@
+// /qompassai/dotfiles/.config/polkit-1/rules.d/allow-mount-internal.rules
+// Qompass AI Polkit Allow-Mount-Internal Rules Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+//////////////////////////////////////////////////////////////////////////
+polkit.addRule(function(action, subject) {
+    if ((action.id == "org.freedesktop.udisks2.filesystem-mount-system" ||
+         action.id == "org.freedesktop.udisks.filesystem-mount-system-internal") &&
+        subject.local && subject.active && subject.isInGroup("users"))
+    {
+            return polkit.Result.YES;
+    }
+});

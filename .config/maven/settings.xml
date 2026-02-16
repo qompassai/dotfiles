@@ -5,9 +5,12 @@
 <settings xmlns="http://maven.apache.org/SETTINGS/2.0.0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/2.0.0 https://maven.apache.org/xsd/settings-2.0.0.xsd">
-  <localRepository>/path/to/your/local/repo</localRepository>
+  
+  <localRepository>${env.XDG_DATA_HOME}/maven/repository</localRepository>
+  
   <interactiveMode>true</interactiveMode>
   <offline>false</offline>
+  
   <profiles>
     <profile>
       <id>custom-profile</id>
@@ -15,23 +18,25 @@
         <activeByDefault>true</activeByDefault>
       </activation>
       <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       </properties>
     </profile>
+    
     <profile>
       <id>zig-default</id>
       <activation>
-        <activeByDefault>true</activeByDefault>
+        <activeByDefault>false</activeByDefault>
       </activation>
       <properties>
         <zig.compiler>zig cc</zig.compiler>
       </properties>
     </profile>
   </profiles>
+  
   <activeProfiles>
     <activeProfile>custom-profile</activeProfile>
-    <activeProfile>zig-default</activeProfile>
   </activeProfiles>
+  
 </settings>
-

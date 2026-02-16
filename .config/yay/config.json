@@ -33,7 +33,7 @@
     "rebuild": "yes",
     "redownload": "yes",
     "removemake": "yes",
-    "requestsplitn": 300,
+    "requestsplitn": 90,
     "rpc": true,
     "searchby": "name-desc",
     "separatesources": true,

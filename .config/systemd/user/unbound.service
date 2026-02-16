@@ -1,0 +1,20 @@
+[Unit]
+Description=Unbound DNS Resolver (User)
+Documentation=man:unbound(8)
+After=network-online.target
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/unbound -d -c %h/.config/unbound/unbound.conf
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=5s
+StandardOutput=journal
+StandardError=journal
+
+PrivateTmp=yes
+NoNewPrivileges=yes
+
+[Install]
+WantedBy=default.target
+

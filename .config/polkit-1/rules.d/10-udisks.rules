@@ -1,0 +1,9 @@
+// /qompassai/dotfiles/.config/polkit-1/rules.d/10-udisks.rules
+// Qompass AI Polkit Udisk Rules Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+////////////////////////////////////////////////////////////////////////
+polkit.addRule(function(action, subject) {
+if (action.id.indexOf("org.freedesktop.udisks.") == 0 && subject.isInGroup("storage")) {
+        return polkit.Result.YES;
+    }
+});

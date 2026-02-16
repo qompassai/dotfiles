@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Remove
+Type = Package
+Target = linux-zen
+Target = linux
+
+[Action]
+Description = Cleaning up old kernel files and updating Limine...
+When = PostTransaction
+Exec = /home/phaedrus/.config/pacman/scripts/cleanup.sh
+

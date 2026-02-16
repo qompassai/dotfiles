@@ -1,0 +1,14 @@
+// /qompassai/dotfiles/.config/polkit-1/rules.d/udisks-no-consolekit.rules
+// Qompass AI Polkit Udisk No Consolekit Rules Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+//////////////////////////////////////////////////////////////////////////
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.udisks.filesystem-mount") {
+        if (subject.isInGroup("wheel"))
+            return polkit.Result.YES;
+        else
+            return polkit.Result.AUTH_ADMIN_KEEP;
+    } else if (/^org\.freedesktop\.udisks\./.test(action.id)) {
+        return polkit.Result.AUTH_ADMIN_KEEP;
+    }
+});

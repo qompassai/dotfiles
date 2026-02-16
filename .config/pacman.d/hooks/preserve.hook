@@ -1,0 +1,12 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = linux-zen
+Target = linux-zen-headers
+
+[Action]
+Description = Preserving linux-zen preset configuration...
+When = PreTransaction
+Exec = /usr/bin/bash -c 'if [ -f /etc/mkinitcpio.d/linux-zen.preset ]; then cp /etc/mkinitcpio.d/linux-zen.preset /tmp/linux-zen.preset.backup; fi'
+

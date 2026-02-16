@@ -16,3 +16,4 @@ set fish_function_path $fish_function_path $XDG_DATA_HOME/omf/pkg/foreign-env/fu
 fish_add_path --prepend $HOME/.local/bin
 fish_add_path --prepend $HOME/.local/share/lua/bin
 fish_add_path /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin
+set -gx PATH $HOME/.nimble/bin $PATH

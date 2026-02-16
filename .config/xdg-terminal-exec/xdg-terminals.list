@@ -2,15 +2,41 @@
 # Qompass AI XDG-Terminal Exec Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
+kitty.desktop
+alacritty.desktop
+org.codeberg.dnkl.foot.desktop
+/execarg_compat
 -org.kde.yakuake.desktop
--kitty-open.desktop
+/execarg_default:Alacritty.desktop:-e
+/execarg_default:alacritty.desktop:-e
 /execarg_default:com.raggesilver.BlackBox.desktop:--
 /execarg_default:contour.desktop:execute
+/execarg_default:cool-retro-term.desktop:-e
+/execarg_default:deepin-terminal.desktop:-e
+/execarg_default:Eterm.desktop:-e
+/execarg_default:ghostty.desktop:-e
 /execarg_default:io.elementary.terminal.desktop:-x
-/execarg_default:org.codeberg.dnkl.foot.desktop:--
-/execarg_default:org.gnome.Terminal.desktop:--
 /execarg_default:kitty.desktop:--
+/execarg_default:konsole.desktop:-e
+/execarg_default:lxterminal.desktop:-e
 /execarg_default:mate-terminal.desktop:-x
+/execarg_default:org.codeberg.dnkl.foot.desktop:--
+/execarg_default:org.codeberg.dnkl.foot-server.desktop:--
+/execarg_default:org.gnome.Console.desktop:--
+/execarg_default:org.gnome.Terminal.desktop:--
+/execarg_default:org.kde.konsole.desktop:-e
+/execarg_default:org.wezfurlong.wezterm.desktop:start --
+/execarg_default:rio.desktop:-e
 /execarg_default:roxterm.desktop:-x
+/execarg_default:sakura.desktop:-e
+/execarg_default:st.desktop:-e
 /execarg_default:terminator.desktop:-x
+/execarg_default:Terminix.desktop:-e
+/execarg_default:terminology.desktop:-e
+/execarg_default:tilix.desktop:-e
+/execarg_default:urxvt.desktop:-e
+/execarg_default:urxvtc.desktop:-e
+/execarg_default:wezterm.desktop:start --
 /execarg_default:xfce4-terminal.desktop:-x
+/execarg_default:xterm.desktop:-e
+/execarg_default:zutty.desktop:--

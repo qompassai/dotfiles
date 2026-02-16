@@ -1,0 +1,13 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = linux-zen
+Target = linux-zen-headers
+
+[Action]
+Description = Restoring linux-zen preset and fixing naming...
+When = PostTransaction
+Exec = /home/phaedrus/.config/pacman/scripts/fix.sh
+NeedsTargets
+

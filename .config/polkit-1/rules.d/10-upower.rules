@@ -1,0 +1,10 @@
+// /qompassai/dotfiles/.config/polkit-1/rules.d/10-upower.rules
+// Qompass AI Polkit UPower Rules Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+////////////////////////////////////////////////////////////////
+polkit.addRule(function(action, subject) {
+    if (action.id == "org.freedesktop.upower.hibernate" ||
+        action.id == "org.freedesktop.upower.suspend") {
+        return polkit.Result.YES;
+    }
+});
