@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# /etc/pacman.d/hooks/vcpkg-post.sh
+set -euo pipefail
+VCPKG_ROOT="${VCPKG_ROOT:-/opt/vcpkg}"
+if [[ -d "$VCPKG_ROOT/.git" ]]; then
+  echo "→ vcpkg repo found at $VCPKG_ROOT, pulling latest..."
+  git -C "$VCPKG_ROOT" pull --ff-only
+else
+  echo "→ Cloning vcpkg recipe repo to $VCPKG_ROOT..."
+  git clone https://github.com/microsoft/vcpkg "$VCPKG_ROOT"
+fi
+if [[ ! -x "$VCPKG_ROOT/vcpkg" ]]; then
+  echo "→ Bootstrapping vcpkg..."
+  bash "$VCPKG_ROOT/bootstrap-vcpkg.sh" -disableMetrics
+fi
+PROFILED="/etc/profile.d/vcpkg.sh"
+if [[ ! -f "$PROFILED" ]]; then
+  cat > "$PROFILED" << EOF
+export VCPKG_ROOT="$VCPKG_ROOT"
+export PATH="\$VCPKG_ROOT:\$PATH"
+EOF
+  echo "✓ Wrote $PROFILED"
+fi
+echo "✓ vcpkg recipe repo ready at $VCPKG_ROOT"
+

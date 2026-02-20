@@ -1,0 +1,10 @@
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = vcpkg
+
+[Action]
+Description = Clone/update vcpkg recipe repository
+When = PostTransaction
+Exec = /usr/bin/bash $XDG_CONFIG_HOMe/pacman/hooks/vcpkg
