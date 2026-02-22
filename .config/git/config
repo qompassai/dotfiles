@@ -1,4 +1,0 @@
-[url "git@gitlab.archlinux.org:"]
-	insteadOf = https://gitlab.archlinux.org/
-[http]
-	sslVerify = true
