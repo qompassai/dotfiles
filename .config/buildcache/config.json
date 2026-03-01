@@ -1,0 +1,34 @@
+{
+  "accuracy": "DEFAULT",
+  "cache_link_commands": false,
+  "cache_on_failure": false,
+  "compress": true,
+  "compress_format": "DEFAULT",
+  "compress_level": -1,
+  "debug": -1,
+  "cache_dir": "/home/phaedrus/.cache/buildcache",
+  "direct_mode": true,
+  "disable": false,
+  "hard_links": false,
+  "hash_extra_files": [],
+  "impersonate": "",
+  "log_file": "/home/phaedrus/.local/state/buildcache/buildcache.log",
+  "lua_paths": [
+    "/home/phaedrus/.config/buildcache/lua"
+  ],
+  "max_cache_size": 10000000000,
+  "max_local_entry_size": 134217728,
+  "max_remote_entry_size": 134217728,
+  "perf": false,
+  "prefix": "",
+  "read_only": false,
+  "read_only_remote": false,
+  "redis_username": "",
+  "redis_password": "",
+  "remote": "",
+  "remote_locks": false,
+  "s3_access": "",
+  "s3_secret": "",
+  "terminate_on_miss": false
+}
+
