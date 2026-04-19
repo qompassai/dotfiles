@@ -7,34 +7,51 @@
     "height": 34,
     // "width": 1280,
     "spacing": 4,
-     "reload_style_on_change": false,
+    "reload_style_on_change": false,
     "gtk-layer-shell": true,
     "start_hidden": false,
-    "modules-left": ["hyprland/workspaces", "idle_inhibitor", "pulseaudio", "backlight", "network", "custom/updates"],
+    "modules-left": [
+        "hyprland/workspaces",
+        "idle_inhibitor",
+        "pulseaudio",
+        "backlight",
+        "network",
+        "custom/updates"
+    ],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["hyprland/submap", "hyprland/language", "cpu", "memory", "temperature", "battery", "tray", "clock"],
-     "hyprland/workspaces": {
-         "disable-scroll": true,
-         "on-click": "activate",
-         // "all-outputs": false,
-         // "format": "{name}: {icon}",
-         "format": "{name}",
-         "on-scroll-up": "hyprctl dispatch workspace m-1 > /dev/null",
-         "on-scroll-down": "hyprctl dispatch workspace m+1 > /dev/null",
-          "persistent_workspaces": {
-          "*": 5
-          },
-          "format-icons": {
-             "1": "",
-             "2": "",
-             "3": "",
-             "4": "",
-             "5": "",
-             "urgent": "",
-             "focused": "",
-             "default": ""
-         }
-     },
+    "modules-right": [
+        "hyprland/submap",
+        "hyprland/language",
+        "cpu",
+        "memory",
+        "temperature",
+        "battery",
+        "custom/vpn",
+        "tray",
+        "clock"
+    ],
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "on-click": "activate",
+        // "all-outputs": false,
+        // "format": "{name}: {icon}",
+        "format": "{name}",
+        "on-scroll-up": "hyprctl dispatch workspace m-1 > /dev/null",
+        "on-scroll-down": "hyprctl dispatch workspace m+1 > /dev/null",
+        "persistent_workspaces": {
+            "*": 5
+        },
+        "format-icons": {
+            "1": "",
+            "2": "",
+            "3": "",
+            "4": "",
+            "5": "",
+            "urgent": "",
+            "focused": "",
+            "default": ""
+        }
+    },
     "keyboard-state": {
         "numlock": false,
         "capslock": false,
@@ -101,11 +118,11 @@
     },
     "clock": {
         "interval": 1,
-         "timezone": "America/Los_Angeles",
+        "timezone": "America/Los_Angeles",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
-     },
-     "cpu": {
+    },
+    "cpu": {
         "format": "{usage}% ",
         "tooltip": false,
         "interval": 2
@@ -115,18 +132,26 @@
         "interval": 2
     },
     "custom/temperature": {
-    "exec": "~/.config/waybar/scripts/temp_f.sh",
-    "interval": 30,
-    "format": "{}",
-    "tooltip": false
+        "exec": "~/.config/waybar/scripts/temp_f.sh",
+        "interval": 30,
+        "format": "{}",
+        "tooltip": false
     },
+"custom/vpn": {
+    "interval": 5,
+    "return-type": "json",
+    "exec": "~/.config/waybar/scripts/vpn_status.sh",
+    "on-click": "foot -e bash -c '~/.config/waybar/scripts/vpn_connect.sh; read'",
+    "on-click-right": "sudo pkill openconnect",
+    "tooltip": true
+},
     "backlight": {
         // "device": "acpi_video1",
         "format": "{percent}% {icon}",
         "format-icons": ["", "", "", "", "", "", "", "", ""]
     },
     "battery": {
-    "interval": 5,
+        "interval": 5,
         "states": {
             // "good": 95,
             "warning": 30,
@@ -176,7 +201,7 @@
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
         "smooth-scrolling-threshold": 1
         // "on-click": "pavucontrol"
-        },
+    },
     "custom/notification": {
         "tooltip": false,
         "format": "{} {icon}",

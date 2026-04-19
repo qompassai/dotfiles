@@ -30,7 +30,6 @@
 	font-weight: 400;
   color: @base04;
   background: rgba(0, 0, 0, 0.95);
-  /*background: @base01;*/
 }
 
 #workspaces {
@@ -41,9 +40,6 @@
   margin: 4px 0;
   padding: 0 4px;
   color: @base05;
-}
-
-#workspaces button.visible {
 }
 
 #workspaces button.active {
@@ -70,7 +66,7 @@
   border-left: none;
 }
 
-#mode, #battery, #cpu, #memory, #network, #pulseaudio, #idle_inhibitor, #backlight, #custom-storage, #custom-updates, #custom-weather, #custom-mail, #clock, #temperature, #language{
+#mode, #battery, #cpu, #memory, #network, #pulseaudio, #idle_inhibitor, #backlight, #custom-storage, #custom-updates, #custom-weather, #custom-mail, #clock, #temperature, #language {
   margin: 4px 2px;
   padding: 0 6px;
   background-color: @base02;
@@ -102,17 +98,33 @@
 }
 
 #custom-temperature.warm {
-  color: @base0A; /* yellow */
+  color: @base0A;
 }
 
 #custom-temperature.critical {
-  color: @base0F; /* red */
+  color: @base0F;
 }
 
 #custom-temperature.cool {
-  color: @base0C; /* cyan */
+  color: @base0C;
 }
 
+#custom-vpn {
+  margin: 4px 2px;
+  padding: 0 6px;
+  background-color: @base02;
+  border-radius: 4px;
+  min-width: 20px;
+  color: @base03;
+}
+
+#custom-vpn.connected {
+  color: @base0B;
+}
+
+#custom-vpn.disconnected {
+  color: @base03;
+}
 
 #window {
   font-size: 0.9em;
@@ -125,3 +137,4 @@
 	font-weight: 500;
 	letter-spacing: -1px;
 }
+
