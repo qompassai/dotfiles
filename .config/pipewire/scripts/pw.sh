@@ -10,30 +10,30 @@ cat > "$CONF_DIR/10-properties.conf" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/10-properties.conf
 # ==========================================================================
 context.properties = {
-    clock.power-of-two-quantum                                  = true
-    core.daemon                                                 = true
-    core.name                                                   = pipewire-0
-    cpu.zero.denormals                                          = true
-    context.data-loop.library.name.system                       = support/libspa-support
-    context.num-data-loops                                      = 1
-    library.name.system                          = support/libspa-support
-    link.max-buffers                             = 64
-    log.level                                    = 5
-    # log.patterns                               = [ "*:E" "*:W" ]
-    mem.allow-mlock                              = true
-    mem.mlock-all                                = false
-    mem.warn-mlock                               = false
-    # rlimit.nofile                              = -1
-    support.dbus                                 = true
+    clock.power-of-two-quantum                             = true
+    core.daemon                                            = true
+    core.name                                              = pipewire-0
+    cpu.zero.denormals                                     = true
+    context.data-loop.library.name.system                  = support/libspa-support
+    context.num-data-loops                                 = 1
+    library.name.system                                    = support/libspa-support
+    link.max-buffers                                       = 64
+    log.level                                              = 5
+    # log.patterns                                         = [ "*:E" "*:W" ]
+    mem.allow-mlock                                        = true
+    mem.mlock-all                                          = false
+    mem.warn-mlock                                         = false
+    # rlimit.nofile                                        = -1
+    support.dbus                                           = true
 }
 EOF
 cat > "$CONF_DIR/20-clock.conf" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/20-clock.conf
 # ==========================================================================
 context.properties = {
-    default.clock.allowed-rates                  = [ 44100 48000 88200 96000 ]
-    default.clock.rate                           = 48000
-    # default.clock.force-rate                   = 0
+    default.clock.allowed-rates                            = [ 44100 48000 88200 96000 ]
+    default.clock.rate                                     = 48000
+    # default.clock.force-rate                      = 0
     default.clock.max-quantum                    = 2048
     default.clock.min-quantum                    = 128
     default.clock.quantum                        = 128
@@ -229,9 +229,9 @@ cat > "$CONF_DIR/60-modules-optional.conf" << 'EOF'
 context.modules = [
     { name = libpipewire-module-x11-bell
         args = {
-            sample.name                          = "bell-window-system"
-            sink.name                            = "@DEFAULT_SINK@"
-            x11.display                          = null    # Auto-detect
+            sample.name                                    = "bell-window-system"
+            sink.name                                      = "@DEFAULT_SINK@"
+            x11.display                          = nul
             # x11.xauthority                     = null    # Auto-detect
         }
         flags     = [ ifexists nofail ]
@@ -367,17 +367,17 @@ cat > "$CONF_DIR/90-low-latency.conf.disabled" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/90-low-latency.conf
 # ==========================================================================
 context.properties = {
-    default.clock.max-quantum                    = 1024
-    default.clock.min-quantum                    = 64
-    default.clock.quantum                        = 64
+    default.clock.max-quantum                              = 1024
+    default.clock.min-quantum                              = 64
+    default.clock.quantum                                  = 64
 }
 EOF
 cat > "$CONF_DIR/95-battery-saver.conf.disabled" << 'EOF'
 # /qompassai/dotfiles/.config/pipewire/pipewire.conf.d/95-battery-saver.conf
 # ==========================================================================
 context.properties = {
-    default.clock.quantum                        = 2048
-    resample.quality                             = 2
+    default.clock.quantum                                  = 2048
+    resample.quality                                       = 2
     # module.echo-cancel                         = false
     # module.filter-chain                        = false
 }
@@ -396,9 +396,6 @@ ls -1 "$CONF_DIR/" | while read file; do
 done
 
 echo ""
-echo "🔧 Optional Features (rename .disabled to .conf to enable):"
-echo "   • 80-multicore.conf.disabled     - Multi-core CPU optimization"
-echo "   • 90-low-latency.conf.disabled   - Ultra-low latency (64 samples)"
 echo "   • 95-battery-saver.conf.disabled - Battery/power saving mode"
 
 systemctl --user restart pipewire pipewire-pulse wireplumber

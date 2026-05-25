@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inochi Session settings.json Reference</title>
+<style>
+  :root {
+    --bg: #13111a;
+    --surface: #1c1a24;
+    --surface-2: #242230;
+    --border: #2e2b3a;
+    --text: #e2dff0;
+    --muted: #8b87a8;
+    --faint: #4a4760;
+    --accent: #a685e2;
+    --accent-dim: #6e4bbf;
+    --green: #6dbf8a;
+    --yellow: #e2c96d;
+    --red: #e26d8a;
+    --code-bg: #0f0d16;
+    --radius: 8px;
+    --mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+  [data-theme="light"] {
+    --bg: #f5f3ff;
+    --surface: #ffffff;
+    --surface-2: #ede9ff;
+    --border: #d4cef5;
+    --text: #1a1730;
+    --muted: #6b5ea8;
+    --faint: #b0a8d0;
+    --accent: #6e4bbf;
+    --accent-dim: #a685e2;
+    --green: #2e7d4f;
+    --yellow: #8a6800;
+    --red: #8a2e4a;
+    --code-bg: #ede9ff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', 'Inter', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    padding: 2rem 1rem 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+  .page-header h1 span { color: var(--accent); }
+  .page-header p {
+    margin-top: 0.4rem;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+  .page-header code {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+  }
+
+  /* Theme toggle */
+  .theme-toggle {
+    flex-shrink: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.4rem 0.75rem;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 180ms ease;
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Details/Summary — collapsible sections */
+  details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: border-color 180ms ease;
+  }
+  details[open] { border-color: var(--accent-dim); }
+  details[open] summary { border-bottom: 1px solid var(--border); }
+
+  summary {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text);
+    transition: background 180ms ease;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover { background: var(--surface-2); }
+
+  .chevron {
+    width: 18px; height: 18px;
+    flex-shrink: 0;
+    color: var(--accent);
+    transition: transform 220ms ease;
+  }
+  details[open] .chevron { transform: rotate(90deg); }
+
+  .section-badge {
+    margin-left: auto;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 0.1em 0.6em;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  .section-body { padding: 1.25rem 1.5rem 1.5rem; }
+  .section-body > p { color: var(--muted); font-size: 0.875rem; margin-bottom: 1rem; }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; margin: 0.75rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  thead tr { background: var(--surface-2); }
+  th {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface-2); }
+  td code, th code {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    background: var(--code-bg);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+    color: var(--accent);
+  }
+
+  /* Required badge */
+  .req { color: var(--green); font-weight: 700; }
+  .opt { color: var(--faint); }
+
+  /* Type badges */
+  .type {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    padding: 0.1em 0.5em;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .type-string  { background: #1e3a2a; color: var(--green); }
+  .type-boolean { background: #2a1e3a; color: #c49df5; }
+  .type-integer { background: #1e2a3a; color: #6db8e2; }
+  .type-float   { background: #1e2a3a; color: #6db8e2; }
+  .type-array   { background: #3a2a1e; color: var(--yellow); }
+  .type-object  { background: #3a1e2a; color: var(--red); }
+
+  /* Code blocks */
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    margin: 0.75rem 0;
+    color: #c9c3e6;
+  }
+  pre .k  { color: #a685e2; }  /* key */
+  pre .s  { color: #6dbf8a; }  /* string value */
+  pre .n  { color: #6db8e2; }  /* number */
+  pre .b  { color: #e2a66d; }  /* boolean */
+  pre .cm { color: #5a5678; font-style: italic; } /* comment */
+
+  /* Notes */
+  .note {
+    background: var(--surface-2);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 0.75rem 1rem;
+    margin: 0.75rem 0;
+    font-size: 0.875rem;
+    color: var(--muted);
+  }
+  .note strong { color: var(--text); }
+
+  /* Subsections within open details */
+  .subsection { margin-top: 1.25rem; }
+  .subsection h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .subsection h3::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Tracker sub-details */
+  details.tracker {
+    background: var(--surface-2);
+    border-color: var(--border);
+    margin: 0.5rem 0;
+  }
+  details.tracker[open] { border-color: var(--accent-dim); }
+  details.tracker summary { padding: 0.75rem 1rem; font-size: 0.9rem; }
+  details.tracker .section-body { padding: 0.75rem 1rem 1rem; }
+
+  /* Inline label pill */
+  .pill {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.1em 0.55em;
+    border-radius: 99px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+  .pill-osf  { background: #1e3a2a; color: var(--green); }
+  .pill-vmc  { background: #2a1e3a; color: #c49df5; }
+  .pill-vts  { background: #1e2a3a; color: #6db8e2; }
+  .pill-ifm  { background: #3a2a1e; color: var(--yellow); }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <h1>Inochi Session <span>settings.json</span> Reference</h1>
+    <p>Location: <code>$XDG_CONFIG_HOME/inochi-session/settings.json</code> &nbsp;·&nbsp;
+    Auto-generated on first run &nbsp;·&nbsp; v0.8.x</p>
+  </div>
+  <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme">☀ Light</button>
+</div>
+
+<!-- ── Top-Level Fields ─────────────────────────────────────────────────────── -->
+<details open>
+  <summary>
+    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+    Top-Level Fields
+    <span class="section-badge">8 fields</span>
+  </summary>
+  <div class="section-body">
+    <p>All keys in the root JSON object. Fields are listed alphabetically.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><code>autoStart</code></td>
+            <td><span class="type type-boolean">boolean</span></td>
+            <td><code>false</code></td>
+            <td>Automatically begin tracking when Session launches</td>
+          </tr>
+          <tr>
+            <td><code>language</code></td>
+            <td><span class="type type-string">string</span></td>
+            <td><code>"en_US"</code></td>
+            <td>UI language locale code. See the <strong>Languages</strong> section below</td>
+          </tr>
+          <tr>
+            <td><code>plugins</code></td>
+            <td><span class="type type-array">array</span></td>
+            <td><code>[]</code></td>
+            <td>List of <code>.so</code> plugin filenames to load from the <code>plugins/</code> directory</td>
+          </tr>
+          <tr>
+            <td><code>theme</code></td>
+            <td><span class="type type-string">string</span></td>
+            <td><code>"dark"</code></td>
+            <td>UI color theme. Options: <code>"dark"</code> or <code>"light"</code></td>
+          </tr>
+          <tr>
+            <td><code>UIScale</code></td>
+            <td><span class="type type-float">float</span></td>
+            <td><code>1.0</code></td>
+            <td>DPI scaling multiplier for the UI. Range: <code>0.5</code> – <code>3.0</code>. Match to your Hyprland monitor scale</td>
+          </tr>
+          <tr>
+            <td><code>virtualSpaces</code></td>
+            <td><span class="type type-array">array</span></td>
+            <td><code>[]</code></td>
+            <td>List of virtual space objects. Each groups one or more trackers. See <strong>Virtual Spaces</strong> below</td>
+          </tr>
+          <tr>
+            <td><code>windowHeight</code></td>
+            <td><span class="type type-integer">integer</span></td>
+            <td><code>720</code></td>
+            <td>Initial window height in pixels</td>
+          </tr>
+          <tr>
+            <td><code>windowWidth</code></td>
+            <td><span class="type type-integer">integer</span></td>
+            <td><code>1280</code></td>
+            <td>Initial window width in pixels</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</details>
+
+<!-- ── Virtual Spaces ────────────────────────────────────────────────────────── -->
+<details>
+  <summary>
+    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+    Virtual Spaces
+    <span class="section-badge">object schema</span>
+  </summary>
+  <div class="section-body">
+    <p>An array of virtual space objects. Each space groups trackers and can be switched between at runtime.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><code>name</code></td>
+            <td><span class="type type-string">string</span></td>
+            <td><span class="req">✓ required</span></td>
+            <td>Display name shown in the GUI switcher</td>
+          </tr>
+          <tr>
+            <td><code>trackers</code></td>
+            <td><span class="type type-array">array</span></td>
+            <td><span class="req">✓ required</span></td>
+            <td>Array of tracker objects. Each must include a <code>type</code> field</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <pre><span class="k">"virtualSpaces"</span>: [
+  {
+    <span class="k">"name"</span>: <span class="s">"Default"</span>,
+    <span class="k">"trackers"</span>: [ <span class="cm">/* tracker objects — see Tracker Types */</span> ]
+  }
+]</pre>
+  </div>
+</details>
+
+<!-- ── Tracker Types ─────────────────────────────────────────────────────────── -->
+<details>
+  <summary>
+    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+    Tracker Types
+    <span class="section-badge">4 types</span>
+  </summary>
+  <div class="section-body">
+    <p>Each tracker object requires a <code>type</code> field. Remaining fields depend on the type. All trackers share <code>pollingFactor</code>.</p>
+
+    <!-- OSF -->
+    <details class="tracker">
+      <summary>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        <span class="pill pill-osf">OSF</span>&nbsp; OpenSeeFace
+      </summary>
+      <div class="section-body">
+        <p>Webcam face tracking via the <code>facetracker.py</code> script. Fully native on Linux.</p>
+        <pre>{
+  <span class="k">"type"</span>:          <span class="s">"OSF"</span>,
+  <span class="k">"osf_bind_ip"</span>:   <span class="s">"0.0.0.0"</span>,
+  <span class="k">"osf_bind_port"</span>: <span class="n">11573</span>,
+  <span class="k">"pollingFactor"</span>: <span class="n">1</span>
+}</pre>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>osf_bind_ip</code></td><td><span class="type type-string">string</span></td><td><code>"0.0.0.0"</code></td><td>UDP listener IP. <code>"0.0.0.0"</code> = any interface. Use <code>"127.0.0.1"</code> for local only</td></tr>
+              <tr><td><code>osf_bind_port</code></td><td><span class="type type-integer">integer</span></td><td><code>11573</code></td><td>UDP port — must match OpenSeeFace <code>--port</code> argument</td></tr>
+              <tr><td><code>pollingFactor</code></td><td><span class="type type-integer">integer</span></td><td><code>1</code></td><td>Polling frequency multiplier. Higher = more responsive, more CPU usage</td></tr>
+              <tr><td><code>type</code></td><td><span class="type type-string">string</span></td><td>—</td><td>Must be <code>"OSF"</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note"><strong>Launch command:</strong><br><code>python facetracker.py --port 11573 --ip 127.0.0.1</code></div>
+      </div>
+    </details>
+
+    <!-- VMC -->
+    <details class="tracker">
+      <summary>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        <span class="pill pill-vmc">VMC</span>&nbsp; Virtual Motion Capture Protocol
+      </summary>
+      <div class="section-body">
+        <p>Receives VMC-format OSC packets. Compatible with VTube Studio, Puppetstring, iFacialMocap, and Animaze.</p>
+        <pre>{
+  <span class="k">"type"</span>:          <span class="s">"VMC"</span>,
+  <span class="k">"pollingFactor"</span>: <span class="n">1</span>,
+  <span class="k">"port"</span>:          <span class="n">39540</span>
+}</pre>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>pollingFactor</code></td><td><span class="type type-integer">integer</span></td><td><code>1</code></td><td>Polling frequency multiplier</td></tr>
+              <tr><td><code>port</code></td><td><span class="type type-integer">integer</span></td><td><code>39540</code></td><td>UDP port for incoming VMC packets</td></tr>
+              <tr><td><code>type</code></td><td><span class="type type-string">string</span></td><td>—</td><td>Must be <code>"VMC"</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note">
+          <strong>Common VMC ports:</strong><br>
+          <code>39540</code> — Inochi Session default &amp; VTube Studio default<br>
+          <code>39539</code> — Animaze default sender port
+        </div>
+      </div>
+    </details>
+
+    <!-- VTS -->
+    <details class="tracker">
+      <summary>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        <span class="pill pill-vts">VTS</span>&nbsp; VTube Studio
+      </summary>
+      <div class="section-body">
+        <p>Direct connection to VTube Studio's plugin API running on a phone or PC.</p>
+        <pre>{
+  <span class="k">"type"</span>:          <span class="s">"VTS"</span>,
+  <span class="k">"phoneIP"</span>:       <span class="s">"192.168.1.100"</span>,
+  <span class="k">"pollingFactor"</span>: <span class="n">1</span>
+}</pre>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>phoneIP</code></td><td><span class="type type-string">string</span></td><td>—</td><td>IP address of the device running VTube Studio</td></tr>
+              <tr><td><code>pollingFactor</code></td><td><span class="type type-integer">integer</span></td><td><code>1</code></td><td>Polling frequency multiplier</td></tr>
+              <tr><td><code>type</code></td><td><span class="type type-string">string</span></td><td>—</td><td>Must be <code>"VTS"</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+    <!-- IFM -->
+    <details class="tracker">
+      <summary>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        <span class="pill pill-ifm">IFM</span>&nbsp; iFacialMocap
+      </summary>
+      <div class="section-body">
+        <p>iOS ARKit face tracking via the iFacialMocap app on iPhone/iPad.</p>
+        <pre>{
+  <span class="k">"type"</span>:          <span class="s">"IFM"</span>,
+  <span class="k">"phoneIP"</span>:       <span class="s">"192.168.1.100"</span>,
+  <span class="k">"pollingFactor"</span>: <span class="n">1</span>
+}</pre>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Field</th><th>Type</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>phoneIP</code></td><td><span class="type type-string">string</span></td><td>—</td><td>IP address of the iOS device running iFacialMocap</td></tr>
+              <tr><td><code>pollingFactor</code></td><td><span class="type type-integer">integer</span></td><td><code>1</code></td><td>Polling frequency multiplier</td></tr>
+              <tr><td><code>type</code></td><td><span class="type type-string">string</span></td><td>—</td><td>Must be <code>"IFM"</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+
+  </div>
+</details>
+
+<!-- ── Languages ─────────────────────────────────────────────────────────────── -->
+<details>
+  <summary>
+    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+    Languages
+    <span class="section-badge">9 locales</span>
+  </summary>
+  <div class="section-body">
+    <p>Valid values for the <code>language</code> top-level field.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Value</th><th>Language</th></tr></thead>
+        <tbody>
+          <tr><td><code>"de_DE"</code></td><td>German</td></tr>
+          <tr><td><code>"en_US"</code></td><td>English (United States) — default</td></tr>
+          <tr><td><code>"es_ES"</code></td><td>Spanish</td></tr>
+          <tr><td><code>"fr_FR"</code></td><td>French</td></tr>
+          <tr><td><code>"ja_JP"</code></td><td>Japanese</td></tr>
+          <tr><td><code>"ko_KR"</code></td><td>Korean</td></tr>
+          <tr><td><code>"pt_BR"</code></td><td>Portuguese (Brazil)</td></tr>
+          <tr><td><code>"zh_CN"</code></td><td>Chinese (Simplified)</td></tr>
+          <tr><td><code>"zh_TW"</code></td><td>Chinese (Traditional)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</details>
+
+<!-- ── Plugins ───────────────────────────────────────────────────────────────── -->
+<details>
+  <summary>
+    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+    Plugins
+    <span class="section-badge">array of strings</span>
+  </summary>
+  <div class="section-body">
+    <p>Array of <code>.so</code> plugin filenames to load at startup. Drop files into the plugins directory before launching.</p>
+    <pre><span class="k">"plugins"</span>: [
+  <span class="s">"my-tracker-plugin.so"</span>,
+  <span class="s">"another-plugin.so"</span>
+]</pre>
+    <div class="note">
+      <strong>Plugin directory:</strong><br>
+      <code>~/.config/inochi-session/plugins/</code><br><br>
+      The directory is scanned once at startup — restart Session after adding new plugins.
+    </div>
+  </div>
+</details>
+
+<!-- ── Full Example ──────────────────────────────────────────────────────────── -->
+<details>
+  <summary>
+    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+    Full Example Config
+    <span class="section-badge">copy-paste ready</span>
+  </summary>
+  <div class="section-body">
+    <p>A complete <code>settings.json</code> with two virtual spaces — OSF webcam and VMC phone.</p>
+    <pre>{
+  <span class="k">"autoStart"</span>:     <span class="b">false</span>,
+  <span class="k">"language"</span>:      <span class="s">"en_US"</span>,
+  <span class="k">"plugins"</span>:       [],
+  <span class="k">"theme"</span>:         <span class="s">"dark"</span>,
+  <span class="k">"UIScale"</span>:       <span class="n">1.0</span>,
+  <span class="k">"virtualSpaces"</span>: [
+    {
+      <span class="k">"name"</span>: <span class="s">"OSF Webcam"</span>,
+      <span class="k">"trackers"</span>: [
+        {
+          <span class="k">"osf_bind_ip"</span>:   <span class="s">"0.0.0.0"</span>,
+          <span class="k">"osf_bind_port"</span>: <span class="n">11573</span>,
+          <span class="k">"pollingFactor"</span>: <span class="n">1</span>,
+          <span class="k">"type"</span>:          <span class="s">"OSF"</span>
+        }
+      ]
+    },
+    {
+      <span class="k">"name"</span>: <span class="s">"Phone VMC"</span>,
+      <span class="k">"trackers"</span>: [
+        {
+          <span class="k">"pollingFactor"</span>: <span class="n">1</span>,
+          <span class="k">"port"</span>:          <span class="n">39540</span>,
+          <span class="k">"type"</span>:          <span class="s">"VMC"</span>
+        }
+      ]
+    }
+  ],
+  <span class="k">"windowHeight"</span>:  <span class="n">720</span>,
+  <span class="k">"windowWidth"</span>:   <span class="n">1280</span>
+}</pre>
+  </div>
+</details>
+
+<!-- ── Notes ─────────────────────────────────────────────────────────────────── -->
+<details>
+  <summary>
+    <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+    Notes &amp; Gotchas
+    <span class="section-badge">4 notes</span>
+  </summary>
+  <div class="section-body">
+    <div class="note">
+      <strong>Blendshape bindings are NOT stored here.</strong><br>
+      Tracker blendshape bindings, Lua expressions, dampen values, and parameter mappings are saved
+      inside your <code>.inp</code> puppet file via <strong>Save to File</strong> in the GUI.
+    </div>
+    <div class="note">
+      <strong>pollingFactor</strong><br>
+      <code>1</code> is correct for almost all setups. Only increase if tracking feels laggy and
+      you have spare CPU headroom.
+    </div>
+    <div class="note">
+      <strong>Hyprland / HiDPI</strong><br>
+      Set <code>UIScale</code> to match your monitor's scale value from
+      <code>hyprctl monitors</code> to avoid a blurry UI.
+    </div>
+    <div class="note">
+      <strong>Plugin loading</strong><br>
+      The <code>plugins/</code> directory is scanned once at startup — drop <code>.so</code> files
+      there before launching Session.
+    </div>
+  </div>
+</details>
+
+<script>
+  const btn = document.querySelector('[data-theme-toggle]');
+  const html = document.documentElement;
+  btn.addEventListener('click', () => {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    btn.textContent = next === 'dark' ? '☀ Light' : '☾ Dark';
+  });
+</script>
+</body>
+</html>

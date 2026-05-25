@@ -1,0 +1,481 @@
+#!/usr/bin/env bash
+set -e
+BOLD='\033[1m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+RED='\033[0;31m'
+NC='\033[0m'
+print_header()
+{
+    echo -e "\n${BOLD}${BLUE}==== $1 ====${NC}"
+}
+print_found()
+{
+    echo -e "${GREEN}✓${NC} $1"
+}
+print_notfound()
+{
+    echo -e "${RED}✗${NC} $1"
+}
+print_info()
+{
+    echo -e "${YELLOW}→${NC} $1"
+}
+count_files()
+{
+    local dir="$1"
+    local pattern="$2"
+    if [ -d "$dir" ]; then
+        find "$dir" -type f -name "$pattern" 2> /dev/null | wc -l
+    else
+        echo "0"
+    fi
+}
+print_header "ALSA Sound Cards"
+if command -v aplay &> /dev/null; then
+    echo -e "\n${BOLD}Available ALSA cards:${NC}"
+    aplay -l 2> /dev/null | grep -E "^card" || print_notfound "No cards found"
+    echo -e "\n${BOLD}Suggested ALSA_CARD values:${NC}"
+    aplay -l 2> /dev/null | grep -oP "card \K\d+" | while read -r num; do
+        name=$(aplay -l 2> /dev/null | grep "^card $num" | grep -oP "card $num: \K[^,]+" | head -1)
+        print_info "ALSA_CARD=hw:$num  # $name"
+    done
+    print_info "ALSA_CARD=default  # System default"
+else
+    print_notfound "aplay not found (install alsa-utils)"
+fi
+print_header "Audio Plugin Directories"
+declare -A PLUGIN_PATHS=(
+    ["CLAP"]="/usr/lib/clap:/usr/local/lib/clap:${CLAP_PATH:-}:$HOME/.clap:$HOME/.local/lib/clap"
+    ["DSSI"]="/usr/lib/dssi:/usr/local/lib/dssi:/usr/lib64/dssi:${DSSI_PATH:-}:$HOME/.dssi"
+    ["LADSPA"]="/usr/lib/ladspa:/usr/local/lib/ladspa:/usr/lib64/ladspa:${LADSPA_PATH:-}:$HOME/.ladspa"
+    ["LV2"]="/usr/lib/lv2:/usr/local/lib/lv2:/usr/lib64/lv2:${LV2_PATH:-}:$HOME/.lv2"
+    ["VST2"]="/usr/lib/vst:/usr/local/lib/vst:/usr/lib/lxvst:${VST_PATH:-}:$HOME/.vst:$HOME/.lxvst"
+    ["VST3"]="/usr/lib/vst3:/usr/local/lib/vst3:/usr/lib64/vst3:${VST3_PATH:-}:$HOME/.vst3:$HOME/.local/lib/vst3"
+)
+declare -A PLUGIN_EXTS=(
+    ["CLAP"]="*.clap"
+    ["DSSI"]="*.so"
+    ["LADSPA"]="*.so"
+    ["LV2"]="*.ttl"
+    ["VST2"]="*.so"
+    ["VST3"]="*.vst3"
+)
+for plugin_type in CLAP DSSI LADSPA LV2 VST2 VST3; do
+    echo -e "\n${BOLD}${plugin_type} Plugins:${NC}"
+    IFS=':' read -ra PATHS <<< "${PLUGIN_PATHS[$plugin_type]}"
+    total=0
+    for path in "${PATHS[@]}"; do
+        expanded_path="${path/#\~/$HOME}"
+        if [ -d "$expanded_path" ]; then
+            count=$(count_files "$expanded_path" "${PLUGIN_EXTS[$plugin_type]}")
+            total=$((total + count))
+            if [ "$count" -gt 0 ]; then
+                print_found "$expanded_path ($count plugins)"
+                find "$expanded_path" -type f -name "${PLUGIN_EXTS[$plugin_type]}" 2> /dev/null | head -3 | while read -r file; do
+                    echo "    - $(basename "$file")"
+                done
+                [ "$count" -gt 3 ] && echo "    ... and $((count - 3)) more"
+            else
+                print_info "$expanded_path (empty)"
+            fi
+        else
+            print_notfound "$expanded_path (directory doesn't exist)"
+        fi
+    done
+    if [ "$total" -eq 0 ]; then
+        echo -e "${RED}  No ${plugin_type} plugins found - consider commenting out ${plugin_type}_PATH${NC}"
+    else
+        echo -e "${GREEN}  Total: $total ${plugin_type} plugins${NC}"
+    fi
+done
+print_header "JACK Audio"
+if command -v jack_control &> /dev/null || command -v jackd &> /dev/null; then
+    print_found "JACK installed"
+
+    if command -v jack_control &> /dev/null; then
+        echo -e "\n${BOLD}JACK Status:${NC}"
+        jack_control status 2> /dev/null || print_info "JACK not running"
+    fi
+    if [ -d /usr/lib/jack ]; then
+        jack_count=$(count_files /usr/lib/jack "*.so")
+        print_info "JACK drivers available: $jack_count"
+        print_info "Suggested: JACK_DRIVER_DIR=/usr/lib/jack"
+    fi
+    print_info "Suggested: JACK_NO_START_SERVER=1 (prevent auto-start with PipeWire)"
+else
+    print_notfound "JACK not installed"
+    print_info "Consider commenting out all JACK_* variables"
+fi
+print_header "PipeWire Configuration"
+if command -v pipewire &> /dev/null; then
+    print_found "PipeWire installed"
+    if systemctl --user is-active pipewire &> /dev/null; then
+        print_found "PipeWire is running"
+    else
+        print_notfound "PipeWire is not running"
+    fi
+    echo -e "\n${BOLD}Current PipeWire sample rate:${NC}"
+    pw-cli info 0 2> /dev/null | grep -E "rate|quantum" | head -2 || print_info "Cannot query PipeWire"
+
+    if [ -d "$XDG_CONFIG_HOME/pipewire" ]; then
+        print_found "Custom config: $HOME/.config/pipewire"
+        print_info "Enable: PIPEWIRE_CONFIG_DIR=~/.config/pipewire"
+    else
+        print_info "Using system default config"
+        print_info "Default location: /usr/share/pipewire"
+    fi
+    echo -e "\n${BOLD}Suggested PIPEWIRE_LATENCY values:${NC}"
+    print_info "PIPEWIRE_LATENCY=64/48000   # Ultra-low latency (1.3ms)"
+    print_info "PIPEWIRE_LATENCY=128/48000  # Low latency (2.7ms) - CURRENT"
+    print_info "PIPEWIRE_LATENCY=256/48000  # Balanced (5.3ms)"
+    print_info "PIPEWIRE_LATENCY=512/48000  # Safe/power-saving (10.7ms)"
+else
+    print_notfound "PipeWire not installed"
+fi
+print_header "PulseAudio / pipewire-pulse"
+if command -v pactl &> /dev/null; then
+    print_found "PulseAudio tools installed"
+    if pactl info &> /dev/null; then
+        print_found "PulseAudio server is running"
+        echo -e "\n${BOLD}Server info:${NC}"
+        pactl info 2> /dev/null | grep -E "Server Name|Server Version|Default Sink|Default Source" || true
+        echo -e "\n${BOLD}Suggested PULSE_SINK values:${NC}"
+        pactl list short sinks 2> /dev/null | while read -r line; do
+            sink_name=$(echo "$line" | awk '{print $2}')
+            print_info "PULSE_SINK=$sink_name"
+        done
+        echo -e "\n${BOLD}Suggested PULSE_SOURCE values:${NC}"
+        pactl list short sources 2> /dev/null | grep -v "monitor" | while read -r line; do
+            source_name=$(echo "$line" | awk '{print $2}')
+            print_info "PULSE_SOURCE=$source_name"
+        done
+    else
+        print_notfound "PulseAudio server not running"
+    fi
+else
+    print_notfound "PulseAudio tools not installed"
+fi
+print_header "Wine Audio (pwasio, wineasio)"
+if command -v wine &> /dev/null; then
+    print_found "Wine installed"
+    if pacman -Q pwasio-git &> /dev/null 2>&1; then
+        print_found "pwasio-git installed"
+        print_info "Enable Wine ASIO variables"
+    fi
+    wine_lib_paths=(
+        "$HOME/.wine/drive_c/windows/system32"
+        "$HOME/.wine/drive_c/windows/syswow64"
+    )
+    for path in "${wine_lib_paths[@]}"; do
+        if [ -f "$path/wineasio.dll" ] || [ -f "$path/wineasio.dll.so" ]; then
+            print_found "WineASIO found in $path"
+        fi
+    done
+    echo -e "\n${BOLD}Suggested Wine ASIO settings:${NC}"
+    print_info "WINEASIO_FIXED_BUFFERSIZE=512  # Match PIPEWIRE_LATENCY"
+    print_info "WINEASIO_NUMBER_INPUTS=2       # Stereo in"
+    print_info "WINEASIO_NUMBER_OUTPUTS=2      # Stereo out"
+else
+    print_notfound "Wine not installed"
+    print_info "Comment out all WINEASIO_* variables"
+fi
+print_header "Audio Production Tools"
+declare -A AUDIOTOOLS=(
+    ["Carla"]="carla"
+    ["yabridge"]="yabridgectl"
+    ["Ardour"]="ardour"
+    ["Reaper"]="reaper"
+    ["Bitwig"]="bitwig-studio"
+    ["LMMS"]="lmms"
+)
+for tool_name in "${!AUDIOTOOLS[@]}"; do
+    if command -v "${AUDIOTOOLS[$tool_name]}" &> /dev/null; then
+        print_found "$tool_name installed"
+        case "$tool_name" in
+            "Carla")
+                print_info "Enable: CARLA_BRIDGE_* variables"
+                ;;
+            "yabridge")
+                if [ -f "$XDG_CONFIG_HOME/yabridgectl/config.toml" ]; then
+                    print_info "yabridge configured"
+                    print_info "Enable: YABRIDGE_* variables for debugging"
+                fi
+                ;;
+        esac
+    else
+        print_notfound "$tool_name not installed"
+    fi
+done
+print_header "Realtime Configuration"
+if groups | grep -q realtime; then
+    print_found "User is in realtime group"
+    print_info "RT_PRIO and SCHED_FIFO are informational only"
+    print_info "Actual limits set in /etc/security/limits.d/"
+else
+    print_notfound "User NOT in realtime group"
+    print_info "Run: sudo usermod -aG realtime $USER"
+fi
+if [ -f /etc/security/limits.d/99-realtime-privileges.conf ]; then
+    echo -e "\n${BOLD}Current realtime limits:${NC}"
+    grep -E "^@realtime" /etc/security/limits.d/99-realtime-privileges.conf || true
+fi
+print_header "SDL Audio Configuration"
+echo -e "${BOLD}Available SDL audio drivers:${NC}"
+if command -v pipewire &> /dev/null; then
+    print_found "SDL_AUDIODRIVER=pipewire (RECOMMENDED)"
+fi
+if command -v pactl &> /dev/null; then
+    print_info "SDL_AUDIODRIVER=pulseaudio"
+fi
+if command -v aplay &> /dev/null; then
+    print_info "SDL_AUDIODRIVER=alsa"
+fi
+print_header "Summary & Recommendations"
+echo -e "\n${BOLD}${GREEN}Variables to ENABLE (uncomment):${NC}"
+[ -d /usr/lib/clap ] || [ -d "$HOME/.clap" ] && echo "  ✓ CLAP_PATH" || echo "  ✗ CLAP_PATH (no plugins found)"
+[ -d /usr/lib/dssi ] || [ -d "$HOME/.dssi" ] && echo "  ✓ DSSI_PATH" || echo "  ✗ DSSI_PATH (no plugins found)"
+[ -d /usr/lib/ladspa ] || [ -d "$HOME/.ladspa" ] && echo "  ✓ LADSPA_PATH" || echo "  ✗ LADSPA_PATH (no plugins found)"
+[ -d /usr/lib/lv2 ] || [ -d "$HOME/.lv2" ] && echo "  ✓ LV2_PATH" || echo "  ✗ LV2_PATH (no plugins found)"
+[ -d /usr/lib/vst ] || [ -d "$HOME/.vst" ] && echo "  ✓ VST_PATH" || echo "  ✗ VST_PATH (no plugins found)"
+[ -d /usr/lib/vst3 ] || [ -d "$HOME/.vst3" ] && echo "  ✓ VST3_PATH" || echo "  ✗ VST3_PATH (no plugins found)"
+command -v jack_control &> /dev/null && echo "  ✓ JACK_* variables" || echo "  ✗ JACK_* variables (JACK not installed)"
+command -v pipewire &> /dev/null && echo "  ✓ PIPEWIRE_* variables" || echo "  ✗ PIPEWIRE_* variables (PipeWire not installed)"
+command -v wine &> /dev/null && pacman -Q pwasio-git &> /dev/null && echo "  ✓ WINEASIO_* variables" || echo "  ✗ WINEASIO_* variables"
+echo -e "\n${BOLD}${YELLOW}Optional debugging variables:${NC}"
+echo "  • PIPEWIRE_DEBUG=3 (for troubleshooting)"
+echo "  • PIPEWIRE_LOG=/tmp/pipewire.log (for logging)"
+echo "  • YABRIDGE_DEBUG_LEVEL=1 (if using yabridge)"
+echo -e "\n${BOLD}Run this script again after installing new audio software!${NC}"
+print_header()
+{
+    echo -e "\n${BOLD}${CYAN}${HR}${NC}\n${BOLD}${CYAN}  ▶ $*${NC}\n${BOLD}${CYAN}${HR}${NC}"
+}
+print_sub()
+{
+    echo -e "\n${BOLD}${YELLOW}  ── $* ──${NC}"
+}
+print_ok()
+{
+    echo -e "  ${GREEN}✓${NC}  $*"
+}
+print_warn()
+{
+    echo -e "  ${YELLOW}⚠${NC}  $*"
+}
+print_err()
+{
+    echo -e "  ${RED}✗${NC}  $*"
+}
+print_info()
+{
+    echo -e "  ${DIM}→${NC}  $*"
+}
+need()
+{
+    command -v "$1" > /dev/null 2>&1 || {
+        print_err "Missing required tool: $1 (install alsa-utils)"
+        exit 1
+    }
+}
+REPORT_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/alsa-audit"
+mkdir -p "$REPORT_DIR"
+REPORT="$REPORT_DIR/audit-$(date +%Y%m%d-%H%M%S).txt"
+exec > >(tee "$REPORT") 2>&1
+echo -e "${BOLD}Qompass AI — ALSA Audio Audit${NC}"
+echo -e "${DIM}$(date)${NC}"
+echo -e "${DIM}Report → $REPORT${NC}"
+print_header "Binary Availability Check"
+TOOLS=(
+aconnect
+alsabat
+alsactl
+alsaloop
+alsamixer
+alsatplg
+alsaucm
+amidi
+amixer
+aplay
+aplaymidi
+aplaymidi2
+arecord
+arecordmidi
+arecordmidi2
+aseqdump
+aseqnet
+aseqsend
+axfer
+iecset
+nhlt-dmic-info
+speaker-test
+)
+ALL_OK=1
+for t in "${TOOLS[@]}"; do
+    if command -v "$t" > /dev/null 2>&1; then
+        print_ok "$t  →  $(command -v "$t")"
+    else
+        print_err "$t  →  NOT FOUND"
+        ALL_OK=0
+    fi
+done
+[[ $ALL_OK -eq 1 ]] && echo -e "\n${GREEN}  All alsa-utils binaries present.${NC}" \
+    || echo -e "\n${YELLOW}  Some binaries missing — partial audit only.${NC}"
+print_header "ALSA Version & Kernel"
+print_sub "Kernel"
+uname -r
+print_sub "ALSA Driver Version"
+cat /proc/asound/version 2> /dev/null || print_warn "/proc/asound/version not available"
+print_sub "Loaded Sound Modules"
+lsmod | grep -E '^snd' | sort || print_warn "No snd_* modules loaded"
+print_sub "ALSA Cards (/proc/asound/cards)"
+cat /proc/asound/cards 2> /dev/null || print_warn "/proc/asound/cards not readable"
+print_header "PCM Devices  [aplay / arecord / axfer]"
+print_sub "Playback Devices (aplay -l)"
+aplay -l 2> /dev/null || print_warn "No playback devices found"
+print_sub "Capture Devices (arecord -l)"
+arecord -l 2> /dev/null || print_warn "No capture devices found"
+print_sub "axfer — Playback Devices (xfer list)"
+axfer list playback 2> /dev/null || print_warn "axfer list playback unavailable"
+print_sub "axfer — Capture Devices (xfer list)"
+axfer list capture 2> /dev/null || print_warn "axfer list capture unavailable"
+print_header "Mixer Controls  [amixer]"
+while IFS= read -r line; do
+    card_num=$(echo "$line" | grep -oP '(?<=card )\d+' || true)
+    [[ -z $card_num ]] && continue
+    print_sub "Card $card_num mixer contents"
+    amixer -c "$card_num" 2> /dev/null || print_warn "amixer failed for card $card_num"
+    print_sub "Card $card_num — default volume levels"
+    amixer -c "$card_num" scontents 2> /dev/null \
+        | awk '/Simple mixer/{ctrl=$0} /Playback|Capture/{print ctrl": "$0}' | head -20 \
+        || print_warn "scontents unavailable for card $card_num"
+done < <(aplay -l 2> /dev/null | grep '^card' || true)
+echo ""
+print_info "To interactively edit: alsamixer -c <card_num>"
+print_header "State & Configuration  [alsactl]"
+print_sub "alsactl info (YAML — all cards)"
+alsactl info 2> /dev/null || print_warn "alsactl info unavailable"
+print_sub "alsactl dump-state"
+alsactl dump-state 2> /dev/null | head -60 || print_warn "dump-state unavailable"
+print_sub "alsactl dump-cfg (truncated to 80 lines)"
+alsactl dump-cfg 2> /dev/null | head -80 || print_warn "dump-cfg unavailable"
+STATE_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/alsa/asound.state"
+if [[ -f $STATE_FILE ]]; then
+    print_ok "User state file exists: $STATE_FILE ($(wc -l < "$STATE_FILE") lines)"
+else
+    print_warn "No user state file at $STATE_FILE"
+    print_info "Run: alsactl -f \"$STATE_FILE\" store"
+fi
+print_header "Use Case Manager Profiles  [alsaucm]"
+print_sub "Available UCM cards"
+alsaucm listcards 2> /dev/null || print_warn "No UCM profiles found (embedded/SoC audio only)"
+while IFS= read -r ucmcard; do
+    [[ -z $ucmcard ]] && continue
+    print_sub "UCM card: $ucmcard — verbs"
+    alsaucm -c "$ucmcard" listverbs 2> /dev/null || true
+done < <(alsaucm listcards 2> /dev/null | grep -v '^$' | awk '{print $1}' || true)
+print_header "Firmware Topology Files  [alsatplg]"
+print_sub "Topology blobs in /lib/firmware"
+find /lib/firmware -name "*.tplg" 2> /dev/null | sort | head -20 \
+    || print_warn "No .tplg topology files found in /lib/firmware"
+print_info "To decode a topology blob: alsatplg -p -i <file.tplg>"
+print_header "IEC 958 / S/PDIF Status  [iecset]"
+spdif_found=0
+while IFS= read -r line; do
+    card_num=$(echo "$line" | grep -oP '(?<=card )\d+' || true)
+    [[ -z $card_num ]] && continue
+    output=$(iecset -c "$card_num" 2> /dev/null) && {
+        print_ok "Card $card_num IEC 958 status:"
+        echo "$output"
+        spdif_found=1
+    } || true
+done < <(aplay -l 2> /dev/null | grep '^card' || true)
+[[ $spdif_found -eq 0 ]] && print_warn "No IEC 958 / S/PDIF controls found on any card"
+print_header "Intel DMIC Array Geometry  [nhlt-dmic-info]"
+if nhlt-dmic-info 2> /dev/null; then
+    print_ok "NHLT DMIC info retrieved"
+else
+    print_warn "nhlt-dmic-info: no NHLT DMIC data (non-Intel DMIC or not present)"
+fi
+print_header "MIDI Sequencer Ports & Connections  [aconnect]"
+print_sub "All MIDI input ports"
+aconnect -i 2> /dev/null || print_warn "No MIDI input ports found"
+print_sub "All MIDI output ports"
+aconnect -o 2> /dev/null || print_warn "No MIDI output ports found"
+print_sub "Current port connections (full list)"
+aconnect -l 2> /dev/null || print_warn "aconnect -l unavailable"
+print_header "Raw MIDI Devices  [amidi]"
+amidi -l 2> /dev/null || print_warn "No raw MIDI hardware devices found"
+print_info "To send SysEx: amidi -p <port> -s <file.syx>"
+print_info "To dump SysEx: amidi -p <port> -d"
+print_header "MIDI Playback Capability  [aplaymidi / aplaymidi2]"
+print_sub "aplaymidi — available ports"
+aplaymidi -l 2> /dev/null || print_warn "No MIDI playback ports available"
+print_sub "aplaymidi2 — available ports (MIDI 2.0 / UMP)"
+aplaymidi2 -l 2> /dev/null || print_warn "aplaymidi2 unavailable or no UMP ports"
+print_sub "arecordmidi — available capture ports"
+arecordmidi -l 2> /dev/null || print_warn "No MIDI capture ports available"
+print_sub "arecordmidi2 — available capture ports (MIDI 2.0 / UMP)"
+arecordmidi2 -l 2> /dev/null || print_warn "arecordmidi2 unavailable or no UMP capture ports"
+print_header "MIDI Event Monitor Snapshot  [aseqdump]"
+print_sub "ALSA sequencer ports visible to aseqdump"
+aseqdump -l 2> /dev/null || print_warn "aseqdump -l unavailable"
+print_sub "Passive 1-second MIDI event capture on port 0:0"
+print_info "Listening for 1 second — send MIDI now to capture events..."
+timeout 1s aseqdump -p 0:0 2> /dev/null && true || print_info "(no events / no port 0:0 — expected on systems without active MIDI)"
+print_header "MIDI Network Port  [aseqnet]"
+print_info "aseqnet is a MIDI-over-TCP bridge; no automatic probe possible."
+print_info "Server usage: aseqnet"
+print_info "Client usage: aseqnet <server-hostname>"
+print_header "Arbitrary MIDI Send  [aseqsend]"
+print_info "aseqsend sends raw MIDI/SysEx bytes to a sequencer port."
+print_info "Example — send Middle C note-on to port 20:0:"
+print_info "  aseqsend -p 20:0 0x90 0x3C 0x7F"
+print_header "Loopback Feasibility  [alsaloop]"
+if lsmod | grep -q snd_aloop; then
+    print_ok "snd-aloop module loaded — alsaloop loopback available"
+    print_info "Usage: alsaloop -C hw:Loopback,0 -P hw:Loopback,1"
+else
+    print_warn "snd-aloop not loaded — no kernel loopback device"
+    print_info "Load with: sudo modprobe snd-aloop"
+    print_info "Then: alsaloop -C hw:Loopback,0 -P hw:Loopback,1"
+fi
+print_header "Audio Quality / Loopback Test  [alsabat]"
+if lsmod | grep -q snd_aloop; then
+    print_sub "alsabat loopback self-test (requires snd-aloop)"
+    print_info "Running: alsabat -P hw:Loopback,0,0 -C hw:Loopback,1,0 --standalone"
+    timeout 10s alsabat -P hw:Loopback,0,0 -C hw:Loopback,1,0 --standalone 2>&1 \
+        && print_ok "alsabat loopback test passed" \
+        || print_warn "alsabat test failed or snd-aloop device not ready"
+else
+    print_warn "Skipping alsabat loopback test — snd-aloop not loaded"
+    print_info "Load snd-aloop then rerun for full audio quality test"
+fi
+print_sub "alsabat version"
+alsabat --version 2> /dev/null || true
+print_header "Full ALSA Diagnostic Dump  [alsa-info.sh]"
+ALSA_INFO_OUT="$REPORT_DIR/alsa-info-$(date +%Y%m%d-%H%M%S).txt"
+print_info "Saving full alsa-info output to: $ALSA_INFO_OUT"
+alsa-info.sh --no-upload --output "$ALSA_INFO_OUT" 2> /dev/null \
+    && print_ok "alsa-info.sh complete → $ALSA_INFO_OUT" \
+    || print_warn "alsa-info.sh failed or not in PATH"
+print_header "Audio Server Integration Sanity"
+print_sub "Active audio server"
+pactl info 2> /dev/null | grep -E "Server Name|Server Version|Default Sink|Default Source" \
+    || print_warn "pactl unavailable — no PulseAudio/PipeWire-pulse server running"
+print_sub "PipeWire status"
+pw-cli info 2> /dev/null | head -10 || print_warn "pw-cli unavailable"
+print_sub "WirePlumber status"
+wpctl status 2> /dev/null | head -30 || print_warn "wpctl unavailable"
+print_header "Audit Complete"
+echo -e "${GREEN}  Full report saved to:${NC} $REPORT"
+echo -e "${GREEN}  alsa-info dump at:${NC}   $ALSA_INFO_OUT"
+echo ""
+print_info "Useful follow-up commands:"
+echo "    alsamixer                          # interactive mixer TUI"
+echo "    alsactl -f ~/.config/alsa/asound.state store  # save current mixer state"
+echo "    aplay -D default /usr/share/sounds/alsa/Front_Center.wav  # quick playback test"
+echo "    speaker-test -c 2 -t wav           # stereo speaker test with voice labels"
+echo "    aconnect -l                        # MIDI connection map"
+echo ""

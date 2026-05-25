@@ -4,9 +4,9 @@
 # Copyright (C) 2026 Qompass AI, All rights reserved
 ####################################################
 # Reference: https://rust-lang.github.io/rustup
-export CARGO_HOME="$HOME/.cargo"
 CARGO_REGISTRY_TOKEN="$(pass show crates.io/token)"
 eval "$(zoxide init bash)"
+export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export CARGO_REGISTRY_TOKEN
 export PATH="$PATH:$HOME/.cargo/bin"
 export RUSTUP_AUTO_INSTALL="1"

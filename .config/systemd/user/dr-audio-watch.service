@@ -1,0 +1,15 @@
+[Unit]
+Description=resolve-audio-fix — DaVinci Resolve AAC Audio Watcher
+Documentation=https://github.com/owlivion/resolve-audio-fix
+After=default.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/dr-watch
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

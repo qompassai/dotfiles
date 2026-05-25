@@ -1,0 +1,26 @@
+// /qompassai/dotfiles/inochi-session/settings.jsonc
+// Qompass AI Inochi-Session Config
+// Copyright (C) 2026 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+    "UIScale": 1.0,
+    "autoStart": false,
+    "language": "en_US",
+    "plugins": [],
+    "theme": "dark",
+    "virtualSpaces": [
+        {
+            "name": "Default",
+            "trackers": [
+                {
+                    "osf_bind_ip": "0.0.0.0",
+                    "osf_bind_port": 11573,
+                    "pollingFactor": 1,
+                    "type": "OSF"
+                }
+            ]
+        }
+    ],
+    "windowHeight": 720,
+    "windowWidth": 1280
+}

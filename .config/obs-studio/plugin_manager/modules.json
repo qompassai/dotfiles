@@ -1,1 +1,280 @@
-[]
+[
+    {
+        "display_name": "Source Switcher",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "source-switcher",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "source_switcher"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "Source Record",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "source-record",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "source_record_filter"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "Source Clone",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "source-clone",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "source-clone",
+            "source_clone_audio_wrapper_source"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-vban",
+        "outputs": [
+            "net.nagater.obs-vban.output"
+        ],
+        "services": [],
+        "sources": [
+            "net.nagater.obs-vban.source",
+            "net.nagater.obs-vban.filter"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [
+            "obs-va-vah264lpenc",
+            "obs-va-vah265lpenc",
+            "obs-va-vah264enc",
+            "obs-va-vah265enc"
+        ],
+        "id": "",
+        "module_name": "obs-vaapi",
+        "outputs": [],
+        "services": [],
+        "sources": [],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-text-pthread",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "obs_text_pthread_source"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-retro-effects",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "obs_retro_effects_filter"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-pwvideo",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "pipewire-video-source"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-noise",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "obs_noise_source",
+            "obs_noise_displace_filter"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [
+            "gstreamer-encoder-h264",
+            "gstreamer-encoder-h265"
+        ],
+        "id": "",
+        "module_name": "obs-gstreamer",
+        "outputs": [
+            "gstreamer-output"
+        ],
+        "services": [],
+        "sources": [
+            "gstreamer-source",
+            "gstreamer-filter-video",
+            "gstreamer-filter-audio"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-composite-blur",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "obs_composite_blur"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-backgroundremoval",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "background_removal",
+            "enhanceportrait"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-audio-pan-filter",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "stereo_pan_filter"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-advanced-masks",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "advanced_masks_filter"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "linux-vkcapture",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "linux-vkcapture",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "vkcapture-source"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "linux-pipewire-audio",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "pipewire_audio_input_capture",
+            "pipewire_audio_output_capture",
+            "pipewire_audio_application_capture"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "libOBSInfoWriter",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "infowriter"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "Freeze Filter",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "freeze-filter",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "freeze_filter"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "DroidCam",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "droidcam-obs",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "droidcam_obs"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "Draw",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "draw-dock",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "draw_source"
+        ],
+        "version": ""
+    }
+]

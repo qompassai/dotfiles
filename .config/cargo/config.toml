@@ -15,12 +15,11 @@ zig-aarch64-t = "zigbuild test --target aarch64-unknown-linux-gnu"
 zigrun-aarch64 = "zigbuild run --target aarch64-unknown-linux-gnu"
 
 [build]
-build-dir = "target"
 # dep-info-basedir = ""
 jobs = 4
 incremental = false
 rustc = "rustc"
-rustc-wrapper = "sccache"
+#rustc-wrapper = "sccache"
 rustdoc = "rustdoc"
 rustflags = ["-C", "target-cpu=native"]
 target-dir = "target"
@@ -36,8 +35,8 @@ browser = "chromium"
 
 [env]
 CARGO_INCREMENTAL = "0"
-SCCACHE_DIR = "/home/phaedrus/.cache/sccache"
-SCCACHE_IDLE_TIMEOUT = "1200"
+#SCCACHE_DIR = "/home/phaedrus/.cache/sccache"
+#SCCACHE_IDLE_TIMEOUT = "1200"
 ZIG_GLOBAL_CACHE_DIR = "/home/phaedrus/.cache/zig"
 
 [future-incompat-report]

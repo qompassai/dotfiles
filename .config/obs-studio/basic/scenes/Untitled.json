@@ -1,6 +1,7 @@
 {
+    "name": "Untitled",
     "DesktopAudioDevice1": {
-        "prev_ver": 520159234,
+        "prev_ver": 536936450,
         "name": "Desktop Audio",
         "uuid": "68a3372a-8f5d-41a1-b807-5f4736be067f",
         "id": "pulse_output_capture",
@@ -31,7 +32,7 @@
         "private_settings": {}
     },
     "AuxAudioDevice1": {
-        "prev_ver": 520159234,
+        "prev_ver": 536936450,
         "name": "Mic/Aux",
         "uuid": "0f832724-4e77-45c3-963b-4efc23901a66",
         "id": "pulse_input_capture",
@@ -61,17 +62,38 @@
         "monitoring_type": 0,
         "private_settings": {}
     },
-    "current_scene": "Scene",
-    "current_program_scene": "Scene",
-    "scene_order": [
-        {
-            "name": "Scene"
-        }
-    ],
-    "name": "Untitled",
     "sources": [
         {
-            "prev_ver": 520159234,
+            "prev_ver": 536936450,
+            "name": "Global Draw Source",
+            "uuid": "86587ea0-c268-4c28-ad07-98c492931463",
+            "id": "draw_source",
+            "versioned_id": "draw_source",
+            "settings": {
+                "tool": 1,
+                "width": 1920,
+                "height": 1080,
+                "tool_alpha": 50.0
+            },
+            "mixers": 0,
+            "sync": 0,
+            "flags": 0,
+            "volume": 1.0,
+            "balance": 0.5,
+            "enabled": true,
+            "muted": false,
+            "push-to-mute": false,
+            "push-to-mute-delay": 0,
+            "push-to-talk": false,
+            "push-to-talk-delay": 0,
+            "hotkeys": {},
+            "deinterlace_mode": 0,
+            "deinterlace_field_order": 0,
+            "monitoring_type": 0,
+            "private_settings": {}
+        },
+        {
+            "prev_ver": 536936450,
             "name": "Scene",
             "uuid": "4232ab8b-51db-4b34-9bc1-7663220c2e66",
             "id": "scene",
@@ -103,6 +125,17 @@
         }
     ],
     "groups": [],
+    "scene_order": [
+        {
+            "name": "Scene"
+        }
+    ],
+    "current_scene": "Scene",
+    "current_program_scene": "Scene",
+    "canvases": [],
+    "current_transition": "Fade",
+    "transition_duration": 300,
+    "transitions": [],
     "quick_transitions": [
         {
             "name": "Cut",
@@ -126,16 +159,15 @@
             "fade_to_black": true
         }
     ],
-    "transitions": [],
     "saved_projectors": [],
-    "canvases": [],
-    "current_transition": "Fade",
-    "transition_duration": 300,
     "preview_locked": false,
     "scaling_enabled": false,
-    "scaling_level": -12,
+    "scaling_level": -19,
     "scaling_off_x": 0.0,
     "scaling_off_y": 0.0,
+    "virtual-camera": {
+        "type2": 3
+    },
     "modules": {
         "scripts-tool": [],
         "output-timer": {
@@ -148,6 +180,9 @@
             "autoStartStreamTimer": false,
             "autoStartRecordTimer": false,
             "pauseRecordTimer": true
+        },
+        "decklink_captions": {
+            "source": ""
         }
     },
     "version": 2
