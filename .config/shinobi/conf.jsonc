@@ -1,0 +1,93 @@
+{
+    "api": {
+        "auth": false,
+        "bind": "0.0.0.0",
+        "port": 8080
+    },
+    "cron": {
+        "key": "CHANGE_THIS_TO_SOMETHING_VERY_RANDOM"
+    },
+    "db": {
+        "database": "ccio",
+        "host": "127.0.0.1",
+        "password": "",
+        "port": 3306,
+        "user": "majesticflame"
+    },
+    "ip": "127.0.0.1",
+    "mail": {
+        "auth": {
+            "pass": "",
+            "user": ""
+        },
+        "fromAddress": "shinobi@example.com",
+        "fromName": "Shinobi CCTV",
+        "host": "smtp.example.com",
+        "port": 587,
+        "secure": false,
+        "service": "",
+        "tls": {
+            "rejectUnauthorized": false
+        }
+    },
+    "monitorDefaults": {
+        "auto_host_enable": "1",
+        "auto_host": "",
+        "auto_host_port": "",
+        "auto_host_user": "",
+        "auto_host_pass": "",
+        "auto_host_path": "",
+        "details": {
+            "detector": "1",
+            "detector_audio": "0",
+            "detector_frame": "1",
+            "detector_sensitivity": "5",
+            "detector_timeout": "2",
+            "detector_trigger": "1",
+            "detector_use_detect_object": "0",
+            "mp4_vbr": "2",
+            "notes": "",
+            "record_audio": "1",
+            "snap": "1",
+            "stream_mjpeg_clients": "25",
+            "stream_vcodec": "copy"
+        },
+        "fps": "10",
+        "height": "720",
+        "mode": "start",
+        "name": "New Camera",
+        "path": "",
+        "port": "554",
+        "protocol": "rtsp",
+        "type": "h264",
+        "width": "1280"
+    },
+    "plugins": {
+        "authKeys": {},
+        "path": "./plugins"
+    },
+    "path": {
+        "addStorage": [],
+        "ffmpeg": "/usr/bin/ffmpeg",
+        "logs": "/var/log/shinobi",
+        "videos": "/var/lib/shinobi/videos"
+    },
+    "system": {
+        "cpuUsageCheck": 1,
+        "cron": {
+            "deleteOld": true,
+            "deleteOldDays": 30,
+            "logRetentionDays": 14
+        },
+        "language": "en",
+        "maxPerformance": false,
+        "uploaderLimit": 3,
+        "userLogRetentionDays": 365
+    },
+    "web": {
+        "allowCors": true,
+        "auth": true,
+        "lang": "en",
+        "theme": "dark"
+    }
+}

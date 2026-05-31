@@ -1,0 +1,12 @@
+schema_version = "1.0.0"
+id = "b_Unicode"
+name = "B Unicode"
+version = "1.1.0"
+tagline = "Access Unicode characters"
+maintainer = "Dinesh"
+type = "add-on"
+tags = ["3D View", "Sequencer", "Text Editor"]
+blender_version_min = "5.1.0"
+license = ["SPDX:GPL-3.0-or-later"]
+website = "https://github.com/Dinesh0N"
+copyright = ["2024 Dinesh"]

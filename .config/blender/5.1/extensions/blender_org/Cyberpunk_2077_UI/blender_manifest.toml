@@ -1,0 +1,21 @@
+schema_version = "1.0.0"
+
+# Version
+id = "Cyberpunk_2077_UI"
+version = "3.0.3"
+name = "Cyberpunk_2077_UI"
+tagline = "Dark Crimson Futuristic Dystopian"
+maintainer = "Raz3Demon <raz3demon@gmail.com>"
+# Supported types
+type = "theme"
+
+# Tags
+tags = ["Dark", "Colorful"]
+
+# Support version
+blender_version_min = "5.0.0"
+
+# License
+license = [
+  "SPDX:GPL-3.0-or-later",
+]

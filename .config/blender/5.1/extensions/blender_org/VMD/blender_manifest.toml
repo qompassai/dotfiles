@@ -1,0 +1,27 @@
+schema_version = "1.0.0"
+
+id = "VMD"
+version = "5.1.1"
+name = "vmdesk"
+tagline = "Interactive editor environment in 3D Viewport"
+maintainer = "LAW.Y.T <oorcer@gmail.com>"
+type = "add-on"
+
+website = "https://github.com/Iiispace/vmdesk"
+
+tags = ["3D View", "Modeling", "Mesh", "Object", "User Interface"]
+
+blender_version_min = "5.1.0"
+blender_version_max = "5.1.9999"
+
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
+
+copyright = [
+  "2024 LAW.Y.T",
+]
+
+[permissions]
+files = "Import/export from disk to user-supplied path"
+clipboard = "Copy and paste from shortcut/UI"

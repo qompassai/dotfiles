@@ -40,6 +40,17 @@
         "version": ""
     },
     {
+        "display_name": "Scene Collection Manager",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "scene-collection-manager",
+        "outputs": [],
+        "services": [],
+        "sources": [],
+        "version": ""
+    },
+    {
         "display_name": "",
         "enabled": true,
         "encoders": [],
@@ -59,10 +70,10 @@
         "display_name": "",
         "enabled": true,
         "encoders": [
-            "obs-va-vah264lpenc",
-            "obs-va-vah265lpenc",
+            "obs-va-vah265enc",
             "obs-va-vah264enc",
-            "obs-va-vah265enc"
+            "obs-va-vah265lpenc",
+            "obs-va-vah264lpenc"
         ],
         "id": "",
         "module_name": "obs-vaapi",
@@ -81,6 +92,25 @@
         "services": [],
         "sources": [
             "obs_text_pthread_source"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-teleport",
+        "outputs": [
+            "teleport-output"
+        ],
+        "services": [],
+        "sources": [
+            "teleport-source",
+            "teleport-filter",
+            "teleport-video-filter",
+            "teleport-audio-filter",
+            "teleport-dummy"
         ],
         "version": ""
     },
@@ -274,6 +304,46 @@
         "services": [],
         "sources": [
             "draw_source"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "3D Effect",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "3d-effect",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "3d_effect_filter"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "wlrobs",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "wlrobs-scpy",
+            "wlrobs-dmabuf"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-kmscap",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "kmscap_source"
         ],
         "version": ""
     }

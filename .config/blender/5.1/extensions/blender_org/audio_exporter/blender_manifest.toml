@@ -1,0 +1,14 @@
+schema_version = "1.0.0"
+id = "audio_exporter"
+name = "Audio Exporter"
+version = "1.1.0"
+tagline = "Export audio separate or combined files in VSE"
+maintainer = "Dinesh007"
+type = "add-on"
+tags = ["Sequencer"]
+blender_version_min = "4.5.0"
+license = ["SPDX:GPL-3.0-or-later"]
+website = "https://github.com/Dinesh0N"
+copyright = ["2024 Dinesh"]
+[permissions]
+files = "Requires access to directory where it exports audio files"

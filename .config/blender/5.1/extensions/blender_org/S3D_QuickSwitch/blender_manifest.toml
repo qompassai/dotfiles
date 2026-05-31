@@ -1,0 +1,31 @@
+schema_version = "1.0.0"
+
+id = "S3D_QuickSwitch"
+version = "2.1.0"
+name = "Quick Switch"
+tagline = "Quickly switch between Editor Areas"
+maintainer = "Silvie3D <rabahahmed95@gmail.com>"
+type = "add-on"
+
+website = "https://github.com/Silvie3D/S3D_QuickSwitch"
+
+tags = [
+  "User Interface", "Pipeline"
+]
+
+blender_version_min = "4.2.0"
+
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
+
+copyright = [
+  "2025 Silvie3D",
+]
+
+changelog = [
+  "Added support for Asset Browser and File Browser editors",
+  "Added left/right toggle to control switch position in the header",
+  "Improved separator display to work with both position options",
+  "Fixed UI alignment issues in special editor types"
+] 

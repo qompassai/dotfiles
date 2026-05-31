@@ -1,0 +1,19 @@
+# Blender Add-on Manifest
+# Generated on: 2025-04-23 23:05:42
+
+schema_version = "1.0.0"
+id = "vectart_import"
+name = "Vectart Import"
+version = "1.0.4"
+tagline = "Import and preview vector files with layer management"
+type = "add-on"
+maintainer = "Dimona Patrick <dream.pixels.forge@gmail.com>"
+website = "https://github.com/Dream-Pixels-Forge/add_on_vectart_import"
+tags = [ "Modeling", "Object",]
+blender_version_min = "4.2.0"
+license = [ "SPDX:GPL-3.0-or-later",]
+copyright = [ "2025, Dream-Pixels-Forge", "Dimona Patrick",]
+
+[permissions]
+files = "Required to read and import SVG files from the disk"
+

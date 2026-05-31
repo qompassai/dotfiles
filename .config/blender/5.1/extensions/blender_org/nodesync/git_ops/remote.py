@@ -1,0 +1,242 @@
+"""
+Mixin: remote operations — clone, push, pull, fetch, remote URL management.
+"""
+
+import subprocess
+import shutil
+
+from .exceptions import GitError, GitNotFoundError
+
+
+def _inject_token(url: str, token: str, username: str = '') -> str:
+    """Embed credentials into an HTTPS Git URL for authentication.
+
+    Builds ``https://USER:TOKEN@host/...`` when *username* is supplied,
+    otherwise falls back to ``https://TOKEN@host/...``.  The single-token
+    form works for GitHub and Azure DevOps; other hosts (GitLab, Codeberg,
+    Gitea, Bitbucket, self-hosted Forgejo, etc.) require a username — for
+    those services the user supplies a service-specific value such as
+    ``oauth2`` (GitLab), ``x-token-auth`` (Bitbucket), or their account
+    name (Codeberg / Gitea).
+
+    Non-HTTPS schemes (SSH, git://, file://) are returned unchanged so the
+    user's SSH agent or local credential helpers handle authentication.
+    Already-credentialled URLs are also returned untouched to avoid
+    double-injection.
+    """
+    if not token or not url.startswith('https://'):
+        return url
+    # Avoid double-injection
+    if '@' in url.split('//')[1].split('/')[0]:
+        return url
+    if username:
+        return url.replace('https://', f'https://{username}:{token}@', 1)
+    return url.replace('https://', f'https://{token}@', 1)
+
+
+class RemoteMixin:
+    def get_remote_url(self) -> str | None:
+        """Return the origin remote URL, or None if no remote is configured."""
+        r = self._run('remote', 'get-url', 'origin', check=False)
+        if r.returncode != 0 or not r.stdout.strip():
+            return None
+        return r.stdout.strip()
+
+    def set_remote_url(self, url: str):
+        """Add origin remote, or update it if one already exists."""
+        existing = self.get_remote_url()
+        if existing is None:
+            self._run('remote', 'add', 'origin', url)
+        else:
+            self._run('remote', 'set-url', 'origin', url)
+
+    @classmethod
+    def clone(cls, url: str, target_dir: str, token: str = '',
+              username: str = '') -> 'RemoteMixin':
+        """Clone a remote repo into target_dir. Returns a GitRepo for the result."""
+        git = shutil.which('git')
+        if git is None:
+            raise GitNotFoundError("Git executable not found in PATH.")
+        clone_url = _inject_token(url, token, username)
+        try:
+            result = subprocess.run(
+                [git, 'clone', clone_url, target_dir],
+                capture_output=True,
+                text=True,
+                timeout=120,
+            )
+        except subprocess.TimeoutExpired:
+            raise GitError("git clone timed out after 120 seconds")
+        if result.returncode != 0:
+            msg = result.stderr.strip() or result.stdout.strip() or 'git clone failed'
+            raise GitError(msg)
+        return cls(target_dir)
+
+    def push(self, branch: str | None = None, token: str = '',
+             username: str = '') -> str:
+        """Push to origin. Returns stdout. Raises GitError on failure."""
+        remote_url = self.get_remote_url()
+        if not remote_url:
+            raise GitError("No remote URL configured. Set one in the Git Remote panel first.")
+
+        push_url = _inject_token(remote_url, token, username)
+
+        if branch is None:
+            branch = self.current_branch()
+
+        r = self._run(
+            'push', '--set-upstream', push_url, branch,
+            check=False, timeout=60,
+        )
+        if r.returncode != 0:
+            msg = r.stderr.strip() or r.stdout.strip() or 'push failed'
+            raise GitError(msg)
+        return r.stdout.strip() or r.stderr.strip()
+
+    def pull(self, token: str = '', username: str = '') -> tuple[bool, list]:
+        """Pull from origin current branch.
+
+        Returns (has_conflicts, conflicted_files).
+        has_conflicts is True if merge produced conflicts.
+        conflicted_files is a list of paths like 'nodes/Foo.json'.
+        Raises GitError for non-conflict failures.
+        """
+        remote_url = self.get_remote_url()
+        if not remote_url:
+            raise GitError("No remote URL configured. Set one in the Git Remote panel first.")
+
+        pull_url = _inject_token(remote_url, token, username)
+        branch = self.current_branch()
+
+        r = self._run('pull', pull_url, branch, check=False, timeout=60)
+
+        if r.returncode == 0:
+            return False, []
+
+        # Check if the failure is due to merge conflicts
+        conflicted = self.get_conflicted_files()
+        if conflicted:
+            return True, conflicted
+
+        # Some other error
+        msg = r.stderr.strip() or r.stdout.strip() or 'pull failed'
+        raise GitError(msg)
+
+    def fetch(self, token: str = '', username: str = '') -> str:
+        """Fetch from origin without merging. Returns stdout."""
+        remote_url = self.get_remote_url()
+        if not remote_url:
+            raise GitError("No remote URL configured.")
+        fetch_url = _inject_token(remote_url, token, username)
+        r = self._run('fetch', fetch_url, check=False, timeout=60)
+        if r.returncode != 0:
+            msg = r.stderr.strip() or r.stdout.strip() or 'fetch failed'
+            raise GitError(msg)
+        return r.stdout.strip()
+
+    def fetch_only(self, token: str = '', username: str = '') -> str:
+        """
+        Fetch the current branch from origin so origin/<branch> is updated,
+        without touching the working tree.  Returns stdout.
+        """
+        remote_url = self.get_remote_url()
+        if not remote_url:
+            raise GitError("No remote URL configured.")
+        fetch_url = _inject_token(remote_url, token, username)
+        branch = self.current_branch()
+        r = self._run('fetch', fetch_url, branch, check=False, timeout=60)
+        if r.returncode != 0:
+            msg = r.stderr.strip() or r.stdout.strip() or 'fetch failed'
+            raise GitError(msg)
+        # Update the local origin/<branch> ref so diff_local_vs_remote sees it.
+        # Some Git configurations don't auto-update the remote-tracking ref
+        # when fetching a single branch; do it explicitly.
+        self._run(
+            'update-ref', f'refs/remotes/origin/{branch}', 'FETCH_HEAD',
+            check=False,
+        )
+        return r.stdout.strip()
+
+    def discard_assignments_worktree_changes(self) -> bool:
+        """
+        Reset any uncommitted worktree changes to nodes/_scene_assignments.json.
+        That file is auto-regenerated on every save/commit, so a dirty copy is
+        safe to discard before a merge/checkout.  Returns True if the file was
+        reset, False if it was clean or untracked.
+        """
+        path = 'nodes/_scene_assignments.json'
+        status = self._run('status', '--porcelain', '--', path, check=False)
+        if status.returncode != 0 or not status.stdout.strip():
+            return False
+        # Only reset if the file is tracked-and-modified (status starts with ' M' or 'M ').
+        # Untracked files (status '??') are left alone.
+        code = status.stdout[:2]
+        if '?' in code:
+            return False
+        self._run('checkout', 'HEAD', '--', path, check=False)
+        return True
+
+    def selective_pull(self, branch: str, selected_paths: list,
+                       unselected_paths: list, message: str) -> tuple[bool, list]:
+        """
+        Apply only the selected file changes from origin/<branch> into the
+        local branch as a single merge commit.  Unselected files keep their
+        local content.  Requires fetch_only() to have been called first.
+
+        Returns (has_conflicts, conflicted_files).  If conflicts arise, the
+        merge is left in-progress for the caller to resolve via the existing
+        conflict UI.
+        """
+        if not branch:
+            raise GitError("selective_pull: branch is required")
+
+        # _scene_assignments.json is auto-regenerated on every save, so its
+        # worktree state can drift from HEAD without the user committing.
+        # Discard those local edits so the merge isn't blocked; the post-merge
+        # apply_scene_assignments() + next save will rebuild it correctly.
+        self.discard_assignments_worktree_changes()
+
+        ref = f'origin/{branch}'
+
+        # If everything is selected, fall back to a normal merge.
+        if not unselected_paths:
+            r = self._run('merge', ref, '-m', message, check=False, timeout=60)
+            if r.returncode == 0:
+                return False, []
+            conflicted = self.get_conflicted_files()
+            if conflicted:
+                return True, conflicted
+            msg = r.stderr.strip() or r.stdout.strip() or 'merge failed'
+            raise GitError(msg)
+
+        # Start a no-commit merge so we can pick which file changes to keep.
+        r = self._run(
+            'merge', '--no-commit', '--no-ff', ref,
+            check=False, timeout=60,
+        )
+        # Conflicts at this point are the same shape as a normal merge — let
+        # the caller drive the conflict UI.
+        conflicted = self.get_conflicted_files()
+        if conflicted:
+            return True, conflicted
+        if r.returncode != 0:
+            # Cleanly back out so the worktree is left alone
+            self._run('merge', '--abort', check=False)
+            msg = r.stderr.strip() or r.stdout.strip() or 'merge failed'
+            raise GitError(msg)
+
+        # Revert unselected paths to local HEAD (drops the remote change).
+        for path in unselected_paths:
+            self._run('checkout', 'HEAD', '--', path, check=False)
+            # Also un-stage by re-adding the local version
+            self._run('add', path, check=False)
+
+        # Commit the selectively-merged result.
+        commit_r = self._run(
+            'commit', '-m', message, check=False, timeout=30,
+        )
+        if commit_r.returncode != 0:
+            msg = commit_r.stderr.strip() or commit_r.stdout.strip() or 'commit failed'
+            raise GitError(msg)
+
+        return False, []

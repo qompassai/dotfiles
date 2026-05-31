@@ -1,12 +1,13 @@
 {
+    "name": "Untitled",
     "DesktopAudioDevice1": {
-        "prev_ver": 520159234,
+        "prev_ver": 536936450,
         "name": "Desktop Audio",
-        "uuid": "68a3372a-8f5d-41a1-b807-5f4736be067f",
+        "uuid": "85c8c289-38de-42c4-929d-220beeca50c4",
         "id": "pulse_output_capture",
         "versioned_id": "pulse_output_capture",
         "settings": {
-            "device_id": "bluez_output.2C_53_D7_F9_2B_25.1.monitor"
+            "device_id": "default"
         },
         "mixers": 255,
         "sync": 0,
@@ -31,13 +32,13 @@
         "private_settings": {}
     },
     "AuxAudioDevice1": {
-        "prev_ver": 520159234,
+        "prev_ver": 536936450,
         "name": "Mic/Aux",
-        "uuid": "0f832724-4e77-45c3-963b-4efc23901a66",
+        "uuid": "25afc2cc-3c01-4eb6-ab8f-ae1e767a90b3",
         "id": "pulse_input_capture",
         "versioned_id": "pulse_input_capture",
         "settings": {
-            "device_id": "alsa_input.usb-Lumina_Industries__Inc._Lumina_Camera_-_Raw_SN0001-02.pro-input-0"
+            "device_id": "default"
         },
         "mixers": 255,
         "sync": 0,
@@ -61,25 +62,128 @@
         "monitoring_type": 0,
         "private_settings": {}
     },
-    "current_scene": "Scene",
-    "current_program_scene": "Scene",
-    "scene_order": [
-        {
-            "name": "Scene"
-        }
-    ],
-    "name": "Untitled",
     "sources": [
         {
-            "prev_ver": 520159234,
+            "prev_ver": 536936450,
+            "name": "Global Draw Source",
+            "uuid": "e7548c51-0072-45aa-acae-ebbe599b8005",
+            "id": "draw_source",
+            "versioned_id": "draw_source",
+            "settings": {
+                "tool": 1,
+                "width": 1920,
+                "height": 1080,
+                "tool_alpha": 50.0
+            },
+            "mixers": 0,
+            "sync": 0,
+            "flags": 0,
+            "volume": 1.0,
+            "balance": 0.5,
+            "enabled": true,
+            "muted": false,
+            "push-to-mute": false,
+            "push-to-mute-delay": 0,
+            "push-to-talk": false,
+            "push-to-talk-delay": 0,
+            "hotkeys": {},
+            "deinterlace_mode": 0,
+            "deinterlace_field_order": 0,
+            "monitoring_type": 0,
+            "private_settings": {}
+        },
+        {
+            "prev_ver": 536936450,
+            "name": "PipeWire Video",
+            "uuid": "d9b5c063-5120-42e0-b00a-e93e23e7ef81",
+            "id": "pipewire-video-source",
+            "versioned_id": "pipewire-video-source",
+            "settings": {
+                "target": ""
+            },
+            "mixers": 0,
+            "sync": 0,
+            "flags": 0,
+            "volume": 1.0,
+            "balance": 0.5,
+            "enabled": true,
+            "muted": false,
+            "push-to-mute": false,
+            "push-to-mute-delay": 0,
+            "push-to-talk": false,
+            "push-to-talk-delay": 0,
+            "hotkeys": {},
+            "deinterlace_mode": 0,
+            "deinterlace_field_order": 0,
+            "monitoring_type": 0,
+            "private_settings": {}
+        },
+        {
+            "prev_ver": 536936450,
             "name": "Scene",
-            "uuid": "4232ab8b-51db-4b34-9bc1-7663220c2e66",
+            "uuid": "c2e33fc8-1901-4518-a27c-291308817997",
             "id": "scene",
             "versioned_id": "scene",
             "settings": {
-                "id_counter": 2,
+                "id_counter": 6,
                 "custom_size": false,
-                "items": []
+                "items": [
+                    {
+                        "name": "PipeWire Video",
+                        "source_uuid": "d9b5c063-5120-42e0-b00a-e93e23e7ef81",
+                        "visible": true,
+                        "locked": false,
+                        "rot": 0.0,
+                        "scale_ref": {
+                            "x": 1920.0,
+                            "y": 1080.0
+                        },
+                        "align": 5,
+                        "bounds_type": 0,
+                        "bounds_align": 0,
+                        "bounds_crop": false,
+                        "crop_left": 0,
+                        "crop_top": 0,
+                        "crop_right": 0,
+                        "crop_bottom": 0,
+                        "id": 6,
+                        "group_item_backup": false,
+                        "pos": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "pos_rel": {
+                            "x": -1.7777777910232544,
+                            "y": -1.0
+                        },
+                        "scale": {
+                            "x": 1.0,
+                            "y": 1.0
+                        },
+                        "scale_rel": {
+                            "x": 1.0,
+                            "y": 1.0
+                        },
+                        "bounds": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "bounds_rel": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "scale_filter": "disable",
+                        "blend_method": "default",
+                        "blend_type": "normal",
+                        "show_transition": {
+                            "duration": 300
+                        },
+                        "hide_transition": {
+                            "duration": 300
+                        },
+                        "private_settings": {}
+                    }
+                ]
             },
             "mixers": 0,
             "sync": 0,
@@ -93,7 +197,9 @@
             "push-to-talk": false,
             "push-to-talk-delay": 0,
             "hotkeys": {
-                "OBSBasic.SelectScene": []
+                "OBSBasic.SelectScene": [],
+                "libobs.show_scene_item.6": [],
+                "libobs.hide_scene_item.6": []
             },
             "deinterlace_mode": 0,
             "deinterlace_field_order": 0,
@@ -103,6 +209,17 @@
         }
     ],
     "groups": [],
+    "scene_order": [
+        {
+            "name": "Scene"
+        }
+    ],
+    "current_scene": "Scene",
+    "current_program_scene": "Scene",
+    "canvases": [],
+    "current_transition": "Fade",
+    "transition_duration": 300,
+    "transitions": [],
     "quick_transitions": [
         {
             "name": "Cut",
@@ -126,17 +243,19 @@
             "fade_to_black": true
         }
     ],
-    "transitions": [],
     "saved_projectors": [],
-    "canvases": [],
-    "current_transition": "Fade",
-    "transition_duration": 300,
     "preview_locked": false,
     "scaling_enabled": false,
-    "scaling_level": -12,
+    "scaling_level": -4,
     "scaling_off_x": 0.0,
     "scaling_off_y": 0.0,
+    "virtual-camera": {
+        "type2": 3
+    },
     "modules": {
+        "decklink_captions": {
+            "source": ""
+        },
         "scripts-tool": [],
         "output-timer": {
             "streamTimerHours": 0,
@@ -148,6 +267,13 @@
             "autoStartStreamTimer": false,
             "autoStartRecordTimer": false,
             "pauseRecordTimer": true
+        },
+        "auto-scene-switcher": {
+            "interval": 300,
+            "non_matching_scene": "",
+            "switch_if_not_matching": false,
+            "active": false,
+            "switches": []
         }
     },
     "version": 2

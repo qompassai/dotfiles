@@ -1,0 +1,25 @@
+schema_version = "1.0.0"
+
+id = "hifi_builder"
+name = "HiFi Architecture Builder v4.5.8"
+version = "4.5.8"
+tagline = "One-click architecture, and game engine prep tool"
+maintainer = "Malik Nomi"
+type = "add-on"
+tags = ["Add Mesh", "Modeling", "Game Engine", "Animation"]
+blender_version_min = "4.2.0"
+license = ["SPDX:GPL-3.0-or-later"]
+website = "https://www.youtube.com/@hifigamingstar?sub_confirmation=1"
+copyright = [
+    "2026 Malik Nomi"
+]
+
+description = """
+HiFi Architecture Builder v4.5.8
+The Ultimate 3D Prototyping & Game Prep Tool. Includes 25+ precise architectural generators (Walls, Domes, Pipes, Ramps, etc) and complete pre-built Prop sets (Ceiling Fans, Toilets, Showers, Sinks, Billboards). 
+Now featuring a 3-Click Export Ready Process with native Sollumz integration (YTYP, Clip Dictionaries, Auto-Rigging), a Native Live-Sync Object Inspector.
+"""
+
+changelog = [
+    "v4.5.8 - Added specific direct extraction formatting for Code Walker (x, y, z) to the Copy Transform clipboard utility."
+]

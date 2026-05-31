@@ -1,0 +1,30 @@
+schema_version = "1.0.0"
+
+id = "core_debug_tools"
+version = "0.1.0"
+name = "Core Debug Tools"
+tagline = "Debugging utilities for core Blender developers"
+maintainer = "Jacques Lucke"
+type = "add-on"
+
+tags = ["Development"]
+
+blender_version_min = "4.3.0"
+
+license = ["SPDX:GPL-3.0-or-later"]
+
+copyright = ["2024 Jacques Lucke"]
+
+[permissions]
+files = "Build temporary html files to view in the browser"
+
+[build]
+paths_exclude_pattern = [
+    "__pycache__/",
+    "/.git/",
+    "/*.zip",
+    "viewer/node_modules/",
+    ".vscode",
+    ".gitignore",
+    "images/",
+]

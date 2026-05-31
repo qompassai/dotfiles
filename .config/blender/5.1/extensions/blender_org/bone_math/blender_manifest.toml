@@ -1,0 +1,12 @@
+schema_version = "1.0.0"
+
+id = "bone_math"
+version = "0.1.0"
+name = "Bone Math"
+tagline = "Calculate pole angles, plus other bone related math"
+maintainer = "Xury Greer <xury.greer@gmail.com>"
+type = "add-on"
+website = "https://github.com/Xury46/bone-math"
+tags = ["Rigging"]
+blender_version_min = "4.5.0"
+license = ["SPDX:GPL-3.0-or-later"]

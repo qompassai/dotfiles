@@ -1,0 +1,41 @@
+import bpy
+
+from ..model_selection.active_object import mustardui_active_object
+from ..warnings.can_draw_ui import can_draw_ui
+from . import MainPanel
+
+
+class PANEL_PT_MustardUI_Links(MainPanel, bpy.types.Panel):
+    bl_idname = "PANEL_PT_MustardUI_Links"
+    bl_label = "Links"
+    bl_options = {"DEFAULT_CLOSED"}
+
+    @classmethod
+    def poll(cls, context):
+        if can_draw_ui():
+            return False
+
+        res, arm = mustardui_active_object(context, config=0)
+        if arm is not None:
+            rig_settings = arm.MustardUI_RigSettings
+            return res and rig_settings.links_enable and arm.MustardUI_Links
+        return res
+
+    def draw(self, context):
+        poll, arm = mustardui_active_object(context, config=0)
+
+        layout = self.layout
+
+        for link in arm.MustardUI_Links:
+            if link != "":
+                layout.operator(
+                    "mustardui.openlink", text=link.name, icon="URL"
+                ).url = link.url
+
+
+def register():
+    bpy.utils.register_class(PANEL_PT_MustardUI_Links)
+
+
+def unregister():
+    bpy.utils.unregister_class(PANEL_PT_MustardUI_Links)

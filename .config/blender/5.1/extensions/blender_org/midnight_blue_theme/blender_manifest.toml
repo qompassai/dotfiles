@@ -1,0 +1,17 @@
+schema_version = "1.0.0"
+
+id = "midnight_blue_theme"
+version = "1.0.1"
+name = "Midnight Blue"
+tagline = "Blender blues after midnight"
+maintainer = "Mingwei Lim"
+type = "theme"
+
+website = "https://github.com/williamchange/blender-themes"
+tags = ["Dark"]
+
+blender_version_min = "5.0.0"
+
+license = [
+  "SPDX:GPL-3.0-or-later",
+]

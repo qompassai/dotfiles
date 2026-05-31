@@ -1,0 +1,7 @@
+[WARN ] User home directory does not exist /home/phaedrus/.config/blender/5.1/extensions/.user/blender_org/mpfb
+[INFO ] Not adding link to MakeHuman user data, since neither explicit path nor auto-discovery is set in preferences.
+[INFO ] Creating relevant directory: /home/phaedrus/.config/blender/5.1/extensions/.user/blender_org/mpfb
+[INFO ] Creating relevant directory: /home/phaedrus/.config/blender/5.1/extensions/.user/blender_org/mpfb/data
+[INFO ] Creating relevant directory: /home/phaedrus/.config/blender/5.1/extensions/.user/blender_org/mpfb/config
+[INFO ] Creating relevant directory: /home/phaedrus/.config/blender/5.1/extensions/.user/blender_org/mpfb/cache
+[INFO ] Creating relevant directory: /home/phaedrus/.config/blender/5.1/extensions/.user/blender_org/mpfb/logs

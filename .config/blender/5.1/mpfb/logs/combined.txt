@@ -1,0 +1,9 @@
+[WARN ] services.locationservice ...............: User home directory does not exist /home/phaedrus/.config/blender/5.1/extensions/.user/blender_org/mpfb
+[INFO ] services.locationservice ...............: Not adding link to MakeHuman user data, since neither explicit path nor auto-discovery is set in preferences.
+[INFO ] services.locationservice ...............: Creating relevant directory: /home/phaedrus/.config/blender/5.1/extensions/.user/blender_org/mpfb
+[INFO ] services.locationservice ...............: Creating relevant directory: /home/phaedrus/.config/blender/5.1/extensions/.user/blender_org/mpfb/data
+[INFO ] services.locationservice ...............: Creating relevant directory: /home/phaedrus/.config/blender/5.1/extensions/.user/blender_org/mpfb/config
+[INFO ] services.locationservice ...............: Creating relevant directory: /home/phaedrus/.config/blender/5.1/extensions/.user/blender_org/mpfb/cache
+[INFO ] services.locationservice ...............: Creating relevant directory: /home/phaedrus/.config/blender/5.1/extensions/.user/blender_org/mpfb/logs
+[INFO ] mpfb.init ..............................: Build info 20260503
+[INFO ] mpfb.init ..............................: MPFB initialization has finished.

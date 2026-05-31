@@ -1,0 +1,21 @@
+schema_version = "1.0.0"
+
+id = "capture_thumbnails_from_viewport"
+version = "1.0.3"
+name = "Asset Browser: Capture Thumbnail from Viewport"
+tagline = "Add new thumbnails for you asset based on the current viewport" 
+maintainer = "Dan-Gry"
+type = "add-on"
+
+website = "https://blenderartists.org/t/asset-browser-capture-thumbnail-from-viewport-free-add-on/1591206"
+
+tags = ["Pipeline"]
+
+blender_version_min = "4.2.0"
+
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
+
+[permissions]
+files = "Create a .png in temp folder"

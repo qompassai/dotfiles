@@ -1,0 +1,56 @@
+# Searchsploit resource configuration
+
+# Global options (A–Z)
+# -----------------------------
+
+# Display full path to exploits by default
+export DISPLAY_PATHS="yes"
+
+# Enable color output (yes|no)
+export ENABLE_COLOR="yes"
+
+# Include exploit titles when mirroring (yes|no)
+export INCLUDE_TITLES="yes"
+
+# Maximum results to display (0 = unlimited)
+export MAX_RESULTS="0"
+
+# Use pager (less) for long output (yes|no)
+export USE_PAGER="yes"
+
+files_array=("files_exploits.csv")
+path_array=("/opt/exploit-database")
+name_array=("Exploit")
+git_array=("https://github.com/offensive-security/exploit-database.git")
+package_array=("exploitdb")
+
+# -----------------------------
+# Exploit-DB papers (optional)
+# -----------------------------
+
+files_array+=("files_papers.csv")
+path_array+=("/opt/exploit-database-papers")
+name_array+=("Paper")
+git_array+=("https://github.com/offensive-security/exploit-database-papers.git")
+package_array+=("exploitdb-papers")
+
+# -----------------------------
+# Shell options (A–Z)
+# -----------------------------
+
+# Default editor for opening exploits
+export EDITOR="${EDITOR:-vim}"
+
+# Default browser for opening URLs in metadata
+export BROWSER="${BROWSER:-xdg-open}"
+
+# -----------------------------
+# Updating behavior (A–Z)
+# -----------------------------
+
+# When set to "yes", searchsploit -u will also update papers repo
+export UPDATE_PAPERS="yes"
+
+# When set to "yes", searchsploit -u will perform git gc
+export UPDATE_GC="no"
+

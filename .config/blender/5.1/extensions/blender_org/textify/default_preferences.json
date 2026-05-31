@@ -1,0 +1,213 @@
+{
+    "preferences": {
+        "bookmark_line_category": "Bookmark Line",
+        "code_map_category": "Code Map",
+        "open_recent_category": "Text",
+        "enable_addon_installer": true,
+        "enable_bookmark_line": true,
+        "enable_case_convert": true,
+        "enable_character_count": true,
+        "enable_code_map": true,
+        "enable_go_to_definition": true,
+        "enable_highlight_occurrences": false,
+        "enable_jump_to_line": true,
+        "enable_script_formatter": true,
+        "enable_trim_whitespace": true,
+        "zip_name_style": "NAME_DASH_VERSION",
+        "addon_installer_popup_width": 380,
+        "auto_activate_search": false,
+        "show_code_filters": true,
+        "code_map_popup_width": 320,
+        "auto_activate_find": false,
+        "use_textify_find_replace": true,
+        "realtime_search": true,
+        "enable_find_on_enter": true,
+        "highlight_mode": "FIND_TEXT",
+        "case_sensitive": false,
+        "show_in_scroll": true,
+        "col_preset": "BLUE",
+        "highlight_color": [
+            0.0,
+            0.4000000059604645,
+            0.800000011920929,
+            0.30000001192092896
+        ],
+        "text_color": [
+            1.0,
+            1.0,
+            1.0,
+            0.699999988079071
+        ],
+        "scroll_color": [
+            0.14000000059604645,
+            0.6000000238418579,
+            1.0,
+            0.550000011920929
+        ],
+        "scroll_horiz_pos": 0.0,
+        "scroll_marker_length": 6.0,
+        "recent_data_path": "C:\\Users\\jishn\\AppData\\Roaming\\Blender Foundation\\Blender\\4.3\\config",
+        "show_open_recent_panel": true,
+        "show_folder_name": true,
+        "max_entries": 30,
+        "expand_highlight_occurrences": false,
+        "expand_script_formatter": false
+    },
+    "keymap": [
+        {
+            "label": "Addon Installer",
+            "items": [
+                {
+                    "operator": "textify.install_addon_popup",
+                    "type": "F2",
+                    "value": "PRESS",
+                    "ctrl": 0,
+                    "shift": 0,
+                    "alt": 0
+                },
+                {
+                    "operator": "textify.install_addon",
+                    "type": "F2",
+                    "value": "PRESS",
+                    "ctrl": 0,
+                    "shift": 0,
+                    "alt": 1
+                }
+            ]
+        },
+        {
+            "label": "Bookmarks Line",
+            "items": [
+                {
+                    "operator": "bookmark_line.popup",
+                    "type": "F4",
+                    "value": "PRESS",
+                    "ctrl": 0,
+                    "shift": 0,
+                    "alt": 0
+                }
+            ]
+        },
+        {
+            "label": "Code Map",
+            "items": [
+                {
+                    "operator": "code_map.popup",
+                    "type": "ACCENT_GRAVE",
+                    "value": "PRESS",
+                    "ctrl": 0,
+                    "shift": 0,
+                    "alt": 0
+                }
+            ]
+        },
+        {
+            "label": "Find & Replace",
+            "items": [
+                {
+                    "operator": "text.find_replace",
+                    "type": "F1",
+                    "value": "PRESS",
+                    "ctrl": 0,
+                    "shift": 0,
+                    "alt": 0
+                },
+                {
+                    "operator": "text.find_previous",
+                    "type": "D",
+                    "value": "PRESS",
+                    "ctrl": 0,
+                    "shift": 0,
+                    "alt": 1
+                },
+                {
+                    "operator": "text.find",
+                    "type": "F",
+                    "value": "PRESS",
+                    "ctrl": 0,
+                    "shift": 0,
+                    "alt": 1
+                }
+            ]
+        },
+        {
+            "label": "Go to Definition",
+            "items": [
+                {
+                    "operator": "textify.go_to_definition",
+                    "type": "F12",
+                    "value": "PRESS",
+                    "ctrl": 0,
+                    "shift": 0,
+                    "alt": 0
+                }
+            ]
+        },
+        {
+            "label": "Open Recent",
+            "items": [
+                {
+                    "operator": "textify.open",
+                    "type": "O",
+                    "value": "PRESS",
+                    "ctrl": 1,
+                    "shift": 0,
+                    "alt": 0
+                },
+                {
+                    "operator": "textify.save",
+                    "type": "S",
+                    "value": "PRESS",
+                    "ctrl": 1,
+                    "shift": 0,
+                    "alt": 0
+                },
+                {
+                    "operator": "textify.save_as",
+                    "type": "S",
+                    "value": "PRESS",
+                    "ctrl": 1,
+                    "shift": 1,
+                    "alt": 0
+                },
+                {
+                    "operator": "wm.call_menu",
+                    "type": "O",
+                    "value": "PRESS",
+                    "ctrl": 1,
+                    "shift": 0,
+                    "alt": 1,
+                    "properties": {
+                        "name": "TEXTIFY_MT_open_recent"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Script Switcher",
+            "items": [
+                {
+                    "operator": "textify.cycle_scripts",
+                    "type": "TAB",
+                    "value": "PRESS",
+                    "ctrl": 1,
+                    "shift": 0,
+                    "alt": 0
+                }
+            ]
+        },
+        {
+            "label": "Script Formatter",
+            "items": [
+                {
+                    "operator": "textify.format_script",
+                    "type": "F",
+                    "value": "PRESS",
+                    "ctrl": 1,
+                    "shift": 1,
+                    "alt": 0
+                }
+            ]
+        }
+    ]
+}

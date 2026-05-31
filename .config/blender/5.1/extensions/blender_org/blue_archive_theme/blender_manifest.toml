@@ -1,0 +1,13 @@
+schema_version = "1.0.0"
+
+id = "blue_archive_theme"
+version = "1.2.1"
+name = "Blue Archive"
+tagline = "Theme inspired by Blue Archive game UI"
+maintainer = "RAZUMNO"
+type = "theme"
+tags = ["Light", "Inspired By"]
+blender_version_min = "5.0.0"
+license = [
+  "SPDX:GPL-3.0-or-later",
+]

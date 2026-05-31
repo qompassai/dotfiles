@@ -1,0 +1,33 @@
+schema_version = "1.0.0"
+
+id = "textify"
+version = "1.8.0"
+name = "Textify"
+tagline = "Streamline and Enhance Blender’s Text Editor"
+maintainer = "Jishnu, kaio <jishnukv661@gmail.com>"
+type = "add-on"
+
+website = "https://discord.com/channels/1356442907338608640/1356442907812298752"
+
+tags = ["Text Editor", "Development"]
+
+blender_version_min = "4.2.0"
+
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
+
+copyright = [
+  "2025 Jishnu Jithu",
+]
+
+wheels = [
+   "./wheels/autopep8-2.3.2-py2.py3-none-any.whl",
+   "./wheels/jedi-0.19.2-py2.py3-none-any.whl",
+   "./wheels/parso-0.8.4-py2.py3-none-any.whl",
+   "./wheels/pycodestyle-2.14.0-py2.py3-none-any.whl",
+]
+
+[permissions]
+files = "Read/write settings, and manage scripts on disk"
+clipboard = "Copy class bl_idname and identifiers to clipboard"

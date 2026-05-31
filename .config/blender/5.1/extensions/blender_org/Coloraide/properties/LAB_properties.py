@@ -1,0 +1,51 @@
+"""LAB Properties with fixed range handling and relative adjustment mode"""
+
+import bpy
+from bpy.props import FloatProperty
+from ..import COLORAIDE_sync
+from .base import SuppressUpdatesMixin
+
+class ColoraideLABProperties(SuppressUpdatesMixin):
+    
+    def update_lab_values(self, context):
+        if COLORAIDE_sync.is_updating() or self.suppress_updates:
+            return
+        lab_values = (self.lightness, self.a, self.b)
+        # Use RELATIVE mode for slider adjustments
+        COLORAIDE_sync.sync_all(context, 'lab', lab_values, mode='relative')
+
+    lightness: FloatProperty(
+        name="L",
+        min=0.0,
+        max=100.0,
+        default=50.0,
+        precision=0,
+        step=100,
+        soft_min=0.0,
+        soft_max=100.0,
+        update=update_lab_values
+    )
+    
+    a: FloatProperty(
+        name="a",
+        min=-128.0,
+        max=127.0,
+        default=0.0,
+        precision=0,
+        step=100,
+        soft_min=-128.0,
+        soft_max=127.0,
+        update=update_lab_values
+    )
+    
+    b: FloatProperty(
+        name="b",
+        min=-128.0,
+        max=127.0,
+        default=0.0,
+        precision=0,
+        step=100,
+        soft_min=-128.0,
+        soft_max=127.0,
+        update=update_lab_values
+    )

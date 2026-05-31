@@ -1,0 +1,18 @@
+schema_version = "1.0.0"
+
+
+id = "Quick_Character_Selector"
+version = "1.1.0"
+name = "Quick Character Selector"
+tagline = "Seleccion rapida de armatures"
+maintainer = "Matias Martin 3D - madison.martin1990@gmail.com"
+
+type = "add-on"
+
+tags = ["Object", "Animation",]
+
+blender_version_min = "4.2.0"
+
+license = [
+  "SPDX:GPL-2.0-or-later",
+]

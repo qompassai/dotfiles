@@ -1,0 +1,50 @@
+# Blender Extension Manifest
+# Asset Optimizer - Complete optimization toolkit for game assets
+
+schema_version = "1.0.0"
+
+id = "asset_optimizer"
+version = "1.0.2"
+name = "Game Asset Optimizer"
+tagline = "Optimize 3D models for Unity and Unreal Engine workflows"
+maintainer = "Sudip Soni <sudipsoni13@example.com>"
+
+type = "add-on"
+
+# License conforming to https://spdx.org/licenses/
+license = [
+  "SPDX:GPL-3.0-or-later",
+]
+
+copyright = [
+  "2024-2025 Sudip Soni",
+]
+
+# Minimum Blender version required
+blender_version_min = "4.2.0"
+
+# Tags for categorization on extensions.blender.org
+tags = [
+  "Modeling",
+  "Mesh",
+  "Pipeline",
+]
+
+# Optional: Documentation and support links
+website = "https://github.com/Sudip13/AssetOptimizer"
+
+# Permissions: Declare resources this add-on requires
+[permissions]
+files = "Export optimized assets for Unity and Unreal Engine"
+
+# Build configuration: Exclude development files from package
+[build]
+paths_exclude_pattern = [
+  "__pycache__/",
+  ".git/",
+  ".github/",
+  "*.zip",
+  "*.pyc",
+  ".gitignore",
+  "*.md",
+]

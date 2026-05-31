@@ -1,0 +1,2 @@
+{Intel/Mesa Intel(R) Graphics (RPL-P)/4.6 (Core Profile) Mesa 26.1.1-arch1.2}=SUPPORTED
+{NVIDIA Corporation/NVIDIA GeForce RTX 4070 Laptop GPU/PCIe/SSE2/4.6.0 NVIDIA 595.71.05}=SUPPORTED

@@ -1,0 +1,21 @@
+schema_version = "1.0.0"
+
+# Version
+id = "Light_Rain_Theme"
+version = "2.2.0"
+name = "Light_Rain_Theme"
+tagline = "Cloudy Grey"
+maintainer = "Raz3Demon <raz3demon@gmail.com>"
+# Supported types
+type = "theme"
+
+# Tags
+tags = ["Light"]
+
+# Support version
+blender_version_min = "5.0.0"
+
+# License
+license = [
+  "SPDX:GPL-3.0-or-later",
+]

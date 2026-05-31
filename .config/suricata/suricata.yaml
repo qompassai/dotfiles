@@ -1,0 +1,102 @@
+vars:
+  address-groups:
+    DNS_SERVERS: "[8.8.8.8, 8.8.4.4]"
+    EXTERNAL_NET: "!$HOME_NET"
+    HOME_NET: "[192.168.0.0/16]"
+    HTTP_SERVERS: "$HOME_NET"
+    SMTP_SERVERS: "$HOME_NET"
+    SSH_SERVERS: "$HOME_NET"
+
+  port-groups:
+    DNS_PORTS: "53"
+    FILE_DATA_PORTS: "80,110,143,445,993,995"
+    HTTP_PORTS: "80,8080,8000,443,8443"
+    SHELLCODE_PORTS: "!80"
+    SSH_PORTS: "22"
+
+capture:
+  nfqueue:
+    mode: accept
+    queue:
+      - id: 0
+        bypass: no
+        fail-open: no
+        max-pending: 1024
+        verdict-delay: 0
+    threads: auto
+
+detect:
+  blocklist: default
+  bypass: no
+  inspection-recursion-limit: 3000
+  mpm-algo: hs
+  prefilter: yes
+  profiling: no
+  sgh-mpm-context: auto
+  spm-algo: hs
+  stream-inline: auto
+  tenant-id: 0
+
+default-rule-path: /var/lib/suricata/rules
+
+rule-files:
+  - suricata.rules
+
+outputs:
+  - eve-log:
+      enabled: yes
+      filename: eve.json
+      filetype: regular
+      community-id: yes
+      community-id-seed: 0
+      extended: yes
+      types:
+        - alert:
+            metadata: yes
+            tagged-packets: no
+        - dns:
+            query: yes
+            answer: yes
+        - flow:
+            enabled: yes
+        - http:
+            extended: yes
+        - stats:
+            totals: yes
+        - tls:
+            extended: yes
+
+  - fast:
+      enabled: yes
+      filename: fast.log
+      append: yes
+
+  - stats:
+      enabled: yes
+      filename: stats.log
+      interval: 10
+
+logging:
+  default-log-level: notice
+  default-output-filter:
+  outputs:
+    - console:
+        enabled: no
+        level: info
+    - file:
+        enabled: yes
+        filename: /var/log/suricata/suricata.log
+        level: info
+
+threading:
+  auto-affinity: yes
+  cpu-affinity:
+    management-cpu-set:
+      cpu: [0]
+      mode: "management"
+    worker-cpu-set:
+      cpu: [1,2,3,4]
+      mode: "exclusive"
+      prio: high
+  detect-thread-ratio: 1.0
+  set-cpu-affinity: yes
