@@ -1,7 +1,0 @@
-{
-    "type": "boolean",
-    "name": "setup_multires",
-    "description": "Create a multires modifier. This will also remove any subdivision modifier, if present",
-    "label": "Setup multires",
-    "default": true
-}

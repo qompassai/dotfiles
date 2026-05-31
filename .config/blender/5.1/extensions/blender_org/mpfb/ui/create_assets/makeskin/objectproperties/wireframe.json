@@ -1,8 +1,0 @@
-{
-    "type": "boolean",
-    "name": "wireframe",
-    "description": "If the material is to be rendered as a wireframe. It is unlikely you want this",
-    "label": "Wireframe",
-    "default": false,
-    "aliases": ["MhMsWireframe"]
-}

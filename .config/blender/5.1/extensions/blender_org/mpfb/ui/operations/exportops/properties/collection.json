@@ -1,7 +1,0 @@
-{
-    "type": "boolean",
-    "name": "collection",
-    "description": "Create a new collection \"export copy\" (if it doesn't exist) and place the copy there",
-    "label": "Create collection",
-    "default": true
-}

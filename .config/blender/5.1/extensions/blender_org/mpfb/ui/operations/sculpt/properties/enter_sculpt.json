@@ -1,7 +1,0 @@
-{
-    "type": "boolean",
-    "name": "enter_sculpt",
-    "description": "When the bake is finished, enter sculpt mode",
-    "label": "Enter sculpt mode",
-    "default": true
-}

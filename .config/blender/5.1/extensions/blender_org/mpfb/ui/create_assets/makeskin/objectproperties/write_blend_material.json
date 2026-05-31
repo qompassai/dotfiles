@@ -1,7 +1,0 @@
-{
-    "type": "boolean",
-    "name": "write_blend_material",
-    "description": "Stores the second material on the active object in a blend file",
-    "label": "Write blend material",
-    "default": false
-}

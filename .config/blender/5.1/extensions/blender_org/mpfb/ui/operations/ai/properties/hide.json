@@ -1,7 +1,0 @@
-{
-    "type": "boolean",
-    "name": "hide",
-    "description": "This will attempt to hide all objects in the scene, except the camera and the visible bones",
-    "label": "Hide unrelated objects",
-    "default": true
-}

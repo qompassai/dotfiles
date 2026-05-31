@@ -1,7 +1,0 @@
-{
-    "type": "float",
-    "name": "maxx",
-    "description": "Maximum X for the bounding box",
-    "label": "Max X",
-    "default": 1.0
-}

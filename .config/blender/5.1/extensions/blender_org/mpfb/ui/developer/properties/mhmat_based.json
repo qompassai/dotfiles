@@ -1,7 +1,0 @@
-{
-    "type": "boolean",
-    "name": "mhmat_based",
-    "description": "When saving the material, also generate structures for handling mhmat data",
-    "label": "MHMAT",
-    "default": false
-}

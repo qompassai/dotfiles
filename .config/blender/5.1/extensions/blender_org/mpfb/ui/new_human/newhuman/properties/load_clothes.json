@@ -1,7 +1,0 @@
-{
-    "type": "boolean",
-    "name": "load_clothes",
-    "description": "If clothes are specified in the presets, then load these",
-    "label": "Load clothes",
-    "default": true
-}

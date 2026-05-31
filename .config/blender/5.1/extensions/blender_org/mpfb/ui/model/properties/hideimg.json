@@ -1,7 +1,0 @@
-{
-    "type": "boolean",
-    "name": "hideimg",
-    "description": "Hide modifier icons from the interface, making the interface more compact",
-    "label": "Hide icons",
-    "default": false
-}

@@ -1,7 +1,0 @@
-{
-    "type": "string",
-    "name": "name",
-    "description": "Name of the human to save",
-    "label": "Save file name",
-    "default": ""
-}

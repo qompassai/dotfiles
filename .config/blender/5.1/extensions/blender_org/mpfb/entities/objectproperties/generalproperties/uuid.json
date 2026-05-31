@@ -1,8 +1,0 @@
-{
-    "type": "string",
-    "name": "uuid",
-    "description": "the unique id identifying the source asset",
-    "label": "UUID",
-    "default": "",
-    "aliases": []
-}

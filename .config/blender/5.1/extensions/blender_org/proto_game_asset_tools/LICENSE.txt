@@ -1,1 +1,0 @@
-PROTO Game Asset Tools is released under GNU General Public License, version 3

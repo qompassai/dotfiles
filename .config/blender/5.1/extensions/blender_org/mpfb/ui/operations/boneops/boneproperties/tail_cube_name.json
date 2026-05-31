@@ -1,7 +1,0 @@
-{
-    "type": "string",
-    "name": "tail_cube_name",
-    "description": "Name of the head joint",
-    "label": "Tail Joint",
-    "default": ""
-}

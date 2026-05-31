@@ -1,1 +1,0 @@
-A blender addon packing several **professional-grade techniques** commonly used in the **video game industry*. Head over to the [documentation](https://github.com/GhislainGir/GameToolsDoc/wiki) for more information.

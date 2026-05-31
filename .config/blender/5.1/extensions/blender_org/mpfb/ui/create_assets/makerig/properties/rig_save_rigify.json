@@ -1,7 +1,0 @@
-{
-    "type": "boolean",
-    "name": "rig_save_rigify",
-    "description": "Save Rigify layer data with the rig",
-    "label": "Save Rigify layers",
-    "default": false
-}
