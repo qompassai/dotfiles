@@ -1,0 +1,56 @@
+# /qompassai/dotfiles/.config/siege/siegrc
+# Qompass AI Siege Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+############################################################
+logfile   = $(HOME)/var/siege.log
+accept-encoding = gzip, deflate
+benchmark       = false
+cache           = false
+chunked         = true
+color           = on
+concurrent      = 50
+connection      = close
+cookies         = false
+csv             = true
+delay           = 0.0
+display-id      = true
+expire-session  = true
+failures        = 10
+file            = $(XDG_CONFIG_HOME)/siege/urls.txt
+follow-location = true
+fullurl         = true
+gmethod         = HEAD
+internet        = false
+json_output     = false
+limit           = 255
+logging         = true
+logfile         = ${XDG_DATA_HOME}/log/siege.log
+parser          = true
+protocol        = HTTP/1.1
+quiet           = false
+reps            = 20
+show-logfile    = true
+time            = 50m
+timestamp       = true
+timeout         = 10
+unique          = true
+url-escaping    = true
+user-agent      = Limey The Bulldog
+verbose         = false
+# proxy-host   =
+# proxy-port   =
+# proxy-login  =
+# auth-url     =
+# ftp-login    =
+# login        =
+# login-url    =
+# SSL/TLS configuration
+# ssl-cert     =
+# ssl-ciphers  =
+# ssl-key      =
+# ssl-timeout  = 30
+nofollow       = ad.doubleclick.net
+nofollow       = ads.pubsqrd.com
+nofollow       = ib.adnxs.com
+nofollow       = pagead2.googlesyndication.com
+# url =

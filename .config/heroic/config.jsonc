@@ -1,0 +1,57 @@
+// qompassai/dotfiles/.config/heroic/config.jsonc
+// Qompass AI Heroic Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+  "defaultSettings": {
+    "addDesktopShortcuts": true,
+    "addStartMenuShortcuts": true,
+    "addSteamShortcuts": true,
+    "afterLaunchScriptPath": "",
+    "autoInstallDxvk": true,
+    "autoInstallDxvkNvapi": true,
+    "autoInstallVkd3d": true,
+    "autoUpdateGames": true,
+    "battlEyeRuntime": true,
+    "beforeLaunchScriptPath": "",
+    "checkForUpdatesOnStartup": true,
+    "checkUpdatesInterval": 10,
+    "customWinePaths": [],
+    "defaultInstallPath": "$HOME/.Games/Heroic",
+    "defaultSteamPath": "$HOME/.steam/steam",
+    "defaultWinePrefix": "$HOME/.Games/Heroic/Prefixes/default",
+    "disableUMU": false,
+    "eacRuntime": true,
+    "enableEsync": true,
+    "enableFsync": true,
+    "enableMsync": false,
+    "enableUpdates": true,
+    "environmentOptions": [],
+    "experimentalFeatures": {
+      "cometSupport": true,
+      "enableHelp": false,
+      "enableNewDesign": true
+    },
+    "framelessWindow": false,
+    "hideChangelogsOnStartup": false,
+    "language": "en",
+    "libraryTopSection": "disabled",
+    "maxWorkers": 0,
+    "minimizeOnLaunch": false,
+    "nvidiaPrime": true,
+    "preferSystemLibs": false,
+    "showFps": false,
+    "useGameMode": false,
+    "verboseLogs": false,
+    "wineCrossoverBottle": "Heroic",
+    "winePrefix": "$HOME/.Games/Heroic/Prefixes/default",
+    "wineVersion": {
+      "bin": "/usr/bin/wine",
+      "name": "Wine Default - wine-9.0 (Staging)",
+      "type": "wine",
+      "wineserver": "/usr/bin/wineserver"
+    },
+    "wrapperOptions": []
+  },
+  "version": "v0"
+}

@@ -1,0 +1,5 @@
+system:
+  game_path: /home/phaedrus/.Games
+  gamescope: true
+  gamescope_window_mode: -b
+  terminal_app: /usr/bin/foot

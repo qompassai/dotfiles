@@ -1,8 +1,7 @@
 # profile.ps1
-# Qompass AI - [Add description here]
+# Qompass AI PowerShell Profile
 # Copyright (C) 2025 Qompass AI, All rights reserved
 # ----------------------------------------
-# ~/.config/powershell/profile.ps1
 
 Import-Module PSReadLine
 Set-PSReadLineOption -HistorySaveStyle SaveIncrementally
@@ -19,12 +18,10 @@ if (Test-Path $ModulePath) {
     }
 }
 
-# Aliases for remote administration
 Set-Alias ssh Enter-PSSession
 Set-Alias scp Copy-Item
 Set-Alias sftp Copy-Item
 
-# WinRM configuration function (for reference)
 function Enable-RemoteWinRM {
     Invoke-Command -ScriptBlock {
         Enable-PSRemoting -Force

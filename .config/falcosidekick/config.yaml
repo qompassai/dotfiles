@@ -1,0 +1,30 @@
+bracketreplacer: "_"
+customfields:
+  env: "prod"
+  owner: "secops"
+  team: "security"
+debug: false
+listenaddress: "0.0.0.0"
+listenport: 2801
+templatedfields:
+  k8s_namespace_foo_label: '{{ or (index . "k8s.ns.labels.foo") "unset" }}'
+  k8s_pod_name: '{{ index . "k8s.pod.name" }}'
+  syscall_user: '{{ index . "user.name" }}'
+tls:
+  mutualtlsclient:
+    cacertfile: "/etc/certs/client/ca.crt"
+    certfile: "/etc/certs/client/client.crt"
+    keyfile: "/etc/certs/client/client.key"
+  mutualtlsfilespath: "/etc/certs"
+  tlsclient:
+    cacertfile: "/etc/certs/client/ca.crt"
+  tlsserver:
+    cacertfile: "/etc/certs/server/ca.crt"
+    certfile: "/etc/certs/server/server.crt"
+    deploy: true
+    keyfile: "/etc/certs/server/server.key"
+    mutualtls: true
+    notlspaths:
+      - "/healthz"
+      - "/ping"
+    notlsport: 2810

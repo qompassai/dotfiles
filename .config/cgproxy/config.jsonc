@@ -1,0 +1,32 @@
+// qompassai/dotfiles/.config/cgproxy/config.jsonc
+// Qompass AI CGProxy Config
+// Copyright (C) 2026 Qompass AI, All rights reserved
+/////////////////////////////////////////////////////
+{
+  "comment": "For usage, see https://github.com/springzfx/cgproxy",
+  "enable_dns": true,
+  "enable_gateway": false,
+  "enable_nftables": true,
+  "enable_ipv4": true,
+  "enable_ipv6": true,
+  "enable_tcp": true,
+  "enable_udp": true,
+  "fwmark": 39283,
+  "port": 12345,
+  "table": 10007,
+  "program_noproxy": [
+    "v2ray",
+    "qv2ray"
+  ],
+  "cgroup_noproxy": [
+    "/system.slice/v2ray.service"
+  ],
+  "program_proxy": [],
+  "cgroup_proxy": [],
+   "bypass_private_ips": true,
+   "dns_server": "127.0.0.1:5353",
+   "proxy_socks5": "127.0.0.1:1080",
+   "proxy_http": "127.0.0.1:8080",
+   "proxy_redir": "127.0.0.1:1090",
+   "log_level": "info"
+}

@@ -1,0 +1,8 @@
+[0:v]drawtext=
+text='@@TEXT@@':
+fontfile='@@FONTFILE@@':
+fontcolor=@FONTCOLOR@:
+fontsize=@FONTSIZE@:
+x=@X_EXPR@:
+y=@Y_EXPR@:
+enable='between(t,@T_START@,@T_END@)'[v]

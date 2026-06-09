@@ -1,0 +1,5 @@
+system:
+  game_path: /home/phaedrus/.Games
+wine:
+  Graphics: wayland
+  ShowCrashDialog: true

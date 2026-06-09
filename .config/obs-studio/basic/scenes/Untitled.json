@@ -3,11 +3,11 @@
     "DesktopAudioDevice1": {
         "prev_ver": 536936450,
         "name": "Desktop Audio",
-        "uuid": "85c8c289-38de-42c4-929d-220beeca50c4",
+        "uuid": "68a3372a-8f5d-41a1-b807-5f4736be067f",
         "id": "pulse_output_capture",
         "versioned_id": "pulse_output_capture",
         "settings": {
-            "device_id": "default"
+            "device_id": "bluez_output.2C_53_D7_F9_2B_25.1.monitor"
         },
         "mixers": 255,
         "sync": 0,
@@ -34,11 +34,11 @@
     "AuxAudioDevice1": {
         "prev_ver": 536936450,
         "name": "Mic/Aux",
-        "uuid": "25afc2cc-3c01-4eb6-ab8f-ae1e767a90b3",
+        "uuid": "0f832724-4e77-45c3-963b-4efc23901a66",
         "id": "pulse_input_capture",
         "versioned_id": "pulse_input_capture",
         "settings": {
-            "device_id": "default"
+            "device_id": "alsa_input.usb-Lumina_Industries__Inc._Lumina_Camera_-_Raw_SN0001-02.pro-input-0"
         },
         "mixers": 255,
         "sync": 0,
@@ -66,7 +66,7 @@
         {
             "prev_ver": 536936450,
             "name": "Global Draw Source",
-            "uuid": "e7548c51-0072-45aa-acae-ebbe599b8005",
+            "uuid": "86587ea0-c268-4c28-ad07-98c492931463",
             "id": "draw_source",
             "versioned_id": "draw_source",
             "settings": {
@@ -94,36 +94,10 @@
         },
         {
             "prev_ver": 536936450,
-            "name": "PipeWire Video",
-            "uuid": "d9b5c063-5120-42e0-b00a-e93e23e7ef81",
-            "id": "pipewire-video-source",
-            "versioned_id": "pipewire-video-source",
-            "settings": {
-                "target": ""
-            },
-            "mixers": 0,
-            "sync": 0,
-            "flags": 0,
-            "volume": 1.0,
-            "balance": 0.5,
-            "enabled": true,
-            "muted": false,
-            "push-to-mute": false,
-            "push-to-mute-delay": 0,
-            "push-to-talk": false,
-            "push-to-talk-delay": 0,
-            "hotkeys": {},
-            "deinterlace_mode": 0,
-            "deinterlace_field_order": 0,
-            "monitoring_type": 0,
-            "private_settings": {}
-        },
-        {
-            "prev_ver": 536936450,
-            "name": "Wayland output(dmabuf)",
-            "uuid": "275c28db-b2f0-4533-9581-d1324446d7aa",
-            "id": "wlrobs-dmabuf",
-            "versioned_id": "wlrobs-dmabuf",
+            "name": "Video Capture Device (PipeWire) (BETA)",
+            "uuid": "eb52ccf6-a66e-44f9-8f17-3f52f30e807e",
+            "id": "pipewire-camera-source",
+            "versioned_id": "pipewire-camera-source",
             "settings": {},
             "mixers": 0,
             "sync": 0,
@@ -145,124 +119,13 @@
         {
             "prev_ver": 536936450,
             "name": "Scene",
-            "uuid": "c2e33fc8-1901-4518-a27c-291308817997",
+            "uuid": "4232ab8b-51db-4b34-9bc1-7663220c2e66",
             "id": "scene",
             "versioned_id": "scene",
             "settings": {
-                "id_counter": 7,
+                "id_counter": 5,
                 "custom_size": false,
-                "items": [
-                    {
-                        "name": "PipeWire Video",
-                        "source_uuid": "d9b5c063-5120-42e0-b00a-e93e23e7ef81",
-                        "visible": true,
-                        "locked": false,
-                        "rot": 0.0,
-                        "scale_ref": {
-                            "x": 1920.0,
-                            "y": 1080.0
-                        },
-                        "align": 5,
-                        "bounds_type": 0,
-                        "bounds_align": 0,
-                        "bounds_crop": false,
-                        "crop_left": 0,
-                        "crop_top": 0,
-                        "crop_right": 0,
-                        "crop_bottom": 0,
-                        "id": 6,
-                        "group_item_backup": false,
-                        "pos": {
-                            "x": 0.0,
-                            "y": 0.0
-                        },
-                        "pos_rel": {
-                            "x": -1.7777777910232544,
-                            "y": -1.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0
-                        },
-                        "scale_rel": {
-                            "x": 1.0,
-                            "y": 1.0
-                        },
-                        "bounds": {
-                            "x": 0.0,
-                            "y": 0.0
-                        },
-                        "bounds_rel": {
-                            "x": 0.0,
-                            "y": 0.0
-                        },
-                        "scale_filter": "disable",
-                        "blend_method": "default",
-                        "blend_type": "normal",
-                        "show_transition": {
-                            "duration": 300
-                        },
-                        "hide_transition": {
-                            "duration": 300
-                        },
-                        "private_settings": {}
-                    },
-                    {
-                        "name": "Wayland output(dmabuf)",
-                        "source_uuid": "275c28db-b2f0-4533-9581-d1324446d7aa",
-                        "visible": true,
-                        "locked": false,
-                        "rot": 0.0,
-                        "scale_ref": {
-                            "x": 1920.0,
-                            "y": 1080.0
-                        },
-                        "align": 5,
-                        "bounds_type": 0,
-                        "bounds_align": 0,
-                        "bounds_crop": false,
-                        "crop_left": 0,
-                        "crop_top": 0,
-                        "crop_right": 0,
-                        "crop_bottom": 0,
-                        "id": 7,
-                        "group_item_backup": false,
-                        "pos": {
-                            "x": 0.0,
-                            "y": 0.0
-                        },
-                        "pos_rel": {
-                            "x": -1.7777777910232544,
-                            "y": -1.0
-                        },
-                        "scale": {
-                            "x": 1.0,
-                            "y": 1.0
-                        },
-                        "scale_rel": {
-                            "x": 1.0,
-                            "y": 1.0
-                        },
-                        "bounds": {
-                            "x": 0.0,
-                            "y": 0.0
-                        },
-                        "bounds_rel": {
-                            "x": 0.0,
-                            "y": 0.0
-                        },
-                        "scale_filter": "disable",
-                        "blend_method": "default",
-                        "blend_type": "normal",
-                        "show_transition": {
-                            "duration": 300
-                        },
-                        "hide_transition": {
-                            "duration": 300
-                        },
-                        "private_settings": {}
-                    }
-                ]
+                "items": []
             },
             "mixers": 0,
             "sync": 0,
@@ -276,11 +139,7 @@
             "push-to-talk": false,
             "push-to-talk-delay": 0,
             "hotkeys": {
-                "OBSBasic.SelectScene": [],
-                "libobs.show_scene_item.6": [],
-                "libobs.hide_scene_item.6": [],
-                "libobs.show_scene_item.7": [],
-                "libobs.hide_scene_item.7": []
+                "OBSBasic.SelectScene": []
             },
             "deinterlace_mode": 0,
             "deinterlace_field_order": 0,
@@ -327,16 +186,13 @@
     "saved_projectors": [],
     "preview_locked": false,
     "scaling_enabled": false,
-    "scaling_level": -4,
+    "scaling_level": -9,
     "scaling_off_x": 0.0,
     "scaling_off_y": 0.0,
     "virtual-camera": {
         "type2": 3
     },
     "modules": {
-        "decklink_captions": {
-            "source": ""
-        },
         "scripts-tool": [],
         "output-timer": {
             "streamTimerHours": 0,
@@ -349,12 +205,8 @@
             "autoStartRecordTimer": false,
             "pauseRecordTimer": true
         },
-        "auto-scene-switcher": {
-            "interval": 300,
-            "non_matching_scene": "",
-            "switch_if_not_matching": false,
-            "active": false,
-            "switches": []
+        "decklink_captions": {
+            "source": ""
         }
     },
     "version": 2
