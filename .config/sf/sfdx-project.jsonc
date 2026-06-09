@@ -76,7 +76,7 @@
             "replaceWith": "SANDBOX"
         }
     ],
-    "sfdcLoginUrl": "https://tdstelecom.my.salesforce.com",
+    "sfdcLoginUrl": "",
     "sourceApiVersion": "67.0",
     "oauthLocalPort": 1718,
     "sourceBehaviorOptions": [

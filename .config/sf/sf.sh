@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 # sf.sh
-# Qompass AI Salesforce CLI Setup
-# Copyright (C) 2026 Qompass AI, All rights reserved
-# ----------------------------------------
+# Salesforce CLI Setup
+# --------------------------------------
 set -euo pipefail
-INSTANCE_URL="https://tdstelecom.my.salesforce.com"
-DEFAULT_ORG_ALIAS="tds"
+INSTANCE_URL=""
+DEFAULT_ORG_ALIAS=""
 sf config set disable-telemetry=true --global
 sf config set org-api-version=67.0 --global
 sf config set org-capitalize-record-types=false --global
@@ -27,5 +26,5 @@ echo "Dev Hub authorized and set."
 echo "Default Dev Hub alias: ${DEVHUB_ALIAS}"
 echo "Default org alias: ${DEVHUB_ALIAS}"
 echo
-echo "If you also want a general TDS alias, run:"
+echo "If you also want a general alias, run:"
 echo "  sf alias set ${DEFAULT_ORG_ALIAS}=\$(sf org display --target-org ${DEVHUB_ALIAS} --json | jq -r '.result.username')"

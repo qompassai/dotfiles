@@ -2,7 +2,7 @@
 
 This repository is a Salesforce DX project for a template workspace, using `sf`/`sfdx` project configuration, sandbox-first defaults, and a two-package layout consisting of a base package and a dependent feature package.
 
-The current project configuration targets API version `63.0`, uses `https://test.salesforce.com` as the project login default, and sets `oauthLocalPort` to `1718` to avoid common localhost callback conflicts during browser-based auth.
+The current project configuration targets API version `67.0`, uses `https://test.salesforce.com` as the project login default, and sets `oauthLocalPort` to `1718` to avoid common localhost callback conflicts during browser-based auth.
 
 ## Project layout
 
@@ -41,12 +41,12 @@ The project also enables these `sourceBehaviorOptions`: `decomposeCustomLabelsBe
 
 The project-level `sfdcLoginUrl` is set to `https://test.salesforce.com`, which is appropriate for sandbox-first workflows, but explicit CLI login commands can still override that value with a My Domain URL when needed.
 
-For TDS work, use the org My Domain URL directly when authorizing the CLI:
+For work, use the org My Domain URL directly when authorizing the CLI:
 
 ```bash
 sf org login web \
-  --instance-url https://tdstelecom.my.salesforce.com \
-  --alias tds \
+  --instance-url https://replaceme.my.salesforce.com \
+  --alias default \
   --set-default
 ```
 
@@ -54,7 +54,7 @@ If the org is also your Dev Hub, log in and set a Dev Hub alias at the same time
 
 ```bash
 sf org login web \
-  --instance-url https://tdstelecom.my.salesforce.com \
+  --instance-url https://replaceme.my.salesforce.com \
   --alias map-dev \
   --set-default-dev-hub
 ```
@@ -63,7 +63,7 @@ Salesforce recommends using `--alias` for readable org names and `--set-default-
 
 ## `sf.sh` guidance
 
-The setup script should treat the TDS org as the shared work org alias and allow each developer to enter a personal Dev Hub alias, then map that alias to the same authenticated org.
+The setup script should treat the org as the shared work org alias and allow each developer to enter a personal Dev Hub alias, then map that alias to the same authenticated org.
 
 A recommended `sf.sh` looks like this:
 
@@ -72,8 +72,8 @@ A recommended `sf.sh` looks like this:
 
 set -euo pipefail
 
-INSTANCE_URL="https://tdstelecom.my.salesforce.com"
-DEFAULT_ORG_ALIAS="tds"
+INSTANCE_URL="https://replaceme.my.salesforce.com"
+DEFAULT_ORG_ALIAS="replacme"
 
 require_cmd() {
   command -v "$1" >/dev/null 2>&1 || {
@@ -124,17 +124,17 @@ sf plugins --core
 sf plugins
 ```
 
-This structure keeps `tds` as the team-standard org alias, allows a user-defined Dev Hub alias such as `map-dev`, and installs the additional official plugins that are most useful beyond the CLI’s built-in core and just-in-time plugin behavior.
+This structure keeps your org as the team-standard org alias, allows a user-defined Dev Hub alias such as `map-dev`, and installs the additional official plugins that are most useful beyond the CLI’s built-in core and just-in-time plugin behavior.
 
 ## Recommended commands
 
 Common commands for this repo:
 
 ```bash
-# log into the TDS org
-sf org login web --instance-url https://tdstelecom.my.salesforce.com --alias tds --set-default
+# log into the org
+sf org login web --instance-url https://replaceme.my.salesforce.com --alias default --set-default
 # log into the same org as a Dev Hub
-sf org login web --instance-url https://tdstelecom.my.salesforce.com --alias map-dev --set-default-dev-hub
+sf org login web --instance-url https://replaceme.my.salesforce.com --alias map-dev --set-default-dev-hub
 # create a scratch org
 sf org create scratch --definition-file config/project-scratch-def.json --alias map-scratch --set-default
 # list orgs and aliases
