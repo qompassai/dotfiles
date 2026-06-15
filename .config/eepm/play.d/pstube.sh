@@ -1,0 +1,35 @@
+#!/bin/sh
+
+PKGNAME=pstube
+SUPPORTEDARCHES="x86_64"
+VERSION="$2"
+DESCRIPTION="PsTube (formerly FluTube) - Watch and download videos without ads. From the official site"
+URL="https://github.com/prateekmedia/pstube"
+
+. $(dirname $0)/common.sh
+
+pkgtype="$(epm print info -p)"
+
+case "$pkgtype" in
+    rpm|deb)
+        ;;
+    *)
+        pkgtype="deb"
+        ;;
+esac
+
+# strip rpm-specific suffix from version (e.g. 3.1.3+9 -> 3.1.3)
+VERSION="$(echo "$VERSION" | sed 's|+.*||')"
+[ "$VERSION" = "*" ] && VERSION="[0-9]*"
+
+if ! is_glibc_enough 2.34 ; then
+    fatal "glibc is too old"
+fi
+
+arch=x86_64
+# https://github.com/prateekmedia/pstube/releases/download/2.6.0/pstube-linux-2.6.0-x86_64.rpm
+# https://github.com/prateekmedia/pstube/releases/download/2.6.0/pstube-linux-2.6.0-x86_64.deb
+# https://github.com/prateekmedia/pstube/releases/download/3.0.0-beta/pstube-3.0.0-beta-linux-x86_64.rpm
+PKGURL=$(eget --list --latest https://github.com/prateekmedia/pstube/releases "$PKGNAME-$VERSION-linux-$arch.$pkgtype")
+
+install_pkgurl

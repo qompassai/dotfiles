@@ -52,7 +52,7 @@ All configs follow X Desktop Group (XDG) convention `$XDG_CONFIG_HOME` (`~/.conf
 </details>
 <details>
 <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
-  <strong>B — Builds, Browsers & Bluetooth</strong>
+  <strong>B </strong>
 </summary>
 <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
   <ul>
@@ -79,7 +79,7 @@ export BTOP_CONFIG="$XDG_CONFIG_HOME/btop/btop.conf"
 
 <details>
 <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
-  <strong>C — Containers, Compilers & CLI Tools</strong>
+  <strong>C</strong>
 </summary>
 <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
   <ul>
@@ -104,7 +104,7 @@ export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 
 <details>
 <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
-  <strong>D — DNS, Databases & Display</strong>
+  <strong>D</strong>
 </summary>
 <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
   <ul>
@@ -204,13 +204,14 @@ export GIT_CONFIG_GLOBAL="$XDG_CONFIG_HOME/git/config"
 
 <details>
 <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
-  <strong>H — Hyprland, Hotplug & Hardening</strong>
+  <strong>H</strong>
 </summary>
 <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
   <ul>
     <li><a href=".config/haproxy">haproxy</a> — High-availability load balancer</li>
     <li><a href=".config/hostapd">hostapd</a> — IEEE 802.11 AP daemon</li>
     <li><a href=".config/hotplug">hotplug</a> — Device hotplug rules</li>
+    <li><a href=".config/hyprmon">hyprmon</a> — Hyprland Config</li>
     <li><a href=".config/hyprmon">hyprmon</a> — Hyprland monitor management</li>
   </ul>
 <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 10px; font-family: monospace;">
@@ -225,7 +226,7 @@ export GIT_CONFIG_GLOBAL="$XDG_CONFIG_HOME/git/config"
 
 <details>
 <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
-  <strong>I — Input, IPC & Infrastructure</strong>
+  <strong>I</strong>
 </summary>
 <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
   <ul>
@@ -250,7 +251,7 @@ export IWD_CONF_DIR="$XDG_CONFIG_HOME/iwd"
 
 <details>
 <summary style="font-size: 1.4em; font-weight: bold; padding: 15px; background: #667eea; color: white; border-radius: 10px; cursor: pointer; margin: 10px 0; display: flex; align-items: center; gap: 8px;">
-  <strong>J–K — Julia, Jupyter & KDE</strong>
+  <strong>J-K</strong>
 </summary>
 <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
   <ul>

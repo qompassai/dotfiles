@@ -1,29 +1,23 @@
 #!/usr/bin/openrc-run
-# Copyright 1999-2011 Gentoo Foundation
-# Distributed under the terms of the GNU General Public License v2
-
+# /qompassai/dotfiles/.config/init.d/autofs
+# Qompass AI Init.d AutoFS Config
+# Copyright (C) 2026 Qompass AI, All rights reserved
+########################################################
 DAEMON=/usr/bin/automount
 PIDFILE=/run/autofs.pid
 DEVICE=autofs
-
 depend() {
 	need localmount
 	use ypbind nfs slapd portmap net
 }
-
 extra_started_commands="reload"
-
 start() {
 	ebegin "Starting automounter"
-
-	# Ensure autofs support is loaded
 	grep -q autofs /proc/filesystems || modprobe -q autofs4
 	if [ $? -ne 0 ]; then
 		eend 1 "No autofs support available in kernel"
 		return 1
 	fi
-
-	# Check misc device
 	if [ -n "${USE_MISC_DEVICE}" -a "${USE_MISC_DEVICE}" = "yes" ]; then
 		sleep 1
 		if [ -e "/proc/misc" ]; then
@@ -46,18 +40,14 @@ start() {
 	else
 		[ -c "/dev/${DEVICE}" ] && rm -rf "/dev/${DEVICE}"
 	fi
-
 	start-stop-daemon --start --exec ${DAEMON} -- -p ${PIDFILE} ${OPTIONS}
-
 	eend $?
 }
-
 stop() {
 	ebegin "Stopping automounter"
 	start-stop-daemon --stop --quiet -R TERM/45 -p ${PIDFILE}
 	eend $?
 }
-
 reload() {
 	ebegin "Reloading automounter"
 	if [ ! -r "${PIDFILE}" ]; then

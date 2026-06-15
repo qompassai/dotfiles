@@ -1,5 +1,8 @@
-#!/bin/bash
-#
+#!/usr//bin/env bash
+# /qompassai/dotfiles/.config/init.d/mst
+# Qompass AI Init.d MST Config
+# Copyright (C) 2026 Qompass AI, All rights reserved
+########################################################
 #
 ### BEGIN INIT INFO
 # Provides:            mst
@@ -18,24 +21,23 @@ prefix="/usr/mst"
 modprobe=/sbin/modprobe
 lspci=lspci
 
-if [ `id -u` -ne 0 ]; then
+if [ "$(id -u)" -ne 0 ]; then
     echo "-E- You must be root to use mst tool"
     exit 1
 fi
 
-if [[ `uname -a` == *MELLANOX* ]]; then
+if [[ $(uname -a) == *MELLANOX* ]]; then
     IS_MLNXOS=1
 fi
 
-# Source function library.
-action() {
+action()
+{
     STRING=$1
     echo -n "$STRING"
     shift
-    $*
+    "$*"
     rc=$?
-    if test $rc -ne 0
-    then
+    if test $rc -ne 0; then
         echo " - Failure: $rc"
         RETVAL=1
     else
@@ -43,16 +45,18 @@ action() {
     fi
     return $rc
 }
-echo_success() {
+echo_success()
+{
     echo " - Success"
 }
-echo_failure() {
+echo_failure()
+{
     echo " - Failure: $?"
 }
-failure() {
+failure()
+{
     echo -n "$* - Failure"
 }
-
 
 RETVAL=0
 
@@ -105,56 +109,55 @@ GR100_HW_ID="3000"
 Quantum3_HW_ID="025B"
 Quantum3_RMA_HW_ID="025c"
 Quantum4_HW_ID="0278"
-
-pcie_switch_device_id=(\
-["0x1976"]="$Schrodinger_HW_ID" # ConnectX6dx PCIe Bridge.
-["0x1979"]="$Freysa_P1011_HW_ID" # ConnectX-7 PCIe Bridge.
-["0x197d"]="$CX8_BRIDGE_HW_ID" # ConnectX-8 PCIe Bridge.
+pcie_switch_device_id=(
+    ["0x1976"]="$Schrodinger_HW_ID"  # ConnectX6dx PCIe Bridge.
+    ["0x1979"]="$Freysa_P1011_HW_ID" # ConnectX-7 PCIe Bridge.
+    ["0x197d"]="$CX8_BRIDGE_HW_ID"   # ConnectX-8 PCIe Bridge.
 )
 
-pci_dev_to_hw_dev_id=(\
-["0xcb20"]="$SwitchIB_HW_ID"
-["0xcf08"]="$SwitchIB2_HW_ID"
-["0xcb84"]="$Spectrum_HW_ID"
-["0x1013"]="$ConnectX4_HW_ID"
-["0x1fb3"]="$ConnectX4_HW_ID"       # - Special internal device for debug FW.
-["0x1015"]="$ConnectX4LX_HW_ID"
-["0x1fb5"]="$ConnectX4LX_HW_ID"     # - Special internal device for debug FW.
-["0x1017"]="$ConnectX5_HW_ID"
-["0x1019"]="$ConnectX5_HW_ID"
-["0x101b"]="$ConnectX6_HW_ID"
-["0x101d"]="$ConnectX6DX_HW_ID"
-["0x101f"]="$ConnectX6LX_HW_ID"
-["0x1021"]="$ConnectX7_HW_ID"
-["0x0219"]="$ConnectX7_RMA_HW_ID"
-["0x1023"]="$ConnectX8_HW_ID"
-["0x021f"]="$ConnectX8_RMA_HW_ID"
-["0x1025"]="$ConnectX9_HW_ID"
-["0x0225"]="$ConnectX9_RMA_HW_ID"
-["0xa2d2"]="$BlueField_HW_ID"
-["0xa2d6"]="$BlueField2_HW_ID"
-["0xc2d1"]="$BlueField2_HW_ID"
-["0xa2dc"]="$BlueField3_HW_ID"
-["0x021d"]="$BlueField3_RMA_HW_ID"
-["0xa2de"]="$BlueField4_HW_ID"
-["0xd2f0"]="$Quantum_HW_ID"
-["0xd2f2"]="$Quantum2_HW_ID"
-["0x0258"]="$Quantum2_RMA_HW_ID"
-["0xcf6c"]="$Specturm_2_HW_ID"
-["0xcf70"]="$Specturm_3_HW_ID"
-["0xcf80"]="$Specturm_4_HW_ID"
-["0x0255"]="$Specturm_4_RMA_HW_ID"
-["0xcf82"]="$Specturm_5_HW_ID"
-["0xcf84"]="$Specturm_6_HW_ID"
-["0xcf86"]="$Specturm_6IB_HW_ID"
-["0x1976"]="$Schrodinger_HW_ID"
-["0x1979"]="$Freysa_P1011_HW_ID"
-["0x197d"]="$CX8_BRIDGE_HW_ID"
-["0x2900"]="$GB100_HW_ID"
-["0x3000"]="$GR100_HW_ID"
-["0xd2f4"]="$Quantum3_HW_ID"
-["0x025c"]="$Quantum3_RMA_HW_ID"
-["0xd2f8"]="$Quantum4_HW_ID"
+pci_dev_to_hw_dev_id=(
+    ["0xcb20"]="$SwitchIB_HW_ID"
+    ["0xcf08"]="$SwitchIB2_HW_ID"
+    ["0xcb84"]="$Spectrum_HW_ID"
+    ["0x1013"]="$ConnectX4_HW_ID"
+    ["0x1fb3"]="$ConnectX4_HW_ID"
+    ["0x1015"]="$ConnectX4LX_HW_ID"
+    ["0x1fb5"]="$ConnectX4LX_HW_ID"
+    ["0x1017"]="$ConnectX5_HW_ID"
+    ["0x1019"]="$ConnectX5_HW_ID"
+    ["0x101b"]="$ConnectX6_HW_ID"
+    ["0x101d"]="$ConnectX6DX_HW_ID"
+    ["0x101f"]="$ConnectX6LX_HW_ID"
+    ["0x1021"]="$ConnectX7_HW_ID"
+    ["0x0219"]="$ConnectX7_RMA_HW_ID"
+    ["0x1023"]="$ConnectX8_HW_ID"
+    ["0x021f"]="$ConnectX8_RMA_HW_ID"
+    ["0x1025"]="$ConnectX9_HW_ID"
+    ["0x0225"]="$ConnectX9_RMA_HW_ID"
+    ["0xa2d2"]="$BlueField_HW_ID"
+    ["0xa2d6"]="$BlueField2_HW_ID"
+    ["0xc2d1"]="$BlueField2_HW_ID"
+    ["0xa2dc"]="$BlueField3_HW_ID"
+    ["0x021d"]="$BlueField3_RMA_HW_ID"
+    ["0xa2de"]="$BlueField4_HW_ID"
+    ["0xd2f0"]="$Quantum_HW_ID"
+    ["0xd2f2"]="$Quantum2_HW_ID"
+    ["0x0258"]="$Quantum2_RMA_HW_ID"
+    ["0xcf6c"]="$Specturm_2_HW_ID"
+    ["0xcf70"]="$Specturm_3_HW_ID"
+    ["0xcf80"]="$Specturm_4_HW_ID"
+    ["0x0255"]="$Specturm_4_RMA_HW_ID"
+    ["0xcf82"]="$Specturm_5_HW_ID"
+    ["0xcf84"]="$Specturm_6_HW_ID"
+    ["0xcf86"]="$Specturm_6IB_HW_ID"
+    ["0x1976"]="$Schrodinger_HW_ID"
+    ["0x1979"]="$Freysa_P1011_HW_ID"
+    ["0x197d"]="$CX8_BRIDGE_HW_ID"
+    ["0x2900"]="$GB100_HW_ID"
+    ["0x3000"]="$GR100_HW_ID"
+    ["0xd2f4"]="$Quantum3_HW_ID"
+    ["0x025c"]="$Quantum3_RMA_HW_ID"
+    ["0xd2f8"]="$Quantum4_HW_ID"
 )
 
 GB100_PCI_ID_START=0x2900
@@ -166,10 +169,8 @@ GR100_PCI_ID_END=0x30FF
 MST_START_FLAGS="[--$WITH_MSIX] [--$WITH_UNKNOWN_ID] [--$WITH_DEVI2C] [--$WITH_DEVLPC] [--device] [--$WITH_PLANARIZED_DEVICE_PCI] [--$KERNEL_DEBUG_MODE] [--$SKIP_SCAN]"
 
 # Mellanox dev directory
-mdir="/dev/mst"                 # Directory where MST devices created
-mbindir=/usr/bin           # Binary directory where MST-utils and modules are located
-
-
+mdir="/dev/mst"  # Directory where MST devices created
+mbindir=/usr/bin # Binary directory where MST-utils and modules are located
 
 #@POST_MST_BIN_DIR@  # Update the bin dir by the post install script.
 
@@ -179,25 +180,24 @@ BASH_VERSION_LIB_PATH=${mlibdir}/mft/bash_libs/tools_version.sh
 
 UNKNOWN_ID="UNKNWON_ID"
 
-
 MFT_EXT_PYTHON_LIB_DIR=$mlibdir/mft/python_ext_libs
 MFT_PYTHON_TOOLS=$mlibdir/mft/python_tools
 
 if test -z "${PYTHONPATH}"; then
-   PYTHONPATH=$MFT_PYTHON_TOOLS:$MFT_EXT_PYTHON_LIB_DIR
+    PYTHONPATH=$MFT_PYTHON_TOOLS:$MFT_EXT_PYTHON_LIB_DIR
 else
-   PYTHONPATH=$MFT_PYTHON_TOOLS:$MFT_EXT_PYTHON_LIB_DIR:${PYTHONPATH}
+    PYTHONPATH=$MFT_PYTHON_TOOLS:$MFT_EXT_PYTHON_LIB_DIR:${PYTHONPATH}
 fi
 export PYTHONPATH
 
-PYTHON_EXEC=`find /usr/bin /bin/ /usr/local/bin -iname 'python*' 2>&1 | grep -e='*python[0-9,.]*' | sort -d | head -n 1`
-which python3 >/dev/null 2>&1
-if test $? -eq 0 ; then
-   PYTHON_EXEC='/usr/bin/env python3'
+PYTHON_EXEC=$(find /usr/bin /bin/ /usr/local/bin -iname 'python*' 2>&1 | grep -e='*python[0-9,.]*' | sort -d | head -n 1)
+which python3 > /dev/null 2>&1
+if test $? -eq 0; then
+    PYTHON_EXEC='/usr/bin/env python3'
 else
-    which python2 >/dev/null 2>&1
-    if test $? -eq 0 ; then
-       PYTHON_EXEC='/usr/bin/env python2'
+    which python2 > /dev/null 2>&1
+    if test $? -eq 0; then
+        PYTHON_EXEC='/usr/bin/env python2'
     fi
 fi
 
@@ -212,14 +212,13 @@ pcidir="/var/mst_pci"
 perm="600"
 
 # Vendor / Device IDs
-mellanox_vendor_id="15b3"                # Mellanox vendor ID
-nvidia_vendor_id="10de"     # Nvidia vendor ID
+mellanox_vendor_id="15b3" # Mellanox vendor ID
+nvidia_vendor_id="10de"   # Nvidia vendor ID
 
-devid_pcurom="5a50"  # MT23108 PCIROM device ID
-
+devid_pcurom="5a50" # MT23108 PCIROM device ID
 
 #    DevId              RstAddr   Description
-dev_id_database=(\
+dev_id_database=(
     "cb20               0xf0010   Switch-IB"
     "1013               0xf0010   MT27620 [ConnectX-4]"
     "1015               0xf0010   MT27630 Family [ConnectX-4LX]"
@@ -260,7 +259,7 @@ dev_id_database=(\
 
 )
 
-live_fish_id_database=(\
+live_fish_id_database=(
     "0249  0xf0010 Spectrum Flash recovery mode"
     "024b  0xf0010 Switch-IB 2 Flash recovery mode"
     "0247  0xf0010 Switch-IB Flash recovery mode"
@@ -289,25 +288,20 @@ live_fish_id_database=(\
     "0220  0xf0010 BlueField4 SoC Flash recovery mode"
 )
 
-
-nvidia_device_id_database=(\
+nvidia_device_id_database=(
     "2900|GB100"
     "3000|GR100"
 )
 
-
-
 # Title
 prog="MST (Mellanox Software Tools) driver set"
 
-
-
 PATH=${PATH}:/sbin:/usr/bin:/bin:${mbindir}
 
-kver=`uname -r`
+kver=$(uname -r)
 
 if [ -r /etc/mst.conf ]; then
-. /etc/mst.conf
+    . /etc/mst.conf
 fi
 
 ###
@@ -322,14 +316,15 @@ fi
 devnums=()
 pf0devids=()
 
-map_set() {
+map_set()
+{
 
     map=$1
     key=$2
     val=$3
     if [ "$map" == "devnums" ]; then
         map_len=${#devnums[@]}
-        for (( i=0; i<${map_len}; i++ )); do
+        for ((i = 0; i < map_len; i++)); do
             iKEY=${devnums[i]%%=*}
             if [ "$key" == "$iKEY" ]; then
                 devnums[i]="$key=$val"
@@ -339,7 +334,7 @@ map_set() {
         devnums+=("$key=$val")
     elif [ "$map" == "pf0devids" ]; then
         map_len=${#pf0devids[@]}
-        for (( i=0; i<${map_len}; i++ )); do
+        for ((i = 0; i < map_len; i++)); do
             iKEY=${pf0devids[i]%%=*}
             if [ "$key" == "$iKEY" ]; then
                 pf0devids[i]="$key=$val"
@@ -350,7 +345,8 @@ map_set() {
     fi
 }
 
-map_get() {
+map_get()
+{
     map=$1
     key=$2
     if [ "$map" == "devnums" ]; then
@@ -375,19 +371,14 @@ map_get() {
         printf "NA"
     fi
 }
-
-###
-### PCI / PCICONF PCUROM
-### --------------------
-###
-
-function is_device_bad() {
+function is_device_bad()
+{
     dev=$1
-    bar_info=`cat $dev | tail -1`
+    bar_info=$(cat $dev | tail -1)
     bar_regexp="domain:bus:dev.fn=[[:xdigit:]]{4}:[[:xdigit:]]{2}:[[:xdigit:]]{2}.[[:xdigit:]]{1} bar=0x[[:xdigit:]]+ size=0x[[:xdigit:]]+"
 
     if [[ $bar_info =~ $bar_regexp ]]; then
-        bar_size=`echo $bar_info | cut -d"=" -f4`
+        bar_size=$(echo $bar_info | cut -d"=" -f4)
         if [ "$bar_size" == "0x0" ]; then
             return 1
         fi
@@ -395,8 +386,6 @@ function is_device_bad() {
     return 0
 }
 
-### create group of PCI devices per one instance of InfiniHost (cr,uar)
-### ------------------------------------------------------------------
 create_pci_dev()
 {
     ## For IA64 - do not create PCI devices
@@ -409,8 +398,8 @@ create_pci_dev()
     local devnum=$3
     local major=$4
     local minor=$5
-#    local c_major=$6
-#    local c_minor=$7
+    #    local c_major=$6
+    #    local c_minor=$7
     local bar_step=$6
     shift 6
     #Get the fn from the BDF
@@ -418,38 +407,38 @@ create_pci_dev()
     local bar=0
     # PCI group of devices
     #     "_cr", for InfiniHost
-    for name
-    do
+    for name; do
         if [ x$name != xNOBAR ]; then
-             new_dev=${mdir}/${devname}pci$name${devnum}
-             if [[ "$fn" != "0" ]]; then
+            new_dev=${mdir}/${devname}pci$name${devnum}
+            if [[ $fn != "0" ]]; then
                 new_dev=${new_dev}.${fn}
-             fi
-             if [ ! -c ${new_dev} ]; then
-                 mknod -m ${perm} ${new_dev} c ${major} ${minor}
-                 ${mbindir}/minit ${new_dev} $busdevfn $bar
-                 if [ $? -ne 0 ]; then
-                     rm ${new_dev}
-                 fi
-                 is_device_bad $new_dev; rc=$?
-                 if [ $rc == "1" ]; then
+            fi
+            if [ ! -c ${new_dev} ]; then
+                mknod -m ${perm} ${new_dev} c ${major} ${minor}
+                ${mbindir}/minit ${new_dev} $busdevfn $bar
+                if [ $? -ne 0 ]; then
+                    rm ${new_dev}
+                fi
+                is_device_bad $new_dev
+                rc=$?
+                if [ $rc == "1" ]; then
                     ${mbindir}/mstop "$new_dev"
                     rm ${new_dev}
-                  fi
-             fi
-             minor=$(( $minor + 1 ))
+                fi
+            fi
+            minor=$((minor + 1))
         fi
-        bar=$(( $bar + $bar_step ))
+        bar=$((bar + bar_step))
     done
 
-    is_bar_access=$(echo $@ | grep "NOBAR")
+    is_bar_access=$(echo "${@}" | grep "NOBAR")
     if [ -z "$is_bar_access" ]; then
         # open mem access if closed.
-        mem_byte=`setpci -s $busdevfn 4.B`
+        mem_byte=$(setpci -s $busdevfn 4.B)
         let "mem_en = 0x$mem_byte & 0xf"
         if [ $mem_en -eq 0 ]; then
             let "mem_byte = 0x$mem_byte | 0x6"
-            mem_byte=`printf "%x" $mem_byte`
+            mem_byte=$(printf "%x" $mem_byte)
             setpci -s $busdevfn 4.B=$mem_byte
         fi
     fi
@@ -465,15 +454,13 @@ get_pciconf_dev_name()
     local name=$4
     local full_name="${mdir}/${devname}pciconf$name${devnum}"
 
-    if [[ "$fn" != "0" ]]; then
+    if [[ $fn != "0" ]]; then
         full_name=${full_name}.${fn}
     fi
 
     echo ${full_name}
 }
 
-### create a PCICONF device per one instance of infinihost
-### -------------------------------------------------
 create_pciconf_dev()
 {
     local devname=$1
@@ -482,11 +469,9 @@ create_pciconf_dev()
     local major=$4
     local minor=$5
     local name=$6
-
-    #Get the fn from the BDF
     fn=$(echo ${busdevfn} | cut -f2 -d.)
     # PCICONF
-    fullname=`get_pciconf_dev_name $devname $devnum $fn $name`
+    fullname=$(get_pciconf_dev_name $devname $devnum $fn $name)
     if [ ! -c ${fullname} ]; then
         mknod -m ${perm} $fullname c ${major} ${minor}
         ${mbindir}/minit $fullname ${busdevfn} 88 92
@@ -494,7 +479,7 @@ create_pciconf_dev()
             rm ${mdir}/${devname}pciconf$name${minor}
         fi
     fi
-    minor=$((  $minor + 1 ))
+    minor=$((minor + 1))
 }
 
 get_pci_dev_args()
@@ -509,25 +494,25 @@ get_pci_dev_args()
     hw_dev_id=${pci_dev_to_hw_dev_id[0x${devid}]}
     dev_args="2 _cr"
     # For the devices ConnectX4/LX, don't create /dev/mst/pci_****cr device
-    if [ x$hw_dev_id == x$ConnectX4_HW_ID ] ||
-        [ x$hw_dev_id == x$ConnectX4LX_HW_ID ]; then
+    if [ x$hw_dev_id == x$ConnectX4_HW_ID ] \
+        || [ x$hw_dev_id == x$ConnectX4LX_HW_ID ]; then
         dev_args="2 NOBAR _cr"
     fi
-    # For the devices >= ConnectX5: if we find a bar gateway offset != -1 (determined in minit) in the pciconf ($conf_dev), 
+    # For the devices >= ConnectX5: if we find a bar gateway offset != -1 (determined in minit) in the pciconf ($conf_dev),
     # then return "0 _cr" and create /dev/mst/pci_****cr device
     # otherwise, the BAR0 gateway is unsupported; return "2 NOBAR"
-    if [ x$hw_dev_id == x$ConnectX5_HW_ID ] ||
-        [ x$hw_dev_id == x$ConnectX6_HW_ID ] ||
-        [ x$hw_dev_id == x$ConnectX6DX_HW_ID ] ||
-        [ x$hw_dev_id == x$ConnectX6LX_HW_ID ] ||
-        [ x$hw_dev_id == x$ConnectX7_HW_ID ] ||
-        [ x$hw_dev_id == x$ConnectX8_HW_ID ] ||
-        [ x$hw_dev_id == x$ConnectX9_HW_ID ] ||
-        [ x$hw_dev_id == x$BlueField_HW_ID ] ||
-        [ x$hw_dev_id == x$BlueField2_HW_ID ] ||
-        [ x$hw_dev_id == x$BlueField3_HW_ID ] ||
-        [ x$hw_dev_id == x$BlueField4_HW_ID ] ; then
-        bar_size=`cat "$conf_dev" | grep "cr_bar.gw_offset=" | grep -v "\-1"`
+    if [ x$hw_dev_id == x$ConnectX5_HW_ID ] \
+        || [ x$hw_dev_id == x$ConnectX6_HW_ID ] \
+        || [ x$hw_dev_id == x$ConnectX6DX_HW_ID ] \
+        || [ x$hw_dev_id == x$ConnectX6LX_HW_ID ] \
+        || [ x$hw_dev_id == x$ConnectX7_HW_ID ] \
+        || [ x$hw_dev_id == x$ConnectX8_HW_ID ] \
+        || [ x$hw_dev_id == x$ConnectX9_HW_ID ] \
+        || [ x$hw_dev_id == x$BlueField_HW_ID ] \
+        || [ x$hw_dev_id == x$BlueField2_HW_ID ] \
+        || [ x$hw_dev_id == x$BlueField3_HW_ID ] \
+        || [ x$hw_dev_id == x$BlueField4_HW_ID ]; then
+        bar_size=$(cat "$conf_dev" | grep "cr_bar.gw_offset=" | grep -v "\-1")
         if [ "$bar_size" == "" ]; then
             dev_args="2 NOBAR"
         else
@@ -536,7 +521,7 @@ get_pci_dev_args()
     fi
     if [ "$with_msix" == "1" ]; then
         dev_args="$dev_args _msix"
-        fi
+    fi
 
     echo $dev_args
 }
@@ -549,11 +534,11 @@ get_dev_id()
 
     local devid=$devidarg
 
-    if [ "$devidarg" == $UNKNOWN_ID ] ; then
+    if [ "$devidarg" == $UNKNOWN_ID ]; then
         if [ "$oper" == "before" ]; then
             devid=""
         else
-            devid=`echo $devid_lspci_out | cut -f2 -d"\""`
+            devid=$(echo $devid_lspci_out | cut -f2 -d"\"")
         fi
     fi
     echo $devid
@@ -562,7 +547,7 @@ get_dev_id()
 get_dev_name()
 {
     dev_id=$1
-    dev_id_dec=`printf %d 0x$dev_id`
+    dev_id_dec=$(printf %d 0x$dev_id)
     devname="mt"$dev_id_dec"_"
     echo $devname
 }
@@ -572,8 +557,8 @@ is_pcie_switch()
     local devidarg=$1
     hw_dev_id=${pcie_switch_device_id[0x${devidarg}]}
 
-    for id in ${pcie_switch_device_id[@]}; do
-        if [[ $hw_dev_id == $id ]]; then
+    for id in "${pcie_switch_device_id[@]}"; do
+        if [[ $hw_dev_id == "${id}" ]]; then
             mdevices_info -s $busdevfn
             RC=$?
             if [ $RC != 1 ]; then
@@ -589,22 +574,19 @@ update_bdf()
     local busdevfn=$1
     local new_dev=$2
     local new_fn=$3
-
     bus="${busdevfn%:*}"
     updated_busdevfn="${bus}:${new_dev}.${new_fn}"
-
     echo "$updated_busdevfn"
 }
-
 already_created()
 {
     directory=$1
     dev_name=$2
 
     for file in "$directory"/*; do
-    if [[ "$file" == *"$dev_name"* ]]; then
-        return 0
-    fi
+        if [[ $file == *"$dev_name"* ]]; then
+            return 0
+        fi
     done
     return 1
 }
@@ -623,99 +605,96 @@ prepare_create_pci_dev()
 
     devid=$(get_dev_id "before" $devidarg)
 
-    new_minors=`(
-    echo $pciminor $pciconfminor
-    ${lspci} -m -n -d ${vendor_id}:$devid 2> /dev/null | while read str
-    do
-        set -- $str
-        busdevfn=$1
+    new_minors=$( (
+        echo "${pciminor}" $pciconfminor
+        ${lspci} -m -n -d ${vendor_id}:$devid 2> /dev/null | while read str; do
+            set -- "${str}"
+            busdevfn=$1
 
-        if [[ "$busdevfn" != *\:*\:*\.* ]]; then
-            busdevfn="0000:$busdevfn"
-        fi
-        # Ignore the device if its a PCIE switch device
-        # and vendor specific capability is not supported.
-        if [ "$devidarg" != $UNKNOWN_ID ] ; then
-            is_pcie_switch $devidarg
-            if [ $? -ne 0 ]; then
-                continue
+            if [[ $busdevfn != *\:*\:*\.* ]]; then
+                busdevfn="0000:$busdevfn"
             fi
-        fi
-
-        devid=$(get_dev_id "after" $devidarg $4)
-
-        devname=$(get_dev_name $devid)
-
-        #Get the fn from the BDF
-        fn=$(echo ${busdevfn} | cut -f2 -d.)
-        busdev=$(echo $busdevfn | cut -d':' -f1-2 | sed 's/://g')
-
-        #Handle toolspf devices
-        bus=$(echo $busdevfn | awk -F ':' '{print $1":"$2":"}')
-        #For each bus-device, the toolspf device (if enabled) should appear last. *for BlueField: might appear one before last since enable_tools_pf exposes BF rshim as well.
-        #toolspf device ID starts with 0x1f (for CX4 and above) or 0xb2 (for BlueField devices).
-        toolspf_dev_id=$(lspci -n -s $bus | sort -u | tail -n2 | awk -F: '{gsub(/[[:space:]]/, "", $NF); if (substr($NF, 1, 2) ~ /^(b2|1f)/) print $NF}' | awk -F '(' '{print $1}')
-
-        if [ ! -z "$toolspf_dev_id" ]; then
-            #Get the toolspf fn from the BDF
-            toolspf_fn=$(\lspci -n -s "${bus}" | sort -u | tail -n2 | grep  '\<1f\w*\|b2\w*\>' | awk {'print $1'} | awk -F '.' '{print $2}')
-            toolspf_dev=$(\lspci -n -s "${bus}" | sort -u | tail -n2 | grep  '\<1f\w*\|b2\w*\>' | awk {'print $1'} | awk -F ':' '{print $2}' | awk -F '.' '{print $1}')
-        fi
-
-        if [[ "$fn" == "0" ]]; then
-            #pf0devids[$busdev]=$devid
-            map_set "pf0devids" ${busdev} ${devid}
-        fi
-        #pf0devid=${pf0devids[$busdev]}
-        pf0devid=$(map_get "pf0devids" $busdev)
-
-        val=$(map_get "devnums" $pf0devid)
-        if [ "$val" == "NA" ]; then
-            #devnums[$pf0devid]=0
-            map_set "devnums" $pf0devid 0
-        else
-            if [[ "$fn" == "0" ]]; then
-                #let devnums[$pf0devid]+=1
-                new_val=$(expr $val + 1)
-                map_set "devnums" $pf0devid $new_val;
+            # Ignore the device if its a PCIE switch device
+            # and vendor specific capability is not supported.
+            if [ "$devidarg" != $UNKNOWN_ID ]; then
+                is_pcie_switch $devidarg
+                if [ $? -ne 0 ]; then
+                    continue
+                fi
             fi
-        fi
-        devnum=$(map_get "devnums" $pf0devid)
-        #devnum=${devnums[$pf0devid]}
-        conf_dev_name=$(get_pciconf_dev_name $devname $devnum $fn)
-        create_pciconf_dev $devname $busdevfn $devnum $pciconfmajor $pciconfminor
-        pciconfminor=$((  $pciconfminor + 1 ))
 
-        pci_dev_args=$(get_pci_dev_args $with_msix $devid $conf_dev_name)
-        next_pciminor=$(create_pci_dev $devname $busdevfn $devnum $pcimajor $pciminor $pci_dev_args)
-        pciminor=$next_pciminor
+            devid=$(get_dev_id "after" $devidarg $4)
 
-        #Create toolspf devices (if exists)
-        if [ ! -z "$toolspf_dev_id" ]; then
-            toolspf_devname=$(get_dev_name $toolspf_dev_id)
-            conf_dev_name=$(get_pciconf_dev_name $toolspf_devname $devnum $toolspf_fn)
+            devname=$(get_dev_name $devid)
 
-            bus_dev=$(echo $busdevfn | awk 'BEGIN{FS=OFS=":"} {sub(/\..*$/, "", $3); print $1, $2, $3}')
-            busdevfn=$(update_bdf $busdevfn $toolspf_dev $toolspf_fn)
-            toolspf_bus_dev=$(echo $busdevfn | awk 'BEGIN{FS=OFS=":"} {sub(/\..*$/, "", $3); print $1, $2, $3}')
-            devs_dir="/dev/mst/"
+            fn=$(echo ${busdevfn} | cut -f2 -d.)
+            busdev=$(echo $busdevfn | cut -d':' -f1-2 | sed 's/://g')
 
-            already_created "$devs_dir" "$toolspf_devname"
-            if [ $? -ne 0 ] || [[ "$busdev" != "$toolspf_busdev" ]]; then #Create the corresponding file to the device only if it was not yet created (when the toolsPF dev and original dev share the same domain/bus/device).
-                create_pciconf_dev $toolspf_devname $busdevfn $devnum $pciconfmajor $pciconfminor
-                pciconfminor=$(( $pciconfminor + 1 ))
-                pci_dev_args=$(get_pci_dev_args $with_msix $devid $conf_dev_name)
-                next_pciminor=$(create_pci_dev $toolspf_devname $busdevfn $devnum $pcimajor $pciminor $pci_dev_args)
-                pciminor=$next_pciminor
+            #Handle toolspf devices
+            bus=$(echo $busdevfn | awk -F ':' '{print $1":"$2":"}')
+            #For each bus-device, the toolspf device (if enabled) should appear last. *for BlueField: might appear one before last since enable_tools_pf exposes BF rshim as well.
+            #toolspf device ID starts with 0x1f (for CX4 and above) or 0xb2 (for BlueField devices).
+            toolspf_dev_id=$(lspci -n -s $bus | sort -u | tail -n2 | awk -F: '{gsub(/[[:space:]]/, "", $NF); if (substr($NF, 1, 2) ~ /^(b2|1f)/) print $NF}' | awk -F '(' '{print $1}')
+
+            if [ ! -z "$toolspf_dev_id" ]; then
+                #Get the toolspf fn from the BDF
+                toolspf_fn=$(\lspci -n -s "${bus}" | sort -u | tail -n2 | grep '\<1f\w*\|b2\w*\>' | awk "{'print $1'}" | awk -F '.' '{print $2}')
+                toolspf_dev=$(\lspci -n -s "${bus}" | sort -u | tail -n2 | grep '\<1f\w*\|b2\w*\>' | awk "{'print $1'}" | awk -F ':' '{print $2}' | awk -F '.' '{print $1}')
             fi
-        fi
 
-        echo $pciminor $pciconfminor
-    done
-    )| tail -1`
+            if [[ $fn == "0" ]]; then
+                #pf0devids[$busdev]=$devid
+                map_set "pf0devids" "${busdev}" "${devid}"
+            fi
+            #pf0devid=${pf0devids[$busdev]}
+            pf0devid=$(map_get "pf0devids" $busdev)
+
+            val=$(map_get "devnums" $pf0devid)
+            if [ "$val" == "NA" ]; then
+                #devnums[$pf0devid]=0
+                map_set "devnums" $pf0devid 0
+            else
+                if [[ $fn == "0" ]]; then
+                    #let devnums[$pf0devid]+=1
+                    new_val=$(expr $val + 1)
+                    map_set "devnums" $pf0devid $new_val
+                fi
+            fi
+            devnum=$(map_get "devnums" $pf0devid)
+            #devnum=${devnums[$pf0devid]}
+            conf_dev_name=$(get_pciconf_dev_name $devname $devnum $fn)
+            create_pciconf_dev $devname $busdevfn $devnum $pciconfmajor $pciconfminor
+            pciconfminor=$((pciconfminor + 1))
+
+            pci_dev_args=$(get_pci_dev_args $with_msix $devid $conf_dev_name)
+            next_pciminor=$(create_pci_dev $devname $busdevfn $devnum $pcimajor $pciminor $pci_dev_args)
+            pciminor=$next_pciminor
+
+            #Create toolspf devices (if exists)
+            if [ ! -z "$toolspf_dev_id" ]; then
+                toolspf_devname=$(get_dev_name $toolspf_dev_id)
+                conf_dev_name=$(get_pciconf_dev_name $toolspf_devname $devnum $toolspf_fn)
+
+                bus_dev=$(echo $busdevfn | awk 'BEGIN{FS=OFS=":"} {sub(/\..*$/, "", $3); print $1, $2, $3}')
+                busdevfn=$(update_bdf $busdevfn $toolspf_dev $toolspf_fn)
+                toolspf_bus_dev=$(echo $busdevfn | awk 'BEGIN{FS=OFS=":"} {sub(/\..*$/, "", $3); print $1, $2, $3}')
+                devs_dir="/dev/mst/"
+
+                already_created "$devs_dir" "$toolspf_devname"
+                if [ $? -ne 0 ] || [[ $busdev != "$toolspf_busdev" ]]; then #Create the corresponding file to the device only if it was not yet created (when the toolsPF dev and original dev share the same domain/bus/device).
+                    create_pciconf_dev $toolspf_devname $busdevfn $devnum $pciconfmajor $pciconfminor
+                    pciconfminor=$((pciconfminor + 1))
+                    pci_dev_args=$(get_pci_dev_args $with_msix $devid $conf_dev_name)
+                    next_pciminor=$(create_pci_dev $toolspf_devname $busdevfn $devnum $pcimajor $pciminor $pci_dev_args)
+                    pciminor=$next_pciminor
+                fi
+            fi
+
+            echo $pciminor $pciconfminor
+        done
+    ) | tail -1)
     echo $new_minors
 }
-
 
 prepare_create_pci_dev_live_fish()
 {
@@ -727,22 +706,21 @@ prepare_create_pci_dev_live_fish()
 
     devid=$(get_dev_id "before" $devidarg)
 
-    new_pciconfminor=`(
-    echo $pciconfminor
-    ${lspci} -m -n -d ${mellanox_vendor_id}:${devid} 2> /dev/null | sort | while read str
-    do
-        set -- $str
-        busdevfn=$1
-        devid=$(get_dev_id "after" $devidarg $4)
-
-        devname=$(get_dev_name $devid)
-        create_pciconf_dev $devname $busdevfn $devnum $pciconfmajor $pciconfminor
-
-        devnum=$((  $devnum + 1 ))
-        pciconfminor=$((  $pciconfminor + 1 ))
+    new_pciconfminor=$( (
         echo $pciconfminor
-    done
-    )| tail -1`
+        ${lspci} -m -n -d ${mellanox_vendor_id}:${devid} 2> /dev/null | sort | while read str; do
+            set -- $str
+            busdevfn=$1
+            devid=$(get_dev_id "after" $devidarg $4)
+
+            devname=$(get_dev_name $devid)
+            create_pciconf_dev $devname $busdevfn $devnum $pciconfmajor $pciconfminor
+
+            devnum=$((devnum + 1))
+            pciconfminor=$((pciconfminor + 1))
+            echo $pciconfminor
+        done
+    ) | tail -1)
     echo $new_pciconfminor
 }
 
@@ -751,18 +729,17 @@ find_mtusb_rename()
     declare -i i
     i=0
 
-    for s in ${ids[@]}
-    do
+    for s in "${ids[@]}"; do
         if [ "0x$1" == ${s} ]; then
             break
         fi
         i=i+1
     done
-    if [[ "${devices_names[$i]}" != "" ]]; then
+    if [[ ${devices_names[$i]} != "" ]]; then
         mtusb_name=${devices_names[$i]}
     else
         rc=1
-        while test $rc -ne 0 ; do
+        while test $rc -ne 0; do
             mtusb_name=${mst_usb_dev}mtusb-1
             mst_usb_dev=X$mst_usb_dev
             check_existence $mtusb_name "n"
@@ -772,7 +749,7 @@ find_mtusb_rename()
 
 }
 
-generate_serial_file ()
+generate_serial_file()
 {
     bus=$1
     dev=$2
@@ -784,20 +761,19 @@ generate_serial_file ()
     fi
 }
 
-
 create_ndc_devices()
 {
     counter=0
     found=
- 
+
     # Check if there is any usb directory in tree.
-    for DIR in /sys/bus/usb/devices/usb* ; do
+    for DIR in /sys/bus/usb/devices/usb*; do
         if [ -e "$DIR" ]; then
             found="$DIR"
             break
         fi
     done
-    
+
     if [ -z "$found" ]; then
         return
     fi
@@ -805,14 +781,14 @@ create_ndc_devices()
     while IFS= read -r sysdevpath; do
         syspath="${sysdevpath%/dev}"
         devname="$(udevadm info -q name -p "$syspath")"
-        [[ "$devname" == "bus/"* ]] && continue
-        eval "$(udevadm info -q property --export -p "$syspath")" 2>/dev/null
-        [[ -z "$ID_SERIAL" ]] && continue
+        [[ $devname == "bus/"* ]] && continue
+        eval "$(udevadm info -q property --export -p "$syspath")" 2> /dev/null
+        [[ -z $ID_SERIAL ]] && continue
         device=$(echo "$ID_SERIAL" | grep STM32)
-        [[ -z "$device" ]] && continue
+        [[ -z $device ]] && continue
 
         # Check to skip if devname does not contain "ttyACM".
-        if [[ "$devname" != *ttyACM* ]]; then
+        if [[ $devname != *ttyACM* ]]; then
             continue
         fi
 
@@ -826,11 +802,10 @@ create_ndc_devices()
         ln -sf "/dev/$devname" "$new_ndc_device.2"
 
         if [ "$counter" -eq 0 ]; then
-            # Echo this command twice, in case it fails at the first try.
             stty -F "/dev/$devname" "1:0:1cb2:0:3:1c:7f:15:4:5:1:0:11:13:1a:0:12:f:17:16:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0"
             stty -F "/dev/$devname" "1:0:1cb2:0:3:1c:7f:15:4:5:1:0:11:13:1a:0:12:f:17:16:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0"
         fi
-        
+
         # After unplugging and re-plugging the NDC, the device is incapable of reading, writing, or scanning with it.
         # To resolve this, we need to reset the I2C controller.
         printf "\r\r\r" > /dev/$devname
@@ -849,34 +824,35 @@ create_mtusb_devices()
     local mst_usb_dev=""
 
     OLD_IFS=$IFS
-    IFS=$'\n';
-    warn_msg="-W- Missing \"lsusb\" command, skipping MTUSB devices detection"
+    IFS=$'\n'
+    warn_msg='-W- Missing "lsusb" command, skipping MTUSB devices detection'
     if [ "$IS_MLNXOS" == "1" ]; then
         warn_msg=""
     fi
-    command -v lsusb >/dev/null || { echo ${warn_msg}; return; }
+    command -v lsusb > /dev/null || {
+        echo ${warn_msg}
+        return
+    }
     if ! test -f ${mbindir}/dimax_init; then
-        echo "-W- Missing \"dimax_init\", skipping MTUSB devices detection"
+        echo '-W- Missing "dimax_init", skipping MTUSB devices detection'
         return
     fi
-    for lsusb_out in `lsusb -d $dimax_vend:$dimax_prod 2> /dev/null`;
-    do
+    for lsusb_out in $(lsusb -d $dimax_vend:$dimax_prod 2> /dev/null); do
         IFS=$OLD_IFS
         found_devs=0
         local bus=$(echo $lsusb_out | cut -f2 -d" ")
         local device=$(echo $lsusb_out | cut -f1 -d":" | cut -f4 -d " ")
-        for usb_dir in /dev/bus/usb /proc/bus/usb;
-        do
+        for usb_dir in /dev/bus/usb /proc/bus/usb; do
             if ! test -d $usb_dir; then
                 continue
             fi
             usb_dev="$usb_dir/$bus/$device"
             if chmod 0666 $usb_dev 2> /dev/null; then
-                if ${mbindir}/dimax_init $usb_dev > /dev/null ; then
+                if ${mbindir}/dimax_init $usb_dev > /dev/null; then
                     found_devs=1
-                    if [[ "${ENABLE_RENAMING}" == "1" ]]; then
-                         usb_serial=`get_mtusb_serial $bus $device`
-                         find_mtusb_rename $usb_serial
+                    if [[ ${ENABLE_RENAMING} == "1" ]]; then
+                        usb_serial=$(get_mtusb_serial $bus $device)
+                        find_mtusb_rename $usb_serial
                     else
                         mtusb_name=${mst_usb_dev}mtusb-1
                         mst_usb_dev=X$mst_usb_dev
@@ -884,8 +860,8 @@ create_mtusb_devices()
                     action "MTUSB-1 USB to I2C Bridge" ln -fs $usb_dev ${mdir}/${mtusb_name} 2> /dev/null
                     generate_serial_file $bus $device
                 else
-                    diolan_mod=`lsmod | grep diolan`
-                    if [[ "${diolan_mod}" == "" ]]; then
+                    diolan_mod=$(lsmod | grep diolan)
+                    if [[ ${diolan_mod} == "" ]]; then
                         echo "Can't initialize MTUSB-1 USB to I2C Bridge"
                     else
                         #echo "Failed to initialize MTUSB-1, try to blocklist the module i2c-diolan-u2c"
@@ -897,7 +873,7 @@ create_mtusb_devices()
             fi
             # If devices were found on first dir, don't search the other dir (may be doplicated)
             if [ "$found_devs" == "1" ]; then
-                break;
+                break
             fi
         done
 
@@ -907,9 +883,9 @@ create_mtusb_devices()
 
 check_lspci_existance()
 {
-    check_lspci=`${lspci} --version 2> /dev/null`
+    check_lspci=$(${lspci} --version 2> /dev/null)
     if [ $? -ne 0 ]; then
-        echo "-E- Could not find lspci, you may need to install \"pciutils\" package."
+        echo '-E- Could not find lspci, you may need to install "pciutils" package.'
         return 1
     fi
 }
@@ -918,7 +894,7 @@ is_gpu_device()
 {
     local pci_device_id=$1
     local hex_deviceid=0x"$pci_device_id"
-    is_gpu=`${mbindir}/mst_tool -g $hex_deviceid`
+    is_gpu=$(${mbindir}/mst_tool -g "${hex_deviceid}")
     if [ "$is_gpu" -eq "1" ]; then
         echo 1
     else
@@ -932,16 +908,11 @@ create_pci_devices()
     local with_unknown=$2
     local vendor_id=$mellanox_vendor_id
 
-    # ------------------------------------
-    # Determine PCI/PCICONF major numbers.
-    # Initialize PCI/PCICONF minor numbers.
-    # ------------------------------------
-
     check_lspci_existance
     if [ $? -ne 0 ]; then
         return 1
     fi
-    mstr=`cat /proc/devices | grep 'mst_pci$'`
+    mstr=$(cat /proc/devices | grep 'mst_pci$')
     if [ $? -ne 0 ]; then
         echo
         echo "mst_pci driver not found"
@@ -949,7 +920,7 @@ create_pci_devices()
     fi
     set -- $mstr
     pcimajor=$1
-    mstr=`cat /proc/devices | grep 'mst_pciconf$'`
+    mstr=$(cat /proc/devices | grep 'mst_pciconf$')
     if [ $? -ne 0 ]; then
         echo
         echo "mst_pciconf driver not found"
@@ -973,11 +944,10 @@ create_pci_devices()
         pciminor=$1
         pciconfminor=$2
     else
-        lspci_mlnx_output=`${lspci} -m -n -d ${mellanox_vendor_id}: 2> /dev/null | cut -d " " -f4 | sed 's/\"//g'`
-        mlnx_uniqe_ids=`echo "$lspci_mlnx_output" | xargs -n1 | sort -u | xargs`
+        lspci_mlnx_output=$(${lspci} -m -n -d ${mellanox_vendor_id}: 2> /dev/null | cut -d " " -f4 | sed 's/\"//g')
+        mlnx_uniqe_ids=$(echo "$lspci_mlnx_output" | xargs -n1 | sort -u | xargs)
         # Discover devices with Mellanox vendor id
-        for devid in $mlnx_uniqe_ids;
-        do
+        for devid in $mlnx_uniqe_ids; do
             for id in "${dev_id_database[@]}"; do
                 set -- $id
                 cur_devid=$1
@@ -992,8 +962,7 @@ create_pci_devices()
         done
 
         # Discover livefish devices with Mellanox vendor id
-        for devid in $mlnx_uniqe_ids;
-        do
+        for devid in $mlnx_uniqe_ids; do
             for id in "${live_fish_id_database[@]}"; do
                 set -- $id
                 lf_devid=$1
@@ -1006,11 +975,10 @@ create_pci_devices()
         done
 
         # Discover devices with NVIDIA vendor id
-        ${lspci} -m -n -d ${nvidia_vendor_id}: 2> /dev/null | cut -d " " -f4 | sed 's/\"//g' | while read str
-        do
+        ${lspci} -m -n -d ${nvidia_vendor_id}: 2> /dev/null | cut -d " " -f4 | sed 's/\"//g' | while read str; do
             devid=$str
             is_gpu_dev=$(is_gpu_device $devid)
-             if [ "$is_gpu_dev" == "0" ]; then
+            if [ "$is_gpu_dev" == "0" ]; then
                 continue
             fi
             pci_pciconf_minor=$(prepare_create_pci_dev $devid $pciminor $pciconfminor $pcimajor $pciconfmajor $with_msix $nvidia_vendor_id)
@@ -1040,12 +1008,12 @@ create_devices()
 
 is_module()
 {
-local RC
+    local RC
 
     /sbin/lsmod | grep -w "$1" > /dev/null 2>&1
     RC=$?
 
-return $RC
+    return $RC
 }
 load_module()
 {
@@ -1054,13 +1022,12 @@ load_module()
     load_cmd=$3
     load_cmd_string=$4
     with_unknown=$5
-    kernel_debug_mode=${6:-0}  # Default to 0 if not provided
+    kernel_debug_mode=${6:-0} # Default to 0 if not provided
 
-    if is_module ${mod_name}
-    then
+    if is_module ${mod_name}; then
         echo "[warn] ${mod_name} is already loaded, skipping"
     else
-            action "${load_cmd_string}" "${load_cmd}" "${load_cmd_flags}" "${mod_file_path} with_unknown=$with_unknown debug=$kernel_debug_mode"
+        action "${load_cmd_string}" "${load_cmd}" "${load_cmd_flags}" "${mod_file_path} with_unknown=$with_unknown debug=$kernel_debug_mode"
     fi
 
 }
@@ -1068,9 +1035,9 @@ load_module()
 get_dev_id_by_mst()
 {
     mst_dev=$1
-    dev_rev=`${mbindir}/mcra ${mst_dev} 0xf0014`
+    dev_rev=$(${mbindir}/mcra ${mst_dev} 0xf0014)
     local str=${dev_rev:6:4}
-    str=`echo $str | tr a-z A-Z`
+    str=$(echo $str | tr a-z A-Z)
     echo $str
 }
 
@@ -1084,8 +1051,7 @@ check_existence()
     else
         list=("${ids[@]}")
     fi
-    for l in "${list[@]}"
-    do
+    for l in "${list[@]}"; do
         #echo comparing $obj with $l
         if [ $obj == $l ]; then
             return 1
@@ -1101,10 +1067,9 @@ check_conf()
         return 0
     fi
     conf=$1
-    while read line
-    do
+    while read line; do
         if [ ${#line} != 0 ]; then
-            if [[ "$line" == "#"* ]]; then
+            if [[ $line == "#"* ]]; then
                 continue
             fi
             conf_opcode=$(echo ${line} | awk '{print $1}')
@@ -1113,21 +1078,21 @@ check_conf()
                 devname=$(echo ${line} | awk '{print $3}')
                 id=$(echo ${line} | awk '{print $4}')
                 if [[ ${dev_type} == "USB" ]]; then
-                   devname=${devname}-mtusb-1
+                    devname=${devname}-mtusb-1
                 else
                     echo -W- Renaming ${dev_type} devices is not supported !
                     continue
                 fi
                 check_existence ${devname} "n"
                 rc=$?
-                if test $rc -ne 0 ; then
+                if test $rc -ne 0; then
                     echo -e "-E- The Conf file is not right !\n-E- line: $line have duplicated device name, Renaming was ignored !"
                     ENABLE_RENAMING=0
                     return 1
                 fi
                 check_existence ${id} "id"
                 rc=$?
-                if test $rc -ne 0 ; then
+                if test $rc -ne 0; then
                     echo -e "$res-E- The Conf file is not right !\n-E- line: $line have duplicated ID, Renaming was ignored !"
                     ENABLE_RENAMING=0
                     return 1
@@ -1140,12 +1105,12 @@ check_conf()
                 continue
             fi
         fi
-    done <$MST_CONF
+    done < $MST_CONF
 }
 
 get_devname_from_pci()
 {
-    devs_arr=(`grep -l domain:bus:dev.fn=$1 /dev/mst/mt*pciconf*[0-9]`)
+    devs_arr=($(grep -l domain:bus:dev.fn=$1 /dev/mst/mt*pciconf*[0-9]))
     mst_dev_t=${devs_arr[0]}
     echo "${mst_dev_t}"
 }
@@ -1161,7 +1126,7 @@ start()
 
     check_conf $MST_CONF
 
-    while (( "$#" )); do
+    while (("$#")); do
         if [ "$1" == "--$WITH_MSIX" ]; then
             with_msix=1
         elif [ "$1" == "--$WITH_UNKNOWN_ID" ]; then
@@ -1199,13 +1164,13 @@ start()
             sleep 0.1
         fi
         for f in /dev/i2c-*; do
-                # enforce format
-                if [[ ${f} =~ ^/dev/i2c-[0-9]+$ ]]; then
-                    dev=`basename $f`
-                    I2C_DEV=${mdir}/dev-$dev
-                    rm -f $I2C_DEV
-                    ln -s $f $I2C_DEV
-                fi
+            # enforce format
+            if [[ ${f} =~ ^/dev/i2c-[0-9]+$ ]]; then
+                dev=$(basename $f)
+                I2C_DEV=${mdir}/dev-$dev
+                rm -f $I2C_DEV
+                ln -s $f $I2C_DEV
+            fi
         done
     fi
     if [ "$ENABLE_LPC_DEV" == "1" ]; then
@@ -1213,13 +1178,12 @@ start()
         if [ -f ${IO_PORTS_FILE} ]; then
             num_of_ports=$(cat ${IO_PORTS_FILE} | grep lpc | wc -l)
             if [ "${num_of_ports}" != "0" ]; then
-               echo "IO regions num: ${num_of_ports}" > ${mdir}/dev-lpc-1
-               region_index=0
-               for port_range in $(cat ${IO_PORTS_FILE} | grep lpc | awk '{print $1}')
-               do
-                   echo "IO region${region_index}: ${port_range}" >> ${mdir}/dev-lpc-1
-                   region_index=$((region_index + 1))
-               done
+                echo "IO regions num: ${num_of_ports}" > ${mdir}/dev-lpc-1
+                region_index=0
+                for port_range in $(cat ${IO_PORTS_FILE} | grep lpc | awk '{print $1}'); do
+                    echo "IO region${region_index}: ${port_range}" >> ${mdir}/dev-lpc-1
+                    region_index=$((region_index + 1))
+                done
             fi
         fi
     fi
@@ -1232,51 +1196,47 @@ start()
 
     MST_PCI_MOD="mst_pci"
     MST_PCICONF_MOD="mst_pciconf"
-    load_module "${MST_PCI_MOD}"     "${MST_PCI_MOD}"     "${modprobe}"  "Loading MST PCI module" $with_unknwon_id $kernel_debug_mode
-    load_module "${MST_PCICONF_MOD}" "${MST_PCICONF_MOD}" "${modprobe}"  "Loading MST PCI configuration module" $with_unknwon_id $kernel_debug_mode
+    load_module "${MST_PCI_MOD}" "${MST_PCI_MOD}" "${modprobe}" "Loading MST PCI module" $with_unknwon_id $kernel_debug_mode
+    load_module "${MST_PCICONF_MOD}" "${MST_PCICONF_MOD}" "${modprobe}" "Loading MST PCI configuration module" $with_unknwon_id $kernel_debug_mode
 
     # create all related devices
-    create_devices "Create devices"  $with_msix $with_unknwon_id $skip_scan
-    if  ls ${mdir}| grep -e "_cr" > /dev/null 2>&1
-    then :
+    create_devices "Create devices" $with_msix $with_unknwon_id $skip_scan
+    if ls ${mdir} | grep -e "_cr" > /dev/null 2>&1; then
+        :
     else
         action "Unloading MST PCI module (unused)" modprobe -r mst_pci
     fi
-    if ls ${mdir}| grep -e "conf" > /dev/null 2>&1
-    then :
+    if ls ${mdir} | grep -e "conf" > /dev/null 2>&1; then
+        :
     else
         action "Unloading MST PCI configuration module (unused)" modprobe -r mst_pciconf
     fi
 
-    for dev in /dev/*
-    do
+    for dev in /dev/*; do
         if [ -r "$dev" ]; then
-            if expr match "$dev" ".*livefish.*" > /dev/null 2>&1
-            then
-                devnam=${mdir}/`basename $dev`
+            if expr match "$dev" ".*livefish.*" > /dev/null 2>&1; then
+                devnam=${mdir}/$(basename $dev)
                 if [ ! -L ${devnam} ]; then
-                   ln -s ${dev} ${devnam}
+                    ln -s ${dev} ${devnam}
                 fi
             fi
         fi
     done
 
-    for dev in $mlnx_switch_dev_dir/*
-    do
+    for dev in $mlnx_switch_dev_dir/*; do
         if [ -r "$dev" ]; then
-            if expr match "$dev" ".*mlnxsw-*" > /dev/null 2>&1
-            then
-                devnam=${mdir}/`basename $dev`
+            if expr match "$dev" ".*mlnxsw-*" > /dev/null 2>&1; then
+                devnam=${mdir}/$(basename $dev)
                 devnam="${devnam/mlx/mlnx}"
                 if [ ! -f ${devnam} ]; then
-                   ln -s ${dev} ${devnam}
+                    ln -s ${dev} ${devnam}
                 fi
             fi
         fi
     done
 
     if ! ls /dev/i2c-* 1> /dev/null 2>&1; then
-        if lsmod | grep "i2c_dev" > /dev/null ; then
+        if lsmod | grep "i2c_dev" > /dev/null; then
             action "Unloading I2C module (unused)" modprobe -r i2c-dev
         fi
     fi
@@ -1321,7 +1281,6 @@ clean_mdir()
     rm -fr ${CONF_DIR}/usb*serial
 }
 
-
 stop_device()
 {
     device=$1
@@ -1329,7 +1288,7 @@ stop_device()
     echo "Stopping the device: $device, ensure that no active processes are utilizing this device!"
 
     if [ ! -z "$device" ]; then
-          ${mbindir}/mstop "$device" >/dev/null 2>&1
+        ${mbindir}/mstop "$device" > /dev/null 2>&1
     fi
 
     rm -fr ${mdir}/$device
@@ -1353,19 +1312,16 @@ stop()
         check_module_busy mst_pci
     fi
 
-    for dev in ${mdir}/*
-    do
+    for dev in ${mdir}/*; do
         if [ -e "$dev" ]; then
-          ${mbindir}/mstop "$dev" >/dev/null 2>&1
+            ${mbindir}/mstop "$dev" > /dev/null 2>&1
         fi
     done
 
-    if  lsmod | grep mst_pciconf > /dev/null
-    then
-        action "Unloading MST PCI configuration module" modprobe -r  mst_pciconf
+    if lsmod | grep mst_pciconf > /dev/null; then
+        action "Unloading MST PCI configuration module" modprobe -r mst_pciconf
     fi
-    if  lsmod | grep mst_pci | grep -v mst_pciconf> /dev/null
-    then
+    if lsmod | grep mst_pci | grep -v mst_pciconf > /dev/null; then
         action "Unloading MST PCI module" modprobe -r mst_pci
     fi
     gpudel
@@ -1375,7 +1331,7 @@ stop()
 print_chip_rev_internal()
 {
     export MTCR_REMOTE_WARN=1
-    local dev_rev=`${mbindir}/mcra $1 0xF0014`
+    local dev_rev=$(${mbindir}/mcra $1 0xF0014)
     unset MTCR_REMOTE_WARN
     if [ "$dev_rev" == "0xbad0cafe" ]; then
         local str="NA"
@@ -1383,7 +1339,7 @@ print_chip_rev_internal()
         local str="NA"
     else
         local str=${dev_rev:4:2}
-        str=`echo $str | tr a-z A-Z`
+        str=$(echo $str | tr a-z A-Z)
     fi
     echo "                                   Chip revision is: $str"
 }
@@ -1391,12 +1347,10 @@ print_chip_rev_internal()
 print_chip_rev()
 {
     local dev=$1
-    if expr match "$dev" ".*_pci_cr" > /dev/null 2>&1
-    then
+    if expr match "$dev" ".*_pci_cr" > /dev/null 2>&1; then
         print_chip_rev_internal $dev
     fi
-    if expr match "$dev" ".*_pciconf" > /dev/null 2>&1
-    then
+    if expr match "$dev" ".*_pciconf" > /dev/null 2>&1; then
         print_chip_rev_internal $dev
     fi
 }
@@ -1424,20 +1378,20 @@ get_mtusb_serial()
 
 print_mtusb_sn()
 {
-    bus=`readlink $1 | rev | cut -f2 -d/ | rev`
-    dev=`readlink $1 | rev | cut -f1 -d/ | rev`
-    iserial=`get_mtusb_serial $bus $dev`
+    bus=$(readlink $1 | rev | cut -f2 -d/ | rev)
+    dev=$(readlink $1 | rev | cut -f1 -d/ | rev)
+    iserial=$(get_mtusb_serial $bus $dev)
     printf "%35siSerial = 0x$iserial\n"
 }
 
 function ignore_phys_fn()
 {
     set dev=$1
-    if expr match "$dev" ".*_pciconf[0-9]*\.[0-9]*"  > /dev/null 2>&1; then
+    if expr match "$dev" ".*_pciconf[0-9]*\.[0-9]*" > /dev/null 2>&1; then
         echo "YES"
         return
     fi
-    if expr match "$dev" ".*_pci_cr[0-9]*\.[0-9]*"  > /dev/null 2>&1; then
+    if expr match "$dev" ".*_pci_cr[0-9]*\.[0-9]*" > /dev/null 2>&1; then
         echo "YES"
         return
     fi
@@ -1456,8 +1410,7 @@ print_ul_mdevices_info()
         echo -e "\tNo devices were found.\n"
         return
     fi
-    echo "${mdevices}" | while read -r line
-    do
+    echo "${mdevices}" | while read -r line; do
         if expr match "$line" "[-]*" > /dev/null 2>&1; then
             continue
         fi
@@ -1465,13 +1418,13 @@ print_ul_mdevices_info()
             continue
         fi
         read -a arr <<< $line
-        if [[ "$IGNORE_FUNCS" == "1" ]]; then
-            if [[ "${arr[2]}" == *"1" ]]; then
+        if [[ $IGNORE_FUNCS == "1" ]]; then
+            if [[ ${arr[2]} == *"1" ]]; then
                 continue
             fi
         fi
-        if [[ -z "${arr[2]}" ]]; then
-            continue;
+        if [[ -z ${arr[2]} ]]; then
+            continue
         fi
         echo -e "${arr[2]}\n"
     done
@@ -1486,15 +1439,13 @@ print_status()
     # Check modules
     echo "MST modules:"
     echo "------------"
-    if  is_module mst_pci
-    then
+    if is_module mst_pci; then
         echo "    MST PCI module loaded"
         is_mst_loaded=1
     else
         echo "    MST PCI module is not loaded"
     fi
-    if  is_module mst_pciconf
-    then
+    if is_module mst_pciconf; then
         echo "    MST PCI configuration module loaded"
         is_mst_loaded=1
     else
@@ -1549,86 +1500,64 @@ print_status()
         echo "MST devices:"
         echo "------------"
     fi
-    for dev in ${mdir}/*
-    do
+    for dev in ${mdir}/*; do
         if [ -r "$dev" ]; then
-            if expr match "$dev" ".*mlnxsw-*" > /dev/null 2>&1
-            then
+            if expr match "$dev" ".*mlnxsw-*" > /dev/null 2>&1; then
                 mlnxsw_devs=$mlnxsw_devs" $dev"
-                mlnxsw_dev_cnt=$((  $mlnxsw_dev_cnt + 1 ))
-            elif expr match "$dev" ".*_rt.*" > /dev/null 2>&1
-            then
+                mlnxsw_dev_cnt=$((mlnxsw_dev_cnt + 1))
+            elif expr match "$dev" ".*_rt.*" > /dev/null 2>&1; then
                 retimerdevs=$retimerdevs" $dev"
-                retimercnt=$((  $retimercnt + 1 ))
-            elif expr match "$dev" ".*mtusb.*lx*" > /dev/null 2>&1 # linkx device on EVB
-            then
+                retimercnt=$((retimercnt + 1))
+            elif expr match "$dev" ".*mtusb.*lx*" > /dev/null 2>&1; then # linkx device on EVB
                 cabledevs=$cabledevs" $dev"
-                cablescnt=$((  $cablescnt + 1 ))
-            elif expr match "$dev" ".*_module_.*" > /dev/null 2>&1
-            then
+                cablescnt=$((cablescnt + 1))
+            elif expr match "$dev" ".*_module_.*" > /dev/null 2>&1; then
                 cabledevs=$cabledevs" $dev"
-                cablescnt=$((  $cablescnt + 1 ))
-            elif expr match "$dev" ".*cable.*" > /dev/null 2>&1
-            then
+                cablescnt=$((cablescnt + 1))
+            elif expr match "$dev" ".*cable.*" > /dev/null 2>&1; then
                 cabledevs=$cabledevs" $dev"
-                cablescnt=$((  $cablescnt + 1 ))
-            elif expr $dev : '.*:' > /dev/null 2>&1
-            then
+                cablescnt=$((cablescnt + 1))
+            elif expr $dev : '.*:' > /dev/null 2>&1; then
                 rdevs=$rdevs" $dev"
-                rcnt=$((  $rcnt + 1 ))
-            elif expr match "$dev" ".*lid-0x[0-9A-Fa-f]*" > /dev/null 2>&1
-            then
+                rcnt=$((rcnt + 1))
+            elif expr match "$dev" ".*lid-0x[0-9A-Fa-f]*" > /dev/null 2>&1; then
                 ibdevs=$ibdevs" $dev"
-                ibcnt=$((  $ibcnt + 1 ))
-            elif expr match "$dev" ".*lid-[0-9]*" > /dev/null 2>&1
-            then
+                ibcnt=$((ibcnt + 1))
+            elif expr match "$dev" ".*lid-[0-9]*" > /dev/null 2>&1; then
                 ibdevs=$ibdevs" $dev"
-                ibcnt=$((  $ibcnt + 1 ))
-            elif expr match "$dev" ".*ibdr-[0-9]*" > /dev/null 2>&1
-            then
+                ibcnt=$((ibcnt + 1))
+            elif expr match "$dev" ".*ibdr-[0-9]*" > /dev/null 2>&1; then
                 ibdevs=$ibdevs" $dev"
-                ibcnt=$((  $ibcnt + 1 ))
-            elif expr match "$dev" ".*nvl-0x[0-9A-Fa-f]*" > /dev/null 2>&1
-            then
+                ibcnt=$((ibcnt + 1))
+            elif expr match "$dev" ".*nvl-0x[0-9A-Fa-f]*" > /dev/null 2>&1; then
                 nvldevs=$nvldevs" $dev"
-                nvlcnt=$((  $nvlcnt + 1 ))
-            elif expr match "$dev" ".*nvl-[0-9]*" > /dev/null 2>&1
-            then
+                nvlcnt=$((nvlcnt + 1))
+            elif expr match "$dev" ".*nvl-[0-9]*" > /dev/null 2>&1; then
                 nvldevs=$nvldevs" $dev"
-                nvlcnt=$((  $nvlcnt + 1 ))
-            elif expr match "$dev" ".*ndc-*" > /dev/null 2>&1
-            then
+                nvlcnt=$((nvlcnt + 1))
+            elif expr match "$dev" ".*ndc-*" > /dev/null 2>&1; then
                 ndc_devs=$ndc_devs" $dev"
-                ndc_counter=$((  $ndc_counter+ 1 ))
-            elif expr match "$dev" ".*redfish*" > /dev/null 2>&1
-            then
+                ndc_counter=$((ndc_counter + 1))
+            elif expr match "$dev" ".*redfish*" > /dev/null 2>&1; then
                 redfish_json_file=1
-            elif expr match "$dev" ".*usb.*" > /dev/null 2>&1
-            then
-                    #echo -e "$dev\t\t - USB to I2C adapter as I2C primary"
-                    printf "%-33s- USB to I2C adapter as I2C primary\n" "$dev"
-                    print_mtusb_sn $dev
-            elif expr match "$dev" ".*nvjtag.*" > /dev/null 2>&1
-            then
-                    printf "%-33s- USB to JTAG adapter\n" "$dev"
-            elif expr match "$dev" ".*gpu.*" > /dev/null 2>&1
-            then
-                    printf "%-33s- GPU Device\n" "$dev"
-            elif expr match "$dev" ".*planarized_device.*" > /dev/null 2>&1
-            then
-                    printf "%-33s- Planarized devices\n" "$dev"
-            elif expr match "$dev" ".*nicx.*" > /dev/null 2>&1
-            then
-                    printf "%-33s- NICX Devices\n" "$dev"
-            elif expr match "$dev" ".*lpc.*" > /dev/null 2>&1
-            then
+            elif expr match "$dev" ".*usb.*" > /dev/null 2>&1; then
+                #echo -e "$dev\t\t - USB to I2C adapter as I2C primary"
+                printf "%-33s- USB to I2C adapter as I2C primary\n" "$dev"
+                print_mtusb_sn $dev
+            elif expr match "$dev" ".*nvjtag.*" > /dev/null 2>&1; then
+                printf "%-33s- USB to JTAG adapter\n" "$dev"
+            elif expr match "$dev" ".*gpu.*" > /dev/null 2>&1; then
+                printf "%-33s- GPU Device\n" "$dev"
+            elif expr match "$dev" ".*planarized_device.*" > /dev/null 2>&1; then
+                printf "%-33s- Planarized devices\n" "$dev"
+            elif expr match "$dev" ".*nicx.*" > /dev/null 2>&1; then
+                printf "%-33s- NICX Devices\n" "$dev"
+            elif expr match "$dev" ".*lpc.*" > /dev/null 2>&1; then
                 lpcdevs=$lpcdevs" $dev"
-                lpccnt=$((  $lpccnt + 1 ))
-            elif expr match "$dev" ".*dev-i2c.*" > /dev/null 2>&1
-            then
-                    echo -e "$dev\t\t - Embedded I2C primary"
-            elif expr match "$dev" ".*livefish.*" > /dev/null 2>&1
-            then
+                lpccnt=$((lpccnt + 1))
+            elif expr match "$dev" ".*dev-i2c.*" > /dev/null 2>&1; then
+                echo -e "$dev\t\t - Embedded I2C primary"
+            elif expr match "$dev" ".*livefish.*" > /dev/null 2>&1; then
                 echo -e "$dev\t - Livefish char device"
             else
                 ignore_dev=$(ignore_phys_fn $dev)
@@ -1639,15 +1568,14 @@ print_status()
                     fi
                 fi
             fi
-            devcnt=$((  $devcnt + 1 ))
-       fi
+            devcnt=$((devcnt + 1))
+        fi
     done
 
-    for dev in ${mdir}/retimer/*
-    do
+    for dev in ${mdir}/retimer/*; do
         if [ -r "$dev" ]; then
             retimerdevs=$retimerdevs" $dev"
-            retimercnt=$((  $retimercnt + 1 ))
+            retimercnt=$((retimercnt + 1))
         fi
     done
 
@@ -1655,8 +1583,7 @@ print_status()
         echo
         echo "Remote MST devices:"
         echo "-------------------"
-        for dev in $rdevs
-        do
+        for dev in $rdevs; do
             echo $dev
             print_chip_rev $dev
         done
@@ -1673,8 +1600,7 @@ print_status()
         echo
         echo "Inband devices:"
         echo "-------------------"
-        for dev in $ibdevs
-        do
+        for dev in $ibdevs; do
             echo $dev
         done
     fi
@@ -1683,8 +1609,7 @@ print_status()
         echo
         echo "NVL devices:"
         echo "-------------------"
-        for dev in $nvldevs
-        do
+        for dev in $nvldevs; do
             echo $dev
         done
     fi
@@ -1693,8 +1618,7 @@ print_status()
         echo
         echo "NDC devices:"
         echo "-------------------"
-        for dev in $ndc_devs
-        do
+        for dev in $ndc_devs; do
             echo $dev
         done
     fi
@@ -1703,8 +1627,7 @@ print_status()
         echo
         echo "LPC device:"
         echo "-------------------"
-        for dev in $lpcdevs
-        do
+        for dev in $lpcdevs; do
             echo $dev
         done
     fi
@@ -1713,9 +1636,8 @@ print_status()
         echo
         echo "Cables:"
         echo "-------------------"
-        for dev in $cabledevs
-        do
-            echo `basename $dev`
+        for dev in $cabledevs; do
+            echo $(basename $dev)
         done
     fi
 
@@ -1723,26 +1645,23 @@ print_status()
         echo
         echo "Retimers:"
         echo "-------------------"
-        for dev in $retimerdevs
-        do
+        for dev in $retimerdevs; do
             if [[ $dev =~ _rt[0-9]+$ ]]; then
-                echo `basename $dev`
+                echo $(basename $dev)
             fi
         done
     fi
-
 
     if [ ${mlnxsw_dev_cnt} -ne 0 ]; then
         echo "Switch - mlnxsw devices:"
         echo "-------------------------"
         first=1
-        for dev in $mlnxsw_devs
-        do
+        for dev in $mlnxsw_devs; do
             ix=0
             # Go over once for getting the keys (Parameters names)
             if [ ${first} == 1 ]; then
                 printf "%-20s" "NAME"
-                while IFS='' read -r line || [[ -n "$line" ]]; do
+                while IFS='' read -r line || [[ -n $line ]]; do
                     IFS='=' read -r -a array <<< "$line"
                     printf "%-20s" "${array[0]}"
                 done < "$dev"
@@ -1750,24 +1669,22 @@ print_status()
             fi
             # Go over for getting the values (Parameters names)
             printf "%-20s" "$dev"
-            while IFS='' read -r line || [[ -n "$line" ]]; do
+            while IFS='' read -r line || [[ -n $line ]]; do
                 IFS='=' read -r -a array <<< "$line"
-                        if [ "$line" != "" ]; then
-                            val=${array[1]} # clean spacse
-                            printf "%-20s" "${val//[[:blank:]]/}"
-                        fi
+                if [ "$line" != "" ]; then
+                    val=${array[1]} # clean spacse
+                    printf "%-20s" "${val//[[:blank:]]/}"
+                fi
             done < "$dev"
             printf "\n"
             first=0
         done
     fi
-    
+
     #
     printf "\n"
     ${PYTHON_EXEC} ${MFT_PYTHON_TOOLS}/gearbox/gearbox_status_script.py
 }
-
-
 
 # return the matching slot file name in the PCI fs
 # Check if domain need to be added.
@@ -1777,16 +1694,14 @@ get_pci_file()
 
     local prefix=/proc/bus/pci/
 
-    if echo $slot | grep ":..:"  > /dev/null 2>&1
-    then
-        dombus=`echo $slot | cut -f1,2 -d:`
-        devfn=`echo  $slot | cut -f3   -d:`
+    if echo $slot | grep ":..:" > /dev/null 2>&1; then
+        dombus=$(echo $slot | cut -f1,2 -d:)
+        devfn=$(echo $slot | cut -f3 -d:)
     else
-        dombus=`echo $slot | cut -f1   -d:`
-        devfn=`echo  $slot | cut -f2   -d:`
+        dombus=$(echo $slot | cut -f1 -d:)
+        devfn=$(echo $slot | cut -f2 -d:)
 
-        if [ -d "$prefix/0000:$dombus" ]
-        then
+        if [ -d "$prefix/0000:$dombus" ]; then
             # Try to add zero domain to the name if domain not explicitly given
             dombus="0000:$dombus"
         fi
@@ -1794,7 +1709,6 @@ get_pci_file()
 
     echo "$prefix/$dombus/$devfn"
 }
-
 
 save_pci()
 {
@@ -1876,7 +1790,8 @@ get_reset_addr()
 {
 
     #### A trick to get the array that was passed to the function as an argument ####
-    OLD_IFS=$IFS; IFS=''
+    OLD_IFS=$IFS
+    IFS=''
 
     local array_string="$1[*]"
     local data_base_arr=(${!array_string})
@@ -1884,9 +1799,7 @@ get_reset_addr()
     IFS=$OLD_IFS
     ###################################################################################\
 
-
     local raddr=0x0
-
 
     local element_count=${#data_base_arr[@]}
     local index=0
@@ -1897,10 +1810,9 @@ get_reset_addr()
         rst_addr=$2
         dev_expr=".*$(get_dev_name $devid)pci"
 
-        if expr $device : $dev_expr > /dev/null 2>&1
-        then
+        if expr $device : $dev_expr > /dev/null 2>&1; then
             raddr=$rst_addr
-            break;
+            break
         fi
 
         ((index++))
@@ -1934,8 +1846,7 @@ reset_pci()
 
     echo -n "Reset device $device"
 
-    if ${mbindir}/mcra $device $raddr 1
-    then
+    if ${mbindir}/mcra $device $raddr 1; then
         sleep 1
         echo_success
         echo
@@ -1956,21 +1867,24 @@ radd()
     local secret=$3
     local port=23108
 
-    if expr $host : '.*:' > /dev/null 2>&1
-    then
-        set -- $(IFS=:; set -- $host; echo "$@")
+    if expr $host : '.*:' > /dev/null 2>&1; then
+        set -- $(
+            IFS=:
+            set -- $host
+            echo "$@"
+        )
         host=$1
         port=$2
     fi
     mkdir -p $mdir
-    devs=`${mbindir}/mremote $host:$port L $flag $secret`; RC=$?
+    devs=$(${mbindir}/mremote $host:$port L $flag $secret)
+    RC=$?
     if [[ $RC == 0 ]]; then
-        for dev in $devs
-        do
-        if ! [[ $dev =~ [:#][0-9]+, ]] ; then  # do not add remote devices from the target host (multiple hops remote not supported)
-            local fname=${mdir}/$host:$port,`echo $dev | sed -e 's/\//@/g'`
-            touch $fname
-        fi
+        for dev in $devs; do
+            if ! [[ $dev =~ [:#][0-9]+, ]]; then # do not add remote devices from the target host (multiple hops remote not supported)
+                local fname=${mdir}/$host:$port,$(echo $dev | sed -e 's/\//@/g')
+                touch $fname
+            fi
         done
     fi
 }
@@ -1979,9 +1893,12 @@ rdel()
 {
     local host=$1
     local port=23108
-    if expr $host : '.*:' > /dev/null 2>&1
-    then
-        set -- $(IFS=:; set -- $host; echo "$@")
+    if expr $host : '.*:' > /dev/null 2>&1; then
+        set -- $(
+            IFS=:
+            set -- $host
+            echo "$@"
+        )
         host=$1
         port=$2
     fi
@@ -1996,7 +1913,6 @@ cabledel()
     rm -f ${mdir}/*cable*
     rm -f ${mdir}/*_lx*
 }
-
 
 g_with_ib="--with_ib"
 g_with_sysfs="--with_sysfs"
@@ -2038,8 +1954,8 @@ retimerdel()
 
 jtagadd()
 {
-    dev_num=`${mbindir}/nvjtag_discovery`
-    for (( dev_index=0; dev_index<$dev_num; dev_index++ )) do
+    dev_num=$(${mbindir}/nvjtag_discovery)
+    for ((dev_index = 0; dev_index < dev_num; dev_index++)); do
         touch ${mdir}/"nvjtag_$dev_index"
     done
     echo "-I- Added $dev_num Jtag devices..."
@@ -2050,7 +1966,6 @@ jtagdel()
 {
     rm -f ${mdir}/nvjtag_*
 }
-
 
 gpurestart()
 {
@@ -2080,7 +1995,7 @@ gpuadd()
             break
         fi
 
-        if [ $(( now_ts - start_ts )) -gt 1800 ]; then
+        if [ $((now_ts - start_ts)) -gt 1800 ]; then
             echo "Timeout opening Nvidia Device Files"
             break
         fi
@@ -2091,23 +2006,20 @@ gpudel()
 {
     rm -f ${mdir}/*_gpu*
     # Send SIGINT to RM Driver discovery process.
-    ps -efa | grep ${mbindir}/rm_driver_discovery | grep -v grep | while read str
-    do
+    ps -efa | grep ${mbindir}/rm_driver_discovery | grep -v grep | while read str; do
         set -- $str
         kill -2 $2
     done
 }
 
-
-
 cableadd()
 {
 
-    # Set the flags 
-    WITH_IB=0  # false
-    WITH_SYSFS=0  # false
-    hca_id=""  # N/A
-    ib_port="" # N/A
+    # Set the flags
+    WITH_IB=0      # false
+    WITH_SYSFS=0   # false
+    hca_id=""      # N/A
+    ib_port=""     # N/A
     WITH_CHIPSET=0 # false
     WITH_RETIMER=0 # false
     CHIPSET_RETIMER_CABLES=""
@@ -2118,19 +2030,19 @@ cableadd()
             "${g_with_ib}")
                 WITH_IB=1
                 shift
-                if [ "$1" ] && [[ ! "$1" =~ ^\- ]] ; then # a flag that doesn't start with "-"
+                if [ "$1" ] && [[ ! $1 =~ ^\- ]]; then # a flag that doesn't start with "-"
                     hca_id=$1
                     shift
                 else
                     continue
-                fi  
+                fi
 
-                if [ "$1" ] && [[ ! "$1" =~ ^\- ]]; then # a flag that doesn't start with "-"
+                if [ "$1" ] && [[ ! $1 =~ ^\- ]]; then # a flag that doesn't start with "-"
                     ib_port=$1
                     shift
                 else
                     continue
-                fi  
+                fi
 
                 ;;
 
@@ -2145,10 +2057,10 @@ cableadd()
                 ;;
 
             "--cables")
-                shift;
+                shift
                 if [ -z "$1" ]; then
                     echo "-E- --cables requires a comma-delimited list of cables to add chipsets"
-                    exit 1;
+                    exit 1
                 fi
                 CHIPSET_RETIMER_CABLES=$1
                 shift
@@ -2160,8 +2072,9 @@ cableadd()
                 ;;
 
             *)
-            echo "-E- Bad switch \"$1\" for mst cable add, please run mst help for more details."
-            exit 1
+                echo "-E- Bad switch \"$1\" for mst cable add, please run mst help for more details."
+                exit 1
+                ;;
         esac
 
     done
@@ -2172,7 +2085,7 @@ cableadd()
     #echo with_chipset=$WITH_CHIPSET
 
     cblcnt=0
-    if  is_module mst_pciconf; then
+    if is_module mst_pciconf; then
         devs=/dev/mst/*pciconf*
     else
         IGNORE_FUNCS=0
@@ -2186,13 +2099,12 @@ cableadd()
         index=0
         while [ "$index" -lt "$element_count" ]; do
             device_id_databse=$(echo ${nvidia_device_id_database[$index]} | cut -d "|" -f 1)
-            ${lspci} -m -n -d ${nvidia_vendor_id}:${device_id_databse} 2> /dev/null | while read str
-            do
+            ${lspci} -m -n -d ${nvidia_vendor_id}:${device_id_databse} 2> /dev/null | while read str; do
                 set -- $str
                 busdevfn=$1
                 device_name=$(echo ${nvidia_device_id_database[$index]} | cut -d "|" -f 2)
                 kong_filename=$device_name-$busdevfn
-                create_cable=`mlxcables -d ${kong_filename} -c`
+                create_cable=$(mlxcables -d ${kong_filename} -c)
                 create_cable=$(echo $create_cable | sed s/"FAILED"//)
                 create_cable=$(echo $create_cable | sed s/"PASSED"//)
                 echo $create_cable
@@ -2203,58 +2115,57 @@ cableadd()
     fi
 
     if [ -f ${mbindir}/mlxcables ]; then
-        for dev in $devs;
-        do
+        for dev in $devs; do
             # preventing discovery on remote devices
-            if [[ "$dev" == *:* ]]; then
+            if [[ $dev == *:* ]]; then
                 continue
             fi
             if ! expr match "$dev" ".*cable.*" > /dev/null 2>&1; then
                 #MAX num of ports is 128 for switches
                 #echo "Checking device: ${dev}"
-                ports_type=`mlxcables -d ${dev} --get_dev_type`
+                ports_type=$(mlxcables -d ${dev} --get_dev_type)
                 RC=$?
                 if [[ $RC != 0 ]]; then
                     continue
                 fi
-                type=`echo $ports_type | cut -d' ' -f1`
-                ports=`echo $ports_type | cut -d' ' -f2`
-                if [[ "$ports" == "-1" ]]; then
+                type=$(echo $ports_type | cut -d' ' -f1)
+                ports=$(echo $ports_type | cut -d' ' -f2)
+                if [[ $ports == "-1" ]]; then
                     ports=128
                 fi
-                if [[ "$type" == "HCA" ]]; then
-                    module_num=`mlxcables -d $dev --get_module 1`
+                if [[ $type == "HCA" ]]; then
+                    module_num=$(mlxcables -d $dev --get_module 1)
                     RC=$?
                     if [[ $RC != 0 ]]; then
                         continue
                     fi
-                    cblcnt=$((  $cblcnt + 1 ))
+                    cblcnt=$((cblcnt + 1))
                     cable_name=${dev#/dev/mst/}_cable_${module_num}
                     cable_dev=/dev/mst/${cable_name}
-                    if [[ "$ul_mode" == "1" ]]; then
+                    if [[ $ul_mode == "1" ]]; then
                         cable_dev=${mdir}/${cable_name}
                     fi
                     mkdir -p ${mdir}
                     touch ${cable_dev}
-                    cable_check=`${mbindir}/mlxcables -d ${cable_name} -c`
+                    cable_check=$(${mbindir}/mlxcables -d ${cable_name} -c)
                     if [[ ${cable_check} == *FAILED* ]]; then
                         rm -f ${cable_dev}
-                        cblcnt=$((  $cblcnt - 1 ))
+                        cblcnt=$((cblcnt - 1))
                     fi
-                elif [[ "$type" == "SW" ]]; then
-                    for (( port=0; port<$ports; port++ )) do
-                        cblcnt=$((  $cblcnt + 1 ))
+                elif [[ $type == "SW" ]]; then
+                    for ((port = 0; port < ports; port++)); do
+                        cblcnt=$((cblcnt + 1))
                         cable_name=${dev#/dev/mst/}_cable_$port
                         cable_dev=/dev/mst/${cable_name}
-                        if [[ "$ul_mode" == "1" ]]; then
+                        if [[ $ul_mode == "1" ]]; then
                             cable_dev=${mdir}/${cable_name}
                         fi
                         mkdir -p ${mdir}
                         touch ${cable_dev}
-                        cable_check=`${mbindir}/mlxcables -d ${cable_name} -c`
+                        cable_check=$(${mbindir}/mlxcables -d ${cable_name} -c)
                         if [[ ${cable_check} == *FAILED* ]]; then
                             rm -f ${cable_dev}
-                            cblcnt=$((  $cblcnt - 1 ))
+                            cblcnt=$((cblcnt - 1))
                         fi
 
                     done
@@ -2264,22 +2175,20 @@ cableadd()
     fi
     if [ ${WITH_SYSFS} == "1" ]; then
         modules_number=0
-        sysfs_output=`sysfs_module_com --discover | sort`
+        sysfs_output=$(sysfs_module_com --discover | sort)
 
         if echo "$sysfs_output" | grep -q "Error"; then
             echo "$sysfs_output"
         else
             for mod_name in $sysfs_output; do
-                if [[ ! -z "$mod_name" ]]; then
-                    modules_number=$((  $modules_number + 1 ))
+                if [[ -n $mod_name ]]; then
+                    modules_number=$((modules_number + 1))
                     cable_name=/dev/mst/${mod_name}
                     mkdir -p ${mdir}
                     touch ${cable_name}
                 fi
             done
         fi
-
-        
 
         if [ ! -z "${modules_number}" ]; then
             echo "Added ${modules_number} sysfs cable devices."
@@ -2289,10 +2198,10 @@ cableadd()
         ib_devs=(${hca_id})
         ports=(${ib_port})
         if [ "${hca_id}" == "" ]; then
-            if [ `is_tool_existing ${g_ibstat}` == "1" ]; then
-                devs=`${g_ibstat} -l | tr '\r\n' ' '`
-            elif [ `is_tool_existing ${g_ibv_devices}` == "1" ]; then
-                devs=`${g_ibv_devices} | tail -n+3 | tr -d ' ' | cut  -f1 | tr '\r\n' ' '`
+            if [ $(is_tool_existing ${g_ibstat}) == "1" ]; then
+                devs=$(${g_ibstat} -l | tr '\r\n' ' ')
+            elif [ $(is_tool_existing ${g_ibv_devices}) == "1" ]; then
+                devs=$(${g_ibv_devices} | tail -n+3 | tr -d ' ' | cut -f1 | tr '\r\n' ' ')
             else
                 echo "-E- Failed to find a tool to get the network IB interfaces"
                 exit 1
@@ -2300,10 +2209,15 @@ cableadd()
             ib_devs=("${devs}")
             ports=(1 2)
         fi
-        get_ib_tools_info_index ${tool_to_use}; index=$?
+        get_ib_tools_info_index ${tool_to_use}
+        index=$?
         set -- ${g_tools_database[index]}
-        g_tool_path=$2; g_tool_type=$3; ca_flag=$4; p_flag=$5; g_old_indexing=$6; topo_file=$7 ;
-
+        g_tool_path=$2
+        g_tool_type=$3
+        ca_flag=$4
+        p_flag=$5
+        g_old_indexing=$6
+        topo_file=$7
 
         added_nodes_type="only_mlnx"
         use_ibdr=0
@@ -2315,13 +2229,15 @@ cableadd()
                 if [ "${g_tool_type}" == "${G_TT_DIAGNET}" ]; then
                     # Convert from hca name (mlx4_0,mthca0,...) to index (0,1..) using ibv_devinfo.
                     if [ ${g_old_indexing} == "1" ]; then
-                        get_index_for_old_diagnet ${dev}; hca_idx=$?
+                        get_index_for_old_diagnet ${dev}
+                        hca_idx=$?
                     fi
                     cmd="$cmd -skip all"
                 fi
                 cmd="$cmd -${ca_flag} $hca_idx -${p_flag} $ib_port"
                 rm -f ${topo_file}
-                $cmd &> ${g_out_file}; RC=$?
+                $cmd &> ${g_out_file}
+                RC=$?
                 if [ "$RC" != "0" ]; then
                     continue
                 fi
@@ -2331,20 +2247,21 @@ cableadd()
                 fi
                 #Run mst_ib_add script
                 mkdir -p $mdir
-                for d in `${mbindir}/mst_ib_add "discovery" ${topo_file} ${added_nodes_type} ${g_tool_type} ${use_ibdr} $dev $ib_port 0 --with-guids`; do
-                    mdev=`echo $d | cut -d'#' -f1`
-                    guid=`echo $d | cut -d'#' -f2`
-                    if expr match "$mdev" ".*CA_.*" > /dev/null 2>&1
-                    then
-                        is_guid_exists $guid; rc=$?
+                for d in $(${mbindir}/mst_ib_add "discovery" ${topo_file} ${added_nodes_type} ${g_tool_type} ${use_ibdr} $dev $ib_port 0 --with-guids); do
+                    mdev=$(echo $d | cut -d'#' -f1)
+                    guid=$(echo $d | cut -d'#' -f2)
+                    if expr match "$mdev" ".*CA_.*" > /dev/null 2>&1; then
+                        is_guid_exists $guid
+                        rc=$?
                         if [ $rc == 1 ]; then
                             #echo "Ignoring $mdev, it was added before by another port"
                             continue
                         fi
                         g_guids_list+=("$guid")
                     fi
-                    create_lid_cable $mdev; c=$?
-                    cblcnt=$(( $cblcnt + $c ))
+                    create_lid_cable $mdev
+                    c=$?
+                    cblcnt=$((cblcnt + c))
                 done
             done
         done
@@ -2353,57 +2270,55 @@ cableadd()
     if [ -f ${mbindir}/mlxcables ]; then
         mtusb_devs=/dev/mst/*mtusb*
         ndc_devs=/dev/mst/*ndc*
-        for dev in $mtusb_devs $ndc_devs;
-            do
-                # preventing discovery on remote devices
-                if [[ "$dev" == *:* ]]; then
-                    continue
-                fi
-                if ! expr match "$dev" ".*cable.*" > /dev/null 2>&1; then
-                    for (( port=0; port<4; port++ )) do
-                        cblcnt=$((  $cblcnt + 1 ))
-                        cable_name=${dev#/dev/mst/}_cable_$port
-                        cable_dev=${dev}_cable_$port
-                        mkdir -p ${mdir}
-                        touch ${cable_dev}
-                        cable_check=`${mbindir}/mlxcables -d ${cable_name} -c`
-                        if [[ ${cable_check} == *FAILED* ]]; then
-                            rm -f ${cable_dev}
-                            cblcnt=$((  $cblcnt - 1 ))
-                        fi
-                    done
-                fi
-            done
+        for dev in $mtusb_devs $ndc_devs; do
+            # preventing discovery on remote devices
+            if [[ $dev == *:* ]]; then
+                continue
+            fi
+            if ! expr match "$dev" ".*cable.*" > /dev/null 2>&1; then
+                for ((port = 0; port < 4; port++)); do
+                    cblcnt=$((cblcnt + 1))
+                    cable_name=${dev#/dev/mst/}_cable_$port
+                    cable_dev=${dev}_cable_$port
+                    mkdir -p ${mdir}
+                    touch ${cable_dev}
+                    cable_check=$(${mbindir}/mlxcables -d ${cable_name} -c)
+                    if [[ ${cable_check} == *FAILED* ]]; then
+                        rm -f ${cable_dev}
+                        cblcnt=$((cblcnt - 1))
+                    fi
+                done
+            fi
+        done
 
         if command -v i2cdetect &> /dev/null; then
-            i2c_devs=$( i2cdetect -l | grep -i nv | grep -P "adapter [1|2]" | cut  -f1 | sort )
-            for dev in $i2c_devs;
-                do
-                    dev="/dev/mst/dev-"$dev
-                    product_name_path=/sys/class/dmi/id/product_name
-                    dev_type="UNKNOWN"
-                    if [ -f ${product_name_path} ]; then
-                        dev_type=$(cat ${product_name_path})
-                    fi
-                    dev_type_flag=""
-                    if [ "$dev_type" == "$NVL3_WOLF_ID" -o "$dev_type" == "$NVL4_KONG_ID" ]; then
-                        dev_type_flag=_${dev_type}
-                    fi
-                    if ! expr match "$dev" ".*cable.*" > /dev/null 2>&1; then
-                    for (( port=0; port<8; port++ )) do
-                        cblcnt=$((  $cblcnt + 1 ))
+            i2c_devs=$(i2cdetect -l | grep -i nv | grep -P "adapter [1|2]" | cut -f1 | sort)
+            for dev in $i2c_devs; do
+                dev="/dev/mst/dev-"$dev
+                product_name_path=/sys/class/dmi/id/product_name
+                dev_type="UNKNOWN"
+                if [ -f ${product_name_path} ]; then
+                    dev_type=$(cat ${product_name_path})
+                fi
+                dev_type_flag=""
+                if [ "$dev_type" == "$NVL3_WOLF_ID" -o "$dev_type" == "$NVL4_KONG_ID" ]; then
+                    dev_type_flag=_${dev_type}
+                fi
+                if ! expr match "$dev" ".*cable.*" > /dev/null 2>&1; then
+                    for ((port = 0; port < 8; port++)); do
+                        cblcnt=$((cblcnt + 1))
                         cable_name=${dev#/dev/mst/}${dev_type_flag}_cable_$port
                         cable_dev=${dev}${dev_type_flag}_cable_$port
                         mkdir -p ${mdir}
                         touch ${cable_dev}
-                        cable_check=`${mbindir}/mlxcables -d ${cable_name} -c`
+                        cable_check=$(${mbindir}/mlxcables -d ${cable_name} -c)
                         if [[ ${cable_check} == *FAILED* ]]; then
                             rm -f ${cable_dev}
-                            cblcnt=$((  $cblcnt - 1 ))
+                            cblcnt=$((cblcnt - 1))
                         fi
                     done
-                    fi
-                done
+                fi
+            done
         fi
     fi
 
@@ -2421,7 +2336,6 @@ cableadd()
 G_TT_DIAGNET="diagnet"
 G_TT_NETDISCOVER="netdiscover"
 
-
 g_ibdiagnet_tmp_path="/opt/bin/ibdiagnet"
 g_out_file="/tmp/mft_discover.out"
 g_mlxcables_out_file="/tmp/mft_mlxcables.out"
@@ -2435,7 +2349,7 @@ g_ibdiagnet_tool="ibdiagnet"
 g_ibdiagnet2_lst_file="/var/tmp/ibdiagnet2/ibdiagnet2.lst"
 g_ibdiagnet2_db_csv_file="/var/tmp/ibdiagnet2/ibdiagnet2.db_csv"
 
-g_tools_database=(\
+g_tools_database=(
     "${g_ibdiag2_db_csv_id} ${g_ibdiagnet_tool} ${G_TT_DIAGNET}     i p 0 ${g_ibdiagnet2_db_csv_file}"
     "${g_ibdiag2_id}        ${g_ibdiagnet_tool} ${G_TT_DIAGNET}     i p 0 ${g_ibdiagnet2_lst_file}"
     "${g_new_ibdiag_id}     ${g_ibdiagnet_tool}     ${G_TT_DIAGNET}     i p 0 ${g_ibdiagnet2_lst_file}"
@@ -2443,7 +2357,8 @@ g_tools_database=(\
     "${g_ibnetdiscover}     ${g_ibnetdiscover}      ${G_TT_NETDISCOVER} C P 0 ${g_out_file}"
 )
 
-get_ib_tool_index() {
+get_ib_tool_index()
+{
     ID=$1
     element_count=${#g_tools_database[@]}
     index=0
@@ -2459,19 +2374,21 @@ get_ib_tool_index() {
     exit 1
 }
 
-function is_tool_existing() {
-    cmd_exists=`which $1 2> /dev/null`
+function is_tool_existing()
+{
+    cmd_exists=$(which $1 2> /dev/null)
     if [ "$cmd_exists" == "" ]; then
         echo "0"
-    else 
+    else
         echo "1"
     fi
 }
-function is_ibdiagnet_new() {
+function is_ibdiagnet_new()
+{
     ibdiagnet_tool=$1
-    version="`$ibdiagnet_tool -V 2> /dev/null| head -1`"
+    version="$($ibdiagnet_tool -V 2> /dev/null | head -1)"
     new_ver_regexp=\-I\-\ IBDIAGNET\ [0-9]\.[0-9]
-    if [[ "${version}" =~ ${new_ver_regexp} ]]; then
+    if [[ ${version} =~ ${new_ver_regexp} ]]; then
         echo "1"
     else
         echo "0"
@@ -2482,29 +2399,34 @@ function get_ib_tools_info_index()
 {
     tool_to_use=$1
     if [ "${tool_to_use}" == "" ]; then
-        if [ -f ${g_ibdiagnet_tmp_path} ] && [ `is_ibdiagnet_new ${g_ibdiagnet_tmp_path}` == "1" ]; then
-            get_ib_tool_index ${g_ibdiag2_id}; return $?
-        elif [ `is_ibdiagnet_new ${g_ibdiagnet_tool}` == "1" ]; then
-            get_ib_tool_index ${g_new_ibdiag_id}; return $?
-        elif [ `is_tool_existing ${g_ibnetdiscover}` == "1" ]; then
-            get_ib_tool_index ${g_ibnetdiscover}; return $?
-        elif [ `is_tool_existing ${g_ibdiagnet_tool}` == "1" ]; then
-            get_ib_tool_index ${g_old_ibdiag_id}; return $?
+        if [ -f ${g_ibdiagnet_tmp_path} ] && [ $(is_ibdiagnet_new ${g_ibdiagnet_tmp_path}) == "1" ]; then
+            get_ib_tool_index ${g_ibdiag2_id}
+            return $?
+        elif [ $(is_ibdiagnet_new ${g_ibdiagnet_tool}) == "1" ]; then
+            get_ib_tool_index ${g_new_ibdiag_id}
+            return $?
+        elif [ $(is_tool_existing ${g_ibnetdiscover}) == "1" ]; then
+            get_ib_tool_index ${g_ibnetdiscover}
+            return $?
+        elif [ $(is_tool_existing ${g_ibdiagnet_tool}) == "1" ]; then
+            get_ib_tool_index ${g_old_ibdiag_id}
+            return $?
         else
             echo "-E- Failed to find a tool to discover the fabric (neither ${g_ibdiagnet_tool} nor ${g_ibnetdiscover} is installed on this machine)"
             exit 1
         fi
     else
-        if [ "${tool_to_use}" ==  "${g_ibdiagnet_tool}" ]; then
-            if [ `is_ibdiagnet_new ${g_ibdiagnet_tool}` == "1" ]; then
+        if [ "${tool_to_use}" == "${g_ibdiagnet_tool}" ]; then
+            if [ $(is_ibdiagnet_new ${g_ibdiagnet_tool}) == "1" ]; then
                 tool_to_use=${g_new_ibdiag_id}
             else
                 tool_to_use=${g_old_ibdiag_id}
             fi
         fi
-        get_ib_tool_index ${tool_to_use}; return $?
+        get_ib_tool_index ${tool_to_use}
+        return $?
     fi
- }
+}
 
 function get_index_for_old_diagnet()
 {
@@ -2512,7 +2434,7 @@ function get_index_for_old_diagnet()
     if [ "${hca_id}" == "" ]; then
         return ${hca_id}
     fi
-    hca_idx=`ibv_devinfo | grep hca_id: | grep -n $hca_id | cut -f1 -d:`
+    hca_idx=$(ibv_devinfo | grep hca_id: | grep -n $hca_id | cut -f1 -d:)
     if [ "$hca_idx" == "" ]; then
         echo "-E- Failed to get hca index for hca \"$hca_id\""
         exit 1
@@ -2527,13 +2449,13 @@ g_add_non_mlnx="--add-non-mlnx"
 g_use_ibdr_opt="--use-ibdr"
 g_add_planarized="--planarized"
 
-function check_arg() {
-    if [ -z $2 ] || [[ "$2" == -* ]]; then
+function check_arg()
+{
+    if [ -z $2 ] || [[ $2 == -* ]]; then
         echo "-E- Missing parameter after \"$1\" switch."
-    exit 1
+        exit 1
     fi
 }
-
 
 function create_lid_cable()
 {
@@ -2542,7 +2464,8 @@ function create_lid_cable()
     cblscnt=0
     if [ -f ${mbindir}/mlxcables ]; then
         cmd="${mbindir}/mlxcables -d ${device} --get_ports_num"
-        $cmd 1> ${g_mlxcables_out_file}; RC=$?
+        $cmd 1> ${g_mlxcables_out_file}
+        RC=$?
         if [ "$RC" != "0" ]; then
             echo "-W- Failed to get number of ports for device ${device}, skipping it.."
             return 0
@@ -2554,18 +2477,18 @@ function create_lid_cable()
             ports=1
         fi
 
-        for (( port=0; port<$ports; port++ )) do
+        for ((port = 0; port < ports; port++)); do
             if [ "$no_port" == "0" ]; then
                 cable_dev=${device}_cable_$port
             else
                 cable_dev=${device}_cable
             fi
             touch $mdir/${cable_dev}
-            cable_check=`${mbindir}/mlxcables -d ${cable_dev} -c`
-                cblscnt=$(( $cblscnt + 1 ))
+            cable_check=$(${mbindir}/mlxcables -d ${cable_dev} -c)
+            cblscnt=$((cblscnt + 1))
             if [[ ${cable_check} == *FAILED* ]]; then
                 rm -f $mdir/${cable_dev}
-                cblscnt=$(( $cblscnt - 1 ))
+                cblscnt=$((cblscnt - 1))
             fi
         done
     fi
@@ -2584,7 +2507,7 @@ i2c_add()
 
     while [[ $# -gt 0 ]]; do
         case $1 in
-            --with_retimer|--with_chipset)
+            --with_retimer | --with_chipset)
                 args+=("$1")
                 shift
                 ;;
@@ -2625,8 +2548,8 @@ function ib_add()
     # Get the parameters
     while [ "$1" ]; do
         # Stop when we have a non flag paramater (an argument that doesn't start with -)
-        if ! [[ "$1" =~ ^\- ]]; then
-            break;
+        if ! [[ $1 =~ ^\- ]]; then
+            break
         fi
         case $1 in
             "${g_nvl_add_opt}")
@@ -2658,8 +2581,9 @@ function ib_add()
                 shift
                 ;;
             *)
-            echo "-E- Bad switch \"$1\" for mst ib add, please run mst help for more details."
-            exit 1
+                echo "-E- Bad switch \"$1\" for mst ib add, please run mst help for more details."
+                exit 1
+                ;;
         esac
         shift
     done
@@ -2673,18 +2597,24 @@ function ib_add()
     fi
 
     # Is Mkey feature is supported ?
-    mkey_is_supported=$(cat /etc/mft/mft.conf | grep mkey_enable | cut -d '=' -f 2 | sed 's/^ *//g');
-    sm_config_dir=$(cat /etc/mft/mft.conf | grep sm_config_dir | cut -d '=' -f 2 | sed 's/^ *//g');
+    mkey_is_supported=$(cat /etc/mft/mft.conf | grep mkey_enable | cut -d '=' -f 2 | sed 's/^ *//g')
+    sm_config_dir=$(cat /etc/mft/mft.conf | grep sm_config_dir | cut -d '=' -f 2 | sed 's/^ *//g')
 
     # Get the sm configuration directory.
     if [ "$sm_config_dir" == "" ]; then
-            sm_config_dir="/var/cache/opensm/"
+        sm_config_dir="/var/cache/opensm/"
     fi
 
     if [ "$topo_file" == "" ]; then
-        get_ib_tools_info_index ${tool_to_use}; index=$?
+        get_ib_tools_info_index ${tool_to_use}
+        index=$?
         set -- ${g_tools_database[index]}
-        g_tool_path=$2; g_tool_type=$3; ca_flag=$4; p_flag=$5; g_old_indexing=$6; topo_file=$7 ;
+        g_tool_path=$2
+        g_tool_type=$3
+        ca_flag=$4
+        p_flag=$5
+        g_old_indexing=$6
+        topo_file=$7
 
         cmd="$g_tool_path"
         hca_idx=${hca_id}
@@ -2692,7 +2622,8 @@ function ib_add()
         if [ "${g_tool_type}" == "${G_TT_DIAGNET}" ]; then
             # Convert from hca name (mlx4_0,mthca0,...) to index (0,1..) using ibv_devinfo.
             if [ ${g_old_indexing} == "1" ]; then
-                get_index_for_old_diagnet ${hca_id}; hca_idx=$?
+                get_index_for_old_diagnet ${hca_id}
+                hca_idx=$?
             fi
 
             if [ $mkey_is_supported == "yes" ]; then
@@ -2711,22 +2642,22 @@ function ib_add()
         if [ "${g_tool_type}" == "${G_TT_NETDISCOVER}" ]; then
             # Is Mkey feature is supported ?
             if [ $mkey_is_supported == "yes" ]; then
-                sm_conf_file_path=$(cat /etc/mft/mft.conf | grep sm_conf_file_path | cut -d '=' -f 2 | sed 's/^ *//g');
+                sm_conf_file_path=$(cat /etc/mft/mft.conf | grep sm_conf_file_path | cut -d '=' -f 2 | sed 's/^ *//g')
                 # Is Mkey per port feature enabled on OpenSM?
-                m_key_per_port_enabled_opensm=$(cat $sm_conf_file_path | grep m_key_per_port | cut -d ' ' -f 2 | sed 's/^ *//g' | awk '{print tolower($0)}');
+                m_key_per_port_enabled_opensm=$(cat $sm_conf_file_path | grep m_key_per_port | cut -d ' ' -f 2 | sed 's/^ *//g' | awk '{print tolower($0)}')
                 if [ ${m_key_per_port_enabled_opensm} == "true" ]; then
                     # Does ibnetdiscover current version support Mkey per port feature?
-                    m_key_per_port_supported_ibnetdiscover=$($cmd -h 2>&1 | grep "m_key_files" | sed 's/^ *//g');
+                    m_key_per_port_supported_ibnetdiscover=$($cmd -h 2>&1 | grep "m_key_files" | sed 's/^ *//g')
                     m_key_per_port_supported=${#m_key_per_port_supported_ibnetdiscover}
                     if [ ${m_key_per_port_supported} != 0 ]; then
-                    cmd="$cmd --m_key_files ${sm_config_dir}"
+                        cmd="$cmd --m_key_files ${sm_config_dir}"
                     else
                         echo "-E- m_key_per_port is not supported by current ibnetdiscover version."
                         echo "please update ibnetdiscover or disable m_key_per_port in OpenSM."
                         exit 1
                     fi
                 else
-                    key=$(cat ${sm_conf_file_path} | grep m_key | head -1 | cut -d " " -f 2);
+                    key=$(cat ${sm_conf_file_path} | grep m_key | head -1 | cut -d " " -f 2)
                     cmd="$cmd --m_key $key"
                 fi
             fi
@@ -2743,7 +2674,8 @@ function ib_add()
         fi
 
         rm -f ${topo_file}
-        $cmd &> ${g_out_file}; RC=$?
+        $cmd &> ${g_out_file}
+        RC=$?
         if [ "$RC" != "0" ]; then
             echo "-E- Command: \"$cmd\" failed (rc: $RC), for more details see: ${g_out_file}"
             exit 1
@@ -2753,8 +2685,10 @@ function ib_add()
             echo "-E- You should specify which tool you used to generate the given topofile by \"${g_discover_tool_opt} <tool>\""
             exit 1
         fi
-        get_ib_tools_info_index ${tool_to_use}; index=$?
-        set -- ${g_tools_database[index]}; g_tool_type=$3
+        get_ib_tools_info_index ${tool_to_use}
+        index=$?
+        set -- ${g_tools_database[index]}
+        g_tool_type=$3
     fi
 
     if [ ! -f ${topo_file} ]; then
@@ -2767,14 +2701,14 @@ function ib_add()
     cblcnt=0
     mkdir -p $mdir
 
-    for d in `${mbindir}/mst_ib_add "discovery" ${topo_file} ${added_nodes_type} ${g_tool_type} ${use_ibdr} $hca_id $ib_port 0`; do
+    for d in $(${mbindir}/mst_ib_add "discovery" ${topo_file} ${added_nodes_type} ${g_tool_type} ${use_ibdr} $hca_id $ib_port 0); do
         if [ $add_nvl == 1 ]; then
             d=${d//lid/nvl}
         fi
 
         touch $mdir/$d
         c=0
-        ibcnt=$(( $ibcnt + 1 ))
+        ibcnt=$((ibcnt + 1))
     done
 
     if [ $add_planarized == 1 ]; then
@@ -2794,22 +2728,22 @@ serv_start()
             shift
             secret="$3"
             shift
-        elif [[ "$3" =~ ^[0-9]+ ]]; then
+        elif [[ $3 =~ ^[0-9]+ ]]; then
             port=$3
             shift
         else
             shift
         fi
     done
-    if [[ "$secret" == "" ]]; then
+    if [[ $secret == "" ]]; then
         ${mbindir}/mtserver -p $port &
     else
         ${mbindir}/mtserver -p $port -s $secret &
     fi
-    
+
     mtserver_pid=$!
-    ps_output=`ps -p $mtserver_pid | sed "1 d"`
-    if [[ "$ps_output" == "" ]]; then
+    ps_output=$(ps -p $mtserver_pid | sed "1 d")
+    if [[ $ps_output == "" ]]; then
         wait $mtserver_pid
         RETVAL=$?
     fi
@@ -2817,8 +2751,7 @@ serv_start()
 
 serv_stop()
 {
-    ps -efa | grep ${mbindir}/mtserver | grep -v grep | while read str
-    do
+    ps -efa | grep ${mbindir}/mtserver | grep -v grep | while read str; do
         set -- $str
         kill $2
     done
@@ -2826,8 +2759,7 @@ serv_stop()
 
 mtsim_stop()
 {
-    ps -efa | grep mtsim | grep -v grep | while read str
-    do
+    ps -efa | grep mtsim | grep -v grep | while read str; do
         set -- $str
         kill $2
     done
@@ -2835,14 +2767,13 @@ mtsim_stop()
 
 check_start_args()
 {
-    if [[ "$1" == "" ]]; then
+    if [[ $1 == "" ]]; then
         return
     fi
     found=0
     read -r -a start_flags <<< "${MST_START_FLAGS}"
-    for flag in "${start_flags[@]}"
-    do
-        if [[ "${flag}" == "[$1]" ]]; then
+    for flag in "${start_flags[@]}"; do
+        if [[ ${flag} == "[$1]" ]]; then
             found=1
         fi
     done
@@ -2858,10 +2789,12 @@ check_start_args()
 
 # The function gets a number and an array and check if the number is in the array
 # Example: Inputs: seeking=8 , array=(1 3 4 6 7 8 12) ; Output 1
-function is_in_arr () {
+function is_in_arr()
+{
 
-    local seeking=$1 ; shift  # Input number
-    local array=$@            # Input array
+    local seeking=$1
+    shift          # Input number
+    local array=$@ # Input array
 
     local in=0
     for element in $array; do
@@ -2876,10 +2809,12 @@ function is_in_arr () {
 
 # The function gets an array and max number and return a number that doesn't exist in the array and < max
 # Example: Inputs: max=50, array=(0 1 2 3 4 5 6) ; Output: 7
-function get_free_number () {
+function get_free_number()
+{
 
-    local max=$1 ; shift  # Input max number to search
-    local array=$@        # Input array
+    local max=$1
+    shift          # Input max number to search
+    local array=$@ # Input array
 
     local num=0
     while [ $num -le $max ]; do
@@ -2899,19 +2834,20 @@ function get_free_number () {
 
 }
 
-
 # The function gets mst-device and return the serial-number
 # Example: Input : /dev/mst/mt4117_pciconf3.2 ; Output: 3
 
-function get_serial_num_from_mst_dev(){
+function get_serial_num_from_mst_dev()
+{
     local mst_device=$1
-    mst_device=${mst_device/.*/} # Remove .<>
-    mst_device=${mst_device/#*conf} # Remove everything before & including 'conf' (if exists).
-    serial_num=${mst_device/#*cr} # Remove everything before & including 'cr' (if exists).
+    mst_device=${mst_device/.*/}     # Remove .<>
+    mst_device=${mst_device/#*conf/} # Remove everything before & including 'conf' (if exists).
+    serial_num=${mst_device/#*cr/}   # Remove everything before & including 'cr' (if exists).
     echo $serial_num
 }
 
-function is_default_domain(){
+function is_default_domain()
+{
     dbdf=$1
     domain=${dbdf:0:4}
     if [[ $domain -eq "0000" ]]; then
@@ -2923,7 +2859,8 @@ function is_default_domain(){
 
 # The function gets pci-address and checks if the relvant adapter (NIC) already has serial number. if not allocate new one
 # Example for serial-number: /dev/mst/mt4117_pciconf<SERIAL-NUM>.2
-function get_serial_num(){
+function get_serial_num()
+{
 
     dbdf=$1
     is_default_domain=$(is_default_domain $dbdf)
@@ -2939,47 +2876,43 @@ function get_serial_num(){
 
     if [ -n "$mst_dev" ] && [ $mst_dev != "NA" ]; then # Serial number already exist
         serial_num=$(get_serial_num_from_mst_dev $mst_dev)
-    else                    # Need to allocate new serial number for the mst device
+    else # Need to allocate new serial number for the mst device
         serial_num_arr=()
-        while read line; # use here string
-            do
-                mst_dev=$(echo $line | awk '{print $2}')
-                serial_num_ii=$(get_serial_num_from_mst_dev $mst_dev)
-                serial_num_arr+=($serial_num_ii)
+        while read line; do # use here string
+            mst_dev=$(echo $line | awk '{print $2}')
+            serial_num_ii=$(get_serial_num_from_mst_dev $mst_dev)
+            serial_num_arr+=($serial_num_ii)
         done <<< "$(mdevices_info -v | grep $numeric_id)"
         serial_num=$(get_free_number 100 "${serial_num_arr[@]}")
     fi
     echo $serial_num
 }
 
-
-
-function get_major(){
+function get_major()
+{
     local mst_module_type=$1
 
-    if [ $mst_module_type == "pciconf" ];then
+    if [ $mst_module_type == "pciconf" ]; then
         mst_module_name=mst_pciconf
-    elif [ $mst_module_type == "pci_cr" ];then
+    elif [ $mst_module_type == "pci_cr" ]; then
         mst_module_name=mst_pci
     else
         echo 'mst moudle type not recognized'
         exit 1
     fi
 
-
-    local major=$(cat /proc/devices | grep $mst_module_name$ | awk '{print $1}');
+    local major=$(cat /proc/devices | grep $mst_module_name$ | awk '{print $1}')
     echo $major
 }
 
-
-function get_minor(){
+function get_minor()
+{
 
     local mst_module_type=$1
     local major=$2
 
     local minors=()
-    while read line;
-        do
+    while read line; do
         minor=$(echo $line | awk '{print $6}')
         minors+=($minor)
     done <<< "$(ls -l /dev/mst | grep $mst_module_type)"
@@ -2989,20 +2922,20 @@ function get_minor(){
     echo $free_minor
 }
 
-
-
-function is_valid_pci(){
+function is_valid_pci()
+{
     pci=$1
     num_of_match=$(lspci -s $pci 2> /dev/null | wc -l)
 
-     if [[ $num_of_match -eq 1 ]]; then
+    if [[ $num_of_match -eq 1 ]]; then
         return 0
-     else
+    else
         return 1
-     fi
+    fi
 }
 
-function get_numeric_id(){
+function get_numeric_id()
+{
 
     local dbdf=$1
 
@@ -3011,18 +2944,21 @@ function get_numeric_id(){
     echo $numeric_id
 }
 
-function get_fn(){
+function get_fn()
+{
     local dbdf=$1
     local len=${#dbdf}
-    echo ${dbdf:(len-1)}
+    echo ${dbdf:len-1}
 }
 
-function get_bdf(){
+function get_bdf()
+{
     local dbdf=$1
     echo ${dbdf:5}
 }
 
-function dec_to_hex(){
+function dec_to_hex()
+{
 
     _=$(which printf) # Check if "printf" exists
 
@@ -3033,18 +2969,17 @@ function dec_to_hex(){
     printf '%x' $1
 }
 
-
-function get_device_name(){
+function get_device_name()
+{
 
     local numeric_id=$1
     local mst_module_type=$2
     local serial_num=$3
     local fn=$4
 
-
     mst_device=${mdir}/mt${numeric_id}_${mst_module_type}${serial_num}
 
-    if [ $fn -ne 0 ];then
+    if [ $fn -ne 0 ]; then
         mst_device=$mst_device.$fn
     fi
 
@@ -3052,7 +2987,8 @@ function get_device_name(){
 
 }
 
-function remove_device(){
+function remove_device()
+{
 
     local mst_module_type=$1
     local numeric_id=$2
@@ -3067,8 +3003,8 @@ function remove_device(){
     fi
 }
 
-
-function is_mst_device_exists(){
+function is_mst_device_exists()
+{
     dbdf=$1
     bdf=$dbdf
     is_default_domain=$(is_default_domain $dbdf)
@@ -3089,7 +3025,7 @@ function is_mst_device_exists(){
 
 case "$1" in
     help)
-        cat <<END
+        cat << END
 
         MST (Mellanox Software Tools) service
         =====================================
@@ -3271,33 +3207,35 @@ case "$1" in
 END
         ;;
     save)
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "You must be root to do that"
             exit 1
         fi
-        if [ $# -eq 2 ]
-        then
-        save_pci $2; RC=$?
+        if [ $# -eq 2 ]; then
+            save_pci $2
+            RC=$?
         else
-        save_pci; RC=$?
+            save_pci
+            RC=$?
         fi
         if [ "$RC" != "0" ]; then
-           RETVAL=1
+            RETVAL=1
         fi
         ;;
     load)
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "You must be root to do that"
             exit 1
         fi
-        if [ $# -eq 2 ]
-        then
-        load_pci $2; RC=$?
+        if [ $# -eq 2 ]; then
+            load_pci $2
+            RC=$?
         else
-        load_pci; RC=$?
+            load_pci
+            RC=$?
         fi
         if [ "$RC" != "0" ]; then
-           RETVAL=1
+            RETVAL=1
         fi
         ;;
     reset)
@@ -3309,13 +3247,11 @@ END
             echo "Available devices are:"
             echo "----------------------"
             echo
-            for dev in ${mdir}/*
-            do
+            for dev in ${mdir}/*; do
                 if [ -r "$dev" ]; then
-                    if ! expr "$dev" : '.*\(vtop\|ddr\|uar\)' > /dev/null 2>&1
-                    then
+                    if ! expr "$dev" : '.*\(vtop\|ddr\|uar\)' > /dev/null 2>&1; then
                         cat $dev | head -n 1
-                        devcnt=$((  $devcnt + 1 ))
+                        devcnt=$((devcnt + 1))
                     fi
                 fi
             done
@@ -3326,14 +3262,12 @@ END
         fi
 
         # Check that we are root
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "You must be root to do that"
             exit 1
         fi
-        if save_pci
-        then
-            if reset_pci $2
-            then
+        if save_pci; then
+            if reset_pci $2; then
                 load_pci
             else
                 echo "-E- Failed to reset the pci device $2"
@@ -3353,18 +3287,18 @@ END
         case "$2" in
             start)
                 serv_start $@
-            ;;
+                ;;
             stop)
                 if [ $# -gt 2 ]; then
                     echo "Unknown option/s: ${@:3}"
                     exit 1
                 fi
                 serv_stop
-            ;;
+                ;;
             *)
                 echo "Subcommand should be start or stop"
                 RETVAL=1
-            ;;
+                ;;
         esac
         ;;
     mtsim)
@@ -3380,16 +3314,16 @@ END
                     exit 1
                 fi
                 mtsim_stop
-            ;;
+                ;;
             *)
                 echo "Subcommand should be stop"
                 RETVAL=1
-            ;;
+                ;;
         esac
         ;;
     remote)
         # We are expecting command and host name
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "-E- You must be root to add/remove remote devices"
             exit 1
         fi
@@ -3402,18 +3336,18 @@ END
         case "$2" in
             add)
                 radd $3 $4 $5
-            ;;
+                ;;
             del)
                 rdel $3
-            ;;
+                ;;
             *)
                 echo "Subcommand should be add or del"
                 RETVAL=1
-            ;;
+                ;;
         esac
         ;;
     i2c)
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "-E- You must be root to add/remove i2c devices"
             exit 1
         fi
@@ -3425,19 +3359,19 @@ END
             add)
                 shift 2
                 i2c_add $@
-            ;;
+                ;;
             del)
                 rm -rf $(ls ${mdir} | grep -E '^(mtusb|ndc|i2c).*_')
-            ;;
+                ;;
             *)
                 echo "Subcommand should be add or del"
                 RETVAL=1
-            ;;
+                ;;
         esac
         ;;
     ib)
         # We are expecting subsommand here
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "-E- You must be root to add/remove ib devices"
             exit 1
         fi
@@ -3449,23 +3383,23 @@ END
             add)
                 shift 2
                 ib_add $@
-            ;;
+                ;;
             del)
                 ls $mdir/SW_* $mdir/CA_* 2> /dev/null | grep -v -e cable -e _nvl | xargs rm -f
-            ;;
+                ;;
             create_aggregated_device)
                 shift 2
                 ib_create_aggregated_device $@
-            ;;
+                ;;
             *)
                 echo "Subcommand should be add or del"
                 RETVAL=1
-            ;;
+                ;;
         esac
         ;;
     nvl)
         # We are expecting subsommand here
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "-E- You must be root to add/remove nvl devices"
             exit 1
         fi
@@ -3477,19 +3411,19 @@ END
             add)
                 shift 2
                 ib_add $g_nvl_add_opt $@
-            ;;
+                ;;
             del)
                 ls $mdir/SW_* $mdir/CA_* 2> /dev/null | grep -v -e cable -e lid | xargs rm -f
-            ;;
+                ;;
             *)
                 echo "Subcommand should be add or del"
                 RETVAL=1
-            ;;
+                ;;
         esac
         ;;
     cable)
         # We are expecting command and host name
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "-E- You must be root to add/remove cable devices"
             exit 1
         fi
@@ -3503,19 +3437,19 @@ END
             add)
                 shift 2
                 cableadd $@
-            ;;
+                ;;
             del)
                 cabledel $3
-            ;;
+                ;;
             *)
                 echo "Subcommand should be add or del"
                 RETVAL=1
-            ;;
+                ;;
         esac
         ;;
     jtag)
         # We are expecting command and host name
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "-E- You must be root to add/remove jtag devices"
             exit 1
         fi
@@ -3529,19 +3463,19 @@ END
             add)
                 shift 2
                 jtagadd $@
-            ;;
+                ;;
             del)
                 jtagdel $3
-            ;;
+                ;;
             *)
                 echo "Subcommand should be add or del"
                 RETVAL=1
-            ;;
+                ;;
         esac
         ;;
     gpu)
         # We are expecting command and host name
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "-E- You must be root to add/remove gpu devices"
             exit 1
         fi
@@ -3555,22 +3489,22 @@ END
             add)
                 shift 2
                 gpuadd $@
-            ;;
+                ;;
             del)
                 gpudel $3
-            ;;
+                ;;
             restart)
                 gpurestart $3
-            ;;
+                ;;
             *)
                 echo "Subcommand should be add or del"
                 RETVAL=1
-            ;;
+                ;;
         esac
         ;;
     redfish)
         # We are expecting command and host name
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "-E- You must be root to add/remove redfish devices"
             exit 1
         fi
@@ -3586,19 +3520,19 @@ END
                     mkdir ${mdir}
                 fi
                 ${mbindir}/mst_tool --redfish_add $3 $4
-            ;;
+                ;;
             del)
                 rm -rf ${mdir}/redfish*
-            ;;
+                ;;
             *)
                 echo "Subcommand should be add or del"
                 RETVAL=1
-            ;;
+                ;;
         esac
         ;;
     gearbox)
         # We are expecting command and host name
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "-E- You must be root to add/remove gearbox devices"
             exit 1
         fi
@@ -3612,18 +3546,18 @@ END
             add)
                 shift 2
                 gboxadd $@
-            ;;
+                ;;
             del)
                 gboxdel $3
-            ;;
+                ;;
             *)
                 echo "Subcommand should be add or del"
                 RETVAL=1
-            ;;
+                ;;
         esac
         ;;
     retimer)
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "-E- You must be root to add/remove retimer chipset devices"
             exit 1
         fi
@@ -3637,18 +3571,18 @@ END
             add)
                 shift 2
                 retimeradd $@
-            ;;
+                ;;
             del)
                 retimerdel $3
-            ;;
+                ;;
             *)
                 echo "Subcommand should be add or del"
                 RETVAL=1
-            ;;
+                ;;
         esac
         ;;
     start)
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "You must be root to do that"
             exit 1
         fi
@@ -3656,7 +3590,7 @@ END
         start $2 $3
         ;;
     stop)
-        if [ `id -u` -ne 0 ]; then
+        if [ $(id -u) -ne 0 ]; then
             echo "You must be root to do that"
             exit 1
         fi
@@ -3665,10 +3599,10 @@ END
         else
             stop $2
             rm -fr $pcidir
-        fi 
+        fi
         ;;
     status)
-            print_status $2
+        print_status $2
         ;;
     version)
         if [ -f $BASH_VERSION_LIB_PATH ]; then
@@ -3678,8 +3612,8 @@ END
             echo "N/A"
         fi
         ;;
-        restart)
-        if [ `id -u` -ne 0 ]; then
+    restart)
+        if [ $(id -u) -ne 0 ]; then
             echo "You must be root to do that"
             exit 1
         fi
@@ -3691,8 +3625,8 @@ END
             start $2 $3
         fi
         ;;
-     add)
-        if [ `id -u` -ne 0 ]; then
+    add)
+        if [ $(id -u) -ne 0 ]; then
             echo "You must be root to do that"
             exit 1
         fi
@@ -3704,7 +3638,6 @@ END
             echo "Usage: mst add <pci-device>"
             exit 1
         fi
-
 
         lsmod | grep mst > /dev/null
         if [ $? -ne 0 ]; then
@@ -3739,12 +3672,12 @@ END
         # Create pci_cr device
         ########################
         major=$(get_major "pci_cr")
-        if [ -n "$major" ];then # create device only if module exist
+        if [ -n "$major" ]; then # create device only if module exist
             minor=$(get_minor "pci_cr" $major)
             pciconf_dev_name=$(get_device_name $numeric_id "pciconf" $serial_num $fn)
             numeric_id_hex=$(dec_to_hex $numeric_id)
             if [ $? -ne 0 ]; then
-                echo "\"printf\" not found!"
+                echo '"printf" not found!'
                 exit 1
             fi
             minit_args=$(get_pci_dev_args 0 $numeric_id_hex $pciconf_dev_name)
@@ -3753,8 +3686,8 @@ END
         fi
         echo "mst device created"
         ;;
-     rm)
-        if [ `id -u` -ne 0 ]; then
+    rm)
+        if [ $(id -u) -ne 0 ]; then
             echo "You must be root to do that"
             exit 1
         fi
@@ -3788,7 +3721,7 @@ END
 
         numeric_id=$(get_numeric_id $dbdf)
         fn=$(get_fn $dbdf)
-        serial_num=$(get_serial_num $dbdf)           # The function will return all the "echo" from all the called functions
+        serial_num=$(get_serial_num $dbdf) # The function will return all the "echo" from all the called functions
 
         remove_device "pciconf" $numeric_id $serial_num $fn
         remove_device "pci_cr" $numeric_id $serial_num $fn
@@ -3796,8 +3729,8 @@ END
         echo "mst device removed"
 
         ;;
-      rescan)
-        if [ `id -u` -ne 0 ]; then
+    rescan)
+        if [ $(id -u) -ne 0 ]; then
             echo "You must be root to do that"
             exit 1
         fi
@@ -3813,5 +3746,6 @@ END
         echo
         echo "Type \"$0 help\" for detailed help"
         RETVAL=1
+        ;;
 esac
 exit $RETVAL

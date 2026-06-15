@@ -1,0 +1,211 @@
+# /qompassai/dotfiles/.config/amanda/template.d/dumptypes
+# Qompass AI Amanda Dump Types Config
+# Copyright (C) 2026 Qompass AI, All rights reserved
+#############################################################
+dump of this filesystem always"
+    compress none
+    priority high
+    dumpcycle 0
+}
+define dumptype root-star {
+    global
+    program "STAR"
+    comment "root partitions dumped with star"
+    compress none
+    index
+    exclude list "/var/lib/amanda/exclude.star"
+    priority low
+}
+
+define dumptype user-star {
+    root-star
+    comment "user partitions dumped with star"
+    priority medium
+}
+
+define dumptype user-star-span {
+    root-star
+    comment "tape-spanning user partitions dumped with star"
+    priority medium
+}
+define dumptype high-star {
+    root-star
+    comment "partitions dumped with star"
+    priority high
+}
+define dumptype comp-root-star {
+    root-star
+    comment "Root partitions with compression"
+    compress client fast
+}
+define dumptype comp-user-star {
+    user-star
+    compress client fast
+}
+
+define dumptype comp-user-star-span {
+    user-star-span
+    compress client fast
+}
+define dumptype root-tar {
+    global
+    program "GNUTAR"
+    comment "root partitions dumped with tar"
+    compress none 
+    index
+    priority low
+}
+define dumptype user-tar {
+    root-tar
+    comment "user partitions dumped with tar"
+    priority medium
+}
+define dumptype user-tar-span {
+    root-tar
+    comment "tape-spanning user partitions dumped with tar"
+    priority medium
+}
+define dumptype high-tar {
+    root-tar
+    comment "partitions dumped with tar"
+    priority high
+}
+define dumptype comp-root-tar {
+    root-tar
+    comment "Root partitions with compression dumped with tar"
+    compress client fast
+}
+define dumptype comp-user-tar {
+    user-tar
+    compress client fast
+}
+define dumptype comp-user-tar-span {
+    user-tar-span
+    compress client fast
+}
+
+define dumptype holding-disk {
+    global
+    comment "The master-host holding disk itself"
+    holdingdisk never
+    priority medium
+}
+define dumptype comp-user {
+    global
+    comment "Non-root partitions on reasonably fast machines"
+    compress client fast
+    priority medium
+}
+define dumptype comp-user-span {
+    global
+    comment "Tape-spanning non-root partitions on reasonably fast machines"
+    compress client fast
+    priority medium
+}
+define dumptype nocomp-user {
+    comp-user
+    comment "Non-root partitions on slow machines"
+    compress none
+}
+define dumptype nocomp-user-span {
+    comp-user-span
+    comment "Tape-spanning non-root partitions on slow machines"
+    compress none
+}
+define dumptype comp-root {
+    global
+    comment "Root partitions with compression"
+    compress client fast
+    priority low
+}
+define dumptype nocomp-root {
+    comp-root
+    comment "Root partitions without compression"
+    compress none
+}
+define dumptype comp-high {
+    global
+    comment "very important partitions on fast machines"
+    compress client best
+    priority high
+}
+define dumptype nocomp-high {
+    comp-high
+    comment "very important partitions on slow machines"
+    compress none
+}
+define dumptype nocomp-test {
+    global
+    comment "test dump without compression, no /etc/dumpdates recording"
+    compress none
+    record no
+    priority medium
+}
+define dumptype comp-test {
+    nocomp-test
+    comment "test dump with compression, no /etc/dumpdates recording"
+    compress client fast
+}
+define dumptype nocomp-ssh {
+   root-tar
+   comment "ssh authorization and dumped with tar"
+   auth "ssh"
+   ssh_keys "/var/lib/amanda/.ssh/id_rsa_amdump"
+   compress none
+}
+define dumptype custom-compress {
+   root-tar
+   comment "custom client compression, dumped with tar"
+   compress client custom
+   client_custom_compress "/usr/bin/bzip2"
+}
+define dumptype encrypt-fast {
+   root-tar
+   comment "fast client compression and server symmetric encryption, dumped with tar"
+   compress client fast
+   encrypt server
+   server_encrypt "/usr/bin/amcrypt"
+   server_decrypt_option "-d"
+}
+define dumptype encrypt-simple-nocomp {
+   root-tar
+   comment "client simple symmetric encryption, dumped with tar"
+   compress none
+   encrypt client
+   client_encrypt "/usr/bin/amcryptsimple"
+   client_decrypt_option "-d"
+}
+define dumptype gpg-encrypt-nocomp {
+   root-tar
+   comment "server public-key encryption, dumped with tar"
+   compress none
+   encrypt server
+   server_encrypt "/usr/bin/amgpgcrypt"
+   server_decrypt_option "-d"
+}
+define dumptype gui-default {
+   gui-base
+   comment "gui default dumptype"
+   compress none
+   encrypt none
+}
+define dumptype gui-compress {
+   gui-base
+   comment "gui dumptype with compression"
+   compress client fast
+   encrypt none
+}
+define dumptype gui-encrypt {
+   gui-base
+   comment "gui dumptype with encryption"
+   compress none
+   encrypt server
+   server_encrypt "/usr/bin/amcryptsimple"
+}
+define dumptype gui-encrypt-compress {
+   gui-base
+   comment "gui dumptype with compression and encryption"
+   compress client fast
+   encrypt server 
+   server_encrypt "/usr/bin/amcryptsimple"
+}

@@ -1,0 +1,6 @@
+# http://wiki.zmanda.com/index.php/GSWA/Build_a_Basic_Configuration
+
+localhost /etc simple-gnutar-local
+
+# http://wiki.zmanda.com/index.php/GSWA/Backing_Up_Other_Systems
+# euclid.amanda.org /etc simple-gnutar-remote
