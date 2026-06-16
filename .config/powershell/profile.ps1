@@ -2,97 +2,161 @@
 # Qompass AI PowerShell Profile
 # Copyright (C) 2025 Qompass AI, All rights reserved
 # ----------------------------------------
-
 Import-Module PSReadLine
 Set-PSReadLineOption -HistorySaveStyle SaveIncrementally
 Set-PSReadLineOption -PredictionSource History
-
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
-
-# Load custom modules if present
 $script:ModulePath = [Environment]::GetFolderPath("MyDocuments") + "/PowerShell/Modules"
 if (Test-Path $ModulePath) {
     Get-ChildItem $ModulePath -Directory | ForEach-Object {
         Import-Module $_.FullName -ErrorAction SilentlyContinue
     }
 }
+foreach ($name in @('ssh','scp','sftp')) {
+    if (Get-Alias $name -ErrorAction SilentlyContinue) {
+        Remove-Item "Alias:$name" -ErrorAction SilentlyContinue
+    }
+}
 
-Set-Alias ssh Enter-PSSession
-Set-Alias scp Copy-Item
-Set-Alias sftp Copy-Item
+function Get-WindowsIp {
+    (& pass show windows/ip).Trim()
+}
+function Get-WindowsUser {
+    try {
+        (& pass show windows/user).Trim()
+    } catch {
+        $env:USER
+    }
+}
+function Get-WSLUser {
+    try {
+        (& pass show windows/wsl-user).Trim()
+    } catch {
+        "phaedrus"
+    }
+}
+function Get-NetInfo {
+    param(
+        [string]$Subnet = "192.168.0.0/24"
+    )
+    ip addr show
+    ip route show
+    if (Get-Command nmap -ErrorAction SilentlyContinue) {
+        nmap -sn $Subnet
+    } else {
+        Write-Warning "nmap is not installed; skipping subnet scan."
+    }
+}
+
+function Test-WindowsSsh {
+    param(
+        [string]$HostIp = $(Get-WindowsIp),
+        [int]$Port = 22
+    )
+
+    ssh -vvv -p $Port "$(Get-WindowsUser)@$HostIp"
+}
+
+function Connect-WindowsSsh {
+    param(
+        [string]$HostIp = $(Get-WindowsIp),
+        [string]$User = $(Get-WindowsUser),
+        [int]$Port = 22
+    )
+
+    ssh -p $Port "$User@$HostIp"
+}
+
+function Connect-WSL2Ssh {
+    param(
+        [string]$HostIp = $(Get-WindowsIp),
+        [string]$User = $(Get-WSLUser),
+        [int]$Port = 2342
+    )
+
+    ssh -p $Port "$User@$HostIp"
+}
+
+function Connect-WSLViaWindows {
+    param(
+        [string]$HostIp = $(Get-WindowsIp),
+        [string]$WindowsUser = $(Get-WindowsUser),
+        [string]$Distro = "Arch"
+    )
+
+    ssh -t "$WindowsUser@$HostIp" "wsl -d $Distro"
+}
 
 function Enable-RemoteWinRM {
+    param(
+        [Parameter(Mandatory)]
+        [string]$ComputerName
+    )
+
     Invoke-Command -ScriptBlock {
         Enable-PSRemoting -Force
         Set-Item WSMan:\localhost\Client\TrustedHosts -Value '*'
-        # Open firewall ports
-        New-NetFirewallRule -Name "WinRM TCP" -Protocol TCP -Port 5985 -Action Allow
-    } -ComputerName $args[0] -Credential (Get-Credential)
+        New-NetFirewallRule -Name "WinRM TCP" -Protocol TCP -LocalPort 5985 -Action Allow -ErrorAction SilentlyContinue
+    } -ComputerName $ComputerName -Credential (Get-Credential)
 }
 
-# Connect to remote Windows host with credentials
-function Connect-Windows {
+function Connect-WindowsPS {
     param(
-        [Parameter(Mandatory)]
-        [string]$ComputerName,
-        [Parameter()]
-        [string]$User = $env:USER
+        [string]$ComputerName = $(Get-WindowsIp),
+        [string]$User = $(Get-WindowsUser)
     )
+
     $cred = Get-Credential -UserName $User -Message "Enter password for $User"
     Enter-PSSession -ComputerName $ComputerName -Credential $cred
 }
 
-# Copy file to remote host
 function Copy-ToWindows {
     param(
-        [Parameter(Mandatory)]
-        [string]$ComputerName,
+        [string]$ComputerName = $(Get-WindowsIp),
         [Parameter(Mandatory)]
         [string]$LocalPath,
         [Parameter(Mandatory)]
         [string]$RemotePath,
-        [Parameter()]
-        [string]$User = $env:USER
+        [string]$User = $(Get-WindowsUser)
     )
-    $cred = Get-Credential -UserName $User
-    Copy-Item $LocalPath -Destination "\\$ComputerName\$RemotePath" -Credential $cred
+
+    $dest = "\\$ComputerName\$RemotePath"
+    Copy-Item $LocalPath -Destination $dest
 }
 
-# Gather remote system info
 function Get-RemoteSystemInfo {
     param(
-        [Parameter(Mandatory)]
-        [string]$ComputerName,
-        [Parameter()]
-        [string]$User = $env:USER
+        [string]$ComputerName = $(Get-WindowsIp),
+        [string]$User = $(Get-WindowsUser)
     )
+
     $cred = Get-Credential -UserName $User
     Invoke-Command -ComputerName $ComputerName -Credential $cred -ScriptBlock {
         Get-ComputerInfo
-        Get-Service | Where-Object {$_.Status -eq "Running"}
+        Get-Service | Where-Object { $_.Status -eq "Running" }
         Get-Process | Sort-Object CPU -Descending | Select-Object -First 10
     }
 }
 
-# Helpful network info from Linux side
-function Get-NetInfo {
-    ip addr show
-    ip route show
-    nmap -sn <your subnet here>
-}
-
-# Export/Import SSH keys for passwordless access (if ssh enabled on Windows)
-function Export-SSHKey {
-    # Usage: Export-SSHKey -User <WindowsUser> -ComputerName <WindowsHost>
-    param (
-        [Parameter(Mandatory)]
-        [string]$User,
-        [Parameter(Mandatory)]
-        [string]$ComputerName
+function Export-SSHKey-ToWindows {
+    param(
+        [string]$HostIp = $(Get-WindowsIp),
+        [string]$User = $(Get-WindowsUser),
+        [int]$Port = 22
     )
-    ssh-copy-id $User@$ComputerName
+
+    ssh-copy-id -p $Port "$User@$HostIp"
 }
 
-Write-Host "💻 PowerShell profile loaded. Ready for remote Windows work." -ForegroundColor Cyan
+function Export-SSHKey-ToWSL2 {
+    param(
+        [string]$HostIp = $(Get-WindowsIp),
+        [string]$User = $(Get-WSLUser),
+        [int]$Port = 2342
+    )
 
+    ssh-copy-id -p $Port "$User@$HostIp"
+}
+
+Write-Host "PowerShell profile loaded. pass-backed Windows/WSL helpers ready." -ForegroundColor Cyan

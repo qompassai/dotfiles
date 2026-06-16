@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+# abridge
+# Qompass AI - [ ]
+# Copyright (C) 2026 Qompass AI, All rights reserved
+# ----------------------------------------
+#!/usr/bin/env bash
+set -Eeuo pipefail
+REAL_UID="$(id -ur)"
+FROM="/tmp/audacity_script_pipe.from.${REAL_UID}"
+TO="/tmp/audacity_script_pipe.to.${REAL_UID}"
+LOCK_DIR="/tmp/audacity_bridge.${REAL_UID}.lock"
+AUDACITY_BIN="${AUDACITY_BIN:-audacity}"
+STARTUP_TIMEOUT="${STARTUP_TIMEOUT:-30}"
+READY_DELAY="${READY_DELAY:-0.5}"
+ANNOUNCED=false
+AUDACITY_PID=""
+READER_PID=""
+log()
+{
+    printf '%s\n' "$*" >&2
+}
+cleanup()
+{
+    local exit_code=$?
+    if [[ -n ${READER_PID} ]]; then
+        kill "${READER_PID}" 2> /dev/null || true
+    fi
+    if [[ -n ${AUDACITY_PID} ]]; then
+        kill -TERM "${AUDACITY_PID}" 2> /dev/null || true
+        wait "${AUDACITY_PID}" 2> /dev/null || true
+    fi
+
+    [[ -p ${FROM} ]] && rm -f "${FROM}"
+    [[ -p ${TO} ]] && rm -f "${TO}"
+    rm -rf "${LOCK_DIR}"
+
+    shopt -s nullglob
+    for report in /tmp/audacity_dbgrpt-*; do
+        [[ -d ${report} ]] && rm -rf "${report}"
+    done
+
+    exit "${exit_code}"
+}
+
+trap cleanup EXIT INT TERM HUP
+
+while ! mkdir "${LOCK_DIR}" 2> /dev/null; do
+    if ! ${ANNOUNCED}; then
+        ANNOUNCED=true
+        log "Waiting for another instance of audacity-bridge to quit."
+        log "If no other instance is running, remove: ${LOCK_DIR}"
+    fi
+    sleep 1
+done
+[[ -p ${FROM} ]] && rm -f "${FROM}"
+[[ -p ${TO} ]] && rm -f "${TO}"
+
+"${AUDACITY_BIN}" "$@" > /dev/null 2>&1 &
+AUDACITY_PID=$!
+
+for ((i = 0; i < STARTUP_TIMEOUT * 10; i++)); do
+    if [[ -p ${FROM} && -p ${TO} ]]; then
+        break
+    fi
+    sleep 0.1
+done
+if [[ ! -p ${FROM} || ! -p ${TO} ]]; then
+    log "Timed out waiting for Audacity mod-script-pipe."
+    log "Make sure mod-script-pipe is installed and enabled in Audacity."
+    exit 1
+fi
+
+sleep "${READY_DELAY}"
+{
+    awk 'BEGIN{blank=0} {lines[NR]=$0} END {for(i=1;i<=NR;i++){if(i<=NR-3) print lines[i]}}' < "${FROM}"
+} &
+READER_PID=$!
+
+while IFS= read -r input; do
+    printf '%s\n' "${input}"
+done > "${TO}"
+printf '%s\n' 'MenuCommand: CommandName=Exit' > "${TO}" || true
+wait "${READER_PID}" 2> /dev/null || true

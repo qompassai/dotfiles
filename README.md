@@ -276,7 +276,7 @@ Where:
 
 * [Attention High level overview video](https://www.youtube.com/watch?v=fjJOgb-E41w)
 
-* [Attention Is All You Need Arxiv Paper](https://arxiv.org/abs/1706.03762)
+* [Attention Is All You Need ArxiV Paper](https://arxiv.org/abs/1706.03762)
 
 The Attention mechanism equation is:
 

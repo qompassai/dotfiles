@@ -1,0 +1,44 @@
+# See: man profanity, https://profanity-im.github.io/reference.html | https://profanity-im.github.io/guide/070/files.html
+time.time_format = %H:%M
+time.show_seconds = true
+time.show_date_changes = true
+ui.nick_color = yellow
+theme = default
+ui.mouse = true
+input.mode = vi
+ui.history_length = 2000
+muc.autojoin = true
+presence.auto_subscribe = true
+presence.auto_authorize = true
+notify.message = true
+notify.mention = true
+notify.muc = false
+# Example (uncomment to use and adjust path):
+# notify.command = /usr/bin/notify-send "Profanity" "%s"
+log.chats = on
+log.muc = on
+log.level = INFO
+omemo.autotrust = false
+omemo.autoswitch = true
+omemo.notify = true
+# pgp.keyid = #
+/exec /account add cbt
+/exec /account set cbt jid USERNAME@chatterboxtown.us
+/exec /account set cbt password PASSWORD
+/exec /autoconnect set cbt
+muc.nick = phaedrus
+muc.show_joins = true
+muc.show_parts = true
+muc.show_status = true
+muc.show_topic = true
+muc.history = 50
+roster.show_offline = false
+roster.confirm_remove = true
+status.online = "online"
+status.away = "away"
+status.xa = "not available"
+status.dnd = "do not disturb"
+status.chat = "free to chat"
+connection.auto_reconnect = true
+connection.reconnect_interval = 10
+tls.allow_untrusted = false

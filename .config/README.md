@@ -33,10 +33,14 @@ All configs follow X Desktop Group (XDG) convention `$XDG_CONFIG_HOME` (`~/.conf
 </summary>
 <blockquote style="font-size: 1.2em; line-height: 1.8; padding: 25px; background: #f8f9fa; border-left: 6px solid #667eea; border-radius: 8px; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
   <ul>
+  <li><a href=".config/abuild">abuild</a> — Arch build</li>
+  <li><a href=".config/acme-redirect.d">acme-redirect.d</a> — ACME DNS Redirect</li>
     <li><a href=".config/alsa">alsa</a> — ALSA audio device configuration</li>
     <li><a href=".config/alsacontrol">alsacontrol</a> — ALSA mixer control</li>
+  <li><a href=".config/alsacontrol">alsacontrol</a> — Virtual Reality</li>
     <li><a href=".config/amsynth">amsynth</a> — Software synthesizer</li>
     <li><a href=".config/ansible-bundler">ansible-bundler</a> — Ansible automation bundler</li>
+   <li><a href=".config/amsynth">amsynth</a> — Java ant</li>
     <li><a href=".config/apparmor">apparmor</a> — AppArmor MAC security profiles</li>
     <li><a href=".config/appimagelauncher">appimagelauncher</a> — AppImage integration</li>
     <li><a href=".config/aria2">aria2</a> — Lightweight download utility</li>
