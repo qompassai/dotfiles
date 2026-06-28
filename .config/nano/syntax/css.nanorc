@@ -1,0 +1,8 @@
+syntax css "\.css$"
+comment "/*|*/"
+color brightred "."
+color brightyellow start="\{" end="\}"
+color brightwhite start=":" end="([;^{]|$)"
+color brightcyan ":(active|checked|focus|hover|link|visited|after|before)\>"
+color brightblue start="/\*" end="\*/"
+color green ";|:|\{|\}"

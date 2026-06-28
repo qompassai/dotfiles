@@ -1,0 +1,7 @@
+syntax email "\.eml$"
+color green "^>.*"
+color cyan "^> ?>.*"
+color yellow "^> ?> ?>.*"
+color brightmagenta "<[^@]+@[^@]+>"
+color brightblue "(https?|ftp)://\S+\.\S+[^[:space:].)]"
+color yellow start="^>* ?-- $" end="^>* ?$"
