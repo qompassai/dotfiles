@@ -1,0 +1,8 @@
+syntax "svn-commit" "svn-commit(\.[[:digit:]]+)?\.tmp$"
+color yellow ".*"
+color brightblack "^--.+--$"
+color white       "^[ADM_](M|[[:space:]])[[:space:]](\+|[[:space:]])[[:space:]].*"
+color red         "^D[[:space:]]{4}"
+color green       "^[M_](M|[[:space:]])[[:space:]]{3}"
+color brightgreen "^A(M|[[:space:]])[[:space:]]{3}"
+color brightblue  "^A(M|[[:space:]])[[:space:]]\+[[:space:]]"

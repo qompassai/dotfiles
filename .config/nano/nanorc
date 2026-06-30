@@ -1,4 +1,5 @@
 #/qompassai/dotfiles/.config/nano/nanorc
+# Reference: https://wiki.archlinux.org/title/Nano
 bind ^A mark main
 bind ^B wherewas all
 bind ^C copy main
@@ -9,12 +10,11 @@ bind ^G findnext all
 bind ^H exit help
 bind ^K "{mark}{end}{zap}" main
 bind ^L refresh main
-bind ^M-K comment main
+bind M-K comment main
 bind ^O insert main
 bind ^P location main
 bind ^Q exit all
 bind ^R replace main
-bind ^S savefile main
 bind ^S "{execute}| sed 's/\\s\\+$//' {enter}{savefile}" main
 bind Sh-M-C "{execute}| xsel -ib {enter}{undo}" main
 bind Sh-M-L "{nextword}{mark}{prevword}{execute}| sed 's/.*/\L&/' {enter}" main
@@ -31,43 +31,72 @@ bind ^X cut main
 bind ^Y redo main
 bind ^Z suspend main
 bind ^Z undo main
-extendsyntax python tabgives "    "
-include "$XDG_CONFIG_HOME/nano/syntax/asm.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/autoconf.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/awk.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/c.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/cmake.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/css.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/default.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/elisp.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/email.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/faust.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/go.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/groff.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/html.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/java.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/javascript.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/json.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/latex.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/lua.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/makefile.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/markdown.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/nanohelp.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/nftables.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/patch.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/php.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/po.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/python.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/ruby.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/rust.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/sh.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/sql.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/tcl.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/tex.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/texinfo.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/toml.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/xml.nanorc"
-include "$XDG_CONFIG_HOME/nano/syntax/yaml.nanorc"
+include "/home/phaedrus/.config/nano/syntax/asciidoc.nanorc"
+include "/home/phaedrus/.config/nano/syntax/asm.nanorc"
+include "/home/phaedrus/.config/nano/syntax/autoconf.nanorc"
+include "/home/phaedrus/.config/nano/syntax/awk.nanorc"
+include "/home/phaedrus/.config/nano/syntax/batch.nanorc"
+include "/home/phaedrus/.config/nano/syntax/c.nanorc"
+include "/home/phaedrus/.config/nano/syntax/changelog.nanorc"
+include "/home/phaedrus/.config/nano/syntax/cmake.nanorc"
+include "/home/phaedrus/.config/nano/syntax/colortest.nanorc"
+include "/home/phaedrus/.config/nano/syntax/conf.nanorc"
+include "/home/phaedrus/.config/nano/syntax/css.nanorc"
+include "/home/phaedrus/.config/nano/syntax/csv.nanorc"
+include "/home/phaedrus/.config/nano/syntax/cython.nanorc"
+include "/home/phaedrus/.config/nano/syntax/default.nanorc"
+include "/home/phaedrus/.config/nano/syntax/dot.nanorc"
+include "/home/phaedrus/.config/nano/syntax/dotenv.nanorc"
+include "/home/phaedrus/.config/nano/syntax/elisp.nanorc"
+include "/home/phaedrus/.config/nano/syntax/elixir.nanorc"
+include "/home/phaedrus/.config/nano/syntax/email.nanorc"
+include "/home/phaedrus/.config/nano/syntax/etc-hosts.nanorc"
+include "/home/phaedrus/.config/nano/syntax/faust.nanorc"
+include "/home/phaedrus/.config/nano/syntax/fish.nanorc"
+include "/home/phaedrus/.config/nano/syntax/git.nanorc"
+include "/home/phaedrus/.config/nano/syntax/glsl.nanorc"
+include "/home/phaedrus/.config/nano/syntax/go.nanorc"
+include "/home/phaedrus/.config/nano/syntax/gradle.nanorc"
+include "/home/phaedrus/.config/nano/syntax/groff.nanorc"
+include "/home/phaedrus/.config/nano/syntax/html.nanorc"
+include "/home/phaedrus/.config/nano/syntax/ini.nanorc"
+include "/home/phaedrus/.config/nano/syntax/java.nanorc"
+include "/home/phaedrus/.config/nano/syntax/javascript.nanorc"
+include "/home/phaedrus/.config/nano/syntax/json.nanorc"
+include "/home/phaedrus/.config/nano/syntax/kickstart.nanorc"
+include "/home/phaedrus/.config/nano/syntax/lua.nanorc"
+include "/home/phaedrus/.config/nano/syntax/makefile.nanorc"
+include "/home/phaedrus/.config/nano/syntax/man.nanorc"
+include "/home/phaedrus/.config/nano/syntax/markdown.nanorc"
+include "/home/phaedrus/.config/nano/syntax/mutt.nanorc"
+include "/home/phaedrus/.config/nano/syntax/nanohelp.nanorc"
+include "/home/phaedrus/.config/nano/syntax/nftables.nanorc"
+include "/home/phaedrus/.config/nano/syntax/patch.nanorc"
+include "/home/phaedrus/.config/nano/syntax/perl.nanorc"
+include "/home/phaedrus/.config/nano/syntax/perl6.nanorc"
+include "/home/phaedrus/.config/nano/syntax/php.nanorc"
+include "/home/phaedrus/.config/nano/syntax/po.nanorc"
+include "/home/phaedrus/.config/nano/syntax/properties.nanorc"
+include "/home/phaedrus/.config/nano/syntax/python.nanorc"
+include "/home/phaedrus/.config/nano/syntax/reST.nanorc"
+include "/home/phaedrus/.config/nano/syntax/ruby.nanorc"
+include "/home/phaedrus/.config/nano/syntax/rust.nanorc"
+include "/home/phaedrus/.config/nano/syntax/scala.nanorc"
+include "/home/phaedrus/.config/nano/syntax/sh.nanorc"
+include "/home/phaedrus/.config/nano/syntax/sql.nanorc"
+include "/home/phaedrus/.config/nano/syntax/swift.nanorc"
+include "/home/phaedrus/.config/nano/syntax/systemd.nanorc"
+include "/home/phaedrus/.config/nano/syntax/tcl.nanorc"
+include "/home/phaedrus/.config/nano/syntax/tex.nanorc"
+include "/home/phaedrus/.config/nano/syntax/texinfo.nanorc"
+include "/home/phaedrus/.config/nano/syntax/toml.nanorc"
+include "/home/phaedrus/.config/nano/syntax/vala.nanorc"
+include "/home/phaedrus/.config/nano/syntax/verilog.nanorc"
+include "/home/phaedrus/.config/nano/syntax/vi.nanorc"
+include "/home/phaedrus/.config/nano/syntax/xml.nanorc"
+include "/home/phaedrus/.config/nano/syntax/xresources.nanorc"
+include "/home/phaedrus/.config/nano/syntax/yaml.nanorc"
+include "/home/phaedrus/.config/nano/syntax/yum.nanorc"
 set afterends
 set atblanks
 set autoindent
@@ -137,3 +166,5 @@ unbind ^U all
 unbind ^Y all
 unbind M-J main
 unbind M-T main
+
+extendsyntax python tabgives "    "

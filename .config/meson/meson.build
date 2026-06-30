@@ -1,7 +1,7 @@
-# ~/.config/meson/meson.build
-# ---------------------------
+# /qompassai/dotfiles/.cconfig/meson/meson.build
+# Qompass AI Meson Build Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
-
+####################################################
 cmake = import('cmake')
 
 cmake_opts = cmake.subproject_options()

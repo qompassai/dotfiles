@@ -1,0 +1,5 @@
+syntax "Conf" "\.c[o]?nf$"
+icolor white ""(\\.|[^"])*""
+icolor brightblue "^[[:space:]]*#.*$"
+icolor cyan "^[[:space:]]*##.*$"
+color ,green "[[:space:]]+$"

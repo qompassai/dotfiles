@@ -1,0 +1,3 @@
+syntax "properties" "\.properties$"
+icolor green "^[^:=]+[:=]"
+icolor blue "([[:space:]])*[#!].*$"

@@ -1,0 +1,19 @@
+# /qompassai/dotfiles/.config/freakyfetch/config
+# Qompass AI Freakyfetch Config
+# Copyright (C) 2026 Qompass AI, All rights reserved
+####################################################
+distro=freaky
+image=~/.Pictures/picture.png
+user=true
+os=true
+host=true
+kernel=true
+cpu=true
+gpu=1
+gpus=true
+ram=true
+resolution=false
+shell=true
+pkgs=true
+uptime=true
+colors=true

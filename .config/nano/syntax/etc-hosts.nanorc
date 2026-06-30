@@ -1,0 +1,5 @@
+syntax "/etc/hosts" "hosts"
+color yellow "^[0-9\.]+\s"
+icolor green "^[0-9a-f:]+\s"
+color normal "[.:]"
+color brightblack "^#.*"
