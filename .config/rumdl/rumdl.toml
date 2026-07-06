@@ -1,0 +1,99 @@
+#:tombi schema.strict = false
+# #################################################################
+# /qompassai/dotfiles/.config/rumdl/rumdl.toml
+# Qompass AI Rumdl Config
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (c) 2026 Qompass AI
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# #################################################################
+[global]
+cache = true
+cache_dir = ".rumdl_cache"
+disable = [
+  "MD064",
+  "MD013",
+]
+enable = [
+  "MD001",
+  "MD003",
+  "MD013",
+]
+exclude = [
+  "*.tmp.md",
+  "build",
+  "dist",
+  "docs/generated/**",
+  "node_modules",
+]
+flavor = "mkdocs"
+include = [
+  "**/*.markdown",
+  "README.md",
+  "docs/**/*.md",
+]
+line_length = 350
+respect_gitignore = true
+
+[per-file-ignores]
+"**/TOC.md" = ["MD025"]
+"README.md" = ["MD033"]
+"SUMMARY.md" = ["MD025"]
+"docs/api/**/*.md" = ["MD013", "MD041"]
+"docs/legacy/**/*.md" = ["MD003", "MD022"]
+
+[MD013]
+code-blocks = false
+headings = false
+length-mode = "visual"
+line-length = 120
+paragraphs = true
+reflow = true
+reflow-mode = "default"
+strict = false
+
+[MD022]
+lines-above = [0, 0, 1, 1, 1, 1]
+lines-below = [0, 0, 1, 0, 0, 0]
+
+[MD024]
+allow-different-nesting = true
+siblings-only = false
+
+[MD029]
+style = "ordered"
+
+[no-inline-html]
+allowed-elements = [
+  "kbd",
+]
+
+[MD046]
+style = "consistent"
+
+[MD048]
+style = "backtick"
+
+[MD051]
+anchor-style = "github"
+
+[MD055]
+style = "leading_and_trailing"
+
+[emphasis-style]
+style = "underscore"
+
+[line-length]
+code-blocks = false
+
+[strong-style]
+style = "asterisk"
