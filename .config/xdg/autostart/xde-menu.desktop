@@ -1,0 +1,20 @@
+[Desktop Entry]
+Type=Application
+Name=Applications Menu
+GenericName=Menu
+Comment=Popup menu for the X Desktop Environment
+Icon=menu
+TryExec=xde-menu
+Exec=xde-menu --monitor
+Terminal=false
+Categories=XDE;System;Utility;
+NotShowIn=GNOME;KDE;XFCE;LXDE;
+StartupNotify=true
+StartupWMClass=xde-menu
+X-GNOME-Autostart-enabled=true
+NoDisplay=true
+Actions=PopMenu;
+
+[Desktop Action PopMenu]
+Name=Pop Applications Menu
+Exec=xde-menu --popmenu --tooltips --actions

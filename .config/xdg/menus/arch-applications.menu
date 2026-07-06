@@ -49,7 +49,7 @@
       <And>
         <Category>Development</Category>
       </And>
-      <Filename>nvim.desktop</Filename>
+      <Filename>emacs.desktop</Filename>
     </Include>
   </Menu>
 
@@ -140,6 +140,16 @@
       <And>
         <Category>System</Category>
         <Not><Category>Settings</Category></Not>
+      </And>
+    </Include>
+  </Menu>
+
+  <Menu>
+    <Name>Settings</Name>
+    <Directory>Arch-Settings.directory</Directory>
+    <Include>
+      <And>
+        <Category>Settings</Category>
       </And>
     </Include>
   </Menu>

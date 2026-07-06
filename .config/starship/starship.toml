@@ -1,0 +1,126 @@
+# ##################################################################
+# /qompassai/dotfiles/.config/starship/starship.toml
+# Qompass AI Starship Config
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (c) 2026 Qompass AI
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# #################################################################
+
+
+format = """
+$os\
+$username\
+[](#f4d03e)\
+$directory\
+[](#f4d03e)\
+$git_branch\
+$git_status\
+$container\
+$nodejs\
+$bun\
+$dotnet\
+$golang\
+$java\
+$rust\
+$dart\
+$cmd_duration\
+\n """
+
+[directory]
+style = "fg:#38296e bg:#f4d03e"
+format = "[ $path ]($style)"
+truncation_length = 3
+
+[directory.substitutions]
+truncation_symbol = "…/"
+"Code" = "" # Code icon
+"Documents" = "󰈙" # Documents icon
+"Downloads" = "" # Downloads icon
+"Music" = ""
+"Pictures" = "" 
+
+[git_branch]
+symbol = ""
+style = "bg:#f2714f"
+format = '[[ $symbol $branch ](fg:#fff bg:#f2714f)]($style)'
+
+[git_status]
+style = "bg:#f2714f"
+format = '[[($all_status$ahead_behind )](fg:#fff bg:#f2714f)]($style)'
+
+[nodejs]
+symbol = "" # Node.js icon
+format = '[[ $symbol ($version) ](fg:#80bd00)]($style)'
+
+[bun]
+symbol = "" # Bun icon
+format = '[[ $symbol ($version) ](fg:#fb923c)]($style)'
+detect_files = ['bun.lock', 'bun.lockb', 'bunfig.toml']
+
+[dotnet]
+symbol = "" # .NET icon
+format = '[[ $symbol ($version) ](fg:#6C7CDB)]($style)'
+detect_extensions = ['csproj', 'fsproj', 'xproj', 'sln']
+
+[golang]
+symbol = "" # Go icon
+format = '[[ $symbol ($version) ](fg:#00acd7)]($style)'
+detect_files = ['go.mod']
+
+[java]
+symbol = "" # Java icon
+format = '[[ $symbol ($version) ](fg:#5382a1)]($style)'
+detect_files = ['pom.xml']
+
+[rust]
+symbol = "" # Rust icon
+format = '[[ $symbol ($version) ](fg:#dea584)]($style)'
+detect_files = ['Cargo.toml']
+
+[dart]
+symbol = "" # Dart icon
+format = '[[ $symbol ($version) ](fg:#00b4d8)]($style)'
+detect_files = ['pubspec.yaml', 'pubspec.yml', 'pubspec.lock']
+detect_folders = ['.dart_tool']
+
+[cmd_duration]
+min_time = 2_000
+format = '[[  $duration ](fg:#8b5cf6)]($style)' # Clock icon with value
+style = "bold #8b5cf6"
+
+[container]
+symbol = "" # Container icon
+format = '[[ $symbol \[$name\] ](fg:#06b6d4)]($style)'
+style = "bold #06b6d4"
+
+[os]
+disabled = false
+format = "[$symbol]($style)"
+style = "bold"
+
+[os.symbols]
+Arch = " "
+CachyOS = " " 
+Debian = " " # Debian icon
+Fedora = " " # Fedora icon
+Linux = " " # Linux icon
+Macos = " " # macOS icon
+Ubuntu = " " # Ubuntu icon
+Windows = " " # Windows icon
+
+[username]
+disabled = false
+show_always = true
+format = "[$user]($style) "
+style_user = "bold"
+style_root = "bold #ef4444"

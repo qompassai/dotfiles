@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Check if any Desktop Video devices need to have their firmware updated
+Comment=Notify if any Desktop Video devices need to have their firmware updated
+Exec=/usr/bin/DesktopVideoUpdater
+Terminal=false
+Type=Application
+Categories=System;Settings;GTK;HardwareSettings;

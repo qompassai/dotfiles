@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Btrfs desktop notification
+Comment=Automatic notification when BTRFS warning or error occurs from the dmesg log.
+Icon=notifications
+Exec=btrfs-desktop-notification
+Terminal=false
+Type=Application
+Categories=Utility

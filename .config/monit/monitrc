@@ -2,7 +2,7 @@
 # Qompass AI Monit Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 #################################################
-set daemon  30            
+set daemon  30
 set log syslog
 set pidfile /var/run/monit.pid
 set idfile /var/.monit.id

@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (c) 2021-2024 Lars Grüter
+
+[Desktop Entry]
+Type=Application
+Name=pacautomation-notify
+GenericName=Notification helper
+NoDisplay=true
+Icon=pacautomation
+Exec=/usr/bin/pacautomation-notify
+Terminal=false
+Comment=Desktop notifier for maintenance around pacman

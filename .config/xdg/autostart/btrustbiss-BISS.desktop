@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=BISS
+Comment=Browser independent signing service
+Exec=/opt/btrustbiss/bin/BISS
+Icon=/opt/btrustbiss/lib/BISS.png
+Terminal=false
+Type=Application
+Categories=Unknown
+MimeType=

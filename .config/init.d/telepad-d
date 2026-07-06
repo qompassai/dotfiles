@@ -1,0 +1,53 @@
+#! /bin/sh -e
+
+DAEMON="/usr/share/telepad/telepad"
+daemon_OPT=""
+daemon_NAME="telepad"
+
+
+test -x $DAEMON || exit 0
+
+. /lib/lsb/init-functions
+
+d_start () {
+        log_daemon_msg "Starting system $daemon_NAME Daemon"
+	start-stop-daemon --background --name $daemon_NAME --start --quiet --exec $DAEMON -- $daemon_OPT
+        log_end_msg $?
+}
+
+d_stop () {
+        log_daemon_msg "Stopping system $daemon_NAME Daemon"
+        pkill -f 'java.*telepad.*'
+        start-stop-daemon --name $daemon_NAME --stop --retry 5 --quiet
+	log_end_msg $?
+}
+
+case "$1" in
+
+        start|stop)
+                d_${1}
+                ;;
+
+        restart|reload|force-reload)
+                        d_stop
+                        d_start
+                ;;
+
+        force-stop)
+               d_stop
+                pkill -f 'java.*telepad.*' || true
+                killall -q $daemon_NAME || true
+                sleep 2
+                pkill -f 'java.*telepad.*' || true
+                killall -q -9 $daemon_NAME || true
+                ;;
+
+        status)
+                status_of_proc "$daemon_NAME" "$DAEMON" "system-wide $daemon_NAME" && exit 0 || exit $?
+                ;;
+        *)
+                echo "Usage: /etc/init.d/telepad-d {start|stop|force-stop|restart|reload|force-reload|status}"
+                exit 1
+                ;;
+esac
+exit 0

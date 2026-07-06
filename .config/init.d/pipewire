@@ -1,4 +1,9 @@
 #!/usr/bin/openrc-run
+
+# Work based on file by "Gentoo Authors", 2022
+# Modified for Artix Linux by dreieck, 2023
+# Distributed under the terms of the GNU General Public License v2
+
 PIPEWIRE_RUNTIME_DIR="/run/pipewire"
 name="pipewire daemon"
 description="A sound server which speaks pipewire, pulseaudio and jack."
@@ -7,10 +12,12 @@ command_args="${pipewire_args[@]}"
 command_background=yes
 command_user="pipewire:pipewire"
 pidfile="${PIPEWIRE_RUNTIME_DIR}/pipewire.pid"
+
 depend() {
   after udev dbus
   use alsasound pulseaudio
 }
+
 start_pre() {
   if [[ ! -e "${PIPEWIRE_RUNTIME_DIR}" ]]; then
     mkdir -p "${PIPEWIRE_RUNTIME_DIR}"
@@ -21,6 +28,7 @@ start_pre() {
   chown -R pipewire:pipewire "${PIPEWIRE_RUNTIME_DIR}"
   export PIPEWIRE_RUNTIME_DIR
 }
+
 start_post() {
   einfo "Wait for the pipewire socket to be ready ..."
   sleep 3
