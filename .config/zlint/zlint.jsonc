@@ -1,0 +1,26 @@
+// zlint.jsonc
+// Qompass AI Zlint Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+// ----------------------------------------
+{
+  "$schema": "https://raw.githubusercontent.com/DonIsaac/zlint/refs/heads/main/zlint.schema.json",
+  "rules": {
+    "allocator-first-param": "error",
+    "homeless-try": "error",
+    "no-unresolved": "error",
+    "returned-stack-reference": "error",
+    "unsafe-undefined": "warn",
+    "unused-decls": "warn",
+    "useless-error-return": "error",
+    "avoid-as": "warn",
+    "no-catch-return": "warn",
+    "no-return-try": "warn",
+    "suppressed-errors": "warn",
+    "must-return-ref": "warn",
+    "case-convention": "error",
+    "empty-file": "warn",
+    "line-length": ["warn", { "max": 100 }],
+    "no-print": "warn"
+  }
+}
+

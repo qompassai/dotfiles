@@ -1,13 +1,3 @@
-# DESCRIPTION:  Palettes for the terminal
-
-# DESCRIPTION:  Restore to the last selected palette
-# USAGE:        palette-reset
-
-# DESCRIPTION:  Store the last selected palette has that on set by <command>
-# USAGE:        palette-set <command>
-
-# DESCRIPTION:  The last choosen palette
-# VARIABLE:     $PALETTE
 
 # Commands for setting the palette:
 #    linuxColours      The standard Linux VT palette 
@@ -86,5 +76,5 @@ palette-reset () {
     echo -n "$PALETTE"
 }
 
-palette-set `stdColours`
+palette-set "stdColours"
 

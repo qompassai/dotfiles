@@ -1,7 +1,16 @@
+
 # profile.ps1
 # Qompass AI PowerShell Profile
 # Copyright (C) 2025 Qompass AI, All rights reserved
 # ----------------------------------------
+Set-Alias touch New-Item
+Set-Alias g git
+Set-Alias gg gitui
+Set-Alias vim nvim
+Set-Alias codi codium
+Set-Alias exp explorer
+Set-Alias -Name z -Value __zoxide_z -Option AllScope -Scope Global -Force
+Set-Alias -Name zi -Value __zoxide_zi -Option AllScope -Scope Global -Force
 Import-Module PSReadLine
 Set-PSReadLineOption -HistorySaveStyle SaveIncrementally
 Set-PSReadLineOption -PredictionSource History

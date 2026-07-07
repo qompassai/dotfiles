@@ -1,0 +1,35 @@
+# /qompassai/dotfiles/.config/chktex/chktexrc
+# Qompass AI Chktex Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+# ----------------------------------------
+TabSize = 4
+Verbosity = 2
+HeaderErr = true 
+InputFiles = true
+QuoteStyle = Traditional
+WipeVerb = true
+LineErr = true
+ShowContext = true
+Nowarn 1
+Nowarn 8
+Nowarn 24
+HyphDash 2
+TextDash 3
+VerbEnvir
+{
+    verbatim
+    comment
+    minted
+    lstlisting
+    listing
+    verbatimtab
+    picture
+    tikzpicture
+    pgfpicture
+    rawhtml
+    errexam
+    texdraw
+    solution
+    IPA
+    filecontents
+}
