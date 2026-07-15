@@ -1,0 +1,12 @@
+{
+    "name": "GNOME",
+    "version": "46.4",
+    "installed": false,
+    "dependencies": ["gnome-shell", "gdm"],
+    "description": "Window management and application launching for GNOME",
+    "metapackages": ["gnome3-default"],
+    "metapackage_variants": {
+        "super-minimal": "gnome-super-minimal",
+        "minimal": "gnome3-minimal"
+    }
+}

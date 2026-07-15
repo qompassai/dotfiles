@@ -3,7 +3,7 @@
 # Qompass AI Bash CMake Script
 # Copyright (C) 2026 Qompass AI, All rights reserved
 # ----------------------------------------
-export CMAKE_POLICY_VERSION_MINIMUM=4.2
+export CMAKE_POLICY_VERSION_MINIMUM=4.4.0
 export NINJA_DEFAULT_THROTTLE_RATES='{"anon":"100/hour","user":"1000/hour","burst":"60/min","sustained":"1000/day"}'
 export NINJA_FIX_REQUEST_FILES_METHODS='["PUT","PATCH"]'
 export NINJA_NUM_PROXIES=1

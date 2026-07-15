@@ -2,11 +2,14 @@
 # Qompass AI Fish Cuda Config
 # Copyright (C) 2025 Qompass AI, All rights reserved
 ####################################################
-set -x NVHPC_ROOT /opt/nvidia/hpc_sdk/Linux_x86_64/2025
-set -x NVHPC_VERSION 2025
-set -x NVHPC_COMPILERS $NVHPC_ROOT/compilers
-set -x NVHPC_COMM_LIBS $NVHPC_ROOT/comm_libs
-set -x NVHPC_MATH_LIBS $NVHPC_ROOT/math_libs
+set -gx CUDAToolkit_ROOT /opt/cuda
+set -gx PATH $CUDAToolkit_ROOT/bin $PATH
+set -gx LD_LIBRARY_PATH $CUDAToolkit_ROOT/lib64 $LD_LIBRARY_PATH
+#set -x NVHPC_ROOT /opt/nvidia/hpc_sdk/Linux_x86_64/2025
+#set -x NVHPC_VERSION 2025
+#set -x NVHPC_COMPILERS $NVHPC_ROOT/compilers
+#set -x NVHPC_COMM_LIBS $NVHPC_ROOT/comm_libs
+#set -x NVHPC_MATH_LIBS $NVHPC_ROOT/math_libs
 #set -x CUDA_PATH $NVHPC_ROOT/cuda
 #set -x CUDA_ROOT $NVHPC_ROOT/cuda
 #set -x CUDA_HOME $NVHPC_ROOT/cuda

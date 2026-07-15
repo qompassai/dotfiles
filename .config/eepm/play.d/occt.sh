@@ -1,0 +1,22 @@
+#!/bin/sh
+
+PKGNAME=OCCT
+SUPPORTEDARCHES="x86_64"
+VERSION="$2"
+DESCRIPTION="Free, all-in-one stability, stress test, benchmark and monitoring tool for PC"
+URL="https://www.ocbase.com/download"
+
+. $(dirname $0)/common.sh
+
+if ! is_glibc_enough 2.34 ; then
+	fatal "Версия glibc слишком старая, требуется система с glibc 2.34 и выше."
+fi
+
+if [ "$VERSION" = "*" ] ; then
+    VERSION=$(eget -q -O- https://www.ocbase.com/download | grep -oP '"versionStr":"\K[0-9]+\.[0-9]+\.[0-9]+(?=")' | sort -uV | tail -n1)
+    PKGURL="https://www.ocbase.com/download/edition:Personal/os:Linux"
+else
+    PKGURL="https://www.ocbase.com/download/edition:Personal/os:Linux/version:$VERSION"
+fi
+
+install_pack_pkgurl "$VERSION"

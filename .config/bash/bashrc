@@ -4,8 +4,8 @@
 # Copyright (C) 2026 Qompass AI, All rights reserved
 # ----------------------------------------
 # shellcheck disable=SC1090,SC1091
-if [ -d "$XDG_CONFIG_HOME/bash" ]; then
-    for script in "$XDG_CONFIG_HOME"/bash/conf.d/*.sh; do
+if [ -d "${XDG_CONFIG_HOME}/bash" ]; then
+    for script in "${XDG_CONFIG_HOME}"/bash/conf.d/*.sh; do
         [ -r "${script}" ] && [ "${script}" != "${BASH_SOURCE[0]}" ] && . "${script}"
     done
 fi

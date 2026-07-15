@@ -1,12 +1,8 @@
-// /qompassai/dotfiles/.config/biome/biome.jsonc
-// Qompass AI Biome Jsonc
-// Copyright (C) 2025 Qompass AI, All rights reserved
-/////////////////////////////////////////////////////
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.3/schema.json",
   "formatter": {
     "enabled": true,
-    "formatWithErrors": false,
+    "formatWithErrors": true,
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "lf",
@@ -20,14 +16,13 @@
       "next": "all"
     },
     "rules": {
+      "recommended": true,
       "correctness": {
         "noUndeclaredDependencies": "error"
       },
       "nursery": {
-        "noFloatingPromises": "error",
-        "noImportCycles": "error"
+        "noFloatingPromises": "error"
       },
-      "recommended": true,
       "style": {
         "noInferrableTypes": "error",
         "noParameterAssign": "error",
@@ -49,11 +44,7 @@
   },
   "overrides": [
     {
-      "includes": [
-        "**/*.svelte",
-        "**/*.astro",
-        "**/*.vue"
-      ],
+      "includes": ["**/*.svelte", "**/*.astro", "**/*.vue"],
       "linter": {
         "rules": {
           "style": {
@@ -78,13 +69,6 @@
       "indentWidth": 2
     }
   },
-  "files": {
-    "experimentalScannerIgnores": [
-      ".cargo",
-      ".git",
-      "target"
-    ]
-  },
   "javascript": {
     "formatter": {
       "jsxQuoteStyle": "double",
@@ -104,6 +88,10 @@
     }
   },
   "json": {
+    "parser": {
+      "allowComments": false,
+      "allowTrailingCommas": false
+    },
     "linter": {
       "enabled": true
     },
@@ -115,7 +103,7 @@
   },
   "vcs": {
     "clientKind": "git",
-    "enabled": true,
-    "useIgnoreFile": true
+    "enabled": false,
+    "useIgnoreFile": false
   }
 }

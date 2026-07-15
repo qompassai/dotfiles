@@ -1,28 +1,27 @@
 #!/usr/bin/env bash
+# #################################################################
 # /qompassai/dotfiles/.config/bash/conf.d/lua.sh
 # Qompass AI Bash Lua Config
-# Copyright (C) 2026 Qompass AI, All rights reserved
-# --------------------------------------------------
-eval "$(fzf --bash)"
-# --------------------------------------------------
-[[ $- == *i* ]] || return 0
-lua51_root="${XDG_DATA_HOME}/lua/5.1"
-lua51_lib="${lua51_root}/lib/lua/5.1"
-lua51_lua="${lua51_root}/share/lua/5.1"
-luajit_root="${XDG_DATA_HOME}/lua/luajit"
-luajit_lib="${luajit_root}/lib/lua/5.1"
-luajit_lua="${luajit_root}/share/lua/5.1"
-export LUAROCKS_CONFIG="${HOME}/.config/luarocks/luarocks-5.1.lua"
-export LUA_PATH="\
-${lua51_lua}/?.lua;\
-${lua51_lua}/?/init.lua;\
-${luajit_lua}/?.lua;\
-${luajit_lua}/?/init.lua;\
-;;"
-export LUA_CPATH="\
-${luajit_lib}/?.so;\
-${lua51_lib}/?.so;\
-;;"
-export PATH="$PATH:$HOME/.local/share/lua/luajit/bin"
-unset luajit_root luajit_lua luajit_lib lua51_root lua51_lua lua51_lib
-export VIMRUNTIME="${XDG_DATA_HOME}/nvim/runtime"
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (c) 2026 Qompass AI
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# #################################################################
+export BUILDCACHE_CONFIG_FILE="$XDG_CONFIG_HOME/buildcache/config.json"
+export BUILDCACHE_DIR="$XDG_CACHE_HOME/buildcache"
+export BUILDCACHE_LUA_PATH="$XDG_CONFIG_HOME/buildcache/lua"
+export BUILDCACHE_CC=/usr/bin/clang
+export BUILDCACHE_CXX=/usr/bin/clang++
+export BUILDCACHE_IMPERSONATE=/usr/bin/clang
+alias lua='lua5.1'
+
+

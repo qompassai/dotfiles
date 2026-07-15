@@ -5,7 +5,6 @@
 # --------------------------------------------------
 : "${XDG_DATA_HOME:=$HOME/.local/share}"
 export PNPM_HOME="$XDG_DATA_HOME/pnpm"
-
 if [ -d "$PNPM_HOME" ]; then
     case ":$PATH:" in
         *":$PNPM_HOME/bin:"*) : ;;
