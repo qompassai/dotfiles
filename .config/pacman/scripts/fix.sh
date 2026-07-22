@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-
 # fix.sh
-# Qompass AI - [ ]
+# Qompass AI
 # Copyright (C) 2026 Qompass AI, All rights reserved
-# ----------------------------------------
 PRESET_FILE="/etc/mkinitcpio.d/linux-zen.preset"
 BACKUP_FILE="/tmp/linux-zen.preset.backup"
 if [ -f "$BACKUP_FILE" ]; then

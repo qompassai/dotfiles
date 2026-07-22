@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # update.sh
 # Qompass AI - [ ]
 # Copyright (C) 2026 Qompass AI, All rights reserved
@@ -8,11 +7,8 @@ set -e
 LIMINE_CONF="/boot/limine.conf"
 LIMINE_CONF_BACKUP="/boot/limine.conf.backup"
 MACHINE_ID=$(cat /etc/machine-id)
-
 cp "$LIMINE_CONF" "$LIMINE_CONF_BACKUP"
-
 echo "🔄 Updating Limine configuration..."
-
 if [ -f /boot/vmlinuz-linux-zen ]; then
     ZEN_VERSION=$(pacman -Q linux-zen 2> /dev/null | awk '{print $2}' || echo "unknown")
     ZEN_KERNEL_VERSION=$(file /boot/vmlinuz-linux-zen | grep -oP 'version \K[^ ]+' || echo "unknown")
@@ -47,7 +43,6 @@ timeout: 5
 
 EOF
 
-# Add BLS entries if they exist
 if [ -d "/boot/$MACHINE_ID" ]; then
     cat >> "$LIMINE_CONF" << EOF
 /+Arch Linux
@@ -55,7 +50,6 @@ comment: Arch Linux
 comment: machine-id=$MACHINE_ID order-priority=50 
 EOF
 
-    # Add linux-zen BLS entry
     if [ -d "/boot/$MACHINE_ID/linux-zen" ]; then
         ZEN_VMLINUZ=$(find /boot/$MACHINE_ID/linux-zen -name 'vmlinuz-linux-zen*' -type f 2> /dev/null | sort -V | tail -1)
         ZEN_INITRD=$(find /boot/$MACHINE_ID/linux-zen -name 'initramfs-linux-zen-[0-9]*' -type f 2> /dev/null | sort -V | tail -1)

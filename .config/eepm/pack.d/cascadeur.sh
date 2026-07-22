@@ -1,0 +1,32 @@
+#!/bin/sh
+
+TAR="$1"
+RETURNTARNAME="$2"
+VERSION="$3"
+
+. $(dirname $0)/common.sh
+
+PKGNAME=$PRODUCT-$VERSION
+
+if echo "$TAR" | grep -q "cascadeur-linux.tgz" ; then
+    erc -C opt/$PRODUCT "$TAR" || fatal
+else
+    fatal "We support only cascadeur-linux.tgz"
+fi
+
+# from https://www.producthunt.com/posts/cascadeur
+# https://ph-files.imgix.net/e07b5249-d804-4b4e-9458-fa037d30a14b.png?auto=compress&codec=mozjpeg&cs=strip&auto=format&w=72&h=72&fit=crop&bg=0fff&dpr=1
+install_file "ipfs://QmXwpR5PJK13xUYF3LBmotGQEUvY75zeR5NwpRJi2tFfj1" /usr/share/pixmaps/$PRODUCT.png
+
+erc pack $PKGNAME.tar opt usr
+
+cat <<EOF >$PKGNAME.tar.eepm.yaml
+name: $PRODUCT
+group: Graphics
+license: Proprietary
+url: https://cascadeur.com/download
+summary: Cascadeur - a physics‑based 3D animation software
+description: Cascadeur - a physics‑based 3D animation software.
+EOF
+
+return_tar $PKGNAME.tar

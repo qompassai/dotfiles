@@ -2,7 +2,9 @@
   "parser-directories": [
     "~/.local/share/nvim/lazy/nvim-treesitter",
     "~/.local/share/nvim/runtime",
-    "~/.local/share/nvim/site/pack/core/opt/nvim-treesitter"
+    "~/.local/share/nvim/site/pack/core/opt/nvim-treesitter",
+    "~/.local/share/tree-sitter/parsers"
+
   ],
   "theme": {
     "attribute": {
