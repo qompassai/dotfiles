@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name = org.laptop.sugar.DataStore
-Exec = /usr/bin/datastore-service

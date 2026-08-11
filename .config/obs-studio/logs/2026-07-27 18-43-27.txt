@@ -1,0 +1,191 @@
+18:43:27.243: Platform: Wayland
+18:43:27.243: CPU Name: 13th Gen Intel(R) Core(TM) i7-13620H
+18:43:27.243: CPU Speed: 2699.408MHz
+18:43:27.243: Physical Cores: 10, Logical Cores: 16
+18:43:27.243: Physical Memory: 63990MB Total, 3386MB Free
+18:43:27.243: Kernel Version: Linux 7.1.4-zen1-1-zen
+18:43:27.244: Distribution: "Arch Linux" Unknown
+18:43:27.244: Desktop Environment: Hyprland (Hyprland)
+18:43:27.244: Session Type: wayland
+18:43:27.245: Current Date/Time: 2026-07-27, 06:43:27 PM
+18:43:27.245: Browser Hardware Acceleration: true
+18:43:27.245: Qt Version: 6.11.1 (runtime), 6.11.1 (compiled)
+18:43:27.245: Portable mode: false
+18:43:27.457: OBS 32.1.2 (linux)
+18:43:27.457: ---------------------------------
+18:43:27.458: ---------------------------------
+18:43:27.458: audio settings reset:
+18:43:27.458: 	samples per sec: 48000
+18:43:27.458: 	speakers:        2
+18:43:27.458: 	max buffering:   960 milliseconds
+18:43:27.458: 	buffering type:  dynamically increasing
+18:43:27.459: ---------------------------------
+18:43:27.459: Initializing OpenGL...
+18:43:27.459: Using EGL/Wayland
+18:43:27.521: Initialized EGL 1.5
+18:43:27.537: Loading up OpenGL on adapter Intel Mesa Intel(R) Graphics (RPL-P)
+18:43:27.537: OpenGL loaded successfully, version 4.6 (Core Profile) Mesa 26.1.5-arch1.1, shading language 4.60
+18:43:27.585: ---------------------------------
+18:43:27.585: video settings reset:
+18:43:27.585: 	base resolution:   1279x800
+18:43:27.585: 	output resolution: 1020x640
+18:43:27.585: 	downscale filter:  Bicubic
+18:43:27.585: 	fps:               60/1
+18:43:27.585: 	format:            NV12
+18:43:27.585: 	YUV mode:          Rec. 709/Partial
+18:43:27.585: NV12 texture support enabled
+18:43:27.585: P010 texture support not available
+18:43:27.589: Audio monitoring device:
+18:43:27.589: 	name: Default
+18:43:27.589: 	id: default
+18:43:27.590: ---------------------------------
+18:43:27.592: [3D Effect] loaded version 0.1.4
+18:43:27.593: Failed to load 'en-US' text for module: 'decklink-captions.so'
+18:43:27.594: Failed to load 'en-US' text for module: 'decklink-output-ui.so'
+18:43:27.596: Decklink API Compiled version 12.0
+18:43:27.596: Decklink API Installed version 16.1
+18:43:27.597: [Draw Dock] loaded version 0.3.1
+18:43:27.611: [droidcam-obs] module loaded release 243 (arch)
+18:43:27.612: [Freeze Filter] loaded version 0.3.5
+18:43:27.919: Failed to load 'en-US' text for module: 'libOBSInfoWriter.so'
+18:43:27.946: [pipewire] No capture sources available
+18:43:27.952: [linux-vkcapture] plugin loaded successfully (version 1.5.6)
+18:43:27.958: [Advanced Masks] loaded version 1.5.4
+18:43:27.960: Failed to load 'en-US' text for module: 'obs-audio-pan-filter.so'
+18:43:27.960: [obs-audio-pan-filter] plugin loaded successfully (version 0.2.3)
+18:43:27.960: Skipping module 'obs-backgroundremoval', is disabled
+18:43:28.002: [obs-browser]: Version 2.26.8
+18:43:28.002: [obs-browser]: CEF Version 150.0.7871.129 (runtime), 149.0.6+g0d0eeb6+chromium-149.0.7827.201 (compiled)
+18:43:28.005: [Composite Blur] loaded version 1.5.2
+18:43:28.031: LIBVA_DRIVER_NAME variable is set, this could prevent FFmpeg VAAPI from working correctly
+18:43:28.593: VAAPI: API version 1.24
+18:43:28.992: FFmpeg VAAPI H264 encoding not supported
+18:43:30.448: FFmpeg VAAPI AV1 encoding not supported
+18:43:31.661: FFmpeg VAAPI HEVC encoding not supported
+18:43:31.671: [obs-gstreamer] build: b60942f, gst-runtime: 1.28.5
+18:43:31.716: [Noise] loaded version 1.0.0
+18:43:32.155: [obs-nvenc] NVENC version: 13.0 (compiled) / 13.1 (driver), CUDA driver version: 13.30, AV1 supported: true
+18:43:32.159: [obs-pwvideo] plugin loaded successfully (version 0.2.3)
+18:43:34.837: [Retro Effects] loaded version 1.0.2
+18:43:34.844: [obs-shaderfilter] loaded version 2.6.0
+18:43:34.845: os_dlopen(/usr/lib/obs-plugins/obs-teleport.so->/usr/lib/obs-plugins/obs-teleport.so): /usr/lib/libturbojpeg.so.0: version `TURBOJPEG_3' not found (required by /usr/lib/obs-plugins/obs-teleport.so)
+18:43:34.845: 
+18:43:34.845: Module '/usr/lib/obs-plugins/obs-teleport.so' not loaded
+18:43:34.849: Failed to load 'en-US' text for module: 'obs-text-pthread.so'
+18:43:34.850: [obs-text-pthread] plugin loaded (version 2.0.6)
+18:43:34.861: [obs-vaapi] version: 0.4.2, gst-runtime: 1.28.5
+18:43:34.870: [obs-vban] plugin loaded (version 0.3.0)
+18:43:34.964: [obs-websocket] [obs_module_load] you can haz websockets (Version: 5.7.3 | RPC Version: 1)
+18:43:34.965: [obs-websocket] [obs_module_load] Qt version (compile-time): 6.11.1 | Qt version (run-time): 6.11.1
+18:43:34.965: [obs-websocket] [obs_module_load] Linked ASIO Version: 103800
+18:43:34.997: [obs-websocket] [obs_module_load] Module loaded.
+18:43:35.030: [Scene Collection Manager] loaded version 0.1.2
+18:43:35.036: [Source Clone] loaded version 0.2.3
+18:43:35.042: [Source Record] loaded version 0.4.8
+18:43:35.048: [Source Switcher] loaded version 0.4.3
+18:43:35.058: ---------------------------------
+18:43:35.058:   Loaded Modules:
+18:43:35.058:     wlrobs.so
+18:43:35.058:     text-freetype2.so
+18:43:35.058:     source-switcher.so
+18:43:35.058:     source-record.so
+18:43:35.058:     source-clone.so
+18:43:35.058:     scene-collection-manager.so
+18:43:35.058:     rtmp-services.so
+18:43:35.058:     obs-x264.so
+18:43:35.058:     obs-websocket.so
+18:43:35.058:     obs-webrtc.so
+18:43:35.058:     obs-vst.so
+18:43:35.058:     obs-vban.so
+18:43:35.058:     obs-vaapi.so
+18:43:35.058:     obs-transitions.so
+18:43:35.058:     obs-text-pthread.so
+18:43:35.058:     obs-shaderfilter.so
+18:43:35.058:     obs-retro-effects.so
+18:43:35.058:     obs-qsv11.so
+18:43:35.058:     obs-pwvideo.so
+18:43:35.058:     obs-outputs.so
+18:43:35.058:     obs-nvenc.so
+18:43:35.058:     obs-noise.so
+18:43:35.058:     obs-libfdk.so
+18:43:35.058:     obs-gstreamer.so
+18:43:35.058:     obs-filters.so
+18:43:35.058:     obs-ffmpeg.so
+18:43:35.058:     obs-composite-blur.so
+18:43:35.058:     obs-command-source.so
+18:43:35.058:     obs-browser.so
+18:43:35.058:     obs-audio-pan-filter.so
+18:43:35.058:     obs-advanced-masks.so
+18:43:35.058:     linux-vkcapture.so
+18:43:35.058:     linux-v4l2.so
+18:43:35.058:     linux-pulseaudio.so
+18:43:35.058:     linux-pipewire.so
+18:43:35.058:     linux-pipewire-audio.so
+18:43:35.058:     linux-jack.so
+18:43:35.058: Last log entry repeated for 12 more lines
+18:43:35.058: ---------------------------------
+18:43:35.062: ---------------------------------
+18:43:35.062: Available Encoders:
+18:43:35.062:   Video Encoders:
+18:43:35.062: 	- ffmpeg_svt_av1 (SVT-AV1)
+18:43:35.062: 	- ffmpeg_aom_av1 (AOM AV1)
+18:43:35.062: 	- obs_nvenc_h264_tex (NVIDIA NVENC H.264)
+18:43:35.062: 	- obs_nvenc_hevc_tex (NVIDIA NVENC HEVC)
+18:43:35.062: 	- obs_nvenc_av1_tex (NVIDIA NVENC AV1)
+18:43:35.062: 	- obs_x264 (x264)
+18:43:35.062:   Audio Encoders:
+18:43:35.062: 	- ffmpeg_aac (FFmpeg AAC)
+18:43:35.062: 	- ffmpeg_opus (FFmpeg Opus)
+18:43:35.062: 	- ffmpeg_pcm_s16le (FFmpeg PCM (16-bit))
+18:43:35.062: 	- ffmpeg_pcm_s24le (FFmpeg PCM (24-bit))
+18:43:35.062: 	- ffmpeg_pcm_f32le (FFmpeg PCM (32-bit float))
+18:43:35.062: 	- ffmpeg_alac (FFmpeg ALAC (24-bit))
+18:43:35.062: 	- ffmpeg_flac (FFmpeg FLAC (16-bit))
+18:43:35.062: 	- libfdk_aac (libfdk AAC)
+18:43:35.062: ==== Startup complete ===============================================
+18:43:35.071: Switched to Preview/Program mode
+18:43:35.071: ------------------------------------------------
+18:43:35.161: All scene data cleared
+18:43:35.161: ------------------------------------------------
+18:43:35.194: Device for 'Audio Output Capture' source Desktop Audio is also used for audio monitoring.
+18:43:35.194: Deduplication logic is being applied to all monitored sources.
+18:43:35.197: pulse-input: Server name: 'PulseAudio (on PipeWire 1.6.8) 15.0.0'
+18:43:35.197: pulse-input: Audio format: s16le, 8000 Hz, 1 channels
+18:43:35.197: pulse-input: Started recording from 'bluez_output.2C_53_D7_F9_2B_25.1.monitor'
+18:43:35.197: [Loaded global audio device]: 'Desktop Audio'
+18:43:35.200: pulse-input: Server name: 'PulseAudio (on PipeWire 1.6.8) 15.0.0'
+18:43:35.201: pulse-input: Audio format: s16le, 48000 Hz, 2 channels
+18:43:35.201: pulse-input: Started recording from 'alsa_input.usb-Lumina_Industries__Inc._Lumina_Camera_-_Raw_SN0001-02.pro-input-0'
+18:43:35.201: [Loaded global audio device]: 'Mic/Aux'
+18:43:35.217: Switched to scene 'Scene'
+18:43:35.217: Attempted to add Scene without specifying a canvas! Using default canvas instead.
+18:43:35.217: User switched Program to scene 'Scene'
+18:43:35.222: ------------------------------------------------
+18:43:35.222: Loaded scenes:
+18:43:35.222: - scene 'Scene':
+18:43:35.222: ------------------------------------------------
+18:43:35.229: Device for 'Audio Output Capture' source Desktop Audio is also used for audio monitoring.
+18:43:35.229: Deduplication logic is being applied to all monitored sources.
+18:43:48.226: ==== Shutting down ==================================================
+18:43:48.227: [Draw Dock] Saved settings
+18:43:48.230: pulse-input: Stopped recording from 'bluez_output.2C_53_D7_F9_2B_25.1.monitor'
+18:43:48.230: pulse-input: Got 2419 packets with 104017 frames
+18:43:48.230: Deduplication logic stopped.
+18:43:48.230: pulse-input: Stopped recording from 'alsa_input.usb-Lumina_Industries__Inc._Lumina_Camera_-_Raw_SN0001-02.pro-input-0'
+18:43:48.230: pulse-input: Got 2435 packets with 623360 frames
+18:43:48.265: All scene data cleared
+18:43:48.265: ------------------------------------------------
+18:43:48.274: Tried to call obs_frontend_remove_event_callback with no callbacks!
+18:43:48.322: Tried to call obs_frontend_remove_event_callback with no callbacks!
+18:43:48.323: Tried to call obs_frontend_remove_event_callback with no callbacks!
+18:43:48.323: Tried to call obs_frontend_remove_save_callback with no callbacks!
+18:43:48.324: [obs-websocket] [obs_module_unload] Shutting down...
+18:43:48.324: Tried to call obs_frontend_remove_event_callback with no callbacks!
+18:43:48.324: [obs-websocket] [obs_module_unload] Finished shutting down.
+18:43:48.324: [obs-vban] plugin unloaded
+18:43:48.324: [obs-text-pthread] plugin unloaded
+18:43:48.324: [obs-pwvideo] plugin unloaded
+18:43:48.324: [obs-audio-pan-filter] plugin unloaded
+18:43:48.324: [linux-vkcapture] plugin unloaded
+18:43:48.347: [Scripting] Total detached callbacks: 0
+18:43:48.347: Freeing OBS context data

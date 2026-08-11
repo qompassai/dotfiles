@@ -1,0 +1,198 @@
+18:30:05.735: Crash or unclean shutdown detected
+18:30:08.682: [Safe Mode] Normal launch selected, loading third-party plugins is enabled
+18:30:08.682: Platform: Wayland
+18:30:08.682: CPU Name: 13th Gen Intel(R) Core(TM) i7-13620H
+18:30:08.682: CPU Speed: 2991.943MHz
+18:30:08.682: Physical Cores: 10, Logical Cores: 16
+18:30:08.682: Physical Memory: 63990MB Total, 10631MB Free
+18:30:08.682: Kernel Version: Linux 7.1.4-zen1-1-zen
+18:30:08.682: Distribution: "Arch Linux" Unknown
+18:30:08.682: Desktop Environment: Hyprland (Hyprland)
+18:30:08.682: Session Type: wayland
+18:30:08.684: Current Date/Time: 2026-07-27, 06:30:08 PM
+18:30:08.684: Browser Hardware Acceleration: true
+18:30:08.684: Qt Version: 6.11.1 (runtime), 6.11.1 (compiled)
+18:30:08.684: Portable mode: false
+18:30:08.703: OBS 32.1.2 (linux)
+18:30:08.703: ---------------------------------
+18:30:08.704: ---------------------------------
+18:30:08.704: audio settings reset:
+18:30:08.704: 	samples per sec: 48000
+18:30:08.704: 	speakers:        2
+18:30:08.704: 	max buffering:   960 milliseconds
+18:30:08.704: 	buffering type:  dynamically increasing
+18:30:08.707: ---------------------------------
+18:30:08.707: Initializing OpenGL...
+18:30:08.707: Using EGL/Wayland
+18:30:08.792: Initialized EGL 1.5
+18:30:08.804: Loading up OpenGL on adapter Intel Mesa Intel(R) Graphics (RPL-P)
+18:30:08.804: OpenGL loaded successfully, version 4.6 (Core Profile) Mesa 26.1.5-arch1.1, shading language 4.60
+18:30:08.837: ---------------------------------
+18:30:08.837: video settings reset:
+18:30:08.837: 	base resolution:   1279x800
+18:30:08.837: 	output resolution: 1020x640
+18:30:08.837: 	downscale filter:  Bicubic
+18:30:08.837: 	fps:               60/1
+18:30:08.837: 	format:            NV12
+18:30:08.837: 	YUV mode:          Rec. 709/Partial
+18:30:08.837: NV12 texture support enabled
+18:30:08.837: P010 texture support not available
+18:30:08.842: Audio monitoring device:
+18:30:08.842: 	name: Default
+18:30:08.842: 	id: default
+18:30:08.844: ---------------------------------
+18:30:08.846: [3D Effect] loaded version 0.1.4
+18:30:08.848: Failed to load 'en-US' text for module: 'decklink-captions.so'
+18:30:08.851: Failed to load 'en-US' text for module: 'decklink-output-ui.so'
+18:30:08.862: Decklink API Compiled version 12.0
+18:30:08.862: Decklink API Installed version 16.1
+18:30:08.866: [Draw Dock] loaded version 0.3.1
+18:30:08.888: [droidcam-obs] module loaded release 243 (arch)
+18:30:08.892: [Freeze Filter] loaded version 0.3.5
+18:30:09.090: Failed to load 'en-US' text for module: 'libOBSInfoWriter.so'
+18:30:09.120: [pipewire] No capture sources available
+18:30:09.126: [linux-vkcapture] plugin loaded successfully (version 1.5.6)
+18:30:09.131: [Advanced Masks] loaded version 1.5.4
+18:30:09.132: Failed to load 'en-US' text for module: 'obs-audio-pan-filter.so'
+18:30:09.132: [obs-audio-pan-filter] plugin loaded successfully (version 0.2.3)
+18:30:09.139: os_dlopen(/usr/lib/obs-plugins/obs-backgroundremoval.so->/usr/lib/obs-plugins/obs-backgroundremoval.so): libopencv_core.so.413: cannot open shared object file: No such file or directory
+18:30:09.139: 
+18:30:09.139: Module '/usr/lib/obs-plugins/obs-backgroundremoval.so' not loaded
+18:30:09.210: [obs-browser]: Version 2.26.8
+18:30:09.210: [obs-browser]: CEF Version 150.0.7871.129 (runtime), 149.0.6+g0d0eeb6+chromium-149.0.7827.201 (compiled)
+18:30:09.214: [Composite Blur] loaded version 1.5.2
+18:30:09.619: VAAPI: API version 1.24
+18:30:09.714: FFmpeg VAAPI H264 encoding supported
+18:30:10.027: FFmpeg VAAPI AV1 encoding not supported
+18:30:10.304: FFmpeg VAAPI HEVC encoding supported
+18:30:10.314: [obs-gstreamer] build: b60942f, gst-runtime: 1.28.5
+18:30:10.887: [obs-kmscap] plugin loaded successfully (version 0.0.1)
+18:30:10.887: [obs-kmscap] KMS DMA-BUF screen capture source registered
+18:30:10.894: [Noise] loaded version 1.0.0
+18:30:11.065: [obs-nvenc] NVENC version: 13.0 (compiled) / 13.1 (driver), CUDA driver version: 13.30, AV1 supported: true
+18:30:11.071: [obs-pwvideo] plugin loaded successfully (version 0.2.3)
+18:30:11.520: [Retro Effects] loaded version 1.0.2
+18:30:11.522: [obs-shaderfilter] loaded version 2.6.0
+18:30:11.527: os_dlopen(/usr/lib/obs-plugins/obs-teleport.so->/usr/lib/obs-plugins/obs-teleport.so): /usr/lib/libturbojpeg.so.0: version `TURBOJPEG_3' not found (required by /usr/lib/obs-plugins/obs-teleport.so)
+18:30:11.527: 
+18:30:11.527: Module '/usr/lib/obs-plugins/obs-teleport.so' not loaded
+18:30:11.529: Failed to load 'en-US' text for module: 'obs-text-pthread.so'
+18:30:11.529: [obs-text-pthread] plugin loaded (version 2.0.6)
+18:30:11.532: [obs-vaapi] version: 0.4.2, gst-runtime: 1.28.5
+18:30:11.532: [obs-vaapi] found vah264lpenc
+18:30:11.532: [obs-vaapi] found vah265lpenc
+18:30:11.532: [obs-vaapi] found vah264enc
+18:30:11.532: [obs-vaapi] found vah265enc
+18:30:11.534: [obs-vban] plugin loaded (version 0.3.0)
+18:30:11.571: [obs-websocket] [obs_module_load] you can haz websockets (Version: 5.7.3 | RPC Version: 1)
+18:30:11.571: [obs-websocket] [obs_module_load] Qt version (compile-time): 6.11.1 | Qt version (run-time): 6.11.1
+18:30:11.571: [obs-websocket] [obs_module_load] Linked ASIO Version: 103800
+18:30:11.576: [obs-websocket] [obs_module_load] Module loaded.
+18:30:11.585: [Scene Collection Manager] loaded version 0.1.2
+18:30:11.587: [Source Clone] loaded version 0.2.3
+18:30:11.589: [Source Record] loaded version 0.4.8
+18:30:11.591: [Source Switcher] loaded version 0.4.3
+18:30:11.594: ---------------------------------
+18:30:11.594:   Loaded Modules:
+18:30:11.594:     wlrobs.so
+18:30:11.594:     text-freetype2.so
+18:30:11.594:     source-switcher.so
+18:30:11.594:     source-record.so
+18:30:11.594:     source-clone.so
+18:30:11.594:     scene-collection-manager.so
+18:30:11.594:     rtmp-services.so
+18:30:11.594:     obs-x264.so
+18:30:11.594:     obs-websocket.so
+18:30:11.594:     obs-webrtc.so
+18:30:11.594:     obs-vst.so
+18:30:11.594:     obs-vban.so
+18:30:11.594:     obs-vaapi.so
+18:30:11.594:     obs-transitions.so
+18:30:11.594:     obs-text-pthread.so
+18:30:11.594:     obs-shaderfilter.so
+18:30:11.594:     obs-retro-effects.so
+18:30:11.594:     obs-qsv11.so
+18:30:11.594:     obs-pwvideo.so
+18:30:11.594:     obs-outputs.so
+18:30:11.594:     obs-nvenc.so
+18:30:11.594:     obs-noise.so
+18:30:11.594:     obs-libfdk.so
+18:30:11.594:     obs-kmscap.so
+18:30:11.594:     obs-gstreamer.so
+18:30:11.594:     obs-filters.so
+18:30:11.594:     obs-ffmpeg.so
+18:30:11.594:     obs-composite-blur.so
+18:30:11.594:     obs-command-source.so
+18:30:11.594:     obs-browser.so
+18:30:11.594:     obs-audio-pan-filter.so
+18:30:11.594:     obs-advanced-masks.so
+18:30:11.594:     linux-vkcapture.so
+18:30:11.594:     linux-v4l2.so
+18:30:11.594:     linux-pulseaudio.so
+18:30:11.594:     linux-pipewire.so
+18:30:11.594:     linux-pipewire-audio.so
+18:30:11.594: Last log entry repeated for 13 more lines
+18:30:11.594: ---------------------------------
+18:30:11.595: ---------------------------------
+18:30:11.595: Available Encoders:
+18:30:11.595:   Video Encoders:
+18:30:11.595: 	- ffmpeg_svt_av1 (SVT-AV1)
+18:30:11.595: 	- ffmpeg_aom_av1 (AOM AV1)
+18:30:11.595: 	- ffmpeg_vaapi_tex (FFmpeg VAAPI H.264)
+18:30:11.595: 	- hevc_ffmpeg_vaapi_tex (FFmpeg VAAPI HEVC)
+18:30:11.595: 	- obs_nvenc_h264_tex (NVIDIA NVENC H.264)
+18:30:11.595: 	- obs_nvenc_hevc_tex (NVIDIA NVENC HEVC)
+18:30:11.595: 	- obs_nvenc_av1_tex (NVIDIA NVENC AV1)
+18:30:11.595: 	- obs_qsv11_v2 (QuickSync H.264)
+18:30:11.595: 	- obs_qsv11_hevc (QuickSync HEVC)
+18:30:11.606: 	- obs-va-vah264lpenc (VAAPI H.264 on AD106M [GeForce RTX 4070 Max-Q / Mobile] (Low Power))
+18:30:11.613: 	- obs-va-vah265lpenc (VAAPI H.265 on AD106M [GeForce RTX 4070 Max-Q / Mobile] (Low Power))
+18:30:11.619: 	- obs-va-vah264enc (VAAPI H.264 on AD106M [GeForce RTX 4070 Max-Q / Mobile])
+18:30:11.628: 	- obs-va-vah265enc (VAAPI H.265 on AD106M [GeForce RTX 4070 Max-Q / Mobile])
+18:30:11.628: 	- obs_x264 (x264)
+18:30:11.628:   Audio Encoders:
+18:30:11.628: 	- ffmpeg_aac (FFmpeg AAC)
+18:30:11.628: 	- ffmpeg_opus (FFmpeg Opus)
+18:30:11.628: 	- ffmpeg_pcm_s16le (FFmpeg PCM (16-bit))
+18:30:11.628: 	- ffmpeg_pcm_s24le (FFmpeg PCM (24-bit))
+18:30:11.628: 	- ffmpeg_pcm_f32le (FFmpeg PCM (32-bit float))
+18:30:11.628: 	- ffmpeg_alac (FFmpeg ALAC (24-bit))
+18:30:11.628: 	- ffmpeg_flac (FFmpeg FLAC (16-bit))
+18:30:11.628: 	- libfdk_aac (libfdk AAC)
+18:30:11.628: ==== Startup complete ===============================================
+18:30:11.631: Switched to Preview/Program mode
+18:30:11.631: ------------------------------------------------
+18:30:11.671: All scene data cleared
+18:30:11.671: ------------------------------------------------
+18:30:11.682: Device for 'Audio Output Capture' source Desktop Audio is also used for audio monitoring.
+18:30:11.682: Deduplication logic is being applied to all monitored sources.
+18:30:11.682: pulse-input: Server name: 'PulseAudio (on PipeWire 1.6.8) 15.0.0'
+18:30:11.682: pulse-input: Audio format: s16le, 8000 Hz, 1 channels
+18:30:11.682: pulse-input: Started recording from 'bluez_output.2C_53_D7_F9_2B_25.1.monitor'
+18:30:11.682: [Loaded global audio device]: 'Desktop Audio'
+18:30:11.682: pulse-input: Server name: 'PulseAudio (on PipeWire 1.6.8) 15.0.0'
+18:30:11.682: pulse-input: Audio format: s16le, 48000 Hz, 2 channels
+18:30:11.682: pulse-input: Started recording from 'alsa_input.usb-Lumina_Industries__Inc._Lumina_Camera_-_Raw_SN0001-02.pro-input-0'
+18:30:11.682: [Loaded global audio device]: 'Mic/Aux'
+18:30:11.685: Error compiling shader:
+18:30:11.685: 0:41(44): error: `ViewProj' undeclared
+18:30:11.685: 0:41(15): error: operands to arithmetic operators must be numeric
+18:30:11.685: 
+18:30:11.685: 
+18:30:11.685: device_vertexshader_create (GL) failed
+18:30:11.685: Pass (0) <> missing vertex shader!
+18:30:11.685: [kmscap] Failed to load NV12 effect — NV12 capture will not work
+18:30:11.692: [kmscap] Opened /dev/dri/card1, using CRTC 200
+18:30:11.692: [kmscap] Unrecognised fourcc XB30 (0x30334258), falling back to GS_BGRA
+18:30:11.692: Cannot create EGLImage: Arguments are inconsistent (for example, a valid context requires buffers not supplied by a valid surface).
+18:30:11.692: [kmscap] Explicit modifier import failed for fb_id=843, retrying with implicit modifiers
+18:30:11.693: Switched to scene 'Scene'
+18:30:11.693: Attempted to add Scene without specifying a canvas! Using default canvas instead.
+18:30:11.693: User switched Program to scene 'Scene'
+18:30:11.695: ------------------------------------------------
+18:30:11.695: Loaded scenes:
+18:30:11.695: - scene 'Scene':
+18:30:11.695:     - source: 'KMS Screen Capture' (kmscap_source)
+18:30:11.695: ------------------------------------------------
+18:30:11.705: Device for 'Audio Output Capture' source Desktop Audio is also used for audio monitoring.
+18:30:11.705: Deduplication logic is being applied to all monitored sources.

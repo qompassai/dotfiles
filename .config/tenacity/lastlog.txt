@@ -1,0 +1,10 @@
+12:55:05: Tenacity 1.3.4
+12:55:05: Error: Couldn't find symbol 'av_oformat_next' in a dynamic library: /usr/lib/libavformat.so.61: undefined symbol: av_oformat_next
+12:55:05: Error: Couldn't find symbol 'av_register_all' in a dynamic library: /usr/lib/libavformat.so.61: undefined symbol: av_register_all
+12:55:05: Error: Couldn't find symbol 'avcodec_register_all' in a dynamic library: /usr/lib/libavformat.so.61: undefined symbol: avcodec_register_all
+12:55:05: Error: Couldn't find symbol 'av_codec_next' in a dynamic library: /usr/lib/libavformat.so.61: undefined symbol: av_codec_next
+12:55:05: Error: Couldn't find symbol 'av_get_default_channel_layout' in a dynamic library: /usr/lib/libavformat.so.61: undefined symbol: av_get_default_channel_layout
+12:55:14: File name is /home/phaedrus/.audio/hfo.wav
+12:55:14: Mime type is *
+12:55:14: Opening with libsndfile
+12:55:14: Open(/home/phaedrus/.audio/hfo.wav) succeeded

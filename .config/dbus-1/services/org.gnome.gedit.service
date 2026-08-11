@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=org.gnome.gedit
-Exec=/usr/bin/gedit --gapplication-service

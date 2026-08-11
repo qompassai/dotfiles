@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=org.kde.kmtpd5
-Exec=/usr/lib/kf6/kiod6

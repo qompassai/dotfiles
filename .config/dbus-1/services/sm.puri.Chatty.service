@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=sm.puri.Chatty
-Exec=/usr/bin/chatty --gapplication-service

@@ -1,15 +1,13 @@
 [
     {
         "display_name": "",
-        "enabled": true,
+        "enabled": false,
         "encoders": [],
         "id": "",
-        "module_name": "obs-audio-pan-filter",
+        "module_name": "obs-backgroundremoval",
         "outputs": [],
         "services": [],
-        "sources": [
-            "stereo_pan_filter"
-        ],
+        "sources": [],
         "version": ""
     },
     {
@@ -46,10 +44,10 @@
         "display_name": "",
         "enabled": true,
         "encoders": [
-            "obs-va-vah264lpenc",
-            "obs-va-vah265lpenc",
+            "obs-va-vah265enc",
             "obs-va-vah264enc",
-            "obs-va-vah265enc"
+            "obs-va-vah265lpenc",
+            "obs-va-vah264lpenc"
         ],
         "id": "",
         "module_name": "obs-vaapi",
@@ -73,20 +71,26 @@
     },
     {
         "display_name": "",
-        "enabled": true,
+        "enabled": false,
         "encoders": [],
         "id": "",
         "module_name": "obs-teleport",
-        "outputs": [
-            "teleport-output"
-        ],
+        "outputs": [],
+        "services": [],
+        "sources": [],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-shaderfilter",
+        "outputs": [],
         "services": [],
         "sources": [
-            "teleport-source",
-            "teleport-filter",
-            "teleport-video-filter",
-            "teleport-audio-filter",
-            "teleport-dummy"
+            "shader_filter",
+            "shader_transition"
         ],
         "version": ""
     },
@@ -133,19 +137,6 @@
     {
         "display_name": "",
         "enabled": true,
-        "encoders": [],
-        "id": "",
-        "module_name": "obs-kmscap",
-        "outputs": [],
-        "services": [],
-        "sources": [
-            "kmscap_source"
-        ],
-        "version": ""
-    },
-    {
-        "display_name": "",
-        "enabled": true,
         "encoders": [
             "gstreamer-encoder-h264",
             "gstreamer-encoder-h265"
@@ -178,15 +169,14 @@
     },
     {
         "display_name": "",
-        "enabled": false,
+        "enabled": true,
         "encoders": [],
         "id": "",
-        "module_name": "obs-backgroundremoval",
+        "module_name": "obs-command-source",
         "outputs": [],
         "services": [],
         "sources": [
-            "background_removal",
-            "enhanceportrait"
+            "command_source"
         ],
         "version": ""
     },
@@ -200,6 +190,19 @@
         "services": [],
         "sources": [
             "3d_effect_filter"
+        ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-audio-pan-filter",
+        "outputs": [],
+        "services": [],
+        "sources": [
+            "stereo_pan_filter"
         ],
         "version": ""
     },
@@ -345,6 +348,39 @@
         "sources": [
             "draw_source"
         ],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-kmscap",
+        "outputs": [],
+        "services": [],
+        "sources": [],
+        "version": ""
+    },
+    {
+        "display_name": "",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "obs-wlroots-screencopy",
+        "outputs": [],
+        "services": [],
+        "sources": [],
+        "version": ""
+    },
+    {
+        "display_name": "DistroAV",
+        "enabled": true,
+        "encoders": [],
+        "id": "",
+        "module_name": "distroav",
+        "outputs": [],
+        "services": [],
+        "sources": [],
         "version": ""
     }
 ]

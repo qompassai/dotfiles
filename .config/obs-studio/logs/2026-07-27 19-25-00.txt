@@ -1,0 +1,200 @@
+19:25:00.664: Using EGL/X11
+19:25:00.664: CPU Name: 13th Gen Intel(R) Core(TM) i7-13620H
+19:25:00.664: CPU Speed: 895.397MHz
+19:25:00.665: Physical Cores: 10, Logical Cores: 16
+19:25:00.665: Physical Memory: 63990MB Total, 7289MB Free
+19:25:00.665: Kernel Version: Linux 7.1.4-zen1-1-zen
+19:25:00.665: Distribution: "Arch Linux" Unknown
+19:25:00.665: Desktop Environment: Hyprland (Hyprland)
+19:25:00.665: Session Type: wayland
+19:25:00.665: Window System: X11.0, Vendor: The X.Org Foundation, Version: 1.24.1
+19:25:00.669: Current Date/Time: 2026-07-27, 07:25:00 PM
+19:25:00.669: Browser Hardware Acceleration: true
+19:25:00.669: Qt Version: 6.11.1 (runtime), 6.11.1 (compiled)
+19:25:00.669: Portable mode: false
+19:25:00.942: OBS 32.1.2 (linux)
+19:25:00.942: ---------------------------------
+19:25:00.971: ---------------------------------
+19:25:00.971: audio settings reset:
+19:25:00.971: 	samples per sec: 48000
+19:25:00.971: 	speakers:        2
+19:25:00.971: 	max buffering:   960 milliseconds
+19:25:00.971: 	buffering type:  dynamically increasing
+19:25:00.973: ---------------------------------
+19:25:00.973: Initializing OpenGL...
+19:25:01.083: Loading up OpenGL on adapter Intel Mesa Intel(R) Graphics (RPL-P)
+19:25:01.083: OpenGL loaded successfully, version 4.6 (Core Profile) Mesa 26.1.5-arch1.1, shading language 4.60
+19:25:01.119: ---------------------------------
+19:25:01.119: video settings reset:
+19:25:01.119: 	base resolution:   1279x800
+19:25:01.119: 	output resolution: 1020x640
+19:25:01.119: 	downscale filter:  Bicubic
+19:25:01.119: 	fps:               60/1
+19:25:01.119: 	format:            NV12
+19:25:01.119: 	YUV mode:          Rec. 709/Partial
+19:25:01.120: NV12 texture support enabled
+19:25:01.120: P010 texture support not available
+19:25:01.123: Audio monitoring device:
+19:25:01.123: 	name: Default
+19:25:01.123: 	id: default
+19:25:01.128: ---------------------------------
+19:25:01.132: [3D Effect] loaded version 0.1.4
+19:25:01.133: Failed to load 'en-US' text for module: 'decklink-captions.so'
+19:25:01.136: Failed to load 'en-US' text for module: 'decklink-output-ui.so'
+19:25:01.144: Decklink API Compiled version 12.0
+19:25:01.144: Decklink API Installed version 16.1
+19:25:01.150: [distroav] obs_module_load: you can haz DistroAV (Version 6.2.1)
+19:25:01.195: [distroav] ERR-405 - Error loading the NDI Library from path: '/usr/lib/libndi.so.5'
+19:25:01.195: [distroav] ERR-404 - NDI library not found, DistroAV features will not be available. Read the wiki and install the NDI Libraries.
+19:25:01.195: [distroav] ERR-401 - NDI library failed to load with message: 'Error-401: NDI Runtime not found.<br><br>Download the installer here:<br><a href="https://distroav.org/ndi/redist-linux">https://distroav.org/ndi/redist-linux</a>'
+19:25:01.197: [distroav] plugin loaded (UI-only) (version 6.2.1)
+19:25:01.199: [Draw Dock] loaded version 0.3.1
+19:25:01.214: [droidcam-obs] module loaded release 243 (arch)
+19:25:01.215: [Freeze Filter] loaded version 0.3.5
+19:25:01.410: Failed to load 'en-US' text for module: 'libOBSInfoWriter.so'
+19:25:01.431: [pipewire] No capture sources available
+19:25:01.437: [linux-vkcapture] plugin loaded successfully (version 1.5.6)
+19:25:01.441: [Advanced Masks] loaded version 1.5.4
+19:25:01.442: Failed to load 'en-US' text for module: 'obs-audio-pan-filter.so'
+19:25:01.442: [obs-audio-pan-filter] plugin loaded successfully (version 0.2.3)
+19:25:01.442: Skipping module 'obs-backgroundremoval', is disabled
+19:25:01.454: [obs-browser]: Version 2.26.1
+19:25:01.454: [obs-browser]: CEF Version 127.0.6533.120 (runtime), 127.0.0-6533-fix-stutter-and-osr-extra-info.3040+ga0ca18e+chromium-127.0.6533.120 (compiled)
+19:25:01.457: [Composite Blur] loaded version 1.5.2
+19:25:01.785: VAAPI: API version 1.24
+19:25:01.860: FFmpeg VAAPI H264 encoding supported
+19:25:02.195: FFmpeg VAAPI AV1 encoding not supported
+19:25:02.512: FFmpeg VAAPI HEVC encoding supported
+19:25:02.517: [obs-gstreamer] build: b60942f, gst-runtime: 1.28.5
+19:25:02.532: [Noise] loaded version 1.0.0
+19:25:02.709: [obs-nvenc] NVENC version: 13.0 (compiled) / 13.1 (driver), CUDA driver version: 13.30, AV1 supported: true
+19:25:02.711: [obs-pwvideo] plugin loaded successfully (version 0.2.3)
+19:25:03.361: [Retro Effects] loaded version 1.0.2
+19:25:03.362: [obs-shaderfilter] loaded version 2.6.0
+19:25:03.362: Skipping module 'obs-teleport', is disabled
+19:25:03.363: Failed to load 'en-US' text for module: 'obs-text-pthread.so'
+19:25:03.363: [obs-text-pthread] plugin loaded (version 2.0.6)
+19:25:03.366: [obs-vaapi] version: 0.4.2, gst-runtime: 1.28.5
+19:25:03.366: [obs-vaapi] found vah265enc
+19:25:03.366: [obs-vaapi] found vah264enc
+19:25:03.366: [obs-vaapi] found vah265lpenc
+19:25:03.366: [obs-vaapi] found vah264lpenc
+19:25:03.368: [obs-vban] plugin loaded (version 0.3.0)
+19:25:03.382: [obs-websocket] [obs_module_load] you can haz websockets (Version: 5.7.3 | RPC Version: 1)
+19:25:03.382: [obs-websocket] [obs_module_load] Qt version (compile-time): 6.11.1 | Qt version (run-time): 6.11.1
+19:25:03.382: [obs-websocket] [obs_module_load] Linked ASIO Version: 103800
+19:25:03.388: [obs-websocket] [obs_module_load] Module loaded.
+19:25:03.393: [Scene Collection Manager] loaded version 0.1.2
+19:25:03.394: [Source Clone] loaded version 0.2.3
+19:25:03.396: [Source Record] loaded version 0.4.8
+19:25:03.398: [Source Switcher] loaded version 0.4.3
+19:25:03.399: ---------------------------------
+19:25:03.400:   Loaded Modules:
+19:25:03.400:     wlrobs.so
+19:25:03.400:     text-freetype2.so
+19:25:03.400:     source-switcher.so
+19:25:03.400:     source-record.so
+19:25:03.400:     source-clone.so
+19:25:03.400:     scene-collection-manager.so
+19:25:03.400:     rtmp-services.so
+19:25:03.400:     obs-x264.so
+19:25:03.400:     obs-wlroots-screencopy.so
+19:25:03.400:     obs-websocket.so
+19:25:03.400:     obs-webrtc.so
+19:25:03.400:     obs-vst.so
+19:25:03.400:     obs-vban.so
+19:25:03.400:     obs-vaapi.so
+19:25:03.400:     obs-transitions.so
+19:25:03.400:     obs-text-pthread.so
+19:25:03.400:     obs-shaderfilter.so
+19:25:03.400:     obs-retro-effects.so
+19:25:03.400:     obs-qsv11.so
+19:25:03.400:     obs-pwvideo.so
+19:25:03.400:     obs-outputs.so
+19:25:03.400:     obs-nvenc.so
+19:25:03.400:     obs-noise.so
+19:25:03.400:     obs-libfdk.so
+19:25:03.400:     obs-gstreamer.so
+19:25:03.400:     obs-filters.so
+19:25:03.400:     obs-ffmpeg.so
+19:25:03.400:     obs-composite-blur.so
+19:25:03.400:     obs-command-source.so
+19:25:03.400:     obs-browser.so
+19:25:03.400:     obs-audio-pan-filter.so
+19:25:03.400:     obs-advanced-masks.so
+19:25:03.400:     linux-vkcapture.so
+19:25:03.400:     linux-v4l2.so
+19:25:03.400:     linux-pulseaudio.so
+19:25:03.400:     linux-pipewire.so
+19:25:03.400:     linux-pipewire-audio.so
+19:25:03.400:     linux-jack.so
+19:25:03.400:     linux-capture.so
+19:25:03.400:     linux-alsa.so
+19:25:03.400: Last log entry repeated for 11 more lines
+19:25:03.400: ---------------------------------
+19:25:03.403: ---------------------------------
+19:25:03.403: Available Encoders:
+19:25:03.403:   Video Encoders:
+19:25:03.403: 	- ffmpeg_svt_av1 (SVT-AV1)
+19:25:03.403: 	- ffmpeg_aom_av1 (AOM AV1)
+19:25:03.403: 	- ffmpeg_vaapi_tex (FFmpeg VAAPI H.264)
+19:25:03.403: 	- hevc_ffmpeg_vaapi_tex (FFmpeg VAAPI HEVC)
+19:25:03.403: 	- obs_nvenc_h264_tex (NVIDIA NVENC H.264)
+19:25:03.403: 	- obs_nvenc_hevc_tex (NVIDIA NVENC HEVC)
+19:25:03.403: 	- obs_nvenc_av1_tex (NVIDIA NVENC AV1)
+19:25:03.403: 	- obs_qsv11_v2 (QuickSync H.264)
+19:25:03.403: 	- obs_qsv11_hevc (QuickSync HEVC)
+19:25:03.409: 	- obs-va-vah265enc (VAAPI H.265 on AD106M [GeForce RTX 4070 Max-Q / Mobile])
+19:25:03.415: 	- obs-va-vah264enc (VAAPI H.264 on AD106M [GeForce RTX 4070 Max-Q / Mobile])
+19:25:03.423: 	- obs-va-vah265lpenc (VAAPI H.265 on AD106M [GeForce RTX 4070 Max-Q / Mobile] (Low Power))
+19:25:03.432: 	- obs-va-vah264lpenc (VAAPI H.264 on AD106M [GeForce RTX 4070 Max-Q / Mobile] (Low Power))
+19:25:03.432: 	- obs_x264 (x264)
+19:25:03.432:   Audio Encoders:
+19:25:03.433: 	- ffmpeg_aac (FFmpeg AAC)
+19:25:03.433: 	- ffmpeg_opus (FFmpeg Opus)
+19:25:03.433: 	- ffmpeg_pcm_s16le (FFmpeg PCM (16-bit))
+19:25:03.433: 	- ffmpeg_pcm_s24le (FFmpeg PCM (24-bit))
+19:25:03.433: 	- ffmpeg_pcm_f32le (FFmpeg PCM (32-bit float))
+19:25:03.433: 	- ffmpeg_alac (FFmpeg ALAC (24-bit))
+19:25:03.433: 	- ffmpeg_flac (FFmpeg FLAC (16-bit))
+19:25:03.433: 	- libfdk_aac (libfdk AAC)
+19:25:03.433: ==== Startup complete ===============================================
+19:25:03.435: Switched to Preview/Program mode
+19:25:03.435: ------------------------------------------------
+19:25:03.516: All scene data cleared
+19:25:03.516: ------------------------------------------------
+19:25:03.559: [distroav] WARN-419 - Update Check request failed: `{ "curlCode":{ "code":22, "text":"HTTP response code said error" }, "error":"The requested URL returned error: 412" }`
+19:25:03.566: Device for 'Audio Output Capture' source Desktop Audio is also used for audio monitoring.
+19:25:03.566: Deduplication logic is being applied to all monitored sources.
+19:25:03.567: pulse-input: Server name: 'PulseAudio (on PipeWire 1.6.8) 15.0.0'
+19:25:03.568: pulse-input: Audio format: s16le, 8000 Hz, 1 channels
+19:25:03.568: pulse-input: Started recording from 'bluez_output.2C_53_D7_F9_2B_25.1.monitor'
+19:25:03.568: [Loaded global audio device]: 'Desktop Audio'
+19:25:03.571: pulse-input: Server name: 'PulseAudio (on PipeWire 1.6.8) 15.0.0'
+19:25:03.573: pulse-input: Audio format: s16le, 48000 Hz, 2 channels
+19:25:03.573: pulse-input: Started recording from 'alsa_input.usb-Lumina_Industries__Inc._Lumina_Camera_-_Raw_SN0001-02.pro-input-0'
+19:25:03.573: [Loaded global audio device]: 'Mic/Aux'
+19:25:03.584: Switched to scene 'Scene'
+19:25:03.584: Attempted to add Scene without specifying a canvas! Using default canvas instead.
+19:25:03.584: User switched Program to scene 'Scene'
+19:25:03.587: ------------------------------------------------
+19:25:03.587: Loaded scenes:
+19:25:03.587: - scene 'Scene':
+19:25:03.588:     - source: 'Wayland output(dmabuf)' (wlrobs-dmabuf)
+19:25:03.588:     - source: 'Source Switcher' (source_switcher)
+19:25:03.588: ------------------------------------------------
+19:25:03.602: Device for 'Audio Output Capture' source Desktop Audio is also used for audio monitoring.
+19:25:03.602: Deduplication logic is being applied to all monitored sources.
+19:25:03.672: [distroav] obs_module_load: NDI features not registered; skipping output initialization.
+19:25:03.672: [distroav] WARN-417 - Update Check received a non-expected response. httpStatusCode=412, errorData='{ "curlCode":{ "code":22, "text":"HTTP response code said error" }, "error":"The requested URL returned error: 412" }'; ignoring response
+19:25:04.150: adding 21 milliseconds of audio buffering, total audio buffering is now 21 milliseconds (source: Mic/Aux)
+19:25:04.150: 
+19:25:05.201: Output ID 'ndi_output' not found
+19:25:05.201: Failed to create output 'NDI Main Output'!
+19:25:46.436: User added source 'Window Capture (Xcomposite)' (xcomposite_input) to scene 'Scene'
+19:25:54.341: [window-capture: 'Window Capture (Xcomposite)'] update settings:
+19:25:54.341: 	title: OBS Studio 32.1.2 - Profile: Untitled - Scenes: Untitled
+19:25:54.341: 	class: obs
+19:25:54.341: 
+19:26:13.368: User Removed source 'Source Switcher' (source_switcher) from scene 'Scene'
+19:26:17.767: User Removed source 'Window Capture (Xcomposite)' (xcomposite_input) from scene 'Scene'

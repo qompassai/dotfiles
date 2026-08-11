@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=app.drey.Dialect
-Exec=/usr/bin/dialect --gapplication-service

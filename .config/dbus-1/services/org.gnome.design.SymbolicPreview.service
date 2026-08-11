@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=org.gnome.design.SymbolicPreview
-Exec=/usr/bin/symbolic-preview --gapplication-service

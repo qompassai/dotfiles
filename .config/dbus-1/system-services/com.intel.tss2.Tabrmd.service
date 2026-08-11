@@ -1,4 +1,0 @@
-[D-BUS Service]
-Name=com.intel.tss2.Tabrmd
-Exec=/bin/false
-SystemdService=tpm2-abrmd.service

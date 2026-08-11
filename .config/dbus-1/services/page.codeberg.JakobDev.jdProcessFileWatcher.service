@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=page.codeberg.JakobDev.jdProcessFileWatcher
-Exec=jdprocessfilewatcher

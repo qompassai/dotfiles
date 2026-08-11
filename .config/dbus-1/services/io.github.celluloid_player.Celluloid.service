@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=io.github.celluloid_player.Celluloid
-Exec=/usr/bin/celluloid --gapplication-service

@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=com.github.huluti.Curtail
-Exec=/usr/bin/curtail --gapplication-service
