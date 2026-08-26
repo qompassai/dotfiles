@@ -1,0 +1,270 @@
+#!/usr/bin/env bash
+# #################################################################
+# /qompassai/.local/bin/qsync
+# Qompass AI Qsync Script
+# SPDX-License-Identifier: Apache-2.0
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# #################################################################
+set -euo pipefail
+JSON_MODE=true
+[[ "${1:-}" == "--json" ]] && JSON_MODE=true
+AUTHOR_AFFIL=$(pass show zen/affil)
+AUTHOR_FULL_NAME=$(pass show auth/fullname)
+AUTHOR_GIVEN_NAME=$(pass show auth/givenname)
+AUTHOR_LAST_NAME=$(pass show auth/lastname)
+DEFAULT_KEYWORDS=$(jq -c -n '["AI", "Quantum", "Post-Quantum Cryptography", "Education", "Healthcare"]')
+GITHUB_ORG=$(pass show gh/org)
+GITHUB_TOKEN=$(pass show gh/patc)
+GITHUB_USER=$(pass show gh/user)
+GITHUB_USER_EMAIL=$(pass show gh/email)
+LICENSE=$(pass show qsync/license)
+LICENSES_ARRAY=$(jq -c -n '["APACHE-2.0"]')
+LOGFILE="$HOME/.q-sync.log"
+ORCID_ID=$(pass show orcid/id)
+QSYNC_DIR=$(pass show qsync/dir)
+RELEASE_DATE=$(date +%Y-%m-%d)
+UPLOAD_TYPE="software"
+ZENODO_COMMUNITY=$(pass show zen/community)
+ZENODO_TOKEN=$(pass show api/zenodo)
+: >"$LOGFILE"
+log() {
+  local message="$1"
+  if [[ "$JSON_MODE" == true ]]; then
+    jq -n --arg time "$(date --iso-8601=seconds)" --arg msg "$message" '{timestamp: $time, message: $msg}'
+  else
+    echo -e "$message" | tee -a "$LOGFILE"
+  fi
+}
+get_json_field() {
+  local json="$1"
+  local field="$2"
+  if echo "$json" | jq empty &>/dev/null; then
+    jq -r "$field" <<<"$json"
+  else
+    log "❌ Invalid JSON input for jq field $field"
+    echo ""
+  fi
+}
+process_repo() {
+  local repo_dir="$1"
+  cd "$repo_dir" || return
+  local REPO_URL REPO_NAME GITHUB_REPO
+  REPO_URL=$(git config --get remote.origin.url || echo "")
+  if [[ -z "$REPO_URL" ]]; then
+    log "No remote.origin.url for $repo_dir"
+    return
+  fi
+  if [[ "$REPO_URL" =~ github\.com[:/]([^/]+)/([^/.]+)(\.git)?$ ]]; then
+    GITHUB_REPO="${BASH_REMATCH[1]}/${BASH_REMATCH[2]}"
+    REPO_NAME="${BASH_REMATCH[2]}"
+  else
+    log " Unable to parse: $REPO_URL"
+    return
+  fi
+  log "\n Processing repo: $repo_dir"
+  log "REPO_URL=$REPO_URL"
+  log "REPO_NAME=$REPO_NAME"
+  log "GITHUB_REPO=$GITHUB_REPO"
+  if ! gh repo view "$GITHUB_REPO" &>/dev/null; then
+    log "$GITHUB_REPO not found. Skipping."
+    return
+  fi
+  local DESCRIPTION LANGUAGE REPO_TOPICS_JSON
+  DESCRIPTION=$(gh repo view "$GITHUB_REPO" --json description -q .description)
+  REPO_TOPICS_JSON=$(gh repo view "$GITHUB_REPO" --json repositoryTopics -q 'try (.repositoryTopics.nodes // []) | map(.topic.name | gsub("-"; " "))')
+  LANGUAGE=$(gh repo view "$GITHUB_REPO" --json primaryLanguage -q '.primaryLanguage.name // empty')
+  if [[ -z "$REPO_TOPICS_JSON" || "$(jq -r 'length' <<<"$REPO_TOPICS_JSON")" == "0" ]]; then
+    case "$LANGUAGE" in
+    Python) REPO_TOPICS_JSON='["python", "data science", "machine learning"]' ;;
+    Rust) REPO_TOPICS_JSON='["rust", "systems programming", "performance"]' ;;
+    Go) REPO_TOPICS_JSON='["go", "concurrency", "cloud native"]' ;;
+    JavaScript) REPO_TOPICS_JSON='["javascript", "frontend", "web"]' ;;
+    TypeScript) REPO_TOPICS_JSON='["typescript", "frontend", "typed"]' ;;
+    Scala) REPO_TOPICS_JSON='["scala", "jvm", "functional"]' ;;
+    Lua) REPO_TOPICS_JSON='["lua", "neovim", "config"]' ;;
+    Mojo) REPO_TOPICS_JSON='["mojo", "accelerated computing", "ai"]' ;;
+    *) REPO_TOPICS_JSON='["software", "opensource"]' ;;
+    esac
+  fi
+  local KEYWORDS
+  KEYWORDS=$(jq -c -n --argjson a "$DEFAULT_KEYWORDS" --argjson b "$REPO_TOPICS_JSON" '$a + $b | unique')
+  local VERSION
+  VERSION=$(git describe --tags --always --dirty 2>/dev/null || date +%Y.%m.%d)
+  cat <<EOF >.zenodo.json
+{
+  "title": "$REPO_NAME",
+  "description": "$DESCRIPTION",
+  "license": "$LICENSE",
+  "language": "eng",
+  "upload_type": "$UPLOAD_TYPE",
+  "access_right": "open",
+  "version": "$VERSION",
+  "publication_date": "$RELEASE_DATE",
+  "creators": [
+    {
+      "name": "$AUTHOR_FULL_NAME",
+      "affiliation": "$AUTHOR_AFFIL",
+      "orcid": "$ORCID_ID",
+      "type": "Author"
+    }
+  ],
+  "keywords": $KEYWORDS,
+  "related_identifiers": [
+    { "identifier": "https://github.com/$GITHUB_REPO", "relation": "isSupplementTo", "resource_type": "$UPLOAD_TYPE" },
+    { "identifier": "https://github.com/$GITHUB_REPO/releases/tag/v$RELEASE_DATE", "relation": "isIdenticalTo", "resource_type": "$UPLOAD_TYPE" },
+    { "identifier": "https://orcid.org/$ORCID_ID", "relation": "isAuthorOf", "resource_type": "person" },
+    { "identifier": "https://github.com/$GITHUB_REPO/actions", "relation": "isCompiledBy", "resource_type": "workflow" },
+    { "identifier": "https://loop.frontiersin.org/people/2230223", "relation": "isAuthorOf", "resource_type": "person" },
+    { "identifier": "https://www.webofscience.com/wos/author/HNQ-0292-2023", "relation": "isIdenticalTo", "resource_type": "person" },
+    { "identifier": "https://www.scopus.com/authid/detail.uri?authorId=57385910700", "relation": "isIdenticalTo", "resource_type": "person" }
+  ],
+  "communities": [ { "identifier": "$ZENODO_COMMUNITY" } ],
+  "contributors": [
+    { "name": "$AUTHOR_FULL_NAME", "orcid": "https://orcid.org/$ORCID_ID", "type": "Author" },
+    { "name": "$AUTHOR_AFFIL", "type": "Sponsor" }
+  ]
+}
+EOF
+  log "Valid .zenodo.json generated"
+  echo "cff-version: 1.2.0" >CITATION.cff
+  echo "title: \"$REPO_NAME\"" >>CITATION.cff
+  echo "message: \"If you use this software, please cite it as below.\"" >>CITATION.cff
+  echo "authors:" >>CITATION.cff
+  echo "  - family-names: \"$AUTHOR_LAST_NAME\"" >>CITATION.cff
+  echo "    given-names: \"$AUTHOR_GIVEN_NAME\"" >>CITATION.cff
+  echo "    orcid: \"https://orcid.org/$ORCID_ID\"" >>CITATION.cff
+  echo "    affiliation: \"$AUTHOR_AFFIL\"" >>CITATION.cff
+  echo "version: \"v$RELEASE_DATE\"" >>CITATION.cff
+  echo "date-released: \"$RELEASE_DATE\"" >>CITATION.cff
+  echo "repository-code: \"https://github.com/$GITHUB_REPO\"" >>CITATION.cff
+  echo "license: \"$LICENSE\"" >>CITATION.cff
+  echo "keywords:" >>CITATION.cff
+  jq -r '.[] | "  - \(.)"' <<<"$KEYWORDS" >>CITATION.cff
+  echo "abstract: \"$DESCRIPTION\"" >>CITATION.cff
+  git config user.name "$GITHUB_USER"
+  git config user.email "$GITHUB_USER_EMAIL"
+  git add -A
+  if ! git diff --cached --quiet; then
+    git commit -m "Update $RELEASE_DATE"
+    git pull --rebase || {
+      log "Failed to pull/rebase before push; needs manual check."
+      return
+    }
+    git push
+    log "update $REPO_NAME"
+  else
+    log "No changes for $REPO_NAME"
+  fi
+  if ! gh release view "v$RELEASE_DATE" &>/dev/null; then
+    local last_release_date=""
+    local last_release_epoch=0
+    local current_epoch
+    local should_create_release=false
+
+    current_epoch=$(date +%s)
+
+    last_release_date=$(
+      gh release list \
+        --limit 1 \
+        --json publishedAt \
+        --jq '.[0].publishedAt // ""' \
+        2>/dev/null || true
+    )
+
+    if [[ -z "$last_release_date" ]]; then
+      should_create_release=true
+    elif last_release_epoch=$(date -d "$last_release_date" +%s 2>/dev/null); then
+      if ((current_epoch - last_release_epoch > 1209600)); then
+        should_create_release=true
+      fi
+    else
+      log "Unable to parse previous release date: $last_release_date"
+    fi
+
+    if [[ "$should_create_release" == true ]]; then
+      if gh release create "v$RELEASE_DATE" \
+        --title "Release $RELEASE_DATE" \
+        --notes ""
+      then
+        log "Created release for $RELEASE_DATE"
+      else
+        log "Failed to create release for $RELEASE_DATE"
+      fi
+    else
+      log "Skipping release creation — recent release exists"
+    fi
+  else
+    log "Release for v$RELEASE_DATE already exists."
+  fi
+  local ZENODO_API="https://zenodo.org/api"
+  query_response=$(curl -sL "$ZENODO_API/records/?q=related.identifier:https://github.com/$GITHUB_REPO&sort=mostrecent&size=1")
+  ZENODO_RECORD_ID=$(get_json_field "$query_response" '.hits.hits[0].id // empty')
+  if [[ -z "$ZENODO_RECORD_ID" ]]; then
+    local deposit_response=$(curl -sL -X POST "$ZENODO_API/deposit/depositions" \
+      -H "Content-Type: application/json" \
+      -H "Authorization: Bearer $ZENODO_TOKEN" -d '{}')
+    ZENODO_RECORD_ID=$(get_json_field "$deposit_response" '.id')
+    [[ -z "$ZENODO_RECORD_ID" ]] && {
+      log "Failed to create Zenodo deposit"
+      return
+    }
+    curl -s -X PUT "$ZENODO_API/deposit/depositions/$ZENODO_RECORD_ID" \
+      -H "Content-Type: application/json" \
+      -H "Authorization: Bearer $ZENODO_TOKEN" \
+      -d @.zenodo.json >/dev/null
+    log "Zenodo metadata uploaded for $REPO_NAME"
+  else
+    log "Existing Zenodo record ID found: $ZENODO_RECORD_ID"
+  fi
+  metadata_response=$(curl -sL -H "Authorization: Bearer $ZENODO_TOKEN" "$ZENODO_API/records/$ZENODO_RECORD_ID")
+  PUBLISHED=$(get_json_field "$metadata_response" '.metadata.publication_date // empty')
+  if [[ -z "$PUBLISHED" ]]; then
+    curl -sL -X POST "$ZENODO_API/deposit/depositions/$ZENODO_RECORD_ID/actions/publish" \
+      -H "Authorization: Bearer $ZENODO_TOKEN" >/dev/null &&
+      log "Zenodo record published for $REPO_NAME" ||
+      log "Failed to publish Zenodo record for $REPO_NAME"
+  else
+    log "Zenodo record already published: $PUBLISHED"
+  fi
+  DOI=$(get_json_field "$metadata_response" '.doi // empty')
+  if [[ -n "$DOI" ]]; then
+    log "Found Zenodo DOI: $DOI"
+    local BADGE="[![DOI](https://zenodo.org/badge/DOI/$DOI.svg)](https://doi.org/$DOI)"
+    [[ -f README.md && ! "$(grep "$DOI" README.md)" ]] && echo -e "\n$BADGE" >>README.md
+    cat <<EOF >citation.bib
+@software{$REPO_NAME,
+  author       = {$AUTHOR_FULL_NAME},
+  title        = {$REPO_NAME},
+  year         = {$(date +%Y)},
+  license      = {$LICENSE},
+  publisher    = {Zenodo},
+  version      = {v$RELEASE_DATE},
+  doi          = {$DOI},
+  keywords     = {$(jq -r '. | join(", ")' <<<"$KEYWORDS")},
+  organization = {$AUTHOR_AFFIL},
+  url          = {https://doi.org/$DOI},
+  note         = {Released under $LICENSES_ARRAY. Source: https://github.com/$GITHUB_REPO}
+}
+EOF
+  fi
+}
+export -f log get_json_field process_repo
+export JSON_MODE ZENODO_TOKEN QSYNC_DIR RELEASE_DATE \
+  ZENODO_COMMUNITY LICENSE LICENSES_ARRAY ORCID_ID \
+  AUTHOR_FULL_NAME AUTHOR_GIVEN_NAME AUTHOR_LAST_NAME \
+  AUTHOR_AFFIL GITHUB_USER GITHUB_TOKEN GITHUB_USER_EMAIL \
+  LOGFILE UPLOAD_TYPE
+while IFS= read -r repo; do
+  process_repo "$repo"
+done < <(find "$QSYNC_DIR" -type d -name ".git" -exec dirname {} \;)
+log "All Qompass repositories processed."
