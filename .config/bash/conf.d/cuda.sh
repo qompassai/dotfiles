@@ -15,6 +15,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # #################################################################
+export CUDA_HOME=/opt/cuda
+export CUDA_PATH=/opt/cuda
 export CUDAToolkit_ROOT=/opt/cuda
-export PATH="$CUDAToolkit_ROOT/bin:$PATH"
-export LD_LIBRARY_PATH="$CUDAToolkit_ROOT/lib64:$LD_LIBRARY_PATH"
+export CUDACXX="$CUDA_HOME/bin/nvcc"
+export CUDAHOSTCXX=/usr/bin/g++
+case ":$PATH:" in
+  *":$CUDA_HOME/bin:"*) ;;
+  *) export PATH="$CUDA_HOME/bin:$PATH" ;;
+esac
+case ":${LD_LIBRARY_PATH:-}:" in
+  *":$CUDA_HOME/lib64:"*) ;;
+  *)
+    export LD_LIBRARY_PATH="$CUDA_HOME/lib64${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+    ;;
+esac

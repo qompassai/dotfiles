@@ -1,0 +1,38 @@
+// /qompassai/dotfiles/.config/nimble/nimbledata2.jsonc
+// Qompass AI Nimble Data2 Config
+// Copyright (C) 2025 Qompass AI, All rights reserved
+//////////////////////////////////////////////
+{
+  "version": 1,
+  "reverseDeps": {
+    "ast_pattern_matching": {
+      "1.0.0": {
+        "e7d2f92c1a3390b4b2da00e021baf14b91ff5017": [
+          {
+            "name": "jsonschema",
+            "version": "0.2.1",
+            "checksum": "8ae2ef3c6c97e9bf2fdf650436adf512ba2f5991"
+          }
+        ]
+      }
+    },
+    "jsonschema": {
+      "0.2.1": {
+        "8ae2ef3c6c97e9bf2fdf650436adf512ba2f5991": [
+          {
+            "path": "/home/phaedrus/.cache/paru/clone/nimlsp/src/nimlsp-0.4.6"
+          }
+        ]
+      }
+    },
+    "asynctools": {
+      "0.1.1": {
+        "3f7096335282f45ebab49b939b20a1ed52cdec31": [
+          {
+            "path": "$XDG_CACHE_HOME/paru/clone/nimlsp/src/nimlsp-0.4.6"
+          }
+        ]
+      }
+    }
+  }
+}

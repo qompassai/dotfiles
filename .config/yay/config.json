@@ -4,7 +4,6 @@
     "aurrpcurl": "https://aur.archlinux.org/rpc?",
     "batchinstall": true,
     "bottomup": true,
-    "buildDir": "$XDG_CACHE_HOME/yay",
     "cleanAfter": true,
     "cleanmenu": true,
     "combinedupgrade": true,
@@ -22,11 +21,9 @@
     "gpgflags": "",
     "keepSrc": false,
     "makepkgbin": "makepkg",
-    "makepkgconf": "$XDG_CONFIG_HOME/pacman/makepkg.conf",
     "maxconcurrentdownloads": 15,
     "mflags": "--nocheck --syncdeps --clean --noconfirm",
     "pacmanbin": "pacman",
-    "pacmanconf": "$XDG_CONFIG_HOME/pacman/pacman.conf",
     "pgpfetch": true,
     "provides": true,
     "ramver": "",
@@ -43,6 +40,5 @@
     "sudoflags": "-E",
     "sudoloop": true,
     "timeupdate": true,
-    "useask": false,
-    "version": "12.5.7"
+    "useask": false
 }

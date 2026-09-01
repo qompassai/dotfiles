@@ -21,7 +21,8 @@ export BUILDCACHE_DIR="$XDG_CACHE_HOME/buildcache"
 export BUILDCACHE_LUA_PATH="$XDG_CONFIG_HOME/buildcache/lua"
 export BUILDCACHE_CC=/usr/bin/clang
 export BUILDCACHE_CXX=/usr/bin/clang++
-export BUILDCACHE_IMPERSONATE=/usr/bin/clang
-alias lua='lua5.1'
+#export BUILDCACHE_IMPERSONATE=/usr/bin/clang
+#alias lua='lua5.1'
 
 
+export PATH="$HOME/.local/bin:$HOME/.luarocks/bin:$PATH"
