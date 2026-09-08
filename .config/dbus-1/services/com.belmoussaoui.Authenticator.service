@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=com.belmoussaoui.Authenticator
+Exec=/usr/bin/authenticator --gapplication-service

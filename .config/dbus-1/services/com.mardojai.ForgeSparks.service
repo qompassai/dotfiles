@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=com.mardojai.ForgeSparks
+Exec=/usr/bin/forge-sparks --gapplication-service

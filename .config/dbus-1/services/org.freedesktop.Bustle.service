@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.freedesktop.Bustle
+Exec=/usr/bin/bustle --gapplication-service

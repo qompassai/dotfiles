@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=com.intel.dleyna-renderer
+Exec=/usr/lib/dleyna-renderer-service

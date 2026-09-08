@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = pnpm
+
+[Action]
+Description = Updating standalone pnpm
+When = PostTransaction
+Depends = pnpm
+Exec = /usr/bin/env pnpm self-update

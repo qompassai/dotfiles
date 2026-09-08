@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=app.drey.EarTag
+Exec=/usr/bin/eartag --gapplication-service

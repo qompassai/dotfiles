@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=org.freedesktop.LocalSearch3.Writeback
+Exec=/usr/lib/localsearch-writeback-3
+SystemdService=localsearch-writeback-3.service

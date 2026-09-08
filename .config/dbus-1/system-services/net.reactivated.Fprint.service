@@ -1,0 +1,5 @@
+[D-BUS Service]
+Name=net.reactivated.Fprint
+Exec=/usr/lib/fprintd
+User=root
+SystemdService=fprintd.service

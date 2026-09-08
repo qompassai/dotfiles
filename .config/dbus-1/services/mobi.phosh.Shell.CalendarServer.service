@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=mobi.phosh.Shell.CalendarServer
+Exec=/usr/lib/phosh/phosh-calendar-server

@@ -18,3 +18,5 @@ fish_add_path --prepend $HOME/.local/share/lua/bin
 fish_add_path /usr/local/bin /usr/local/sbin /usr/bin /usr/sbin
 set -gx PATH $HOME/.nimble/bin $PATH
 set -gx PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/home/phaedrus/.local/bin
+
+test -f /home/xlings/.xlings_data/xlings-profile.fish; and source /home/xlings/.xlings_data/xlings-profile.fish

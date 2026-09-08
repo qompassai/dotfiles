@@ -1,0 +1,6 @@
+[D-BUS Service]
+Name=org.freedesktop.sssd.infopipe
+# If system is configured to use systemd ifp service ("SystemdService=") then "Exec=" and "User=" options are not used
+Exec=/usr/lib/sssd/sssd/sssd_ifp --socket-activated
+User=root
+SystemdService=sssd-ifp.service

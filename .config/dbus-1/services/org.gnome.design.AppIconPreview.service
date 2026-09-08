@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.gnome.design.AppIconPreview
+Exec=/usr/bin/app-icon-preview --gapplication-service
