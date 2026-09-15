@@ -1,0 +1,8 @@
+# /qompassai/dotfiles/.config/distcc/hosts
+# Qompass AI Distcc Hosts Config
+# Copyright (C) 2025 Qompass AI, All rights reserved
+####################################################
+caffe:2432/8,lzo
+doppio:2432/8,lzo
+pensare:2342/8,lzo
+primo:2342/8,lzo
