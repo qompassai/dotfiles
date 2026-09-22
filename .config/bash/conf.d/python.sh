@@ -5,4 +5,4 @@
 # Copyright (C) 2026 Qompass AI, All rights reserved
 # ----------------------------------------
 export PYTHONNOUSERSITE=1
-alias pip='python -m pip'
+#alias pip='python -m pip'

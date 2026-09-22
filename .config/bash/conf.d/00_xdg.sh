@@ -6,7 +6,7 @@
 # Reference: https://wiki.archlinux.org/title/XDG_Base_Directory
 export LANG=en_US.UTF-8
 export PATH="$HOME/.local/bin:$PATH"
-export XDG_BIN_HOME="$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin"
+#export XDG_BIN_HOME="$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_DIRS="$HOME/.config/xdg:/etc/xdg:/usr/local/etc/xdg:/usr/etc/xdg"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"

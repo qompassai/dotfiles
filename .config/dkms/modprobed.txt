@@ -1,11 +1,3 @@
-=== 3c574_cs ===
-max_interrupt_work: (int)
-full_duplex: (int)
-auto_polarity: (int)
-
-=== 3c589_cs ===
-if_port: (int)
-
 === 3c59x ===
 debug:3c59x debug level (0-6) (int)
 options:3c59x: Bits 0-3: media type, bit 4: bus mastering, bit 9: full duplex (array of int)
@@ -99,15 +91,6 @@ verbose:How verbose should the driver be? (0-3):
 === abituguru3 ===
 force:Set to one to force detection. (bool)
 verbose:Enable/disable verbose error reporting (bool)
-
-=== acenic ===
-link:AceNIC/3C985/NetGear link state (array of int)
-trace:AceNIC/3C985/NetGear firmware trace level (array of int)
-tx_coal_tick:AceNIC/3C985/GA620 max clock ticks to wait from first tx descriptor arrives (array of int)
-max_tx_desc:AceNIC/3C985/GA620 max number of transmit descriptors to wait (array of int)
-rx_coal_tick:AceNIC/3C985/GA620 max clock ticks to wait from first rx descriptor arrives (array of int)
-max_rx_desc:AceNIC/3C985/GA620 max number of receive descriptors to wait (array of int)
-tx_ratio:AceNIC/3C985/GA620 ratio of NIC memory used for TX/RX descriptors (range 0-63) (array of int)
 
 === acerhdf ===
 kernelmode:Kernel mode fan control on / off (uint)
@@ -255,10 +238,6 @@ use_msi:
 programmableDelay:delay used during tablet programming (int)
 jitterDelay:stylus/mouse settlement delay (int)
 
-=== akvcam ===
-loglevel:Debug verbosity (-2 to 7) (int)
-config_file:Full path to virtual cameras config file (string)
-
 === alienware-wmi ===
 force_hwmon:Force probing for HWMON support without checking if the WMI backend is available (bool)
 force_platform_profile:Forces auto-detecting thermal profiles without checking if WMI thermal backend is available (bool)
@@ -293,9 +272,6 @@ am53c974_fenab:Enable 24-bit DMA transfer sizes (bool)
 pwminv: (int)
 init: (int)
 
-=== amd_3d_vcache ===
-x3d_mode:Initial 3D-VCache mode; 'frequency' (default) or 'cache' (charp)
-
 === amd5536udc_pci ===
 use_dma:true for DMA (bool)
 use_dma_ppb:true for DMA in packet per buffer mode (bool)
@@ -321,13 +297,13 @@ vis_vramlimit:Restrict visible VRAM for testing, in megabytes (int)
 gartsize:Size of kernel GART to setup in megabytes (32, 64, etc., -1=auto) (uint)
 gttsize:Size of the GTT userspace domain in megabytes (-1 = auto) (int)
 moverate:Maximum buffer migration rate in MB/s. (32, 64, etc., -1=auto, 0=1=disabled) (int)
-audio:Audio enable (-1 = auto, 0 = disable, 1 = enable) (int)
+audio:HDMI/DP Audio enable for non DC displays (-1 = auto, 0 = disable, 1 = enable) (int)
 disp_priority:Display Priority (0 = auto, 1 = normal, 2 = high) (int)
 hw_i2c:hw i2c engine enable (0 = disable) (int)
 pcie_gen2:PCIE Gen2 mode (-1 = auto, 0 = disable, 1 = enable) (int)
 msi:MSI support (1 = enable, 0 = disable, -1 = auto) (int)
 svm_default_granularity:SVM's default granularity in log(2^Pages), default 9 = 2^9 = 2 MiB (uint)
-lockup_timeout:GPU lockup timeout in ms (default: 10000 for all jobs. 0: keep default value. negative: infinity timeout), format: for bare metal [Non-Compute] or [GFX,Compute,SDMA,Video]; for passthrough or sriov [all jobs] or [GFX,Compute,SDMA,Video]. (string)
+lockup_timeout:GPU lockup timeout in ms (default: 2000. 0: keep default value. negative: infinity timeout), format: [single value for all] or [GFX,Compute,SDMA,Video]. (string)
 dpm:DPM support (1 = enable, 0 = disable, -1 = auto) (int)
 fw_load_type:firmware loading type (3 = rlc backdoor autoload if supported, 2 = smu load if supported, 1 = psp load, 0 = force direct if supported, -1 = auto) (int)
 aspm:ASPM support (1 = enable, 0 = disable, -1 = auto) (int)
@@ -361,15 +337,13 @@ ras_enable:Enable RAS features on the GPU (0 = disable, 1 = enable, -1 = auto (d
 ras_mask:Mask of RAS features to enable (default 0xffffffff), only valid when ras_enable == 1 (uint)
 timeout_fatal_disable:disable watchdog timeout fatal error (false = default) (bool)
 timeout_period:watchdog timeout period (0 = timeout disabled, 1 ~ 0x23 = timeout maxcycles = (1 << period) (uint)
-si_support:SI support (1 = enabled, 0 = disabled (default)) (int)
-cik_support:CIK support (1 = enabled, 0 = disabled (default)) (int)
+si_support:SI support (1 = enabled, 0 = disabled, -1 = default) (int)
+cik_support:CIK support  (1 = enabled, 0 = disabled, -1 = default) (int)
 smu_memory_pool_size:reserve gtt for smu debug usage, 0 = disable,0x1 = 256Mbyte, 0x2 = 512Mbyte, 0x4 = 1 Gbyte, 0x8 = 2GByte (uint)
 async_gfx_ring:Asynchronous GFX rings that could be configured with either different priorities (HP3D ring and LP3D ring), or equal priorities (0 = disabled, 1 = enabled (default)) (int)
 mcbp:Enable Mid-command buffer preemption (0 = disabled, 1 = enabled), -1 = auto (default) (int)
 discovery:Allow driver to discover hardware IPs from IP Discovery table at the top of VRAM (int)
-mes:Enable Micro Engine Scheduler (0 = disabled (default), 1 = enabled) (int)
 mes_log_enable:Enable Micro Engine Scheduler log (0 = disabled (default), 1 = enabled) (int)
-mes_kiq:Enable Micro Engine Scheduler KIQ (0 = disabled (default), 1 = enabled) (int)
 uni_mes:Enable Unified Micro Engine Scheduler (0 = disabled, 1 = enabled(default) (int)
 noretry:Disable retry faults (0 = retry enabled, 1 = retry disabled, -1 auto (default)) (int)
 force_asic_type:A non negative value used to specify the asic type for all supported GPUs (int)
@@ -385,7 +359,8 @@ queue_preemption_timeout_ms:queue preemption timeout in ms (1 = Minimum, 9000 = 
 debug_evictions:enable eviction debug messages (false = default) (bool)
 no_system_mem_limit:disable system memory limit (false = default) (bool)
 no_queue_eviction_on_vm_fault:No queue eviction on VM fault (0 = queue eviction, 1 = no queue eviction) (int)
-mtype_local:MTYPE for local memory (0 = MTYPE_RW (default), 1 = MTYPE_NC, 2 = MTYPE_CC) (int)
+mtype_local:MTYPE for local memory (default: ASIC dependent, 0 = MTYPE_RW, 1 = MTYPE_NC, 2 = MTYPE_CC) (int)
+pcie_p2p:Enable PCIe P2P (requires large-BAR). (N = off, Y = on(default)) (bool)
 dcfeaturemask:all stable DC features enabled (default)) (uint)
 dcdebugmask:all debug options disabled (default)) (uint)
 visualconfirm:Visual confirm (0 = off (default), 1 = MPO, 5 = PSR) (uint)
@@ -411,15 +386,22 @@ agp:AGP (-1 = auto (default), 0 = disable, 1 = enable) (int)
 wbrf:Enable Wifi RFI interference mitigation (0 = disabled, 1 = enabled, -1 = auto(default) (int)
 rebar:Resizable BAR (-1 = auto (default), 0 = disable, 1 = enable) (int)
 user_queue:Enable user queues (-1 = auto (default), 0 = disable, 1 = enable, 2 = enable UQs and disable KQs) (int)
+hdmi_hpd_debounce_delay_ms:HDMI HPD disconnect debounce delay in milliseconds (0 to disable (by default), 1500 is common) (uint)
+ptl:Enable PTL (-1 = auto, 0 = disable (default), 1 = enable, 2 = permanently disable) (int)
 
 === amd-pmc ===
 enable_stb:Enable the STB debug mechanism (bool)
 dump_custom_stb:Enable to dump full STB buffer (bool)
 disable_workarounds:Disable workarounds for platform bugs (bool)
+delay_suspend:Delays s2idle by 2.5 seconds to work around buggy ECs, often causing keyboard issues after suspend. 0: don't delay, 1: do delay, -1 (default): let amd_pmc decide. If you need this please report this to: platform-driver-x86@vger.kernel.org (int)
 
 === amd-pmf ===
 metrics_table_loop_ms:Metrics Table sample size time (default = 1000ms) (int)
 force_load:Force load this driver on supported older platforms (experimental) (bool)
+smart_pc_support:Smart PC Support (default = true) (bool)
+
+=== amd-pstate-ut ===
+test_list:Comma-delimited list of tests to run (empty means run all tests) (charp)
 
 === amd_sfh ===
 sensor_mask:override the detected sensors mask (int)
@@ -428,8 +410,10 @@ sensor_mask:override the detected sensors mask (int)
 update_interval: (uint)
 
 === amdxdna ===
+force_iova:Force use IOVA (Default false) (bool)
 aie2_max_col:Maximum column could be used (uint)
-force_cmdlist:Force use command list (Default false) (bool)
+force_cmdlist:Force use command list (Default true) (bool)
+tdr_timeout_ms:TDR (Timeout Detection and Recovery) timeout in milliseconds (0 = disable) (int)
 
 === amd-xgbe ===
 ecc_sec_info_threshold: ECC corrected error informational threshold setting (uint)
@@ -442,29 +426,12 @@ debug: Network interface message level setting (int)
 === analog ===
 map:Describes analog joysticks type/capabilities (array of charp)
 
-=== ansi_cprng ===
-dbg:Boolean to enable debugging (0/1 == off/on) (int)
-
 === aoe ===
 aoe_iflist:aoe_iflist=dev1[,dev2...] (string)
 aoe_dyndevs:Use dynamic minor numbers for devices. (int)
 aoe_deadsecs:After aoe_deadsecs seconds, give up and fail dev. (int)
 aoe_maxout:Only aoe_maxout outstanding packets for every MAC on eX.Y. (int)
 aoe_maxsectors:When nonzero, set the maximum number of sectors per I/O request (int)
-
-=== apex ===
-allow_power_save: (int)
-allow_sw_clock_gating: (int)
-allow_hw_clock_gating: (int)
-bypass_top_level: (int)
-trip_point0_temp: (int)
-trip_point1_temp: (int)
-trip_point2_temp: (int)
-hw_temp_warn1: (int)
-hw_temp_warn2: (int)
-hw_temp_warn1_en: (bool)
-hw_temp_warn2_en: (bool)
-temp_poll_interval: (int)
 
 === apple_bl ===
 debug:Set to one to enable debugging messages. (int)
@@ -478,10 +445,6 @@ touchpad_dimensions:The pixel dimensions of the touchpad, as XxY+W+H . (string)
 === appletouch ===
 threshold:Discard any change in data from a sensor (the trackpad has many of these sensors) less than this value. (int)
 debug:Activate debugging output (int)
-
-=== applicom ===
-irq:IRQ of the Applicom board (uint)
-mem:Shared Memory Address of Applicom board (ulong)
 
 === arcmsr ===
 msix_enable:Enable MSI-X interrupt(0 ~ 1), msix_enable=1(enable), =0(disable) (int)
@@ -635,13 +598,6 @@ aq_itr:Interrupt throttling mode (uint)
 aq_itr_tx:TX interrupt throttle rate (uint)
 aq_itr_rx:RX interrupt throttle rate (uint)
 
-=== atp ===
-max_interrupt_work:ATP maximum events handled per interrupt (int)
-debug:ATP debug level (0-7) (int)
-io:ATP I/O base address(es) (array of int)
-irq:ATP IRQ number(s) (array of int)
-xcvr:ATP transceiver(s) (0=internal, 1=external) (array of int)
-
 === au0828 ===
 disable_ir:disable infrared remote support (int)
 isoc_debug:enable debug messages [isoc transfers] (int)
@@ -666,9 +622,6 @@ zv_mode:Turn on/off ZeeVee modulator compatibility mode (default:on).
 === auth_rpcgss ===
 expired_cred_retry_delay:Timeout (in seconds) until the RPC engine retries an expired credential (uint)
 key_expire_timeo:Time (in seconds) at the end of a credential keys lifetime where the NFS layer cleans up prior to key expiration (uint)
-
-=== avmfritz ===
-debug:avmfritz debug mask
 
 === ax88796c ===
 msg_enable:Message mask (see linux/netdevice.h for bitmap) (int)
@@ -710,21 +663,6 @@ b44_debug:B44 bitmapped debugging message enable value (int)
 
 === bareudp ===
 log_ecn_error:Log packets received with corrupted ECN (bool)
-
-=== baycom_par ===
-mode:baycom operating mode; eg. par96 or picpar (array of charp)
-iobase:baycom io base address (array of int)
-
-=== baycom_ser_fdx ===
-mode:baycom operating mode; * for software DCD (array of charp)
-iobase:baycom io base address (array of int)
-irq:baycom irq number (array of int)
-baud:baycom baud rate (300 to 4800) (array of int)
-
-=== baycom_ser_hdx ===
-mode:baycom operating mode; * for software DCD (array of charp)
-iobase:baycom io base address (array of int)
-irq:baycom irq number (array of int)
 
 === bcache ===
 bch_cutoff_writeback:threshold to cutoff writeback (uint)
@@ -791,13 +729,6 @@ pcie_max_read_reqsz:PCIe max read request size, default=0 (use system setting), 
 bfa_debugfs_enable:Enables debugfs feature, default=1, Range[false:0|true:1] (int)
 max_xfer_size:default=32MB, Range[64k|128k|256k|512k|1024k|2048k] (int)
 max_rport_logins:Max number of logins to initiator and target rports on a port (physical/logical), default=1024 (int)
-
-=== blackmagic ===
-blackmagic_flags: (ulong)
-
-=== blackmagic-io ===
-irq:The default irq type: msi, legacy (charp)
-tty:Serial TTY driver is enabled (bool)
 
 === block2mtd ===
 block2mtd:Device to use. "block2mtd=<dev>[,[<erasesize>][,<label>]]"
@@ -1018,7 +949,7 @@ force:Force module load, ignore CPU blacklist (int)
 stats_timer:enable timer for statistics (default:on) (int)
 
 === can-gw ===
-max_hops:maximum can-gw routing hops for CAN frames (valid values: 1-6 hops, default: 1) (uint)
+max_hops:maximum can-gw routing hops for CAN frames (valid values: 1-6 hops, default: 1) (byte)
 
 === can-isotp ===
 max_pdu_size:maximum isotp pdu size (default 8300) (uint)
@@ -1051,6 +982,7 @@ psp_cmd_timeout: default timeout value, in seconds, for PSP commands (int)
 psp_probe_timeout: default timeout value, in seconds, during PSP device probe (int)
 init_ex_path: Path for INIT_EX data; if set try INIT_EX (charp)
 psp_init_on_probe:  if true, the PSP will be initialized on module init. Else the PSP will be initialized on the first command requiring it (bool)
+tio:Enables TIO in SNP_INIT_EX (bool)
 dma_chan_attr:Set DMA channel visibility: 0 (default) = device defaults, 1 = make private, 2 = make public (uint)
 dmaengine:Register services with the DMA subsystem (any non-zero value, default: 1) (uint)
 nqueues:Number of queues per CCP (minimum 1; default: all available) (uint)
@@ -1112,10 +1044,6 @@ scale:Default scale.
 			1 -> Select default video modes.
 			2 -> Select video modes with a lower blanking ratio. (int)
 
-=== chipsec ===
-a1: (ulong)
-a2: (ulong)
-
 === chromeos_pstore ===
 ecc_size:ECC parity data size in bytes. A positive value enables ECC for the ramoops region. (int)
 
@@ -1127,7 +1055,6 @@ cifs_min_rcv:Network buffers in pool. Default: 4 Range: 1 to 64 (uint)
 cifs_min_small:Small network buffers in pool. Default: 30 Range: 2 to 256 (uint)
 cifs_max_pending:Simultaneous requests to server for CIFS/SMB1 dialect (N/A for SMB3) Default: 32767 Range: 2 to 32767. (uint)
 dir_cache_timeout:Number of seconds to cache directory contents for which we have a lease. Default: 30 Range: 1 to 65000 seconds, 0 to disable caching dir contents (uint)
-drop_dir_cache:Write 1 to drop all cached directory entries across all CIFS mounts
 enable_oplocks:Enable or disable oplocks. Default: y/Y/1 (bool)
 enable_gcm_256:Enable requesting strongest (256 bit) GCM encryption. Default: y/Y/1 (bool)
 require_gcm_256:Require strongest (256 bit) GCM encryption. Default: n/N/0 (bool)
@@ -1139,95 +1066,6 @@ phone:Phone name {kip1000, gtalk, usbph01, atcom} (charp)
 
 === compal-laptop ===
 force:Force driver load, ignore DMI data (bool)
-
-=== corefreqk ===
-ArchID:Force an architecture (ID) (int)
-AutoClock:Estimate Clock Frequency 0:Spec; 1:Once; 2:Auto (int)
-SleepInterval:Timer interval (ms) (uint)
-TickInterval:System requested interval (ms) (uint)
-Experimental:Enable features under development (int)
-CPU_Count:-1:Kernel(default); 0:Hardware; >0: User value (int)
-Target_Ratio_Unlock:1:Target Ratio Unlock; 0:Lock (short)
-Clock_Ratio_Unlock:1:MinRatio; 2:MaxRatio; 3:Both Unlock (short)
-Turbo_Ratio_Unlock:1:Turbo Ratio Unlock; 0:Lock (short)
-Uncore_Ratio_Unlock:1:Uncore Ratio Unlock; 0:Lock (short)
-ServiceProcessor:Select a CPU to run services with (int)
-RDPMC_Enable:Enable RDPMC bit in CR4 register (ushort)
-NMI_Disable:Disable the NMI Handler (ushort)
-Override_SubCstate:Override Sub C-States (array of ushort)
-PkgCStateLimit:Package C-State Limit (short)
-IOMWAIT_Enable:I/O MWAIT Redirection Enable (short)
-CStateIORedir:Power Mgmt IO Redirection C-State (short)
-Config_TDP_Level:Config TDP Control Level (short)
-Custom_TDP_Offset:TDP Limit Offset (watt) (array of short)
-PowerTimeWindow:Power Limit PL(n) Time Window (array of short)
-Activate_TDP_Limit:Activate TDP Limiting (array of short)
-Activate_TDP_Clamp:Activate TDP Clamping (array of short)
-Custom_TDC_Offset:TDC Limit Offset (amp) (short)
-Activate_TDC_Limit:Activate TDC Limiting (short)
-L1_HW_PREFETCH_Disable:Disable L1 HW Prefetcher (short)
-L1_HW_IP_PREFETCH_Disable:Disable L1 HW IP Prefetcher (short)
-L1_NPP_PREFETCH_Disable:Disable L1 NPP Prefetcher (short)
-L1_Scrubbing_Enable:Enable L1 Scrubbing (short)
-L2_HW_PREFETCH_Disable:Disable L2 HW Prefetcher (short)
-L2_HW_CL_PREFETCH_Disable:Disable L2 HW CL Prefetcher (short)
-L2_AMP_PREFETCH_Disable:Adaptive Multipath Probability (short)
-L2_NLP_PREFETCH_Disable:Disable L2 NLP Prefetcher (short)
-L1_STRIDE_PREFETCH_Disable:Disable L1 Stride Prefetcher (short)
-L1_REGION_PREFETCH_Disable:Disable L1 Region Prefetcher (short)
-L1_BURST_PREFETCH_Disable:Disable L1 Burst Prefetcher (short)
-L2_STREAM_PREFETCH_Disable:Disable L2 Stream Prefetcher (short)
-L2_UPDOWN_PREFETCH_Disable:Disable L2 Up/Down Prefetcher (short)
-LLC_Streamer_Disable:Disable LLC Streamer (short)
-SpeedStep_Enable:Enable SpeedStep (short)
-C1E_Enable:Enable SpeedStep C1E (short)
-TurboBoost_Enable:Enable Turbo Boost (array of short)
-C3A_Enable:Enable C3 Auto Demotion (short)
-C1A_Enable:Enable C3 Auto Demotion (short)
-C3U_Enable:Enable C3 UnDemotion (short)
-C1U_Enable:Enable C1 UnDemotion (short)
-C2U_Enable:Enable C2 UnDemotion (short)
-CC6_Enable:Enable Core C6 State (short)
-PC6_Enable:Enable Package C6 State (short)
-ODCM_Enable:Enable On-Demand Clock Modulation (short)
-ODCM_DutyCycle:ODCM DutyCycle [0-7] | [0-14] (short)
-PowerMGMT_Unlock:Unlock Power Management (short)
-PowerPolicy:Power Policy Preference [0-15] (short)
-Turbo_Activation_Ratio:Turbo Activation Ratio (short)
-PState_FID:P-State Frequency Id (int)
-PState_VID:P-State Voltage Id (int)
-Ratio_Boost:Turbo Boost Frequency ratios (array of int)
-Ratio_PPC:Target Performance ratio (int)
-HWP_Enable:Hardware-Controlled Performance States (short)
-HWP_EPP:Energy Performance Preference (short)
-Ratio_HWP:Hardware-Controlled Performance ratios (array of int)
-HDC_Enable:Hardware Duty Cycling (short)
-EEO_Disable:Disable Energy Efficiency Optimization (short)
-R2H_Disable:Disable Race to Halt (short)
-Clear_Events:Clear Thermal and Power Events (ullong)
-ThermalPoint:Thermal Point (array of short)
-PkgThermalPoint:Package Thermal Point (array of short)
-ThermalOffset:Thermal Offset (short)
-ThermalScope:[0:None; 1:SMT; 2:Core; 3:Package] (int)
-VoltageScope:[0:None; 1:SMT; 2:Core; 3:Package] (int)
-PowerScope:[0:None; 1:SMT; 2:Core; 3:Package] (int)
-Register_CPU_Idle:Register the Kernel cpuidle driver (short)
-Register_CPU_Freq:Register the Kernel cpufreq driver (short)
-Register_Governor:Register the Kernel governor (short)
-Register_ClockSource:Register Clock Source driver (short)
-Idle_Route:[0:Default; 1:I/O; 2:HALT; 3:MWAIT] (short)
-Mech_IBRS:Mitigation Mechanism IBRS (short)
-Mech_STIBP:Mitigation Mechanism STIBP (short)
-Mech_SSBD:Mitigation Mechanism SSBD (short)
-Mech_IBPB:Mitigation Mechanism IBPB (short)
-Mech_SBPB:Mitigation Mechanism SBPB (short)
-Mech_L1D_FLUSH:Mitigation Mechanism Cache L1D Flush (short)
-Mech_PSFD:Mitigation Mechanism PSFD (short)
-Mech_BTC_NOBR:Mitigation Mechanism BTC-NOBR (short)
-Mech_XPROC_LEAK:Mitigation Mech. Cross Processor Leak (short)
-Mech_AGENPICK:Mitigation Mech. LsCfgDisAgenPick (short)
-WDT_Enable:Watchdog Hardware Timer (short)
-HSMP_Attempt:Attempt the HSMP interface (short)
 
 === coretemp ===
 tjmax:TjMax value in degrees Celsius (int)
@@ -1255,9 +1093,6 @@ log_poll_period_ms:EC log polling period(ms) (uint)
 
 === cryptd ===
 cryptd_max_cpu_qlen:Set cryptd Max queue depth (uint)
-
-=== cryptodev ===
-cryptodev_verbosity:0: normal, 1: verbose, 2: debug (int)
 
 === crypto_safexcel ===
 max_rings:Maximum number of rings to use. (uint)
@@ -1418,6 +1253,7 @@ i2c_debug:enable debug messages [i2c] (int)
 i2c_scan:scan i2c bus at insmod time (int)
 dma_reset_workaround:periodic RiSC dma engine reset; 0-force disable, 1-driver detect (default), 2-force enable (int)
 debug:enable debug messages (int)
+disable_analog_video:disable analog video for card type (array of int)
 card:card type (array of int)
 vbibufs:number of vbi buffers, range 2-32 (int)
 vbi_debug:enable debug messages [vbi] (int)
@@ -1630,9 +1466,6 @@ fan_max:Maximum configurable fan speed (default: autodetect) (uint)
 === dell-wmi-ddv ===
 force:Force loading without checking for supported WMI interface versions (bool)
 
-=== des3_ede-x86_64 ===
-force:Force module load, ignore CPU blacklist (int)
-
 === dib0070 ===
 debug:turn on debugging (default: 0) (int)
 
@@ -1689,6 +1522,9 @@ current_allocated_bytes:Memory currently used by the cache (ulong)
 
 === dm-cache ===
 cache_copy_throttle:A percentage of time allocated for copying to and/or from cache (uint)
+
+=== dm-cache-smq ===
+smq_max_background_work:Max concurrent background work items (uint)
 
 === dm-clone ===
 clone_hydration_throttle:A percentage of time allocated for hydrating regions (uint)
@@ -1748,6 +1584,7 @@ log_level:Log level for log messages (uint)
 === dm-verity ===
 prefetch_cluster: (uint)
 use_bh_bytes: (array of uint)
+keyring_unsealed:Leave the dm-verity keyring unsealed (bool)
 require_signatures:Verify the roothash of dm-verity hash tree (bool)
 
 === dm-writecache ===
@@ -2097,12 +1934,6 @@ timeout:Watchdog timeout in seconds (default=60) (uint)
 === ec_bhf ===
 polling_frequency:Polling timer frequency in ns (long)
 
-=== ec_master ===
-main_devices:MAC addresses of main devices (array of charp)
-backup_devices:MAC addresses of backup devices (array of charp)
-debug_level:Debug level (uint)
-run_on_cpu:Bind kthreads to a specific cpu (uint)
-
 === ecryptfs ===
 ecryptfs_verbosity:Initial verbosity level (0 or 1; defaults to 0, which is Quiet) (int)
 ecryptfs_message_buf_len:Number of message buffer elements (uint)
@@ -2297,9 +2128,6 @@ FLOPPY_DMA: (int)
 === fmpm ===
 max_nr_entries:Maximum number of memory poison descriptor entries per FRU (byte)
 
-=== fmvj18x_cs ===
-sram_config: (int)
-
 === fnic ===
 fnic_log_level:bit mask of fnic logging levels (int)
 fnic_fdmi_support:FDMI support (int)
@@ -2326,9 +2154,6 @@ nowayout:Watchdog cannot be stopped once started (default=0) (bool)
 
 === fsia6b ===
 switch_config:Amount of switch positions per channel (14 characters, 0-3) (charp)
-
-=== ftdi_sio ===
-ndi_latency_timer:NDI device latency timer override (int)
 
 === fujitsu-laptop ===
 use_alt_lcd_levels:Interface used for setting LCD brightness level (-1 = auto, 0 = force SBLL, 1 = force SBL2) (int)
@@ -2368,9 +2193,6 @@ initial_mode:Initial mode (int)
 
 === garp ===
 garp_join_time:Join time in ms (default 200ms) (uint)
-
-=== gasket ===
-dma_bit_mask: (int)
 
 === g_audio ===
 idVendor:USB Vendor ID (ushort)
@@ -2541,12 +2363,18 @@ speed_on_ac:minimum fan speed to allow when system is powered by AC (int)
 === gpio-ich ===
 gpiobase:The GPIO number base. -1 means dynamic, which is the default. (int)
 
+=== gpio-kempld ===
+gpio_irq:Set legacy GPIO IRQ (1-15) (uint)
+
 === gpio-mockup ===
 gpio_mockup_ranges: (array of int)
 gpio_mockup_named_lines: (bool)
 
 === gpio-viperboard ===
 gpioa_freq:gpio-a sampling freq in Hz (default is 1000Hz) valid values: 10, 100, 1000, 10000, 100000, 1000000 (uint)
+
+=== gpio_wdt ===
+nowayout:Watchdog cannot be stopped once started (default=0) (bool)
 
 === gpio-winbond ===
 base:I/O port base (when unset - probe chip default ones) (ulong)
@@ -2572,7 +2400,7 @@ iPNPstring:MFG:linux;MDL:g_printer;CLS:PRINTER;SN:1; (charp)
 qlen:The number of 8k buffers to use per endpoint (uint)
 
 === gpu-sched ===
-sched_policy:Specify the scheduling policy for entities on a run-queue, 0 = Round Robin, 1 = FIFO (default). (int)
+sched_policy:Specify the scheduling policy for entities on a run-queue, 0 = Round Robin, 1 = FIFO (default), 2 = Fair (experimental). (int)
 
 === g_serial ===
 idVendor:USB Vendor ID (ushort)
@@ -2682,23 +2510,6 @@ reset_on_lockup:Do device reset on lockup (0 = no, 1 = yes, default yes) (int)
 memory_scrub:Scrub device memory in various states (0 = no, 1 = yes, default no) (int)
 boot_error_status_mask:Mask of the error status during device CPU boot (If bitX is cleared then error X is masked. Default all 1's) (ulong)
 
-=== hamachi ===
-max_interrupt_work:GNIC-II maximum events handled per interrupt (int)
-mtu:GNIC-II MTU (all boards) (int)
-debug:GNIC-II debug level (0-7) (int)
-min_rx_pkt:GNIC-II minimum Rx packets processed between interrupts (int)
-max_rx_gap:GNIC-II maximum Rx inter-packet gap in 8.192 microsecond units (int)
-max_rx_latency:GNIC-II time between Rx interrupts in 8.192 microsecond units (int)
-min_tx_pkt:GNIC-II minimum Tx packets processed between interrupts (int)
-max_tx_gap:GNIC-II maximum Tx inter-packet gap in 8.192 microsecond units (int)
-max_tx_latency:GNIC-II time between Tx interrupts in 8.192 microsecond units (int)
-rx_copybreak:GNIC-II copy breakpoint for copy-only-tiny-frames (int)
-rx_params:GNIC-II min_rx_pkt+max_rx_gap+max_rx_latency (array of int)
-tx_params:GNIC-II min_tx_pkt+max_tx_gap+max_tx_latency (array of int)
-options:GNIC-II Bits 0-3: media type, bits 4-6: as force32, bit 7: half duplex, bit 9 full duplex (array of int)
-full_duplex:GNIC-II full duplex setting(s) (1) (array of int)
-force32:GNIC-II: Bit 0: 32 bit PCI, bit 1: disable parity, bit 2: 64 bit PCI (all boards) (int)
-
 === hangcheck-timer ===
 hangcheck_tick:Timer delay. (int)
 hangcheck_margin:If the hangcheck timer has been delayed more than hangcheck_margin seconds, the driver will fire. (int)
@@ -2732,42 +2543,11 @@ default_video_input:default video input: 0=Component / 1=S-Video / 2=Composite (
 default_audio_input:default audio input: 0=RCA back / 1=RCA front / 2=S/PDIF (uint)
 boost_audio:boost the audio signal (bool)
 
-=== he ===
-disable64:disable 64-bit pci bus transfers (bool)
-nvpibits:numbers of bits for vpi (default 0) (short)
-nvcibits:numbers of bits for vci (default 12) (short)
-rx_skb_reserve:padding for receive skb (default 16) (short)
-irq_coalesce:use interrupt coalescing (default 1) (bool)
-sdh:use SDH framing (default 0) (bool)
-
 === hexium_gemini ===
 debug:debug verbosity (int)
 
 === hexium_orion ===
 debug:debug verbosity (int)
-
-=== hfcmulti ===
-debug: (uint)
-poll: (uint)
-clock: (int)
-timer: (uint)
-clockdelay_te: (uint)
-clockdelay_nt: (uint)
-type: (array of uint)
-pcm: (array of int)
-dmask: (array of uint)
-bmask: (array of uint)
-iomode: (array of uint)
-port: (array of uint)
-hwid: (uint)
-
-=== hfcpci ===
-debug: (uint)
-poll: (uint)
-
-=== hfcsusb ===
-debug: (uint)
-poll: (int)
 
 === hfi1 ===
 lkey_table_size:LKEY table size in bits (2^n, 1 <= n <= 23) (uint)
@@ -2873,6 +2653,9 @@ scroll_speed:Scroll speed, value from 0 (slow) to 63 (fast)
 scroll_acceleration:Accelerate sequential scroll events (bool)
 report_undeciphered:Report undeciphered multi-touch state field using a MSC_RAW event (bool)
 
+=== hid-mcp2221 ===
+gpio_mode_enforce:Enforce GPIO mode for GP0 thru GP3 (default: false, will be used for IIO) (bool)
+
 === hid-ntrig ===
 min_width:Minimum touch contact width to accept. (uint)
 min_height:Minimum touch contact height to accept. (uint)
@@ -2945,6 +2728,10 @@ timesync_implicit:If set treat SAMPLE as SYNC when clock is behind (bool)
 
 === hv_vmbus ===
 max_version:Maximal VMBus protocol version which can be negotiated (uint)
+
+=== hws ===
+dma_window_verify:Read back DMA window registers after programming (debug) (bool)
+toggle_debug:Read toggle registers in IRQ handler for debug logging (bool)
 
 === i10nm_edac ===
 decoding_via_mca:decoding_via_mca: 0=off(default), 1=enable
@@ -3183,11 +2970,6 @@ use_imm_data:Whether or not to request permission to use immediate data during S
 max_imm_data:Maximum immediate data size. (uint)
 ch_count:Number of RDMA channels to use for communication with an SRP target. Using more than one channel improves performance if the HCA supports multiple completion vectors. The default value is the minimum of four times the number of online CPU sockets and the number of completion vectors supported by the HCA. (uint)
 
-=== ib_srpt ===
-srp_max_req_size:Maximum size of SRP request messages in bytes. (int)
-srpt_srq_size:Shared receive queue (SRQ) size. (int)
-srpt_service_guid:Using this value for ioc_guid, id_ext, and cm_listen_id instead of using the node_guid of the first HCA.
-
 === ice ===
 debug:netif level (0=none,...,16=all) (int)
 
@@ -3202,9 +2984,6 @@ ymc_ec_trigger:Enable EC triggering work-around to force emitting tablet mode ev
 
 === ideapad_slidebar ===
 force:Force driver load, ignore DMI data (bool)
-
-=== idt77252 ===
-vpibits:number of VPI bits supported (0, 1, or 2) (uint)
 
 === idxd ===
 sva:Toggle SVA support on/off (bool)
@@ -3232,6 +3011,9 @@ debug:Debug level (0=none,...,16=all) (int)
 ili922x_id:set controller identifier (default=1) (int)
 tx_invert:invert bytes before sending (int)
 
+=== imh_edac ===
+retry_rd_err_log:retry_rd_err_log: 0=off(default), 1=bios(Linux doesn't reset any control bits, but just reports values.), 2=linux(Linux tries to take control and resets mode bits, clear valid/UC bits after reading.) (int)
+
 === imm ===
 mode:Transfer mode (0 = Autodetect, 1 = SPP 4-bit, 2 = SPP 8-bit, 3 = EPP 8-bit, 4 = EPP 16-bit, 5 = EPP 32-bit (uint)
 
@@ -3245,12 +3027,6 @@ pad_thresh:Threshold at which a pad push registers as an arrow key in kbd mode (
 === intel-hid ===
 enable_5_button_array:Enable 5 Button Array support. If you need this please report this to: platform-driver-x86@vger.kernel.org (bool)
 enable_sw_tablet_mode:Enable SW_TABLET_MODE reporting -1:auto 0:off 1:at-first-event 2:at-probe. If you need this please report this to: platform-driver-x86@vger.kernel.org (int)
-
-=== intel-ipu6-psys ===
-enable_suspend_resume:enable fw ppg suspend/resume api (bool)
-early_pg_transfer:Copy PGs back to user after resource allocation (bool)
-enable_power_gating:enable power gating (bool)
-async_fw_init:Enable asynchronous firmware initialization (bool)
 
 === intel-ishtp ===
 ishtp_use_dma:Use DMA to send messages (int)
@@ -3303,7 +3079,7 @@ fw_log_level:NPU firmware default log level: debug=1 info=2 warn=3 error=4 fatal
 dbg_mask:Driver debug mask. See IVPU_DBG_* macros. (int)
 pll_min_ratio:Minimum PLL ratio used to set NPU frequency (byte)
 pll_max_ratio:Maximum PLL ratio used to set NPU frequency (byte)
-sched_mode:Scheduler mode: -1 - Use default scheduler, 0 - Use OS scheduler, 1 - Use HW scheduler (int)
+sched_mode:Scheduler mode: -1 - Use default scheduler, 0 - Use OS scheduler (supported on 27XX - 50XX), 1 - Use HW scheduler (int)
 disable_mmu_cont_pages:Disable MMU contiguous pages optimization (bool)
 force_snoop:Force snooping for NPU host memory access (bool)
 
@@ -3339,13 +3115,6 @@ initial_wait:Time to wait before attempting a connection (in seconds) (int)
 
 === ip_gre ===
 log_ecn_error:Log packets received with corrupted ECN (bool)
-
-=== iphase ===
-IA_TX_BUF: (int)
-IA_TX_BUF_SZ: (int)
-IA_RX_BUF: (int)
-IA_RX_BUF_SZ: (int)
-IADebugFlag: (uint)
 
 === ipip ===
 log_ecn_error:Log packets received with corrupted ECN (bool)
@@ -3514,9 +3283,6 @@ wdt_control_reg:Value to write to watchdog control register. The default WDT_RES
 timeout:Watchdog timeout in seconds, default=60 (int)
 testmode:Watchdog test mode (1 = no reboot), default=0 (int)
 nowayout:Watchdog cannot be stopped once started, default=0 (bool)
-
-=== iTCO_vendor_support ===
-vendorsupport:iTCO vendor specific support mode, default=0 (none), 1=SuperMicro Pent3, 911=Broken SMI BIOS (int)
 
 === iTCO_wdt ===
 heartbeat:Watchdog timeout in seconds. 5..76 (TCO v1) or 3..614 (TCO v2), default=30) (int)
@@ -3784,17 +3550,16 @@ nx_huge_pages_recovery_ratio: (uint)
 nx_huge_pages_recovery_period_ms: (uint)
 flush_on_reuse: (bool)
 tdp_mmu: (bool)
+enable_pmu: (bool)
 lapic_timer_advance: (bool)
 vector_hashing: (bool)
 ignore_msrs: (bool)
 report_ignored_msrs: (bool)
 min_timer_period_us: (uint)
-kvmclock_periodic_sync: (bool)
 tsc_tolerance_ppm: (uint)
 enable_vmware_backdoor: (bool)
 force_emulation_prefix: (int)
 pi_inject_timer: (bint)
-enable_pmu: (bool)
 eager_page_split: (bool)
 mitigate_smt_rsb: (bool)
 halt_poll_ns: (uint)
@@ -3808,7 +3573,6 @@ enable_virt_at_load: (bool)
 sev: (bool)
 sev_es: (bool)
 sev_snp: (bool)
-debug_swap: (bool)
 ciphertext_hiding_asids: (uint)
 avic: (bool)
 enable_ipiv: (bool)
@@ -3819,6 +3583,7 @@ pause_filter_count_grow: (ushort)
 pause_filter_count_shrink: (ushort)
 pause_filter_count_max: (ushort)
 npt: (bool)
+gmet: (bool)
 nested: (int)
 nrips: (int)
 vls: (int)
@@ -3829,23 +3594,23 @@ enable_device_posted_irqs: (bool)
 dump_invalid_vmcb: (bool)
 intercept_smi: (bool)
 vnmi: (bool)
-
-=== kvmfr ===
-static_size_mb:List of static devices to create in MiB (array of int)
+enable_mediated_pmu: (bool)
 
 === kvm-intel ===
 tdx: (bool)
 sgx: (bool)
 enable_shadow_vmcs: (bool)
-nested_early_check: (bool)
+warn_on_missed_cc: (bool)
 vpid: (bool)
 vnmi: (bool)
 flexpriority: (bool)
 ept: (bool)
 unrestricted_guest: (bool)
 eptad: (bool)
+cet: (bool)
 emulate_invalid_guest_state: (bool)
 fasteoi: (bool)
+mbec: (bool)
 enable_apicv: (bool)
 enable_ipiv: (bool)
 enable_device_posted_irqs: (bool)
@@ -3855,6 +3620,7 @@ error_on_inconsistent_vmcs_config: (bool)
 dump_invalid_vmcs: (bool)
 preemption_timer: (bool)
 allow_smaller_maxphyaddr: (bool)
+enable_mediated_pmu: (bool)
 ple_gap: (uint)
 ple_window: (uint)
 ple_window_grow: (uint)
@@ -3862,23 +3628,14 @@ ple_window_shrink: (uint)
 ple_window_max: (uint)
 enlightened_vmcs: (bool)
 
-=== l1oip ===
-type: (array of uint)
-codec: (array of uint)
-ip: (array of uint)
-port: (array of uint)
-remoteport: (array of uint)
-ondemand: (array of uint)
-limit: (array of uint)
-id: (array of uint)
-ulaw: (uint)
-debug: (uint)
-
 === l64781 ===
 debug:Turn on/off frontend debugging (default:off). (int)
 
 === lan78xx ===
 msg_level:Override default message level (int)
+
+=== lattepanda-sigma-ec ===
+force:Force loading on untested BIOS versions (default: false) (bool)
 
 === ldusb ===
 ring_buffer_size:Read ring buffer size in reports (int)
@@ -3907,6 +3664,11 @@ nowayout:Watchdog cannot be stopped once started (default=0) (bool)
 === lenovo_se30_wdt ===
 timeout:Watchdog timeout in seconds. 1 <= timeout <= 255, default=60. (int)
 nowayout:Watchdog cannot be stopped once started (default=0) (bool)
+
+=== lenovo-wmi-other ===
+expose_all_fans:This option skips some capability checks and solely relies on per-channel ones to expose fan attributes. Use with caution. (bool)
+relax_fan_constraint:Do not enforce fan RPM constraint (div/min/max) and enables fan tuning when such data is missing. Enabling this may results in HWMON attributes being out-of-sync, and setting a too low RPM stops the fan. Use with caution. (bool)
+force_load_psy_ext:This option will skip checking if the ideapad_laptop driver will conflict with adding an extension to set the battery charge behavior and battery charge control end threshold. It will also skip checking if the BIOS reports that those features are fully supported. It is recommended to blacklist the ideapad driver before using this option. (bool)
 
 === lenovo-ymc ===
 force:Force loading on boards without a convertible DMI chassis-type (bool)
@@ -3986,28 +3748,6 @@ keyclick_volume:Keyclick volume (in %), default is 100% (int)
 ctrlclick_volume:Ctrlclick volume (in %), default is 100% (int)
 lk201_compose_is_alt:If set non-zero, LK201' Compose key will act as an Alt key (int)
 
-=== lkrg ===
-log_level:log_level [3 (issue) is default] (uint)
-heartbeat:heartbeat [0 (don't print) is default] (uint)
-block_modules:block_modules [0 (don't block) is default] (uint)
-interval:interval [15 seconds is default] (uint)
-kint_validate:kint_validate [3 (periodically + random events) is default] (uint)
-kint_enforce:kint_enforce [2 (panic) is default] (uint)
-msr_validate:msr_validate [0 (disabled) is default] (uint)
-pint_validate:pint_validate [1 (current) is default] (uint)
-pint_enforce:pint_enforce [1 (kill task) is default] (uint)
-umh_validate:umh_validate [1 (allow specific paths) is default] (uint)
-umh_enforce:umh_enforce [1 (prevent execution) is default] (uint)
-pcfi_validate:pcfi_validate [2 (fully enabled pCFI) is default] (uint)
-pcfi_enforce:pcfi_enforce [1 (kill task) is default] (uint)
-smep_validate:smep_validate [1 (enabled) is default] (uint)
-smep_enforce:smep_enforce [2 (panic) is default] (uint)
-smap_validate:smap_validate [1 (enabled) is default] (uint)
-smap_enforce:smap_enforce [2 (panic) is default] (uint)
-net_server_addr:log server IPv4 address (string)
-net_server_port:log server TCP port number [514 is default] (ushort)
-net_server_pk:log server public key (string)
-
 === lm93 ===
 disable_block:Set to non-zero to disable SMBus block data transactions. (bool)
 init:Set to non-zero to force chip initialization. (bool)
@@ -4024,12 +3764,6 @@ nsm_use_hostnames: (bool)
 max_loop:Maximum number of loop devices
 max_part:Maximum number of partitions per loop device (int)
 hw_queue_depth:Queue depth for each hardware queue. Default: 128
-
-=== loop-aes ===
-max_loop:Maximum number of loop devices (1-256) (int)
-lo_prealloc:Number of pre-allocated pages [,index,pages]... (array of int)
-lo_threads:Number of threads per loop [,index,threads]... (array of int)
-lo_nice:Loop thread scheduler nice (0 ... -20) (int)
 
 === lp ===
 parport: (array of charp)
@@ -4126,9 +3860,6 @@ lpfc_vmid_inactivity_timeout:Inactivity timeout in hours (uint)
 lpfc_vmid_app_header:Enable App Header VMID support (uint)
 lpfc_vmid_priority_tagging:Enable Priority Tagging VMID support (uint)
 
-=== lpvo_usb_gpib ===
-debug: (int)
-
 === m2m-deinterlace ===
 debug: (bool)
 
@@ -4152,10 +3883,6 @@ support_p2p_device:Support P2P-Device interface type (bool)
 mlo:Support MLO (bool)
 multi_radio:Support Multiple Radios per wiphy (bool)
 regtest:The type of regulatory test we want to run (int)
-
-=== machzwd ===
-nowayout:Watchdog cannot be stopped once started (default=0) (bool)
-action:after watchdog resets, generate: 0 = RESET(*)  1 = SMI  2 = NMI  3 = SCI (int)
 
 === mantis ===
 verbose:verbose startup messages, default is 0 (no) (int)
@@ -4199,6 +3926,7 @@ buffer_mode:Set the buffer mode to be used; default is to go with what the platf
 start_dirty_degraded: (int)
 create_on_open: (bool)
 legacy_async_del_gendisk: (bool)
+check_new_feature: (bool)
 
 === meegopad_anx7428 ===
 force:Force the driver to probe on unknown boards (bool)
@@ -4267,30 +3995,8 @@ rx_timeout:RX timeout. Timeout in seconds = (timeout_reg * baud_reg * 4) / freq_
 === menz69_wdt ===
 nowayout:Watchdog cannot be stopped once started (default=0) (bool)
 
-=== MergingRavennaALSA ===
-index:Index value for Merging RAVENNA soundcard. (int)
-id:ID string for Merging RAVENNA soundcard. (charp)
-enable:Enable Merging RAVENNA soundcard. (bool)
-pcm_devs:PCM devices # (1) for Merging RAVENNA Audio driver. (int)
-
 === mgag200 ===
 modeset:Disable/Enable modesetting (int)
-
-=== mISDN_core ===
-debug: (uint)
-
-=== mISDN_dsp ===
-debug: (uint)
-options: (uint)
-poll: (uint)
-dtmfthreshold: (uint)
-
-=== mISDNinfineon ===
-debug:infineon debug mask
-irqloops:infineon maximal irqloops (default 4) (uint)
-
-=== mkiss ===
-crc_force:crc [0 = auto | 1 = none | 2 = flexnet | 3 = smack] (int)
 
 === mlx4_core ===
 debug_level:Enable debug tracing if > 0 (int)
@@ -4323,15 +4029,14 @@ sm_guid_assign:Enable SM alias_GUID assignment if sm_guid_assign > 0 (Default: 0
 debug_mask:debug mask: 1 = dump cmd data, 2 = dump cmd exec time, 3 = both. Default=0 (uint)
 prof_sel:profile selector. Valid range 0 - 2 (uint)
 
+=== mlx5_vdpa ===
+max_iotlb_entries:Maximum number of iotlb entries. (default: 2048) (int)
+
 === mmc_block ===
 perdev_minors:Minors numbers to allocate per device (int)
 
 === mmc_core ===
 use_spi_crc: (bool)
-
-=== mods ===
-debug:debug bitflags (2=ioctl 4=pci 8=acpi 16=irq 32=mem 64=fun +256=detailed) (int)
-multi_instance:allows more than one client to simultaneously open the driver (int)
 
 === mousedev ===
 xres:Horizontal screen resolution (uint)
@@ -4343,6 +4048,7 @@ ttymajor: (int)
 
 === mpi3mr ===
 poll_queues:Number of queues for io_uring poll mode. (Range 1 - 126) (int)
+threaded_isr_poll:Enablement of IRQ polling thread (default=true) (bool)
 prot_mask:Host protection capabilities mask, def=0x07 (int)
 prot_guard_mask: Host protection guard mask, def=3 (int)
 logging_level: bits for enabling additional logging info (default=0) (int)
@@ -4362,12 +4068,16 @@ diag_buffer_enable: post diag buffers (TRACE=1/SNAPSHOT=2/EXTENDED=4/default=0) 
 disable_discovery: disable discovery  (int)
 prot_mask: host protection capabilities mask, def=7  (int)
 enable_sdev_max_qd:Enable sdev max qd as can_queue, def=disabled(0) (bool)
+issue_scsi_cmd_to_bringup_drive:allow host driver to
+issue SCSI commands to bring the drive to READY state, default=1  (int)
 multipath_on_hba:Multipath support to add same target device
 		as many times as it is visible to HBA from various paths
 		(by default:
 			 SAS 2.0 & SAS 3.0 HBA - This will be disabled,
 			 SAS 3.5 HBA - This will be enabled) (int)
 host_tagset_enable:Shared host tagset enable/disable Default: enable(1) (int)
+command_retry_count:Device discovery TUR command retry
+count: (default=144) (int)
 max_queue_depth: max controller queue depth  (int)
 max_sgl_entries: max sg entries  (int)
 msix_disable: disable msix routed interrupts (default=0) (int)
@@ -4502,13 +4212,6 @@ writebuf_size:Device write buf size in Bytes (Default: 64) (ulong)
 fifo_mode:initial endpoint configuration (ushort)
 use_dma:enable/disable use of DMA (bool)
 
-=== mwave ===
-mwave_debug: (int)
-mwave_3780i_irq: (int)
-mwave_3780i_io: (int)
-mwave_uart_irq: (int)
-mwave_uart_io: (int)
-
 === mwifiex ===
 reg_alpha2: (charp)
 drcs:multi-channel operation:1, single-channel operation:0 (bool)
@@ -4634,12 +4337,6 @@ oops_only:Only log oops messages (bool)
 debug: (uint)
 netfs_debug:Netfs support debugging mask
 
-=== netjet ===
-debug:Netjet debug mask
-
-=== netrom ===
-nr_ndevs:number of NET/ROM devices (int)
-
 === netup-unidvb ===
 spi_enable: (int)
 adapter_nr:DVB adapter numbers (array of short)
@@ -4651,7 +4348,6 @@ auto_fw_reset:Auto firmware reset (0=disabled, 1=enabled (int)
 flow_control:Tell if UART needs flow control at init. (uint)
 break_control:Tell if UART driver must drive break signal. (uint)
 hci_muxed:Tell if transport is muxed in HCI one. (uint)
-reset_n_io:GPIO that is wired to RESET_N signal. (int)
 
 === nf_conntrack ===
 tstamp:Enable connection tracking flow timestamping. (bool)
@@ -4717,7 +4413,6 @@ send_implementation_id:Send implementation ID with NFSv4.1 exchange_id (ushort)
 nfs4_unique_id:nfs_client_id4 uniquifier string (string)
 recover_lost_locks:If the server reports that a lock might be lost, try to recover it risking data corruption. (bool)
 delay_retrans:Unless negative, specifies the number of times the NFSv4 client retries a request before returning an EAGAIN error, after a reply of NFS4ERR_DELAY from the server. (short)
-enable_ino64: (bool)
 nfs_access_max_cachesize:NFS access maximum total cache length (ulong)
 
 === nfsd ===
@@ -4740,6 +4435,7 @@ nfs3_localio_probe_throttle:Probe for NFSv3 LOCALIO every N IO requests. Must be
 === nfsv4 ===
 layoutstats_timer: (uint)
 delegation_watermark: (uint)
+directory_delegations:Enable the use of directory delegations, defaults to on. (bool)
 
 === ngene ===
 ci_tsfix:Detect and fix TS buffer offset shifts in conjunction with CI expansions (default: 1/enabled) (int)
@@ -4759,9 +4455,6 @@ nowayout:Watchdog cannot be stopped once started (default=0) (int)
 timeout:Watchdog timeout in seconds. (default=80) (uint)
 nowayout:Watchdog cannot be stopped once started. (default=0) (bool)
 
-=== nicstar ===
-mac: (array of charp)
-
 === nicvf ===
 debug:Debug message level bitmap (int)
 cpi_alg:PFC algorithm (0=none, 1=VLAN, 2=VLAN16, 3=IP Diffserv) (int)
@@ -4771,9 +4464,6 @@ ne_cpus:<cpu-list> - CPU pool used for Nitro Enclaves
 
 === niu ===
 debug:NIU debug level (int)
-
-=== nmclan_cs ===
-if_port: (int)
 
 === nouveau ===
 vram_pushbuf:Create DMA push buffers in VRAM (int)
@@ -4828,6 +4518,7 @@ max_num_clients:Maximum number of NTB transport clients (byte)
 copy_bytes:Threshold under which NTB will use the CPU to copy instead of DMA (uint)
 use_dma:Use DMA engine to perform large data copy (bool)
 use_msi:Use MSI interrupts instead of doorbells (bool)
+tx_memcpy_offload:Offload TX memcpy_toio() to a kernel thread (bool)
 
 === null_blk ===
 virt_boundary:Require a virtual boundary for the device. Default: False (bool)
@@ -4865,138 +4556,6 @@ rotational:Set the rotational feature for the device. Default: false (bool)
 === nuvoton-cir ===
 debug:Enable debugging output (int)
 
-=== nvidia ===
-NvSwitchRegDwords:NvSwitch regkey (charp)
-NvSwitchBlacklist:NvSwitchBlacklist=uuid[,uuid...] (charp)
-NVreg_ResmanDebugLevel: (int)
-NVreg_RmLogonRC: (int)
-NVreg_ModifyDeviceFiles: (int)
-NVreg_DeviceFileUID: (int)
-NVreg_DeviceFileGID: (int)
-NVreg_DeviceFileMode: (int)
-NVreg_InitializeSystemMemoryAllocations: (int)
-NVreg_UsePageAttributeTable: (int)
-NVreg_EnablePCIeGen3: (int)
-NVreg_EnableMSI: (int)
-NVreg_EnableStreamMemOPs: (int)
-NVreg_RestrictProfilingToAdminUsers: (int)
-NVreg_PreserveVideoMemoryAllocations: (int)
-NVreg_EnableS0ixPowerManagement: (int)
-NVreg_S0ixPowerManagementVideoMemoryThreshold: (int)
-NVreg_DynamicPowerManagement: (int)
-NVreg_DynamicPowerManagementVideoMemoryThreshold: (int)
-NVreg_EnableGpuFirmware: (int)
-NVreg_EnableGpuFirmwareLogs: (int)
-NVreg_OpenRmEnableUnsupportedGpus: (int)
-NVreg_EnableUserNUMAManagement: (int)
-NVreg_MemoryPoolSize: (int)
-NVreg_KMallocHeapMaxSize: (int)
-NVreg_VMallocHeapMaxSize: (int)
-NVreg_IgnoreMMIOCheck: (int)
-NVreg_NvLinkDisable: (int)
-NVreg_EnablePCIERelaxedOrderingMode: (int)
-NVreg_RegisterPCIDriver: (int)
-NVreg_RegisterPlatformDeviceDriver: (int)
-NVreg_EnableResizableBar: (int)
-NVreg_EnableDbgBreakpoint: (int)
-NVreg_TegraGpuPgMask: (int)
-NVreg_EnableNonblockingOpen: (int)
-NVreg_CoherentGPUMemoryMode: (charp)
-NVreg_RegistryDwords: (charp)
-NVreg_RegistryDwordsPerDevice: (charp)
-NVreg_RmMsg: (charp)
-NVreg_GpuBlacklist: (charp)
-NVreg_TemporaryFilePath: (charp)
-NVreg_ExcludedGpus: (charp)
-NVreg_DmaRemapPeerMmio: (int)
-NVreg_RmNvlinkBandwidth: (charp)
-NVreg_RmNvlinkBandwidthLinkCount: (int)
-NVreg_ImexChannelCount: (int)
-NVreg_CreateImexChannel0: (int)
-NVreg_GrdmaPciTopoCheckOverride: (int)
-NVreg_EnableSystemMemoryPools: (int)
-rm_firmware_active: (charp)
-
-=== nvidia-drm ===
-modeset:Enable atomic kernel modesetting (1 = enable (default), 0 = disable) (bool)
-fbdev:Create a framebuffer device (1 = enable (default), 0 = disable) (bool)
-
-=== nvidia-modeset ===
-output_rounding_fix: (bool)
-disable_hdmi_frl: (bool)
-disable_vrr_memclk_switch: (bool)
-hdmi_deepcolor: (bool)
-vblank_sem_control: (bool)
-opportunistic_display_sync: (bool)
-debug_force_color_space: (uint)
-enable_overlay_layers: (bool)
-fail_malloc:Fail the Nth call to nvkms_alloc (int)
-malloc_verbose:Report information about malloc calls on module unload (bool)
-conceal_vrr_caps:Conceal all display VRR capabilities (bool)
-fail_alloc_core_channel:Control testing for hardware core channel allocation failure (int)
-debug:Enable debug logging (int)
-config_file:Path to the nvidia-modeset configuration file (default: disabled) (charp)
-
-=== nvidia-peermem ===
-peerdirect_support:Set level of support for Peer-direct, 0 [default] or 1 [legacy, for example MLNX_OFED 4.9 LTS] (int)
-persistent_api_support:Set level of support for persistent APIs, 0 [legacy] or 1 [default] (int)
-
-=== nvidia-uvm ===
-uvm_conf_computing_channel_iv_rotation_limit: (ulong)
-uvm_ats_mode:Set to 0 to disable ATS (Address Translation Services). Any other value is ignored. Has no effect unless the platform supports ATS. (int)
-uvm_perf_prefetch_enable: (uint)
-uvm_perf_prefetch_threshold: (uint)
-uvm_perf_prefetch_min_faults: (uint)
-uvm_perf_thrashing_enable: (uint)
-uvm_perf_thrashing_threshold: (uint)
-uvm_perf_thrashing_pin_threshold: (uint)
-uvm_perf_thrashing_lapse_usec: (uint)
-uvm_perf_lapse_vote_threshold: (uint)
-uvm_perf_thrashing_nap: (uint)
-uvm_perf_thrashing_epoch: (uint)
-uvm_perf_thrashing_pin: (uint)
-uvm_perf_thrashing_max_resets: (uint)
-uvm_perf_map_remote_on_native_atomics_fault: (uint)
-uvm_disable_hmm:Force-disable HMM functionality in the UVM driver. Default: false (HMM is enabled if possible). However, even with uvm_disable_hmm=false, HMM will not be enabled if is not supported in this driver build configuration, or if ATS settings conflict with HMM. (bool)
-uvm_perf_migrate_cpu_preunmap_enable: (int)
-uvm_perf_migrate_cpu_preunmap_block_order: (uint)
-uvm_global_oversubscription:Enable (1) or disable (0) global oversubscription support. (int)
-uvm_perf_pma_batch_nonpinned_order: (uint)
-uvm_cpu_chunk_allocation_sizes:OR'ed value of all CPU chunk allocation sizes. (uint)
-uvm_leak_checker:Enable uvm memory leak checking. 0 = disabled, 1 = count total bytes allocated and freed, 2 = per-allocation origin tracking. (int)
-uvm_force_prefetch_fault_support: (uint)
-uvm_debug_enable_push_desc:Enable push description tracking (uint)
-uvm_debug_enable_push_acquire_info:Enable push acquire information tracking (uint)
-uvm_page_table_location:Set the location for UVM-allocated page tables. Choices are: vid, sys. (charp)
-uvm_perf_access_counter_migration_enable:Whether access counters will trigger migrations.Valid values: <= -1 (default policy), 0 (off), >= 1 (on) (int)
-uvm_perf_access_counter_batch_count: (uint)
-uvm_perf_access_counter_threshold:Number of remote accesses on a region required to trigger a notification.Valid values: [1, 65535] (uint)
-uvm_perf_reenable_prefetch_faults_lapse_msec: (uint)
-uvm_perf_fault_batch_count: (uint)
-uvm_perf_fault_replay_policy: (uint)
-uvm_perf_fault_replay_update_put_ratio: (uint)
-uvm_perf_fault_max_batches_per_service: (uint)
-uvm_perf_fault_max_throttle_per_service: (uint)
-uvm_perf_fault_coalesce: (uint)
-uvm_fault_force_sysmem:Force (1) using sysmem storage for pages that faulted. Default: 0. (int)
-uvm_perf_map_remote_on_eviction: (int)
-uvm_block_cpu_to_cpu_copy_with_ce:Use GPU CEs for CPU-to-CPU migrations. (int)
-uvm_exp_gpu_cache_peermem:Force caching for mappings to peer memory. This is an experimental parameter that may cause correctness issues if used. (uint)
-uvm_exp_gpu_cache_sysmem:Force caching for mappings to system memory. This is an experimental parameter that may cause correctness issues if used. (uint)
-uvm_downgrade_force_membar_sys:Force all TLB invalidation downgrades to use MEMBAR_SYS (uint)
-uvm_channel_num_gpfifo_entries: (uint)
-uvm_channel_gpfifo_loc: (charp)
-uvm_channel_gpput_loc: (charp)
-uvm_channel_pushbuffer_loc: (charp)
-uvm_enable_va_space_mm:Set to 0 to disable UVM from using mmu_notifiers to create an association between a UVM VA space and a process. This will also disable pageable memory access via either ATS or HMM. (int)
-uvm_enable_debug_procfs:Enable debug procfs entries in /proc/driver/nvidia-uvm (int)
-uvm_peer_copy:Choose the addressing mode for peer copying, options: phys [default] or virt. Valid for Ampere+ GPUs. (charp)
-uvm_debug_prints:Enable uvm debug prints. (int)
-uvm_enable_builtin_tests:Enable the UVM built-in tests. (This is a security risk) (int)
-uvm_release_asserts:Enable uvm asserts included in release builds. (int)
-uvm_release_asserts_dump_stack:dump_stack() on failed UVM release asserts. (int)
-uvm_release_asserts_set_global_error:Set UVM global fatal error on failed release asserts. (int)
-
 === nvidia-wmi-ec-backlight ===
 force:Force loading (disable acpi_backlight=xxx checks (bool)
 
@@ -5006,6 +4565,7 @@ use_cmb_sqes:use controller's memory buffer for I/O SQes (bool)
 max_host_mem_size_mb:Maximum Host Memory Buffer (HMB) size per controller (in MiB) (uint)
 sgl_threshold:Use SGLs when average request segment size is larger or equal to this size. Use 0 to disable SGLs. (uint)
 io_queue_depth:set io queue depth, should >= 2 and < 4096
+quirks:Enable/disable NVMe quirks by specifying quirks=VID:DID:quirk_names
 write_queues:Number of queues to use for writes. If not set, reads and writes will share a queue set.
 poll_queues:Number of queues to use for polled IO.
 noacpi:disable acpi bios quirks (bool)
@@ -5092,10 +4652,6 @@ ignore_oc:ignore bogus hardware overcurrent indications (bool)
 === p54common ===
 nohwcrypt:Disable hardware encryption. (bool)
 
-=== p54spi ===
-p54spi_gpio_power:gpio number for power line (int)
-p54spi_gpio_irq:gpio number for irq line (int)
-
 === parkbd ===
 port:Parallel port the adapter is connected to (default is 0) (int)
 mode:Mode of operation: XT = 0/AT = 1 (default) (uint)
@@ -5127,12 +4683,6 @@ probe_mask:Probe mask for legacy ISA PATA ports (int)
 autospeed:Chip present that snoops speed changes (int)
 pio_mask:PIO range for autospeed devices (int)
 iordy_mask:Use IORDY if available (int)
-ht6560a:HT 6560A on primary 1, second 2, both 3 (int)
-ht6560b:HT 6560B on primary 1, secondary 2, both 3 (int)
-opti82c611a:Opti 82c611A on primary 1, secondary 2, both 3 (int)
-opti82c46x:Opti 82c465MV on primary 1, secondary 2, both 3 (int)
-qdi:Set to probe QDI controllers (int)
-winbond:Set to probe Winbond controllers, give I/O port if non standard (int)
 
 === pata_parport ===
 probe:Enable automatic device probing (0=off, 1=on [default]) (bool)
@@ -5550,25 +5100,6 @@ num_heads:Number of virtual crtcs to expose (default 4) (int)
 enable_dma:Enable usage of the DMA (default) (bool)
 debug:Debug level (0-3) (int)
 
-=== r8125 ===
-speed_mode:force phy operation. Deprecated by ethtool (8). (uint)
-duplex_mode:force phy operation. Deprecated by ethtool (8). (uint)
-autoneg_mode:force phy operation. Deprecated by ethtool (8). (uint)
-aspm:Enable ASPM. (int)
-s5wol:Enable Shutdown Wake On Lan. (int)
-s5_keep_curr_mac:Enable Shutdown Keep Current MAC Address. (int)
-use_dac:Enable PCI DAC. Unsafe on 32 bit PCI slot. (int)
-timer_count:Timer Interrupt Interval. (int)
-eee_enable:Enable Energy Efficient Ethernet. (int)
-hwoptimize:Enable HW optimization function. (ulong)
-s0_magic_packet:Enable S0 Magic Packet. (int)
-tx_no_close_enable:Enable TX No Close. (int)
-enable_ptp_master_mode:Enable PTP Master Mode. (int)
-disable_wol_support:Disable PM support. (int)
-enable_double_vlan:Enable Double VLAN. (int)
-eee_giga_lite:Enable Giga Lite. (int)
-debug:Debug verbosity level (0=none, ..., 16=all) (int)
-
 === r820t ===
 debug:enable verbose debug messages (int)
 no_imr_cal:Disable IMR calibration at module init (int)
@@ -5643,8 +5174,8 @@ backlight:backlight support (1 = enable, 0 = disable, -1 = auto) (int)
 auxch:Use native auxch experimental support (1 = enable, 0 = disable, -1 = auto) (int)
 uvd:uvd enable/disable uvd support (1 = enable, 0 = disable) (int)
 vce:vce enable/disable vce support (1 = enable, 0 = disable) (int)
-si_support:SI support (1 = enabled (default), 0 = disabled) (int)
-cik_support:CIK support (1 = enabled (default), 0 = disabled) (int)
+si_support:SI support (1 = enabled, 0 = disabled, -1 = default) (int)
+cik_support:CIK support (1 = enabled, 0 = disabled, -1 = default) (int)
 
 === radio-ma901 ===
 radio_nr:Radio file number (int)
@@ -5695,8 +5226,7 @@ mem_name:name of kernel param that holds addr (charp)
 mem_size:size of reserved RAM used to store oops/panic logs (ulong)
 mem_type:memory type: 0=write-combined (default), 1=unbuffered, 2=cached (uint)
 max_reason:maximum reason for kmsg dump (default 2: Oops and Panic)  (int)
-ecc: (int)
-ramoops_ecc:if non-zero, the option enables ECC support and specifies ECC buffer size in bytes (1 is a special value, means 16 bytes ECC)
+ecc:if non-zero, the option enables ECC support and specifies ECC buffer size in bytes (1 is a special value, means 16 bytes ECC) (int)
 dump_oops:(deprecated: use max_reason instead) set to 1 to dump oopses & panics, 0 to only dump panics (int)
 
 === rbd ===
@@ -5730,9 +5260,6 @@ debug_flags:control debugging information (int)
 === rnbd-server ===
 port_nr:The port number the server is listening on (default: 1234) (ushort)
 dev_search_path:Sets the dev_search_path. When a device is mapped this path is prepended to the device path from the map device operation.  If %SESSNAME% is specified in a path, then device will be searched in a session namespace. (default: /)
-
-=== rose ===
-rose_ndevs:number of ROSE devices (int)
 
 === rp1-cfe ===
 track_csi2_errors:track csi-2 errors (bool)
@@ -5929,7 +5456,6 @@ int_clear:Set to 0 to disable interrupt clear before set (default 1)
 
 === rtl8xxxu ===
 debug:Set debug mask (int)
-ht40_2g:Enable HT40 support on the 2.4GHz band (bool)
 dma_aggregation:Enable DMA packet aggregation (bool)
 dma_agg_timeout:Set DMA aggregation timeout (range 1-127) (int)
 dma_agg_pages:Set DMA aggregation pages (range 1-127, 0 to disable) (int)
@@ -5961,22 +5487,10 @@ switch_usb_mode:Set to N to disable switching to USB 3 mode to avoid potential i
 debug_mask:Debugging mask (uint)
 disable_ps_mode:Set Y to disable low power mode (bool)
 
-=== rtw89_core_git ===
-debug_mask:Debugging mask (uint)
-disable_ps_mode:Set Y to disable low power mode (bool)
-
 === rtw89_pci ===
 disable_clkreq:Set Y to disable PCI clkreq support (bool)
 disable_aspm_l1:Set Y to disable PCI ASPM L1 support (bool)
 disable_aspm_l1ss:Set Y to disable PCI L1SS support (bool)
-
-=== rtw89_pci_git ===
-disable_clkreq:Set Y to disable PCI clkreq support (bool)
-disable_aspm_l1:Set Y to disable PCI ASPM L1 support (bool)
-disable_aspm_l1ss:Set Y to disable PCI L1SS support (bool)
-
-=== rtw89_usb_git ===
-switch_usb_mode:Set to N to disable switching to USB 3 mode to avoid potential interference in the 2.4 GHz band (default: Y) (bool)
 
 === rxrpc ===
 debug:RxRPC debugging mask (uint)
@@ -5985,30 +5499,6 @@ debug:RxRPC debugging mask (uint)
 debug:Debug level(0-100) default 0 (int)
 video_nr:start video minor(-1 default autodetect) (int)
 jpeg_enable:Jpeg enable(1-on 0-off) default 1 (int)
-
-=== s2io ===
-tx_fifo_num: (uint)
-rx_ring_num: (uint)
-multiq: (uint)
-rx_ring_mode: (uint)
-use_continuous_tx_intrs: (uint)
-rmac_pause_time: (uint)
-mc_pause_threshold_q0q3: (uint)
-mc_pause_threshold_q4q7: (uint)
-shared_splits: (uint)
-tmac_util_period: (uint)
-rmac_util_period: (uint)
-l3l4hdr_size: (uint)
-tx_steering_type: (uint)
-rxsync_frequency: (uint)
-intr_type: (uint)
-lro_max_pkts: (uint)
-indicate_max_pkts: (uint)
-napi: (uint)
-vlan_tag_strip: (uint)
-tx_fifo_len: (array of uint)
-rx_ring_sz: (array of uint)
-rts_frm_len: (array of uint)
 
 === s5c73m3 ===
 debug: (int)
@@ -6175,11 +5665,6 @@ nowayout:Watchdog cannot be stopped once started (default=0) (bool)
 multicast_filter_limit:Maximum number of filtered multicast addresses (int)
 media:Media type (0x00 = autodetect, 0x01 = 10M half, 0x02 = 10M full, 0x04 = 100M half, 0x08 = 100M full) (int)
 
-=== scap ===
-g_buffer_bytes_dim:This is the dimension of a single per-CPU buffer in bytes. Please note: this buffer will be mapped twice in the process virtual memory, so pay attention to its size.
-max_consumers:Maximum number of consumers that can simultaneously open the devices (uint)
-verbose:Enable verbose logging (bool)
-
 === sch311x_wdt ===
 force_id:Override the detected device ID (ushort)
 timeout:Watchdog timeout in seconds. 1<= timeout <=15300, default=60. (int)
@@ -6343,7 +5828,7 @@ debug:Bitmapped debugging message enable value (uint)
 
 === sg ===
 scatter_elem_sz:scatter gather element size (default: max(SG_SCATTER_SZ, PAGE_SIZE)) (int)
-def_reserved_size:size of buffer reserved for each fd (int)
+def_reserved_size:size of buffer reserved for each fd
 allow_dio:allow direct I/O (default: 0 (disallow)) (int)
 
 === shark2 ===
@@ -6418,9 +5903,6 @@ expose_ld_first:Expose logical drives before physical drives. (int)
 hide_vsep:Hide the virtual SEP for direct attached drives. (int)
 disable_managed_interrupts:Disable the kernel automatically assigning SMP affinity to IRQs. (int)
 ctrl_ready_timeout:Timeout in seconds for driver to wait for controller ready. (uint)
-
-=== smc91c92_cs ===
-if_port: (int)
 
 === smipcie ===
 adapter_nr:DVB adapter numbers (array of short)
@@ -6760,11 +6242,6 @@ index:Index value for RME Hammerfall DSP interface. (array of int)
 id:ID string for RME Hammerfall DSP interface. (array of charp)
 enable:Enable/disable specific Hammerfall DSP soundcards. (array of bool)
 
-=== snd-hdspe ===
-index:Index value for RME HDSPE interface. (array of int)
-id:ID string for RME HDSPE interface. (array of charp)
-enable:Enable/disable specific HDSPE soundcards. (array of bool)
-
 === snd-hdspm ===
 index:Index value for RME HDSPM interface. (array of int)
 id:ID string for RME HDSPM interface. (array of charp)
@@ -6948,13 +6425,6 @@ inject_prepare_err:Inject EINVAL error in the 'prepare' callback (bool)
 inject_trigger_err:Inject EINVAL error in the 'trigger' callback (bool)
 inject_open_err:Inject EBUSY error in the 'open' callback (bool)
 
-=== snd-pcsp ===
-nforce_wa:Apply NForce chipset workaround (expect bad sound) (bool)
-index:Index value for pcsp soundcard. (int)
-id:ID string for pcsp soundcard. (charp)
-enable:Enable PC-Speaker sound. (bool)
-nopcm:Disable PC-Speaker PCM sound. Only beeps remain. (bool)
-
 === snd-pcxhr ===
 index:Index value for Digigram pcxhr soundcard (array of int)
 id:ID string for Digigram pcxhr soundcard (array of charp)
@@ -7077,6 +6547,9 @@ quirk:Board-specific quirk override (uint)
 === snd-soc-sof_es8336 ===
 quirk:Board-specific quirk override (int)
 
+=== snd-soc-sof_rt5682 ===
+quirk:Board-specific quirk override (int)
+
 === snd-soc-sof-sdw ===
 quirk:Board-specific quirk override (int)
 
@@ -7098,6 +6571,8 @@ caps_charge:WM8753 cap charge time (msecs) (int)
 === snd-sof ===
 ipc4_ignore_cpc:Ignore CPC values. This option will disable clock scaling in firmware. (bool)
 disable_function_topology:Disable function topology loading (bool)
+feature_topologies:Topology list for virtual loop DAI link (array of charp)
+on_demand_boot:Force on-demand DSP boot: 0 - disabled, 1 - enabled (int)
 fw_path:alternate path for SOF firmware. (charp)
 fw_filename:alternate filename for SOF firmware. (charp)
 lib_path:alternate path for SOF firmware libraries. (charp)
@@ -7193,25 +6668,6 @@ use_vmalloc:Use vmalloc for PCM intermediate buffers (default: yes). (bool)
 skip_validation:Skip unit descriptor validation (default: no). (bool)
 quirk_flags:Add/modify USB audio quirks (array of quirkp)
 
-=== snd-usb-audio-fasttrack ===
-midi2_enable:Enable MIDI 2.0 support. (bool)
-midi2_ump_probe:Probe UMP v1.1 support at first. (bool)
-index:Index value for the USB audio adapter. (array of int)
-id:ID string for the USB audio adapter. (array of charp)
-enable:Enable USB audio adapter. (array of bool)
-vid:Vendor ID for the USB audio device. (array of int)
-pid:Product ID for the USB audio device. (array of int)
-device_setup:Specific device setup (if needed). (array of int)
-ignore_ctl_error:Ignore errors from USB controller for mixer interfaces. (bool)
-autoclock:Enable auto-clock selection for UAC2 devices (default: yes). (bool)
-lowlatency:Enable low latency playback (default: yes). (bool)
-quirk_alias:Quirk aliases, e.g. 0123abcd:5678beef. (array of charp)
-delayed_register:Quirk for delayed registration, given by id:iface, e.g. 0123abcd:4. (array of charp)
-implicit_fb:Apply generic implicit feedback sync mode. (array of bool)
-use_vmalloc:Use vmalloc for PCM intermediate buffers (default: yes). (bool)
-skip_validation:Skip unit descriptor validation (default: no). (bool)
-quirk_flags:Add/modify USB audio quirks (array of quirkp)
-
 === snd-usb-caiaq ===
 index:Index value for the caiaq sound device (array of int)
 id:ID string for the caiaq soundcard. (array of charp)
@@ -7232,11 +6688,6 @@ index:Index value for US-X2Y. (array of int)
 id:ID string for US-X2Y. (array of charp)
 enable:Enable US-X2Y. (array of bool)
 nrpacks:Number of packets per URB. (int)
-
-=== snd-usb-zoom ===
-index:Index value for ZOOM L-8 soundcard. (array of int)
-id:ID string for ZOOM L-8 soundcard. (array of charp)
-enable:Enable ZOOM L-8 soundcard. (array of bool)
 
 === snd-via82xx ===
 index:Index value for VIA 82xx bridge. (int)
@@ -7500,10 +6951,6 @@ vol:Set the vol variable on load. (int)
 tone:Set the tone variable on load. (int)
 direct:Set the direct variable on load. (int)
 
-=== speedfax ===
-debug:Speedfax debug mask
-irqloops:Speedfax maximal irqloops (default 4) (uint)
-
 === speedtch ===
 altsetting:Alternative setting for data interface (bulk_default: 1; isoc_default: 3) (uint)
 dl_512_first:Read 512 bytes before sending firmware (default: 0) (bool)
@@ -7532,25 +6979,6 @@ use_vmalloc:use vmalloc'ed buffers instead of kmalloc'ed (int)
 check_ranges:checks rx_buffer pattern are valid (int)
 delay_ms:delay between tests, in milliseconds (default: 100) (uint)
 compatible: (string)
-
-=== spl ===
-spl_taskq_thread_bind:Bind taskq thread to CPU by default (int)
-spl_taskq_thread_timeout_ms:Minimum idle threads exit interval for dynamic taskqs (uint)
-spl_taskq_thread_dynamic:Allow dynamic taskq threads (int)
-spl_taskq_thread_priority:Allow non-default priority for taskq threads (int)
-spl_taskq_thread_sequential:Create new taskq threads after N sequential tasks (uint)
-spl_taskq_kick:Write nonzero to kick stuck taskqs to spawn more threads
-spl_kmem_alloc_warn:Warning threshold in bytes for a kmem_alloc() (uint)
-spl_kmem_alloc_max:Maximum size in bytes for a kmem_alloc() (uint)
-spl_kmem_cache_magazine_size:Default magazine size (2-256), set automatically (0) (uint)
-spl_kmem_cache_obj_per_slab:Number of objects per slab (uint)
-spl_kmem_cache_max_size:Maximum size of slab in MB (uint)
-spl_kmem_cache_slab_limit:Objects less than N bytes use the Linux slab (uint)
-spl_kmem_cache_kmem_threads:Number of spl_kmem_cache threads (uint)
-spl_hostid:The system hostid. (ulong)
-spl_hostid_path:The system hostid file (/etc/hostid) (charp)
-spl_panic_halt:Cause kernel panic on assertion failures (uint)
-spl_schedule_hrtimeout_slack_us:schedule_hrtimeout_range() delta/slack value in us, default(0)
 
 === sr_mod ===
 xa_test: (int)
@@ -7899,10 +7327,10 @@ timeout:Watchdog timeout in seconds. (1<=timeout<=4096, default=32) (uint)
 
 === trusted ===
 rng:Select trusted key RNG (charp)
-source:Select trusted keys source (tpm, tee, caam or dcp) (charp)
+source:Select trusted keys source (tpm, tee, caam, dcp or pkwm) (charp)
 
 === ttm ===
-page_pool_size:Number of pages in the WC/UC/DMA pool (ulong)
+page_pool_size:Number of pages in the WC/UC/DMA pool per NUMA node (ulong)
 pages_limit:Limit for the allocated pages (ulong)
 dma32_pages_limit:Limit for the allocated DMA32 pages (ulong)
 
@@ -7989,7 +7417,7 @@ rx_copybreak:Packets smaller than this are copied and the buffer given back to t
 use_mmio:Use MMIO (1) or PIO(0) to access the NIC. Default is to try MMIO and fallback to PIO. (int)
 
 === ubi ===
-mtd:MTD devices to attach. Parameter format: mtd=<name|num|path>[,<vid_hdr_offs>[,max_beb_per1024[,ubi_num]]].
+mtd:MTD devices to attach. Parameter format: mtd=<name|num|path>[,<vid_hdr_offs>[,max_beb_per1024[,ubi_num[,enable_fm[,need_resv_pool]]]]].
 Multiple "mtd" parameters may be specified.
 MTD devices may be specified by their number, name, or path to the MTD character device node.
 Optional "vid_hdr_offs" parameter specifies UBI VID header position to be used by UBI. (default value if 0)
@@ -8001,9 +7429,9 @@ Optional "need_resv_pool" parameter determines whether to reserve pool->max_size
 Example 1: mtd=/dev/mtd0 - attach MTD device /dev/mtd0.
 Example 2: mtd=content,1984 mtd=4 - attach MTD device with name "content" using VID header offset 1984, and MTD device number 4 with default VID header offset.
 Example 3: mtd=/dev/mtd1,0,25 - attach MTD device /dev/mtd1 using default VID header offset and reserve 25*nand_size_in_blocks/1024 erase blocks for bad block handling.
+	(e.g. if the NAND *chipset* has 4096 PEB, 100 will be reserved for this UBI device).
 Example 4: mtd=/dev/mtd1,0,0,5 - attach MTD device /dev/mtd1 to UBI 5 and using default values for the other fields.
 example 5: mtd=1,0,0,5 mtd=2,0,0,6,1 - attach MTD device /dev/mtd1 to UBI 5 and disable fastmap; attach MTD device /dev/mtd2 to UBI 6 and enable fastmap.(only works when fastmap is enabled and fm_autoconvert=Y).
-	(e.g. if the NAND *chipset* has 4096 PEB, 100 will be reserved for this UBI device).
 
 === ublk_drv ===
 ublks_max:max number of unprivileged ublk devices allowed to add(default: 64)
@@ -8016,6 +7444,13 @@ cmv_file:file name with configuration and management variables (array of charp)
 annex:manually set annex a/b (0=auto, 1=annex a, 2=annex b) (array of uint)
 
 === ufshcd-core ===
+use_adaptive_txeq:Find and apply optimal TX Equalization settings before changing Power Mode (default: false) (bool)
+adaptive_txeq_gear:For HS-Gear[n] and above, adaptive txeq shall be used
+use_txeq_presets:Use only the 8 TX Equalization Presets (pre-defined Pre-Shoot & De-Emphasis combinations) for TX EQTR (default: false) (bool)
+txeq_presets_selected:Use only the selected Presets out of the 8 TX Equalization Presets for TX EQTR (array of bool)
+txeq_setting_sel:The qTxEQGnSettings and wTxEQGnSettingsExt Attributes selector used to retrieve and store TX Equalization settings
+retrieve_txeq_setting:Retrieve TX Equalization settings from qTxEQGnSettings and wTxEQGnSettingsExt Attributes (default: true) (bool)
+store_txeq_setting:Store the optimal TX Equalization settings to qTxEQGnSettings and wTxEQGnSettingsExt Attributes (default: true) (bool)
 rw_queues:Number of interrupt driven I/O queues used for rw. Default value is nr_cpus
 read_queues:Number of interrupt driven read queues used for read. Default value is 0
 poll_queues:Number of poll queues used for r/w. Default value is 1
@@ -8032,6 +7467,10 @@ mode:ULi M5261/M5263: Bit 0: 10/100Mbps, bit 2: duplex, bit 8: HomePNA (int)
 auto_delink_en:auto delink mode (0=firmware, 1=software [default]) (int)
 ss_en:enable selective suspend (int)
 ss_delay:seconds to delay before entering selective suspend (int)
+
+=== uniwill-laptop ===
+force:Force loading without checking for supported devices
+ (bool)
 
 === upd64031a ===
 debug:Debug level (0-1) (int)
@@ -8090,35 +7529,10 @@ nodrop:Don't drop incomplete frames (uint)
 quirks:Forced device quirks (uint)
 trace:Trace level bitmask (uint)
 timeout:Streaming control requests timeout (uint)
-
-=== v4l2loopback ===
-debug:debugging level (higher values == more verbose) (int)
-max_buffers:how many buffers should be allocated [DEFAULT: 2] (int)
-max_openers:how many users can open the loopback device [DEFAULT: 10] (int)
-devices:how many devices should be created (int)
-video_nr:video device numbers (-1=auto, 0=/dev/video0, etc.) (array of int)
-card_label:card labels for each device (array of charp)
-exclusive_caps:whether to announce OUTPUT/CAPTURE capabilities exclusively or not  [DEFAULT: 0] (array of bool)
-max_width:maximum allowed frame width [DEFAULT: 8192] (int)
-max_height:maximum allowed frame height [DEFAULT: 8192] (int)
-
-=== v4l2loopback-dc ===
-width:frame width (int)
-height:frame height (int)
-video_nr:video device numbers (-1=auto, 0=/dev/video0, etc.) (int)
+allow_privacy_override:Allow access to privacy related controls (bool)
 
 === v4l2-mem2mem ===
 debug: (bool)
-
-=== vboxdrv ===
-disabled:Disable automatic module loading (int)
-force_async_tsc:force the asynchronous TSC mode (int)
-
-=== vboxnetadp ===
-disabled:Disable automatic module loading (int)
-
-=== vboxnetflt ===
-disabled:Disable automatic module loading (int)
 
 === vboxsf ===
 follow_symlinks:Let host resolve symlinks rather than showing them (int)
@@ -8131,11 +7545,14 @@ echo:Echo sent frames (for testing). Default: 0 (Off) (bool)
 
 === vdpa_sim ===
 batch_mapping:Batched mapping 1 -Enable; 0 - Disable (int)
-max_iotlb_entries:Maximum number of iotlb entries for each address space. 0 means unlimited. (default: 2048) (int)
+max_iotlb_entries:Maximum number of iotlb entries for each address space. (default: 2048) (int)
 use_va:Enable/disable the device's ability to use VA (bool)
 
 === vdpa_sim_blk ===
 shared_backend:Enable the shared backend between virtio-blk devices (bool)
+
+=== vduse ===
+max_iotlb_entries:Maximum number of iotlb entries. (default: 2048) (int)
 
 === ves1820 ===
 verbose:print AFC offset after tuning for debugging the PWM setting (int)
@@ -8156,9 +7573,6 @@ disable_idle_d3:Disable using the PCI D3 low power state for idle, unused device
 enable_sriov:Enable support for SR-IOV configuration.  Enabling SR-IOV on a PF typically requires support of the userspace PF driver, enabling VFs without such support may result in non-functional VFs or PF. (bool)
 disable_denylist:Disable use of device denylist. Disabling the denylist allows binding to devices with known errata that may lead to exploitable stability or security issues when accessed by untrusted users. (bool)
 
-=== vhba ===
-can_queue: (int)
-
 === vhost ===
 max_mem_regions:Maximum number of memory regions in memory map. (default: 64) (ushort)
 max_iotlb_entries:Maximum number of iotlb entries. (default: 2048) (int)
@@ -8170,6 +7584,9 @@ experimental_zcopytx:Enable Zero Copy TX; 1 -Enable; 0 - Disable (int)
 === vhost_scsi ===
 inline_sg_cnt:Set the number of scatterlist entries to pre-allocate. The default is 2048.
 max_io_vqs:Set the max number of IO virtqueues a vhost scsi device can support. The default is 128. The max is 1024. (uint)
+
+=== vhost_vdpa ===
+max_iotlb_entries:Maximum number of iotlb entries. (default: 2048) (int)
 
 === via686a ===
 force_addr:Initialize the base address of the sensors (ushort)
@@ -8227,12 +7644,12 @@ allocator: memory allocator selection, default is 0.
 
 === virtio-gpu ===
 virglhack: (int)
-modeset:disable/enable modesetting (int)
+modeset:Disable/Enable modesetting (int)
 
 === virtio_mem ===
-unplug_online:try to unplug online memory (bool)
-force_bbm:force big block mode. default is 0 (auto-selection) (bool)
-bbm_block_size:big block size in bytes. default is 0 (auto-detection). (ulong)
+unplug_online:Try to unplug online memory (bool)
+force_bbm:Force Big Block Mode. Default is 0 (auto-selection) (bool)
+bbm_block_size:Big Block size in bytes. Default is 0 (auto-detection). (ulong)
 
 === virtio_net ===
 napi_weight: (int)
@@ -8241,12 +7658,12 @@ gso: (bool)
 napi_tx: (bool)
 
 === virtio_snd ===
-pcm_buffer_ms:pcm substream buffer time in milliseconds (uint)
-pcm_periods_min:minimum number of pcm periods (uint)
-pcm_periods_max:maximum number of pcm periods (uint)
-pcm_period_ms_min:minimum pcm period time in milliseconds (uint)
-pcm_period_ms_max:maximum pcm period time in milliseconds (uint)
-msg_timeout_ms:message completion timeout in milliseconds (uint)
+pcm_buffer_ms:PCM substream buffer time in milliseconds (uint)
+pcm_periods_min:Minimum number of PCM periods (uint)
+pcm_periods_max:Maximum number of PCM periods (uint)
+pcm_period_ms_min:Minimum PCM period time in milliseconds (uint)
+pcm_period_ms_max:Maximum PCM period time in milliseconds (uint)
+msg_timeout_ms:Message completion timeout in milliseconds (uint)
 
 === visl ===
 visl_debug: activates debug info (uint)
@@ -8315,6 +7732,8 @@ supports_requests: support for requests, default is 1.
 enable_cursor:Enable/Disable cursor support (bool)
 enable_writeback:Enable/Disable writeback connector support (bool)
 enable_overlay:Enable/Disable overlay support (bool)
+enable_plane_pipeline:Enable/Disable plane pipeline support (bool)
+create_default_dev:Create or not the default VKMS device (bool)
 
 === vmw_balloon ===
 vmwballoon_shrinker_enable:Enable non-cooperative out-of-memory protection. Disabled by default as it may degrade performance. (bool)
@@ -8348,12 +7767,6 @@ force_id:Override the detected device ID (ushort)
 === vt8231 ===
 force_addr:Initialize the base address of the sensors (int)
 
-=== vtunerc ===
-adapter_nr:DVB adapter numbers (array of short)
-devices:Number of virtual adapters (default is 1) (int)
-tscheck:Check TS packet validity (default is 0) (int)
-debug:Enable debug messages (default is 0) (int)
-
 === vub300 ===
 limit_speed_to_24_MHz:Limit Max SDIO Clock Speed to 24 MHz (bool)
 pad_input_to_usb_pkt:Pad USB data input transfers to whole USB Packet (bool)
@@ -8377,11 +7790,6 @@ stretch:Default I2C stretch value to be set when a DS28E17 is detected (byte)
 
 === w1_therm ===
 strong_pullup: (int)
-
-=== w6692 ===
-debug:W6692 debug mask
-led:W6692 LED support bitmask (one bit per card) (uint)
-pots:W6692 POTS support bitmask (one bit per card) (uint)
 
 === w83627ehf ===
 force_id:Override the detected device ID (ushort)
@@ -8513,15 +7921,6 @@ timeout_us:time in microseconds between automatic slave searches (int)
 max_slave_count:maximum number of slaves detected in a search (int)
 slave_ttl:Number of searches not seeing a slave before it will be removed (int)
 
-=== wl ===
-passivemode: (int)
-wl_txq_thresh: (int)
-oneonly: (int)
-piomode: (int)
-instance_base: (int)
-nompc: (int)
-intf_name: (string)
-
 === wl12xx ===
 fref:FREF clock: 19.2, 26, 26x, 38.4, 38.4x, 52 (charp)
 tcxo:TCXO clock: 19.2, 26, 38.4, 52, 16.368, 32.736, 16.8, 33.6 (charp)
@@ -8649,7 +8048,7 @@ enable_psr2_sel_fetch:Enable PSR2 and Panel Replay selective fetch (0=disabled, 
 enable_dmc_wl:Enable DMC wakelock (-1=use per-chip default, 0=disabled, 1=enabled, 2=match any register, 3=always locked) Default: -1 (int)
 svm_notifier_size:Set the svm notifier size in MiB, must be power of 2 [default=512] (uint)
 force_execlist:Force Execlist submission (bool)
-probe_display:Probe display HW, otherwise it's left untouched [default=true]) (bool)
+probe_display:Probe display HW, otherwise it's left untouched [default=1]) (bool)
 vram_bar_size:Set the vram bar size in MiB (<0=disable-resize, 0=max-needed-size, >0=force-size [default=0]) (int)
 guc_log_level:GuC firmware logging level (0=disable, 1=normal, 2..5=verbose-levels [default=1]) (int)
 guc_firmware_path:GuC firmware path to use instead of the default one (charp)
@@ -8657,7 +8056,7 @@ huc_firmware_path:HuC firmware path to use instead of the default one - empty st
 gsc_firmware_path:GSC firmware path to use instead of the default one - empty string disables (charp)
 force_probe:Force probe options for specified devices. See CONFIG_DRM_XE_FORCE_PROBE for details [default=]) (charp)
 max_vfs:Limit number of Virtual Functions (VFs) that could be managed. (0=no VFs; N=allow up to N VFs [default=unlimited]) (uint)
-wedged_mode:Module's default policy for the wedged mode (0=never, 1=upon-critical-errors, 2=upon-any-hang [default=1]) (int)
+wedged_mode:Module's default policy for the wedged mode (0=never, 1=upon-critical-error, 2=upon-any-hang-no-reset [default=upon-critical-error]) (uint)
 
 === xen-acpi-processor ===
 off:Inhibit the hypercall. (int)
@@ -8683,7 +8082,7 @@ feature_persistent:Enables the persistent grants feature (bool)
 video:Video memory size in MB, width, height in pixels (default 2,800,600) (array of int)
 
 === xen-gntalloc ===
-limit:Maximum number of grants that may be allocated by the gntalloc device (int)
+limit:Maximum number of grants that may be allocated by the gntalloc device (uint)
 
 === xen-gntdev ===
 limit:Maximum number of grants that may be mapped by one mapping request (uint)
@@ -8722,6 +8121,7 @@ hide: (charp)
 === xen-privcmd ===
 dm_op_max_nr_bufs:Maximum number of buffers per dm_op hypercall (uint)
 dm_op_buf_max_size:Maximum size of a dm_op hypercall buffer (uint)
+unrestricted:Don't restrict hypercalls to target domain if running in a domU (bool)
 
 === xen-scsiback ===
 log_print_stat: (bool)
@@ -8743,48 +8143,6 @@ triggers_to_buttons:Map triggers to buttons rather than axes for unknown pads (b
 sticks_to_null:Do not map sticks at all for unknown pads (bool)
 auto_poweroff:Power off wireless controllers on suspend (bool)
 
-=== xt_ACCOUNT ===
-max_tables_limit: (uint)
-
-=== xt_CHAOS ===
-reject_percentage: (uint)
-delude_percentage: (uint)
-
-=== xt_condition ===
-condition_list_perms:permissions on /proc/net/nf_condition/* files (uint)
-condition_uid_perms:user owner of /proc/net/nf_condition/* files (uint)
-condition_gid_perms:group owner of /proc/net/nf_condition/* files (uint)
-
-=== xt_DNETMAP ===
-default_ttl: default ttl value to be used if rule doesn't specify any (default: 600) (uint)
-hash_size: hash size for ip lists, needs to be power of 2 (default: 256) (uint)
-disable_log: disables logging of bind/timeout events (default: 0) (uint)
-whole_prefix: use network and broadcast addresses of specified prefix for bindings (default: 1) (uint)
-
-=== xt_lscan ===
-connmark_mask:only set specified bits in connection mark (uint)
-packet_mask:only set specified bits in packet mark (uint)
-mark_seen:nfmark value for packet-seen state (uint)
-mark_synrcv:connmark value for SYN Received state (uint)
-mark_closed:connmark value for closed state (uint)
-mark_synscan:connmark value for SYN Scan state (uint)
-mark_estab1:connmark value for Established-1 state (uint)
-mark_estab2:connmark value for Established-2 state (uint)
-mark_cnscan:connmark value for Connect Scan state (uint)
-mark_grscan:connmark value for Grab Scan state (uint)
-mark_valid:connmark value for Valid state (uint)
-
-=== xt_pknock ===
-rule_hashsize:Buckets in rule hash table (default: 8) (int)
-peer_hashsize:Buckets in peer hash table (default: 16) (int)
-gc_expir_time:Time until garbage collection after valid knock packet (default: 65000 msec) (int)
-nl_multicast_group:Netlink multicast group number for pknock messages (int)
-
-=== xt_quota2 ===
-perms: (uint)
-uid: (uint)
-gid: (uint)
-
 === xt_recent ===
 ip_list_tot:number of IPs to remember per list (uint)
 ip_list_hash_size:size of hash table used to look up IPs (uint)
@@ -8792,12 +8150,6 @@ ip_list_perms:permissions on /proc/net/xt_recent/* files (uint)
 ip_list_uid:default owner of /proc/net/xt_recent/* files (uint)
 ip_list_gid:default owning group of /proc/net/xt_recent/* files (uint)
 ip_pkt_list_tot:number of packets per IP address to remember (max. 65535) (uint)
-
-=== xt_SYSRQ ===
-password:password for remote sysrq (string)
-hash:hash algorithm, default sha1 (string)
-seqno:sequence number for remote sysrq (long)
-debug:debugging: 0=off, 1=on (int)
 
 === xusbatm ===
 vendor:USB device vendor (array of ushort)
@@ -8808,15 +8160,6 @@ rx_padding:rx padding (default 0) (array of byte)
 tx_padding:tx padding (default 0) (array of byte)
 rx_altsetting:rx altsetting (default 0) (array of byte)
 tx_altsetting:rx altsetting (default 0) (array of byte)
-
-=== yellowfin ===
-max_interrupt_work:G-NIC maximum events handled per interrupt (int)
-mtu:G-NIC MTU (all boards) (int)
-debug:G-NIC debug level (0-7) (int)
-rx_copybreak:G-NIC copy breakpoint for copy-only-tiny-frames (int)
-options:G-NIC: Bits 0-3: media type, bit 17: full duplex (array of int)
-full_duplex:G-NIC full duplex setting(s) (1) (array of int)
-gx_fix:G-NIC: enable GX server chipset bug workaround (0-1) (int)
 
 === yenta_socket ===
 disable_clkrun:If PC card doesn't function properly, please try this option (TI and Ricoh bridges only) (bool)
@@ -8830,373 +8173,6 @@ adapter_nr:DVB adapter numbers (array of short)
 
 === zd1301_demod ===
 gain:gain (value: 0x00 - 0x70, default: 0x38) (byte)
-
-=== zfs ===
-zvol_major:Major number for zvol device (uint)
-zvol_max_discard_blocks:Max number of blocks to discard (ulong)
-zvol_blk_mq_queue_depth:Default blk-mq queue depth (uint)
-zvol_use_blk_mq:Use the blk-mq API for zvols (uint)
-zvol_blk_mq_blocks_per_thread:Process volblocksize blocks per thread (uint)
-zvol_open_timeout_ms:Timeout for ZVOL open retries (uint)
-zfs_xattr_compat:Use legacy ZFS xattr naming for writing new user namespace xattrs
-zfs_delete_inode:Delete inodes as soon as the last reference is released.
-zfs_delete_dentry:Delete dentries from dentry cache as soon as the last reference is released.
-zfs_fallocate_reserve_percent:Percentage of length to use for the available capacity check (uint)
-zfs_key_max_salt_uses:Max number of times a salt value can be used for generating encryption keys before it is rotated (ulong)
-zfs_object_mutex_size:Size of znode hold array (uint)
-zfs_unlink_suspend_progress:Set to prevent async unlinks (debug - leaks space into the unlinked set) (int)
-zfs_delete_blocks:Delete files larger than N blocks async (ulong)
-zfs_dbgmsg_enable:Enable ZFS debug message log (int)
-zfs_dbgmsg_maxsize:Maximum ZFS debug log size (uint)
-zfs_admin_snapshot:Enable mkdir/rmdir/mv in .zfs/snapshot (int)
-zfs_expire_snapshot:Seconds to expire .zfs/snapshot (int)
-zfs_snapshot_no_setuid:Disable setuid/setgid for automounts in .zfs/snapshot (int)
-zfs_vdev_open_timeout_ms:Timeout before determining that a device is missing
-zfs_vdev_failfast_mask:Defines failfast mask: 1 - device, 2 - transport, 4 - driver
-zfs_vdev_disk_max_segs:Maximum number of data segments to add to an IO request (min 4)
-zfs_arc_shrinker_limit:Limit on number of pages that ARC shrinker can reclaim at once
-zfs_arc_shrinker_seeks:Relative cost of ARC eviction vs other kernel subsystems
-zfs_abd_scatter_enabled:Toggle whether ABD allocations must be linear. (int)
-zfs_abd_scatter_min_size:Minimum size of scatter allocations. (int)
-zfs_abd_scatter_max_order:Maximum order allocation used for a scatter ABD. (uint)
-zvol_inhibit_dev:Do not create zvol device nodes
-zvol_prefetch_bytes:Prefetch N bytes at zvol start+end
-zvol_volmode:Default volmode property value
-zvol_threads:Number of threads for I/O requests. Set to 0 to use all active CPUs
-zvol_num_taskqs:Number of zvol taskqs
-zvol_request_sync:Synchronously handle bio requests
-zio_slow_io_ms:Max I/O completion time (milliseconds) before marking it as slow
-zio_requeue_io_start_cut_in_line:Prioritize requeued I/O
-zfs_sync_pass_deferred_free:Defer frees starting in this pass
-zfs_sync_pass_dont_compress:Don't compress starting in this pass
-zfs_sync_pass_rewrite:Rewrite new bps starting in this pass
-zio_dva_throttle_enabled:Throttle block allocations in the ZIO pipeline
-zio_deadman_log_all:Log all slow ZIOs, not just those with vdevs
-zfs_commit_timeout_pct:ZIL block open timeout percentage
-zil_replay_disable:Disable intent logging replay
-zil_nocacheflush:Disable ZIL cache flushes
-zil_slog_bulk:Limit in bytes slog sync writes per commit
-zil_maxblocksize:Limit in bytes of ZIL log block size
-zil_maxcopied:Limit in bytes WR_COPIED size
-zfs_immediate_write_sz:Largest write size to store data into ZIL
-zil_special_is_slog:Treat special vdevs as SLOG
-zfs_vnops_read_chunk_size:Bytes to read per chunk
-zfs_bclone_enabled:Enable block cloning
-zfs_bclone_wait_dirty:Wait for dirty blocks when cloning
-zfs_dio_enabled:Enable Direct I/O
-zfs_dio_strict:Return errors on misaligned Direct I/O
-zfs_zil_saxattr:Disable xattr=sa extended attribute logging in ZIL by settng 0.
-zfs_max_nvlist_src_size:Maximum size in bytes allowed for src nvlist passed with ZFS ioctls
-zfs_history_output_max:Maximum size in bytes of ZFS ioctl output that will be logged
-zfs_zevent_retain_max:Maximum recent zevents records to retain for duplicate checking
-zfs_zevent_retain_expire_secs:Expiration time for recent zevents records
-zfs_lua_max_instrlimit:Max instruction limit that can be specified for a channel program
-zfs_lua_max_memlimit:Max memory limit that can be specified for a channel program
-zap_micro_max_size:Maximum micro ZAP size before converting to a fat ZAP, in bytes (max 1M)
-zap_iterate_prefetch:When iterating ZAP object, prefetch it
-zap_shrink_enabled:Enable ZAP shrinking
-zfs_trim_extent_bytes_max:Max size of TRIM commands, larger will be split
-zfs_trim_extent_bytes_min:Min size of TRIM commands, smaller will be skipped
-zfs_trim_metaslab_skip:Skip metaslabs which have never been initialized
-zfs_trim_txg_batch:Min number of txgs to aggregate frees before issuing TRIM
-zfs_trim_queue_limit:Max queued TRIMs outstanding per leaf vdev
-zfs_removal_ignore_errors:Ignore hard IO errors when removing device
-zfs_remove_max_segment:Largest contiguous segment to allocate when removing device
-vdev_removal_max_span:Largest span of free chunks a remap segment can span
-zfs_removal_suspend_progress:Pause device removal after this many bytes are copied (debug use only - causes removal to hang)
-zfs_rebuild_max_segment:Max segment size in bytes of rebuild reads
-zfs_rebuild_vdev_limit:Max bytes in flight per leaf vdev for sequential resilvers
-zfs_rebuild_scrub_enabled:Automatically scrub after sequential resilver completes
-raidz_expand_max_reflow_bytes:For testing, pause RAIDZ expansion after reflowing this many bytes
-raidz_expand_max_copy_bytes:Max amount of concurrent i/o for RAIDZ expansion
-raidz_io_aggregate_rows:For expanded RAIDZ, aggregate reads that have more rows than this
-zfs_scrub_after_expand:For expanded RAIDZ, automatically start a pool scrub when expansion completes
-vdev_read_sit_out_secs:Raidz/draid slow disk sit out time period in seconds
-vdev_raidz_outlier_check_interval_ms:Interval to check for slow raidz/draid children
-vdev_raidz_outlier_insensitivity:How insensitive the slow raidz/draid child check should be
-zfs_vdev_aggregation_limit:Max vdev I/O aggregation size
-zfs_vdev_aggregation_limit_non_rotating:Max vdev I/O aggregation size for non-rotating media
-zfs_vdev_read_gap_limit:Aggregate read I/O over gap
-zfs_vdev_write_gap_limit:Aggregate write I/O over gap
-zfs_vdev_max_active:Maximum number of active I/Os per vdev
-zfs_vdev_async_write_active_max_dirty_percent:Async write concurrency max threshold
-zfs_vdev_async_write_active_min_dirty_percent:Async write concurrency min threshold
-zfs_vdev_async_read_max_active:Max active async read I/Os per vdev
-zfs_vdev_async_read_min_active:Min active async read I/Os per vdev
-zfs_vdev_async_write_max_active:Max active async write I/Os per vdev
-zfs_vdev_async_write_min_active:Min active async write I/Os per vdev
-zfs_vdev_initializing_max_active:Max active initializing I/Os per vdev
-zfs_vdev_initializing_min_active:Min active initializing I/Os per vdev
-zfs_vdev_removal_max_active:Max active removal I/Os per vdev
-zfs_vdev_removal_min_active:Min active removal I/Os per vdev
-zfs_vdev_scrub_max_active:Max active scrub I/Os per vdev
-zfs_vdev_scrub_min_active:Min active scrub I/Os per vdev
-zfs_vdev_sync_read_max_active:Max active sync read I/Os per vdev
-zfs_vdev_sync_read_min_active:Min active sync read I/Os per vdev
-zfs_vdev_sync_write_max_active:Max active sync write I/Os per vdev
-zfs_vdev_sync_write_min_active:Min active sync write I/Os per vdev
-zfs_vdev_trim_max_active:Max active trim/discard I/Os per vdev
-zfs_vdev_trim_min_active:Min active trim/discard I/Os per vdev
-zfs_vdev_rebuild_max_active:Max active rebuild I/Os per vdev
-zfs_vdev_rebuild_min_active:Min active rebuild I/Os per vdev
-zfs_vdev_nia_credit:Number of non-interactive I/Os to allow in sequence
-zfs_vdev_nia_delay:Number of non-interactive I/Os before _max_active
-zfs_vdev_mirror_rotating_inc:Rotating media load increment for non-seeking I/Os
-zfs_vdev_mirror_rotating_seek_inc:Rotating media load increment for seeking I/Os
-zfs_vdev_mirror_rotating_seek_offset:Offset in bytes from the last I/O which triggers a reduced rotating media seek increment
-zfs_vdev_mirror_non_rotating_inc:Non-rotating media load increment for non-seeking I/Os
-zfs_vdev_mirror_non_rotating_seek_inc:Non-rotating media load increment for seeking I/Os
-zfs_initialize_value:Value written during zpool initialize
-zfs_initialize_chunk_size:Size in bytes of writes by zpool initialize
-zfs_condense_indirect_vdevs_enable:Whether to attempt condensing indirect vdev mappings
-zfs_condense_indirect_obsolete_pct:Minimum obsolete percent of bytes in the mapping to attempt condensing
-zfs_condense_min_mapping_bytes:Don't bother condensing if the mapping uses less than this amount of memory
-zfs_condense_max_obsolete_bytes:Minimum size obsolete spacemap to attempt condensing
-zfs_condense_indirect_commit_entry_delay_ms:Used by tests to ensure certain actions happen in the middle of a condense. A maximum value of 1 should be sufficient.
-zfs_reconstruct_indirect_combinations_max:Maximum number of combinations when reconstructing split segments
-vdev_file_logical_ashift:Logical ashift for file-based devices
-vdev_file_physical_ashift:Physical ashift for file-based devices
-zfs_vdev_default_ms_count:Target number of metaslabs per top-level vdev
-zfs_vdev_default_ms_shift:Default lower limit for metaslab size
-zfs_vdev_max_ms_shift:Default upper limit for metaslab size
-zfs_vdev_min_ms_count:Minimum number of metaslabs per top-level vdev
-zfs_vdev_ms_count_limit:Practical upper limit of total metaslabs per top-level vdev
-zfs_slow_io_events_per_second:Rate limit slow IO (delay) events to this many per second
-zfs_deadman_events_per_second:Rate limit hung IO (deadman) events to this many per second
-zfs_dio_write_verify_events_per_second:Rate Direct I/O write verify events to this many per second
-zfs_vdev_direct_write_verify:Direct I/O writes will perform for checksum verification before commiting write
-zfs_checksum_events_per_second:Rate limit checksum events to this many checksum errors per second (do not set below ZED threshold).
-zfs_scan_ignore_errors:Ignore errors during resilver/scrub
-vdev_validate_skip:Bypass vdev_validate()
-zfs_nocacheflush:Disable cache flushes
-zfs_embedded_slog_min_ms:Minimum number of metaslabs required to dedicate one for log blocks
-zfs_vdev_min_auto_ashift:Minimum ashift used when creating new top-level vdevs
-zfs_vdev_max_auto_ashift:Maximum ashift used when optimizing for logical -> physical sector size on new top-level vdevs
-zfs_vdev_raidz_impl:RAIDZ implementation
-zfs_txg_timeout:Max seconds worth of delta per txg
-zfs_read_history:Historical statistics for the last N reads
-zfs_read_history_hits:Include cache hits in read history
-zfs_txg_history:Historical statistics for the last N txgs
-zfs_multihost_history:Historical statistics for last N multihost writes
-zfs_flags:Set additional debugging flags
-zfs_recover:Set to attempt to recover from fatal errors
-zfs_free_leak_on_eio:Set to ignore IO errors during free and permanently leak the space
-zfs_deadman_checktime_ms:Dead I/O check interval in milliseconds
-zfs_deadman_enabled:Enable deadman timer
-spa_asize_inflation:SPA size estimate multiplication factor
-zfs_ddt_data_is_special:Place DDT data into the special class
-zfs_user_indirect_is_special:Place user data indirect blocks into the special class
-zfs_deadman_failmode:Failmode for deadman timer
-zfs_deadman_synctime_ms:Pool sync expiration time in milliseconds
-zfs_deadman_ziotime_ms:IO expiration time in milliseconds
-zfs_special_class_metadata_reserve_pct:Small file blocks in special vdevs depends on this much free space available
-spa_slop_shift:Reserved free space in pool
-spa_num_allocators:Number of allocators per spa
-spa_cpus_per_allocator:Minimum number of CPUs per allocators
-zfs_unflushed_max_mem_amt:Specific hard-limit in memory that ZFS allows to be used for unflushed changes
-zfs_unflushed_max_mem_ppm:Percentage of the overall system memory that ZFS allows to be used for unflushed changes (value is calculated over 1000000 for finer granularity)
-zfs_unflushed_log_block_max:Hard limit (upper-bound) in the size of the space map log in terms of blocks.
-zfs_unflushed_log_block_min:Lower-bound limit for the maximum amount of blocks allowed in log spacemap (see zfs_unflushed_log_block_max)
-zfs_unflushed_log_txg_max:Hard limit (upper-bound) in the size of the space map log in terms of dirty TXGs.
-zfs_unflushed_log_block_pct:Tunable used to determine the number of blocks that can be used for the spacemap log, expressed as a percentage of the total number of metaslabs in the pool (e.g. 400 means the number of log blocks is capped at 4 times the number of metaslabs)
-zfs_max_log_walking:The number of past TXGs that the flushing algorithm of the log spacemap feature uses to estimate incoming log blocks
-zfs_keep_log_spacemaps_at_export:Prevent the log spacemaps from being flushed and destroyed during pool export/destroy
-zfs_max_logsm_summary_length:Maximum number of rows allowed in the summary of the spacemap log
-zfs_min_metaslabs_to_flush:Minimum number of metaslabs to flush per dirty TXG
-spa_upgrade_errlog_limit:Limit the number of errors which will be upgraded to the new on-disk error log when enabling head_errlog
-spa_config_path:SPA config file (/etc/zfs/zpool.cache)
-zfs_spa_discard_memory_limit:Limit for memory used in prefetching the checkpoint space map done on each vdev while discarding the checkpoint
-metaslab_preload_pct:Percentage of CPUs to run a metaslab preload taskq
-spa_load_verify_shift:log2 fraction of arc that can be used by inflight I/Os when verifying pool during import
-spa_load_verify_metadata:Set to traverse metadata on pool import
-spa_load_verify_data:Set to traverse data on pool import
-spa_load_print_vdev_tree:Print vdev tree to zfs_dbgmsg during pool import
-zio_taskq_batch_pct:Percentage of CPUs to run an IO worker thread
-zio_taskq_batch_tpq:Number of threads per IO worker taskqueue
-zfs_max_missing_tvds:Allow importing pool with up to this number of missing top-level vdevs (in read-only mode)
-zfs_livelist_condense_zthr_pause:Set the livelist condense zthr to pause
-zfs_livelist_condense_sync_pause:Set the livelist condense synctask to pause
-zfs_livelist_condense_sync_cancel:Whether livelist condensing was canceled in the synctask
-zfs_livelist_condense_zthr_cancel:Whether livelist condensing was canceled in the zthr function
-zfs_livelist_condense_new_alloc:Whether extra ALLOC blkptrs were added to a livelist entry while it was being condensed
-spa_note_txg_time:How frequently TXG timestamps are stored internally (in seconds)
-spa_flush_txg_time:How frequently the TXG timestamps database should be flushed to disk (in seconds)
-zio_taskq_read:Configure IO queues for read IO
-zio_taskq_write:Configure IO queues for write IO
-zio_taskq_free:Configure IO queues for free IO
-zio_taskq_write_tpq:Number of CPUs per write issue taskq
-zfs_multilist_num_sublists:Number of sublists used in each multilist
-zfs_multihost_interval:Milliseconds between mmp writes to each leaf
-zfs_multihost_fail_intervals:Max allowed period without a successful mmp write
-zfs_multihost_import_intervals:Number of zfs_multihost_interval periods to wait for activity
-metaslab_aliquot:Allocation granularity (a.k.a. stripe size)
-metaslab_debug_load:Load all metaslabs when pool is first opened
-metaslab_debug_unload:Prevent metaslabs from being unloaded
-metaslab_preload_enabled:Preload potential metaslabs during reassessment
-metaslab_preload_limit:Max number of metaslabs per group to preload
-metaslab_unload_delay:Delay in txgs after metaslab was last used before unloading
-metaslab_unload_delay_ms:Delay in milliseconds after metaslab was last used before unloading
-zfs_mg_noalloc_threshold:Percentage of metaslab group size that should be free to make it eligible for allocation
-zfs_mg_fragmentation_threshold:Percentage of metaslab group size that should be considered eligible for allocations unless all metaslab groups within the metaslab class have also crossed this threshold
-metaslab_fragmentation_factor_enabled:Use the fragmentation metric to prefer less fragmented metaslabs
-zfs_metaslab_fragmentation_threshold:Fragmentation for metaslab to allow allocation
-metaslab_lba_weighting_enabled:Prefer metaslabs with lower LBAs
-metaslab_bias_enabled:Enable space-based metaslab group biasing
-metaslab_perf_bias:Enable performance-based metaslab group biasing
-zfs_metaslab_segment_weight_enabled:Enable segment-based metaslab selection
-zfs_metaslab_switch_threshold:Segment-based metaslab selection maximum buckets before switching
-metaslab_force_ganging:Blocks larger than this size are sometimes forced to be gang blocks
-metaslab_force_ganging_pct:Percentage of large blocks that will be forced to be gang blocks
-metaslab_df_max_search:Max distance (bytes) to search forward before using size tree
-metaslab_df_use_largest_segment:When looking in size tree, use largest segment instead of exact fit
-zfs_metaslab_max_size_cache_sec:How long to trust the cached max chunk size of a metaslab
-zfs_metaslab_mem_limit:Percentage of memory that can be used to store metaslab range trees
-zfs_metaslab_try_hard_before_gang:Try hard to allocate before ganging
-zfs_metaslab_find_max_tries:Normally only consider this many of the best metaslabs in each vdev
-zfs_active_allocator:SPA active allocator
-zfs_zevent_len_max:Max event queue length
-zfs_scan_vdev_limit:Max bytes in flight per leaf vdev for scrubs and resilvers
-zfs_scrub_min_time_ms:Min millisecs to scrub per txg
-zfs_obsolete_min_time_ms:Min millisecs to obsolete per txg
-zfs_free_min_time_ms:Min millisecs to free per txg
-zfs_resilver_min_time_ms:Min millisecs to resilver per txg
-zfs_scan_suspend_progress:Set to prevent scans from progressing
-zfs_no_scrub_io:Set to disable scrub I/O
-zfs_no_scrub_prefetch:Set to disable scrub prefetching
-zfs_async_block_max_blocks:Max number of blocks freed in one txg
-zfs_max_async_dedup_frees:Max number of dedup blocks freed in one txg
-zfs_free_bpobj_enabled:Enable processing of the free_bpobj
-zfs_scan_blkstats:Enable block statistics calculation during scrub
-zfs_scan_mem_lim_fact:Fraction of RAM for scan hard limit
-zfs_scan_issue_strategy:IO issuing strategy during scrubbing. 0 = default, 1 = LBA, 2 = size
-zfs_scan_legacy:Scrub using legacy non-sequential method
-zfs_scan_checkpoint_intval:Scan progress on-disk checkpointing interval
-zfs_scan_max_ext_gap:Max gap in bytes between sequential scrub / resilver I/Os
-zfs_scan_mem_lim_soft_fact:Fraction of hard limit used as soft limit
-zfs_scan_strict_mem_lim:Tunable to attempt to reduce lock contention
-zfs_scan_fill_weight:Tunable to adjust bias towards more filled segments during scans
-zfs_scan_report_txgs:Tunable to report resilver performance over the last N txgs
-zfs_resilver_disable_defer:Process all resilvers immediately
-zfs_resilver_defer_percent:Issued IO percent complete after which resilvers are deferred
-zfs_scrub_error_blocks_per_txg:Error blocks to be scrubbed in one txg
-zfs_dirty_data_max_percent:Max percent of RAM allowed to be dirty
-zfs_dirty_data_max_max_percent:zfs_dirty_data_max upper bound as % of RAM
-zfs_delay_min_dirty_percent:Transaction delay threshold
-zfs_dirty_data_max:Determines the dirty space limit
-zfs_wrlog_data_max:The size limit of write-transaction zil log data
-zfs_dirty_data_max_max:zfs_dirty_data_max upper bound in bytes
-zfs_dirty_data_sync_percent:Dirty data txg sync threshold as a percentage of zfs_dirty_data_max
-zfs_delay_scale:How quickly delay approaches infinity
-zfs_zil_clean_taskq_nthr_pct:Max percent of CPUs that are used per dp_sync_taskq
-zfs_zil_clean_taskq_minalloc:Number of taskq entries that are pre-populated
-zfs_zil_clean_taskq_maxalloc:Max number of taskq entries that are cached
-zvol_enforce_quotas:Enable strict ZVOL quota enforcment
-zfs_livelist_max_entries:Size to start the next sub-livelist in a livelist
-zfs_livelist_min_percent_shared:Threshold at which livelist is disabled
-zfs_max_recordsize:Max allowed record size
-zfs_allow_redacted_dataset_mount:Allow mounting of redacted datasets
-zfs_snapshot_history_enabled:Include snapshot events in pool history/events
-zfs_disable_ivset_guid_check:Set to allow raw receives without IVset guids
-zfs_default_bs:Default dnode block shift
-zfs_default_ibs:Default dnode indirect block shift
-zfs_prefetch_disable:Disable all ZFS prefetching
-zfetch_max_streams:Max number of streams per zfetch
-zfetch_min_sec_reap:Min time before stream reclaim
-zfetch_max_sec_reap:Max time before stream delete
-zfetch_min_distance:Min bytes to prefetch per stream
-zfetch_max_distance:Max bytes to prefetch per stream
-zfetch_max_idistance:Max bytes to prefetch indirects for per stream
-zfetch_max_reorder:Max request reorder distance within a stream
-zfetch_hole_shift:Max log2 fraction of holes in a stream
-zfs_pd_bytes_max:Max number of bytes to prefetch
-zfs_traverse_indirect_prefetch_limit:Traverse prefetch number of blocks pointed by indirect block
-send_holes_without_birth_time:Ignore hole_birth txg for zfs send
-zfs_send_corrupt_data:Allow sending corrupt data
-zfs_send_queue_length:Maximum send queue length
-zfs_send_unmodified_spill_blocks:Send unmodified spill blocks
-zfs_send_no_prefetch_queue_length:Maximum send queue length for non-prefetch queues
-zfs_send_queue_ff:Send queue fill fraction
-zfs_send_no_prefetch_queue_ff:Send queue fill fraction for non-prefetch queues
-zfs_override_estimate_recordsize:Override block size estimate with fixed size
-zfs_recv_queue_length:Maximum receive queue length
-zfs_recv_queue_ff:Receive queue fill fraction
-zfs_recv_write_batch_size:Maximum amount of writes to batch into one transaction
-zfs_recv_best_effort_corrective:Ignore errors during corrective receive
-dmu_object_alloc_chunk_shift:CPU-specific allocator grabs 2^N objects at once
-zfs_nopwrite_enabled:Enable NOP writes
-zfs_per_txg_dirty_frees_percent:Percentage of dirtied blocks from frees in one TXG
-zfs_dmu_offset_next_sync:Enable forcing txg sync to find holes
-dmu_prefetch_max:Limit one prefetch call to this size
-dmu_ddt_copies:Override copies= for dedup objects
-ddt_zap_default_bs:DDT ZAP leaf blockshift
-ddt_zap_default_ibs:DDT ZAP indirect blockshift
-zfs_dedup_log_txg_max:Max transactions before starting to flush dedup logs
-zfs_dedup_log_mem_max:Max memory for dedup logs
-zfs_dedup_log_mem_max_percent:Max memory for dedup logs, as % of total memory
-zfs_dedup_prefetch:Enable prefetching dedup-ed blks
-zfs_dedup_log_flush_min_time_ms:Min time to spend on incremental dedup log flush each transaction
-zfs_dedup_log_flush_entries_min:Min number of log entries to flush each transaction
-zfs_dedup_log_flush_entries_max:Max number of log entries to flush each transaction
-zfs_dedup_log_flush_txgs:Number of TXGs to try to rotate the log in
-zfs_dedup_log_cap:Soft cap for the size of the current dedup log
-zfs_dedup_log_hard_cap:Whether to use the soft cap as a hard cap
-zfs_dedup_log_flush_flow_rate_txgs:Number of txgs to average flow rates across
-zfs_dbuf_state_index:Calculate arc header index
-dbuf_cache_max_bytes:Maximum size in bytes of the dbuf cache.
-dbuf_cache_hiwater_pct:Percentage over dbuf_cache_max_bytes for direct dbuf eviction.
-dbuf_cache_lowater_pct:Percentage below dbuf_cache_max_bytes when dbuf eviction stops.
-dbuf_metadata_cache_max_bytes:Maximum size in bytes of dbuf metadata cache.
-dbuf_cache_shift:Set size of dbuf cache to log2 fraction of arc size.
-dbuf_metadata_cache_shift:Set size of dbuf metadata cache to log2 fraction of arc size.
-dbuf_mutex_cache_shift:Set size of dbuf cache mutex array as log2 shift.
-zfs_btree_verify_intensity:Enable btree verification. Levels above 4 require ZFS be built with debugging
-brt_zap_prefetch:Enable prefetching of BRT ZAP entries
-brt_zap_default_bs:BRT ZAP leaf blockshift
-brt_zap_default_ibs:BRT ZAP indirect blockshift
-zfs_arc_min:Minimum ARC size in bytes
-zfs_arc_max:Maximum ARC size in bytes
-zfs_arc_meta_balance:Balance between metadata and data on ghost hits.
-zfs_arc_grow_retry:Seconds before growing ARC size
-zfs_arc_shrink_shift:log2(fraction of ARC to reclaim)
-zfs_arc_pc_percent:Percent of pagecache to reclaim ARC to
-zfs_arc_average_blocksize:Target average block size
-zfs_compressed_arc_enabled:Disable compressed ARC buffers
-zfs_arc_min_prefetch_ms:Min life of prefetch block in ms
-zfs_arc_min_prescient_prefetch_ms:Min life of prescient prefetched block in ms
-l2arc_write_max:Max write bytes per interval
-l2arc_write_boost:Extra write bytes during device warmup
-l2arc_headroom:Number of max device writes to precache
-l2arc_headroom_boost:Compressed l2arc_headroom multiplier
-l2arc_trim_ahead:TRIM ahead L2ARC write size multiplier
-l2arc_feed_secs:Seconds between L2ARC writing
-l2arc_feed_min_ms:Min feed interval in milliseconds
-l2arc_noprefetch:Skip caching prefetched buffers
-l2arc_feed_again:Turbo L2ARC warmup
-l2arc_norw:No reads during writes
-l2arc_meta_percent:Percent of ARC size allowed for L2ARC-only headers
-l2arc_rebuild_enabled:Rebuild the L2ARC when importing a pool
-l2arc_rebuild_blocks_min_l2size:Min size in bytes to write rebuild log blocks in L2ARC
-l2arc_mfuonly:Cache only MFU data from ARC into L2ARC
-l2arc_exclude_special:Exclude dbufs on special vdevs from being cached to L2ARC if set.
-zfs_arc_lotsfree_percent:System free memory I/O throttle in bytes
-zfs_arc_sys_free:System free memory target size in bytes
-zfs_arc_dnode_limit:Minimum bytes of dnodes in ARC
-zfs_arc_dnode_limit_percent:Percent of ARC meta buffers for dnodes
-zfs_arc_dnode_reduce_percent:Percentage of excess dnodes to try to unpin
-zfs_arc_eviction_pct:When full, ARC allocation waits for eviction of this % of alloc size
-zfs_arc_evict_batch_limit:The number of headers to evict per sublist before moving to the next
-zfs_arc_prune_task_threads:Number of arc_prune threads
-zfs_arc_evict_threads:Number of threads to use for ARC eviction.
-zstd_earlyabort_pass:Enable early abort attempts when using zstd
-zstd_abort_size:Minimal size of block to attempt early abort
-zfs_max_dataset_nesting:Limit to the amount of nesting a path can have. Defaults to 50.
-zfs_fletcher_4_impl:Select fletcher 4 implementation.
-zfs_sha512_impl:Select SHA512 implementation.
-zfs_sha256_impl:Select SHA256 implementation.
-icp_gcm_impl:Select gcm implementation.
-icp_gcm_avx_chunk_size:How many bytes to process while owning the FPU
-zfs_blake3_impl:Select BLAKE3 implementation.
-icp_aes_impl:Select aes implementation.
 
 === ziirave_wdt ===
 wdt_timeout:Watchdog timeout in seconds (int)

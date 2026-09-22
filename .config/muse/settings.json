@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "reasoning_effort": "xhigh",
+  "tui": {
+    "terminal_background": "dark"
+  },
+  "mcpServers": {
+    "github": {
+      "enabled": false,
+      "mode": "optional",
+      "transport": "stdio",
+      "command": "github-mcp-server",
+      "args": [
+        "stdio",
+        "--read-only",
+        "--toolsets",
+        "context,repos,issues,pull_requests,actions,code_security"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}",
+        "GITHUB_READ_ONLY": "1",
+        "GITHUB_TOOLSETS": "context,repos,issues,pull_requests,actions,code_security"
+      }
+    },
+    "fetch": {
+      "enabled": false,
+      "mode": "optional",
+      "transport": "stdio",
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ],
+      "env": {}
+    },
+    "playwright": {
+      "enabled": false,
+      "mode": "optional",
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--isolated",
+        "--headless",
+        "--output-dir",
+        "${HOME}/.local/share/mcp/playwright-output",
+        "--file-paths",
+        "relative",
+        "--no-webmcp"
+      ],
+      "env": {}
+    },
+    "brave-search": {
+      "enabled": false,
+      "mode": "optional",
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@brave/brave-search-mcp-server",
+        "--transport",
+        "stdio",
+        "--enabled-tools",
+        "brave_web_search",
+        "brave_news_search",
+        "brave_llm_context"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      }
+    },
+    "context7": {
+      "enabled": true,
+      "mode": "optional",
+      "transport": "streamable_http",
+      "url": "https://mcp.context7.com/mcp"
+    }
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '%s\\n' '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"Prefer local repository files, local project memory, and locally installed skills before external discovery. Use read-only observation before changes. Verify completed work with local checks and report checks not run. Before terminal work, use EDITOR=nvim, VISUAL=nvim, PAGER=cat and GIT_PAGER=cat; preserve the inherited PATH and terminal type. Never enable disabled MCP servers without completing their documented setup gates. GitHub access is read-only and limited to repositories and organizations explicitly authorized by the user; never request broad administration. Fetch is for public HTTPS only: do not access localhost, loopback, private or link-local addresses, Docker networks, router or admin pages, home-lab services, NAS devices, or local files. Playwright is limited to public websites and explicitly approved local development servers, with files limited to the active workspace and dedicated output directory. Never attach existing browsers, tabs, profiles, cookies, or storage state; never use persistent profiles, unrestricted file access, or browser_run_code_unsafe. Ask the user for confirmation before form submissions, messages, uploads, downloads, purchases, account changes, or authenticated actions. Brave is limited to web search, news search, and LLM context. Context7 is limited to documentation and code examples. Request approval before external publication, destructive actions, or credential access. This guidance is advisory, not an enforced sandbox, network policy, tool filter, credential store, or offline-inference guarantee.\"}}'"
+          }
+        ]
+      }
+    ]
+  },
+  "runtime_capabilities": {
+    "plugin:tbh-reminders:reminder:memory": {
+      "enabled": true
+    },
+    "plugin:tbh-reminders:reminder:skill-reminder": {
+      "enabled": true
+    },
+    "plugin:tbh-reminders:reminder:goal-reminder": {
+      "enabled": true
+    },
+    "plugin:tbh-reminders:reminder:verify-reminder": {
+      "enabled": true
+    }
+  }
+}

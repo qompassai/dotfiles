@@ -1,27 +1,19 @@
-#!/usr/bin/env bash
-# /qompassai/dotfiles/.config/bash/conf.d/mojo.sh
-# Qompass AI Bash Mojo Config
-# Copyright (C) 2026 Qompass AI, All rights reserved
-# --------------------------------------------------
-mojo_up()
-{
-    export MOJO_HOME="$HOME/.local/share/mojo/.pixi/envs/default"
-    export CPATH="$MOJO_HOME/include:$CPATH"
-    export C_INCLUDE_PATH="$MOJO_HOME/include:$C_INCLUDE_PATH"
-    export CPLUS_INCLUDE_PATH="$MOJO_HOME/include:$CPLUS_INCLUDE_PATH"
-    export LD_LIBRARY_PATH="$MOJO_HOME/lib:$LD_LIBRARY_PATH"
-    export MANPATH="$MOJO_HOME/man:$MOJO_HOME/share/man:$MANPATH"
-    export MOJO_STDLIB_PATH="$MOJO_HOME/lib/mojo"
-    export PKG_CONFIG_PATH="$MOJO_HOME/lib/pkgconfig:$PKG_CONFIG_PATH"
-    export PATH="$MOJO_HOME/bin:$PATH"
-    echo "Mojo environment activated"
-}
-PATH="${PATH//$HOME\/.local\/share\/mojo\/.pixi\/envs\/default\/bin:/}"
-mojo_down()
-{
-    local new_path
-    new_path="${PATH//$HOME\/.local\/share\/mojo\/.pixi\/envs\/default\/bin:/}"
-    export PATH="$new_path"
-    unset MOJO_HOME MOJO_STDLIB_PATH
-    echo "Mojo environment deactivated"
-}
+# #################################################################
+# /qompassai/.config/bash/conf.d/mojo.sh
+# Qompass AI Mojo
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (c) 2026 Qompass AI
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at:
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# #################################################################
+export NVIM_MOJO_EXECUTABLE="$HOME/.local/bin/mojo"
+export NVIM_MOJO_LLDB_DAP="$HOME/.local/bin/lldb-dap"
