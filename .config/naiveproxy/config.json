@@ -1,0 +1,12 @@
+{
+	"extra-headers": [],
+	"host-resolver-rules": [],
+	"idle-timeout": 600,
+	"insecure-concurrency": 1,
+	"listen": "socks://127.0.0.1:1080",
+	"log": "",
+	"no-post-quantum": false,
+	"proxy": "https://user:REPLACE-ME@proxy.example.com:443",
+	"resolver-range": "100.64.0.0/10",
+	"tunnel-timeout": 1800
+}

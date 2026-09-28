@@ -1,0 +1,135 @@
+## =============================================================================
+## JVM options for Elasticsearch (jvm.options) - documented template
+## =============================================================================
+##
+## What this file is:
+##   One JVM flag per line, read at startup by the Elasticsearch launcher.
+##   Lines starting with '#' are comments; blank lines are ignored. A line may
+##   carry an optional Java-version prefix so a flag only applies to matching
+##   runtimes: "17:" (exactly 17), "17-18:" (17 through 18), "17-:" (17 and up).
+##   Example: 17-:-Xmx2g
+##
+## Doc references (accessed 2026-09-28):
+##   1. JVM settings (heap sizing, dump paths, GC logging, DNS cache, tmpdir):
+##      https://www.elastic.co/docs/reference/elasticsearch/jvm-settings
+##   2. System configuration (memory lock, file descriptors, ...):
+##      https://www.elastic.co/guide/en/elasticsearch/reference/current/system-config.html
+##
+## Notes / judgments:
+##   - Upstream's guidance: do NOT edit the root jvm.options shipped with the
+##     package; put custom flags in jvm.options.d/*.options instead (files
+##     there are read in lexical order and override). This dotfiles copy is a
+##     documented TEMPLATE of the canonical filename - copy it into
+##     jvm.options.d/ (e.g. as 10-custom.options) on a real install.
+##   - Heap: modern Elasticsearch AUTO-SIZES the heap from node roles and
+##     total RAM, so -Xms/-Xmx are often absent from the shipped file. If you
+##     set them explicitly: Xms MUST equal Xmx, and never exceed 50% of RAM
+##     (the OS page cache needs the rest) or ~26-30 GB (compressed OOPs
+##     cutoff). The 2g values below are a dev-workstation template - raise to
+##     min(50% RAM, 31g) on a real node, and pair with
+##     bootstrap.memory_lock: true in elasticsearch.yml.
+##   - GC: G1GC is the documented default collector for current releases.
+##   - Every non-comment line below is a real JVM flag; a structural check
+##     (optional version prefix + dash-prefixed flag) is run at validation.
+
+## Heap size: minimum (-Xms) and maximum (-Xmx). MUST be equal.
+## ELI5: the JVM's memory pool for Elasticsearch. Too small = constant
+## garbage collection pauses; too big = starves the OS file cache that
+## Lucene relies on. 50%-of-RAM rule, see header.
+-Xms2g
+-Xmx2g
+
+## Garbage collector: G1GC (documented default).
+## ELI5: the algorithm that reclaims unused memory. G1 balances pause times
+## and throughput for a search engine's allocation pattern.
+-XX:+UseG1GC
+
+## Touch every heap page at startup.
+## ELI5: forces the OS to actually back the heap with RAM now, instead of
+## faulting pages in later during a query (avoids latency spikes).
+-XX:+AlwaysPreTouch
+
+## Thread stack size.
+## ELI5: memory reserved per thread stack. 1m is the documented default;
+## larger wastes native memory when many threads exist.
+-Xss1m
+
+## Print full stack traces even for "hot" exceptions.
+## ELI5: the JVM normally stops printing stack traces for exceptions thrown
+## very often (as an optimization). Disabling that keeps logs debuggable.
+-XX:-OmitStackTraceInFastThrow
+
+## Show helpful NullPointerException messages (JDK 14+).
+## ELI5: tells you WHICH variable was null instead of just "NullPointerException".
+-XX:+ShowCodeDetailsInExceptionMessages
+
+## Temp directory for JNA and other native scratch files.
+## ELI5: Elasticsearch extracts native libraries at runtime; point them at a
+## private dir instead of the world-writable /tmp. ${ES_TMPDIR} is set by the
+## startup scripts.
+-Djava.io.tmpdir=${ES_TMPDIR}
+-Djna.tmpdir=${ES_TMPDIR}
+
+## Don't let JNA use system-installed native libs.
+## ELI5: use only the JNA bundled with Elasticsearch, so a stray system
+## libjnidispatch can't change behavior or introduce a vulnerable version.
+-Djna.nosys=true
+
+## Headless mode (no GUI available/needed).
+## ELI5: Elasticsearch never opens windows; tell AWT not to try.
+-Djava.awt.headless=true
+
+## File encoding: always UTF-8.
+## ELI5: guarantees text (field names, queries) is read as UTF-8 regardless
+## of the OS locale.
+-Dfile.encoding=UTF-8
+
+## Locale providers: SPI first, then COMPAT.
+## ELI5: which Java locale data to prefer, so date/number formatting is
+## consistent across JDK vendors.
+-Djava.locale.providers=SPI,COMPAT
+
+## Heap dump on OutOfMemoryError.
+## ELI5: if the JVM dies from running out of memory, write a snapshot of the
+## heap first so you can diagnose what ate it.
+-XX:+HeapDumpOnOutOfMemoryError
+-XX:HeapDumpPath=/var/log/elasticsearch
+
+## Fatal error log location (hs_err_pid file on JVM crash).
+## ELI5: if the JVM itself crashes (not just OOM), write the native crash
+## report here. %p = process id.
+-XX:ErrorFile=/var/log/elasticsearch/hs_err_pid%p.log
+
+## GC logging: gc*, gc+age and safepoint events to a rotating log file.
+## ELI5: a permanent flight recorder of garbage-collection pauses - the first
+## thing you read when diagnosing latency spikes. 32 files x 64m rotation.
+-Xlog:gc*,gc+age=trace,safepoint:file=/var/log/elasticsearch/gc.log:utctime,pid,tags:filecount=32,filesize=64m
+
+## Netty: don't use Unsafe / key-set optimizations / recycler.
+## ELI5: Netty is the networking library. These three flags trade a little
+## raw speed for safety and predictable memory use (Unsafe bypasses JVM
+## safety checks; the recycler pools buffers in ways that complicate
+## leak detection).
+-Dio.netty.noUnsafe=true
+-Dio.netty.noKeySetOptimization=true
+-Dio.netty.recycler.maxCapacityPerThread=0
+
+## Logging framework tweaks.
+## ELI5: don't install a shutdown hook that could deadlock on exit
+## (log4j.shutdownHookEnabled); disable JMX lookup of loggers
+## (log4j2.disable.jmx); block ${...} lookups in log messages, the
+## Log4Shell-class vector (log4j2.formatMsgNoLookups).
+-Dlog4j.shutdownHookEnabled=false
+-Dlog4j2.disable.jmx=true
+-Dlog4j2.formatMsgNoLookups=true
+
+## DNS cache TTLs (Elasticsearch-specific properties, seconds).
+## ELI5: how long the JVM caches DNS answers. 60s positive / 10s negative
+## keeps node discovery responsive when IPs change (cloud, containers).
+-Des.networkaddress.cache.ttl=60
+-Des.networkaddress.cache.negative.ttl=10
+
+## Version-gated example (syntax demo; applies the flag only on Java 17+).
+## ELI5: prefix "17-:" = "only pass this flag to JVM 17 or newer". Useful
+## when one options file is shared across hosts with different JDKs.
+# 17-:FILL_IN_VERSION_SPECIFIC_FLAG_IF_NEEDED

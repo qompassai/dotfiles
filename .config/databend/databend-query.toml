@@ -1,0 +1,258 @@
+# =============================================================================
+# Databend Query Service configuration (databend-query.toml)
+# =============================================================================
+#
+# What this app is:
+#   Databend is an open-source cloud-native data warehouse written in Rust,
+#   inspired by ClickHouse. `databend-query` is the stateless compute node:
+#   it serves the MySQL protocol, ClickHouse HTTP, REST, Arrow Flight and
+#   Flight SQL endpoints. It stores no data itself; it reads/writes object
+#   storage (or the local filesystem) and gets cluster metadata from
+#   databend-meta. Start with: databend-query --config-file databend-query.toml
+#
+# Doc references (accessed 2026-09-28):
+#   1. Current distribution template (main branch, canonical source of truth):
+#      https://github.com/databendlabs/databend/blob/main/scripts/distribution/configs/databend-query.toml
+#   2. Detailed option reference incl. documented defaults and env vars:
+#      https://github.com/suyanhanx/databend/blob/HEAD/docs/doc/10-deploy/07-query/10-query-config.md
+#   3. Environment-variable mapping for every config option:
+#      https://docs.databend.com/guides/deploy/references/node-config/environment-variables
+#   4. Storage setup guidance (s3/azblob/gcs/oss/hdfs):
+#      https://github.com/databendlabs/databend-docs/blob/HEAD/docs/fragment/01-deploying-databend-en.md
+#   5. User-auth example (root / no_password) used in tutorials:
+#      https://github.com/databendlabs/databend-docs/blob/HEAD/docs/en/tutorials/operate-and-recover/bendsave.md
+#
+# Notes / unverifiable details:
+#   - Values below mirror the CURRENT distribution template on main (ref 1).
+#     Where the detailed reference (ref 2) documents a different historical
+#     default, it is noted in the option comment.
+#   - Legacy `storage.obs` (Huawei OBS, documented in the old reference) was
+#     replaced by `storage.oss` in the current template and is NOT included
+#     below. Only the section matching `storage.type` takes effect.
+#   - Legacy `log.file.on` / `log.stderr.*` toggles appear in the old
+#     reference but NOT in the current distribution template, so they are
+#     omitted rather than invented.
+#   - The official query-config page could not be fetched (request timed out),
+#     so newer changelog-mentioned query options such as
+#     aggregate_spilling_memory_ratio, join_spilling_memory_ratio,
+#     max_running_queries and data_retention_time_in_days_max are omitted
+#     rather than invented. Re-check upstream before adding them.
+#   - Rule of thumb for the env-var mapping: UPPER_SNAKE_CASE the dotted key
+#     and join sections with underscores, e.g. query.mysql_handler_port ->
+#     QUERY_MYSQL_HANDLER_PORT. Credentials here are the upstream sample
+#     values (root/root, no_password), NOT real secrets.
+
+# ---------------------------------------------------------------------------
+# [query] - the query (compute) service itself
+# ---------------------------------------------------------------------------
+[query]
+
+# ELI5: the address (host:port) of the internal admin/debug REST API
+# (cluster status, stack traces, server info). Default: "0.0.0.0:8080".
+admin_api_address = "0.0.0.0:8080"
+
+# ELI5: a name for this group of query nodes. Every query node that shares
+# the same cluster_id cooperates as one elastic cluster. Default: "default".
+cluster_id = "default"
+
+# ELI5: the address (host:port) of the internal Arrow Flight RPC API used
+# for high-speed data exchange between query nodes. Default: "0.0.0.0:9090".
+flight_api_address = "0.0.0.0:9090"
+
+# ELI5: host the Arrow Flight SQL endpoint listens on (used by JDBC/ODBC
+# drivers). Default: "0.0.0.0".
+flight_sql_handler_host = "0.0.0.0"
+
+# ELI5: port the Arrow Flight SQL endpoint listens on. Default: 8900.
+flight_sql_handler_port = 8900
+
+# ELI5: host the REST / ClickHouse-compatible HTTP handler listens on.
+# Default: "0.0.0.0".
+http_handler_host = "0.0.0.0"
+
+# ELI5: port the REST / ClickHouse-compatible HTTP handler listens on.
+# Default: 8000.
+http_handler_port = 8000
+
+# ELI5: the most client sessions this node allows at once. New connections
+# beyond this are refused. Default: 256.
+max_active_sessions = 256
+
+# ELI5: the address (host:port) of the Prometheus metrics endpoint.
+# Default: "0.0.0.0:7070".
+metric_api_address = "0.0.0.0:7070"
+
+# ELI5: host the MySQL-protocol handler listens on (so mysql clients and
+# drivers can connect). Default: "0.0.0.0".
+mysql_handler_host = "0.0.0.0"
+
+# ELI5: port the MySQL-protocol handler listens on. Default: 3307.
+mysql_handler_port = 3307
+
+# ELI5: how long (milliseconds) the node waits for in-flight queries to
+# finish after it receives a shutdown signal before forcing exit.
+# Default: 5000.
+shutdown_wait_timeout_ms = 5000
+
+# ELI5: the tenant (namespace) this node belongs to. Users, databases and
+# tables are isolated per tenant. Default: "default".
+tenant_id = "default"
+
+# ---------------------------------------------------------------------------
+# [[query.users]] - built-in users created on first startup.
+# Upstream ships these commented out with the note "comment out one of the
+# following blocks to enable a user for the first run". All three documented
+# example blocks are set here explicitly as a template; enable exactly one
+# (root / no_password is what the official tutorials use).
+# ---------------------------------------------------------------------------
+
+# ELI5: username "root" with no password at all. Fine for local dev;
+# never use on a machine reachable from the network.
+[[query.users]]
+name = "root"
+auth_type = "no_password"
+auth_string = ""
+
+# ELI5: username "databend" whose password is stored as a double-SHA1 hash
+# (the auth_string is the documented example hash, not a real credential).
+[[query.users]]
+name = "databend"
+auth_type = "double_sha1_password"
+auth_string = "e6688e284049ca068aa8379216ad16f5c"
+
+# ELI5: username "datafuselabs" whose password is stored as a SHA256 hash
+# (the auth_string is the documented example hash, not a real credential).
+[[query.users]]
+name = "datafuselabs"
+auth_type = "sha256_password"
+auth_string = "e6688e284049ca068aa8379216ad16f5c"
+
+# ---------------------------------------------------------------------------
+# [log] - logging. Canonical template only ships [log.file].
+# ---------------------------------------------------------------------------
+[log]
+
+[log.file]
+# ELI5: where on disk log files are written. Default: "/var/log/databend".
+dir = "/var/log/databend"
+
+# ELI5: log line layout; "text" = human-readable lines, "json" = one JSON
+# object per line (better for log shippers). Default: "text".
+format = "text"
+
+# ELI5: the noisiest level that gets logged: DEBUG < INFO < WARN < ERROR.
+# Default: "WARN".
+level = "WARN"
+
+# ---------------------------------------------------------------------------
+# [meta] - how this query node talks to the databend-meta cluster.
+# ---------------------------------------------------------------------------
+[meta]
+
+# ELI5: how often (seconds) the node re-syncs its view of the cluster
+# topology from the meta service. Default: 60.
+auto_sync_interval = 60
+
+# ELI5: how long (seconds) to wait for a single request to the meta service
+# before giving up. Default in the current template: 10 (the old reference
+# documented 60).
+client_timeout_in_second = 10
+
+# ELI5: the gRPC addresses of the databend-meta nodes, e.g.
+# ["127.0.0.1:9191"]. Default: ["0.0.0.0:9191"].
+endpoints = ["0.0.0.0:9191"]
+
+# ELI5: password for the meta service (matches the meta node's configured
+# user). Default in the current template: "root".
+password = "root"
+
+# ELI5: after how long (seconds) a meta endpoint that stops responding is
+# dropped from the client's rotation. Documented default in the old
+# reference: 120. Not present in the current template; kept for parity with
+# the documented option set - verify against your Databend version.
+unhealth_endpoint_evict_time = 120
+
+# ELI5: username for the meta service. Default in the current template:
+# "root".
+username = "root"
+
+# ---------------------------------------------------------------------------
+# [storage] - where table data actually lives.
+# type = which backend is ACTIVE. Only the matching [storage.<type>]
+# section takes effect; the rest are filled-in templates.
+# Documented values for type: "fs" | "s3" | "azblob" | "gcs" | "oss" |
+# "cos" | "hdfs" | "webhdfs". Default: "fs".
+# ---------------------------------------------------------------------------
+[storage]
+type = "fs"
+
+# ELI5: Azure Blob Storage backend.
+[storage.azblob]
+account_key = "<your-account-key>"
+account_name = "<your-account-name>"
+container = "<your-container>"
+endpoint_url = "https://<your-storage-account-name>.blob.core.windows.net"
+
+# ELI5: Tencent Cloud COS backend.
+[storage.cos]
+bucket = "<your-bucket>"
+endpoint_url = "https://cos.<your-region>.myqcloud.com"
+secret_id = "<your-secret-id>"
+secret_key = "<your-secret-key>"
+
+# ELI5: local filesystem backend (dev / single-machine default).
+[storage.fs]
+data_path = "/var/lib/databend/data"
+
+# ELI5: Google Cloud Storage backend. `credential` holds the contents of a
+# service-account JSON key file.
+[storage.gcs]
+bucket = "<your-bucket>"
+credential = "<your-service-account-json-contents>"
+endpoint_url = "https://storage.googleapis.com"
+
+# ELI5: Hadoop HDFS backend.
+[storage.hdfs]
+name_node = "<your-namenode-address>"
+
+# ELI5: Alibaba Cloud OSS backend.
+[storage.oss]
+access_key_id = "<your-access-key-id>"
+access_key_secret = "<your-access-key-secret>"
+bucket = "<your-bucket>"
+endpoint_url = "https://oss-<your-region>.aliyuncs.com"
+
+# ELI5: S3-compatible backend (AWS S3, MinIO, Ceph RGW, ...).
+[storage.s3]
+access_key_id = "<your-access-key-id>"
+bucket = "<your-bucket>"
+enable_virtual_host_style = false
+endpoint_url = "https://s3.amazonaws.com"
+secret_access_key = "<your-secret-access-key>"
+
+# ELI5: WebHDFS backend (HDFS over HTTP).
+[storage.webhdfs]
+endpoint_url = "http://<your-namenode>:9870"
+
+# ---------------------------------------------------------------------------
+# [cache] - local disk cache for data pulled from remote storage.
+# ---------------------------------------------------------------------------
+[cache]
+
+# ELI5: what happens to cached files when the cache key scheme changes:
+# "reset" = throw everything away and start clean, "fuzzy" = keep using old
+# keys where possible. Default: "reset".
+data_cache_key_reload_policy = "reset"
+
+# ELI5: which storage backs the data cache: "none" = no caching,
+# "disk" = cache on local disk via [cache.disk]. Default: "none".
+data_cache_storage = "none"
+
+[cache.disk]
+# ELI5: the most bytes the disk cache may hold (20 GiB here).
+# Default: 21474836480.
+max_bytes = 21474836480
+
+# ELI5: directory the disk cache files live in.
+# Default: "/var/lib/databend/cache".
+path = "/var/lib/databend/cache"

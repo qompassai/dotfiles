@@ -1,0 +1,142 @@
+# =============================================================================
+# Databend Meta Service configuration (databend-meta.toml)
+# =============================================================================
+#
+# What this app is:
+#   `databend-meta` is Databend's metadata service: a Raft-based cluster
+#   that stores table schemas, user accounts, cluster membership and other
+#   metadata the stateless databend-query nodes need. Run one per machine
+#   (1 or 3 nodes). Start with: databend-meta --config-file databend-meta.toml
+#
+# Doc references (accessed 2026-09-28):
+#   1. Current distribution template (main branch, canonical source of truth):
+#      https://github.com/databendlabs/databend/blob/main/scripts/distribution/configs/databend-meta.toml
+#   2. Detailed metasrv option reference (older, documents TLS keys, Raft
+#      tuning knobs and their defaults):
+#      https://github.com/colagy/databend/blob/HEAD/docs/doc/10-deploy/06-metasrv/15-metasrv-config.md
+#   3. Environment-variable mapping for every config option:
+#      https://docs.databend.com/guides/deploy/references/node-config/environment-variables
+#
+# Notes / unverifiable details:
+#   - Top-level keys and [log]/[raft_config] mirror the current template
+#     (ref 1). TLS keys and Raft tuning knobs come from the older detailed
+#     reference (ref 2); they are marked "(legacy ref)" in their comments.
+#     Verify them against your Databend version before relying on them.
+#   - Ref 2 also documents legacy top-level `log_dir` / `log_level`, which the
+#     current template replaced with [log.file] dir/level; the legacy pair is
+#     not included here.
+#   - `single = true` bootstraps a brand-new single-node Raft cluster. For
+#     nodes 2 and 3, set `single = false` and list the existing nodes in
+#     `join`. After the first successful start the Raft log owns membership
+#     and these two options are ignored.
+#   - Env-var mapping (ref 3), e.g.: METASRV_ADMIN_API_ADDRESS,
+#     METASRV_GRPC_API_ADDRESS, METASRV_GRPC_API_ADVERTISE_HOST,
+#     METASRV_LOG_LEVEL, METASRV_LOG_DIR, METASRV_RAFT_CONFIG_ID,
+#     METASRV_RAFT_CONFIG_RAFT_DIR, METASRV_RAFT_CONFIG_RAFT_API_PORT,
+#     METASRV_RAFT_CONFIG_RAFT_LISTEN_HOST,
+#     METASRV_RAFT_CONFIG_RAFT_ADVERTISE_HOST,
+#     METASRV_RAFT_CONFIG_RAFT_HEARTBEAT_INTERVAL,
+#     METASRV_RAFT_CONFIG_RAFT_INSTALL_SNAPSHOT_TIMEOUT,
+#     METASRV_RAFT_CONFIG_RAFT_MAX_APPLIED_LOG_TO_KEEP,
+#     METASRV_RAFT_CONFIG_RAFT_SNAPSHOT_LOGS_SINCE_LAST,
+#     METASRV_RAFT_CONFIG_ID / ..._SINGLE / ..._JOIN.
+
+# ELI5: address (host:port) of this node's admin/debug REST API (metrics,
+# cluster status, leadership transfer). Default: "0.0.0.0:28002".
+admin_api_address = "0.0.0.0:28002"
+
+# ELI5: (legacy ref) path to the PEM certificate for TLS on the admin API.
+# Empty = TLS disabled. Default: "".
+admin_tls_server_cert = ""
+
+# ELI5: (legacy ref) path to the PEM private key for TLS on the admin API.
+# Empty = TLS disabled. Default: "".
+admin_tls_server_key = ""
+
+# ELI5: address (host:port) this node serves its gRPC metadata API on; the
+# query nodes connect here. Default: "0.0.0.0:9191".
+grpc_api_address = "0.0.0.0:9191"
+
+# ELI5: the hostname/IP this node ADVERTISES to peers and clients for the
+# gRPC API (must be reachable by the others; "localhost" only works when
+# everything runs on one machine). Default: "localhost".
+grpc_api_advertise_host = "localhost"
+
+# ELI5: (legacy ref) path to the PEM certificate for TLS on the gRPC API.
+# Empty = TLS disabled. Default: "".
+grpc_tls_server_cert = ""
+
+# ELI5: (legacy ref) path to the PEM private key for TLS on the gRPC API.
+# Empty = TLS disabled. Default: "".
+grpc_tls_server_key = ""
+
+# ---------------------------------------------------------------------------
+# [log] - logging. Canonical template only ships [log.file].
+# ---------------------------------------------------------------------------
+[log]
+
+[log.file]
+# ELI5: where on disk log files are written. Default: "/var/log/databend".
+dir = "/var/log/databend"
+
+# ELI5: log line layout; "text" = human-readable lines, "json" = one JSON
+# object per line (better for log shippers). Default: "text".
+format = "text"
+
+# ELI5: the noisiest level that gets logged: DEBUG < INFO < WARN < ERROR.
+# Default: "WARN".
+level = "WARN"
+
+# ---------------------------------------------------------------------------
+# [raft_config] - the Raft consensus cluster settings.
+# ---------------------------------------------------------------------------
+[raft_config]
+
+# ELI5: (legacy ref) how often (milliseconds) the leader sends heartbeats to
+# followers to stay in charge. Default: 1000.
+heartbeat_interval = 1000
+
+# ELI5: this node's unique numeric id inside the Raft cluster. Must differ
+# per node. Default: 0.
+id = 0
+
+# ELI5: (legacy ref) how long (milliseconds) a follower waits while
+# receiving a snapshot from the leader before timing out. Default: 4000.
+install_snapshot_timeout = 4000
+
+# ELI5: addresses of EXISTING cluster nodes a new node joins through, e.g.
+# ["127.0.0.1:28004"]. Only used when single = false on first start;
+# ignored afterwards. Default: ["127.0.0.1:28004"].
+join = ["127.0.0.1:28004"]
+
+# ELI5: (legacy ref) how many already-applied Raft log entries are kept on
+# disk instead of being compacted away. Default: 1000.
+max_applied_log_to_keep = 1000
+
+# ELI5: the hostname/IP this node advertises to peers for Raft traffic
+# (must be reachable by the other nodes). Default: "localhost".
+raft_advertise_host = "localhost"
+
+# ELI5: port used for internal Raft replication traffic between meta nodes.
+# Default: 28004.
+raft_api_port = 28004
+
+# ELI5: directory where this node persists the Raft log and snapshots.
+# Default: "/var/lib/databend/raft".
+raft_dir = "/var/lib/databend/raft"
+
+# ELI5: local interface the Raft port binds to. Default: "0.0.0.0".
+raft_listen_host = "0.0.0.0"
+
+# ELI5: true = bootstrap a brand-new single-node cluster on first start.
+# Set false on nodes 2+ and list the cluster in `join`. Ignored after the
+# first successful start. Default: true.
+single = true
+
+# ELI5: (legacy ref) take a snapshot after this many new log entries since
+# the last snapshot (keeps restart/replay fast). Default: 1024.
+snapshot_logs_since_last = 1024
+
+# ELI5: (seen in deployment samples) how long (milliseconds) to wait for a
+# Raft leader to appear during startup before failing. Default: 70000.
+wait_leader_timeout = 70000

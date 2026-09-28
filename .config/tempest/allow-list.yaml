@@ -1,0 +1,24 @@
+# =============================================================================
+# tempest -- allowed log errors (allow-list.yaml)
+# =============================================================================
+# What this is: consumed by tempest's tools/check_logs.py, which scans
+# service logs for ERROR/CRITICAL/TRACE lines after a test run. Entries
+# here are errors you have triaged as known/acceptable, so the checker
+# does not fail on them. ELI5: the proctor's list of "yes, we know the
+# radiator rattles -- ignore that noise".
+#
+# Format (from tools/check_logs.py in upstream tempest 28.0.0): the file is
+# read with yaml.safe_load. Each mapping value must unpack to a
+# (name, l) pair where l is a list of {module, message} dicts; a log line
+# is excused when it matches ".*<module>.*<message>.*". The checker looks
+# entries up by log-file short name (e.g. "c-api" for screen-c-api.log).
+#
+# Upstream ships this file EMPTY (0 bytes), and the body below matches
+# that: empty means "no allowed errors", so every ERROR/CRITICAL/TRACE
+# line fails the check.
+#
+# Source: upstream tempest 28.0.0 etc/allow-list.yaml (accessed
+# 2026-09-28; https://github.com/openstack/tempest).
+# Real location: /etc/tempest/allow-list.yaml
+# ---
+# (intentionally empty -- see above)

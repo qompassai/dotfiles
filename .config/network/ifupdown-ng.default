@@ -1,0 +1,28 @@
+# =============================================================================
+# ifupdown-ng -- service defaults (ifupdown-ng.default)
+# =============================================================================
+# What this is: shell-sourced defaults for the ifupdown-ng networking
+# service wrapper (AUR package `ifupdown-ng` installs this as
+# /etc/default/ifupdown-ng; the SysV-style `networking` script and the
+# systemd unit source it). ELI5: the on/off switches on the electrician's
+# van -- master kill switch, chatty mode, and whether to tidy up at
+# shutdown.
+# All three variables are explicitly set to their packaged defaults, so
+# this file is behaviour-neutral as shipped.
+# Source: upstream ifupdown-ng dist/debian/networking.default and
+# dist/debian/networking (CONFIGURE_INTERFACES handling) (accessed
+# 2026-09-28; https://github.com/ifupdown-ng/ifupdown-ng).
+# Real location: /etc/default/ifupdown-ng
+# ---
+
+# Master kill switch: set to "no" to skip configuring interfaces at boot.
+# (The service script defaults this to "yes" when the file is absent.)
+CONFIGURE_INTERFACES="yes"
+
+# Verbose mode: set to "yes" to make ifup/ifdown and their executors
+# chatty about what they are doing.
+VERBOSE="no"
+
+# Skip deconfiguring all interfaces during system reboot/shutdown.
+# Useful on large deployments to speed up shutdown/reboot.
+SKIP_DOWN_AT_SYSRESET="yes"

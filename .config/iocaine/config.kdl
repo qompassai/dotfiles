@@ -1,0 +1,201 @@
+// =====================================================================
+// iocaine — config.kdl
+// Workstation: primo (Arch Linux) · generated 2026-09-28
+//
+// Canonical filename/format: config.kdl (KDL).
+// Researched from upstream iocaine 3.5.0 (stable branch iocaine-3.x) on
+// 2026-09-28:
+//   https://git.madhouse-project.org/iocaine/iocaine (tag iocaine-3.5.0,
+//     cloned and read directly; config schema lives in
+//     iocaine/src/dominatrix/cuddles/parse.rs and
+//     iocaine/src/dominatrix/mod.rs; handler defaults in
+//     iocaine-powder/embeds/defaults/roto/init/pkg.roto)
+//   https://aur.archlinux.org/iocaine-qmk.git (PKGBUILD, 2026-09-06 —
+//     confirms config source layout for 3.5.0)
+//
+// iocaine is a scraper-defense reverse proxy / tarpit: it answers
+// suspicious crawlers with generated garbage pages instead of your real
+// content, and can auto-block repeat offenders at the firewall.
+//
+// How this file is loaded: `iocaine -c <path>` accepts a file or a
+// directory. A DIRECTORY merges every *.{toml,json,yaml,yml,kdl} under it
+// (sorted) over the embedded default config. A single FILE (this one)
+// replaces the embedded default entirely — so this file declares the
+// handler and server itself instead of inheriting them.
+//
+// KDL crash course: `name arg1 arg2 key="value" { children }`.
+// `//` starts a comment. Node/argument order is insignificant.
+// =====================================================================
+
+// ---------------------------------------------------------------------
+// Instance identity and state.
+// ---------------------------------------------------------------------
+
+// ELI5: a name for this iocaine instance. Used as the default "poison
+// ID" (a marker the garbage pages embed) and recorded in state.json.
+instance-id "primo"
+
+// ELI5: where iocaine keeps state.json (per-server derived state).
+// Must be an absolute path — iocaine does NOT expand "~".
+state-directory "/home/phaedrus/.local/share/iocaine"
+
+// ELI5: seed for the garbage generators. Empty (the default) means the
+// built-in default behavior. Per-server initial-seed/initial-seed-file
+// inside an http-server block would override this for that server.
+initial-seed ""
+// initial-seed-file is the alternative: read the seed from a file.
+// Unset here; setting it would take precedence via the "-file" suffix
+// mechanism (only "initial-seed" supports the -file variant).
+
+// ---------------------------------------------------------------------
+// Servers.
+// ---------------------------------------------------------------------
+
+// ELI5: the tarpit itself — listens for HTTP and hands every request to
+// the "default" handler below. bind is required (ip:port or a unix
+// socket path). unix-socket-access is unset (only meaningful for unix
+// socket binds). initial-seed/initial-seed-file may also appear here
+// per-server; they are unset, so the top-level seed applies.
+http-server default {
+    bind "127.0.0.1:42069"
+    // ELI5: which handler answers requests (handler-from, required),
+    // and which prometheus server receives this server's metrics.
+    use handler-from=default metrics=metrics
+}
+
+// ELI5: metrics endpoint scraped by Prometheus. persist-path keeps
+// counters across restarts; persist-interval "1h" is the documented
+// default (how often they are flushed to disk).
+prometheus-server metrics {
+    bind "127.0.0.1:42080"
+    persist-path "/home/phaedrus/.local/share/iocaine/metrics.json"
+    persist-interval "1h"
+    // Alternate spelling (equivalent): persist path="..." interval="1h"
+}
+
+// haproxy-spoa-server: NOT used here. It speaks the HAProxy SPOA
+// protocol so HAProxy can ask iocaine "block or allow this request?"
+// instead of proxying HTTP through iocaine. Same children as
+// http-server (bind, use, initial-seed[-file]). Enable it instead of
+// (or alongside) http-server when iocaine sits behind HAProxy.
+
+// ---------------------------------------------------------------------
+// Request handler: the tarpit logic (default roto implementation).
+// ---------------------------------------------------------------------
+
+// ELI5: "declare-handler" registers one named tarpit program.
+// language is roto (default), lua, or fennel — whichever runtimes this
+// iocaine build includes. path/compiler are unset, so the embedded
+// default handler program is used. The children below are the
+// handler's own configuration (read by roto/init/pkg.roto).
+declare-handler default language=roto {
+    // ELI5: minify the generated garbage HTML (default true).
+    minify true
+    // ELI5: verbose request logging (default false — keep off; tarpit
+    // logs are noise and can leak visitor details).
+    logging false
+    // ELI5: if set to a header name, a request carrying that header is
+    // trusted to dictate the tarpit decision (for testing behind a
+    // trusted front-end). Empty = disabled (default).
+    trusted-decision-header ""
+    // ELI5: clients from these IP networks skip the tarpit entirely.
+    // Upstream default: just loopback. Add your own nets as more args.
+    trusted-ips "127.0.0.1/32" "::1/128"
+    // ELI5: User-Agent substrings that are never tarpitted (default:
+    // "indieauth" — lets IndieAuth logins through). Vector or string.
+    trusted-user-agents "indieauth"
+    // ELI5: URL paths that are never tarpitted (default "/robots.txt",
+    // so well-behaved crawlers get the real file). Vector or string.
+    trusted-paths "/robots.txt"
+    // ELI5: User-Agent substrings that are ALWAYS tarpitted (default
+    // "Perplexity"). Vector or string.
+    unwanted-visitors "Perplexity"
+    // ELI5: block by origin network (cloud-scraper ASNs). list is the
+    // ASN set (upstream defaults: Alibaba/Huawei ASNs, listed
+    // explicitly below). db-path points at a GeoIP ASN database; it is
+    // UNSET here because a missing/unreadable file fails handler init —
+    // the check stays disabled until you install a database and set it.
+    unwanted-asns {
+        list "37963" "45102" "134963" "34947" "55990" "136907" "63655" "141180" "265443" "149640" "200756" "206798" "151610" "206204" "131444"
+        // db-path "/path/to/GeoLite2-ASN.mmdb"
+    }
+    // ELI5: tuning knobs for the generated garbage pages.
+    garbage {
+        // HTTP status for tarpit answers (default 200: look normal).
+        status-code 200
+        // Status when the tarpit decides NOT to engage (default 421
+        // Misdirected Request — a hint to go away).
+        fallthrough-status-code 421
+        title {
+            min-words 2
+            max-words 15
+        }
+        paragraphs {
+            min-count 1
+            max-count 5
+            min-words 10
+            max-words 69
+        }
+        links {
+            min-count 1
+            max-count 8
+            min-uri-parts 1
+            max-uri-parts 2
+            min-text-words 2
+            max-text-words 5
+            uri-separator "-"
+        }
+    }
+    // ELI5: handler-side firewall rules. block-rule-hits lists the
+    // detection rules whose hits get auto-blocked (default
+    // ["poisoned-url"] — anyone biting a poisoned link). NOTE: the
+    // handler warns if you set firewall.enable here — enabling the
+    // actual nftables firewall belongs in the TOP-LEVEL firewall
+    // block below, not in the handler.
+    firewall {
+        block-rule-hits "poisoned-url"
+    }
+    // Omitted handler keys (all defaulted; setting them needs real files):
+    //   sources { training-corpus ...; wordlists ... } — text sources
+    //     for the Markov garbage. Unset = embedded defaults.
+    //   template "..." / template-file "..." — custom HTML template.
+    //     Unset = embedded garbage.html.
+    //   ai-robots-txt-path "..." — JSON list of AI crawlers to match
+    //     against robots.txt behavior. Unset = embedded robots.json.
+    //   poison-id ... — marker embedded in garbage. Unset = instance-id.
+}
+
+// ---------------------------------------------------------------------
+// Top-level firewall: auto-block offenders via nftables.
+// ---------------------------------------------------------------------
+
+// ELI5: when enable is true, iocaine adds nftables rules that drop
+// traffic from IPs the tarpit flags (see handler firewall above).
+// DISABLED by default (enable false) — it needs root/CAP_NET_ADMIN and
+// a cooperative nftables setup, so it stays off until you opt in.
+firewall {
+    enable false
+    // nftables table name (default "iocaine").
+    table "iocaine"
+    // ELI5: how long a blocked address stays blocked (default 4h).
+    // Units: 30s, 10m, 2h, 7d, or combinations.
+    timeout "4h"
+    // ELI5: how often expired blocks are garbage-collected (default
+    // 2h). Must be smaller than timeout; every second would burn CPU.
+    gc-interval "2h"
+    // ELI5: max entries per address set (one set for v4, one for v6;
+    // default 1000000).
+    size 1000000
+    // ELI5: nftables rule priority (default 0).
+    priority 0
+    // ELI5: enable packet counters on the block rules (default true).
+    counters true
+    // ELI5: networks that are NEVER blocked even if flagged (default:
+    // none). Add your own IPs here before enabling, e.g.:
+    // allow "203.0.113.7/32"
+    allow
+    // ELI5: blocks are sent to nftables in batches: when 1000 unique
+    // offenders pile up (batch size) or 10 seconds pass
+    // (flush-interval), the batch is committed.
+    batch size=1000 flush-interval=10
+}

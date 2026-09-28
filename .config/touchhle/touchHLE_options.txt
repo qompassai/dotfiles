@@ -1,0 +1,194 @@
+# touchHLE_options.txt -- per-app user options for touchHLE.
+#
+# touchHLE (https://github.com/touchhle/touchhle) is a high-level emulator for
+# early iPhone OS applications (the iPhoneOS 1.x-4.x era), written in Rust.
+# It runs old iPhone/iPad apps -- mostly games -- on modern desktop/mobile OSes.
+#
+# This file holds YOUR options, one line per app, keyed by the app's bundle
+# identifier. Options here take precedence over upstream's recommended
+# per-app defaults in touchHLE_default_options.txt (which ships with touchHLE).
+#
+# References (fetched/accessed 2026-09-28):
+# - Project README -- documents this file and OPTIONS_HELP.txt:
+#   https://github.com/touchhle/touchhle
+# - Full option list with prose documentation: OPTIONS_HELP.txt in that repo.
+# - Exact file grammar: src/options.rs, fn get_options_from_file.
+# - Application order (defaults file, then this file, then CLI flags):
+#   src/lib.rs, "Apply options from files".
+# - Where touchHLE looks for this file: src/paths.rs, fn user_data_base_path.
+#   On Linux it reads ./touchHLE_options.txt from its working directory
+#   (seeded from the shipped template on first run); on macOS .app bundles it
+#   uses the SDL pref path; on Android, external storage. This dotfiles copy
+#   at ~/.config/touchhle/touchHLE_options.txt is the managed source of truth;
+#   symlink or copy it to touchHLE's working directory to activate it.
+#
+# UNVERIFIABLE / ENVIRONMENT-SPECIFIC DETAILS (kept out of active config):
+# - There are no active (uncommented) lines in this file: every active line
+#   must be keyed by a real app bundle identifier (shown as "App bundle info"
+#   when you run the app in touchHLE), and no user-owned app is known here, so
+#   inventing identifiers would only create dead config. Add your own line as:
+#       <bundle-id>: <options>
+# - Example bundle IDs below are genuine ones copied from upstream's own
+#   touchHLE_default_options.txt; the lines are commented out and illustrative
+#   only -- uncomment and adapt them for your apps.
+# - --gdb=... opens a TCP listener; the example below binds IPv6 loopback only.
+# - --dump-file=... is relative to touchHLE's user-data dir and TRUNCATES any
+#   existing file with that name.
+# - Touch-coordinate options assume the classic 320x480 portrait / 480x320
+#   landscape iPhone screen unless --scale-hack changes the internal resolution.
+#
+# FILE GRAMMAR (from src/options.rs get_options_from_file; a malformed line
+# prints a warning and the app's options from this file are skipped):
+# - "#" starts a comment that runs to end of line; empty lines are ignored.
+# - Every other line MUST have the form:
+#       <app bundle id> : <whitespace-separated options>
+#   split at the FIRST colon; both sides are trimmed. A non-comment line
+#   without a colon is an error.
+# - The app id must exactly match the running app's bundle identifier.
+# - Only the FIRST line matching an app is used; later duplicates are ignored,
+#   so keep one line per app.
+# - Each option token is parsed like a command-line flag; unknown or invalid
+#   options are errors at launch. "--args" is NOT usable in this file.
+#
+# HOW TO USE: copy an example line, uncomment it, replace the bundle id with
+# your app's, and keep only the options you want. This file wins over
+# touchHLE_default_options.txt; command-line flags win over both.
+
+# ---------------------------------------------------------------------------
+# View options
+# ---------------------------------------------------------------------------
+# --fullscreen
+#   ELI5: run the game full-screen instead of in a window. (Android is always
+#   full-screen; the window is scaled to fit, which can look blurry unless
+#   --scale-hack is also used.)
+# --landscape-left
+#   ELI5: start with the fake iPhone rotated 90 degrees counter-clockwise.
+# --landscape-right
+#   ELI5: start with the fake iPhone rotated 90 degrees clockwise.
+# --scale-hack=N
+#   ELI5: render the game at N times the original resolution for a sharper
+#   picture. A hack: no guarantee it works for every app. N is a natural
+#   number >= 1; 1 (the default) means off.
+# --upside-down
+#   ELI5: start with the fake iPhone rotated 180 degrees (upside-down
+#   portrait). Default orientation is portrait.
+# Example (Super Monkey Ball; bundle id from upstream defaults):
+# com.ooi.supermonkeyball: --fullscreen --landscape-left --scale-hack=2
+
+# ---------------------------------------------------------------------------
+# Device options
+# ---------------------------------------------------------------------------
+# --device-family=iphone|ipad
+#   ELI5: tell the game it is running on an iPhone or an iPad. Only works if
+#   the app supports that family (otherwise ignored). Default: guessed from
+#   the app bundle, falling back to iPhone.
+# Example (Dead Space iPad build; bundle id from upstream defaults):
+# com.ea.deadspace.ipad.bv: --device-family=ipad
+
+# ---------------------------------------------------------------------------
+# Game controller options
+# ---------------------------------------------------------------------------
+# --button-to-touch=BUTTON,X,Y
+#   ELI5: pressing a gamepad button taps a spot on the iPhone screen. BUTTON
+#   is one of: DPadLeft, DPadUp, DPadRight, DPadDown, Start, LeftShoulder, A,
+#   B, X, Y. X,Y are pixels from the top-left corner (screen is 320x480 in
+#   portrait, 480x320 in landscape). Repeatable: one --button-to-touch per
+#   button. (A right-stick virtual cursor also exists by default.)
+# --deadzone=F
+#   ELI5: how far you must push an analog stick before it counts. F is a
+#   decimal 0 to 1; default 0.1 (10%). Smaller = more sensitive.
+# --disable-analog-stick-tilt-controls
+#   ELI5: stop the gamepad sticks from faking iPhone tilt, so a real
+#   accelerometer (e.g. on an Android phone) can steer tilt games instead.
+# --dpad-to-touch=X,Y,W,H
+#   ELI5: turn the D-pad into an 8-direction virtual joystick inside a screen
+#   rectangle (x, y, width, height in pixels). For games where diagonals
+#   matter. Takes precedence over D-pad buttons set with --button-to-touch.
+# --stabilize-virtual-cursor=STRENGTH,RADIUS
+#   ELI5: calm the shaky right-stick mouse cursor: smooth its motion
+#   (STRENGTH) and ignore wiggles within RADIUS pixels, so fussy menus stop
+#   misreading taps as scrolls. Either number may be 0.
+# --stick-to-touch=X,Y,W,H
+#   ELI5: turn the left analog stick into a virtual finger inside a screen
+#   rectangle (x, y, width, height in pixels). For games with analog movement.
+# --x-tilt-offset=D, --y-tilt-offset=D
+#   ELI5: the resting tilt angle, in degrees (may be negative; default 0 =
+#   lying flat), that the game sees when the stick is centered. For games
+#   that expect you to hold the phone at an angle (e.g. 45 in landscape).
+# --x-tilt-range=D, --y-tilt-range=D
+#   ELI5: how many degrees of fake phone tilt a full stick deflection
+#   produces. Default 60 (30 each way). Bigger = twitchier steering. May be
+#   negative. (X maps to the stick's Y axis and vice versa, as if held in
+#   landscape -- historical quirk.)
+# Examples (bundle ids from upstream defaults):
+# com.ooi.supermonkeyball: --deadzone=0.15 --disable-analog-stick-tilt-controls --x-tilt-range=90 --y-tilt-range=90 --x-tilt-offset=0 --y-tilt-offset=24
+# com.ea.fifa10.bv: --button-to-touch=A,450,206 --dpad-to-touch=25,195,100,100 --stick-to-touch=25,195,100,100 --stabilize-virtual-cursor=0.1,10
+
+# ---------------------------------------------------------------------------
+# Graphics driver options
+# ---------------------------------------------------------------------------
+# --gles1=gles1_on_gl2|gles1_native
+#   ELI5: choose which OpenGL ES 1.1 implementation draws the game: touchHLE's
+#   own GLES1-on-GL2 layer, or your system's native one. Default: try each in
+#   order, use the first that works. For troubleshooting graphics bugs.
+# Example (Cro-Mag Rally; bundle id from upstream defaults):
+# com.pangea.cromag: --gles1=gles1_native
+
+# ---------------------------------------------------------------------------
+# Debugging options
+# ---------------------------------------------------------------------------
+# --disable-direct-memory-access
+#   ELI5: make the CPU emulator touch game memory the slow, careful way
+#   (through callbacks) instead of the fast direct path. For debugging the
+#   emulator itself; slower.
+# --dump=LIST
+#   ELI5: dump internals about the app/emulator instead of running normally.
+#   LIST is comma-separated, from: linking-info (linked symbols/classes/
+#   selectors of the app), symbols (touchHLE-provided symbols). See
+#   src/options.rs parse_dump_options for the current list.
+# --dump-file=PATH
+#   ELI5: write --dump output to PATH inside touchHLE's user-data directory
+#   (default DUMP.txt). WARNING: an existing file is truncated (erased)!
+# --gdb=HOST:PORT
+#   ELI5: start a GDB remote-debug server on this TCP address so a debugger
+#   can inspect memory/registers, set breakpoints, and step the running game.
+#   IPv6 addresses go in [brackets].
+# --no-error-popup
+#   ELI5: print errors to the terminal/log only; don't pop up a dialog box.
+# Example (Brothers In Arms; bundle id from upstream defaults):
+# com.gameloft.BIA: --disable-direct-memory-access --dump=linking-info,symbols --dump-file=DUMP-BIA.txt --gdb=[::1]:9001 --no-error-popup
+
+# ---------------------------------------------------------------------------
+# Other options
+# ---------------------------------------------------------------------------
+# --allow-network-access
+#   ELI5: let the old game reach the internet and the local network. Off by
+#   default.
+# --force-composition
+#   ELI5: draw the game through the compositor the slow, safe way. Fixes some
+#   broken rendering at a performance cost.
+# --fps-limit=off|FPS
+#   ELI5: change the 60fps speed cap (needed for accurate emulation). A
+#   decimal number raises it; "off" removes it. Raising it won't make a slow
+#   game faster, just less consistent.
+# --headless
+#   ELI5: run with no window, graphics, or input (implies --no-error-popup).
+#   Only useful for command-line apps.
+# --ignore-gl-errors
+#   ELI5: hide host OpenGL errors from the game (only changes what the game's
+#   glGetError sees, nothing else). Only for apps that really need this lie.
+# --preferred-languages=LIST
+#   ELI5: comma-separated ISO 639 language codes in preference order (e.g.
+#   de,ja,en) reported to the app. Default comes from your OS. Whether the
+#   app honors it is up to the app.
+# --print-fps
+#   ELI5: log the current framerate to the console once per second.
+# --zero-stack-after-guest-to-host-call=BYTES
+#   ELI5: scrub BYTES of scratch stack memory after the game calls into the
+#   host, so games can't read stale leftovers. Fixes some misbehaving games
+#   (e.g. bogus "card removed" checks); the byte count is per-app.
+# NOTE: --args is documented in OPTIONS_HELP.txt but is NOT usable in this
+#   file -- on the command line only, everything after it goes to the app.
+# Example (Brothers In Arms; bundle id and zero-stack value from upstream
+# defaults; --headless shown for shape -- only meaningful for CLI apps):
+# com.gameloft.BIA: --allow-network-access --force-composition --fps-limit=off --headless --ignore-gl-errors --preferred-languages=en,ja --print-fps --zero-stack-after-guest-to-host-call=25

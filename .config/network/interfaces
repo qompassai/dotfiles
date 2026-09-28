@@ -1,0 +1,51 @@
+# =============================================================================
+# ifupdown-ng -- interface configuration database (interfaces)
+# =============================================================================
+# What this is: the interface configuration database read by ifup(8) /
+# ifdown(8) (AUR package `ifupdown-ng`). ELI5: the wiring diagram -- which
+# plugs (interfaces) get turned on automatically and how each one gets its
+# address.
+# Syntax notes: `auto <iface>` brings the interface up at boot;
+# `iface <iface>` starts a definition stanza; `use <executor>` picks the
+# tool that configures it (dhcp, static, ipv6-ra, bond, bridge, ...);
+# executors run in the order of their `use` statements and may also be
+# auto-selected from the options present (see ifupdown-ng.conf).
+# The loopback stanza below is live and safe on any machine. The eth0
+# examples are the ADMIN-GUIDE's own -- enable ONE, adapted to your real
+# interface name and addresses. Executor-specific options are documented
+# in ifupdown-executor(7) and interfaces(5), not enumerated here.
+# Source: upstream ifupdown-ng doc/ADMIN-GUIDE.md "Interface
+# Configuration" (accessed 2026-09-28;
+# https://github.com/ifupdown-ng/ifupdown-ng).
+# Real location: /etc/network/interfaces
+# ---
+# The loopback interface. Always wanted; configure it first.
+auto lo
+iface lo inet loopback
+
+# --- Example 1: desktop with DHCP (IPv4, and DHCPv6 via dhcpcd) ---
+#auto eth0
+#iface eth0
+#    use dhcp
+
+# --- Example 2: IPv6 stateless autoconfiguration only ---
+#auto eth0
+#iface eth0
+#    use ipv6-ra
+
+# --- Example 3: static IPv4 address ---
+#auto eth0
+#iface eth0
+#    address 203.0.113.2/24
+#    gateway 203.0.113.1
+
+# --- Example 4: explicit dependency (bring up gre0 only after eth0) ---
+#auto gre0
+#iface gre0
+#    requires eth0
+#    use gre
+#    gre-endpoint 203.0.113.2
+#    gre-ttl 255
+#    gre-flags ignore-df
+#    address 203.0.113.194/30
+#    gateway 203.0.113.193

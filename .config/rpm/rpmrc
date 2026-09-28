@@ -1,0 +1,100 @@
+# =============================================================================
+# RPM platform configuration (rpmrc)
+# =============================================================================
+#
+# What this app is:
+#   RPM is the package manager and build system used by RPM-based Linux
+#   distributions. While most RPM settings live in macro files, the
+#   low-level machine architecture and OS configuration still lives in
+#   rpmrc files: canonical architecture/OS names, which architectures can
+#   install or build which other architectures' packages, and the
+#   per-architecture compiler flags behind the %{optflags} macro.
+#
+# Where this file lives on a real system:
+#   Per-user:  ~/.config/rpm/rpmrc   (RPM 6+; honored via $XDG_CONFIG_HOME)
+#   System:    /etc/rpmrc
+#   Factory:   /usr/lib/rpm/rpmrc and /usr/lib/rpm/<vendor>/rpmrc
+#   RPM reads every file in that path in order; the last definition wins.
+#   In this dotfiles repo it is stored as .config/rpm/rpmrc, which IS the
+#   real per-user location (~/.config/rpm/rpmrc), so deploying this file
+#   needs no translation.
+#
+# Doc references (accessed 2026-09-28):
+#   1. rpm-rpmrc(5) man page, RPM 6.1.0 (complete directive list, file
+#      search path, XDG behavior):
+#      https://www.mankier.com/5/rpm-rpmrc
+#   2. rpm(8) FILES section (rpmrc search path):
+#      https://manpages.opensuse.org/Leap-15.6/rpm/rpm.8.en.html
+#   3. Maximum RPM, "The rpmrc File" appendix (classic directive reference):
+#      https://rikers.org/rpmbook/node122.html
+#
+# Notes / unverifiable details:
+#   - Each line is `VARIABLE: ARCH: VALUE ...` or `VARIABLE: ARCH VALUE`;
+#     lines starting with `#` are comments. There are no sections.
+#   - The canon numbers (e.g. `11` for x86_64, `1` for Linux) are required
+#     for historical reasons but are not used for any calculation by rpm;
+#     the values shown match upstream RPM factory defaults.
+#   - The factory /usr/lib/rpm/rpmrc ships the FULL architecture and OS
+#     tables (dozens of entries). This file only adds/overrides what is
+#     listed here; everything else keeps its factory value.
+#   - `buildarchtranslate: x86_64_v2: x86_64` is the example straight from
+#     rpm-rpmrc(5): it maps the x86-64-v2 sub-architecture back to the main
+#     x86_64 package architecture at build time.
+#   - `optflags` here is a conservative generic default and feeds the
+#     %{optflags} macro. Distributions normally ship richer per-arch flags
+#     in their vendor rpmrc; those still win unless you override them here.
+#
+# ELI5:
+#   This file is RPM's map of computer types. `arch_canon` gives each CPU
+#   type its official name, `arch_compat` says which package types a machine
+#   may install (an x86_64 PC can install x86_64 packages), `archcolor` says
+#   whether the CPU is 32- or 64-bit, the `build*` lines say which packages
+#   this machine may BUILD, `optflags` are the compiler flags for each CPU
+#   type, and the `os_*` lines do the same job for operating systems.
+
+# -----------------------------------------------------------------------------
+# Canonical architecture names: alias spellings to one official name.
+# ELI5: nickname -> official name. The trailing number is historical and
+# unused by rpm, but it must be there.
+# -----------------------------------------------------------------------------
+arch_canon: i386: i386 1
+arch_canon: x86_64: x86_64 11
+
+# -----------------------------------------------------------------------------
+# Architecture install compatibility: ARCH machines may install packages
+# built for each COMPAT_ARCH.
+# -----------------------------------------------------------------------------
+arch_compat: i386: i386
+arch_compat: x86_64: x86_64
+
+# -----------------------------------------------------------------------------
+# Architecture "color": word length / bitness. 0 = none (noarch and similar),
+# 1 = 32-bit, 2 = 64-bit.
+# -----------------------------------------------------------------------------
+archcolor: i386 1
+archcolor: x86_64 2
+
+# -----------------------------------------------------------------------------
+# Build architecture compatibility: ARCH machines may produce binaries for
+# each COMPAT_ARCH.
+# -----------------------------------------------------------------------------
+buildarch_compat: i386: i386
+buildarch_compat: x86_64: x86_64
+
+# -----------------------------------------------------------------------------
+# Build architecture translation: map a detected sub-architecture to the
+# main package architecture at build time.
+# -----------------------------------------------------------------------------
+buildarchtranslate: x86_64_v2: x86_64
+
+# -----------------------------------------------------------------------------
+# Per-architecture compiler flags, exposed to spec files as %{optflags}.
+# -----------------------------------------------------------------------------
+optflags: i386 -O2 -g -pipe -Wall -march=i686
+optflags: x86_64 -O2 -g -pipe -Wall
+
+# -----------------------------------------------------------------------------
+# Canonical OS names and OS install compatibility.
+# -----------------------------------------------------------------------------
+os_canon: Linux: Linux 1
+os_compat: Linux: Linux

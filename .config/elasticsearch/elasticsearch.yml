@@ -1,0 +1,420 @@
+# =============================================================================
+# Elasticsearch node configuration (elasticsearch.yml) - documented template
+# =============================================================================
+#
+# What this app is:
+#   Elasticsearch is a distributed search and analytics engine. Every node
+#   reads this YAML file at startup for its STATIC settings (cluster/node
+#   identity, paths, network, discovery). DYNAMIC cluster settings are better
+#   managed at runtime via the cluster update settings API, but they may also
+#   appear here on an unstarted or shut-down node (API-set values win).
+#   Package layout on Arch/systemd installs: /etc/elasticsearch/.
+#   This file is a dotfiles template kept at .config/elasticsearch/.
+#
+# Doc references (accessed 2026-09-28):
+#   1. Configure Elasticsearch (settings file format, precedence, env vars):
+#      https://www.elastic.co/guide/en/elasticsearch/reference/current/settings.html
+#   2. Full configuration reference (every setting, static vs dynamic):
+#      https://www.elastic.co/docs/reference/elasticsearch/configuration-reference
+#   3. Important settings (what a production node must set):
+#      https://www.elastic.co/docs/deploy-manage/deploy/self-managed/important-settings-configuration
+#   4. System configuration (memory lock, file descriptors, ...):
+#      https://www.elastic.co/guide/en/elasticsearch/reference/current/system-config.html
+#   5. Auto-configured security on first start (certs/http.p12 etc.):
+#      https://www.parsedmarc.com/elasticsearch-kibana-logstash-configuration.html
+#
+# Notes / scope judgments:
+#   - Settings are grouped by category, alphabetical within each group.
+#   - "Static" settings below require a node restart; where a setting is
+#     DYNAMIC it is marked (dynamic) - prefer the cluster update settings API
+#     for those on a running cluster.
+#   - Environment variables and ${...} / ${VAR:-default} substitution work in
+#     this file (ref 1). Secrets (keystore passwords, S3 keys) belong in the
+#     elasticsearch-keystore, never here.
+#   - Deliberately OUT of scope here: deep xpack feature settings
+#     (watcher actions, ilm policies, ccr, rollup, transform, ml job
+#     internals) and per-index settings - those are runtime/index concerns,
+#     not node configuration. Thread-pool sizes are static and documented in
+#     ref 2 under "Thread pools" if you need to tune them.
+#   - bootstrap.memory_lock: true is REQUIRED for production together with
+#     LimitMEMLOCK=infinity on the service and a matching -Xms/-Xmx in
+#     jvm.options; a node that cannot lock memory refuses to start.
+#   - xpack.security.enabled defaults to true in 8.x; the transport/http TLS
+#     entries below are what the auto-configuration writes on first boot
+#     (ref 5). On a machine that only binds loopback, the node still starts;
+#     binding a non-loopback address triggers the production bootstrap checks.
+
+# ---------------------------------------------------------------------------
+# Cluster identity
+# ---------------------------------------------------------------------------
+# ELI5: the name of the cluster this node joins. Nodes only talk to nodes
+# with the same name. Default: elasticsearch.
+cluster.name: elasticsearch
+
+# ELI5: on the VERY FIRST start of a brand-new cluster, the node names that
+# must be present to elect the first master (prevents split-brain). Set
+# once, then remove or leave - it is ignored after bootstrapping.
+# Example: ["es-node-1", "es-node-2", "es-node-3"]. Default: unset.
+cluster.initial_master_nodes: []
+
+# ELI5: (dynamic) safety cap: shards per data node before new index creation
+# is rejected. Default: 1000.
+cluster.max_shards_per_node: 1000
+
+# ELI5: (dynamic) what clients may do when no master is elected: "write" =
+# writes rejected, reads/metadata still allowed. Default: write.
+cluster.no_master_block: write
+
+# ELI5: (dynamic) when true the whole cluster rejects writes (flood-stage
+# disk protection flips read_only_allow_delete automatically). Default: false.
+cluster.blocks.read_only: false
+
+# ELI5: (dynamic) like read_only but auto-applied on disk flood; clear it
+# manually after freeing disk. Default: false.
+cluster.blocks.read_only_allow_delete: false
+
+# ELI5: (dynamic) how long a cluster-state publish waits for acks before
+# retrying/failing. Default: 30s.
+cluster.persisted_cluster_state_update_timeout: 30s
+
+# ELI5: (dynamic) how long master waits for nodes to ack a cluster-state
+# update before failing it. Default: 30s.
+cluster.publish.timeout: 30s
+
+# ELI5: (dynamic) how long to wait before just LOGGING that some nodes are
+# slow to ack (does not fail the update). Default: 10s.
+cluster.publish.info_timeout: 10s
+
+# ---------------------------------------------------------------------------
+# Node identity
+# ---------------------------------------------------------------------------
+# ELI5: this node's human-readable name (shows in logs, _cat/nodes, shard
+# allocation explain). ${HOSTNAME} resolves from the environment.
+# Default: the machine's hostname.
+node.name: ${HOSTNAME}
+
+# ELI5: what jobs this node may do. Default = every role (full list below).
+# Trim for dedicated nodes, e.g. master-only: ["master"].
+node.roles: [data, data_cold, data_content, data_frozen, data_hot, data_warm, ingest, master, ml, remote_cluster_client, transform]
+
+# ---------------------------------------------------------------------------
+# Paths
+# ---------------------------------------------------------------------------
+# ELI5: where shard/index data lives. Comma/list = stripe across disks.
+# Default (package installs): /var/lib/elasticsearch.
+path.data: /var/lib/elasticsearch
+
+# ELI5: where Elasticsearch writes its own logs. Default (package installs):
+# /var/log/elasticsearch.
+path.logs: /var/log/elasticsearch
+
+# ELI5: (dynamic) filesystem locations registered for snapshot repositories.
+# Empty = no shared repo locations. Default: [].
+path.repo: []
+
+# ---------------------------------------------------------------------------
+# Network - shared
+# ---------------------------------------------------------------------------
+# ELI5: the primary network setting; sets bind_host and publish_host for
+# BOTH http and transport unless they are overridden. Default: localhost
+# (loopback only). Set to 0.0.0.0 to listen on all interfaces (then the
+# production bootstrap checks apply).
+network.host: 0.0.0.0
+
+# ELI5: which local interface(s) to bind. Default: network.host.
+network.bind_host: 0.0.0.0
+
+# ELI5: the address this node TELLS other nodes/clients to reach it at
+# (must be routable by them). Default: network.host.
+network.publish_host: _local_
+
+# ---------------------------------------------------------------------------
+# Network - transport (node-to-node, port 9300)
+# ---------------------------------------------------------------------------
+# ELI5: port for inter-node communication. Default: 9300.
+transport.port: 9300
+
+# ELI5: bind interface for transport. Default: network.bind_host.
+transport.bind_host: 0.0.0.0
+
+# ELI5: address advertised to other nodes. Default: network.publish_host.
+transport.publish_host: _local_
+
+# ELI5: compress transport messages (costs CPU, saves bandwidth on slow
+# links). Default: false.
+transport.compress: false
+
+# ELI5: how long to wait when opening a connection to another node.
+# Default: 30s.
+transport.connect_timeout: 30s
+
+# ELI5: how often to ping idle connections to keep them (and detect dead
+# peers). Default: 5s.
+transport.ping_schedule: 5s
+
+# ELI5: keep idle TCP connections alive at the OS level. Default: true.
+transport.tcp.keep_alive: true
+
+# ELI5: disable Nagle's algorithm (send small packets immediately; better
+# latency). Default: true.
+transport.tcp.no_delay: true
+
+# ELI5: allow rebinding an address in TIME_WAIT (faster restarts).
+# Default: true.
+transport.tcp.reuse_address: true
+
+# ---------------------------------------------------------------------------
+# Network - HTTP (REST API, port 9200)
+# ---------------------------------------------------------------------------
+# ELI5: serve the REST API at all (a pure transport/coordinating setup can
+# disable it). Default: true.
+http.enabled: true
+
+# ELI5: bind interface for the REST API. Default: network.host.
+http.host: 0.0.0.0
+
+# ELI5: REST API port. Default: 9200.
+http.port: 9200
+
+# ELI5: address advertised for REST clients. Default: network.publish_host.
+http.publish_host: _local_
+
+# ELI5: largest HTTP body accepted (bulk/index requests). Default: 100mb.
+http.max_content_length: 100mb
+
+# ELI5: largest HTTP header block accepted. Default: 8kb.
+http.max_header_size: 8kb
+
+# ELI5: largest chunked-transfer chunk accepted. Default: 8kb.
+http.max_chunk_size: 8kb
+
+# ELI5: (dynamic) cap on the number of deprecation-warning headers per
+# response; -1 = unlimited. Default: -1.
+http.max_warning_header_count: -1
+
+# ELI5: (dynamic) cap on total bytes of deprecation-warning headers per
+# response; -1 = unlimited. Default: -1.
+http.max_warning_header_size: -1
+
+# ELI5: gzip-compress REST responses when the client asks. Default: false.
+http.compression: false
+
+# ELI5: gzip level used when http.compression is on (1-9). Default: 3.
+http.compression_level: 3
+
+# ELI5: allow browsers on other origins to call the REST API (needed for
+# browser-based dev tools). Default: false.
+http.cors.enabled: false
+
+# ELI5: which origins may call when CORS is on (regex). Default: only
+# localhost over http/https.
+http.cors.allow-origin: "/https?:\\/\\/localhost(:[0-9]+)?/"
+
+# ELI5: HTTP methods allowed via CORS. Default: OPTIONS,HEAD,GET,POST,PUT,DELETE.
+http.cors.allow-methods: OPTIONS,HEAD,GET,POST,PUT,DELETE
+
+# ELI5: request headers allowed via CORS. Default: the standard auth/content set.
+http.cors.allow-headers: X-Requested-With,X-Auth-Token,Content-Type,Content-Length,Authorization
+
+# ELI5: let browsers send credentials (cookies/auth) cross-origin. Default: false.
+http.cors.allow-credentials: false
+
+# ELI5: how long (seconds) browsers cache CORS preflight results. Default: 1728000.
+http.cors.max-age: 1728000
+
+# ELI5: return full error stack traces in REST error responses (dev-friendly,
+# leaks internals - keep true only behind trusted access). Default: true.
+http.detailed_errors.enabled: true
+
+# ELI5: allow HTTP pipelining (multiple requests per connection). Default: true.
+http.pipelining: true
+
+# ELI5: max pipelined events queued per connection. Default: 10000.
+http.pipelining.max_events: 10000
+
+# ELI5: reset (clear) the Authorization cookie header handling; leave false
+# unless a proxy setup requires it. Default: false.
+http.reset_cookies: false
+
+# ELI5: keep idle HTTP connections alive at the OS level. Default: true.
+http.tcp.keep_alive: true
+
+# ELI5: disable Nagle's algorithm for HTTP. Default: true.
+http.tcp.no_delay: true
+
+# ELI5: allow rebinding an HTTP address in TIME_WAIT. Default: true.
+http.tcp.reuse_address: true
+
+# ---------------------------------------------------------------------------
+# Discovery and cluster formation
+# ---------------------------------------------------------------------------
+# ELI5: how a node finds the cluster: unset (default) = normal multi-node
+# discovery via discovery.seed_hosts below; "single-node" = form a one-node
+# cluster immediately and skip discovery (dev workstation default used here).
+discovery.type: single-node
+
+# ELI5: seed addresses to contact when looking for the master / other nodes
+# (host:port; port defaults to 9300-9305 scan). IGNORED while
+# discovery.type is single-node; used when you switch to multi-node.
+# Default: ["127.0.0.1"].
+discovery.seed_hosts: ["127.0.0.1"]
+
+# ELI5: how often an election-less node retries finding peers. Default: 1s.
+discovery.find_peers_interval: 1s
+
+# ELI5: how long to wait for peers to respond during discovery. Default: 3s.
+discovery.request_peers_timeout: 3s
+
+# ELI5: how long without a master before logging a "not discovered" warning.
+# Default: 10s.
+discovery.cluster_formation_warning_timeout: 10s
+
+# ELI5: how long a node waits for initial discovery before giving up and
+# retrying (bootstrapping safety). Default: 3s.
+discovery.unconfigured_bootstrap_timeout: 3s
+
+# ELI5: timeout for opening a discovery probe connection. Default: 3s.
+discovery.probe.connect_timeout: 3s
+
+# ELI5: timeout for the discovery handshake once connected. Default: 3s.
+discovery.probe.handshake_timeout: 3s
+
+# ---------------------------------------------------------------------------
+# Gateway (local shard recovery after a full cluster restart)
+# ---------------------------------------------------------------------------
+# ELI5: how many nodes must be up before recovery starts (-1 = derive from
+# expected_*). Default: -1.
+gateway.recover_after_nodes: -1
+
+# ELI5: how many DATA nodes must be up before recovery starts. Default: -1.
+gateway.recover_after_data_nodes: -1
+
+# ELI5: how many MASTER nodes must be up before recovery starts. Default: -1.
+gateway.recover_after_master_nodes: -1
+
+# ELI5: how many nodes are expected in total (informational, for the -1
+# derivation). Default: -1.
+gateway.expected_nodes: -1
+
+# ELI5: how many data nodes are expected. Default: -1.
+gateway.expected_data_nodes: -1
+
+# ELI5: how many master nodes are expected. Default: -1.
+gateway.expected_master_nodes: -1
+
+# ELI5: after the node count is met, wait this long for MORE nodes to appear
+# before starting recovery (avoids recovering twice). Default: 5m.
+gateway.recover_after_time: 5m
+
+# ---------------------------------------------------------------------------
+# Bootstrap (OS-level)
+# ---------------------------------------------------------------------------
+# ELI5: lock the JVM heap in RAM so it is never swapped to disk (stable
+# latency). Needs LimitMEMLOCK=infinity on the service. Default: false.
+bootstrap.memory_lock: false
+
+# ELI5: install the seccomp system-call filter (sandbox: blocks fork/exec
+# and other dangerous syscalls from plugins). Default: true.
+bootstrap.system_call_filter: true
+
+# ELI5: install a Ctrl+C handler for clean shutdown on Windows / when run
+# in foreground. Default: true.
+bootstrap.ctrlhandler: true
+
+# ---------------------------------------------------------------------------
+# Indices: caches and circuit breakers
+# ---------------------------------------------------------------------------
+# ELI5: (dynamic) cap for the fielddata cache (uninverting text fields for
+# sorting/aggregations); "unbounded" = limited only by the fielddata circuit
+# breaker. Default: unbounded.
+indices.fielddata.cache.size: unbounded
+
+# ELI5: (static) share of heap for the filter/query cache. Default: 10%.
+indices.queries.cache.size: 10%
+
+# ELI5: cap a single request's memory at this share of heap (kills the
+# request instead of the node). Default: 60%.
+indices.breaker.request.limit: 60%
+
+# ELI5: cap fielddata memory at this share of heap. Default: 40%.
+indices.breaker.fielddata.limit: 40%
+
+# ELI5: cap ALL breakers combined at this share of heap (last line of
+# defense against OutOfMemory). Default: 95%.
+indices.breaker.total.limit: 95%
+
+# ELI5: cap in-flight network request bytes at this share of heap.
+# Default: 100%.
+network.breaker.inflight_requests.limit: 100%
+
+# ---------------------------------------------------------------------------
+# Monitoring
+# ---------------------------------------------------------------------------
+# ELI5: (dynamic) log at DEBUG when a GC takes longer than this % of a
+# 5-minute window. Default: 10.
+monitor.jvm.gc.overhead.debug: 10
+
+# ELI5: (dynamic) log at WARN when a GC takes longer than this % of a
+# 5-minute window. Default: 50.
+monitor.jvm.gc.overhead.warn: 50
+
+# ELI5: (dynamic) how often to refresh filesystem stats. Default: 1s.
+monitor.fs.refresh_interval: 1s
+
+# ---------------------------------------------------------------------------
+# Misc actions
+# ---------------------------------------------------------------------------
+# ELI5: (dynamic) auto-create an index when a document targets a missing one
+# (true), a pattern list, or false to require explicit creation. Default: true.
+action.auto_create_index: true
+
+# ELI5: (dynamic) require an explicit index name for destructive wildcard
+# deletes (blocks DELETE /* accidents). Default: false.
+action.destructive_requires_name: false
+
+# ELI5: (dynamic) hosts allowed as _reindex remote sources ("*" = any; keep
+# restrictive). Default: [].
+reindex.remote.allowlist: []
+
+# ELI5: (dynamic) which stored-script types may run: inline, stored, none.
+# Default: inline.
+script.allowed_types: inline
+
+# ---------------------------------------------------------------------------
+# Security (xpack) - as written by first-boot auto-configuration
+# ---------------------------------------------------------------------------
+# ELI5: master switch for authentication/authorization. Default in 8.x: true.
+xpack.security.enabled: true
+
+# ELI5: allow enrolling new nodes/Kibana with an enrollment token instead of
+# manual certs. Default: true.
+xpack.security.enrollment.enabled: true
+
+# ELI5: TLS for the REST (HTTP) layer. Default: true (auto-configured).
+xpack.security.http.ssl.enabled: true
+
+# ELI5: keystore holding the auto-generated HTTP certificate. Default:
+# certs/http.p12 (password in the elasticsearch-keystore).
+xpack.security.http.ssl.keystore.path: certs/http.p12
+
+# ELI5: TLS for the transport (node-to-node) layer. Default: true.
+xpack.security.transport.ssl.enabled: true
+
+# ELI5: how strictly to check peer certificates: "certificate" = valid cert
+# signed by a trusted CA (hostname not checked). Default: certificate.
+xpack.security.transport.ssl.verification_mode: certificate
+
+# ELI5: keystore holding this node's transport certificate. Default:
+# certs/transport.p12.
+xpack.security.transport.ssl.keystore.path: certs/transport.p12
+
+# ELI5: truststore with the CA used to verify peers. Default:
+# certs/transport.p12.
+xpack.security.transport.ssl.truststore.path: certs/transport.p12
+
+# ---------------------------------------------------------------------------
+# Monitoring collection
+# ---------------------------------------------------------------------------
+# ELI5: (dynamic) have each node periodically collect and index its own
+# monitoring data. Default: false (use Metricbeat instead).
+xpack.monitoring.collection.enabled: false

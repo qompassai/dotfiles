@@ -1,0 +1,144 @@
+# =============================================================================
+# RPM per-system macro overrides (macros)
+# =============================================================================
+#
+# What this app is:
+#   RPM is the package manager and build system used by RPM-based Linux
+#   distributions (Fedora, RHEL, openSUSE, ...). Macros are RPM's
+#   configuration primitives: named text substitutions used by `rpm` and
+#   `rpmbuild` to control build directories, install paths, compiler flags,
+#   packager identity and signing. Think of this file as RPM's "settings
+#   page written in find-and-replace rules".
+#
+# Where this file lives on a real system:
+#   /etc/rpm/macros  (per-system overrides; read after the factory defaults
+#   in /usr/lib/rpm/macros and the vendor file in /usr/lib/rpm/<vendor>/macros,
+#   and before the user's own ~/.rpmmacros). In this dotfiles repo it is
+#   stored as .config/rpm/macros and meant to be symlinked/copied to
+#   /etc/rpm/macros by whatever deploys the dotfiles.
+#
+# Doc references (accessed 2026-09-28):
+#   1. RPM macro syntax and the move from rpmrc lines to macros (rpm 3.0+):
+#      http://ftp.rpm.org/api/4.4.2.2/macros.html
+#   2. Fedora packaging guidelines, RPMMacros (key build-dir and install-path
+#      macro table):
+#      https://docs.fedoraproject.org/en-US/packaging-guidelines/RPMMacros/
+#   3. rpm(8) FILES section (macro file search path):
+#      https://manpages.opensuse.org/Leap-15.6/rpm/rpm.8.en.html
+#   4. openSUSE packaging conventions ("/etc/rpm is for per-system
+#      adjustments done by the system administrator"):
+#      https://en.opensuse.org/openSUSE:Packaging_Conventions_RPM_Macros
+#
+# Notes / unverifiable details:
+#   - Lines starting with `#` are comments (used throughout the upstream
+#     factory macro files as well). A macro line is `%name value`, i.e. a
+#     leading `%`, the macro name, whitespace, then the value.
+#   - RPM ships hundreds of built-in macros; this template sets the
+#     documented, commonly customized per-system ones (build tree, install
+#     paths, flags, identity, signing) rather than redefining the whole
+#     factory set.
+#   - `%_topdir %{getenv:HOME}/rpmbuild` is the documented Fedora form that
+#     points every user at their own build tree. A system-wide /etc/rpm/macros
+#     may instead want a shared path such as /srv/rpmbuild.
+#   - `%_libdir %{_exec_prefix}/%{_lib}` reuses RPM's built-in platform macro
+#     `%_lib` (expands to `lib` or `lib64` depending on the target), so this
+#     file does not hard-code the wrong libdir for the architecture.
+#   - `%_gpg_name` is intentionally left commented: it must be the key ID of
+#     a real GPG key you own. Uncomment and set it only when you sign
+#     packages on this machine.
+#   - `%optflags` here is a conservative generic default. Distributions
+#     normally override per-arch flags in the rpmrc file (see ../rpmrc), and
+#     vendor macro packages (e.g. redhat-rpm-config) may override it again.
+#
+# ELI5:
+#   Each `%something value` line is a labeled box. Whenever RPM or a spec
+#   file writes `%{something}`, RPM swaps in the value from the box. The
+#   boxes below say where packages get built (the "workshop" directories),
+#   where files get installed (the "shelves"), which compiler flags to use,
+#   whose name goes on the package, and which GPG key signs it.
+
+# -----------------------------------------------------------------------------
+# Build tree: where rpmbuild does its work.
+# ELI5: the workshop rooms. _topdir is the workshop; the others are rooms
+# inside it (BUILD = unpacked sources, SOURCES = tarballs, SPECS = recipes,
+# RPMS/SRPMS = finished packages, BUILDROOT = the fake install tree).
+# -----------------------------------------------------------------------------
+%_builddir        %{_topdir}/BUILD
+%_buildrootdir    %{_topdir}/BUILDROOT
+%_rpmdir          %{_topdir}/RPMS
+%_sourcedir       %{_topdir}/SOURCES
+%_specdir         %{_topdir}/SPECS
+%_srcrpmdir       %{_topdir}/SRPMS
+%_tmppath         %{_var}/tmp
+%_topdir          %{getenv:HOME}/rpmbuild
+%buildroot        %{_buildrootdir}/%{name}-%{version}-%{release}.%{_arch}
+
+# -----------------------------------------------------------------------------
+# Install paths: where package files land on the target system.
+# ELI5: the shelves files go on. Most shelves are defined relative to the
+# prefix (/usr), so changing %_prefix moves the whole layout at once.
+# -----------------------------------------------------------------------------
+%_bindir          %{_exec_prefix}/bin
+%_datadir         %{_prefix}/share
+%_datarootdir     %{_prefix}/share
+%_defaultdocdir   %{_usr}/share/doc
+%_docdir          %{_datadir}/doc
+%_exec_prefix     %{_prefix}
+%_includedir      %{_prefix}/include
+%_infodir         %{_datadir}/info
+%_initddir        %{_sysconfdir}/rc.d/init.d
+%_initrddir       %{_sysconfdir}/rc.d/init.d
+%_libdir          %{_exec_prefix}/%{_lib}
+%_libexecdir      %{_exec_prefix}/libexec
+%_localstatedir   /var
+%_mandir          %{_datadir}/man
+%_oldincludedir   /usr/include
+%_prefix          /usr
+%_rundir          /run
+%_sbindir         %{_exec_prefix}/sbin
+%_sharedstatedir  /var/lib
+%_sysconfdir      /etc
+%_usr             /usr
+%_usrsrc          %{_usr}/src
+%_var             /var
+
+# -----------------------------------------------------------------------------
+# Compiler flags used when building packages.
+# ELI5: the default recipe card handed to the C compiler: optimize a bit
+# (-O2), include debug info (-g), show warnings (-Wall), keep build output
+# tidy (-pipe). Per-architecture flags from the rpmrc file feed this same
+# macro, so distro toolchains can override it.
+# -----------------------------------------------------------------------------
+%optflags         -O2 -g -pipe -Wall
+
+# -----------------------------------------------------------------------------
+# Packager identity: stamped into every package built on this system.
+# ELI5: the "made by" sticker. Replace the placeholders with your real name
+# and the distro/vendor this build host belongs to.
+# -----------------------------------------------------------------------------
+%_distribution    Unknown
+%_packager        Your Name <you@example.com>
+%_vendor          Unknown
+
+# -----------------------------------------------------------------------------
+# Package signing.
+# ELI5: the wax seal. _signature says "we sign with GPG", __gpg says where
+# the gpg program lives, and _gpg_name says WHICH key is the seal -- that one
+# stays commented until you have a real key, because a wrong name breaks
+# every signed build.
+# -----------------------------------------------------------------------------
+%__gpg            /usr/bin/gpg
+# %_gpg_name is intentionally commented out: set it to the key ID of a real
+# GPG key you own before signing packages on this machine.
+#%_gpg_name        YOUR-GPG-KEY-ID
+%_signature       gpg
+
+# -----------------------------------------------------------------------------
+# How to write your own macros (examples, commented out).
+# ELI5: you can invent your own labeled boxes. `%define` fills the box right
+# away; `%global` is the same but also visible inside parameterized macros.
+# A macro with (opts) in its name takes arguments, like a tiny function.
+# -----------------------------------------------------------------------------
+# %define my_company       Example Corp
+# %global my_release_dist  .el9
+# %my_install_step()       install -m 0755 %{1} %{buildroot}%{_bindir}/%{2}

@@ -1,0 +1,102 @@
+# =============================================================================
+# statime PTP daemon configuration (statime.toml)
+# =============================================================================
+#
+# What this app is:
+#   `statime` is the Precision Time Protocol (PTP, IEEE 1588) daemon from
+#   the Pendulum project, written in Rust. It synchronizes clocks between
+#   computers on a network, electing a grandmaster clock and disciplining
+#   the rest. Think of it as NTP's stricter sibling for networks where
+#   sub-microsecond time agreement matters (industrial control, telecom,
+#   audio/video production).
+#
+# Where this file lives on a real system:
+#   /etc/statime/statime.toml. In this dotfiles repo it is stored as
+#   .config/statime/statime.toml and meant to be symlinked/copied to
+#   /etc/statime/statime.toml by whatever deploys the dotfiles.
+#
+# Doc references (accessed 2026-09-28):
+#   1. statime.toml(5) man page (complete option list with defaults):
+#      https://docs.statime.pendulum-project.org/man/statime.toml.5/
+#   2. Getting-started guide:
+#      https://github.com/pendulum-project/statime/blob/HEAD/docs/guide/getting-started.md
+#   3. statime.toml(5) man page source:
+#      https://github.com/pendulum-project/statime/blob/HEAD/docs/man/statime.toml.5.md
+#   4. statime(8) man page source:
+#      https://github.com/pendulum-project/statime/blob/HEAD/docs/man/statime.8.md
+#   5. Exporting metrics guide:
+#      https://github.com/pendulum-project/statime/blob/HEAD/docs/guide/exporting-metrics.md
+#
+# Notes / unverifiable details:
+#   - Upstream doc quirk: the DESCRIPTION section of ref 1 says
+#     "Configuration of ntpd-rs happens in the statime.toml configuration
+#     format" -- that is an upstream copy/paste typo; the file configures
+#     statime, not ntpd-rs.
+#   - `identity` is commented out on purpose: when unset, statime derives
+#     the clock identity from a MAC address. Writing a made-up identity
+#     would make this host claim a false PTP identity, so the example from
+#     the man page is shown as a comment only.
+#   - `acceptable-master-list` is commented out on purpose: the default
+#     (unset) accepts all clock identities as masters. Uncommenting it
+#     RESTRICTS which masters this port will follow -- only do that when
+#     you know the grandmaster's identity.
+#   - `path-trace` has no documented default; it is set to false here
+#     (conservative: path-trace TLVs only help detect clock loops when
+#     enabled on every instance in the network).
+#   - `observation-path` is set explicitly so the metrics exporter can
+#     actually observe the daemon (unset = no observation socket). The
+#     directory /run/statime must exist and be writable by the daemon.
+#   - `interface = "lo"` is the man page's own placeholder example. PTP on
+#     loopback synchronizes the machine with itself -- harmless for a
+#     template, but point it at a real PTP-capable NIC (e.g. "enp0s31f6")
+#     on a real deployment.
+#
+# ELI5:
+#   The top of the file describes THIS clock (who am I, which PTP neighborhood
+#   do I belong to, am I allowed to be the boss). Each [[port]] block describes
+#   one network cable plugged into the time-sync game (which interface, how
+#   chatty to be, how to measure cable delay). The [observability] block opens
+#   a window so monitoring tools can watch what the daemon is doing.
+
+# -----------------------------------------------------------------------------
+# This clock's identity and domain membership (keys alphabetical).
+# -----------------------------------------------------------------------------
+domain = 0
+# identity = "00FFFFFFFFFFFFFB"   # unset: derived from a MAC address (see header)
+path-trace = false
+priority1 = 128
+priority2 = 128
+sdo-id = 0
+slave-only = false
+virtual-system-clock = false
+
+# -----------------------------------------------------------------------------
+# PTP port: one per network interface participating in PTP.
+# ELI5: how often this port shouts "what time is it?" (intervals are powers
+# of two: sync-interval 0 = every 1s, announce-interval 1 = every 2s),
+# how it measures cable delay (E2E = ask-and-answer round trip), and
+# whether it may use the network card's own hardware clock for timestamps.
+# -----------------------------------------------------------------------------
+[[port]]
+# acceptable-master-list = ["00FFFFFFFFFFFFFB"]  # unset: accept all masters (see header)
+announce-interval = 1
+announce-receipt-timeout = 3
+delay-asymmetry = 0
+delay-interval = 0
+delay-mechanism = "E2E"
+hardware-clock = "auto"
+interface = "lo"
+master-only = false
+minor-ptp-version = 1
+sync-interval = 0
+
+# -----------------------------------------------------------------------------
+# Observability: how monitoring tools watch the daemon.
+# ELI5: observation-path is a special file (Unix socket) the daemon chats
+# through; the metrics exporter reads it and re-serves the numbers on
+# metrics-exporter-listen for Prometheus-style scraping.
+# -----------------------------------------------------------------------------
+[observability]
+metrics-exporter-listen = "127.0.0.1:9975"
+observation-path = "/run/statime/observation.sock"
+observation-permissions = 0o666

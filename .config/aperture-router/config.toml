@@ -1,0 +1,144 @@
+# =====================================================================
+# aperture-router — config.toml
+# Workstation: primo (Arch Linux) · generated 2026-09-28
+#
+# Canonical filename/format: config.toml (TOML).
+# Researched from upstream on 2026-09-28:
+#   https://github.com/wayazi/aperture-router/blob/HEAD/docs/reference/configuration.md
+#   (complete field reference: types, defaults, validation rules; source:
+#   src/config.rs, config.example.toml)
+#
+# Lookup order: --config PATH > /etc/aperture-router/config.toml (as root /
+# --system) > ./config.toml. If no file exists and APERTURE_BASE_URL is set,
+# a minimal config is built from the environment instead.
+#
+# Env overrides (loaded after this file, win on conflict):
+#   APERTURE_HOST -> host · APERTURE_PORT -> port ·
+#   APERTURE_BASE_URL -> aperture.base_url ·
+#   APERTURE_API_KEY -> aperture.api_key (removed from env after read) ·
+#   APERTURE_CLIENT_API_KEYS -> security.api_keys (comma-separated) ·
+#   APERTURE_ALLOW_NO_AUTH -> security.require_auth_in_prod=false ·
+#   RUST_LOG -> log filter
+# =====================================================================
+
+# --- Top-level scalars (TOML requires these before any [table]) --------
+
+# ELI5: which network interface to listen on. 127.0.0.1 = only this
+# machine can reach the router. Must parse as an IP address.
+host = "127.0.0.1"
+
+# ELI5: the TCP port the router listens on. Must be non-zero.
+port = 8765
+
+# ELI5: when false, every request goes to the single [aperture] gateway
+# and [[providers]] is ignored. When true, requests are routed across
+# the [[providers]] list below.
+multi_provider_enabled = false
+
+# ELI5: nicknames for models. Before a request is validated or routed,
+# "alias" is replaced with its real model name. Empty map = no aliases.
+# Example: model_aliases = { fast = "openai/gpt-4o-mini" }
+model_aliases = {}
+
+# ELI5: the list of upstream providers. Only used when
+# multi_provider_enabled = true. Empty array = none configured.
+# Each entry is a [[providers]] table with:
+#   name            (string, required, non-empty, unique)
+#   base_url        (string, required, http/https, not an internal or
+#                    metadata IP — same SSRF rules as aperture.base_url)
+#   api_key         (optional string; omit if the provider needs none)
+#   endpoint_style  ("openai_v1" | "openai_direct" | "anthropic";
+#                    default "openai_v1"; controls how URLs are built)
+#   models          (array of strings, required, non-empty)
+#   enabled         (bool, default true)
+# Example (commented out because multi_provider_enabled = false):
+# [[providers]]
+# name           = "openrouter"
+# base_url       = "https://openrouter.ai/api"
+# api_key        = "sk-or-v1-REPLACE-ME"
+# endpoint_style = "openai_v1"
+# models         = ["openai/gpt-4o-mini", "anthropic/claude-3-5-sonnet"]
+# enabled        = true
+providers = []
+
+# --- [aperture]: the default single gateway ----------------------------
+
+[aperture]
+# ELI5: where the router forwards requests in single-gateway mode.
+# Non-empty; must be http/https; may not be a cloud metadata endpoint
+# or an internal IP (CGN 100.64.0.0/10 is blocked here too). api_key is
+# deliberately absent (= None): set it via the APERTURE_API_KEY env var
+# instead of writing secrets into this file. Validation rejects the
+# placeholder "your-api-key-here", and fails startup if a key is set
+# with a non-HTTPS, non-Tailscale, non-localhost base_url.
+base_url = "http://localhost:8080"
+model_refresh_interval_secs = 300
+
+# --- [cors]: who may call the router from a browser --------------------
+
+[cors]
+# ELI5: browser pages at these origins may call the API. "*" or an empty
+# list triggers a startup warning — keep it tight.
+allowed_origins = ["http://localhost:3000"]
+# ELI5: IPs of reverse proxies whose X-Forwarded-For headers we trust.
+# Parsed as IP addresses; empty = trust none.
+trusted_proxies = []
+
+# --- [http]: how the router talks to upstreams --------------------------
+
+[http]
+connect_timeout_secs = 10
+request_timeout_secs = 300
+# ELI5: how often a heartbeat comment is sent on streaming (SSE)
+# responses so idle connections are not killed by middleboxes.
+sse_keep_alive_secs = 15
+# ELI5: when an upstream answers 429 Too Many Requests, retry this many
+# times with exponential backoff (base_delay * 2^n * jitter 0.7-1.3,
+# server Retry-After overrides, capped at 4x base). Validation: <= 5.
+# Set to 0 to pass 429s straight through. Quota-exhaustion carveout: a
+# 429 with x-ratelimit-remaining: 0 short-circuits the retry loop.
+upstream_retry_attempts = 2
+# ELI5: the base delay for the retry backoff above, in milliseconds.
+# Validation: 1..=10000.
+upstream_retry_base_delay_ms = 2000
+
+# --- [rate_limit]: per-IP throttling ------------------------------------
+
+[rate_limit]
+# ELI5: sustained requests per second allowed per client IP. The burst
+# window is burst_size / requests_per_second seconds (here: 30/10 = 3s
+# of burst). At most 10,000 IPs are tracked (LRU eviction). All four
+# values must be non-zero.
+burst_size = 30
+health_burst_size = 50
+health_requests_per_second = 20
+requests_per_second = 10
+
+# --- [security]: inbound auth and abuse limits --------------------------
+
+[security]
+# ELI5: admin keys unlock admin endpoints; client keys unlock the proxy
+# endpoints. Each key must be >= 32 chars with >= 20 unique chars and no
+# placeholder text. Empty lists are the documented defaults, but note
+# the rule below: a RELEASE build with require_auth_in_prod = true and
+# no api_keys refuses to start. Add real keys (or set
+# APERTURE_CLIENT_API_KEYS in the environment) before deploying.
+admin_api_keys = []
+api_keys = []
+# ELI5: brute-force guard — after max_auth_attempts bad auth attempts
+# within auth_window_secs, the IP is banned for ban_duration_secs.
+auth_window_secs = 60
+ban_duration_secs = 300
+max_auth_attempts = 5
+# ELI5: largest request body accepted (10 MiB here). Validation: 1..=100MiB.
+max_body_size_bytes = 10485760
+# ELI5: deepest JSON nesting accepted. Validation: 16..=4096.
+max_json_depth = 256
+# ELI5: most chat messages accepted in one request. Must be > 0.
+max_messages = 10000
+# ELI5: largest streaming response body accepted (100 MiB here).
+# Validation: 1..=1GiB.
+max_streaming_size_bytes = 104857600
+# ELI5: in release builds, the router refuses to start without client
+# api_keys unless this is false. Keep true (fail closed); provision keys.
+require_auth_in_prod = true
