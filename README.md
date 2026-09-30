@@ -129,6 +129,74 @@ nix develop --command "$USER_SHELL"
   DeepTech Founder & CEO</p>
 </div>
 
+<h3>Agent Skills</h3>
+  <p>
+    Reusable agent playbooks (<code>SKILL.md</code>) that teach an AI agent how to work a domain with Matt's
+    real, verified toolchain. General skills live at
+    <a href="./.local/share/skills"><code>.local/share/skills</code></a> (<code>$XDG_DATA_HOME/skills</code>,
+    documented in <a href="./.local/share/README.md"><code>.local/share/README.md</code></a>); Neovim-specific
+    skills live at <a href="./.local/share/nvim/skills"><code>.local/share/nvim/skills</code></a>
+    (<code>$XDG_DATA_HOME/nvim/skills</code>) because they require Diver's Lua modules, <code>lsp/</code>
+    configs, DAP adapters, and <code>:Sf*</code> commands. Every skill states exactly which tools were verified
+    on the workstation and which are still setup steps — nothing is presented as working before it is installed.
+  </p>
+  <h4>Salesforce</h4>
+  <p>
+    <strong><a href="./.local/share/nvim/skills/salesforce-trailblazer/SKILL.md"><code>salesforce-trailblazer</code></a></strong>
+    — work Salesforce Trailhead (Trailblazer) modules asynchronously with an AI agent, built on Diver's
+    bounded, disk-persisted Trailhead job queue (<code>lua/dev/sf/trailhead.lua</code>).
+  </p>
+  <ul>
+    <li><strong>Workflow:</strong> enqueue a module as a job, break it into steps, start it, and let the agent
+      work the hands-on parts via the <code>sf</code> CLI while you read or do something else. Sessions survive
+      Neovim restarts.</li>
+    <li><strong>Job kinds:</strong> <code>trailmix</code>, <code>quest</code>, <code>study</code>,
+      <code>shell</code>, <code>note</code>. Bounds: 128 jobs max, 4 active, 256 steps per job, 15-minute step
+      timeout — a stuck org command can't hang the session forever.</li>
+    <li><strong>Commands:</strong> <code>:SfTrailheadEnqueue</code>, <code>:SfTrailheadAddStep</code>,
+      <code>:SfTrailheadStart</code> / <code>:SfTrailheadStatus</code> / <code>:SfTrailheadJobs</code> /
+      <code>:SfTrailheadLog</code>, <code>:SfTrailheadResume</code>, <code>:SfTrailheadCancel</code> /
+      <code>:SfTrailheadCancelAll</code>, <code>:SfTrailheadDone</code> / <code>:SfTrailheadFail</code>
+      (browser-task handoff), <code>:SfTrailheadQuests</code> (certification voucher sources).</li>
+    <li><strong>Honest boundary:</strong> Trailhead exposes <em>no public completion API</em> — no endpoint can
+      mark a unit complete or read quiz answers, and the skill never claims otherwise. The agent verifies
+      <em>org-side</em> state (metadata deployed? tests green? SOQL returns the rows?) via shell steps;
+      clicking through units, quiz answers, and "check challenge" stay human-side or go to an explicitly
+      approved browser task that reports back through <code>:SfTrailheadDone</code>.</li>
+    <li><strong>Requires:</strong> Diver's <code>dev.sf.trailhead</code> module and its
+      <code>:SfTrailhead*</code> commands, the <code>sf</code> CLI, and an authenticated Salesforce org
+      (scratch, playground, or dev).</li>
+  </ul>
+  <p>
+    <strong><a href="./.local/share/nvim/skills/apex-dev/SKILL.md"><code>apex-dev</code></a></strong>
+    — the full Salesforce Apex development loop in Neovim: edit, format, lint, run, deploy, and debug.
+  </p>
+  <ul>
+    <li><strong>Toolchain (verified on the workstation):</strong> <code>sf</code> CLI and <code>java</code>
+      installed; Apex LSP jar, <code>apexfmt</code>, the SOQL language server, and the DAP JS adapters are
+      <em>not</em> installed — the configs degrade gracefully (notify / no-op) and the skill marks each as a
+      setup step with the exact install source.</li>
+    <li><strong>Edit</strong> — Apex LSP (<code>lsp/apex_ls.lua</code>: <code>java</code> +
+      <code>apex-jorje-lsp.jar</code>, embedded SOQL completion) for <code>.cls</code> / <code>.trigger</code>;
+      <strong>format</strong> — <code>apexfmt</code> via a <code>BufWritePost</code> hook (fires only when on
+      PATH); <strong>lint</strong> — Salesforce Code Analyzer v5 and <code>lightning-flow-scanner</code> through
+      the <code>sf</code> plugins (<code>:SfAnalyzeFile</code>, <code>:SfAnalyzeProject</code>).</li>
+    <li><strong>Run</strong> — anonymous Apex (<code>.apex</code> scripts) and test runs through
+      <code>sf apex</code> (<code>:SfApexRunCurrent</code>, <code>:SfApexTestClass</code>,
+      <code>:SfTestRunAll</code>); <strong>deploy / retrieve</strong> — <code>sf project</code>
+      (<code>:SfDeployCurrent</code>, <code>:SfDeployValidate</code> with <code>--dry-run</code> before shared
+      orgs).</li>
+    <li><strong>Debug</strong> — two node-based DAP adapters from the salesforcedx-vscode bundle
+      (<code>lua/dap/apex.lua</code>): interactive (<code>apexDebug.js</code>, live against the org) and replay
+      (<code>apexReplayDebug.js</code>, step through a fetched debug log via <code>:SfApexReplayDebug</code>).
+      Discovery order: <code>NVIM_APEX_*_ADAPTER</code> env vars, then <code>NVIM_SALESFORCE_DAP_ROOT</code>,
+      then conventional bundle paths.</li>
+    <li><strong>SOQL / data</strong> — SOQL language server for <code>.soql</code> / <code>.sosl</code> plus the
+      always-available <code>sf data query</code> (<code>:SfSoql</code>, <code>:SfSoqlBuffer</code>).</li>
+    <li><strong>Deliberately out of scope:</strong> the thin, unverified LWC / Visualforce / AgentScript LSP
+      configs, and the legacy <code>sfdx</code> CLI (the config standardizes on <code>sf</code>).</li>
+  </ul>
+
 <h3>Publications</h3>
   <p>
     <a href="https://orcid.org/0000-0002-0302-4812">

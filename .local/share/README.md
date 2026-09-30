@@ -53,3 +53,16 @@ Diver config (`.config/nvim` submodule) and at `$XDG_DATA_HOME/nvim/skills`.
 | [mcp-builder](./skills/mcp-builder) | Build and harden MCP servers and clients for the Neovim-first stack |
 | [rosenpass-pqc-vpn](./skills/rosenpass-pqc-vpn) | Post-quantum-secure WireGuard tunnels via Rosenpass key exchange |
 | [skill-creator](./skills/skill-creator) | Guides creation, modification, and improvement of Agent Skills for Neovim-centered workflows |
+
+---
+
+## Neovim Skills (A–Z)
+
+Neovim-specific Agent Skills, installed at `$XDG_DATA_HOME/nvim/skills`. These require Matt's
+Diver Neovim config (its Lua modules, `lsp/` configs, DAP adapters, and `:Sf*` commands) —
+see the root README's Agent Skills section for the full write-up.
+
+| Skill | Description |
+| --- | --- |
+| [apex-dev](./nvim/skills/apex-dev) | Full Salesforce Apex loop in Neovim: Apex LSP edit, apexfmt, Code Analyzer lint, `sf` test runs, deploy/retrieve, interactive + replay DAP debug, SOQL |
+| [salesforce-trailblazer](./nvim/skills/salesforce-trailblazer) | Work Salesforce Trailhead modules asynchronously via Diver's Trailhead job queue and the `sf` CLI |
