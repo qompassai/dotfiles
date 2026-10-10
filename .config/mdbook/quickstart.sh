@@ -26,7 +26,12 @@ if [ ! -f "$TEMPLATE_BOOK_TOML" ]; then
   echo "mdBook template not found at: $TEMPLATE_BOOK_TOML" >&2
   exit 1
 fi
-mkdir -p "$PROJECT_ROOT/docs/book/src"
+mkdir -p "$PROJECT_ROOT/docs/book/src" "$PROJECT_ROOT/docs/book/theme"
 cp "$TEMPLATE_BOOK_TOML" "$PROJECT_ROOT/docs/book/book.toml"
+# The template book.toml references theme/book.css and theme/book.js via
+# [output.html] additional-css/additional-js; mdBook fails the build if
+# they are absent, so the theme travels with the config.
+cp -a "$TEMPLATE_DIR/theme/." "$PROJECT_ROOT/docs/book/theme/"
 echo "Copied template book.toml to $PROJECT_ROOT/docs/book/book.toml"
+echo "Copied template theme to $PROJECT_ROOT/docs/book/theme/"
 echo "You can now edit docs/book/book.toml for project-specific overrides."
