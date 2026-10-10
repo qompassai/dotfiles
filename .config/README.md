@@ -370,6 +370,7 @@ Every entry in this directory, alphabetical by app name. Click an app to open it
 | [mcp](./mcp) |  |
 | [mcproxy](./mcproxy) |  |
 | [mdadm](./mdadm) |  |
+| [mdbook](./mdbook) | mdBook book template, theme, and quickstart |
 | [mediamtx](./mediamtx) |  |
 | [meilisearch](./meilisearch) | Fast search engine |
 | [menus](./menus) |  |
