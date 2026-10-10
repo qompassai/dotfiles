@@ -32,6 +32,17 @@ cp "$TEMPLATE_BOOK_TOML" "$PROJECT_ROOT/docs/book/book.toml"
 # [output.html] additional-css/additional-js; mdBook fails the build if
 # they are absent, so the theme travels with the config.
 cp -a "$TEMPLATE_DIR/theme/." "$PROJECT_ROOT/docs/book/theme/"
+# mdBook requires src/SUMMARY.md to exist (create-missing only fills in
+# chapters a SUMMARY already lists), so seed a minimal starter summary
+# and chapter like `mdbook init` does; the scaffolded book then builds.
+if [ ! -f "$PROJECT_ROOT/docs/book/src/SUMMARY.md" ]; then
+  printf '# Summary\n\n- [Chapter 1](./chapter_1.md)\n' > "$PROJECT_ROOT/docs/book/src/SUMMARY.md"
+  echo "Seeded starter SUMMARY.md in $PROJECT_ROOT/docs/book/src"
+fi
+if [ ! -f "$PROJECT_ROOT/docs/book/src/chapter_1.md" ]; then
+  printf '# Chapter 1\n' > "$PROJECT_ROOT/docs/book/src/chapter_1.md"
+  echo "Seeded starter chapter_1.md in $PROJECT_ROOT/docs/book/src"
+fi
 echo "Copied template book.toml to $PROJECT_ROOT/docs/book/book.toml"
 echo "Copied template theme to $PROJECT_ROOT/docs/book/theme/"
 echo "You can now edit docs/book/book.toml for project-specific overrides."
