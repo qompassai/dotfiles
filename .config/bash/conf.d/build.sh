@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
-# /qompassai/dotfiles/.config/bash/conf.d/cmake.sh
-# Qompass AI Bash CMake Script
+# /qompassai/dotfiles/.config/bash/conf.d/build.sh
+# Qompass AI Bash Build Script (buildcache + CMake)
 # Copyright (C) 2026 Qompass AI, All rights reserved
 # ----------------------------------------
+# All buildcache configuration is consolidated here; it was formerly
+# defined in three places (~/.bashrc, cuda.sh, lua.sh) with drifting
+# values. The Django-Ninja exports that used to sit in this file
+# moved to django.sh, where they belong.
+export BUILDCACHE_CC=/usr/bin/clang
+export BUILDCACHE_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/buildcache/config.json"
+export BUILDCACHE_CXX=/usr/bin/clang++
+export BUILDCACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/buildcache"
+export BUILDCACHE_LUA_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/buildcache/lua"
+export BUILDCACHE_MAX_CACHE_SIZE=50000000000 # bytes; 50G
+export CMAKE_C_COMPILER_LAUNCHER=buildcache
+export CMAKE_CXX_COMPILER_LAUNCHER=buildcache
 export CMAKE_POLICY_VERSION_MINIMUM=4.4.0
-export NINJA_DEFAULT_THROTTLE_RATES='{"anon":"100/hour","user":"1000/hour","burst":"60/min","sustained":"1000/day"}'
-export NINJA_FIX_REQUEST_FILES_METHODS='["PUT","PATCH"]'
-export NINJA_NUM_PROXIES=1
-export NINJA_PAGINATION_CLASS="ninja.pagination.LimitOffsetPagination"
-export NINJA_PAGINATION_PER_PAGE="100"
-export NINJA_MAX_PER_PAGE_SIZE="200"
-export NINJA_PAGINATION_MAX_LIMIT="1000"
-export DJANGO_SETTINGS_MODULE="django.conf.global_settings"
 #vim: set filetype=sh:

@@ -1,12 +1,23 @@
+# shellcheck shell=bash
 #
 # /qompassai/dotfiles/.config/bash/bashrc
 # Qompass AI Bash Bashrc
 # Copyright (C) 2026 Qompass AI, All rights reserved
 # ----------------------------------------
 # shellcheck disable=SC1090,SC1091
+# XDG fallback: the conf.d loop below keys off XDG_CONFIG_HOME, which
+# is unset in a bare bash session; default it per the XDG spec. (The
+# previous line here, a bare `: "/home/phaedrus/.config"`, assigned
+# nothing, so conf.d silently never loaded without an inherited XDG
+# environment.)
+: "${XDG_CONFIG_HOME:=$HOME/.config}"
+export XDG_CONFIG_HOME
 if [ -d "${XDG_CONFIG_HOME}/bash" ]; then
     for script in "${XDG_CONFIG_HOME}"/bash/conf.d/*.sh; do
         [ -r "${script}" ] && [ "${script}" != "${BASH_SOURCE[0]}" ] && . "${script}"
     done
 fi
-export PATH
+# Aliases load after conf.d so they can build on its definitions.
+if [ -r "${XDG_CONFIG_HOME}/bash/aliases" ]; then
+    . "${XDG_CONFIG_HOME}/bash/aliases"
+fi

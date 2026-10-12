@@ -1,10 +1,16 @@
+# shellcheck shell=bash
 # /qompassai/dotfiles/.config/bash/aliases
 # Qompass AI Bash Aliases Config
 # Copyright (C) 2026 Qompass AI, All rights reserved
 # ----------------------------------------
+# Sourced by ~/.config/bash/bashrc after conf.d (this file previously
+# was never sourced at all, so every alias below was dead).
 alias gcsm='git commit -S -m'
 alias grep='grep --color=auto'
+alias luamake='$HOME/.GH/luamake/luamake'
 alias luarocks='luarocks --lua-version=5.1'
 alias shellcheck='shellcheck --rcfile "$XDG_CONFIG_HOME/shellcheck/.shellcheckrc"'
 alias starkup="curl --proto '=https' --tlsv1.2 -sSf https://sh.starkup.sh | sh -s --"
-complete_alias gcsm
+# The former `complete_alias gcsm` line is gone: complete-alias is not
+# installed, so the call failed on every shell start. gcsm completes
+# with the default filename/command completion instead.

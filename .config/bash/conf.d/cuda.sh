@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # #################################################################
 # /qompassai/.config/bash/conf.d/cuda.sh
 # Qompass AI Cuda
@@ -40,6 +41,7 @@ case ":${LD_LIBRARY_PATH:-}:" in
   *":$CUDA_HOME/targets/x86_64-linux/lib:"*) ;;
   *) export LD_LIBRARY_PATH="${_cuda_lib}${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}" ;;
 esac
+unset _cuda_lib
 
 export CUDNN_INCLUDE_DIR=/usr/include
 export CUDNN_LIBRARY=/usr/lib/libcudnn.so
@@ -47,8 +49,6 @@ export CUDNN_LIBRARY=/usr/lib/libcudnn.so
 export CUDA_DEVICE_ORDER=PCI_BUS_ID
 export CUDA_MODULE_LOADING=LAZY
 export PYTORCH_ALLOC_CONF=expandable_segments:True
-export BUILDCACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/buildcache"
-export BUILDCACHE_MAX_CACHE_SIZE=50000000000   # bytes; 50G
-export CMAKE_C_COMPILER_LAUNCHER=buildcache
-export CMAKE_CXX_COMPILER_LAUNCHER=buildcache
+# Buildcache itself is configured in build.sh; only the CUDA
+# compiler launcher belongs here.
 export CMAKE_CUDA_COMPILER_LAUNCHER=buildcache

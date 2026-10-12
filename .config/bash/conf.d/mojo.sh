@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # #################################################################
 # /qompassai/.config/bash/conf.d/mojo.sh
 # Qompass AI Mojo

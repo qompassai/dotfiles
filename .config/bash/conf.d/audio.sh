@@ -4,6 +4,7 @@
 # Qompass AI Bash Audio Config
 # Copyright (C) 2026 Qompass AI, All rights reserved
 # ----------------------------------------
-export SOXOPTS="--buffer 131072"
 export AUDIODRIVER="pipewire"
-export SOXOPTS="-V1"
+# SOXOPTS was exported twice with different values (the second export
+# silently won); merged into the single intended value.
+export SOXOPTS="--buffer 131072 -V1"

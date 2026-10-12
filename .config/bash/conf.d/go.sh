@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # #################################################################
 # /qompassai/.config/bash/conf.d/go.sh
 # Qompass AI Go
@@ -15,10 +16,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # #################################################################
-export GOPATH="${GOPATH:-${XDG_DATA_HOME:-$HOME/.local/share}/go}"
 export GOBIN="${GOBIN:-${XDG_BIN_HOME:-$HOME/.local/bin}}"
 export GOCACHE="${GOCACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/go-build}"
 export GOMODCACHE="${GOMODCACHE:-${XDG_CACHE_HOME:-$HOME/.cache}/go-mod}"
+export GOPATH="${GOPATH:-${XDG_DATA_HOME:-$HOME/.local/share}/go}"
 case " ${GOFLAGS-} " in
   *" -modcacherw "*) ;;
   *) export GOFLAGS="${GOFLAGS:+$GOFLAGS }-modcacherw" ;;
@@ -29,4 +30,8 @@ case ":$PATH:" in
   *) export PATH="$GOBIN:$PATH" ;;
 esac
 export GOTOOLCHAIN="${GOTOOLCHAIN:-auto}"
-
+paru-purge()
+{
+  chmod -R u+w ~/.cache/paru/clone 2> /dev/null # Go modcache is read-only by design
+  rm -rf ~/.cache/paru/clone/*
+}

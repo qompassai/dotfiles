@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # #################################################################
-# /qompassai/dotfiles/.config/bash/conf.d/lua.sh
+# /qompassai/.config/bash/conf.d/lua.sh
 # Qompass AI Bash Lua Config
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (c) 2026 Qompass AI
@@ -16,13 +16,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # #################################################################
-export BUILDCACHE_CONFIG_FILE="$XDG_CONFIG_HOME/buildcache/config.json"
-export BUILDCACHE_DIR="$XDG_CACHE_HOME/buildcache"
-export BUILDCACHE_LUA_PATH="$XDG_CONFIG_HOME/buildcache/lua"
-export BUILDCACHE_CC=/usr/bin/clang
-export BUILDCACHE_CXX=/usr/bin/clang++
-#export BUILDCACHE_IMPERSONATE=/usr/bin/clang
-#alias lua='lua5.1'
-
-
-export PATH="$HOME/.local/bin:$HOME/.luarocks/bin:$PATH"
+# Buildcache settings moved to build.sh, where they are defined
+# once. What remains here is the LuaRocks tree on PATH (guarded;
+# ~/.local/bin itself is owned by 00_xdg.sh).
+case ":$PATH:" in
+    *":$HOME/.luarocks/bin:"*) ;;
+    *) export PATH="$HOME/.luarocks/bin:$PATH" ;;
+esac

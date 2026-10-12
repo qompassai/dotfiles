@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 # #################################################################
 # /qompassai/.config/bash/conf.d/dotnet.sh
 # Qompass AI Dotnet
@@ -15,5 +16,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # #################################################################
-export PATH="$HOME/.dotnet/tools:$PATH"
-
+# The CLI home and the NuGet package cache move into the XDG tree;
+# without these, dotnet defaults to ~/.dotnet and ~/.nuget.
+export DOTNET_CLI_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/dotnet"
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+export DOTNET_NOLOGO=1
+export NUGET_PACKAGES="${XDG_CACHE_HOME:-$HOME/.cache}/nuget/packages"
+case ":$PATH:" in
+    *":$DOTNET_CLI_HOME/tools:"*) ;;
+    *) export PATH="$DOTNET_CLI_HOME/tools:$PATH" ;;
+esac
+# Legacy tools directory from the pre-XDG install; drop this block
+# once the global tools are reinstalled under DOTNET_CLI_HOME.
+case ":$PATH:" in
+    *":$HOME/.dotnet/tools:"*) ;;
+    *) export PATH="$HOME/.dotnet/tools:$PATH" ;;
+esac

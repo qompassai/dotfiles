@@ -18,3 +18,8 @@ bind 'set completion-ignore-case on'
 bind 'set completion-map-case on'
 bind '"\e[Z": menu-complete-backward'
 alias mvn-debug='mvn help:effective-settings'
+# zoxide is initialized exactly once, here (it was previously
+# evaluated in both ~/.bashrc and rust.sh).
+if command -v zoxide > /dev/null 2>&1; then
+    eval "$(zoxide init bash)"
+fi

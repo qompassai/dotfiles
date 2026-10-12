@@ -1,2 +1,5 @@
 todo.md
 texput.log
+
+# bash: local credentials (migrating to pass) - never commit
+.config/bash/conf.d/secrets.sh
