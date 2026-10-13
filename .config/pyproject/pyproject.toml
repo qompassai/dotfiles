@@ -8,7 +8,7 @@ name = "qai"
 description = "Quantum AI models for healthcare and education"
 readme = "README.md"
 requires-python = ">=3.11"
-license = "AGPL-3.0 AND QCDA-1.0"
+license = "Apache-2.0"
 license-files = ["LICENSE-AGPL", "LICENSE-QCDA"]
 authors = [{ name = "Matt A. Porter", email = "map@qompass.ai" }]
 keywords = ["ai", "education", "healthcare", "machine-learning", "quantum"]
